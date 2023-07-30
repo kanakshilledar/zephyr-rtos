@@ -39,9 +39,9 @@ CPU0_intc: interrupt-controller {
     };
   };
 
-uart0: uart@11300 {
+uart0: serial@11300 {
          compatible = "shakti,uart0";
-         reg= <0x11300 0x1000>;
+         reg= < 0x0 0x11300 0x0 0x1000>;
          reg-names = "control";
          label = "uart_0";
          status = "disabled";

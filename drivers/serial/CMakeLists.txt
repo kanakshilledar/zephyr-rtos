@@ -60,6 +60,8 @@ zephyr_library_sources_ifdef(CONFIG_UART_OPENTITAN uart_opentitan.c)
 zephyr_library_sources_ifdef(CONFIG_UART_HOSTLINK uart_hostlink.c)
 zephyr_library_sources_ifdef(CONFIG_UART_EMUL uart_emul.c)
 
+zephyr_library_sources_ifdef(CONFIG_UART_SHAKTI uart_shakti.c)
+
 zephyr_library_sources_ifdef(CONFIG_USERSPACE   uart_handlers.c)
 
 if(CONFIG_UART_NATIVE_POSIX)
