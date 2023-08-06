@@ -8,9 +8,9 @@
  * @brief UART driver for the SiFive Freedom Processor
  */
 
-#include <kernel.h>
-#include <arch/cpu.h>
-#include <uart.h>
+#include <zephyr/kernel.h>
+#include <zephyr/arch/cpu.h>
+#include <zephyr/drivers/uart.h>
 
 #define RXDATA_EMPTY   (1 << 31)   /* Receive FIFO Empty */
 #define RXDATA_MASK    0xFF        /* Receive Data Mask */
@@ -375,7 +375,7 @@ static const struct uart_driver_api uart_sifive_driver_api = {
 #endif
 };
 
-#ifdef CONFIG_UART_SHAKTI_PORT_0
+#ifdef CONFIG_UART_SIFIVE_PORT_0
 
 static struct uart_sifive_data uart_sifive_data_0;
 
@@ -412,9 +412,9 @@ static void uart_sifive_irq_cfg_func_0(void)
 }
 #endif
 
-#endif /* CONFIG_UART_SHAKTI_PORT_0 */
+#endif /* CONFIG_UART_SIFIVE_PORT_0 */
 
-#ifdef CONFIG_UART_SHAKTI_PORT_1
+#ifdef CONFIG_UART_SIFIVE_PORT_1
 
 static struct uart_sifive_data uart_sifive_data_1;
 
@@ -451,4 +451,4 @@ static void uart_sifive_irq_cfg_func_1(void)
 }
 #endif
 
-#endif /* CONFIG_UART_SHAKTI_PORT_1 */
+#endif /* CONFIG_UART_SIFIVE_PORT_1 */
