@@ -4,13 +4,13 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 ---
-title: SHAKTI UART
-version: 0.1
+description: SHAKTI UART
+# version: 0.1
 
-description: >
-    This binding gives a base representation of the shakti UART
+# description: >
+#     This binding gives a base representation of the shakti UART
 
-include: [uart.yaml]
+include: [uart-controller.yaml, pinctrl-device.yaml]
 
 compatible: "shakti,spike-bare-dev"
 properties:
@@ -21,16 +21,23 @@ properties:
       # constraint: "shakti,uart0"
       # generation: define
 
-    reg:
-      type: array
-      description: mmio register space
-      generation: define
-      category: required
+#     reg:
+#       type: array
+#       description: mmio register space
+#       # generation: define
+#       required: true
 
-    interrupts:
-      type: array
-      category: required
-      description: required interrupts
-      generation: define
+#     interrupts:
+#       type: array
+#       required: true
+#       description: required interrupts
+#       # generation: define
+  reg:
+    required: true
+  
+  interrupts:
+    required: true
+      
 
-...
+
+# ...

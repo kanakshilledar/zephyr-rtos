@@ -1,6 +1,6 @@
 /dts-v1/;
 
-#include "riscv32-shakti.dtsi"
+#include <riscv32-shakti.dtsi>
 
 / {
 	model = "shakti,spike-bare";
