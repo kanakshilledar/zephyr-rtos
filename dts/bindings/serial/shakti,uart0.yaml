@@ -10,34 +10,13 @@ description: SHAKTI UART
 # description: >
 #     This binding gives a base representation of the shakti UART
 
+compatible: "shakti,spike-bare-dev"
+
 include: [uart-controller.yaml, pinctrl-device.yaml]
 
-compatible: "shakti,spike-bare-dev"
 properties:
-    
-      # type: string
-      # category: required
-      # description: compatible strings
-      # constraint: "shakti,uart0"
-      # generation: define
-
-#     reg:
-#       type: array
-#       description: mmio register space
-#       # generation: define
-#       required: true
-
-#     interrupts:
-#       type: array
-#       required: true
-#       description: required interrupts
-#       # generation: define
   reg:
     required: true
-  
+
   interrupts:
     required: true
-      
-
-
-# ...
