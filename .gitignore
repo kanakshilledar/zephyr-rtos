@@ -1,2 +1,6 @@
-build/
+*/build/*
 *__pycache__*
+*.idea*
+*.vscode*
+/samples/application_development/sqlite_module/
+*/cmake-build-debug/*
