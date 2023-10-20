@@ -6,3 +6,64 @@ description: SiFive S7 Standard Core CPU
 compatible: "sifive,s7"
 
 include: sifive-common.yaml
+
+properties:
+  d-cache-block-size:
+    description: Specifies the block size in bytes of the data cache
+    required: true
+    type: int
+
+  d-cache-sets:
+    description: Specifies the number of associativity sets in the data cache
+    required: true
+    type: int
+
+  d-cache-size:
+    description: Specifies the size in bytes of the data cache
+    required: true
+    type: int
+
+  d-tlb-sets:
+    description: Specifies the number of entries in the data TLB
+    required: true
+    type: int
+
+  d-tlb-size:
+    description: Specifies the number of entries in the data TLB
+    required: true
+    type: int
+
+  i-cache-block-size:
+    description: Specifies the block size in bytes of the instruction cache
+    required: true
+    type: int
+
+  i-cache-sets:
+    description: Specifies the number of associativity sets in the instruction cache
+    required: true
+    type: int
+
+  i-cache-size:
+    description: Specifies the size in bytes of the instruction cache
+    required: true
+    type: int
+
+  i-tlb-sets:
+    description: Specifies the number of associativity sets in the instruction TLB
+    required: true
+    type: int
+
+  i-tlb-size:
+    description: Specifies the number of entries in the instruction TLB
+    required: true
+    type: int
+
+  next-level-cache:
+    description: Indicates that another level of cache exists
+    required: true
+    type: phandle
+
+  tlb-split:
+    description: Specifies that the TLB has a split configuration
+    required: true
+    type: boolean

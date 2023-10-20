@@ -17,7 +17,6 @@
 #include <zephyr/storage/flash_map.h>
 
 LOG_MODULE_REGISTER(main);
-
 /* Matches LFS_NAME_MAX */
 #define MAX_PATH_LEN 255
 #define TEST_FILE_SIZE 547
