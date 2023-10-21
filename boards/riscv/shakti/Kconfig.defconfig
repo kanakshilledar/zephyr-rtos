@@ -1,6 +1,0 @@
-if BOARD_SHAKTI
-
-config BOARD
-	default "shakti"
-
-endif

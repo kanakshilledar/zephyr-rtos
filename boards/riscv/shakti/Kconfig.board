@@ -1,6 +1,0 @@
-config BOARD_SHAKTI
-	bool "shakti target"
-	depends on SOC_RISCV32_SHAKTI
-        select QEMU_TARGET
-        select HAS_DTS
-
