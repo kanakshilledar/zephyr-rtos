@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb-c-sink-sample:
 
 Basic USB-C SINK
 ################
+=======
+.. zephyr:code-sample:: usb-c-sink
+   :name: Basic USB-C Sink
+   :relevant-api: _usbc_device_api
+
+   Implement a USB-C Power Delivery application in the form of a USB-C Sink.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -30,7 +38,11 @@ Building and Running
 Build and flash as follows, changing ``b_g474e_dpow1`` for your board:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/subsys/usb-c/sink
+=======
+   :zephyr-app: samples/subsys/usb_c/sink
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: b_g474e_dpow1
    :goals: build flash
    :compact:

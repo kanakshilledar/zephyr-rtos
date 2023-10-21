@@ -98,6 +98,11 @@ The Zephyr nucleo_f091rc board configuration supports the following hardware fea
 +-----------+------------+-------------------------------------+
 | SPI       | on-chip    | SPI controller                      |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| CAN       | on-chip    | CAN controller                      |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | ADC       | on-chip    | ADC controller                      |
 +-----------+------------+-------------------------------------+
 | DAC       | on-chip    | DAC controller                      |
@@ -132,7 +137,12 @@ Default Zephyr Peripheral Mapping:
 - UART_1 TX/RX : PB6/PB7
 - UART_2 TX/RX : PA2/PA3 (ST-Link Virtual COM Port)
 - I2C1 SCL/SDA : PB8/PB9 (Arduino I2C)
+<<<<<<< HEAD
 - I2C2 SCL/SDA : PA11/PA12
+=======
+- I2C2 SCL/SDA : PA11/PA12 (disabled by default, uses same pins as CAN)
+- CAN RX/TX : PA11/PA12
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - SPI1 SCK/MISO/MOSI : PA5/PA6/PA7 (Arduino SPI)
 - SPI2 SCK/MISO/MOSI : PB13/PB14/PB15
 - USER_PB : PC13
@@ -158,7 +168,11 @@ This interface is supported by the openocd version included in the Zephyr SDK.
 Flashing an application to Nucleo F091RC
 ----------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -185,6 +199,7 @@ References
 .. target-notes::
 
 .. _Nucleo F091RC website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f091rc.html
 
 .. _STM32F091 reference manual:
@@ -192,3 +207,12 @@ References
 
 .. _STM32 Nucleo-64 board User Manual:
    http://www.st.com/resource/en/user_manual/dm00105823.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f091rc.html
+
+.. _STM32F091 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00031936.pdf
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

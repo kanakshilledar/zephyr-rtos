@@ -17,7 +17,11 @@ LOG_MODULE_REGISTER(net_test, CONFIG_NET_ROUTE_LOG_LEVEL);
 #include <errno.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/linker/sections.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/tc_util.h>
 
@@ -75,7 +79,11 @@ static struct net_if *recipient;
 static struct net_if *my_iface;
 static struct net_if *peer_iface;
 
+<<<<<<< HEAD
 static struct net_route_entry *entry;
+=======
+static struct net_route_entry *route_entry;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define MAX_ROUTES CONFIG_NET_MAX_ROUTES
 static const int max_routes = MAX_ROUTES;
@@ -374,6 +382,7 @@ static void test_populate_nbr_cache(void)
 
 static void test_route_add(void)
 {
+<<<<<<< HEAD
 	entry = net_route_add(my_iface,
 			      &dest_addr, 128,
 			      &peer_addr,
@@ -381,6 +390,15 @@ static void test_route_add(void)
 			      NET_ROUTE_PREFERENCE_LOW);
 
 	zassert_not_null(entry, "Route add failed");
+=======
+	route_entry = net_route_add(my_iface,
+				    &dest_addr, 128,
+				    &peer_addr,
+				    NET_IPV6_ND_INFINITE_LIFETIME,
+				    NET_ROUTE_PREFERENCE_LOW);
+
+	zassert_not_null(route_entry, "Route add failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void test_route_update(void)
@@ -392,7 +410,11 @@ static void test_route_update(void)
 				     &peer_addr,
 				     NET_IPV6_ND_INFINITE_LIFETIME,
 				     NET_ROUTE_PREFERENCE_LOW);
+<<<<<<< HEAD
 	zassert_equal_ptr(update_entry, entry,
+=======
+	zassert_equal_ptr(update_entry, route_entry,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  "Route add again failed");
 }
 
@@ -400,7 +422,11 @@ static void test_route_del(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	ret = net_route_del(entry);
+=======
+	ret = net_route_del(route_entry);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret < 0) {
 		zassert_true(0, "Route del failed");
 	}
@@ -410,7 +436,11 @@ static void test_route_del_again(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	ret = net_route_del(entry);
+=======
+	ret = net_route_del(route_entry);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret >= 0) {
 		zassert_true(0, "Route del again failed");
 	}
@@ -420,7 +450,11 @@ static void test_route_get_nexthop(void)
 {
 	struct in6_addr *nexthop;
 
+<<<<<<< HEAD
 	nexthop = net_route_get_nexthop(entry);
+=======
+	nexthop = net_route_get_nexthop(route_entry);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_not_null(nexthop, "Route get nexthop failed");
 
@@ -494,6 +528,7 @@ static void test_route_del_many(void)
 
 static void test_route_lifetime(void)
 {
+<<<<<<< HEAD
 	entry = net_route_add(my_iface,
 			      &dest_addr, 128,
 			      &peer_addr,
@@ -511,6 +546,25 @@ static void test_route_lifetime(void)
 
 	entry = net_route_lookup(my_iface, &dest_addr);
 	zassert_is_null(entry, "Route did not expire");
+=======
+	route_entry = net_route_add(my_iface,
+				    &dest_addr, 128,
+				    &peer_addr,
+				    NET_IPV6_ND_INFINITE_LIFETIME,
+				    NET_ROUTE_PREFERENCE_LOW);
+
+	zassert_not_null(route_entry, "Route add failed");
+
+	route_entry = net_route_lookup(my_iface, &dest_addr);
+	zassert_not_null(route_entry, "Route not found");
+
+	net_route_update_lifetime(route_entry, 1);
+
+	k_sleep(K_MSEC(1200));
+
+	route_entry = net_route_lookup(my_iface, &dest_addr);
+	zassert_is_null(route_entry, "Route did not expire");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 }
 
@@ -518,19 +572,32 @@ static void test_route_preference(void)
 {
 	struct net_route_entry *update_entry;
 
+<<<<<<< HEAD
 	entry = net_route_add(my_iface,
 			      &dest_addr, 128,
 			      &peer_addr,
 			      NET_IPV6_ND_INFINITE_LIFETIME,
 			      NET_ROUTE_PREFERENCE_LOW);
 	zassert_not_null(entry, "Route add failed");
+=======
+	route_entry = net_route_add(my_iface,
+				    &dest_addr, 128,
+				    &peer_addr,
+				    NET_IPV6_ND_INFINITE_LIFETIME,
+				    NET_ROUTE_PREFERENCE_LOW);
+	zassert_not_null(route_entry, "Route add failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	update_entry = net_route_add(my_iface,
 				     &dest_addr, 128,
 				     &peer_addr_alt,
 				     NET_IPV6_ND_INFINITE_LIFETIME,
 				     NET_ROUTE_PREFERENCE_MEDIUM);
+<<<<<<< HEAD
 	zassert_equal_ptr(update_entry, entry,
+=======
+	zassert_equal_ptr(update_entry, route_entry,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  "Route add again failed");
 
 	update_entry = net_route_add(my_iface,
@@ -541,7 +608,11 @@ static void test_route_preference(void)
 	zassert_is_null(update_entry,
 			"Low preference route overwritten medium one");
 
+<<<<<<< HEAD
 	net_route_del(entry);
+=======
+	net_route_del(route_entry);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 

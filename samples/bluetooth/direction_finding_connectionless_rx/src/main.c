@@ -31,7 +31,11 @@
 #define ADV_DATA_HEX_STR_LEN_MAX (BT_GAP_ADV_MAX_EXT_ADV_DATA_LEN * 2 + 1)
 
 static struct bt_le_per_adv_sync_param sync_create_param;
+<<<<<<< HEAD
 static struct bt_le_per_adv_sync *sync;
+=======
+static struct bt_le_per_adv_sync *adv_sync;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static bt_addr_le_t per_addr;
 static bool per_adv_found;
 static bool scan_enabled;
@@ -264,7 +268,11 @@ static void create_sync(void)
 	sync_create_param.sid = per_sid;
 	sync_create_param.skip = 0;
 	sync_create_param.timeout = 0xaa;
+<<<<<<< HEAD
 	err = bt_le_per_adv_sync_create(&sync_create_param, &sync);
+=======
+	err = bt_le_per_adv_sync_create(&sync_create_param, &adv_sync);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err != 0) {
 		printk("failed (err %d)\n", err);
 		return;
@@ -277,7 +285,11 @@ static int delete_sync(void)
 	int err;
 
 	printk("Deleting Periodic Advertising Sync...");
+<<<<<<< HEAD
 	err = bt_le_per_adv_sync_delete(sync);
+=======
+	err = bt_le_per_adv_sync_delete(adv_sync);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err != 0) {
 		printk("failed (err %d)\n", err);
 		return err;
@@ -304,7 +316,11 @@ static void enable_cte_rx(void)
 	};
 
 	printk("Enable receiving of CTE...\n");
+<<<<<<< HEAD
 	err = bt_df_per_adv_sync_cte_rx_enable(sync, &cte_rx_params);
+=======
+	err = bt_df_per_adv_sync_cte_rx_enable(adv_sync, &cte_rx_params);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err != 0) {
 		printk("failed (err %d)\n", err);
 		return;

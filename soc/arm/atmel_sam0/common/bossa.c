@@ -7,6 +7,10 @@
 #include <soc.h>
 #include <zephyr/drivers/uart/cdc_acm.h>
 #include <zephyr/drivers/usb/usb_dc.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/usb/class/usb_cdc.h>
 
 /*

@@ -25,8 +25,13 @@ static int tcp_upload(int sock,
 		      unsigned int packet_size,
 		      struct zperf_results *results)
 {
+<<<<<<< HEAD
 	int64_t duration = sys_clock_timeout_end_calc(K_MSEC(duration_in_ms));
 	int64_t start_time, last_print_time, end_time, remaining;
+=======
+	k_timepoint_t end = sys_timepoint_calc(K_MSEC(duration_in_ms));
+	int64_t start_time, end_time;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t nb_packets = 0U, nb_errors = 0U;
 	uint32_t alloc_errors = 0U;
 	int ret = 0;
@@ -39,7 +44,10 @@ static int tcp_upload(int sock,
 
 	/* Start the loop */
 	start_time = k_uptime_ticks();
+<<<<<<< HEAD
 	last_print_time = start_time;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	(void)memset(sample_packet, 'z', sizeof(sample_packet));
 
@@ -80,8 +88,12 @@ static int tcp_upload(int sock,
 		k_yield();
 #endif
 
+<<<<<<< HEAD
 		remaining = duration - k_uptime_ticks();
 	} while (remaining > 0);
+=======
+	} while (!sys_timepoint_expired(end));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	end_time = k_uptime_ticks();
 
@@ -119,7 +131,11 @@ int zperf_tcp_upload(const struct zperf_upload_params *param,
 	}
 
 	sock = zperf_prepare_upload_sock(&param->peer_addr, param->options.tos,
+<<<<<<< HEAD
 					 IPPROTO_TCP);
+=======
+					 param->options.priority, IPPROTO_TCP);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (sock < 0) {
 		return sock;
 	}

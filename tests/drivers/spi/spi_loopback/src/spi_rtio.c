@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "zephyr/devicetree.h"
+=======
+#include <zephyr/devicetree.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(spi_rtio_loopback);

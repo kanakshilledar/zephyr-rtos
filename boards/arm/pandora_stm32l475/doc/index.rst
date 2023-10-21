@@ -1,7 +1,12 @@
 .. _stm32l475ve_pandora_board:
 
+<<<<<<< HEAD
 ST STM32L475 Pandora
 ####################
+=======
+Alientek STM32L475 Pandora
+##########################
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

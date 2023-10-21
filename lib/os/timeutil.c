@@ -13,6 +13,10 @@
 #include <zephyr/types.h>
 #include <errno.h>
 #include <stddef.h>
+<<<<<<< HEAD
+=======
+#include <stdbool.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/timeutil.h>
 
 /** Convert a civil (proleptic Gregorian) date to days relative to

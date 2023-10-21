@@ -10,6 +10,14 @@
 		feature-mute;
 		channel-l;
 		channel-r;
+<<<<<<< HEAD
+=======
+
+		feature-volume;
+		volume-max = <0x0500>;
+		volume-min = <0xBA00>;
+		volume-res = <0x100>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	mic_0 {
 		compatible = "usb-audio-mic";

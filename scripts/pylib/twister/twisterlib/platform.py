@@ -36,6 +36,11 @@ class Platform:
         self.supported = set()
 
         self.arch = ""
+<<<<<<< HEAD
+=======
+        self.vendor = ""
+        self.tier = -1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.type = "na"
         self.simulation = "na"
         self.simulation_exec = None
@@ -67,6 +72,11 @@ class Platform:
                 self.supported.add(item)
 
         self.arch = data['arch']
+<<<<<<< HEAD
+=======
+        self.vendor = data.get('vendor', '')
+        self.tier = data.get("tier", -1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.type = data.get('type', "na")
         self.simulation = data.get('simulation', "na")
         self.simulation_exec = data.get('simulation_exec')
@@ -75,7 +85,15 @@ class Platform:
             self.supported_toolchains = []
 
         support_toolchain_variants = {
+<<<<<<< HEAD
           "arc": ["zephyr", "cross-compile", "xtools", "arcmwdt"],
+=======
+          # we don't provide defaults for 'arc' intentionally: some targets can't be built with GNU
+          # toolchain ("zephyr", "cross-compile", "xtools" options) and for some targets we haven't
+          # provided MWDT compiler / linker options in corresponding SoC file in Zephyr, so these
+          # targets can't be built with ARC MWDT toolchain ("arcmwdt" option) by Zephyr build system
+          # Instead for 'arc' we rely on 'toolchain' option in board yaml configuration.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           "arm": ["zephyr", "gnuarmemb", "xtools", "armclang", "llvm"],
           "arm64": ["zephyr", "cross-compile"],
           "mips": ["zephyr", "xtools"],

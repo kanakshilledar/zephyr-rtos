@@ -47,5 +47,10 @@ SOCKS5 Proxy Usage in MQTT
 **************************
 
 For MQTT client, there is :c:func:`mqtt_client_set_proxy()` API that the
+<<<<<<< HEAD
 application can call to setup SOCKS5 proxy. See :ref:`mqtt-publisher-sample`
 for usage example.
+=======
+application can call to setup SOCKS5 proxy. See :zephyr:code-sample:`mqtt-publisher`
+sample application for usage example.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

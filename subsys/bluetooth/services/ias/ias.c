@@ -41,10 +41,17 @@ static enum bt_ias_alert_lvl curr_lvl;
 
 static void set_alert_level(void)
 {
+<<<<<<< HEAD
 	enum bt_ias_alert_lvl alert_level;
 
 	alert_level = devices[0].alert_level;
 	for (int i = 1; i < CONFIG_BT_MAX_CONN; i++) {
+=======
+	enum bt_ias_alert_lvl alert_level = BT_IAS_ALERT_LVL_NO_ALERT;
+
+	/* Set the alert_level as the highest requested by any device */
+	for (int i = 0; i < CONFIG_BT_MAX_CONN; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (alert_level < devices[i].alert_level) {
 			alert_level = devices[i].alert_level;
 		}

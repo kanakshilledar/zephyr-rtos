@@ -21,6 +21,12 @@
 #define STM32_USB_PRE_ENABLED	RCC_CFGR_OTGFSPRE
 #endif
 
+<<<<<<< HEAD
+=======
+#define z_adc_prescaler(v) LL_RCC_ADC_CLKSRC_PCLK2_DIV_ ## v
+#define adc_prescaler(v) z_adc_prescaler(v)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(STM32_PLL_ENABLED)
 
 /*

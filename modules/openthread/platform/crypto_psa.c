@@ -8,9 +8,20 @@
 
 #include <psa/crypto.h>
 
+<<<<<<< HEAD
 #if defined(CONFIG_OPENTHREAD_ECDSA)
 #include <string.h>
 #include <zephyr/sys/__assert.h>
+=======
+#include <zephyr/sys/__assert.h>
+
+#if !defined(CONFIG_BUILD_WITH_TFM) && defined(CONFIG_OPENTHREAD_CRYPTO_PSA)
+#include <zephyr/settings/settings.h>
+#endif
+
+#if defined(CONFIG_OPENTHREAD_ECDSA)
+#include <string.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 static otError psaToOtError(psa_status_t aStatus)
@@ -125,6 +136,19 @@ static void ensureKeyIsLoaded(otCryptoKeyRef aKeyRef)
 void otPlatCryptoInit(void)
 {
 	psa_crypto_init();
+<<<<<<< HEAD
+=======
+
+#if !defined(CONFIG_BUILD_WITH_TFM) && defined(CONFIG_OPENTHREAD_CRYPTO_PSA)
+	/*
+	 * In OpenThread, Settings are initialized after KeyManager by default. If device uses
+	 * PSA with emulated TFM, Settings have to be initialized at the end of otPlatCryptoInit(),
+	 * to be available before storing Network Key.
+	 */
+	__ASSERT_EVAL((void) settings_subsys_init(), int err = settings_subsys_init(),
+		      !err, "Failed to initialize settings");
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 otError otPlatCryptoImportKey(otCryptoKeyRef *aKeyRef,
@@ -415,6 +439,10 @@ otError otPlatCryptoSha256Finish(otCryptoContext *aContext, uint8_t *aHash, uint
 
 void otPlatCryptoRandomInit(void)
 {
+<<<<<<< HEAD
+=======
+	psa_crypto_init();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void otPlatCryptoRandomDeinit(void)

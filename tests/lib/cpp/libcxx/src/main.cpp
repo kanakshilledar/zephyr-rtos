@@ -9,6 +9,10 @@
 #include <memory>
 #include <vector>
 #include <zephyr/ztest.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/kernel.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 BUILD_ASSERT(__cplusplus == 201703);
 
@@ -95,6 +99,20 @@ ZTEST(libcxx_tests, test_exception)
 }
 #endif
 
+<<<<<<< HEAD
+=======
+struct ThreadStack
+{
+	K_KERNEL_STACK_MEMBER(threadStack, 1024) {};
+};
+
+ZTEST(libcxx_tests, test_new_aligned)
+{
+	auto test_aligned = std::make_unique<ThreadStack>();
+	zassert_not_null(test_aligned, "aligned allocation failed");
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void *libcxx_tests_setup(void)
 {
 	TC_PRINT("version %u\n", (uint32_t)__cplusplus);

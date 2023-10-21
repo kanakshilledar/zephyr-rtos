@@ -5,10 +5,19 @@
  */
 
 /** Provisioning protocol timeout in seconds. */
+<<<<<<< HEAD
 #define PROTOCOL_TIMEOUT_SEC  60
 
 /** Provisioning protocol timeout. */
 #define PROTOCOL_TIMEOUT     K_SECONDS(PROTOCOL_TIMEOUT_SEC)
+=======
+#define PROTOCOL_TIMEOUT_SEC     60
+#define PROTOCOL_TIMEOUT_EXT_SEC 120
+
+/** Provisioning protocol timeout. */
+#define PROTOCOL_TIMEOUT     K_SECONDS(PROTOCOL_TIMEOUT_SEC)
+#define PROTOCOL_TIMEOUT_EXT K_SECONDS(PROTOCOL_TIMEOUT_EXT_SEC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @def PROV_BEARER_BUF_HEADROOM
  *

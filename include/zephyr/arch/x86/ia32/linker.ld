@@ -87,6 +87,13 @@ SECTIONS
 	*(.iplt)
 	}
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_SOC_FAMILY_INTEL_ISH) && defined(CONFIG_PM)
+#include <zephyr/arch/x86/ia32/scripts/ish_aon.ld>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_LINKER_USE_BOOT_SECTION
 
 	SECTION_PROLOGUE(boot.text,,)
@@ -503,14 +510,20 @@ SECTIONS
 	__kernel_ram_end = KERNEL_BASE_ADDR + KERNEL_RAM_SIZE;
 	__kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
 
+<<<<<<< HEAD
 	_image_ram_end = .;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	_image_ram_all = (KERNEL_BASE_ADDR + KERNEL_RAM_SIZE) - _image_ram_start;
 
 	z_mapped_end = .;
 	z_mapped_size = z_mapped_end - z_mapped_start;
+<<<<<<< HEAD
 	_end = .; /* end of image */
 
 	GROUP_END(RAMABLE_REGION)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef LINKER_ZEPHYR_FINAL
 	/* static interrupts */
@@ -538,6 +551,13 @@ SECTIONS
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
+=======
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/linker/debug-sections.ld>
 
 	/DISCARD/ : { *(.note.GNU-stack) }

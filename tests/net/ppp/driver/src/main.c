@@ -35,7 +35,11 @@ typedef enum net_verdict (*ppp_l2_callback_t)(struct net_if *iface,
 void ppp_l2_register_pkt_cb(ppp_l2_callback_t cb); /* found in ppp_l2.c */
 void ppp_driver_feed_data(uint8_t *data, int data_len);
 
+<<<<<<< HEAD
 static struct net_if *iface;
+=======
+static struct net_if *net_iface;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static bool test_failed;
 static bool test_started;
@@ -208,15 +212,24 @@ static enum net_verdict ppp_l2_recv(struct net_if *iface, struct net_pkt *pkt)
 
 static void test_iface_setup(void)
 {
+<<<<<<< HEAD
 	iface = net_if_get_first_by_type(&NET_L2_GET_NAME(PPP));
 	zassert_not_null(iface, "PPP interface not found!");
+=======
+	net_iface = net_if_get_first_by_type(&NET_L2_GET_NAME(PPP));
+	zassert_not_null(net_iface, "PPP interface not found!");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* The semaphore is there to wait the data to be received. */
 	k_sem_init(&wait_data, 0, UINT_MAX);
 
 	ppp_l2_register_pkt_cb(ppp_l2_recv);
 
+<<<<<<< HEAD
 	net_if_up(iface);
+=======
+	net_if_up(net_iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	test_failed = false;
 	test_started = true;
@@ -245,9 +258,15 @@ static void test_send_ppp_pkt_with_escapes(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data1, sizeof(ppp_recv_data1),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data1, sizeof(ppp_recv_data1),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data1, sizeof(ppp_expect_data1));
 
 	zassert_true(ret, "iface");
@@ -257,9 +276,15 @@ static void test_send_ppp_pkt_with_full_and_partial(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data2, sizeof(ppp_recv_data2),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data2, sizeof(ppp_recv_data2),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data1, sizeof(ppp_expect_data1));
 
 	zassert_true(ret, "iface");
@@ -320,7 +345,11 @@ static void ppp_verify_fcs(uint8_t *buf, int len)
 	uint8_t *ptr;
 	bool ret;
 
+<<<<<<< HEAD
 	pkt = net_pkt_alloc_with_buffer(iface, len, AF_UNSPEC, 0, K_NO_WAIT);
+=======
+	pkt = net_pkt_alloc_with_buffer(net_iface, len, AF_UNSPEC, 0, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_not_null(pkt, "Cannot create pkt");
 
 	ptr = buf;
@@ -391,7 +420,11 @@ static void ppp_calc_fcs(uint8_t *buf, int len)
 	uint8_t *ptr;
 	bool ret;
 
+<<<<<<< HEAD
 	pkt = net_pkt_alloc_with_buffer(iface, len, AF_UNSPEC, 0, K_NO_WAIT);
+=======
+	pkt = net_pkt_alloc_with_buffer(net_iface, len, AF_UNSPEC, 0, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_not_null(pkt, "Cannot create pkt");
 
 	ptr = buf;
@@ -445,9 +478,15 @@ static void test_send_ppp_3(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data3, sizeof(ppp_recv_data3),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data3, sizeof(ppp_recv_data3),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data3, sizeof(ppp_expect_data3));
 
 	zassert_true(ret, "iface");
@@ -461,9 +500,15 @@ static void test_send_ppp_4(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data4, sizeof(ppp_recv_data4),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data4, sizeof(ppp_recv_data4),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data4, sizeof(ppp_expect_data4));
 
 	zassert_true(ret, "iface");
@@ -477,9 +522,15 @@ static void test_send_ppp_5(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data5, sizeof(ppp_recv_data5),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data5, sizeof(ppp_recv_data5),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data5, sizeof(ppp_expect_data5));
 
 	zassert_true(ret, "iface");
@@ -493,9 +544,15 @@ static void test_send_ppp_6(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data6, sizeof(ppp_recv_data6),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data6, sizeof(ppp_recv_data6),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data6, sizeof(ppp_expect_data6));
 
 	zassert_true(ret, "iface");
@@ -509,9 +566,15 @@ static void test_send_ppp_7(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data7, sizeof(ppp_recv_data7),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data7, sizeof(ppp_recv_data7),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data7, sizeof(ppp_expect_data7));
 
 	zassert_true(ret, "iface");
@@ -525,9 +588,15 @@ static void test_send_ppp_8(void)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	NET_DBG("Sending data to iface %p", iface);
 
 	ret = send_iface(iface, ppp_recv_data8, sizeof(ppp_recv_data8),
+=======
+	NET_DBG("Sending data to iface %p", net_iface);
+
+	ret = send_iface(net_iface, ppp_recv_data8, sizeof(ppp_recv_data8),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 ppp_expect_data8, sizeof(ppp_expect_data8));
 
 	zassert_true(ret, "iface");

@@ -7,7 +7,13 @@
 #include <zephyr/types.h>
 #include <zephyr/ztest.h>
 
+<<<<<<< HEAD
 #define ULL_LLCP_UNITTEST
+=======
+#include <zephyr/fff.h>
+
+DEFINE_FFF_GLOBALS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/bluetooth/hci.h>
 #include <zephyr/sys/byteorder.h>
@@ -97,6 +103,63 @@
 
 static struct ll_conn conn;
 
+<<<<<<< HEAD
+=======
+/* void ecb_encrypt(uint8_t const *const key_le, uint8_t const *const clear_text_le,
+ *		    uint8_t *const cipher_text_le, uint8_t *const cipher_text_be);
+ */
+FAKE_VOID_FUNC(ecb_encrypt, uint8_t const *const, uint8_t const *const,
+			    uint8_t *const, uint8_t *const);
+
+struct {
+	/* In */
+	uint8_t key_le[16];
+	uint8_t clear_text_le[16];
+
+	/* Out */
+	uint8_t cipher_text_le[16];
+	uint8_t cipher_text_be[16];
+} ecb_encrypt_custom_fake_context;
+
+void ecb_encrypt_custom_fake(uint8_t const *const key_le, uint8_t const *const clear_text_le,
+			    uint8_t *const cipher_text_le, uint8_t *const cipher_text_be)
+{
+	zassert_mem_equal(key_le, ecb_encrypt_custom_fake_context.key_le, 16);
+	zassert_mem_equal(clear_text_le, ecb_encrypt_custom_fake_context.clear_text_le, 16);
+
+	if (cipher_text_le) {
+		memcpy(cipher_text_le, ecb_encrypt_custom_fake_context.cipher_text_le, 16);
+	}
+
+	if (cipher_text_be) {
+		memcpy(cipher_text_be, ecb_encrypt_custom_fake_context.cipher_text_be, 16);
+	}
+}
+
+
+/* int lll_csrand_get(void *buf, size_t len); */
+FAKE_VALUE_FUNC(int, lll_csrand_get, void *, size_t);
+
+struct {
+	/* In */
+	void *buf;
+	size_t len;
+} lll_csrand_get_custom_fake_context;
+
+int lll_csrand_get_custom_fake(void *buf, size_t len)
+{
+	zassert_equal(len, lll_csrand_get_custom_fake_context.len);
+	memcpy(buf, lll_csrand_get_custom_fake_context.buf, len);
+	return lll_csrand_get_fake.return_val;
+}
+
+/* struct ll_conn_iso_stream *
+ * ll_conn_iso_stream_get_by_acl(struct ll_conn *conn, uint16_t *cis_iter);
+ */
+FAKE_VALUE_FUNC(struct ll_conn_iso_stream *, ll_conn_iso_stream_get_by_acl,
+		struct ll_conn *, uint16_t *);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void enc_setup(void *data)
 {
 	test_setup(&conn);
@@ -104,6 +167,7 @@ static void enc_setup(void *data)
 	/* Fake that a Feature exchange proceudre has been executed */
 	conn.llcp.fex.valid = 1U;
 	conn.llcp.fex.features_used |= LL_FEAT_BIT_EXT_REJ_IND;
+<<<<<<< HEAD
 }
 
 void ecb_encrypt(uint8_t const *const key_le, uint8_t const *const clear_text_le,
@@ -125,6 +189,21 @@ int lll_csrand_get(void *buf, size_t len)
 	ztest_check_expected_value(len);
 	ztest_copy_return_data(buf, len);
 	return ztest_get_return_value();
+=======
+
+	/* Reset and setup ecb_encrypt fake */
+	RESET_FAKE(ecb_encrypt);
+	memset(&ecb_encrypt_custom_fake_context, 0, sizeof(ecb_encrypt_custom_fake_context));
+	ecb_encrypt_fake.custom_fake = ecb_encrypt_custom_fake;
+
+	/* Reset and setup lll_csrand_get fake */
+	RESET_FAKE(lll_csrand_get);
+	memset(&lll_csrand_get_custom_fake_context, 0, sizeof(lll_csrand_get_custom_fake_context));
+	lll_csrand_get_fake.custom_fake = lll_csrand_get_custom_fake;
+
+	/* Reset ll_conn_iso_stream_get_by_acl fake */
+	RESET_FAKE(ll_conn_iso_stream_get_by_acl);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* BLUETOOTH CORE SPECIFICATION Version 5.2 | Vol 6, Part C
@@ -203,6 +282,7 @@ ZTEST(encryption_start, test_encryption_start_central_loc)
 	struct pdu_data_llctrl_enc_rsp enc_rsp = { .skds = { SKDS }, .ivs = { IVS } };
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
@@ -211,6 +291,16 @@ ZTEST(encryption_start, test_encryption_start_central_loc)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_CENTRAL);
@@ -361,6 +451,7 @@ ZTEST(encryption_start, test_encryption_start_central_loc_limited_memory)
 	struct pdu_data_llctrl_enc_rsp enc_rsp = { .skds = { SKDS }, .ivs = { IVS } };
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
@@ -369,6 +460,16 @@ ZTEST(encryption_start, test_encryption_start_central_loc_limited_memory)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_CENTRAL);
@@ -539,9 +640,15 @@ ZTEST(encryption_start, test_encryption_start_central_loc_reject_ext)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct pdu_data_llctrl_reject_ind reject_ind = { .error_code =
 								 BT_HCI_ERR_UNSUPP_REMOTE_FEATURE };
@@ -641,9 +748,15 @@ ZTEST(encryption_start, test_encryption_start_central_loc_reject)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct pdu_data_llctrl_reject_ind reject_ind = { .error_code =
 								 BT_HCI_ERR_UNSUPP_REMOTE_FEATURE };
@@ -744,9 +857,15 @@ ZTEST(encryption_start, test_encryption_start_central_loc_no_ltk)
 	struct pdu_data_llctrl_enc_rsp enc_rsp = { .skds = { SKDS }, .ivs = { IVS } };
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct pdu_data_llctrl_reject_ind reject_ind = { .error_code =
 								 BT_HCI_ERR_PIN_OR_KEY_MISSING };
@@ -855,9 +974,15 @@ ZTEST(encryption_start, test_encryption_start_central_loc_no_ltk_2)
 	struct pdu_data_llctrl_enc_rsp enc_rsp = { .skds = { SKDS }, .ivs = { IVS } };
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct pdu_data_llctrl_reject_ind reject_ind = { .error_code =
 								 BT_HCI_ERR_PIN_OR_KEY_MISSING };
@@ -966,9 +1091,15 @@ ZTEST(encryption_start, test_encryption_start_central_loc_mic)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_CENTRAL);
@@ -1108,6 +1239,7 @@ ZTEST(encryption_start, test_encryption_start_periph_rem)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_rsp.skds);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
@@ -1116,6 +1248,16 @@ ZTEST(encryption_start, test_encryption_start_periph_rem)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_rsp.skds;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
@@ -1176,7 +1318,11 @@ ZTEST(encryption_start, test_encryption_start_periph_rem)
 	ull_cp_ltk_req_reply(&conn, ltk);
 
 	/* Check state */
+<<<<<<< HEAD
 	CHECK_RX_PE_STATE(conn, PAUSED, ENCRYPTED); /* Rx paused & enc. */
+=======
+	CHECK_RX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Rx paused & unenc. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	CHECK_TX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Tx paused & unenc. */
 
 	/* Prepare */
@@ -1325,6 +1471,7 @@ ZTEST(encryption_start, test_encryption_start_periph_rem_limited_memory)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_rsp.skds);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
@@ -1333,6 +1480,16 @@ ZTEST(encryption_start, test_encryption_start_periph_rem_limited_memory)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_rsp.skds;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
@@ -1573,9 +1730,15 @@ ZTEST(encryption_start, test_encryption_start_periph_rem_no_ltk)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_rsp.skds);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_rsp.skds;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
@@ -1636,9 +1799,14 @@ ZTEST(encryption_start, test_encryption_start_periph_rem_no_ltk)
 	ull_cp_ltk_req_neq_reply(&conn);
 
 	/* Check state */
+<<<<<<< HEAD
 	/* TODO(thoh): THIS IS WRONG! */
 	CHECK_RX_PE_STATE(conn, RESUMED, UNENCRYPTED); /* Rx unenc. */
 	CHECK_TX_PE_STATE(conn, RESUMED, UNENCRYPTED); /* Tx unenc. */
+=======
+	CHECK_RX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Rx paused & unenc. */
+	CHECK_TX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Tx paused & unenc. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Prepare */
 	event_prepare(&conn);
@@ -1713,9 +1881,15 @@ ZTEST(encryption_start, test_encryption_start_periph_rem_mic)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_rsp.skds);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_rsp.skds;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
@@ -1846,6 +2020,7 @@ ZTEST(encryption_pause, test_encryption_pause_central_loc)
 	struct pdu_data_llctrl_enc_rsp enc_rsp = { .skds = { SKDS }, .ivs = { IVS } };
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_req.skdm);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm));
@@ -1854,6 +2029,16 @@ ZTEST(encryption_pause, test_encryption_pause_central_loc)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_req.skdm;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_req.skdm) + sizeof(exp_enc_req.ivm);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_CENTRAL);
@@ -1991,6 +2176,7 @@ ZTEST(encryption_pause, test_encryption_pause_periph_rem)
 	};
 
 	/* Prepare mocked call to lll_csrand_get */
+<<<<<<< HEAD
 	ztest_returns_value(lll_csrand_get, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
 	ztest_return_data(lll_csrand_get, buf, exp_enc_rsp.skds);
 	ztest_expect_value(lll_csrand_get, len, sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs));
@@ -1999,6 +2185,16 @@ ZTEST(encryption_pause, test_encryption_pause_periph_rem)
 	ztest_expect_data(ecb_encrypt, key_le, ltk);
 	ztest_expect_data(ecb_encrypt, clear_text_le, skd);
 	ztest_return_data(ecb_encrypt, cipher_text_be, sk_be);
+=======
+	lll_csrand_get_fake.return_val = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+	lll_csrand_get_custom_fake_context.buf = exp_enc_rsp.skds;
+	lll_csrand_get_custom_fake_context.len = sizeof(exp_enc_rsp.skds) + sizeof(exp_enc_rsp.ivs);
+
+	/* Prepare mocked call to ecb_encrypt */
+	memcpy(ecb_encrypt_custom_fake_context.key_le, ltk, 16);
+	memcpy(ecb_encrypt_custom_fake_context.clear_text_le, skd, 16);
+	memcpy(ecb_encrypt_custom_fake_context.cipher_text_be, sk_be, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Role */
 	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
@@ -2077,6 +2273,13 @@ ZTEST(encryption_pause, test_encryption_pause_periph_rem)
 	/* LTK request reply */
 	ull_cp_ltk_req_reply(&conn, ltk);
 
+<<<<<<< HEAD
+=======
+	/* Check state */
+	CHECK_RX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Rx paused & unenc. */
+	CHECK_TX_PE_STATE(conn, PAUSED, UNENCRYPTED); /* Tx paused & unenc. */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Prepare */
 	event_prepare(&conn);
 
@@ -2138,5 +2341,105 @@ ZTEST(encryption_pause, test_encryption_pause_periph_rem)
 				  "Free CTX buffers %d", llcp_ctx_buffers_free());
 }
 
+<<<<<<< HEAD
+=======
+/* +-----+                     +-------+              +-----+
+ * | UT  |                     | LL_A  |              | LT  |
+ * +-----+                     +-------+              +-----+
+ *    |                            |                     |
+ *  /------------------------------------------------------\
+ *  |              Encrypted & CIS Established             |
+ *  \------------------------------------------------------/
+ *    |                            |                     |
+ *    | Initiate                   |                     |
+ *    | Encryption Pause Proc.     |                     |
+ *    |--------------------------->|                     |
+ *    |                            |                     |
+ *    |         Command Disallowed |                     |
+ *    |<---------------------------|                     |
+ *    |                            |                     |
+ *    |                            |    LL_PAUSE_ENC_REQ |
+ *    |                            |<--------------------|
+ *    |                            |                     |
+ *    |                            | LL_REJECT_EXT_IND   |
+ *    |                            |-------------------->|
+ *    |                            |                     |
+ */
+ZTEST(encryption_pause, test_encryption_pause_periph_rem_invalid)
+{
+	uint8_t err;
+
+	struct node_tx *tx;
+	struct node_rx_pdu *ntf;
+	struct ll_conn_iso_stream cis = { 0 };
+
+	const uint8_t rand[] = { RAND };
+	const uint8_t ediv[] = { EDIV };
+	const uint8_t ltk[] = { LTK };
+
+	struct pdu_data_llctrl_reject_ext_ind reject_ext_ind = {
+		.reject_opcode = PDU_DATA_LLCTRL_TYPE_PAUSE_ENC_REQ,
+		.error_code = BT_HCI_ERR_LMP_PDU_NOT_ALLOWED
+	};
+
+	/* Prepare mocked call to ll_conn_iso_stream_get_by_acl() */
+	ll_conn_iso_stream_get_by_acl_fake.return_val = &cis;
+
+	/* Role */
+	test_set_role(&conn, BT_HCI_ROLE_PERIPHERAL);
+
+	/* Connect */
+	ull_cp_state_set(&conn, ULL_CP_CONNECTED);
+
+	/* Fake that encryption is already active */
+	conn.lll.enc_rx = 1U;
+	conn.lll.enc_tx = 1U;
+
+	/**** ENCRYPTED ****/
+
+	/* Initiate an Encryption Pause Procedure */
+	err = ull_cp_encryption_pause(&conn, rand, ediv, ltk);
+	zassert_equal(err, BT_HCI_ERR_CMD_DISALLOWED);
+
+	/* Check state */
+	CHECK_RX_PE_STATE(conn, RESUMED, ENCRYPTED); /* Rx enc. */
+	CHECK_TX_PE_STATE(conn, RESUMED, ENCRYPTED); /* Tx enc. */
+
+	/**** *****/
+
+	/* Prepare */
+	event_prepare(&conn);
+
+	/* Rx */
+	lt_tx(LL_PAUSE_ENC_REQ, &conn, NULL);
+
+	/* Done */
+	event_done(&conn);
+
+	/* Prepare */
+	event_prepare(&conn);
+
+	/* Tx Queue should have one LL Control PDU */
+	lt_rx(LL_REJECT_EXT_IND, &conn, &tx, &reject_ext_ind);
+	lt_rx_q_is_empty(&conn);
+
+	/* Done */
+	event_done(&conn);
+
+	/* Check state */
+	CHECK_RX_PE_STATE(conn, RESUMED, ENCRYPTED); /* Rx enc. */
+	CHECK_TX_PE_STATE(conn, RESUMED, ENCRYPTED); /* Tx enc. */
+
+	/* Release Tx */
+	ull_cp_release_tx(&conn, tx);
+
+	/**** *****/
+
+	zassert_equal(llcp_ctx_buffers_free(), test_ctx_buffers_cnt(),
+		      "Free CTX buffers %d", llcp_ctx_buffers_free());
+}
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST_SUITE(encryption_start, NULL, NULL, enc_setup, NULL, NULL);
 ZTEST_SUITE(encryption_pause, NULL, NULL, enc_setup, NULL, NULL);

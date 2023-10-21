@@ -440,7 +440,11 @@ int fxos8700_trigger_init(const struct device *dev)
 	}
 #endif
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device not ready");
 		return -ENODEV;
 	}

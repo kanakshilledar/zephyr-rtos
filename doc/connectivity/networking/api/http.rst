@@ -68,7 +68,11 @@ The following is an example of a very simple response handling function:
         LOG_INF("Response status %s", rsp->http_status);
     }
 
+<<<<<<< HEAD
 See :ref:`HTTP client sample application <sockets-http-client-sample>` for
+=======
+See :zephyr:code-sample:`HTTP client sample application <sockets-http-client>` for
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 more information about the library usage.
 
 API Reference

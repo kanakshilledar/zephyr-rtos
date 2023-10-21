@@ -1,14 +1,27 @@
+<<<<<<< HEAD
 .. _blink-led-sample:
 .. _pwm-blinky-sample:
 
 PWM Blinky
 ##########
+=======
+.. zephyr:code-sample:: pwm-blinky
+   :name: PWM Blinky
+   :relevant-api: pwm_interface
+
+   Blink an LED using the PWM API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This application blinks a LED using the :ref:`PWM API <pwm_api>`. See
 :ref:`blinky-sample` for a GPIO-based sample.
+=======
+This application blinks an LED using the :ref:`PWM API <pwm_api>`. See
+:zephyr:code-sample:`blinky` for a GPIO-based sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The LED starts blinking at a 1 Hz frequency. The frequency doubles every 4
 seconds until it reaches 128 Hz. The frequency will then be halved every 4
@@ -53,7 +66,11 @@ In these other cases, however, manual wiring is necessary:
      - connect PWM1 (PA8) to an LED
    * - :ref:`nucleo_wb55rg_board`
      - connect PWM1 (PA8) to an LED
+<<<<<<< HEAD
    * - :ref:`esp32`
+=======
+   * - :ref:`esp32_devkitc_wroom`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
      - connect GPIO2 to an LED
    * - :ref:`esp32s2_saola`
      - connect GPIO2 to an LED

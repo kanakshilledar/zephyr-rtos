@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _pca9633:
 
 PCA9633: 4-Channel RGB
 ######################
+=======
+.. zephyr:code-sample:: pca9633
+   :name: PCA9633 LED
+   :relevant-api: led_interface
+
+   Control 4 LEDs connected to a PCA9633 driver chip.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

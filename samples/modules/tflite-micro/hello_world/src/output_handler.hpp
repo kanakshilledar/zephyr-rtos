@@ -18,10 +18,17 @@
 #define TENSORFLOW_LITE_MICRO_EXAMPLES_HELLO_WORLD_OUTPUT_HANDLER_H_
 
 #include <tensorflow/lite/c/common.h>
+<<<<<<< HEAD
 #include <tensorflow/lite/micro/micro_error_reporter.h>
 
 /* Called by the main loop to produce some output based on the x and y values */
 void HandleOutput(tflite::ErrorReporter *error_reporter, float x_value,
 		  float y_value);
+=======
+#include <tensorflow/lite/micro/micro_log.h>
+
+/* Called by the main loop to produce some output based on the x and y values */
+void HandleOutput(float x_value, float y_value);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif  /* TENSORFLOW_LITE_MICRO_EXAMPLES_HELLO_WORLD_OUTPUT_HANDLER_H_ */

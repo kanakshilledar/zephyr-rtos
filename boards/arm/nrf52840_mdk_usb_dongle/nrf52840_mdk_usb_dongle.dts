@@ -9,6 +9,10 @@
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "nrf52840_mdk_usb_dongle-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "nRF52840 MDK USB Dongle";
@@ -60,6 +64,10 @@
 		reset_button: button_0 {
 			gpios = <&gpio0 18 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "reset button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -85,6 +93,14 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	nfct-pins-as-gpios;
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpio0 {
 	status = "okay";
 };

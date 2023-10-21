@@ -331,7 +331,10 @@ struct bt_tbs_instance {
 	uint16_t termination_reason_handle;
 
 	bool busy;
+<<<<<<< HEAD
 	uint8_t subscribe_cnt;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_TBS_CLIENT_CCID)
 	uint8_t ccid;
 #endif /* defined(CONFIG_BT_TBS_CLIENT_CCID) */

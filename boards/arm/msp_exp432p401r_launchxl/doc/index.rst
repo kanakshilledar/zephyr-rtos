@@ -55,18 +55,66 @@ Other hardware features are not currently supported by the Zephyr kernel.
 Building and Flashing
 *********************
 
+<<<<<<< HEAD
 Building
+=======
+Prerequisites:
+==============
+
+#. Ensure the XDS-110 emulation firmware is updated.
+
+   Download and install the latest `XDS-110 emulation package`_.
+
+   Follow these `xds110 firmware update directions
+   <http://software-dl.ti.com/ccs/esd/documents/xdsdebugprobes/emu_xds110.html#updating-the-xds110-firmware>`_
+
+   Note that the emulation package install may place the xdsdfu utility
+   in ``<install_dir>/ccs_base/common/uscif/xds110/``.
+
+#. Install OpenOCD
+
+   You can obtain OpenOCD by following these
+   :ref:`installing the latest Zephyr SDK instructions <toolchain_zephyr_sdk>`.
+
+   After the installation, add the directory containing the OpenOCD executable
+   to your environment's PATH variable. For example, use this command in Linux:
+
+   .. code-block:: console
+
+      export PATH=$ZEPHYR_SDK_INSTALL_DIR/sysroots/x86_64-pokysdk-linux/usr/bin/openocd:$PATH
+
+   If you had previously installed TI OpenOCD, you can simply switch to use
+   the one in the Zephyr SDK. If for some reason you wish to continue to use
+   your TI OpenOCD installation, you can set the OPENOCD and
+   OPENOCD_DEFAULT_PATH variables in
+   :zephyr_file:`boards/arm/msp_exp432p401r_launchxl/board.cmake` to point the build
+   to the paths of the OpenOCD binary and its scripts, before
+   including the common openocd.board.cmake file:
+
+   .. code-block:: cmake
+
+      set(OPENOCD "/usr/local/bin/openocd" CACHE FILEPATH "" FORCE)
+      set(OPENOCD_DEFAULT_PATH /usr/local/share/openocd/scripts)
+      include(${ZEPHYR_BASE}/boards/common/openocd.board.cmake)
+
+Flashing
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ========
 
 Follow the :ref:`getting_started` instructions for Zephyr application
 development.
 
+<<<<<<< HEAD
 For example, to build the :ref:`hello_world` application for the
+=======
+For example, to build and flash the :ref:`hello_world` application for the
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 MSP-EXP432P401R LaunchXL:
 
 .. zephyr-app-commands::
    :zephyr-app: samples/hello_world
    :board: msp_exp432p401r_launchxl
+<<<<<<< HEAD
    :goals: build
 
 The resulting ``zephyr.elf`` binary in the build directory can be flashed onto
@@ -88,14 +136,38 @@ The following command will flash the ``zephyr.elf`` binary to the MSP-EXP432P401
    $ ./dslite.sh --config=MSP432P401R.ccxml zephyr.elf
 
 .. note:: The ccxml configuration file is included in boards/arm/msp_exp432p401r_launchxl/support.
+=======
+   :goals: flash
+
+This will load the image into flash.
+
+To see program output from UART0, connect a separate terminal window:
+
+.. code-block:: console
+
+  % screen /dev/ttyACM0 115200 8N1
+
+Then press the reset button (S3) on the board to run the program.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Debugging
 =========
 
+<<<<<<< HEAD
 MSP-EXP432P401R LaunchXL board supports debugging primarily using `CCS IDE`_. More information
 on debugging using CCS can be found in CCS Debug Handbook.
 
 Launchpad also supports debugging using GDB. See section 3.3 of GCC ARM Toolchain Guide.
+=======
+To debug a previously flashed image, after resetting the board, use the 'debug'
+build target:
+
+.. zephyr-app-commands::
+   :zephyr-app: samples/hello_world
+   :board: msp_exp432p401r_launchxl
+   :maybe-skip-config:
+   :goals: debug
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 References
 **********
@@ -114,3 +186,9 @@ TI MSP432 SDK:
 
 .. _CCS IDE:
    http://www.ti.com/tool/ccstudio
+<<<<<<< HEAD
+=======
+
+..  _XDS-110 emulation package:
+   http://processors.wiki.ti.com/index.php/XDS_Emulation_Software_Package#XDS_Emulation_Software_.28emupack.29_Download
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

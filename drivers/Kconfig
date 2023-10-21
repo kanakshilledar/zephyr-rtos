@@ -12,6 +12,10 @@ source "drivers/bbram/Kconfig"
 source "drivers/bluetooth/Kconfig"
 source "drivers/cache/Kconfig"
 source "drivers/can/Kconfig"
+<<<<<<< HEAD
+=======
+source "drivers/charger/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/clock_control/Kconfig"
 source "drivers/console/Kconfig"
 source "drivers/coredump/Kconfig"
@@ -54,7 +58,10 @@ source "drivers/misc/Kconfig"
 source "drivers/mm/Kconfig"
 source "drivers/modem/Kconfig"
 source "drivers/net/Kconfig"
+<<<<<<< HEAD
 source "drivers/neural_net/Kconfig"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/pcie/Kconfig"
 source "drivers/peci/Kconfig"
 source "drivers/pinctrl/Kconfig"
@@ -82,5 +89,9 @@ source "drivers/watchdog/Kconfig"
 source "drivers/wifi/Kconfig"
 source "drivers/xen/Kconfig"
 source "drivers/sip_svc/Kconfig"
+<<<<<<< HEAD
+=======
+source "drivers/hwspinlock/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endmenu

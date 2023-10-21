@@ -41,6 +41,10 @@ endif
 config SHELL_STACK_SIZE
 	int "Shell thread stack size"
 	default 3168 if OPENTHREAD_SHELL && OPENTHREAD_JOINER
+<<<<<<< HEAD
+=======
+	default 3072 if 64BIT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 2616 if OPENTHREAD_SHELL
 	default 2048 if MULTITHREADING
 	default 0 if !MULTITHREADING
@@ -90,7 +94,11 @@ config SHELL_ARGC_MAX
 
 config SHELL_TAB
 	bool "The Tab button support in shell"
+<<<<<<< HEAD
 	default y if !SHELL_MINIMAL
+=======
+	default y if !SHELL_MINIMAL && !SHELL_BACKEND_RTT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable using the Tab button in the shell. The button
 	  can be used for prompting commands, or for autocompletion.
@@ -104,6 +112,17 @@ config SHELL_TAB_AUTOCOMPLETION
 	  Enable commands and subcommands autocompletion with the Tab
 	  key. This function can be deactivated to save some flash.
 
+<<<<<<< HEAD
+=======
+config SHELL_ASCII_FILTER
+	bool "Filter incoming ASCII characters"
+	default y
+	help
+	  Shell will not collect characters that are not in
+	  ASCII range: <0, 127>. As a result filtered characters will not be
+	  printed on the terminal and passed to the command handler.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config SHELL_WILDCARD
 	bool "Wildcard support in shell"
 	select FNMATCH
@@ -125,7 +144,11 @@ config SHELL_START_OBSCURED
 
 config SHELL_VT100_COMMANDS
 	bool "VT100 commands in shell"
+<<<<<<< HEAD
 	default y
+=======
+	default y if !SHELL_BACKEND_RTT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enables VT100 commands in shell (e.g. cursor position, clear screen etc.).
 

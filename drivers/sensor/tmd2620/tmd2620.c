@@ -175,7 +175,11 @@ static int tmd2620_sensor_setup(const struct device *dev)
 
 	/* trying to read the id twice, as the sensor does not answer the first request */
 	/* because of this no return code is checked in this line */
+<<<<<<< HEAD
 	i2c_reg_read_byte_dt(&config->i2c, TMD2620_ID_REG, &chip_id);
+=======
+	(void)i2c_reg_read_byte_dt(&config->i2c, TMD2620_ID_REG, &chip_id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = i2c_reg_read_byte_dt(&config->i2c, TMD2620_ID_REG, &chip_id);
 	if (ret < 0) {

@@ -9,6 +9,10 @@
 #include <nxp/nxp_rt1060.dtsi>
 #include "mimxrt1060_evk-pinctrl.dtsi"
 #include <zephyr/dt-bindings/display/panel.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP MIMXRT1060-EVK board";
@@ -18,7 +22,10 @@
 		led0 = &green_led;
 		pwm-led0 = &green_pwm_led;
 		sw0 = &user_button;
+<<<<<<< HEAD
 		kscan0 = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		watchdog0 = &wdog0;
 		sdhc0 = &usdhc1;
 	};
@@ -34,7 +41,10 @@
 		zephyr,shell-uart = &lpuart1;
 		zephyr,canbus = &flexcan3;
 		zephyr,display = &lcdif;
+<<<<<<< HEAD
 		zephyr,keyboard-scan = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	sdram0: memory@80000000 {
@@ -63,9 +73,21 @@
 		user_button: button-1 {
 			label = "User SW8";
 			gpios = <&gpio5 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
 		};
 	};
 
+=======
+			zephyr,code = <INPUT_KEY_0>;
+		};
+	};
+
+	lvgl_pointer {
+		compatible = "zephyr,lvgl-pointer-input";
+		input = <&ft5336>;
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	arduino_header: connector {
 		compatible = "arduino-header-r3";
 		#gpio-cells = <2>;
@@ -193,6 +215,7 @@ arduino_i2c: &lpi2c1 {
 	pinctrl-0 = <&pinmux_lpi2c1>;
 	pinctrl-names = "default";
 
+<<<<<<< HEAD
 	ft5336@38 {
 		compatible = "focaltech,ft5336";
 		reg = <0x38>;
@@ -201,6 +224,12 @@ arduino_i2c: &lpi2c1 {
 		kscan_input: kscan-input {
 			compatible = "zephyr,kscan-input";
 		};
+=======
+	ft5336: ft5336@38 {
+		compatible = "focaltech,ft5336";
+		reg = <0x38>;
+		int-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 
@@ -237,7 +266,21 @@ zephyr_udc0: &usb1 {
 
 &flexpwm2_pwm3 {
 	status = "okay";
+<<<<<<< HEAD
 	pinctrl-0 = <&pinmux_flexpwm2>;
+=======
+	pinctrl-0 = <&pinmux_flexpwm2_3>;
+	pinctrl-names = "default";
+};
+
+&flexpwm1_pwm0 {
+	pinctrl-0 = <&pinmux_flexpwm1_0>;
+	pinctrl-names = "default";
+};
+
+&flexpwm1_pwm3 {
+	pinctrl-0 = <&pinmux_flexpwm1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	pinctrl-names = "default";
 };
 
@@ -323,3 +366,10 @@ arduino_spi: &lpspi1 {
 	pinctrl-0 = <&pinmux_swo>;
 	pinctrl-names = "default";
 };
+<<<<<<< HEAD
+=======
+
+&pxp {
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

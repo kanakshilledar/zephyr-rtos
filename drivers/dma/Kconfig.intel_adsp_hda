@@ -41,3 +41,13 @@ config DMA_INTEL_ADSP_HDA
 	depends on DMA_INTEL_ADSP_HDA_LINK_OUT || DMA_INTEL_ADSP_HDA_LINK_IN || DMA_INTEL_ADSP_HDA_HOST_OUT || DMA_INTEL_ADSP_HDA_HOST_IN
 	help
 	  Intel ADSP HDA DMA driver.
+<<<<<<< HEAD
+=======
+
+config DMA_INTEL_ADSP_HDA_TIMING_L1_EXIT
+	bool "Intel ADSP HDA Host L1 Exit Interrupt"
+	default y if SOC_INTEL_ACE15_MTPM
+	depends on DMA_INTEL_ADSP_HDA_HOST_IN || DMA_INTEL_ADSP_HDA_HOST_OUT
+	help
+	  Intel ADSP HDA Host Interrupt for L1 exit.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

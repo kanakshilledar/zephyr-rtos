@@ -45,6 +45,15 @@ The Zephyr release model was loosely based on the Linux kernel model:
 
     Release Cycle
 
+<<<<<<< HEAD
+=======
+.. note::
+
+    The milestones for the current major version can be found on the
+    `Official GitHub Wiki <https://github.com/zephyrproject-rtos/zephyr/wiki/Release-Management>`_.
+    Information on previous releases can be found :ref:`here <zephyr_release_notes>`.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Development Phase
 *****************
 
@@ -409,6 +418,7 @@ steps:
 
         #. Send an email to the mailing lists (``announce`` and ``devel``) with a link
            to the release
+<<<<<<< HEAD
 
 Listing all closed GitHub issues
 =================================
@@ -432,3 +442,5 @@ cycle you can do the following:
 
 #. Use available release tools to list all the issues that have been closed
    between that date and the day of the release.
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

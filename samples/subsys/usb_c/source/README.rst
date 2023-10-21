@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb-c-source-sample:
 
 Basic USB-C SOURCE
 ##################
+=======
+.. zephyr:code-sample:: usb-c-source
+   :name: Basic USB-C Source
+   :relevant-api: _usbc_device_api
+
+   Implement a USB-C Power Delivery application in the form of a USB-C Source.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -29,7 +37,11 @@ Building and Running
 Build and flash as follows, changing ``stm32g081b_eval`` for your board:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/subsys/usb-c/source
+=======
+   :zephyr-app: samples/subsys/usb_c/source
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: stm32g081b_eval
    :goals: build flash
    :compact:

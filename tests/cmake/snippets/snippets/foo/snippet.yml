@@ -2,3 +2,7 @@ name: foo
 append:
   EXTRA_CONF_FILE: foo.conf
   EXTRA_DTC_OVERLAY_FILE: foo.overlay
+<<<<<<< HEAD
+=======
+  DTS_EXTRA_CPPFLAGS: -DCMAKE_DTS_CONFIGURE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -20,6 +20,7 @@
  */
 int nanosleep(const struct timespec *rqtp, struct timespec *rmtp)
 {
+<<<<<<< HEAD
 	uint64_t ns;
 	uint64_t us;
 	const bool update_rmtp = rmtp != NULL;
@@ -62,4 +63,7 @@ do_rmtp_update:
 	}
 
 	return 0;
+=======
+	return clock_nanosleep(CLOCK_MONOTONIC, 0, rqtp, rmtp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

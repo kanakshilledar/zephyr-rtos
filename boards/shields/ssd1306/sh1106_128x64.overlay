@@ -14,7 +14,11 @@
 	status = "okay";
 
 	sh1106_sh1106_128x64: ssd1306@3c {
+<<<<<<< HEAD
 		compatible = "solomon,ssd1306fb";
+=======
+		compatible = "sinowealth,sh1106";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		reg = <0x3c>;
 		width = <128>;
 		height = <64>;

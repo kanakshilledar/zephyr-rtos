@@ -40,8 +40,15 @@ typedef void (*pm_policy_latency_changed_cb_t)(int32_t latency);
  * @note All fields in this structure are meant for private usage.
  */
 struct pm_policy_latency_subscription {
+<<<<<<< HEAD
 	sys_snode_t node;
 	pm_policy_latency_changed_cb_t cb;
+=======
+	/** @cond INTERNAL_HIDDEN */
+	sys_snode_t node;
+	pm_policy_latency_changed_cb_t cb;
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -50,8 +57,15 @@ struct pm_policy_latency_subscription {
  * @note All fields in this structure are meant for private usage.
  */
 struct pm_policy_latency_request {
+<<<<<<< HEAD
 	sys_snode_t node;
 	uint32_t value_us;
+=======
+	/** @cond INTERNAL_HIDDEN */
+	sys_snode_t node;
+	uint32_t value_us;
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -60,8 +74,15 @@ struct pm_policy_latency_request {
  * @note All fields in this structure are meant for private usage.
  */
 struct pm_policy_event {
+<<<<<<< HEAD
 	sys_snode_t node;
 	uint32_t value_cyc;
+=======
+	/** @cond INTERNAL_HIDDEN */
+	sys_snode_t node;
+	uint32_t value_cyc;
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /** @cond INTERNAL_HIDDEN */

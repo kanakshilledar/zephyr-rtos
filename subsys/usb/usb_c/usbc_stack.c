@@ -82,8 +82,13 @@ static ALWAYS_INLINE void usbc_handler(void *port_dev)
 	};                                                                                         \
                                                                                                    \
 	DEVICE_DT_INST_DEFINE(inst, &usbc_subsys_init, NULL, &usbc_port_data_##inst,               \
+<<<<<<< HEAD
 			      &usbc_port_config_##inst, APPLICATION,                               \
 			      CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, NULL);
+=======
+			      &usbc_port_config_##inst, POST_KERNEL,                               \
+			      CONFIG_USBC_STACK_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 DT_INST_FOREACH_STATUS_OKAY(USBC_SUBSYS_INIT)
 

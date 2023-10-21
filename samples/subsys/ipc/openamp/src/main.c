@@ -61,29 +61,51 @@ static struct virtio_vring_info rvrings[2] = {
 static struct virtio_device vdev;
 static struct rpmsg_virtio_device rvdev;
 static struct metal_io_region *io;
+<<<<<<< HEAD
 static struct virtqueue *vq[2];
 
 static unsigned char virtio_get_status(struct virtio_device *vdev)
+=======
+static struct virtqueue *vqueue[2];
+
+static unsigned char ipc_virtio_get_status(struct virtio_device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return VIRTIO_CONFIG_STATUS_DRIVER_OK;
 }
 
+<<<<<<< HEAD
 static void virtio_set_status(struct virtio_device *vdev, unsigned char status)
+=======
+static void ipc_virtio_set_status(struct virtio_device *dev, unsigned char status)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	sys_write8(status, VDEV_STATUS_ADDR);
 }
 
+<<<<<<< HEAD
 static uint32_t virtio_get_features(struct virtio_device *vdev)
+=======
+static uint32_t ipc_virtio_get_features(struct virtio_device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return 1 << VIRTIO_RPMSG_F_NS;
 }
 
+<<<<<<< HEAD
 static void virtio_set_features(struct virtio_device *vdev,
 				uint32_t features)
 {
 }
 
 static void virtio_notify(struct virtqueue *vq)
+=======
+static void ipc_virtio_set_features(struct virtio_device *dev, uint32_t features)
+{
+}
+
+static void ipc_virtio_notify(struct virtqueue *vq)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 #if defined(CONFIG_SOC_MPS2_AN521) || \
 	defined(CONFIG_SOC_V2M_MUSCA_B1)
@@ -98,11 +120,19 @@ static void virtio_notify(struct virtqueue *vq)
 }
 
 struct virtio_dispatch dispatch = {
+<<<<<<< HEAD
 	.get_status = virtio_get_status,
 	.set_status = virtio_set_status,
 	.get_features = virtio_get_features,
 	.set_features = virtio_set_features,
 	.notify = virtio_notify,
+=======
+	.get_status = ipc_virtio_get_status,
+	.set_status = ipc_virtio_set_status,
+	.get_features = ipc_virtio_get_features,
+	.set_features = ipc_virtio_set_features,
+	.notify = ipc_virtio_notify,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static K_SEM_DEFINE(data_sem, 0, 1);
@@ -151,7 +181,11 @@ static unsigned int receive_message(void)
 		int status = k_sem_take(&data_sem, K_FOREVER);
 
 		if (status == 0) {
+<<<<<<< HEAD
 			virtqueue_notification(vq[0]);
+=======
+			virtqueue_notification(vqueue[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 	return received_data;
@@ -215,6 +249,7 @@ void app_task(void *arg1, void *arg2, void *arg3)
 	}
 
 	/* setup vdev */
+<<<<<<< HEAD
 	vq[0] = virtqueue_allocate(VRING_SIZE);
 	if (vq[0] == NULL) {
 		printk("virtqueue_allocate failed to alloc vq[0]\n");
@@ -223,6 +258,16 @@ void app_task(void *arg1, void *arg2, void *arg3)
 	vq[1] = virtqueue_allocate(VRING_SIZE);
 	if (vq[1] == NULL) {
 		printk("virtqueue_allocate failed to alloc vq[1]\n");
+=======
+	vqueue[0] = virtqueue_allocate(VRING_SIZE);
+	if (vqueue[0] == NULL) {
+		printk("virtqueue_allocate failed to alloc vqueue[0]\n");
+		return;
+	}
+	vqueue[1] = virtqueue_allocate(VRING_SIZE);
+	if (vqueue[1] == NULL) {
+		printk("virtqueue_allocate failed to alloc vqueue[1]\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -233,13 +278,21 @@ void app_task(void *arg1, void *arg2, void *arg3)
 	rvrings[0].info.vaddr = (void *)VRING_TX_ADDRESS;
 	rvrings[0].info.num_descs = VRING_SIZE;
 	rvrings[0].info.align = VRING_ALIGNMENT;
+<<<<<<< HEAD
 	rvrings[0].vq = vq[0];
+=======
+	rvrings[0].vq = vqueue[0];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	rvrings[1].io = io;
 	rvrings[1].info.vaddr = (void *)VRING_RX_ADDRESS;
 	rvrings[1].info.num_descs = VRING_SIZE;
 	rvrings[1].info.align = VRING_ALIGNMENT;
+<<<<<<< HEAD
 	rvrings[1].vq = vq[1];
+=======
+	rvrings[1].vq = vqueue[1];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	vdev.vrings_info = &rvrings[0];
 
@@ -255,7 +308,11 @@ void app_task(void *arg1, void *arg2, void *arg3)
 	 * from NS setup and than we need to process it
 	 */
 	k_sem_take(&data_sem, K_FOREVER);
+<<<<<<< HEAD
 	virtqueue_notification(vq[0]);
+=======
+	virtqueue_notification(vqueue[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Wait til nameservice ep is setup */
 	k_sem_take(&ept_sem, K_FOREVER);
@@ -301,7 +358,11 @@ int main(void)
  */
 int init_status_flag(void)
 {
+<<<<<<< HEAD
 	virtio_set_status(NULL, 0);
+=======
+	ipc_virtio_set_status(NULL, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

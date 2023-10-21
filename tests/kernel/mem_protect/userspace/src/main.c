@@ -327,7 +327,11 @@ ZTEST_USER(userspace, test_write_kerntext)
 	/* Try to write to kernel text. */
 	set_fault(K_ERR_CPU_EXCEPTION);
 
+<<<<<<< HEAD
 	memset(&z_is_thread_essential, 0, 4);
+=======
+	memset(&k_current_get, 0, 4);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_unreachable("Write to kernel text did not fault");
 }
 
@@ -1047,6 +1051,11 @@ void kernel_only_thread_entry(void *p1, void *p2, void *p3)
 
 #ifdef CONFIG_MMU
 #define KERNEL_ONLY_THREAD_STACK_SIZE (ROUND_UP(1024, CONFIG_MMU_PAGE_SIZE))
+<<<<<<< HEAD
+=======
+#elif CONFIG_64BIT
+#define KERNEL_ONLY_THREAD_STACK_SIZE (2048)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #define KERNEL_ONLY_THREAD_STACK_SIZE (1024)
 #endif

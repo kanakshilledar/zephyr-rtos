@@ -18,6 +18,15 @@ extern "C" {
 #endif
 
 /**
+<<<<<<< HEAD
+=======
+ * @ingroup hashmap_apis
+ * @defgroup hash_functions Hash Functions
+ * @{
+ */
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief 32-bit Hash function interface
  *
  * Hash functions are used to map data from an arbitrarily large space to a
@@ -70,7 +79,11 @@ static inline uint32_t sys_hash32_identity(const void *str, size_t n)
 }
 
 /**
+<<<<<<< HEAD
  * @brief Daniel J. Bernstein's hash function
+=======
+ * @brief Daniel J.\ Bernstein's hash function
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * Some notes:
  * - normally, this hash function is used on NUL-terminated strings
@@ -129,6 +142,13 @@ static inline uint32_t sys_hash32(const void *str, size_t n)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

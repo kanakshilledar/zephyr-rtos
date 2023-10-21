@@ -224,7 +224,23 @@ static int handle_capabilities_get(struct bt_mesh_model *mod, struct bt_mesh_msg
 	size = MIN(size, CONFIG_BT_MESH_DFD_SRV_SLOT_SPACE);
 
 	net_buf_simple_add_le32(&rsp, CONFIG_BT_MESH_DFD_SRV_SLOT_SPACE - size);
+<<<<<<< HEAD
 	net_buf_simple_add_u8(&rsp, 0U); /* OOB retrieval not supported */
+=======
+
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	struct bt_mesh_dfd_srv *srv = mod->user_data;
+
+	if (srv->oob_schemes.count > 0) {
+		net_buf_simple_add_u8(&rsp, 1);
+		net_buf_simple_add_mem(&rsp, srv->oob_schemes.schemes,
+				       srv->oob_schemes.count);
+	} else
+#endif
+	{
+		net_buf_simple_add_u8(&rsp, 0);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bt_mesh_model_send(mod, ctx, &rsp, NULL, NULL);
 
@@ -329,9 +345,16 @@ static int handle_apply(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *ctx,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void upload_status_rsp(struct bt_mesh_dfd_srv *srv,
 			      struct bt_mesh_msg_ctx *ctx,
 			      enum bt_mesh_dfd_status status)
+=======
+static void upload_status_rsp_with_progress(struct bt_mesh_dfd_srv *srv,
+					    struct bt_mesh_msg_ctx *ctx,
+					    enum bt_mesh_dfd_status status,
+					    uint8_t progress)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	BT_MESH_MODEL_BUF_DEFINE(rsp, BT_MESH_DFD_OP_UPLOAD_STATUS,
 				 DFD_UPLOAD_STATUS_MSG_MAXLEN);
@@ -346,14 +369,50 @@ static void upload_status_rsp(struct bt_mesh_dfd_srv *srv,
 		return;
 	}
 
+<<<<<<< HEAD
 	net_buf_simple_add_u8(&rsp,
 			      bt_mesh_blob_srv_progress(&srv->upload.blob));
 	net_buf_simple_add_mem(&rsp, srv->upload.slot->fwid,
 			       srv->upload.slot->fwid_len);
+=======
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	if (srv->upload.is_oob) {
+		net_buf_simple_add_u8(&rsp, progress | BIT(7));
+		net_buf_simple_add_mem(&rsp, srv->upload.oob.current_fwid,
+				       srv->upload.oob.current_fwid_len);
+	} else
+#endif
+	{
+		net_buf_simple_add_u8(&rsp, progress);
+		net_buf_simple_add_mem(&rsp, srv->upload.slot->fwid,
+				       srv->upload.slot->fwid_len);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bt_mesh_model_send(srv->mod, ctx, &rsp, NULL, NULL);
 }
 
+<<<<<<< HEAD
+=======
+static void upload_status_rsp(struct bt_mesh_dfd_srv *srv,
+			      struct bt_mesh_msg_ctx *ctx,
+			      enum bt_mesh_dfd_status status)
+{
+	uint8_t progress;
+
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	if (srv->upload.is_oob) {
+		progress = srv->cb->oob_progress_get(srv, srv->upload.slot);
+	} else
+#endif
+	{
+		progress = bt_mesh_blob_srv_progress(&srv->upload.blob);
+	}
+
+	upload_status_rsp_with_progress(srv, ctx, status, progress);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int handle_upload_get(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *ctx,
 			     struct net_buf_simple *buf)
 {
@@ -364,16 +423,61 @@ static int handle_upload_get(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline int set_upload_fwid(struct bt_mesh_dfd_srv *srv, struct bt_mesh_msg_ctx *ctx,
+				  const uint8_t *fwid, size_t fwid_len)
+{
+	int err = bt_mesh_dfu_slot_fwid_set(srv->upload.slot, fwid, fwid_len);
+
+	switch (err) {
+	case -EFBIG: /* Fwid too long */
+	case -EALREADY: /* Other server is in progress with this fwid */
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+		srv->upload.slot = NULL;
+		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
+		break;
+	case -EEXIST: /* Img with this fwid already is in list */
+		srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_SUCCESS;
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+
+		err = bt_mesh_dfu_slot_get(fwid, fwid_len, &srv->upload.slot);
+		if (!err) {
+			upload_status_rsp_with_progress(srv, ctx, BT_MESH_DFD_SUCCESS, 100);
+		} else {
+			srv->upload.slot = NULL;
+			upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
+		}
+		break;
+	case 0:
+		srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_ACTIVE;
+		break;
+	case -EINVAL: /* Slot in wrong state. */
+	default:
+		break;
+	}
+
+	return err;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *ctx,
 			       struct net_buf_simple *buf)
 {
 	struct bt_mesh_dfd_srv *srv = mod->user_data;
+<<<<<<< HEAD
 	const struct bt_mesh_dfu_slot *old_slot = srv->upload.slot;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t meta_len, fwid_len, size;
 	const uint8_t *meta, *fwid;
 	uint16_t timeout_base;
 	uint64_t blob_id;
+<<<<<<< HEAD
 	int err, idx;
+=======
+	int err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t ttl;
 
 	ttl = net_buf_simple_pull_u8(buf);
@@ -392,9 +496,13 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 	LOG_DBG("Upload Start: size: %d, fwid: %s, metadata: %s", size, bt_hex(fwid, fwid_len),
 		bt_hex(meta, meta_len));
 
+<<<<<<< HEAD
 	if (size > CONFIG_BT_MESH_DFD_SRV_SLOT_MAX_SIZE ||
 	    fwid_len > CONFIG_BT_MESH_DFU_FWID_MAXLEN ||
 	    meta_len > CONFIG_BT_MESH_DFU_METADATA_MAXLEN) {
+=======
+	if (size > CONFIG_BT_MESH_DFD_SRV_SLOT_MAX_SIZE) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		upload_status_rsp(srv, ctx,
 				  BT_MESH_DFD_ERR_INSUFFICIENT_RESOURCES);
 		return 0;
@@ -413,7 +521,15 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 		    !memcmp(srv->upload.slot->metadata, meta, meta_len) &&
 		    srv->upload.blob.state.xfer.id == blob_id &&
 		    srv->upload.blob.state.ttl == ttl &&
+<<<<<<< HEAD
 		    srv->upload.blob.state.timeout_base == timeout_base) {
+=======
+		    srv->upload.blob.state.timeout_base == timeout_base
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+		    && !srv->upload.is_oob
+#endif
+		    ) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_DBG("Duplicate upload start");
 			upload_status_rsp(srv, ctx, BT_MESH_DFD_SUCCESS);
 			return 0;
@@ -424,6 +540,7 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 		return 0;
 	}
 
+<<<<<<< HEAD
 	idx = bt_mesh_dfu_slot_get(fwid, fwid_len, &srv->upload.slot);
 	if (idx >= 0 && bt_mesh_dfu_slot_is_valid(srv->upload.slot)) {
 		LOG_DBG("Already received image");
@@ -441,6 +558,20 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 
 	srv->upload.slot = bt_mesh_dfu_slot_add(size, fwid, fwid_len, meta,
 						meta_len, NULL, 0);
+=======
+	/* This will be a no-op if the slot state isn't RESERVED, which is
+	 * what we want.
+	 */
+	if (srv->upload.slot) {
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+	}
+
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	srv->upload.is_oob = false;
+#endif
+	srv->upload.slot = bt_mesh_dfu_slot_reserve();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!srv->upload.slot) {
 		LOG_WRN("No space for slot");
 		upload_status_rsp(srv, ctx,
@@ -448,11 +579,34 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+	err = set_upload_fwid(srv, ctx, fwid, fwid_len);
+	if (err) {
+		return err;
+	}
+
+	err = bt_mesh_dfu_slot_info_set(srv->upload.slot, size, meta, meta_len);
+	switch (err) {
+	case -EFBIG:
+		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
+		break;
+	case 0:
+		break;
+	default:
+		return err;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	srv->io = NULL;
 	err = srv->cb->recv(srv, srv->upload.slot, &srv->io);
 	if (err || !srv->io) {
 		LOG_ERR("App rejected upload. err: %d io: %p", err, srv->io);
+<<<<<<< HEAD
 		slot_del(srv, srv->upload.slot);
+=======
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
 		return 0;
 	}
@@ -461,7 +615,11 @@ static int handle_upload_start(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx
 				    timeout_base);
 	if (err) {
 		LOG_ERR("BLOB Server rejected upload (err: %d)", err);
+<<<<<<< HEAD
 		slot_del(srv, srv->upload.slot);
+=======
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
 		return 0;
 	}
@@ -478,10 +636,96 @@ static int handle_upload_start_oob(struct bt_mesh_model *mod, struct bt_mesh_msg
 				   struct net_buf_simple *buf)
 {
 	struct bt_mesh_dfd_srv *srv = mod->user_data;
+<<<<<<< HEAD
 
 	LOG_DBG("");
 
 	upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_URI_NOT_SUPPORTED);
+=======
+	uint8_t uri_len;
+	uint8_t *uri;
+	uint16_t fwid_len;
+	uint8_t *fwid;
+
+	uri_len = net_buf_simple_pull_u8(buf);
+
+	if (uri_len > buf->len) {
+		return -EINVAL;
+	}
+
+	uri = net_buf_simple_pull_mem(buf, uri_len);
+	fwid_len = buf->len;
+	fwid = net_buf_simple_pull_mem(buf, fwid_len);
+
+	LOG_DBG("Upload OOB Start");
+	LOG_HEXDUMP_DBG(uri, uri_len, "URI");
+	LOG_HEXDUMP_DBG(fwid, fwid_len, "FWID");
+
+	if (upload_is_busy(srv)) {
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+		if (srv->upload.is_oob &&
+		    uri_len == srv->upload.oob.uri_len &&
+		    fwid_len == srv->upload.oob.current_fwid_len &&
+		    !memcmp(uri, srv->upload.oob.uri, uri_len) &&
+		    !memcmp(fwid, srv->upload.oob.current_fwid, fwid_len)) {
+			/* Same image, return SUCCESS for idempotency */
+			upload_status_rsp(srv, ctx, BT_MESH_DFD_SUCCESS);
+			return 0;
+		}
+#endif
+		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_BUSY_WITH_UPLOAD);
+		return 0;
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	} else if (srv->upload.is_oob && srv->upload.is_pending_oob_check) {
+		/* Ignore the request if we didn't confirm the previous one. */
+		return 0;
+#endif
+	}
+
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	if (uri_len > CONFIG_BT_MESH_DFU_URI_MAXLEN ||
+	    fwid_len > CONFIG_BT_MESH_DFU_FWID_MAXLEN) {
+		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INTERNAL);
+		return 0;
+	}
+
+	struct bt_mesh_dfu_slot *slot = bt_mesh_dfu_slot_reserve();
+
+	if (slot == NULL) {
+		upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_INSUFFICIENT_RESOURCES);
+		return 0;
+	}
+
+	/* This will be a no-op if the slot state isn't RESERVED, which is
+	 * what we want.
+	 */
+	if (srv->upload.slot) {
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+	}
+
+	srv->upload.is_oob = true;
+	srv->upload.slot = slot;
+	memcpy(srv->upload.oob.uri, uri, uri_len);
+	srv->upload.oob.uri_len = uri_len;
+	memcpy(srv->upload.oob.current_fwid, fwid, fwid_len);
+	srv->upload.oob.current_fwid_len = fwid_len;
+	memcpy(&srv->upload.oob.ctx, ctx, sizeof(struct bt_mesh_msg_ctx));
+
+	int status = srv->cb->start_oob_upload(srv, srv->upload.slot, srv->upload.oob.uri,
+					       srv->upload.oob.uri_len,
+					       srv->upload.oob.current_fwid,
+					       srv->upload.oob.current_fwid_len);
+
+	if (status != BT_MESH_DFD_SUCCESS) {
+		upload_status_rsp(srv, ctx, status);
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+	} else {
+		srv->upload.is_pending_oob_check = true;
+	}
+#else
+	upload_status_rsp(srv, ctx, BT_MESH_DFD_ERR_URI_NOT_SUPPORTED);
+#endif /* CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -492,7 +736,18 @@ static int handle_upload_cancel(struct bt_mesh_model *mod, struct bt_mesh_msg_ct
 	struct bt_mesh_dfd_srv *srv = mod->user_data;
 
 	srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_IDLE;
+<<<<<<< HEAD
 	(void)bt_mesh_blob_srv_cancel(&srv->upload.blob);
+=======
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+	if (srv->upload.is_oob) {
+		srv->cb->cancel_oob_upload(srv, srv->upload.slot);
+	} else
+#endif
+	{
+		(void)bt_mesh_blob_srv_cancel(&srv->upload.blob);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	upload_status_rsp(srv, ctx, BT_MESH_DFD_SUCCESS);
 
 	return 0;
@@ -508,7 +763,11 @@ static void fw_status_rsp(struct bt_mesh_dfd_srv *srv,
 	bt_mesh_model_msg_init(&rsp, BT_MESH_DFD_OP_FW_STATUS);
 
 	net_buf_simple_add_u8(&rsp, status);
+<<<<<<< HEAD
 	net_buf_simple_add_le16(&rsp, bt_mesh_dfu_slot_foreach(NULL, NULL));
+=======
+	net_buf_simple_add_le16(&rsp, bt_mesh_dfu_slot_count());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	net_buf_simple_add_le16(&rsp, idx);
 	if (fwid) {
@@ -522,7 +781,11 @@ static int handle_fw_get(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *ctx,
 			 struct net_buf_simple *buf)
 {
 	struct bt_mesh_dfd_srv *srv = mod->user_data;
+<<<<<<< HEAD
 	const struct bt_mesh_dfu_slot *slot;
+=======
+	struct bt_mesh_dfu_slot *slot;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const uint8_t *fwid;
 	size_t fwid_len;
 	int idx;
@@ -531,7 +794,11 @@ static int handle_fw_get(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx *ctx,
 	fwid = net_buf_simple_pull_mem(buf, fwid_len);
 
 	idx = bt_mesh_dfu_slot_get(fwid, fwid_len, &slot);
+<<<<<<< HEAD
 	if (idx >= 0 && bt_mesh_dfu_slot_is_valid(slot)) {
+=======
+	if (idx >= 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		fw_status_rsp(srv, ctx, BT_MESH_DFD_SUCCESS, idx, fwid,
 			      fwid_len);
 	} else {
@@ -552,7 +819,11 @@ static int handle_fw_get_by_index(struct bt_mesh_model *mod, struct bt_mesh_msg_
 	idx = net_buf_simple_pull_le16(buf);
 
 	slot = bt_mesh_dfu_slot_at(idx);
+<<<<<<< HEAD
 	if (slot && bt_mesh_dfu_slot_is_valid(slot)) {
+=======
+	if (slot) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		fw_status_rsp(srv, ctx, BT_MESH_DFD_SUCCESS, idx, slot->fwid,
 			      slot->fwid_len);
 	} else {
@@ -614,7 +885,11 @@ const struct bt_mesh_model_op _bt_mesh_dfd_srv_op[] = {
 	{ BT_MESH_DFD_OP_APPLY, BT_MESH_LEN_EXACT(0), handle_apply },
 	{ BT_MESH_DFD_OP_UPLOAD_GET, BT_MESH_LEN_EXACT(0), handle_upload_get },
 	{ BT_MESH_DFD_OP_UPLOAD_START, BT_MESH_LEN_MIN(16), handle_upload_start },
+<<<<<<< HEAD
 	{ BT_MESH_DFD_OP_UPLOAD_START_OOB, BT_MESH_LEN_EXACT(2), handle_upload_start_oob },
+=======
+	{ BT_MESH_DFD_OP_UPLOAD_START_OOB, BT_MESH_LEN_MIN(2), handle_upload_start_oob },
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	{ BT_MESH_DFD_OP_UPLOAD_CANCEL, BT_MESH_LEN_EXACT(0), handle_upload_cancel },
 	{ BT_MESH_DFD_OP_FW_GET, BT_MESH_LEN_MIN(0), handle_fw_get },
 	{ BT_MESH_DFD_OP_FW_GET_BY_INDEX, BT_MESH_LEN_EXACT(2), handle_fw_get_by_index },
@@ -729,8 +1004,12 @@ static void upload_end(struct bt_mesh_blob_srv *b, uint64_t id, bool success)
 
 	LOG_DBG("%u", success);
 
+<<<<<<< HEAD
 	if (success) {
 		bt_mesh_dfu_slot_valid_set(srv->upload.slot, true);
+=======
+	if (success && (bt_mesh_dfu_slot_commit(srv->upload.slot) == 0)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_SUCCESS;
 		return;
 	}
@@ -850,7 +1129,11 @@ enum bt_mesh_dfd_status bt_mesh_dfd_srv_start(struct bt_mesh_dfd_srv *srv,
 
 	xfer.mode = params->xfer_mode;
 	xfer.slot = bt_mesh_dfu_slot_at(params->slot_idx);
+<<<<<<< HEAD
 	if (!xfer.slot || !bt_mesh_dfu_slot_is_valid(xfer.slot)) {
+=======
+	if (!xfer.slot) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return BT_MESH_DFD_ERR_FW_NOT_FOUND;
 	}
 
@@ -887,6 +1170,16 @@ enum bt_mesh_dfd_status bt_mesh_dfd_srv_start(struct bt_mesh_dfd_srv *srv,
 
 	sys_slist_init(&srv->inputs.targets);
 	for (i = 0; i < srv->target_cnt; i++) {
+<<<<<<< HEAD
+=======
+		uint16_t addr = srv->targets[i].blob.addr;
+
+		memset(&srv->targets[i].blob, 0, sizeof(struct bt_mesh_blob_target));
+		memset(&srv->pull_ctxs[i], 0, sizeof(struct bt_mesh_blob_target_pull));
+		srv->targets[i].blob.addr = addr;
+		srv->targets[i].blob.pull = &srv->pull_ctxs[i];
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		sys_slist_append(&srv->inputs.targets, &srv->targets[i].blob.n);
 	}
 
@@ -1013,7 +1306,11 @@ enum bt_mesh_dfd_status bt_mesh_dfd_srv_apply(struct bt_mesh_dfd_srv *srv)
 enum bt_mesh_dfd_status bt_mesh_dfd_srv_fw_delete(struct bt_mesh_dfd_srv *srv, size_t *fwid_len,
 						  const uint8_t **fwid)
 {
+<<<<<<< HEAD
 	const struct bt_mesh_dfu_slot *slot;
+=======
+	struct bt_mesh_dfu_slot *slot;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int idx, err;
 
 	if (srv->phase != BT_MESH_DFD_PHASE_IDLE) {
@@ -1023,7 +1320,11 @@ enum bt_mesh_dfd_status bt_mesh_dfd_srv_fw_delete(struct bt_mesh_dfd_srv *srv, s
 	}
 
 	idx = bt_mesh_dfu_slot_get(*fwid, *fwid_len, &slot);
+<<<<<<< HEAD
 	if (idx < 0 || !bt_mesh_dfu_slot_is_valid(slot)) {
+=======
+	if (idx < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return BT_MESH_DFD_SUCCESS;
 	}
 
@@ -1049,3 +1350,75 @@ enum bt_mesh_dfd_status bt_mesh_dfd_srv_fw_delete_all(struct bt_mesh_dfd_srv *sr
 
 	return BT_MESH_DFD_SUCCESS;
 }
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD
+int bt_mesh_dfd_srv_oob_check_complete(struct bt_mesh_dfd_srv *srv,
+				       const struct bt_mesh_dfu_slot *slot, int status,
+				       uint8_t *fwid, size_t fwid_len)
+{
+	int err;
+
+	if (slot != srv->upload.slot || !srv->upload.is_oob ||
+	    srv->upload.phase == BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_ACTIVE ||
+	    !srv->upload.is_pending_oob_check) {
+		/* This should not happen, unless the application calls the function with a
+		 * "wrong" pointer or at a wrong time.
+		 */
+		return -EINVAL;
+	}
+
+	srv->upload.is_pending_oob_check = false;
+
+	if (status != BT_MESH_DFD_SUCCESS) {
+		bt_mesh_dfu_slot_release(srv->upload.slot);
+		upload_status_rsp(srv, &srv->upload.oob.ctx, status);
+		return -ECANCELED;
+	}
+
+	err = set_upload_fwid(srv, &srv->upload.oob.ctx, fwid, fwid_len);
+
+	if (err) {
+		return err;
+	}
+
+	upload_status_rsp(srv, &srv->upload.oob.ctx, BT_MESH_DFD_SUCCESS);
+	return 0;
+}
+
+int bt_mesh_dfd_srv_oob_store_complete(struct bt_mesh_dfd_srv *srv,
+				       const struct bt_mesh_dfu_slot *slot, bool success,
+				       size_t size, const uint8_t *metadata, size_t metadata_len)
+{
+	int err = 0;
+
+	if (srv->upload.phase != BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_ACTIVE ||
+	    srv->upload.slot != slot || !srv->upload.is_oob) {
+		return -EINVAL;
+	}
+
+	if (!success) {
+		goto error;
+	}
+
+	err = bt_mesh_dfu_slot_info_set(srv->upload.slot, size, metadata, metadata_len);
+	if (err) {
+		goto error;
+	}
+
+	err = bt_mesh_dfu_slot_commit(srv->upload.slot);
+	if (err) {
+		goto error;
+	}
+
+	srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_SUCCESS;
+	return 0;
+
+error:
+	srv->upload.phase = BT_MESH_DFD_UPLOAD_PHASE_TRANSFER_ERROR;
+	bt_mesh_dfu_slot_release(srv->upload.slot);
+	return err;
+}
+#endif /* CONFIG_BT_MESH_DFD_SRV_OOB_UPLOAD */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

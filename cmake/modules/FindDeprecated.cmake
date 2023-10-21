@@ -114,6 +114,21 @@ if("PRJ_BOARD" IN_LIST Deprecated_FIND_COMPONENTS)
                       "replaced with board Kconfig fragments instead.")
 endif()
 
+<<<<<<< HEAD
+=======
+if("PYTHON_PREFER" IN_LIST Deprecated_FIND_COMPONENTS)
+  # This code was deprecated after Zephyr v3.4.0
+  list(REMOVE_ITEM Deprecated_FIND_COMPONENTS PYTHON_PREFER)
+  if(DEFINED PYTHON_PREFER)
+    message(DEPRECATION "'PYTHON_PREFER' variable is deprecated. Please use "
+                        "Python3_EXECUTABLE instead.")
+    if(NOT DEFINED Python3_EXECUTABLE)
+      set(Python3_EXECUTABLE ${PYTHON_PREFER})
+    endif()
+  endif()
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(NOT "${Deprecated_FIND_COMPONENTS}" STREQUAL "")
   message(STATUS "The following deprecated component(s) could not be found: "
                  "${Deprecated_FIND_COMPONENTS}")

@@ -32,7 +32,11 @@ static bool ipc_done(const struct device *dev, void *arg)
 
 ZTEST(intel_adsp, test_host_ipc)
 {
+<<<<<<< HEAD
 	bool ret;
+=======
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	intel_adsp_ipc_set_message_handler(INTEL_ADSP_IPC_HOST_DEV, ipc_message, NULL);
 	intel_adsp_ipc_set_done_handler(INTEL_ADSP_IPC_HOST_DEV, ipc_done, NULL);
@@ -41,7 +45,11 @@ ZTEST(intel_adsp, test_host_ipc)
 	printk("Simple message send...\n");
 	done_flag = false;
 	ret = intel_adsp_ipc_send_message(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_SIGNAL_DONE, 0);
+<<<<<<< HEAD
 	zassert_true(ret, "send failed");
+=======
+	zassert_true(!ret, "send failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	AWAIT(intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV));
 	AWAIT(done_flag);
 
@@ -53,7 +61,11 @@ ZTEST(intel_adsp, test_host_ipc)
 	msg_flag = false;
 	ret = intel_adsp_ipc_send_message(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_RETURN_MSG,
 				RETURN_MSG_SYNC_VAL);
+<<<<<<< HEAD
 	zassert_true(ret, "send failed");
+=======
+	zassert_true(!ret, "send failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	AWAIT(done_flag);
 	AWAIT(intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV));
 	AWAIT(msg_flag);
@@ -66,7 +78,11 @@ ZTEST(intel_adsp, test_host_ipc)
 	msg_flag = false;
 	ret = intel_adsp_ipc_send_message(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_RETURN_MSG,
 				RETURN_MSG_SYNC_VAL);
+<<<<<<< HEAD
 	zassert_true(ret, "send failed");
+=======
+	zassert_true(!ret, "send failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	AWAIT(done_flag);
 	AWAIT(intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV));
 	AWAIT(msg_flag);
@@ -77,7 +93,11 @@ ZTEST(intel_adsp, test_host_ipc)
 	msg_flag = false;
 	ret = intel_adsp_ipc_send_message(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_RETURN_MSG,
 				RETURN_MSG_ASYNC_VAL);
+<<<<<<< HEAD
 	zassert_true(ret, "send failed");
+=======
+	zassert_true(!ret, "send failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	AWAIT(done_flag);
 	AWAIT(intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV));
 	AWAIT(msg_flag);
@@ -92,7 +112,11 @@ ZTEST(intel_adsp, test_host_ipc)
 	done_flag = false;
 	ret = intel_adsp_ipc_send_message_sync(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_ASYNC_DONE_DELAY,
 					 0, K_FOREVER);
+<<<<<<< HEAD
 	zassert_true(ret, "send failed");
+=======
+	zassert_true(!ret, "send failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_true(done_flag, "done interrupt failed to fire");
 	zassert_true(intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV),
 		"sync message incomplete");

@@ -37,6 +37,10 @@ alphascale	AlphaScale Integrated Circuits Systems, Inc.
 alps	Alps Electric Co., Ltd.
 alt	Altus-Escon-Company BV
 altr	Altera Corp.
+<<<<<<< HEAD
+=======
+ambiq	Ambiq Micro, Inc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 amarula	Amarula Solutions
 amazon	Amazon.com, Inc.
 amcc	Applied Micro Circuits Corporation (APM, formally AMCC)
@@ -150,6 +154,10 @@ delta	Delta Electronics, Inc.
 denx	Denx Software Engineering
 devantech	Devantech, Ltd.
 dfi	DFI Inc.
+<<<<<<< HEAD
+=======
+dfrobot	DFRobot
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 dh	DH electronics GmbH
 difrnce	Shenzhen Yagu Electronic Technology Co., Ltd.
 digi	Digi International Inc.
@@ -173,6 +181,10 @@ ebv	EBV Elektronik
 eckelmann	Eckelmann AG
 edt	Emerging Display Technologies
 eeti	eGalax_eMPIA Technology Inc
+<<<<<<< HEAD
+=======
+efinix	Efinix Inc
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 einfochips	Einfochips
 elan	Elan Microelectronic Corp.
 element14	Element14 (A Premier Farnell Company)
@@ -202,7 +214,11 @@ evervision	Evervision Electronics Co. Ltd.
 exar	Exar Corporation
 excito	Excito
 ezchip	EZchip Semiconductor
+<<<<<<< HEAD
 facebook	Facebook
+=======
+facebook	Facebook (deprecated, use meta)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 fairphone	Fairphone B.V.
 faraday	Faraday Technology Corporation
 fastrax	Fastrax Oy
@@ -210,6 +226,10 @@ fcs	Fairchild Semiconductor
 feixin	Shenzhen Feixin Photoelectic Co., Ltd
 feiyang	Shenzhen Fly Young Technology Co.,LTD.
 fii	Foxconn Industrial Internet
+<<<<<<< HEAD
+=======
+fintek	Feature Integration Technology Inc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 firefly	Firefly
 focaltech	FocalTech Systems Co.,Ltd
 frida	Shenzhen Frida LCD Co., Ltd.
@@ -289,6 +309,10 @@ invensense	InvenSense Inc.
 inversepath	Inverse Path
 iom	Iomega Corporation
 isee	ISEE 2007 S.L.
+<<<<<<< HEAD
+=======
+isentek	Isentek Inc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 isil	Intersil
 issi	Integrated Silicon Solutions Inc.
 ite	ITE Tech. Inc.
@@ -371,6 +395,10 @@ menlo	Menlo Systems GmbH
 mentor	Mentor Graphics
 meraki	Cisco Meraki, LLC
 merrii	Merrii Technology Co., Ltd.
+<<<<<<< HEAD
+=======
+meta	Meta Platforms, Inc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 micrel	Micrel Inc.
 microbit	Micro:bit Educational Foundation
 microchip	Microchip Technology Inc.
@@ -439,6 +467,10 @@ opalkelly	Opal Kelly Incorporated
 opencores	OpenCores.org
 openisa	open-isa.org
 openrisc	OpenRISC.io
+<<<<<<< HEAD
+=======
+openthread	OpenThread.io
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 option	Option NV
 oranth	Shenzhen Oranth Technology Co., Ltd.
 ORCL	Oracle Corporation
@@ -479,6 +511,10 @@ powervr	PowerVR (deprecated, use img)
 primux	Primux Trading, S.L.
 probox2	PROBOX2 (by W2COMP Co., Ltd.)
 prt	Protonic Holland
+<<<<<<< HEAD
+=======
+ptc	Princeton Technology Corp.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 pulsedlight	PulsedLight, Inc
 purism	Purism, SPC
 qca	Qualcomm Atheros, Inc.
@@ -555,6 +591,10 @@ simcom	SIMCom Wireless Solutions Co., LTD
 simtek	Cypress Semiconductor Corporation (Simtek Corporation)
 sinlinx	Sinlinx Electronics Technology Co., LTD
 sinovoip	SinoVoip Co., Ltd
+<<<<<<< HEAD
+=======
+sinowealth	Sino Wealth Electronic Ltd
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 sipeed	Shenzhen Sipeed Technology Co., Ltd.
 sirf	SiRF Technology, Inc.
 sis	Silicon Integrated Systems Corp.
@@ -572,6 +612,10 @@ sony	Sony Corporation
 spansion	Spansion Inc.
 sparkfun	SparkFun Electronics
 sprd	Spreadtrum Communications Inc.
+<<<<<<< HEAD
+=======
+sqn	Sequans Communications
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 sst	Silicon Storage Technology, Inc.
 sstar	Xiamen Xingchen(SigmaStar) Technology Co., Ltd. (formerly part of MStar Semiconductor, Inc.)
 st	STMicroelectronics
@@ -611,6 +655,10 @@ topeet	Topeet
 toppoly	TPO (deprecated, use tpo)
 topwise	Topwise Communication Co., Ltd.
 toradex	Toradex AG
+<<<<<<< HEAD
+=======
+torex	Torex Semiconductor Ltd.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 toshiba	Toshiba Corporation
 toumaz	Toumaz
 tpk	TPK U.S.A. LLC

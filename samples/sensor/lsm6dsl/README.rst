@@ -20,7 +20,11 @@ It has been tested on both :ref:`96b_argonkey` and disco_l475_iot1 board.
 References
 **********
 
+<<<<<<< HEAD
 - LSM6DSL http://www.st.com/en/mems-and-sensors/lsm6dsl.html
+=======
+- LSM6DSL https://www.st.com/en/mems-and-sensors/lsm6dsl.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

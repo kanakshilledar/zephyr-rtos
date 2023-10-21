@@ -16,6 +16,7 @@ driven I/O. This section covers the RTIO API, queues, executor, iodev,
 and common usage patterns with peripheral devices.
 
 RTIO takes a lot of inspiration from Linux's io_uring in its operations and API
+<<<<<<< HEAD
 as that API matches up well with hardware DMA transfer queues and descriptions.
 
 A quick sales pitch on why RTIO works well in many scenarios:
@@ -24,6 +25,10 @@ A quick sales pitch on why RTIO works well in many scenarios:
 2. No buffer copying
 3. No callbacks
 4. Blocking or non-blocking operation
+=======
+as that API matches up well with hardware transfer queues and descriptions such as
+DMA transfer lists.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Problem
 *******
@@ -60,8 +65,13 @@ sequence of operations in an asynchronous way directly relates
 to the way hardware typically works with interrupt driven state machines
 potentially involving multiple peripheral IPs like bus and DMA controllers.
 
+<<<<<<< HEAD
 Submission Queue and Chaining
 *****************************
+=======
+Submission Queue
+****************
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The submission queue (sq), is the description of the operations
 to perform in concurrent chains.
@@ -105,6 +115,7 @@ sqe. A chain of sqe will however ensure ordering and failure cascading.
 Other potential schemes are possible but a completion queue is a well trod
 idea with io_uring and other similar operating system APIs.
 
+<<<<<<< HEAD
 Executor and IODev
 ******************
 
@@ -123,10 +134,43 @@ The executor is meant to provide policy for when to use each transfer
 type, and provide the common code for walking through submission queue
 chains by providing calls the iodev may use to signal completion,
 error, or a need to suspend and wait.
+=======
+Executor
+********
+
+The RTIO executor is a low overhead concurrent I/O task scheduler. It ensures
+certain request flags provide the expected behavior. It takes a list of
+submissions working through them in order. Various flags allow for changing the
+behavior of how submissions are worked through. Flags to form in order chains of
+submissions, transactional sets of submissions, or create multi-shot
+(continuously producing) requests are all possible!
+
+IO Device
+*********
+
+Turning submission queue entries (sqe) into completion queue events (cqe) is the
+job of objects implementing the iodev (IO device) API. This API accepts requests
+in the form of the iodev submit API call. It is the io devices job to work
+through its internal queue of submissions and convert them into completions. In
+effect every io device can be viewed as an independent, event driven actor like
+object, that accepts a never ending queue of I/O like requests. How the iodev
+does this work is up to the author of the iodev, perhaps the entire queue of
+operations can be converted to a set of DMA transfer descriptors, meaning the
+hardware does almost all of the real work.
+
+Cancellation
+************
+
+Canceling an already queued operation is possible but not guaranteed. If the
+SQE has not yet started, it's likely that a call to :c:func:`rtio_sqe_cancel`
+will remove the SQE and never run it. If, however, the SQE already started
+running, the cancel request will be ignored.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Memory pools
 ************
 
+<<<<<<< HEAD
 In some cases, the consumer may not know how much data will be produced.
 Alternatively, a consumer might be handling data from multiple producers where
 the frequency of the data is unpredictable. In these cases, read operations may
@@ -136,6 +180,19 @@ allows creating the RTIO context with a dedicated pool of "memory blocks" which
 can be consumed by the IODev. Below is a snippet setting up the RTIO context
 with a memory pool. The memory pool has 128 blocks, each block has the size of
 16 bytes, and the data is 4 byte aligned.
+=======
+In some cases requests to read may not know how much data will be produced.
+Alternatively, a reader might be handling data from multiple io devices where
+the frequency of the data is unpredictable. In these cases it may be wasteful
+to bind memory to in flight read requests. Instead with memory pools the memory
+to read into is left to the iodev to allocate from a memory pool associated with
+the RTIO context that the read was associated with. To create such an RTIO
+context the :c:macro:`RTIO_DEFINE_WITH_MEMPOOL` can be used. It allows creating
+an RTIO context with a dedicated pool of "memory blocks" which can be consumed by
+the iodev. Below is a snippet setting up the RTIO context with a memory pool.
+The memory pool has 128 blocks, each block has the size of 16 bytes, and the data
+is 4 byte aligned.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. code-block:: C
 
@@ -147,6 +204,7 @@ with a memory pool. The memory pool has 128 blocks, each block has the size of
   #define MEM_BLK_SIZE  16
   #define MEM_BLK_ALIGN 4
 
+<<<<<<< HEAD
   RTIO_EXECUTOR_SIMPLE_DEFINE(simple_exec);
   RTIO_DEFINE_WITH_MEMPOOL(rtio_context, (struct rtio_executor *)&simple_exec,
       SQ_SIZE, CQ_SIZE, MEM_BLK_COUNT, MEM_BLK_SIZE, MEM_BLK_ALIGN);
@@ -157,6 +215,17 @@ with a call to :c:func:`rtio_sqe_prep_read_with_pool`. The IODev requires
 only a small change which works with both pre-allocated data buffers as well as
 the mempool. When the read is ready, instead of getting the buffers directly
 from the :c:struct:`rtio_iodev_sqe`, the IODev should get the buffer and count
+=======
+  RTIO_DEFINE_WITH_MEMPOOL(rtio_context,
+      SQ_SIZE, CQ_SIZE, MEM_BLK_COUNT, MEM_BLK_SIZE, MEM_BLK_ALIGN);
+
+When a read is needed, the caller simply needs to replace the call
+:c:func:`rtio_sqe_prep_read` (which takes a pointer to a buffer and a length)
+with a call to :c:func:`rtio_sqe_prep_read_with_pool`. The iodev requires
+only a small change which works with both pre-allocated data buffers as well as
+the mempool. When the read is ready, instead of getting the buffers directly
+from the :c:struct:`rtio_iodev_sqe`, the iodev should get the buffer and count
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 by calling :c:func:`rtio_sqe_rx_buf` like so:
 
 .. code-block:: C
@@ -192,6 +261,7 @@ c:func:`rtio_cqe_get_mempool_buffer`.
   /* Release the mempool buffer */
   rtio_release_buffer(&rtio_context, buf);
 
+<<<<<<< HEAD
 Outstanding Questions
 *********************
 
@@ -276,6 +346,20 @@ result compared to ad-hoc sensor (i2c/spi) requests to get the sample.
 
 Continuous transfers, driven by timer or interrupt, of data from a peripheral's
 on board FIFO over I2C, I3C, SPI, MIPI, I2S, etc... maybe, but not always!
+=======
+When to Use
+***********
+
+RTIO is useful in cases where concurrent or batch like I/O flows are useful.
+
+From the driver/hardware perspective the API enables batching of I/O requests, potentially in an optimal way.
+Many requests to the same SPI peripheral for example might be translated to hardware command queues or DMA transfer
+descriptors entirely. Meaning the hardware can potentially do more than ever.
+
+There is a small cost to each RTIO context and iodev. This cost could be weighed
+against using a thread for each concurrent I/O operation or custom queues and
+threads per peripheral. RTIO is much lower cost than that.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Examples
 ********
@@ -488,6 +572,7 @@ video.
 API Reference
 *************
 
+<<<<<<< HEAD
 RTIO API
 ========
 
@@ -495,5 +580,16 @@ RTIO API
 
 RTIO SPSC API
 =============
+=======
+.. doxygengroup:: rtio
+
+MPSC Lock-free Queue API
+========================
+
+.. doxygengroup:: rtio_mpsc
+
+SPSC Lock-free Queue API
+========================
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. doxygengroup:: rtio_spsc

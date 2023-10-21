@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 .. _samples_eeprom:
 
 EEPROM Sample
 #############
+=======
+.. zephyr:code-sample:: eeprom
+   :name: EEPROM
+   :relevant-api: eeprom_interface
+
+   Store a boot count value in EEPROM.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample demonstrates the EEPROM driver API in a simple boot counter
+=======
+This sample demonstrates the :ref:`EEPROM driver API <eeprom_api>` in a simple boot counter
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 application.
 
 Building and Running

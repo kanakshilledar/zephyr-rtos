@@ -40,14 +40,23 @@
 #include "hal/debug.h"
 
 static int init_reset(void);
+<<<<<<< HEAD
 static inline void lll_flush_tx(struct lll_conn_iso_stream *cis_lll);
 static inline void lll_flush_rx(struct lll_conn_iso_stream *cis_lll);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int prepare_cb(struct lll_prepare_param *p);
 static void abort_cb(struct lll_prepare_param *prepare_param, void *param);
 static void isr_tx(void *param);
 static void isr_rx(void *param);
 static void isr_prepare_subevent(void *param);
 static void isr_done(void *param);
+<<<<<<< HEAD
+=======
+static void payload_count_flush(struct lll_conn_iso_stream *cis_lll);
+static void payload_count_flush_or_inc_on_close(struct lll_conn_iso_stream *cis_lll);
+static void payload_count_lazy_update(struct lll_conn_iso_stream *cis_lll, uint16_t lazy);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static uint16_t next_cis_chan_remap_idx;
 static uint16_t next_cis_chan_prn_s;
@@ -118,6 +127,7 @@ static int init_reset(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline void lll_flush_tx(struct lll_conn_iso_stream *cis_lll)
 {
 	/* sn and nesn are 1-bit, only Least Significant bit is needed */
@@ -136,6 +146,8 @@ static inline void lll_flush_rx(struct lll_conn_iso_stream *cis_lll)
 	cis_lll->nesn += nesn_update;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int prepare_cb(struct lll_prepare_param *p)
 {
 	struct lll_conn_iso_group *cig_lll = p->param;
@@ -155,6 +167,10 @@ static int prepare_cb(struct lll_prepare_param *p)
 	uint16_t lazy;
 	uint32_t ret;
 	uint8_t phy;
+<<<<<<< HEAD
+=======
+	int err = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	DEBUG_RADIO_START_M(1);
 
@@ -196,6 +212,7 @@ static int prepare_cb(struct lll_prepare_param *p)
 	/* Reset accumulated latencies */
 	cig_lll->latency_prepare = 0U;
 
+<<<<<<< HEAD
 	/* Adjust the SN and NESN for skipped CIG events */
 	if (cis_lll->event_count) {
 		uint16_t cis_lazy;
@@ -214,12 +231,22 @@ static int prepare_cb(struct lll_prepare_param *p)
 	se_curr = 1U;
 	cis_lll->tx.bn_curr = 1U;
 	cis_lll->rx.bn_curr = 1U;
+=======
+	se_curr = 1U;
+
+	/* Adjust the SN and NESN for skipped CIG events */
+	payload_count_lazy_update(cis_lll, lazy);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Start setting up of Radio h/w */
 	radio_reset();
 
 #if defined(CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL)
+<<<<<<< HEAD
 	radio_tx_power_set(cis_lll->tx_pwr_lvl);
+=======
+	radio_tx_power_set(conn_lll->tx_pwr_lvl);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else /* !CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL */
 	radio_tx_power_set(RADIO_TXP_DEFAULT);
 #endif /* !CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL */
@@ -247,7 +274,12 @@ static int prepare_cb(struct lll_prepare_param *p)
 		struct node_tx_iso *node_tx;
 		memq_link_t *link;
 
+<<<<<<< HEAD
 		payload_count = cis_lll->event_count * cis_lll->tx.bn;
+=======
+		payload_count = cis_lll->tx.payload_count +
+				cis_lll->tx.bn_curr - 1U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		do {
 			link = memq_peek(cis_lll->memq_tx.head,
@@ -311,20 +343,33 @@ static int prepare_cb(struct lll_prepare_param *p)
 
 		cis_lll->tx.ccm.counter = payload_count;
 
+<<<<<<< HEAD
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
 				    (cis_lll->tx.max_pdu + PDU_MIC_SIZE),
 				    pkt_flags);
+<<<<<<< HEAD
 		radio_pkt_tx_set(radio_ccm_tx_pkt_set(&cis_lll->tx.ccm,
+=======
+		radio_pkt_tx_set(radio_ccm_iso_tx_pkt_set(&cis_lll->tx.ccm,
+						      RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						      pdu_tx));
 #endif /* CONFIG_BT_CTLR_LE_ENC */
 
 	} else {
 		uint8_t pkt_flags;
 
+<<<<<<< HEAD
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
@@ -375,6 +420,7 @@ static int prepare_cb(struct lll_prepare_param *p)
 	ARG_UNUSED(start_us);
 #endif /* !HAL_RADIO_GPIO_HAVE_PA_PIN */
 
+<<<<<<< HEAD
 	if (false) {
 
 #if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
@@ -390,12 +436,31 @@ static int prepare_cb(struct lll_prepare_param *p)
 #endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
 
 	}
+=======
+#if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
+	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
+	uint32_t overhead;
+
+	overhead = lll_preempt_calc(ull, (TICKER_ID_CONN_ISO_BASE + cig_lll->handle),
+				    ticks_at_event);
+	/* check if preempt to start has changed */
+	if (overhead) {
+		LL_ASSERT_OVERHEAD(overhead);
+
+		radio_isr_set(isr_done, cis_lll);
+		radio_disable();
+
+		err = -ECANCELED;
+	}
+#endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Adjust the SN and NESN for skipped CIG events */
 	cis_handle = cis_handle_curr;
 	do {
 		cis_lll = ull_conn_iso_lll_stream_get_by_group(cig_lll, &cis_handle);
 		if (cis_lll && cis_lll->active) {
+<<<<<<< HEAD
 			if (cis_lll->event_count) {
 				uint16_t cis_lazy;
 
@@ -408,10 +473,26 @@ static int prepare_cb(struct lll_prepare_param *p)
 				/* sn and nesn are 1-bit, only Least Significant bit is needed */
 				cis_lll->sn += cis_lll->tx.bn * cis_lazy;
 				cis_lll->nesn += cis_lll->rx.bn * cis_lazy;
+=======
+			/* Adjust sn and nesn for skipped CIG events */
+			payload_count_lazy_update(cis_lll, lazy);
+
+			/* Adjust sn and nesn for canceled events */
+			if (err) {
+				payload_count_flush_or_inc_on_close(cis_lll);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 	} while (cis_lll);
 
+<<<<<<< HEAD
+=======
+	/* Return if prepare callback cancelled */
+	if (err) {
+		return err;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Prepare is done */
 	ret = lll_prepare_done(cig_lll);
 	LL_ASSERT(!ret);
@@ -427,9 +508,27 @@ static void abort_cb(struct lll_prepare_param *prepare_param, void *param)
 
 	/* NOTE: This is not a prepare being cancelled */
 	if (!prepare_param) {
+<<<<<<< HEAD
 		struct lll_conn_iso_stream *cis_lll;
 
 		cis_lll = ull_conn_iso_lll_stream_get(cis_handle_curr);
+=======
+		struct lll_conn_iso_stream *next_cis_lll;
+		struct lll_conn_iso_stream *cis_lll;
+		struct lll_conn_iso_group *cig_lll;
+
+		cis_lll = ull_conn_iso_lll_stream_get(cis_handle_curr);
+		cig_lll = param;
+
+		/* Adjust the SN, NESN and payload_count on abort for CISes  */
+		do {
+			next_cis_lll = ull_conn_iso_lll_stream_get_by_group(cig_lll,
+									    &cis_handle_curr);
+			if (next_cis_lll && next_cis_lll->active) {
+				payload_count_flush_or_inc_on_close(next_cis_lll);
+			}
+		} while (next_cis_lll);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Perform event abort here.
 		 * After event has been cleanly aborted, clean up resources
@@ -465,14 +564,26 @@ static void isr_tx(void *param)
 	/* Get reference to CIS LLL context */
 	cis_lll = param;
 
+<<<<<<< HEAD
+=======
+	/* Acquire rx node for reception */
+	node_rx = ull_iso_pdu_rx_alloc_peek(1U);
+	LL_ASSERT(node_rx);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CTLR_LE_ENC)
 	/* Get reference to ACL context */
 	const struct lll_conn *conn_lll = ull_conn_lll_get(cis_lll->acl_handle);
 #endif /* CONFIG_BT_CTLR_LE_ENC */
 
+<<<<<<< HEAD
 	/* Acquire rx node for reception */
 	node_rx = ull_iso_pdu_rx_alloc_peek(1U);
 	LL_ASSERT(node_rx);
+=======
+	/* PHY */
+	radio_phy_set(cis_lll->rx.phy, PHY_FLAGS_S8);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Encryption */
 	if (false) {
@@ -482,25 +593,45 @@ static void isr_tx(void *param)
 		uint64_t payload_count;
 		uint8_t pkt_flags;
 
+<<<<<<< HEAD
 		payload_count = (cis_lll->event_count * cis_lll->rx.bn) +
 				(cis_lll->rx.bn_curr - 1U);
 		cis_lll->rx.ccm.counter = payload_count;
 
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		payload_count = cis_lll->rx.payload_count +
+				cis_lll->rx.bn_curr - 1U;
+
+		cis_lll->rx.ccm.counter = payload_count;
+
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 cis_lll->rx.phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
 				    (cis_lll->rx.max_pdu + PDU_MIC_SIZE),
 				    pkt_flags);
+<<<<<<< HEAD
 		radio_pkt_rx_set(radio_ccm_rx_pkt_set(&cis_lll->rx.ccm,
 						      cis_lll->rx.phy,
 						      node_rx->pdu));
+=======
+		radio_pkt_rx_set(radio_ccm_iso_rx_pkt_set(&cis_lll->rx.ccm,
+							  cis_lll->rx.phy,
+							  RADIO_PKT_CONF_PDU_TYPE_CIS,
+							  node_rx->pdu));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_BT_CTLR_LE_ENC */
 
 	} else {
 		uint8_t pkt_flags;
 
+<<<<<<< HEAD
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 cis_lll->rx.phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
@@ -555,7 +686,11 @@ static void isr_tx(void *param)
 
 	/* Schedule next subevent */
 	if (se_curr < cis_lll->nse) {
+<<<<<<< HEAD
 		const struct lll_conn *conn_lll;
+=======
+		const struct lll_conn *evt_conn_lll;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint16_t data_chan_id;
 		uint32_t subevent_us;
 		uint32_t start_us;
@@ -568,13 +703,22 @@ static void isr_tx(void *param)
 		LL_ASSERT(start_us == (subevent_us + 1U));
 
 		/* Get reference to ACL context */
+<<<<<<< HEAD
 		conn_lll = ull_conn_lll_get(cis_lll->acl_handle);
+=======
+		evt_conn_lll = ull_conn_lll_get(cis_lll->acl_handle);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Calculate the radio channel to use for next subevent */
 		data_chan_id = lll_chan_id(cis_lll->access_addr);
 		next_chan_use = lll_chan_iso_subevent(data_chan_id,
+<<<<<<< HEAD
 						      conn_lll->data_chan_map,
 						      conn_lll->data_chan_count,
+=======
+						      evt_conn_lll->data_chan_map,
+						      evt_conn_lll->data_chan_count,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						      &data_chan_prn_s,
 						      &data_chan_remap_idx);
 	} else {
@@ -624,7 +768,13 @@ static void isr_tx(void *param)
 		cis_lll = next_cis_lll;
 
 		/* Tx Ack stale ISO Data */
+<<<<<<< HEAD
 		payload_count = cis_lll->event_count * cis_lll->tx.bn;
+=======
+		payload_count = cis_lll->tx.payload_count +
+				cis_lll->tx.bn_curr - 1U;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		do {
 			link = memq_peek(cis_lll->memq_tx.head,
 					 cis_lll->memq_tx.tail,
@@ -659,8 +809,11 @@ static void isr_tx(void *param)
 static void isr_rx(void *param)
 {
 	struct lll_conn_iso_stream *cis_lll;
+<<<<<<< HEAD
 	struct node_rx_pdu *node_rx;
 	struct pdu_cis *pdu_rx;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t ack_pending;
 	uint8_t trx_done;
 	uint8_t crc_ok;
@@ -685,7 +838,29 @@ static void isr_rx(void *param)
 	cis_lll = param;
 
 	/* No Rx */
+<<<<<<< HEAD
 	if (!trx_done) {
+=======
+	if (!trx_done ||
+#if defined(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)
+	    /* Used by test code,
+	     * to skip a number of events in every 3 event count when current subevent is less than
+	     * or equal to 2 or when current subevent has completed all its NSE number of subevents.
+	     * OR
+	     * to skip a (number + 1) of events in every 3 event count when current subevent is less
+	     * than or equal to 1 or when current subevent has completed all its NSE number of
+	     * subevents.
+	     */
+	    ((((cis_lll->event_count % 3U) < CONFIG_TEST_FT_CEN_SKIP_EVENTS_COUNT) &&
+	      ((se_curr > cis_lll->nse) || (se_curr <= 2U))) ||
+
+	     (((cis_lll->event_count % 3U) < (CONFIG_TEST_FT_CEN_SKIP_EVENTS_COUNT + 1U)) &&
+	      ((se_curr > cis_lll->nse) || (se_curr <= 1U)))) ||
+#endif /* CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS */
+	    false) {
+		payload_count_flush(cis_lll);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto isr_rx_next_subevent;
 	}
 
@@ -695,6 +870,7 @@ static void isr_rx(void *param)
 	/* Set the bit corresponding to CIS index */
 	trx_performed_bitmask |= (1U << LL_CIS_IDX_FROM_HANDLE(cis_lll->handle));
 
+<<<<<<< HEAD
 	/* Get reference to received PDU */
 	node_rx = ull_iso_pdu_rx_alloc_peek(1U);
 	LL_ASSERT(node_rx);
@@ -712,6 +888,25 @@ static void isr_rx(void *param)
 
 				cis_lll->tx.bn_curr++;
 
+=======
+	if (crc_ok) {
+		struct node_rx_pdu *node_rx;
+		struct pdu_cis *pdu_rx;
+
+		/* Get reference to received PDU */
+		node_rx = ull_iso_pdu_rx_alloc_peek(1U);
+		LL_ASSERT(node_rx);
+		pdu_rx = (void *)node_rx->pdu;
+
+		/* Tx ACK */
+		if ((pdu_rx->nesn != cis_lll->sn) && (cis_lll->tx.bn_curr <= cis_lll->tx.bn)) {
+			cis_lll->sn++;
+			cis_lll->tx.bn_curr++;
+			if ((cis_lll->tx.bn_curr > cis_lll->tx.bn) &&
+			    ((cis_lll->tx.payload_count / cis_lll->tx.bn) < cis_lll->event_count)) {
+				cis_lll->tx.payload_count += cis_lll->tx.bn;
+				cis_lll->tx.bn_curr = 1U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 
 			/* TODO: Implement early Tx Ack. Currently Tx Ack
@@ -725,9 +920,15 @@ static void isr_rx(void *param)
 		    (cis_lll->rx.bn_curr <= cis_lll->rx.bn) &&
 		    (pdu_rx->sn == cis_lll->nesn) &&
 		    ull_iso_pdu_rx_alloc_peek(2U)) {
+<<<<<<< HEAD
 			struct node_rx_iso_meta *iso_meta;
 
 			/* Increment next expected sequence number */
+=======
+			struct lll_conn_iso_group *cig_lll;
+			struct node_rx_iso_meta *iso_meta;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			cis_lll->nesn++;
 
 #if defined(CONFIG_BT_CTLR_LE_ENC)
@@ -758,12 +959,24 @@ static void isr_rx(void *param)
 			node_rx->hdr.type = NODE_RX_TYPE_ISO_PDU;
 			node_rx->hdr.handle = cis_lll->handle;
 			iso_meta = &node_rx->hdr.rx_iso_meta;
+<<<<<<< HEAD
 			iso_meta->payload_number = (cis_lll->event_count *
 						    cis_lll->rx.bn) +
 						   (cis_lll->rx.bn_curr - 1U);
 			iso_meta->timestamp =
 				HAL_TICKER_TICKS_TO_US(radio_tmr_start_get()) +
 				radio_tmr_ready_restore();
+=======
+			iso_meta->payload_number = cis_lll->rx.payload_count +
+						   cis_lll->rx.bn_curr - 1U;
+			iso_meta->timestamp =
+				HAL_TICKER_TICKS_TO_US(radio_tmr_start_get()) +
+				radio_tmr_ready_restore();
+			cig_lll = ull_conn_iso_lll_group_get_by_stream(cis_lll);
+			iso_meta->timestamp -= (cis_lll->event_count -
+						(cis_lll->rx.payload_count / cis_lll->rx.bn)) *
+					       cig_lll->iso_interval_us;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			iso_meta->timestamp %=
 				HAL_TICKER_TICKS_TO_US(BIT(HAL_TICKER_CNTR_MSBIT + 1U));
 			iso_meta->status = 0U;
@@ -775,6 +988,7 @@ static void isr_rx(void *param)
 			iso_rx_sched();
 #endif /* CONFIG_BT_CTLR_LOW_LAT_ULL */
 
+<<<<<<< HEAD
 			/* Increment burst number */
 			cis_lll->rx.bn_curr++;
 
@@ -799,12 +1013,28 @@ static void isr_rx(void *param)
 		 */
 		} else {
 			/* Do nothing, ignore the Rx buffer */
+=======
+			cis_lll->rx.bn_curr++;
+			if ((cis_lll->rx.bn_curr > cis_lll->rx.bn) &&
+			    ((cis_lll->rx.payload_count / cis_lll->rx.bn) < cis_lll->event_count)) {
+				cis_lll->rx.payload_count += cis_lll->rx.bn;
+				cis_lll->rx.bn_curr = 1U;
+			}
+
+			/* Need to be acked */
+			ack_pending = 1U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Close Isochronous Event */
 		cie = cie || pdu_rx->cie;
 	}
 
+<<<<<<< HEAD
+=======
+	payload_count_flush(cis_lll);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Close Isochronous Event */
 	cie = cie || ((cis_lll->rx.bn_curr > cis_lll->rx.bn) &&
 		      (cis_lll->tx.bn_curr > cis_lll->tx.bn) &&
@@ -812,12 +1042,20 @@ static void isr_rx(void *param)
 
 isr_rx_next_subevent:
 	if (cie || (se_curr == cis_lll->nse)) {
+<<<<<<< HEAD
 		struct lll_conn_iso_stream *old_cis_lll;
 		struct lll_conn_iso_stream *next_cis_lll;
 		struct lll_conn_iso_group *cig_lll;
 		struct lll_conn *next_conn_lll;
 		uint8_t phy;
 		uint8_t bn;
+=======
+		struct lll_conn_iso_stream *next_cis_lll;
+		struct lll_conn_iso_stream *old_cis_lll;
+		struct lll_conn_iso_group *cig_lll;
+		struct lll_conn *next_conn_lll;
+		uint8_t phy;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Fetch next CIS */
 		/* TODO: Use a new ull_conn_iso_lll_stream_get_active_by_group()
@@ -833,6 +1071,7 @@ isr_rx_next_subevent:
 			goto isr_rx_done;
 		}
 
+<<<<<<< HEAD
 		/* Adjust sn when flushing Tx */
 		/* FIXME: When Flush Timeout is implemented */
 		if (cis_lll->tx.bn_curr <= cis_lll->tx.bn) {
@@ -845,6 +1084,8 @@ isr_rx_next_subevent:
 			lll_flush_rx(cis_lll);
 		}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Get reference to ACL context */
 		next_conn_lll = ull_conn_lll_get(next_cis_lll->acl_handle);
 
@@ -878,7 +1119,12 @@ isr_rx_next_subevent:
 			old_cis_lll = cis_lll;
 			cis_lll = next_cis_lll;
 
+<<<<<<< HEAD
 			payload_count = cis_lll->event_count * cis_lll->tx.bn;
+=======
+			payload_count = cis_lll->tx.payload_count +
+					cis_lll->tx.bn_curr - 1U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			do {
 				link = memq_peek(cis_lll->memq_tx.head,
@@ -912,6 +1158,7 @@ isr_rx_next_subevent:
 			cis_lll = old_cis_lll;
 		}
 
+<<<<<<< HEAD
 		/* Generate ISO Data Invalid Status */
 		bn = cis_lll->rx.bn_curr;
 		while (bn <= cis_lll->rx.bn) {
@@ -959,6 +1206,15 @@ isr_rx_next_subevent:
 
 #if defined(CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL)
 		radio_tx_power_set(next_cis_lll->tx_pwr_lvl);
+=======
+		payload_count_flush_or_inc_on_close(cis_lll);
+
+		/* Reset indices for the next CIS */
+		se_curr = 0U; /* isr_prepare_subevent() will increase se_curr */
+
+#if defined(CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL)
+		radio_tx_power_set(next_conn_lll->tx_pwr_lvl);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 		radio_tx_power_set(RADIO_TXP_DEFAULT);
 #endif
@@ -1014,8 +1270,12 @@ static void isr_prepare_subevent(void *param)
 		memq_link_t *link;
 
 		payload_index = cis_lll->tx.bn_curr - 1U;
+<<<<<<< HEAD
 		payload_count = cis_lll->event_count * cis_lll->tx.bn +
 				payload_index;
+=======
+		payload_count = cis_lll->tx.payload_count + payload_index;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		link = memq_peek_n(cis_lll->memq_tx.head, cis_lll->memq_tx.tail,
 				   payload_index, (void **)&node_tx);
@@ -1062,6 +1322,12 @@ static void isr_prepare_subevent(void *param)
 	const struct lll_conn *conn_lll = ull_conn_lll_get(cis_lll->acl_handle);
 #endif /* CONFIG_BT_CTLR_LE_ENC */
 
+<<<<<<< HEAD
+=======
+	/* PHY */
+	radio_phy_set(cis_lll->tx.phy, cis_lll->tx.phy_flags);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Encryption */
 	if (false) {
 
@@ -1071,19 +1337,32 @@ static void isr_prepare_subevent(void *param)
 
 		cis_lll->tx.ccm.counter = payload_count;
 
+<<<<<<< HEAD
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 cis_lll->tx.phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
 				    (cis_lll->tx.max_pdu + PDU_MIC_SIZE), pkt_flags);
+<<<<<<< HEAD
 		radio_pkt_tx_set(radio_ccm_tx_pkt_set(&cis_lll->tx.ccm,
+=======
+		radio_pkt_tx_set(radio_ccm_iso_tx_pkt_set(&cis_lll->tx.ccm,
+						      RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						      pdu_tx));
 #endif /* CONFIG_BT_CTLR_LE_ENC */
 
 	} else {
 		uint8_t pkt_flags;
 
+<<<<<<< HEAD
 		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_DC,
+=======
+		pkt_flags = RADIO_PKT_CONF_FLAGS(RADIO_PKT_CONF_PDU_TYPE_CIS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						 cis_lll->tx.phy,
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
@@ -1144,13 +1423,17 @@ static void isr_done(void *param)
 {
 	struct lll_conn_iso_stream *cis_lll;
 	struct event_done_extra *e;
+<<<<<<< HEAD
 	uint8_t bn;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	lll_isr_status_reset();
 
 	/* Get reference to CIS LLL context */
 	cis_lll = param;
 
+<<<<<<< HEAD
 	/* Adjust sn when flushing Tx */
 	/* FIXME: When Flush Timeout is implemented */
 	if (cis_lll->tx.bn_curr <= cis_lll->tx.bn) {
@@ -1201,6 +1484,9 @@ static void isr_done(void *param)
 		iso_rx_sched();
 	}
 #endif /* CONFIG_BT_CTLR_LOW_LAT_ULL */
+=======
+	payload_count_flush_or_inc_on_close(cis_lll);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	e = ull_event_done_extra_get();
 	LL_ASSERT(e);
@@ -1215,3 +1501,193 @@ static void isr_done(void *param)
 
 	lll_isr_cleanup(param);
 }
+<<<<<<< HEAD
+=======
+
+static void payload_count_flush(struct lll_conn_iso_stream *cis_lll)
+{
+	if (cis_lll->tx.bn) {
+		uint64_t payload_count;
+		uint8_t u;
+
+		payload_count = cis_lll->tx.payload_count + cis_lll->tx.bn_curr - 1U;
+		u = cis_lll->nse - ((cis_lll->nse / cis_lll->tx.bn) *
+				    (cis_lll->tx.bn - 1U -
+				     (payload_count % cis_lll->tx.bn)));
+		if ((((cis_lll->tx.payload_count / cis_lll->tx.bn) + cis_lll->tx.ft) ==
+		     (cis_lll->event_count + 1U)) && (u <= se_curr) &&
+		    (((cis_lll->tx.bn_curr < cis_lll->tx.bn) &&
+		      ((cis_lll->tx.payload_count / cis_lll->tx.bn) <= cis_lll->event_count)) ||
+		     ((cis_lll->tx.bn_curr == cis_lll->tx.bn) &&
+		      ((cis_lll->tx.payload_count / cis_lll->tx.bn) < cis_lll->event_count)))) {
+			/* sn and nesn are 1-bit, only Least Significant bit is needed */
+			cis_lll->sn++;
+			cis_lll->tx.bn_curr++;
+			if (cis_lll->tx.bn_curr > cis_lll->tx.bn) {
+				cis_lll->tx.payload_count += cis_lll->tx.bn;
+				cis_lll->tx.bn_curr = 1U;
+			}
+		}
+	}
+
+	if (cis_lll->rx.bn) {
+		uint64_t payload_count;
+		uint8_t u;
+
+		payload_count = cis_lll->rx.payload_count + cis_lll->rx.bn_curr - 1U;
+		u = cis_lll->nse - ((cis_lll->nse / cis_lll->rx.bn) *
+				    (cis_lll->rx.bn - 1U -
+				     (payload_count % cis_lll->rx.bn)));
+		if ((((cis_lll->rx.payload_count / cis_lll->rx.bn) + cis_lll->rx.ft) ==
+		     (cis_lll->event_count + 1U)) && (u <= se_curr) &&
+		    (((cis_lll->rx.bn_curr < cis_lll->rx.bn) &&
+		      ((cis_lll->rx.payload_count / cis_lll->rx.bn) <= cis_lll->event_count)) ||
+		     ((cis_lll->rx.bn_curr == cis_lll->rx.bn) &&
+		      ((cis_lll->rx.payload_count / cis_lll->rx.bn) < cis_lll->event_count)))) {
+			/* sn and nesn are 1-bit, only Least Significant bit is needed */
+			cis_lll->nesn++;
+			cis_lll->rx.bn_curr++;
+			if (cis_lll->rx.bn_curr > cis_lll->rx.bn) {
+				cis_lll->rx.payload_count += cis_lll->rx.bn;
+				cis_lll->rx.bn_curr = 1U;
+			}
+		}
+	}
+}
+
+static void payload_count_flush_or_inc_on_close(struct lll_conn_iso_stream *cis_lll)
+{
+	if (cis_lll->tx.bn) {
+		uint64_t payload_count;
+		uint8_t u;
+
+		if (((cis_lll->tx.payload_count / cis_lll->tx.bn) + cis_lll->tx.bn_curr) >
+		    (cis_lll->event_count + cis_lll->tx.bn)) {
+			cis_lll->tx.payload_count += cis_lll->tx.bn;
+			cis_lll->tx.bn_curr = 1U;
+
+			goto payload_count_flush_or_inc_on_close_rx;
+		}
+
+		payload_count = cis_lll->tx.payload_count + cis_lll->tx.bn_curr - 1U;
+		u = cis_lll->nse - ((cis_lll->nse / cis_lll->tx.bn) *
+				    (cis_lll->tx.bn - 1U -
+				     (payload_count % cis_lll->tx.bn)));
+		while ((((cis_lll->tx.payload_count / cis_lll->tx.bn) + cis_lll->tx.ft) <
+			(cis_lll->event_count + 1U)) ||
+		       ((((cis_lll->tx.payload_count / cis_lll->tx.bn) + cis_lll->tx.ft) ==
+			 (cis_lll->event_count + 1U)) && (u <= (cis_lll->nse + 1U)))) {
+			/* sn and nesn are 1-bit, only Least Significant bit is needed */
+			cis_lll->sn++;
+			cis_lll->tx.bn_curr++;
+			if (cis_lll->tx.bn_curr > cis_lll->tx.bn) {
+				cis_lll->tx.payload_count += cis_lll->tx.bn;
+				cis_lll->tx.bn_curr = 1U;
+			}
+
+			payload_count = cis_lll->tx.payload_count + cis_lll->tx.bn_curr - 1U;
+			u = cis_lll->nse - ((cis_lll->nse / cis_lll->tx.bn) *
+					    (cis_lll->tx.bn - 1U -
+					     (payload_count % cis_lll->tx.bn)));
+		}
+	}
+
+payload_count_flush_or_inc_on_close_rx:
+	if (cis_lll->rx.bn) {
+		uint64_t payload_count;
+		uint8_t u;
+
+		if (((cis_lll->rx.payload_count / cis_lll->rx.bn) + cis_lll->rx.bn_curr) >
+		    (cis_lll->event_count + cis_lll->rx.bn)) {
+			cis_lll->rx.payload_count += cis_lll->rx.bn;
+			cis_lll->rx.bn_curr = 1U;
+
+			return;
+		}
+
+		payload_count = cis_lll->rx.payload_count + cis_lll->rx.bn_curr - 1U;
+		u = cis_lll->nse - ((cis_lll->nse / cis_lll->rx.bn) *
+				    (cis_lll->rx.bn - 1U -
+				     (payload_count % cis_lll->rx.bn)));
+		while ((((cis_lll->rx.payload_count / cis_lll->rx.bn) + cis_lll->rx.ft) <
+			(cis_lll->event_count + 1U)) ||
+		       ((((cis_lll->rx.payload_count / cis_lll->rx.bn) + cis_lll->rx.ft) ==
+			 (cis_lll->event_count + 1U)) && (u <= (cis_lll->nse + 1U)))) {
+			/* sn and nesn are 1-bit, only Least Significant bit is needed */
+			cis_lll->nesn++;
+			cis_lll->rx.bn_curr++;
+			if (cis_lll->rx.bn_curr > cis_lll->rx.bn) {
+				cis_lll->rx.payload_count += cis_lll->rx.bn;
+				cis_lll->rx.bn_curr = 1U;
+			}
+
+			payload_count = cis_lll->rx.payload_count + cis_lll->rx.bn_curr - 1U;
+			u = cis_lll->nse - ((cis_lll->nse / cis_lll->rx.bn) *
+					    (cis_lll->rx.bn - 1U -
+					     (payload_count % cis_lll->rx.bn)));
+		}
+	}
+}
+
+static void payload_count_lazy_update(struct lll_conn_iso_stream *cis_lll, uint16_t lazy)
+{
+	if (cis_lll->tx.bn) {
+		uint16_t tx_lazy;
+
+		tx_lazy = lazy;
+		while (tx_lazy--) {
+			uint64_t payload_count;
+			uint8_t u;
+
+			payload_count = cis_lll->tx.payload_count + cis_lll->tx.bn_curr - 1U;
+			u = cis_lll->nse - ((cis_lll->nse / cis_lll->tx.bn) *
+					    (cis_lll->tx.bn - 1U -
+					     (payload_count % cis_lll->tx.bn)));
+			while (((cis_lll->tx.payload_count / cis_lll->tx.bn) + cis_lll->tx.ft) <
+			       (cis_lll->event_count + 1U)) {
+				/* sn and nesn are 1-bit, only Least Significant bit is needed */
+				cis_lll->sn++;
+				cis_lll->tx.bn_curr++;
+				if (cis_lll->tx.bn_curr > cis_lll->tx.bn) {
+					cis_lll->tx.payload_count += cis_lll->tx.bn;
+					cis_lll->tx.bn_curr = 1U;
+				}
+
+				payload_count = cis_lll->tx.payload_count +
+						cis_lll->tx.bn_curr - 1U;
+				u = cis_lll->nse - ((cis_lll->nse / cis_lll->tx.bn) *
+						    (cis_lll->tx.bn - 1U -
+						     (payload_count % cis_lll->tx.bn)));
+			}
+		}
+	}
+
+	if (cis_lll->rx.bn) {
+		while (lazy--) {
+			uint64_t payload_count;
+			uint8_t u;
+
+			payload_count = cis_lll->rx.payload_count + cis_lll->rx.bn_curr - 1U;
+			u = cis_lll->nse - ((cis_lll->nse / cis_lll->rx.bn) *
+					    (cis_lll->rx.bn - 1U -
+					     (payload_count % cis_lll->rx.bn)));
+			while (((cis_lll->rx.payload_count / cis_lll->rx.bn) + cis_lll->rx.ft) <
+			       (cis_lll->event_count + 1U)) {
+				/* sn and nesn are 1-bit, only Least Significant bit is needed */
+				cis_lll->nesn++;
+				cis_lll->rx.bn_curr++;
+				if (cis_lll->rx.bn_curr > cis_lll->rx.bn) {
+					cis_lll->rx.payload_count += cis_lll->rx.bn;
+					cis_lll->rx.bn_curr = 1U;
+				}
+
+				payload_count = cis_lll->rx.payload_count +
+						cis_lll->rx.bn_curr - 1U;
+				u = cis_lll->nse - ((cis_lll->nse / cis_lll->rx.bn) *
+						    (cis_lll->rx.bn - 1U -
+						     (payload_count % cis_lll->rx.bn)));
+			}
+		}
+	}
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

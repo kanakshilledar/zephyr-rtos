@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/sh
+=======
+#!/bin/bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Copyright (c) 2019 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
@@ -36,7 +40,11 @@ check_dirs ()
 	    do
 	        local l
 
+<<<<<<< HEAD
 	        l="$d/net-tools"
+=======
+	        l="$d/tools/net-tools"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	        if [ -d "$l" ]; then
 		        NET_TOOLS_BASE="$l"
 		        break

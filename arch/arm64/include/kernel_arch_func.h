@@ -43,7 +43,11 @@ static inline void arch_switch(void *switch_to, void **switched_from)
 	z_arm64_context_switch(new, old);
 }
 
+<<<<<<< HEAD
 extern void z_arm64_fatal_error(z_arch_esf_t *esf, unsigned int reason);
+=======
+extern void z_arm64_fatal_error(unsigned int reason, z_arch_esf_t *esf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 extern void z_arm64_set_ttbr0(uint64_t ttbr0);
 extern void z_arm64_mem_cfg_ipi(void);
 

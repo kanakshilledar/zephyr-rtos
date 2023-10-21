@@ -4,6 +4,45 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+/**
+ * @file
+ * @defgroup rbtree_apis Balanced Red/Black Tree
+ * @ingroup datastructure_apis
+ *
+ * @brief Balanced Red/Black Tree implementation
+ *
+ * This implements an intrusive balanced tree that guarantees
+ * O(log2(N)) runtime for all operations and amortized O(1) behavior
+ * for creation and destruction of whole trees. The algorithms and
+ * naming are conventional per existing academic and didactic
+ * implementations, c.f.:
+ *
+ * https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+ *
+ * The implementation is size-optimized to prioritize runtime memory
+ * usage. The data structure is intrusive, which is to say the @ref
+ * rbnode handle is intended to be placed in a separate struct, in the
+ * same way as with other such structures (e.g. Zephyr's @ref
+ * doubly-linked-list_apis), and requires no data pointer to be stored
+ * in the node. The color bit is unioned with a pointer (fairly common
+ * for such libraries). Most notably, there is no "parent" pointer
+ * stored in the node, the upper structure of the tree being generated
+ * dynamically via a stack as the tree is recursed. So the overall
+ * memory overhead of a node is just two pointers, identical with a
+ * doubly-linked list.
+ *
+ * @{
+ */
+
+#ifndef ZEPHYR_INCLUDE_SYS_RB_H_
+#define ZEPHYR_INCLUDE_SYS_RB_H_
+
+#include <stdbool.h>
+#include <stdint.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Our SDK/toolchains integration seems to be inconsistent about
  * whether they expose alloca.h or not.  On gcc it's a moot point as
  * it's always builtin.
@@ -17,6 +56,7 @@
 #endif
 
 /**
+<<<<<<< HEAD
  * @file
  * @brief Red/Black balanced tree data structure
  *
@@ -48,6 +88,14 @@
 
 struct rbnode {
 	struct rbnode *children[2];
+=======
+ * @brief Balanced red/black tree node structure
+ */
+struct rbnode {
+	/** @cond INTERNAL_HIDDEN */
+	struct rbnode *children[2];
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Theoretical maximum depth of tree based on pointer size. If memory
@@ -59,12 +107,15 @@ struct rbnode {
 #define Z_PBITS(t) (8 * sizeof(t))
 #define Z_MAX_RBTREE_DEPTH (2 * (Z_PBITS(int *) - Z_TBITS(int *) - 1) + 1)
 
+<<<<<<< HEAD
 
  /**
   * @defgroup rbtree_apis Balanced Red/Black Tree
   * @ingroup datastructure_apis
   * @{
   */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @typedef rb_lessthan_t
  * @brief Red/black tree comparison predicate
@@ -80,16 +131,39 @@ struct rbnode {
  */
 typedef bool (*rb_lessthan_t)(struct rbnode *a, struct rbnode *b);
 
+<<<<<<< HEAD
 struct rbtree {
 	struct rbnode *root;
 	rb_lessthan_t lessthan_fn;
+=======
+/**
+ * @brief Balanced red/black tree structure
+ */
+struct rbtree {
+	/** Root node of the tree */
+	struct rbnode *root;
+	/** Comparison function for nodes in the tree */
+	rb_lessthan_t lessthan_fn;
+	/** @cond INTERNAL_HIDDEN */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int max_depth;
 #ifdef CONFIG_MISRA_SANE
 	struct rbnode *iter_stack[Z_MAX_RBTREE_DEPTH];
 	unsigned char iter_left[Z_MAX_RBTREE_DEPTH];
 #endif
+<<<<<<< HEAD
 };
 
+=======
+	/** @endcond */
+};
+
+/**
+ * @brief Prototype for node visitor callback.
+ * @param node Node being visited
+ * @param cookie User-specified data
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 typedef void (*rb_visit_t)(struct rbnode *node, void *cookie);
 
 struct rbnode *z_rb_child(struct rbnode *node, uint8_t side);

@@ -15,7 +15,10 @@
 
 #include <stdio.h>
 
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/nmi.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/init.h>
 #include <zephyr/logging/log.h>
@@ -29,8 +32,11 @@ LOG_MODULE_REGISTER(soc, CONFIG_SOC_LOG_LEVEL);
 
 static int rp2040_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	reset_block(~(RESETS_RESET_IO_QSPI_BITS | RESETS_RESET_PADS_QSPI_BITS |
 		      RESETS_RESET_PLL_USB_BITS | RESETS_RESET_PLL_SYS_BITS));
 
@@ -44,6 +50,7 @@ static int rp2040_init(void)
 
 	unreset_block_wait(RESETS_RESET_BITS);
 
+<<<<<<< HEAD
 
 	key = irq_lock();
 
@@ -54,6 +61,8 @@ static int rp2040_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

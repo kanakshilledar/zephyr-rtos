@@ -121,6 +121,23 @@ When the write function is called, the magic header and checksum (if enabled)
 will be set on the area, and it will be marked as valid from that point
 onwards.
 
+<<<<<<< HEAD
+=======
+Mutex protection
+****************
+
+Mutex protection of retention areas is enabled by default when applications are
+compiled with multithreading support. This means that different threads can
+safely call the retention functions without clashing with other concurrent
+thread function usage, but means that retention functions cannot be used from
+ISRs. It is possible to disable mutex protection globally on all retention
+areas by enabling :kconfig:option:`CONFIG_RETENTION_MUTEX_FORCE_DISABLE` -
+users are then responsible for ensuring that the function calls do not conflict
+with each other. Note that to use this, retention driver mutex support must
+also be disabled by enabling
+:kconfig:option:`CONFIG_RETAINED_MEM_MUTEX_FORCE_DISABLE`.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _boot_mode_api:
 
 Boot mode
@@ -184,6 +201,20 @@ which will allow rebooting directly into the serial recovery mode by using:
 	bootmode_set(BOOT_MODE_TYPE_BOOTLOADER);
 	sys_reboot(0);
 
+<<<<<<< HEAD
+=======
+Retention system modules
+************************
+
+Modules can expand the functionality of the retention system by using it as a
+transport (e.g. between a bootloader and application).
+
+.. toctree::
+    :maxdepth: 1
+
+    blinfo.rst
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 API Reference
 *************
 

@@ -13,6 +13,10 @@
 #include <zephyr/init.h>
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/dma/dma_stm32.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/logging/log.h>
 #include <zephyr/irq.h>
@@ -809,11 +813,19 @@ static int bdma_stm32_init(const struct device *dev)
 	 * This check verifies that the non-cachable flag is set in the DTS.
 	 * For example:
 	 *	&sram4 {
+<<<<<<< HEAD
 	 *		zephyr,memory-region-mpu = "RAM_NOCACHE";
 	 *	};
 	 */
 #if DT_NODE_HAS_PROP(DT_NODELABEL(sram4), zephyr_memory_region_mpu)
 	if (strcmp(DT_PROP(DT_NODELABEL(sram4), zephyr_memory_region_mpu), "RAM_NOCACHE") != 0) {
+=======
+	 *		zephyr,memory-attr = "RAM_NOCACHE";
+	 *	};
+	 */
+#if DT_NODE_HAS_PROP(DT_NODELABEL(sram4), zephyr_memory_attr)
+	if ((DT_PROP(DT_NODELABEL(sram4), zephyr_memory_attr) & DT_MEM_ARM_MPU_RAM_NOCACHE) == 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SRAM4 is not set as non-cachable.");
 		return -EIO;
 	}

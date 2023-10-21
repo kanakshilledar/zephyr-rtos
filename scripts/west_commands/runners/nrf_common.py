@@ -28,7 +28,11 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
     '''Runner front-end base class for nrf tools.'''
 
     def __init__(self, cfg, family, softreset, dev_id, erase=False,
+<<<<<<< HEAD
                  tool_opt=[], force=False, recover=False):
+=======
+                 reset=True, tool_opt=[], force=False, recover=False):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         super().__init__(cfg)
         self.hex_ = cfg.hex_file
         if family and not family.endswith('_FAMILY'):
@@ -37,6 +41,10 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
         self.softreset = softreset
         self.dev_id = dev_id
         self.erase = bool(erase)
+<<<<<<< HEAD
+=======
+        self.reset = bool(reset)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.force = force
         self.recover = bool(recover)
 
@@ -47,7 +55,11 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
     @classmethod
     def capabilities(cls):
         return RunnerCaps(commands={'flash'}, dev_id=True, erase=True,
+<<<<<<< HEAD
                           tool_opt=True)
+=======
+                          reset=True, tool_opt=True)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def dev_id_help(cls) -> str:
@@ -75,6 +87,11 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
                             memory and disable read back protection before
                             flashing (erases flash for both cores on nRF53)''')
 
+<<<<<<< HEAD
+=======
+        parser.set_defaults(reset=True)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     def ensure_snr(self):
         if not self.dev_id or "*" in self.dev_id:
             self.dev_id = self.get_board_snr(self.dev_id or "*")
@@ -224,6 +241,14 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
         else:
             self.logger.info('Recovering and erasing all flash memory.')
 
+<<<<<<< HEAD
+=======
+        # The network core needs to be recovered first due to the fact that
+        # recovering it erases the flash of *both* cores. Since a recover
+        # operation unlocks the core and then flashes a small image that keeps
+        # the debug access port open, recovering the network core last would
+        # result in that small image being deleted from the app core.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if self.family == 'NRF53_FAMILY':
             self.exec_op('recover', core='NRFDL_DEVICE_CORE_NETWORK')
 
@@ -398,7 +423,12 @@ class NrfBinaryRunner(ZephyrBinaryRunner):
         if self.recover:
             self.recover_target()
         self.program_hex()
+<<<<<<< HEAD
         self.reset_target()
+=======
+        if self.reset:
+            self.reset_target()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         # All done, now flush any outstanding ops
         self.flush(force=True)
 

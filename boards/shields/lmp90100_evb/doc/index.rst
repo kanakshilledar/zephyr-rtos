@@ -44,7 +44,11 @@ Programming
 Set ``-DSHIELD=lmp90100_evb`` when you invoke ``west build``. For example:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/shields/lmp90100_evb/thermocouple
+=======
+   :zephyr-app: samples/shields/lmp90100_evb/rtd
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: frdm_k64f
    :shield: lmp90100_evb
    :goals: build

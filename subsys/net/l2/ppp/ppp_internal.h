@@ -213,5 +213,8 @@ static inline bool ppp_my_option_is_acked(struct ppp_fsm *fsm,
 {
 	return ppp_my_option_flags(fsm, code) & PPP_MY_OPTION_ACKED;
 }
+<<<<<<< HEAD
 
 void ppp_if_carrier_down(struct net_if *iface);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

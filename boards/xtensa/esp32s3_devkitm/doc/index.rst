@@ -71,6 +71,16 @@ Security:
 - 4-Kbit OTP, up to 1792 bits for users
 - Cryptographic hardware acceleration: (AES-128/256, Hash, RSA, RNG, HMAC, Digital signature)
 
+<<<<<<< HEAD
+=======
+Asymmetric Multiprocessing (AMP)
+********************************
+
+ESP32S3-DevKitM allows 2 different applications to be executed in ESP32-S3 SoC. Due to its dual-core
+architecture, each core can be enabled to execute customized tasks in stand-alone mode
+and/or exchanging data over OpenAMP framework. See :ref:`ipc_samples` folder as code reference.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 For more information, check the datasheet at `ESP32-S3 Datasheet`_.
 
 Supported Features
@@ -92,6 +102,13 @@ Current Zephyr's ESP32-S3-DevKitM board supports the following features:
 +------------+------------+-------------------------------------+
 | SPI Master | on-chip    | spi                                 |
 +------------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| TWAI/CAN   | on-chip    | can                                 |
++------------+------------+-------------------------------------+
+| ADC        | on-chip    | adc                                 |
++------------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | Timers     | on-chip    | counter                             |
 +------------+------------+-------------------------------------+
 | Watchdog   | on-chip    | watchdog                            |
@@ -106,6 +123,11 @@ Current Zephyr's ESP32-S3-DevKitM board supports the following features:
 +------------+------------+-------------------------------------+
 | GDMA       | on-chip    | dma                                 |
 +------------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| USB-CDC    | on-chip    | serial                              |
++------------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Prerequisites
 -------------
@@ -154,7 +176,11 @@ Sysbuild
 ========
 
 The sysbuild makes possible to build and flash all necessary images needed to
+<<<<<<< HEAD
 bootstrap the board with the EPS32 SoC.
+=======
+bootstrap the board with the ESP32 SoC.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 To build the sample application using sysbuild use the command:
 

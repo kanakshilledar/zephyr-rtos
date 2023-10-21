@@ -81,6 +81,11 @@ already supported, which can also be re-used on this lpcxpresso55s36 board:
 +-----------+------------+-------------------------------------+
 | USB FS    | on-chip    | USB Full Speed device               |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| DAC       | on-chip    | dac                                 |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Other hardware features are not currently enabled.
 
@@ -145,8 +150,14 @@ the functionality of a pin.
 System Clock
 ============
 
+<<<<<<< HEAD
 The LPC55S36 SoC is configured to use the internal FRO at 96MHz as a
 source for the system clock. Other sources for the system clock are
+=======
+The LPC55S36 SoC is configured to use PLL1 clocked from the external 24MHz
+crystal, running at 144MHz as a source for the system clock. When the flash
+controller is enabled, the core clock will be reduced to 96MHz. Other sources for the system clock are
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 provided in the SOC, depending on your system requirements.
 
 Serial Port

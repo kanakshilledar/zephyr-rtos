@@ -216,13 +216,21 @@
 			interrupts = <18 0>;
 			status = "disabled";
 			#io-channel-cells = <1>;
+<<<<<<< HEAD
 			temp-channel = <16>;
 			vref-channel = <17>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			resolutions = <STM32_ADC_RES(12, 0x00)
 				       STM32_ADC_RES(10, 0x01)
 				       STM32_ADC_RES(8, 0x02)
 				       STM32_ADC_RES(6, 0x03)>;
 			sampling-times = <4 9 16 24 48 96 192 384>;
+<<<<<<< HEAD
+=======
+			st,adc-clock-source = <ASYNC>;
+			st,adc-sequencer = <FULLY_CONFIGURABLE>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		dac1: dac@40007400 {

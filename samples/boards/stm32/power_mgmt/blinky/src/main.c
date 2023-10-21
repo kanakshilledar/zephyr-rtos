@@ -19,7 +19,11 @@ int main(void)
 {
 	bool led_is_on = true;
 
+<<<<<<< HEAD
 	__ASSERT_NO_MSG(device_is_ready(led.port));
+=======
+	__ASSERT_NO_MSG(gpio_is_ready_dt(&led));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	printk("Device ready\n");
 

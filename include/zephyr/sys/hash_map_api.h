@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 /**
  * @file
  * @brief Hashmap (Hash Table) API
@@ -12,6 +13,8 @@
  * on a Hashmap (insert, delete, search) are O(1) complexity (on average).
  */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifndef ZEPHYR_INCLUDE_SYS_HASHMAP_API_H_
 #define ZEPHYR_INCLUDE_SYS_HASHMAP_API_H_
 
@@ -27,8 +30,24 @@ extern "C" {
 #endif
 
 /**
+<<<<<<< HEAD
  * @defgroup hashmap_apis Hashmap
  * @ingroup datastructure_apis
+=======
+ * @file
+ * @defgroup hashmap_apis Hashmap
+ * @ingroup datastructure_apis
+ *
+ * @brief Hashmap (Hash Table) API
+ *
+ * Hashmaps (a.k.a Hash Tables) sacrifice space for speed. All operations
+ * on a Hashmap (insert, delete, search) are O(1) complexity (on average).
+ *
+ * @defgroup hashmap_implementations Hashmap Implementations
+ * @ingroup hashmap_apis
+ *
+ * @addtogroup hashmap_apis
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 
@@ -37,6 +56,7 @@ extern "C" {
  *
  * @note @a next should not be used without first checking
  * @ref sys_hashmap_iterator_has_next
+<<<<<<< HEAD
  *
  * @param map Pointer to the associated Hashmap
  * @param next Modify the iterator in-place to point to the next Hashmap entry
@@ -53,6 +73,23 @@ struct sys_hashmap_iterator {
 	uint64_t key;
 	uint64_t value;
 	const size_t size;
+=======
+ */
+struct sys_hashmap_iterator {
+	/** Pointer to the associated Hashmap */
+	const struct sys_hashmap *map;
+	/** Modify the iterator in-place to point to the next Hashmap entry */
+	void (*next)(struct sys_hashmap_iterator *it);
+	/** Implementation-specific iterator state */
+	void *state;
+	/** Key associated with the current entry */
+	uint64_t key;
+	/** Value associated with the current entry */
+	uint64_t value;
+	/** Number of entries in the map */
+	const size_t size;
+	/** Number of entries already iterated */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t pos;
 };
 
@@ -162,6 +199,7 @@ typedef bool (*sys_hashmap_get_t)(const struct sys_hashmap *map, uint64_t key, u
 
 /**
  * @brief Generic Hashmap API
+<<<<<<< HEAD
  *
  * @param iter Iterator constructor (in-place)
  * @param next Forward-incrementer for iterator
@@ -175,6 +213,19 @@ struct sys_hashmap_api {
 	sys_hashmap_clear_t clear;
 	sys_hashmap_insert_t insert;
 	sys_hashmap_remove_t remove;
+=======
+ */
+struct sys_hashmap_api {
+	/** Iterator constructor (in-place) */
+	sys_hashmap_iterator_t iter;
+	/** Clear the hash table, freeing all resources */
+	sys_hashmap_clear_t clear;
+	/** Insert a key-value pair into the Hashmap */
+	sys_hashmap_insert_t insert;
+	/** Remove a key-value pair from the Hashmap */
+	sys_hashmap_remove_t remove;
+	/** Retrieve the value associated with a given key from the Hashmap */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sys_hashmap_get_t get;
 };
 
@@ -193,6 +244,7 @@ struct sys_hashmap_api {
  * The @a initial_n_buckets is defined as the number of buckets to allocate
  * when moving from size 0 to size 1 such that the maximum @a load_factor
  * property is preserved.
+<<<<<<< HEAD
  *
  * @param max_size Maximum number of entries
  * @param load_factor Maximum load factor of expressed in hundredths
@@ -201,6 +253,15 @@ struct sys_hashmap_api {
 struct sys_hashmap_config {
 	size_t max_size;
 	uint8_t load_factor;
+=======
+ */
+struct sys_hashmap_config {
+	/** Maximum number of entries */
+	size_t max_size;
+	/** Maximum load factor expressed in hundredths */
+	uint8_t load_factor;
+	/** Initial number of buckets to allocate */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t initial_n_buckets;
 };
 
@@ -222,6 +283,7 @@ struct sys_hashmap_config {
  * @brief Generic Hashmap data
  *
  * @note When @a size is zero, @a buckets should be `NULL`.
+<<<<<<< HEAD
  *
  * @param buckets Pointer for implementation-specific Hashmap storage
  * @param n_buckets The number of buckets currently allocated
@@ -230,6 +292,15 @@ struct sys_hashmap_config {
 struct sys_hashmap_data {
 	void *buckets;
 	size_t n_buckets;
+=======
+ */
+struct sys_hashmap_data {
+	/** Pointer for implementation-specific Hashmap storage */
+	void *buckets;
+	/** The number of buckets currently allocated */
+	size_t n_buckets;
+	/** The number of entries currently in the Hashmap */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t size;
 };
 

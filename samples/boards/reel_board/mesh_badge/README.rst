@@ -9,7 +9,11 @@ Overview
 This sample app for the reel board showcases Bluetooth mesh
 
 The app starts off as a regular Bluetooth GATT peripheral application.
+<<<<<<< HEAD
 Install the the "nRF Connect" app on your phone (available both for
+=======
+Install the "nRF Connect" app on your phone (available both for
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Android and iOS) to access the service that the app exposes. The service
 can also be accessed with any Bluetooth LE GATT client from your PC,
 however these instructions focus on the necessary steps for phones.

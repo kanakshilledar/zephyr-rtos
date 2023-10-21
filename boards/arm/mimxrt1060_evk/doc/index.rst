@@ -79,6 +79,27 @@ these references:
 - `MIMXRT1060-EVK Website`_
 - `MIMXRT1060-EVK User Guide`_
 - `MIMXRT1060-EVK Schematics`_
+<<<<<<< HEAD
+=======
+- `MIMXRT1060-EVK Debug Firmware`_
+
+External Memory
+===============
+
+This platform has the following external memories:
+
++--------------------+------------+-------------------------------------+
+| Device             | Controller | Status                              |
++====================+============+=====================================+
+| IS25WP064AJBLE     | SEMC       | Enabled via device configuration    |
+|                    |            | data block, which sets up SEMC at   |
+|                    |            | boot time                           |
++--------------------+------------+-------------------------------------+
+| IS42S16160J        | FLEXSPI    | Enabled via flash configurationn    |
+|                    |            | block, which sets up FLEXSPI at     |
+|                    |            | boot time.                          |
++--------------------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Supported Features
 ==================
@@ -315,6 +336,14 @@ however the :ref:`pyocd-debug-host-tools` do not yet support programming the
 external flashes on this board so you must reconfigure the board for one of the
 following debug probes instead.
 
+<<<<<<< HEAD
+=======
+.. _Using LinkServer:
+
+        1. Install the :ref:`linkserver-debug-host-tools` and make sure they are in your search path.
+        2. To update the debug firmware, please follow the instructions on `MIMXRT1060-EVK Debug Firmware`
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _Using J-Link RT1060:
 
 Using J-Link
@@ -429,6 +458,12 @@ connected to the EVK properly. See :ref:`Using J-Link RT1060` for more details.
 .. _MIMXRT1060-EVK User Guide:
    https://www.nxp.com/webapp/Download?colCode=MIMXRT10601064EKBHUG
 
+<<<<<<< HEAD
+=======
+.. _MIMXRT1060-EVK Debug Firmware:
+   https://www.nxp.com/docs/en/application-note/AN13206.pdf
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _MIMXRT1060-EVK Schematics:
    https://www.nxp.com/webapp/Download?colCode=MIMXRT1060-EVK-DESIGNFILE-A3
 

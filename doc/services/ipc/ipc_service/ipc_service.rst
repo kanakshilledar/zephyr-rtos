@@ -161,7 +161,11 @@ See the following example:
 Backends
 ********
 
+<<<<<<< HEAD
 The requirements needed for implementating backends give flexibility to the IPC
+=======
+The requirements needed for implementing backends give flexibility to the IPC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 service. These allow for the addition of dedicated backends having only a
 subsets of features for specific use cases.
 

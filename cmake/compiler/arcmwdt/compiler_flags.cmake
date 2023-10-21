@@ -203,3 +203,9 @@ if(CONFIG_ARCMWDT_LIBC)
   # to ASM builds (which may use 'stdbool.h').
   set_property(TARGET asm APPEND PROPERTY required "-I${NOSTDINC}")
 endif()
+<<<<<<< HEAD
+=======
+
+# Remove after testing that -Wshadow works
+set_compiler_property(PROPERTY warning_shadow_variables)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

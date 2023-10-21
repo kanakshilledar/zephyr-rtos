@@ -622,8 +622,14 @@ static void eth_mcux_phy_work(struct k_work *item)
 
 static void eth_mcux_delayed_phy_work(struct k_work *item)
 {
+<<<<<<< HEAD
 	struct eth_context *context =
 		CONTAINER_OF(item, struct eth_context, delayed_phy_work);
+=======
+	struct k_work_delayable *dwork = k_work_delayable_from_work(item);
+	struct eth_context *context =
+		CONTAINER_OF(dwork, struct eth_context, delayed_phy_work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	eth_mcux_phy_event(context);
 }
@@ -860,7 +866,11 @@ static int eth_rx(struct eth_context *context)
 			ptpTimeData.second--;
 		}
 
+<<<<<<< HEAD
 		pkt->timestamp.nanosecond = ptpTimeData.nanosecond;
+=======
+		pkt->timestamp.nanosecond = ts;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pkt->timestamp.second = ptpTimeData.second;
 	} else {
 		/* Invalid value. */
@@ -1041,6 +1051,11 @@ static void eth_mcux_init(const struct device *dev)
 	enet_config.interrupt |= kENET_MiiInterrupt;
 #endif
 	enet_config.miiMode = kENET_RmiiMode;
+<<<<<<< HEAD
+=======
+	enet_config.callback = eth_callback;
+	enet_config.userData = context;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_ETH_MCUX_PROMISCUOUS_MODE)) {
 		enet_config.macSpecialConfig |= kENET_ControlPromiscuousEnable;
@@ -1097,7 +1112,10 @@ static void eth_mcux_init(const struct device *dev)
 	/* Enable reclaim of tx descriptors that will have the tx timestamp */
 	ENET_SetTxReclaim(&context->enet_handle, true, 0);
 #endif
+<<<<<<< HEAD
 	ENET_SetCallback(&context->enet_handle, eth_callback, context);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	eth_mcux_phy_start(context);
 }

@@ -14,7 +14,11 @@ LOG_MODULE_REGISTER(net_test, LOG_LEVEL_WRN);
 #include <string.h>
 #include <errno.h>
 
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "config.h"
 

@@ -54,14 +54,22 @@ ZTEST(rtc_api, test_alarm_callback)
 	for (uint16_t i = 0; i < alarms_count; i++) {
 		ret = rtc_alarm_set_callback(rtc, i, NULL, NULL);
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to clear and disable alarm");
+=======
+		zassert_ok(ret, "Failed to clear and disable alarm");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Validate alarms supported fields */
 	for (uint16_t i = 0; i < alarms_count; i++) {
 		ret = rtc_alarm_get_supported_fields(rtc, i, &alarm_time_mask_supported);
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to get supported alarm fields");
+=======
+		zassert_ok(ret, "Failed to get supported alarm fields");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Skip test if alarm does not support the minute and hour fields */
 		if (((RTC_ALARM_TIME_MASK_MINUTE & alarm_time_mask_supported) == 0) ||
@@ -78,7 +86,11 @@ ZTEST(rtc_api, test_alarm_callback)
 	for (uint16_t i = 0; i < alarms_count; i++) {
 		ret = rtc_alarm_set_time(rtc, i, alarm_time_mask_set, &alarm_time_set);
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to set alarm time");
+=======
+		zassert_ok(ret, "Failed to set alarm time");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Initialize RTC time to set */
@@ -92,7 +104,11 @@ ZTEST(rtc_api, test_alarm_callback)
 	/* Set RTC time */
 	ret = rtc_set_time(rtc, &time_set);
 
+<<<<<<< HEAD
 	zassert_true(ret == 0, "Failed to set time");
+=======
+	zassert_ok(ret, "Failed to set time");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Clear alarm pending status */
 	for (uint16_t i = 0; i < alarms_count; i++) {
@@ -113,7 +129,11 @@ ZTEST(rtc_api, test_alarm_callback)
 						&callback_user_data_even);
 		}
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to set alarm callback");
+=======
+		zassert_ok(ret, "Failed to set alarm callback");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	for (uint8_t i = 0; i < 2; i++) {
@@ -128,15 +148,23 @@ ZTEST(rtc_api, test_alarm_callback)
 		callback_called_mask_status_odd = atomic_get(&callback_called_mask_odd);
 		callback_called_mask_status_even = atomic_get(&callback_called_mask_even);
 
+<<<<<<< HEAD
 		zassert_true(callback_called_mask_status_odd == 0,
 			     "Alarm callback called prematurely");
 		zassert_true(callback_called_mask_status_even == 0,
 			     "Alarm callback called prematurely");
+=======
+		zassert_equal(callback_called_mask_status_odd, 0,
+			      "Alarm callback called prematurely");
+		zassert_equal(callback_called_mask_status_even, 0,
+			      "Alarm callback called prematurely");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Wait for alarm to trigger */
 		k_sleep(K_SECONDS(RTC_TEST_ALARM_TEST_CALLED_DELAY));
 
 		/* Validate alarm callback called */
+<<<<<<< HEAD
 		for (uint16_t i = 0; i < alarms_count; i++) {
 			callback_called_status =
 				(i % 2) ? atomic_test_bit(&callback_called_mask_odd, i)
@@ -144,23 +172,44 @@ ZTEST(rtc_api, test_alarm_callback)
 
 			zassert_true(callback_called_status == true,
 				     "Alarm callback should have been called");
+=======
+		for (uint16_t j = 0; j < alarms_count; j++) {
+			callback_called_status =
+				(j % 2) ? atomic_test_bit(&callback_called_mask_odd, j)
+					: atomic_test_bit(&callback_called_mask_even, j);
+
+			zassert_equal(callback_called_status, true,
+				      "Alarm callback should have been called");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Reset RTC time */
 		ret = rtc_set_time(rtc, &time_set);
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to set time");
+=======
+		zassert_ok(ret, "Failed to set time");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Disable and clear alarms */
 	for (uint16_t i = 0; i < alarms_count; i++) {
 		ret = rtc_alarm_set_callback(rtc, i, NULL, NULL);
 
+<<<<<<< HEAD
 		zassert_true(ret == 0, "Failed to disable alarm callback");
 
 		ret = rtc_alarm_set_time(rtc, i, 0, NULL);
 
 		zassert_true(ret == 0, "Failed to disable alarm");
+=======
+		zassert_ok(ret, "Failed to disable alarm callback");
+
+		ret = rtc_alarm_set_time(rtc, i, 0, NULL);
+
+		zassert_ok(ret, "Failed to disable alarm");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		ret = rtc_alarm_is_pending(rtc, i);
 

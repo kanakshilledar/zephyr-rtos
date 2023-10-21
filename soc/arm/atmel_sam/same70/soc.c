@@ -1,5 +1,9 @@
 /*
  * Copyright (c) 2016 Piotr Mienkowski
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Gerson Fernando Budke <nandojve@gmail.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,9 +18,14 @@
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/irq.h>
+=======
+#include <cmsis_core.h>
+#include <zephyr/logging/log.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LOG_LEVEL CONFIG_SOC_LOG_LEVEL
 LOG_MODULE_REGISTER(soc);
@@ -224,6 +233,7 @@ static ALWAYS_INLINE void clock_init(void)
 	}
 }
 
+<<<<<<< HEAD
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -243,6 +253,19 @@ static int atmel_same70_init(void)
 
 	if (!(SCB->CCR & SCB_CCR_DC_Msk)) {
 		SCB_EnableDCache();
+=======
+void z_arm_platform_init(void)
+{
+	if (IS_ENABLED(CONFIG_CACHE_MANAGEMENT) && IS_ENABLED(CONFIG_ICACHE)) {
+		SCB_EnableICache();
+	} else {
+		SCB_DisableICache();
+	}
+	if (IS_ENABLED(CONFIG_CACHE_MANAGEMENT) && IS_ENABLED(CONFIG_DCACHE)) {
+		SCB_EnableDCache();
+	} else {
+		SCB_DisableDCache();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/*
@@ -255,6 +278,7 @@ static int atmel_same70_init(void)
 
 	/* Setup system clocks */
 	clock_init();
+<<<<<<< HEAD
 
 	/* Install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
@@ -263,6 +287,20 @@ static int atmel_same70_init(void)
 
 	irq_unlock(key);
 
+=======
+}
+
+/**
+ * @brief Perform basic hardware initialization at boot.
+ *
+ * This needs to be run at the very beginning.
+ * So the init priority has to be 0 (zero).
+ *
+ * @return 0
+ */
+static int atmel_same70_init(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Check that the CHIP CIDR matches the HAL one */
 	if (CHIPID->CHIPID_CIDR != CHIP_CIDR) {
 		LOG_WRN("CIDR mismatch: chip = 0x%08x vs HAL = 0x%08x",

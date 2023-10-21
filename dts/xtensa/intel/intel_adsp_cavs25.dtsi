@@ -41,6 +41,7 @@
 			reg = <3>;
 			cpu-power-states = <&d3>;
 		};
+<<<<<<< HEAD
 	};
 
 	power-states {
@@ -52,6 +53,20 @@
 			power-state-name = "soft-off";
 			min-residency-us = <2147483647>;
 			exit-latency-us = <0>;
+=======
+
+		power-states {
+			/* PM_STATE_SOFT_OFF can be entered only by calling
+			 * pm_state_force. The procedure is triggered by IPC
+			 * from the HOST (SET_DX).
+			 */
+			d3: off {
+				compatible = "zephyr,power-state";
+				power-state-name = "soft-off";
+				min-residency-us = <2147483647>;
+				exit-latency-us = <0>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -97,6 +112,16 @@
 		wovcro-supported;
 	};
 
+<<<<<<< HEAD
+=======
+	IMR1: memory@0xb0000000 {
+		compatible = "intel,adsp-imr";
+		reg = <0xB0000000 DT_SIZE_M(16)>;
+		block-size = <0x1000>;
+		zephyr,memory-region = "IMR1";
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	soc {
 		shim: shim@71f00 {
 			compatible = "intel,adsp-shim";

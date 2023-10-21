@@ -22,7 +22,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 #include <zephyr/net/net_if.h>
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/sys/byteorder.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "fsl_xcvr.h"
 
@@ -359,10 +363,15 @@ static void kw41z_tmr3_disable(void)
 
 static enum ieee802154_hw_caps kw41z_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	return IEEE802154_HW_FCS |
 		IEEE802154_HW_2_4_GHZ |
 		IEEE802154_HW_FILTER |
 		IEEE802154_HW_TX_RX_ACK;
+=======
+	return IEEE802154_HW_FCS | IEEE802154_HW_FILTER |
+	       IEEE802154_HW_TX_RX_ACK | IEEE802154_HW_RX_TX_ACK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int kw41z_cca(const struct device *dev)
@@ -387,7 +396,11 @@ static int kw41z_cca(const struct device *dev)
 static int kw41z_set_channel(const struct device *dev, uint16_t channel)
 {
 	if (channel < 11 || channel > 26) {
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return channel < 11 ? -ENOTSUP : -EINVAL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	ZLL->CHANNEL_NUM0 = channel;
@@ -602,11 +615,19 @@ static void handle_ack(struct kw41z_context *kw41z, uint8_t seq_number)
 
 	/* Use some fake values for LQI and RSSI. */
 	(void)net_pkt_set_ieee802154_lqi(ack_pkt, 80);
+<<<<<<< HEAD
 	(void)net_pkt_set_ieee802154_rssi(ack_pkt, -40);
 
 	net_pkt_cursor_init(ack_pkt);
 
 	if (ieee802154_radio_handle_ack(kw41z->iface, ack_pkt) != NET_OK) {
+=======
+	(void)net_pkt_set_ieee802154_rssi_dbm(ack_pkt, -40);
+
+	net_pkt_cursor_init(ack_pkt);
+
+	if (ieee802154_handle_ack(kw41z->iface, ack_pkt) != NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("ACK packet not handled - releasing.");
 	}
 
@@ -666,10 +687,13 @@ static int kw41z_tx(const struct device *dev, enum ieee802154_tx_mode mode,
 	/* Clear all IRQ flags */
 	ZLL->IRQSTS = ZLL->IRQSTS;
 
+<<<<<<< HEAD
 	/*
 	 * Current Zephyr 802.15.4 stack doesn't support ACK offload
 	 */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Perform automatic reception of ACK frame, if required */
 	if (ieee802154_is_ar_flag_set(frag)) {
 		tx_timeout = kw41z->tx_warmup_time + KW41Z_SHR_PHY_TIME +
@@ -1084,6 +1108,22 @@ static int kw41z_configure(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 11, 26);
+
+static int kw41z_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			  struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+		&drv_attr.phy_supported_channels, value);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct ieee802154_radio_api kw41z_radio_api = {
 	.iface_api.init	= kw41z_iface_init,
 
@@ -1096,6 +1136,10 @@ static struct ieee802154_radio_api kw41z_radio_api = {
 	.stop			= kw41z_stop,
 	.tx			= kw41z_tx,
 	.configure		= kw41z_configure,
+<<<<<<< HEAD
+=======
+	.attr_get		= kw41z_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #if defined(CONFIG_NET_L2_IEEE802154)

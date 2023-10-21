@@ -22,6 +22,12 @@ LOG_MODULE_REGISTER(LOG_DOMAIN);
 
 #include "alh.h"
 
+<<<<<<< HEAD
+=======
+/* global data shared between all alh instances */
+struct dai_alh_global_shared dai_alh_global;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Digital Audio interface formatting */
 static int dai_alh_set_config_tplg(struct dai_intel_alh *dp, const void *spec_config)
 {
@@ -157,11 +163,15 @@ static const struct dai_properties *dai_alh_get_properties(const struct device *
 
 static int dai_alh_probe(const struct device *dev)
 {
+<<<<<<< HEAD
 	struct dai_intel_alh *dp = (struct dai_intel_alh *)dev->data;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_spinlock_key_t key;
 
 	LOG_DBG("%s", __func__);
 
+<<<<<<< HEAD
 	key = k_spin_lock(&dp->lock);
 
 	if (dp->sref == 0) {
@@ -171,17 +181,32 @@ static int dai_alh_probe(const struct device *dev)
 	dp->sref++;
 
 	k_spin_unlock(&dp->lock, key);
+=======
+	key = k_spin_lock(&dai_alh_global.lock);
+
+	if (dai_alh_global.sref == 0) {
+		alh_claim_ownership();
+	}
+
+	dai_alh_global.sref++;
+
+	k_spin_unlock(&dai_alh_global.lock, key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
 
 static int dai_alh_remove(const struct device *dev)
 {
+<<<<<<< HEAD
 	struct dai_intel_alh *dp = (struct dai_intel_alh *)dev->data;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_spinlock_key_t key;
 
 	LOG_DBG("%s", __func__);
 
+<<<<<<< HEAD
 	key = k_spin_lock(&dp->lock);
 
 	if (--dp->sref == 0) {
@@ -189,6 +214,15 @@ static int dai_alh_remove(const struct device *dev)
 	}
 
 	k_spin_unlock(&dp->lock, key);
+=======
+	key = k_spin_lock(&dai_alh_global.lock);
+
+	if (--dai_alh_global.sref == 0) {
+		alh_release_ownership();
+	}
+
+	k_spin_unlock(&dai_alh_global.lock, key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

@@ -1,7 +1,14 @@
 # Copyright 2019-2020 Peter Bigot Consulting, LLC
+<<<<<<< HEAD
 # SPDX-License-Identifier: Apache-2.0
 
 description: GPIO-controlled regulators
+=======
+# Copyright 2023 EPAM Systems
+# SPDX-License-Identifier: Apache-2.0
+
+description: Fixed voltage regulators
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 include:
   - name: base.yaml
@@ -10,6 +17,11 @@ include:
       - regulator-name
       - regulator-boot-on
       - regulator-always-on
+<<<<<<< HEAD
+=======
+      - regulator-min-microvolt
+      - regulator-max-microvolt
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 compatible: "regulator-fixed"
 
@@ -19,7 +31,10 @@ properties:
 
   enable-gpios:
     type: phandle-array
+<<<<<<< HEAD
     required: true
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     description: |
       GPIO to use to enable/disable the regulator.
 

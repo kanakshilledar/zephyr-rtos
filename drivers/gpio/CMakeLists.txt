@@ -1,7 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 zephyr_library()
 
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/gpio.h)
+
+zephyr_library()
+
+zephyr_library_sources_ifdef(CONFIG_GPIO_AXP192     gpio_axp192.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_GPIO_TELINK_B91 gpio_b91.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_INFINEON_CAT1 gpio_ifx_cat1.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_CC13XX_CC26XX gpio_cc13xx_cc26xx.c)
@@ -43,7 +51,10 @@ zephyr_library_sources_ifdef(CONFIG_GPIO_LPC11U6X   gpio_lpc11u6x.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_XLNX_AXI   gpio_xlnx_axi.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_NPCX       gpio_npcx.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_EMUL       gpio_emul.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_GPIO_EMUL_SDL   gpio_emul_sdl.c)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_GPIO_PSOC6      gpio_psoc6.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_PCAL64XXA  gpio_pcal64xxa.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_EOS_S3     gpio_eos_s3.c)
@@ -59,7 +70,11 @@ zephyr_library_sources_ifdef(CONFIG_GPIO_ANDES_ATCGPIO100 gpio_andes_atcgpio100.
 zephyr_library_sources_ifdef(CONFIG_GPIO_NEORV32    gpio_neorv32.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_NCT38XX    gpio_nct38xx.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_NCT38XX    gpio_nct38xx_port.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_GPIO_NCT38XX_INTERRUPT gpio_nct38xx_alert.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_GPIO_NCT38XX_ALERT  gpio_nct38xx_alert.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_GPIO_TEST       gpio_test.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_GD32       gpio_gd32.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_XLNX_PS    gpio_xlnx_ps.c gpio_xlnx_ps_bank.c)
@@ -77,6 +92,23 @@ zephyr_library_sources_ifdef(CONFIG_GPIO_RT1718S    gpio_rt1718s.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_RT1718S    gpio_rt1718s_port.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_NUMICRO    gpio_numicro.c)
 zephyr_library_sources_ifdef(CONFIG_GPIO_HOGS       gpio_hogs.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_GPIO_NUMAKER    gpio_numaker.c)
+zephyr_library_sources_ifdef(CONFIG_GPIO_EFINIX_SAPPHIRE    gpio_efinix_sapphire.c)
+zephyr_library_sources_ifdef(CONFIG_GPIO_DAVINCI    gpio_davinci.c)
+zephyr_library_sources_ifdef(CONFIG_GPIO_SEDI    gpio_sedi.c)
+zephyr_library_sources_ifdef(CONFIG_GPIO_ALTERA_PIO gpio_altera_pio.c)
+
+if (CONFIG_GPIO_EMUL_SDL)
+  zephyr_library_sources(gpio_emul_sdl.c)
+  if (CONFIG_NATIVE_APPLICATION)
+    zephyr_library_sources(gpio_emul_sdl_bottom.c)
+  else()
+    target_sources(native_simulator INTERFACE gpio_emul_sdl_bottom.c)
+  endif()
+endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if(CONFIG_GPIO_SC18IM704)
   zephyr_library_include_directories(${ZEPHYR_BASE}/drivers)

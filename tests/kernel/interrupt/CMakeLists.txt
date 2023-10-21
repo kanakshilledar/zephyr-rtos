@@ -17,3 +17,11 @@ target_sources(app PRIVATE
 
 target_sources_ifdef(CONFIG_DYNAMIC_INTERRUPTS app PRIVATE src/dynamic_isr.c)
 target_sources_ifdef(CONFIG_X86 app PRIVATE src/regular_isr.c)
+<<<<<<< HEAD
+=======
+target_sources_ifdef(CONFIG_SHARED_INTERRUPTS app PRIVATE src/static_shared_irq.c)
+
+if (CONFIG_SHARED_INTERRUPTS)
+target_sources_ifdef(CONFIG_DYNAMIC_INTERRUPTS app PRIVATE src/dynamic_shared_irq.c)
+endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

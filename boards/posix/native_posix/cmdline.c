@@ -8,7 +8,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cmdline_common.h"
+<<<<<<< HEAD
 #include "zephyr/types.h"
+=======
+#include <zephyr/types.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "hw_models_top.h"
 #include "timer_model.h"
 #include "cmdline.h"

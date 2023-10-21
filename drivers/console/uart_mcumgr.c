@@ -61,7 +61,11 @@ void uart_mcumgr_free_rx_buf(struct uart_mcumgr_rx_buf *rx_buf)
 	void *block;
 
 	block = rx_buf;
+<<<<<<< HEAD
 	k_mem_slab_free(&uart_mcumgr_slab, &block);
+=======
+	k_mem_slab_free(&uart_mcumgr_slab, block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if !defined(CONFIG_MCUMGR_TRANSPORT_UART_ASYNC)

@@ -9,8 +9,16 @@ toolchain:
   - xtools
 supported:
   - arduino_gpio
+<<<<<<< HEAD
+=======
+  - counter
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   - gpio
   - watchdog
   - i2c
   - spi
   - usb_device
+<<<<<<< HEAD
+=======
+vendor: renesas
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

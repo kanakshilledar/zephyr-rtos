@@ -127,7 +127,11 @@ static struct osdp_event *pd_event_alloc(struct osdp_pd *pd)
 
 static void pd_event_free(struct osdp_pd *pd, struct osdp_event *event)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(&pd->event.slab, (void **)&event);
+=======
+	k_mem_slab_free(&pd->event.slab, (void *)event);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void pd_event_enqueue(struct osdp_pd *pd, struct osdp_event *event)

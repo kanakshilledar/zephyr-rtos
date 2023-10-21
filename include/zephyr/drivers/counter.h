@@ -32,8 +32,16 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**@defgroup COUNTER_FLAGS Counter device capabilities
  * @{ */
+=======
+/**
+ * @anchor COUNTER_FLAGS
+ * @name Counter device capabilities
+ * @{
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Counter count up flag.
@@ -42,7 +50,13 @@ extern "C" {
 
 /**@} */
 
+<<<<<<< HEAD
 /**@defgroup COUNTER_TOP_FLAGS Flags used by @ref counter_top_cfg.
+=======
+/**
+ * @anchor COUNTER_TOP_FLAGS
+ * @name Flags used by counter_top_cfg.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 
@@ -64,7 +78,13 @@ extern "C" {
 
 /**@} */
 
+<<<<<<< HEAD
 /**@defgroup COUNTER_ALARM_FLAGS Alarm configuration flags
+=======
+/**
+ * @anchor COUNTER_ALARM_FLAGS
+ * @name Alarm configuration flags
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @brief Used in alarm configuration structure (@ref counter_alarm_cfg).
  * @{ */
@@ -87,7 +107,13 @@ extern "C" {
 
 /**@} */
 
+<<<<<<< HEAD
 /**@defgroup COUNTER_GUARD_PERIOD_FLAGS Counter guard period flags
+=======
+/**
+ * @anchor COUNTER_GUARD_PERIOD_FLAGS
+ * @name Counter guard period flags
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @brief Used by @ref counter_set_guard_period and
  *	  @ref counter_get_guard_period.
@@ -113,6 +139,7 @@ typedef void (*counter_alarm_callback_t)(const struct device *dev,
 					 void *user_data);
 
 /** @brief Alarm callback structure.
+<<<<<<< HEAD
  *
  * @param callback Callback called on alarm (cannot be NULL).
  * @param ticks Number of ticks that triggers the alarm. It can be relative (to
@@ -134,6 +161,38 @@ struct counter_alarm_cfg {
 	counter_alarm_callback_t callback;
 	uint32_t ticks;
 	void *user_data;
+=======
+ */
+struct counter_alarm_cfg {
+	/**
+	 * Callback called on alarm (cannot be NULL).
+	 */
+	counter_alarm_callback_t callback;
+	/**
+	 * Number of ticks that triggers the alarm.
+	 *
+	 * It can be relative (to now) or an absolute value (see @ref
+	 * COUNTER_ALARM_CFG_ABSOLUTE). Both, relative and absolute, alarm
+	 * values can be any value between zero and the current top value (see
+	 * @ref counter_get_top_value). When setting an absolute alarm value
+	 * close to the current counter value there is a risk that the counter
+	 * will have counted past the given absolute value before the driver
+	 * manages to activate the alarm. Therefore a guard period can be
+	 * defined that lets the driver decide unambiguously whether it is late
+	 * or not (see @ref counter_set_guard_period). If the counter is clock
+	 * driven then ticks can be converted to microseconds (see @ref
+	 * counter_ticks_to_us). Alternatively, the counter implementation may
+	 * count asynchronous events.
+	 */
+	uint32_t ticks;
+	/**
+	 * User data returned in callback.
+	 */
+	void *user_data;
+	/**
+	 * Alarm flags (see @ref COUNTER_ALARM_FLAGS).
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t flags;
 };
 
@@ -146,6 +205,7 @@ typedef void (*counter_top_callback_t)(const struct device *dev,
 				       void *user_data);
 
 /** @brief Top value configuration structure.
+<<<<<<< HEAD
  *
  * @param ticks		Top value.
  * @param callback	Callback function. Can be NULL.
@@ -157,10 +217,30 @@ struct counter_top_cfg {
 	uint32_t ticks;
 	counter_top_callback_t callback;
 	void *user_data;
+=======
+ */
+struct counter_top_cfg {
+	/**
+	 * Top value.
+	 */
+	uint32_t ticks;
+	/**
+	 * Callback function (can be NULL).
+	 */
+	counter_top_callback_t callback;
+	/**
+	 * User data passed to callback function (not valid if callback is NULL).
+	 */
+	void *user_data;
+	/**
+	 * Flags (see @ref COUNTER_TOP_FLAGS).
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t flags;
 };
 
 /** @brief Structure with generic counter features.
+<<<<<<< HEAD
  *
  * @param max_top_value Maximal (default) top value on which counter is reset
  *			(cleared or reloaded).
@@ -174,6 +254,27 @@ struct counter_config_info {
 	uint32_t max_top_value;
 	uint32_t freq;
 	uint8_t flags;
+=======
+ */
+struct counter_config_info {
+	/**
+	 * Maximal (default) top value on which counter is reset (cleared or reloaded).
+	 */
+	uint32_t max_top_value;
+	/**
+	 * Frequency of the source clock if synchronous events are counted.
+	 */
+	uint32_t freq;
+	/**
+	 * Flags (see @ref COUNTER_FLAGS).
+	 */
+	uint8_t flags;
+	/**
+	 * Number of channels that can be used for setting alarm.
+	 *
+	 * @see counter_set_channel_alarm
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t channels;
 };
 
@@ -618,7 +719,11 @@ static inline int z_impl_counter_set_guard_period(const struct device *dev,
 /**
  * @brief Return guard period.
  *
+<<<<<<< HEAD
  * See @ref counter_set_guard_period.
+=======
+ * @see counter_set_guard_period.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param dev	Pointer to the device structure for the driver instance.
  * @param flags	See @ref COUNTER_GUARD_PERIOD_FLAGS.

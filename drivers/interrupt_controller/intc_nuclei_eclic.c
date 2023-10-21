@@ -11,12 +11,21 @@
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
+=======
+#include <zephyr/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 
 #include <zephyr/sw_isr_table.h>
 #include <zephyr/drivers/interrupt_controller/riscv_clic.h>
 
+<<<<<<< HEAD
+=======
+#define DT_DRV_COMPAT nuclei_eclic
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 union CLICCFG {
 	struct {
 		uint8_t _reserved0 : 1;
@@ -159,7 +168,11 @@ void riscv_clic_irq_priority_set(uint32_t irq, uint32_t pri, uint32_t flags)
 	ECLIC_CTRL[irq].INTATTR.b.trg = (uint8_t)(flags & CLIC_INTATTR_TRIG_Msk);
 }
 
+<<<<<<< HEAD
 static int nuclei_eclic_init(void)
+=======
+static int nuclei_eclic_init(const struct device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* check hardware support required interrupt levels */
 	__ASSERT_NO_MSG(ECLIC_INFO.b.intctlbits >= INTERRUPT_LEVEL);
@@ -182,4 +195,9 @@ static int nuclei_eclic_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(nuclei_eclic_init, PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, nuclei_eclic_init, NULL, NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

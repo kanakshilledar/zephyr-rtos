@@ -74,7 +74,11 @@ int main(void)
 #if DT_NODE_EXISTS(BUTTON_NODE)
 	k_sem_init(&btn_cb_ctx.sem, 0, 1);
 
+<<<<<<< HEAD
 	if (!device_is_ready(btn.port)) {
+=======
+	if (!gpio_is_ready_dt(&btn)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("button device not ready\n");
 		return 0;
 	}

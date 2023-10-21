@@ -4,13 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #ifndef ZEPHYR_SUBSYS_NET_CAN_ISOTP_INTERNAL_H_
 #define ZEPHYR_SUBSYS_NET_CAN_ISOTP_INTERNAL_H_
 
+=======
+#ifndef ZEPHYR_SUBSYS_CANBUS_ISOTP_ISOTP_INTERNAL_H_
+#define ZEPHYR_SUBSYS_CANBUS_ISOTP_ISOTP_INTERNAL_H_
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/canbus/isotp.h>
 #include <zephyr/sys/slist.h>
 
+<<<<<<< HEAD
 /*
  * Abbreviations
  * BS      Block Size
@@ -36,6 +42,8 @@
 #define ISOTP_CAN_DL 8
 #endif/*ISOTP_USE_CAN_FD*/
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Protocol control information*/
 #define ISOTP_PCI_SF 0x00 /* Single frame*/
 #define ISOTP_PCI_FF 0x01 /* First frame */
@@ -67,7 +75,13 @@
 
 #define ISOTP_PCI_SN_MASK          0x0F
 
+<<<<<<< HEAD
 #define ISOTP_FF_DL_MIN            (ISOTP_CAN_DL)
+=======
+#define ISOTP_FF_DL_MIN            8
+#define ISOTP_PADDED_FRAME_DL_MIN  8
+#define ISOTP_PAD_BYTE             0xCC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define ISOTP_STMIN_MAX            0xFA
 #define ISOTP_STMIN_MS_MAX         0x7F
@@ -76,12 +90,23 @@
 
 #define ISOTP_WFT_FIRST            0xFF
 
+<<<<<<< HEAD
 #define ISOTP_BS (CONFIG_ISOTP_BS_TIMEOUT)
 #define ISOTP_A  (CONFIG_ISOTP_A_TIMEOUT)
 #define ISOTP_CR (CONFIG_ISOTP_CR_TIMEOUT)
 
 /* Just before the sender would time out*/
 #define ISOTP_ALLOC_TIMEOUT (CONFIG_ISOTP_A_TIMEOUT - 100)
+=======
+#define ISOTP_4BIT_SF_MAX_CAN_DL   8
+
+#define ISOTP_BS_TIMEOUT_MS (CONFIG_ISOTP_BS_TIMEOUT)
+#define ISOTP_A_TIMEOUT_MS  (CONFIG_ISOTP_A_TIMEOUT)
+#define ISOTP_CR_TIMEOUT_MS (CONFIG_ISOTP_CR_TIMEOUT)
+
+/* Just before the sender would time out*/
+#define ISOTP_ALLOC_TIMEOUT_MS (CONFIG_ISOTP_A_TIMEOUT - 100)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -121,4 +146,8 @@ struct isotp_global_ctx {
 }
 #endif
 
+<<<<<<< HEAD
 #endif /* ZEPHYR_SUBSYS_NET_CAN_ISOTP_INTERNAL_H_ */
+=======
+#endif /* ZEPHYR_SUBSYS_CANBUS_ISOTP_ISOTP_INTERNAL_H_ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

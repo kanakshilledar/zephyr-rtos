@@ -17,6 +17,21 @@ extern "C" {
 #include <zephyr/kernel.h>
 #include <zephyr/sys/util.h>
 
+<<<<<<< HEAD
+=======
+/**
+ * @file
+ *
+ * @defgroup bitarray_apis Bit array
+ * @ingroup datastructure_apis
+ *
+ * @brief Store and manipulate bits in a bit array.
+ *
+ * @{
+ */
+
+/** @cond INTERNAL_HIDDEN */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct sys_bitarray {
 	/* Number of bits */
 	uint32_t num_bits;
@@ -30,7 +45,13 @@ struct sys_bitarray {
 	/* Spinlock guarding access to this bit array */
 	struct k_spinlock lock;
 };
+<<<<<<< HEAD
 
+=======
+/** @endcond */
+
+/** Bitarray structure */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 typedef struct sys_bitarray sys_bitarray_t;
 
 /**
@@ -263,6 +284,13 @@ int sys_bitarray_test_and_set_region(sys_bitarray_t *bitarray, size_t num_bits,
 int sys_bitarray_clear_region(sys_bitarray_t *bitarray, size_t num_bits,
 			      size_t offset);
 
+<<<<<<< HEAD
+=======
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

@@ -1651,11 +1651,19 @@ static uint8_t read_multiple(const void *cmd, uint16_t cmd_len,
 		return BTP_STATUS_FAILED;
 	}
 
+<<<<<<< HEAD
 	if (cp->handles_count > ARRAY_SIZE(handles)) {
 		return BTP_STATUS_FAILED;
 	}
 
 	for (i = 0; i < ARRAY_SIZE(handles); i++) {
+=======
+	if (cp->handles_count == 0 || cp->handles_count > ARRAY_SIZE(handles)) {
+		return BTP_STATUS_FAILED;
+	}
+
+	for (i = 0; i < cp->handles_count; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		handles[i] = sys_le16_to_cpu(cp->handles[i]);
 	}
 
@@ -1670,7 +1678,11 @@ static uint8_t read_multiple(const void *cmd, uint16_t cmd_len,
 	}
 
 	read_params.func = read_cb;
+<<<<<<< HEAD
 	read_params.handle_count = i;
+=======
+	read_params.handle_count = cp->handles_count;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	read_params.multiple.handles = handles; /* not used in read func */
 	read_params.multiple.variable = false;
 	read_params.chan_opt = BT_ATT_CHAN_OPT_NONE;
@@ -2207,7 +2219,11 @@ static uint8_t get_attrs(const void *cmd, uint16_t cmd_len,
 	struct net_buf_simple *buf = NET_BUF_SIMPLE(BTP_DATA_MAX_SIZE - sizeof(*rp));
 	struct get_attrs_foreach_data foreach;
 	uint16_t start_handle, end_handle;
+<<<<<<< HEAD
 	union uuid uuid;
+=======
+	union uuid search_uuid;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if ((cmd_len < sizeof(*cp)) ||
 	    (cmd_len != sizeof(*cp) + cp->type_length)) {
@@ -2220,6 +2236,7 @@ static uint8_t get_attrs(const void *cmd, uint16_t cmd_len,
 	if (cp->type_length) {
 		char uuid_str[BT_UUID_STR_LEN];
 
+<<<<<<< HEAD
 		if (btp2bt_uuid(cp->type, cp->type_length, &uuid.uuid)) {
 			return BTP_STATUS_FAILED;
 		}
@@ -2229,6 +2246,17 @@ static uint8_t get_attrs(const void *cmd, uint16_t cmd_len,
 			end_handle, uuid_str);
 
 		foreach.uuid = &uuid.uuid;
+=======
+		if (btp2bt_uuid(cp->type, cp->type_length, &search_uuid.uuid)) {
+			return BTP_STATUS_FAILED;
+		}
+
+		bt_uuid_to_str(&search_uuid.uuid, uuid_str, sizeof(uuid_str));
+		LOG_DBG("start 0x%04x end 0x%04x, uuid %s", start_handle,
+			end_handle, uuid_str);
+
+		foreach.uuid = &search_uuid.uuid;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		LOG_DBG("start 0x%04x end 0x%04x", start_handle, end_handle);
 

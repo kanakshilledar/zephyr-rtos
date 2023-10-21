@@ -1,10 +1,20 @@
 common:
+<<<<<<< HEAD
   tags: filesystem
+=======
+  tags:
+    - filesystem
+    - littlefs
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   platform_allow:
     - nrf52840dk_nrf52840
     - native_posix
     - native_posix_64
     - mimxrt1060_evk
+<<<<<<< HEAD
+=======
+    - mr_canhubk3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   integration_platforms:
     - nrf52840dk_nrf52840
   modules:

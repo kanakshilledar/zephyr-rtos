@@ -22,7 +22,11 @@ Examples
 
 - In-tree sample applications shall use :ref:`aliases <dt-alias-chosen>` to
   determine which of multiple possible generic devices of a given type will be
+<<<<<<< HEAD
   used in the current build. For example, the :ref:`blinky-sample` uses this to
+=======
+  used in the current build. For example, the :zephyr:code-sample:`blinky` sample uses this to
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   determine the LED to blink.
 
 - Boot-time pin muxing and pin control for new SoCs shall be accomplished via a

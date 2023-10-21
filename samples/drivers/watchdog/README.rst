@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _watchdog-sample:
 
 Watchdog Sample
 ###############
+=======
+.. zephyr:code-sample:: watchdog
+   :name: Watchdog
+   :relevant-api: watchdog_interface
+
+   Use the watchdog driver API to reset the board when it gets stuck in an infinite loop.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

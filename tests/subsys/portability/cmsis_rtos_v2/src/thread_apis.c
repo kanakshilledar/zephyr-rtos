@@ -15,7 +15,11 @@ static int thread_yield_check;
 static int thread_yield_check_dynamic;
 
 static K_THREAD_STACK_DEFINE(test_stack1, STACKSZ);
+<<<<<<< HEAD
 static osThreadAttr_t thread1_attr = {
+=======
+static osThreadAttr_t os_thread1_attr = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.name = "Thread1",
 	.stack_mem = &test_stack1,
 	.stack_size = STACKSZ,
@@ -23,7 +27,11 @@ static osThreadAttr_t thread1_attr = {
 };
 
 static K_THREAD_STACK_DEFINE(test_stack2, STACKSZ);
+<<<<<<< HEAD
 static osThreadAttr_t thread2_attr = {
+=======
+static osThreadAttr_t os_thread2_attr = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.name = "Thread2",
 	.stack_mem = &test_stack2,
 	.stack_size = STACKSZ,
@@ -144,8 +152,13 @@ ZTEST(cmsis_thread_apis, test_thread_apis_dynamic)
 
 ZTEST(cmsis_thread_apis, test_thread_apis)
 {
+<<<<<<< HEAD
 	thread_apis_common(&thread_yield_check, thread1_attr.name,
 			   &thread1_attr, &thread2_attr);
+=======
+	thread_apis_common(&thread_yield_check, os_thread1_attr.name,
+			   &os_thread1_attr, &os_thread2_attr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static osPriority_t OsPriorityInvalid = 60;

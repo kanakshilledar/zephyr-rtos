@@ -7,15 +7,19 @@
 #include <zephyr/kernel.h>
 #include <zephyr/canbus/isotp.h>
 
+<<<<<<< HEAD
 
 #define RX_THREAD_STACK_SIZE 512
 #define RX_THREAD_PRIORITY 2
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 const struct isotp_fc_opts fc_opts_8_0 = {.bs = 8, .stmin = 0};
 const struct isotp_fc_opts fc_opts_0_5 = {.bs = 0, .stmin = 5};
 
 const struct isotp_msg_id rx_addr_8_0 = {
 	.std_id = 0x80,
+<<<<<<< HEAD
 	.ide = 0,
 	.use_ext_addr = 0
 };
@@ -33,14 +37,44 @@ const struct isotp_msg_id tx_addr_0_5 = {
 	.std_id = 0x101,
 	.ide = 0,
 	.use_ext_addr = 0
+=======
+#ifdef CONFIG_SAMPLE_CAN_FD_MODE
+	.flags = ISOTP_MSG_FDF | ISOTP_MSG_BRS,
+#endif
+};
+const struct isotp_msg_id tx_addr_8_0 = {
+	.std_id = 0x180,
+#ifdef CONFIG_SAMPLE_CAN_FD_MODE
+	.dl = 64,
+	.flags = ISOTP_MSG_FDF | ISOTP_MSG_BRS,
+#endif
+};
+const struct isotp_msg_id rx_addr_0_5 = {
+	.std_id = 0x01,
+#ifdef CONFIG_SAMPLE_CAN_FD_MODE
+	.flags = ISOTP_MSG_FDF | ISOTP_MSG_BRS,
+#endif
+};
+const struct isotp_msg_id tx_addr_0_5 = {
+	.std_id = 0x101,
+#ifdef CONFIG_SAMPLE_CAN_FD_MODE
+	.dl = 64,
+	.flags = ISOTP_MSG_FDF | ISOTP_MSG_BRS,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 const struct device *can_dev;
 struct isotp_recv_ctx recv_ctx_8_0;
 struct isotp_recv_ctx recv_ctx_0_5;
 
+<<<<<<< HEAD
 K_THREAD_STACK_DEFINE(rx_8_0_thread_stack, RX_THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(rx_0_5_thread_stack, RX_THREAD_STACK_SIZE);
+=======
+K_THREAD_STACK_DEFINE(rx_8_0_thread_stack, CONFIG_SAMPLE_RX_THREAD_STACK_SIZE);
+K_THREAD_STACK_DEFINE(rx_0_5_thread_stack, CONFIG_SAMPLE_RX_THREAD_STACK_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct k_thread rx_8_0_thread_data;
 struct k_thread rx_0_5_thread_data;
 
@@ -61,8 +95,11 @@ void rx_8_0_thread(void *arg1, void *arg2, void *arg3)
 	ARG_UNUSED(arg3);
 	int ret, rem_len, received_len;
 	struct net_buf *buf;
+<<<<<<< HEAD
 	static uint8_t rx_buffer[7];
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = isotp_bind(&recv_ctx_8_0, can_dev,
 			 &tx_addr_8_0, &rx_addr_8_0,
@@ -83,6 +120,7 @@ void rx_8_0_thread(void *arg1, void *arg2, void *arg3)
 				break;
 			}
 
+<<<<<<< HEAD
 			received_len += buf->len;
 			if (net_buf_tailroom(buf) >= 1) {
 				net_buf_add_u8(buf, '\0');
@@ -96,6 +134,13 @@ void rx_8_0_thread(void *arg1, void *arg2, void *arg3)
 				printk("No tailroom for string termination\n");
 			}
 			net_buf_unref(buf);
+=======
+			while (buf != NULL) {
+				received_len += buf->len;
+				printk("%.*s", buf->len, buf->data);
+				buf = net_buf_frag_del(NULL, buf);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} while (rem_len);
 		printk("Got %d bytes in total\n", received_len);
 	}
@@ -154,6 +199,7 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_SAMPLE_LOOPBACK_MODE
 	ret = can_set_mode(can_dev, CAN_MODE_LOOPBACK);
 	if (ret != 0) {
@@ -161,6 +207,15 @@ int main(void)
 		return 0;
 	}
 #endif /* CONFIG_SAMPLE_LOOPBACK_MODE */
+=======
+	can_mode_t mode = (IS_ENABLED(CONFIG_SAMPLE_LOOPBACK_MODE) ? CAN_MODE_LOOPBACK : 0) |
+			  (IS_ENABLED(CONFIG_SAMPLE_CAN_FD_MODE) ? CAN_MODE_FD : 0);
+	ret = can_set_mode(can_dev, mode);
+	if (ret != 0) {
+		printk("CAN: Failed to set mode [%d]", ret);
+		return 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = can_start(can_dev);
 	if (ret != 0) {
@@ -171,18 +226,36 @@ int main(void)
 	tid = k_thread_create(&rx_8_0_thread_data, rx_8_0_thread_stack,
 			      K_THREAD_STACK_SIZEOF(rx_8_0_thread_stack),
 			      rx_8_0_thread, NULL, NULL, NULL,
+<<<<<<< HEAD
 			      RX_THREAD_PRIORITY, 0, K_NO_WAIT);
 	if (!tid) {
 		printk("ERROR spawning rx thread\n");
 	}
+=======
+			      CONFIG_SAMPLE_RX_THREAD_PRIORITY, 0, K_NO_WAIT);
+	if (!tid) {
+		printk("ERROR spawning rx thread\n");
+		return 0;
+	}
+	k_thread_name_set(tid, "rx_8_0");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	tid = k_thread_create(&rx_0_5_thread_data, rx_0_5_thread_stack,
 			      K_THREAD_STACK_SIZEOF(rx_0_5_thread_stack),
 			      rx_0_5_thread, NULL, NULL, NULL,
+<<<<<<< HEAD
 			      RX_THREAD_PRIORITY, 0, K_NO_WAIT);
 	if (!tid) {
 		printk("ERROR spawning rx thread\n");
 	}
+=======
+			      CONFIG_SAMPLE_RX_THREAD_PRIORITY, 0, K_NO_WAIT);
+	if (!tid) {
+		printk("ERROR spawning rx thread\n");
+		return 0;
+	}
+	k_thread_name_set(tid, "rx_0_5");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	printk("Start sending data\n");
 

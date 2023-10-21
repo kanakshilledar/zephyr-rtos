@@ -9,6 +9,10 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/logging/log.h>
+<<<<<<< HEAD
+=======
+#include <soc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <hal/nrf_gpio.h>
 
 LOG_MODULE_REGISTER(board_control, CONFIG_BOARD_NRF9160DK_LOG_LEVEL);
@@ -27,7 +31,11 @@ LOG_MODULE_REGISTER(board_control, CONFIG_BOARD_NRF9160DK_LOG_LEVEL);
  * exposes the nRESET function (P0.18 in nRF52840), there is no need to
  * provide any additional GPIO configuration for it.
  */
+<<<<<<< HEAD
 #define RESET_INPUT_IS_PINRESET (IS_ENABLED(CONFIG_GPIO_AS_PINRESET) && \
+=======
+#define RESET_INPUT_IS_PINRESET (DT_PROP(DT_NODELABEL(uicr), gpio_as_nreset) && \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				 GET_PORT(reset_input, gpios, 0) == 0 && \
 				 GET_PIN(reset_input, gpios, 0) == 18)
 #define USE_RESET_GPIO \

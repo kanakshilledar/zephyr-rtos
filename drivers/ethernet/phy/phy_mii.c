@@ -477,11 +477,19 @@ static const struct ethphy_driver_api phy_mii_driver_api = {
 
 #define PHY_MII_CONFIG(n)						 \
 static const struct phy_mii_dev_config phy_mii_dev_config_##n = {	 \
+<<<<<<< HEAD
 	.phy_addr = DT_INST_PROP(n, address),				 \
 	.fixed = IS_FIXED_LINK(n),					 \
 	.fixed_speed = DT_INST_ENUM_IDX_OR(n, fixed_link, 0),		 \
 	.mdio = UTIL_AND(UTIL_NOT(IS_FIXED_LINK(n)),			 \
 			 DEVICE_DT_GET(DT_INST_PHANDLE(n, mdio)))	 \
+=======
+	.phy_addr = DT_INST_REG_ADDR(n),				 \
+	.fixed = IS_FIXED_LINK(n),					 \
+	.fixed_speed = DT_INST_ENUM_IDX_OR(n, fixed_link, 0),		 \
+	.mdio = UTIL_AND(UTIL_NOT(IS_FIXED_LINK(n)),			 \
+			 DEVICE_DT_GET(DT_INST_BUS(n)))			 \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define PHY_MII_DEVICE(n)						\

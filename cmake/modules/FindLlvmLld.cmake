@@ -17,6 +17,11 @@
 # 'LLVMLLD_VERSION_STRING'
 # The version of LLVM lld.
 
+<<<<<<< HEAD
+=======
+include(FindPackageHandleStandardArgs)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # See if the compiler has a preferred linker
 execute_process(COMMAND ${CMAKE_C_COMPILER} --print-prog-name=ld.lld
                 OUTPUT_VARIABLE LLVMLLD_LINKER

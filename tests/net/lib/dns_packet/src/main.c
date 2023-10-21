@@ -14,8 +14,13 @@
 /* RFC 1035, 4.1.1. Header section format */
 #define DNS_HEADER_SIZE	12
 
+<<<<<<< HEAD
 static uint8_t buf[MAX_BUF_SIZE];
 static uint16_t buf_len;
+=======
+static uint8_t dns_buf[MAX_BUF_SIZE];
+static uint16_t dns_buf_len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static uint8_t qname[MAX_BUF_SIZE];
 static uint16_t qname_len;
@@ -61,90 +66,150 @@ static int eval_query(const char *dname, uint16_t tid, enum dns_rr_type type,
 		goto lb_exit;
 	}
 
+<<<<<<< HEAD
 	rc = dns_msg_pack_query(buf, &buf_len, MAX_BUF_SIZE, qname, qname_len,
+=======
+	rc = dns_msg_pack_query(dns_buf, &dns_buf_len, MAX_BUF_SIZE, qname, qname_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				tid, type);
 	if (rc != 0) {
 		goto lb_exit;
 	}
 
+<<<<<<< HEAD
 	if (dns_unpack_header_id(buf) != tid) {
+=======
+	if (dns_unpack_header_id(dns_buf) != tid) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* This is a query */
+<<<<<<< HEAD
 	if (dns_header_qr(buf) != DNS_QUERY) {
+=======
+	if (dns_header_qr(dns_buf) != DNS_QUERY) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* This is a query (standard query) */
+<<<<<<< HEAD
 	if (dns_header_opcode(buf) != DNS_QUERY) {
+=======
+	if (dns_header_opcode(dns_buf) != DNS_QUERY) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Authoritative Answer must be 0 for a Query */
+<<<<<<< HEAD
 	if (dns_header_aa(buf) != 0) {
+=======
+	if (dns_header_aa(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* TrunCation is always 0 */
+<<<<<<< HEAD
 	if (dns_header_tc(buf) != 0) {
+=======
+	if (dns_header_tc(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Recursion Desired is always 1 */
+<<<<<<< HEAD
 	if (dns_header_rd(buf) != 1) {
+=======
+	if (dns_header_rd(dns_buf) != 1) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Recursion Available is always 0 */
+<<<<<<< HEAD
 	if (dns_header_ra(buf) != 0) {
+=======
+	if (dns_header_ra(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Z is always 0 */
+<<<<<<< HEAD
 	if (dns_header_z(buf) != 0) {
+=======
+	if (dns_header_z(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Response code must be 0 (no error) */
+<<<<<<< HEAD
 	if (dns_header_rcode(buf) != DNS_HEADER_NOERROR) {
+=======
+	if (dns_header_rcode(dns_buf) != DNS_HEADER_NOERROR) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Question counter must be 1 */
+<<<<<<< HEAD
 	if (dns_header_qdcount(buf) != 1) {
+=======
+	if (dns_header_qdcount(dns_buf) != 1) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Answer counter must be 0 */
+<<<<<<< HEAD
 	if (dns_header_ancount(buf) != 0) {
+=======
+	if (dns_header_ancount(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Name server resource records counter must be 0 */
+<<<<<<< HEAD
 	if (dns_header_nscount(buf) != 0) {
+=======
+	if (dns_header_nscount(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
 	/* Additional records counter must be 0 */
+<<<<<<< HEAD
 	if (dns_header_arcount(buf) != 0) {
+=======
+	if (dns_header_arcount(dns_buf) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
+<<<<<<< HEAD
 	question = buf + DNS_HEADER_SIZE;
+=======
+	question = dns_buf + DNS_HEADER_SIZE;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* QClass */
 	if (dns_unpack_query_qclass(question + qname_len) != DNS_CLASS_IN) {
@@ -159,12 +224,20 @@ static int eval_query(const char *dname, uint16_t tid, enum dns_rr_type type,
 	}
 
 	/* compare with the expected result */
+<<<<<<< HEAD
 	if (buf_len != expected_len) {
+=======
+	if (dns_buf_len != expected_len) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}
 
+<<<<<<< HEAD
 	if (memcmp(expected, buf, buf_len) != 0) {
+=======
+	if (memcmp(expected, dns_buf, dns_buf_len) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = -EINVAL;
 		goto lb_exit;
 	}

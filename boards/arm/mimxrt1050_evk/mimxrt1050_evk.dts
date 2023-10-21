@@ -9,6 +9,10 @@
 #include <nxp/nxp_rt1050.dtsi>
 #include "mimxrt1050_evk-pinctrl.dtsi"
 #include <zephyr/dt-bindings/display/panel.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP MIMXRT1050-EVK board";
@@ -17,7 +21,10 @@
 	aliases {
 		led0 = &green_led;
 		sw0 = &user_button;
+<<<<<<< HEAD
 		kscan0 = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		watchdog0 = &wdog0;
 		magn0 = &fxos8700;
 		accel0 = &fxos8700;
@@ -34,7 +41,10 @@
 		zephyr,flash = &s26ks512s0;
 		zephyr,code-partition = &slot0_partition;
 		zephyr,display = &lcdif;
+<<<<<<< HEAD
 		zephyr,keyboard-scan = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	sdram0: memory@80000000 {
@@ -56,9 +66,21 @@
 		user_button: button_0 {
 			label = "User SW8";
 			gpios = <&gpio5 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
 		};
 	};
 
+=======
+			zephyr,code = <INPUT_KEY_0>;
+		};
+	};
+
+	lvgl_pointer {
+		compatible = "zephyr,lvgl-pointer-input";
+		input = <&ft5336>;
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	arduino_header: connector {
 		compatible = "arduino-header-r3";
 		#gpio-cells = <2>;
@@ -217,6 +239,7 @@ arduino_serial: &lpuart3 {
 		int2-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
 	};
 
+<<<<<<< HEAD
 	ft5336@38 {
 		compatible = "focaltech,ft5336";
 		reg = <0x38>;
@@ -225,6 +248,12 @@ arduino_serial: &lpuart3 {
 		kscan_input: kscan-input {
 			compatible = "zephyr,kscan-input";
 		};
+=======
+	ft5336: ft5336@38 {
+		compatible = "focaltech,ft5336";
+		reg = <0x38>;
+		int-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 

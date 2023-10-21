@@ -11,7 +11,11 @@ tests:
     min_ram: 16
   kernel.fpu_sharing.generic.arm:
     extra_args: PI_NUM_ITERATIONS=70000
+<<<<<<< HEAD
     filter: CONFIG_ARMV7_M_ARMV8_M_FP or CONFIG_ARMV7_R_FP
+=======
+    filter: CONFIG_ARMV7_M_ARMV8_M_FP or CONFIG_ARMV7_R_FP or CONFIG_CPU_HAS_VFP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     slow: true
     arch_allow: arm
     tags:

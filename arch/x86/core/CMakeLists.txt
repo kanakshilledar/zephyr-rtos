@@ -15,7 +15,11 @@ zephyr_library_sources_ifdef(CONFIG_PCIE pcie.c)
 zephyr_library_sources_ifdef(CONFIG_REBOOT_RST_CNT reboot_rst_cnt.c)
 zephyr_library_sources_ifdef(CONFIG_MULTIBOOT_INFO multiboot.c)
 zephyr_library_sources_ifdef(CONFIG_X86_EFI efi.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_ACPI acpi.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_ACPI legacy_bios.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_X86_MMU x86_mmu.c)
 zephyr_library_sources_ifdef(CONFIG_USERSPACE userspace.c)
 zephyr_library_sources_ifdef(CONFIG_ARCH_CACHE cache.c)

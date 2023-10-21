@@ -443,7 +443,11 @@ void *bt_ots_svc_decl_get(struct bt_ots *ots)
 #endif
 
 int bt_ots_init(struct bt_ots *ots,
+<<<<<<< HEAD
 		     struct bt_ots_init *ots_init)
+=======
+		     struct bt_ots_init_param *ots_init)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int err;
 

@@ -63,6 +63,7 @@ static int vnd_gpio_port_toggle_bits(const struct device *port,
 	return -ENOTSUP;
 }
 
+<<<<<<< HEAD
 static int vnd_gpio_pin_interrupt_configure(const struct device *port,
 					    gpio_pin_t pin,
 					    enum gpio_int_mode mode,
@@ -83,6 +84,8 @@ static uint32_t vnd_gpio_get_pending_int(const struct device *dev)
 	return 0;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct gpio_driver_api vnd_gpio_api = {
 	.pin_configure = vnd_gpio_pin_configure,
 	.port_get_raw = vnd_gpio_port_get_raw,
@@ -90,9 +93,12 @@ static const struct gpio_driver_api vnd_gpio_api = {
 	.port_set_bits_raw = vnd_gpio_port_set_bits_raw,
 	.port_clear_bits_raw = vnd_gpio_port_clear_bits_raw,
 	.port_toggle_bits = vnd_gpio_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = vnd_gpio_pin_interrupt_configure,
 	.manage_callback = vnd_gpio_manage_callback,
 	.get_pending_int = vnd_gpio_get_pending_int
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define VND_GPIO_INIT(n)						\

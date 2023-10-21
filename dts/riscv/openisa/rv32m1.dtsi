@@ -23,12 +23,20 @@
 		cpu@0 {
 			device_type = "cpu";
 			compatible = "riscv";
+<<<<<<< HEAD
+=======
+			riscv,isa = "rv32ima_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0>;
 		};
 
 		cpu@1 {
 			device_type = "cpu";
 			compatible = "riscv";
+<<<<<<< HEAD
+=======
+			riscv,isa = "rv32ima_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <1>;
 		};
 	};

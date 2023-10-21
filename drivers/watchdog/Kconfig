@@ -90,6 +90,11 @@ source "drivers/watchdog/Kconfig.rpi_pico"
 
 source "drivers/watchdog/Kconfig.gd32"
 
+<<<<<<< HEAD
+=======
+source "drivers/watchdog/Kconfig.npm1300"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/watchdog/Kconfig.npm6001"
 
 source "drivers/watchdog/Kconfig.nxp_s32"
@@ -110,4 +115,15 @@ source "drivers/watchdog/Kconfig.ifx_cat1"
 
 source "drivers/watchdog/Kconfig.opentitan"
 
+<<<<<<< HEAD
+=======
+source "drivers/watchdog/Kconfig.andes_atcwdt200"
+
+source "drivers/watchdog/Kconfig.nxp_fs26"
+
+source "drivers/watchdog/Kconfig.ambiq"
+
+source "drivers/watchdog/Kconfig.shell"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # WATCHDOG

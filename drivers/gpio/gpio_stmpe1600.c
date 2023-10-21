@@ -249,6 +249,7 @@ static int stmpe1600_port_toggle_bits(const struct device *dev, uint32_t mask)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int stmpe1600_pin_interrupt_configure(const struct device *dev,
 					     gpio_pin_t pin,
 					     enum gpio_int_mode mode,
@@ -257,6 +258,8 @@ static int stmpe1600_pin_interrupt_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int stmpe1600_init(const struct device *dev)
 {
 	const struct stmpe1600_config *const config = dev->config;
@@ -300,7 +303,10 @@ static const struct gpio_driver_api stmpe1600_drv_api = {
 	.port_set_bits_raw = stmpe1600_port_set_bits_raw,
 	.port_clear_bits_raw = stmpe1600_port_clear_bits_raw,
 	.port_toggle_bits = stmpe1600_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = stmpe1600_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define STMPE1600_INIT(inst)					     \

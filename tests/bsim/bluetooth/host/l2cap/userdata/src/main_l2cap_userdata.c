@@ -48,7 +48,12 @@ static const struct bt_l2cap_chan_ops l2cap_ops = {
 
 static struct bt_l2cap_le_chan channel;
 
+<<<<<<< HEAD
 static int accept(struct bt_conn *conn, struct bt_l2cap_chan **l2cap_chan)
+=======
+static int accept(struct bt_conn *conn, struct bt_l2cap_server *server,
+		  struct bt_l2cap_chan **l2cap_chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	channel.chan.ops = &l2cap_ops;
 	*l2cap_chan = &channel.chan;

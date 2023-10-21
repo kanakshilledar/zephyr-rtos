@@ -35,9 +35,14 @@ config NEWLIB_LIBC_SUPPORTED
 config PICOLIBC_SUPPORTED
 	bool
 	depends on !NATIVE_APPLICATION
+<<<<<<< HEAD
 	depends on "$(ZEPHYR_TOOLCHAIN_VARIANT)" = "zephyr"
 	depends on !(CPP && "$(ZEPHYR_TOOLCHAIN_VARIANT)" = "zephyr")
 	# picolibc text is outside .pinned.text on this board. #54148
+=======
+	depends on ("$(TOOLCHAIN_HAS_PICOLIBC)" = "y") || (NATIVE_LIBRARY)
+	depends on !REQUIRES_FULL_LIBCPP || ("$(TOOLCHAIN_HAS_PICOLIBC)" = "y")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	select FULL_LIBC_SUPPORTED
 	help
@@ -54,9 +59,15 @@ menu "C Library"
 
 choice LIBC_IMPLEMENTATION
 	prompt "C Library Implementation"
+<<<<<<< HEAD
 	default EXTERNAL_LIBC if NATIVE_APPLICATION
 	default NEWLIB_LIBC if REQUIRES_FULL_LIBC
 	default PICOLIBC if REQUIRES_FULL_LIBC
+=======
+	default EXTERNAL_LIBC if NATIVE_BUILD
+	default PICOLIBC
+	default NEWLIB_LIBC if REQUIRES_FULL_LIBC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default MINIMAL_LIBC
 
 config MINIMAL_LIBC
@@ -75,6 +86,10 @@ config PICOLIBC
 	select COMMON_LIBC_ABORT
 	select THREAD_LOCAL_STORAGE if ARCH_HAS_THREAD_LOCAL_STORAGE && TOOLCHAIN_SUPPORTS_THREAD_LOCAL_STORAGE
 	select LIBC_ERRNO if THREAD_LOCAL_STORAGE
+<<<<<<< HEAD
+=======
+	select NEED_LIBC_MEM_PARTITION
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	imply COMMON_LIBC_MALLOC
 	depends on !NATIVE_APPLICATION
 	depends on PICOLIBC_SUPPORTED
@@ -88,6 +103,10 @@ config NEWLIB_LIBC
 	select COMMON_LIBC_ABORT
 	depends on !NATIVE_APPLICATION
 	depends on NEWLIB_LIBC_SUPPORTED
+<<<<<<< HEAD
+=======
+	select NEED_LIBC_MEM_PARTITION
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Build with newlib library. The newlib library is expected to be
 	  part of the SDK in this case.
@@ -117,7 +136,11 @@ rsource "picolibc/Kconfig"
 config STDOUT_CONSOLE
 	bool "Send stdout to console"
 	depends on CONSOLE_HAS_DRIVER
+<<<<<<< HEAD
 	depends on !NATIVE_APPLICATION
+=======
+	depends on !(NATIVE_APPLICATION || (NATIVE_LIBRARY && EXTERNAL_LIBC))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	help
 	  This option directs standard output (e.g. printf) to the console

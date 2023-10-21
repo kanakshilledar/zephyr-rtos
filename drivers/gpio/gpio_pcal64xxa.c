@@ -774,7 +774,11 @@ int pcal64xxa_init(const struct device *dev)
 	 * this driver.
 	 */
 	if (drv_cfg->gpio_reset.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(drv_cfg->gpio_reset.port)) {
+=======
+		if (!gpio_is_ready_dt(&drv_cfg->gpio_reset)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("reset gpio device is not ready");
 			return -ENODEV;
 		}
@@ -833,7 +837,11 @@ int pcal64xxa_init(const struct device *dev)
 
 	/* If the INT line is available, configure the callback for it. */
 	if (drv_cfg->gpio_interrupt.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(drv_cfg->gpio_interrupt.port)) {
+=======
+		if (!gpio_is_ready_dt(&drv_cfg->gpio_interrupt)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("interrupt gpio device is not ready");
 			return -ENODEV;
 		}

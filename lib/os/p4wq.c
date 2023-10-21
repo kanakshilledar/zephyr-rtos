@@ -5,11 +5,20 @@
  */
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/p4wq.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
 #include <zephyr/kernel.h>
 #include <ksched.h>
 #include <zephyr/init.h>
 #include <zephyr/sys/iterable_sections.h>
+=======
+#include <zephyr/kernel.h>
+#include <zephyr/init.h>
+#include <zephyr/sys/iterable_sections.h>
+/* private kernel APIs */
+#include <ksched.h>
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(p4wq, CONFIG_LOG_DEFAULT_LEVEL);
 

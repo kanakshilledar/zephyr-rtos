@@ -16,24 +16,40 @@
 
 #include "output_handler.hpp"
 
+<<<<<<< HEAD
 void HandleOutput(tflite::ErrorReporter *error_reporter, int kind)
 {
 	/* light (red: wing, blue: ring, green: slope) */
 	if (kind == 0) {
 		TF_LITE_REPORT_ERROR(
 			error_reporter,
+=======
+void HandleOutput(int kind)
+{
+	/* light (red: wing, blue: ring, green: slope) */
+	if (kind == 0) {
+		MicroPrintf(
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			"WING:\n\r*         *         *\n\r *       * *       "
 			"*\n\r  *     *   *     *\n\r   *   *     *   *\n\r    * *       "
 			"* *\n\r     *         *\n\r");
 	} else if (kind == 1) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(
 			error_reporter,
+=======
+		MicroPrintf(
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			"RING:\n\r          *\n\r       *     *\n\r     *         *\n\r "
 			"   *           *\n\r     *         *\n\r       *     *\n\r      "
 			"    *\n\r");
 	} else if (kind == 2) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(
 			error_reporter,
+=======
+		MicroPrintf(
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			"SLOPE:\n\r        *\n\r       *\n\r      *\n\r     *\n\r    "
 			"*\n\r   *\n\r  *\n\r * * * * * * * *\n\r");
 	}

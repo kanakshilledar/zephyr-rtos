@@ -5,7 +5,11 @@
  */
 
 / {
+<<<<<<< HEAD
 	/delete-node/ input-sdl-touch;
+=======
+	/delete-node/ input_sdl_touch;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	fake_input_device: fake-device {
 		compatible = "vnd,input-device";

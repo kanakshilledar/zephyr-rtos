@@ -1,5 +1,8 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2013-2014 Wind River Systems, Inc.
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * Copyright (c) 2017 Oticon A/S
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -8,6 +11,7 @@
 #ifndef BOARDS_POSIX_NATIVE_POSIX_BOARD_IRQ_H
 #define BOARDS_POSIX_NATIVE_POSIX_BOARD_IRQ_H
 
+<<<<<<< HEAD
 #include <zephyr/sw_isr_table.h>
 #include "zephyr/types.h"
 
@@ -83,5 +87,8 @@ extern void posix_irq_check_idle_exit(void);
 #ifdef __cplusplus
 }
 #endif
+=======
+#include "../common/irq/board_irq.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* BOARDS_POSIX_NATIVE_POSIX_BOARD_IRQ_H */

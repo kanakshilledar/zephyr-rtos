@@ -79,12 +79,15 @@ static ALWAYS_INLINE void clk_init(void)
 
 static int kv5x_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int old_level; /* old interrupt lock level */
 
 	/* Disable interrupts */
 	old_level = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* release I/O power hold to allow normal run state */
 	PMC->REGSC |= PMC_REGSC_ACKISO_MASK;
 
@@ -96,12 +99,15 @@ static int kv5x_init(void)
 	/* Initialize system clocks and PLL */
 	clk_init();
 
+<<<<<<< HEAD
 	/*
 	 * Install default handler that simply resets the CPU if
 	 * configured in the kernel, NOP otherwise
 	 */
 	NMI_INIT();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifndef CONFIG_KINETIS_KV5X_ENABLE_CODE_CACHE
 	/* SystemInit will have enabled the code cache. Disable it here */
 	SCB_DisableICache();
@@ -111,9 +117,12 @@ static int kv5x_init(void)
 	SCB_DisableDCache();
 #endif
 
+<<<<<<< HEAD
 	/* Restore interrupt state */
 	irq_unlock(old_level);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

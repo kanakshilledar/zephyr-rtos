@@ -9,6 +9,10 @@
 #include <freq.h>
 #include <telink/telink_b91.dtsi>
 #include "tlsr9518adk80d-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "telink,b91";
@@ -62,6 +66,10 @@
 		key_1: button_1 {
 			label = "User KEY1";
 			gpios = <&gpioc 2 GPIO_PULL_DOWN>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

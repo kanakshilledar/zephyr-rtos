@@ -13,7 +13,11 @@
 #include <zephyr/init.h>
 #include <zephyr/app_memory/app_memdomain.h>
 #include <zephyr/drivers/entropy.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <mbedtls/entropy.h>
 
 #include <mbedtls/debug.h>
@@ -95,4 +99,19 @@ static int _mbedtls_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(_mbedtls_init, POST_KERNEL, 0);
+=======
+#if defined(CONFIG_MBEDTLS_INIT)
+SYS_INIT(_mbedtls_init, POST_KERNEL, 0);
+#endif
+
+/* if CONFIG_MBEDTLS_INIT is not defined then this function
+ * should be called by the platform before any mbedtls functionality
+ * is used
+ */
+int mbedtls_init(void)
+{
+	return _mbedtls_init();
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

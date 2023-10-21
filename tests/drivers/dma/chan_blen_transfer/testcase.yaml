@@ -1,6 +1,7 @@
 tests:
   drivers.dma.chan_blen_transfer:
     min_ram: 16
+<<<<<<< HEAD
     depends_on: dma
     tags:
       - drivers
@@ -13,3 +14,19 @@ tests:
       - dma
     filter: dt_nodelabel_enabled("test_dma0")
     platform_allow: nucleo_c031c6
+=======
+    depends_on:
+      - dma
+    tags:
+      - dma
+    filter: dt_nodelabel_enabled("test_dma0")
+  drivers.dma.chan_blen_transfer.low_footprint:
+    tags:
+      - dma
+    min_ram: 12
+    depends_on:
+      - dma
+    filter: dt_nodelabel_enabled("test_dma0")
+    platform_allow:
+      - nucleo_c031c6
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

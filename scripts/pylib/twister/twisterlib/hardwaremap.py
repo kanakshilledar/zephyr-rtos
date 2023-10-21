@@ -13,6 +13,10 @@ import yaml
 import scl
 import logging
 from pathlib import Path
+<<<<<<< HEAD
+=======
+from natsort import natsorted
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 from twisterlib.environment import ZEPHYR_BASE
 
@@ -321,7 +325,11 @@ class HardwareMap:
 
     def save(self, hwm_file):
         # use existing map
+<<<<<<< HEAD
         self.detected.sort(key=lambda x: x.serial or '')
+=======
+        self.detected = natsorted(self.detected, key=lambda x: x.serial or '')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if os.path.exists(hwm_file):
             with open(hwm_file, 'r') as yaml_file:
                 hwm = yaml.load(yaml_file, Loader=SafeLoader)

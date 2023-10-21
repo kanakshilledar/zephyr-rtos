@@ -94,15 +94,21 @@ static ALWAYS_INLINE void clk_init(void)
 
 static int k8x_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int old_level; /* old interrupt lock level */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_ARM_MPU)
 	uint32_t temp_reg;
 #endif /* !CONFIG_ARM_MPU */
 
+<<<<<<< HEAD
 	/* Disable interrupts */
 	old_level = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* release I/O power hold to allow normal run state */
 	PMC->REGSC |= PMC_REGSC_ACKISO_MASK;
 
@@ -122,6 +128,7 @@ static int k8x_init(void)
 	/* Initialize system clocks and PLL */
 	clk_init();
 
+<<<<<<< HEAD
 	/*
 	 * Install default handler that simply resets the CPU if
 	 * configured in the kernel, NOP otherwise
@@ -131,6 +138,8 @@ static int k8x_init(void)
 	/* Restore interrupt state */
 	irq_unlock(old_level);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

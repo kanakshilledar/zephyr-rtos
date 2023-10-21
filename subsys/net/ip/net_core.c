@@ -45,6 +45,10 @@ LOG_MODULE_REGISTER(net_core, CONFIG_NET_CORE_LOG_LEVEL);
 #include "ipv4.h"
 
 #include "dhcpv4.h"
+<<<<<<< HEAD
+=======
+#include "dhcpv6_internal.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "route.h"
 
@@ -475,6 +479,14 @@ static inline int services_init(void)
 		return status;
 	}
 
+<<<<<<< HEAD
+=======
+	status = net_dhcpv6_init();
+	if (status != 0) {
+		return status;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	dns_init_resolver();
 	websocket_init();
 

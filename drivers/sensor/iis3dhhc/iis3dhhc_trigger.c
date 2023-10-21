@@ -124,7 +124,11 @@ int iis3dhhc_init_interrupt(const struct device *dev)
 	const struct iis3dhhc_config *cfg = dev->config;
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: device %s is not ready", dev->name, cfg->int_gpio.port->name);
 		return -ENODEV;
 	}

@@ -3,7 +3,11 @@
 
 menuconfig RETENTION
 	bool "Retention support"
+<<<<<<< HEAD
 	depends on CRC
+=======
+	imply CRC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	depends on RETAINED_MEM
 	depends on DT_HAS_ZEPHYR_RETENTION_ENABLED
 	help
@@ -17,6 +21,7 @@ config RETENTION_INIT_PRIORITY
 	default 86
 	help
 	  Retention device initialization priority (must be higher than init
+<<<<<<< HEAD
 	  priorities for retained memory drivers.
 
 config RETENTION_MUTEXES
@@ -27,6 +32,23 @@ config RETENTION_MUTEXES
 	  Use mutexes to prevent issues with concurrent retention device
 	  access. Should only be disabled whereby retained memory access is
 	  required in an ISR or for special use cases.
+=======
+	  priorities for retained memory drivers).
+
+config RETENTION_MUTEXES
+	bool
+	default y
+	depends on MULTITHREADING
+	depends on !RETENTION_MUTEX_FORCE_DISABLE
+
+config RETENTION_MUTEX_FORCE_DISABLE
+	bool "Disable retention mutex support"
+	depends on MULTITHREADING
+	help
+	  Disable use of mutexes which prevent issues with concurrent retention
+	  device access. This option should only be enabled when retention
+	  access is required in an ISR or for special use cases.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config RETENTION_BUFFER_SIZE
 	int "Retention stack buffer sizes"
@@ -50,6 +72,11 @@ config RETENTION_BOOT_MODE
 	  byte must be created and set as the "zephyr,boot-mode" chosen node
 	  via device tree.
 
+<<<<<<< HEAD
+=======
+source "subsys/retention/Kconfig.blinfo"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu
 
 module = RETENTION

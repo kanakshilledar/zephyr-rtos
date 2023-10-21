@@ -37,7 +37,11 @@ class Stm32flashBinaryRunner(ZephyrBinaryRunner):
 
     @classmethod
     def capabilities(cls):
+<<<<<<< HEAD
         return RunnerCaps(commands={'flash'})
+=======
+        return RunnerCaps(commands={'flash'}, reset=True)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def do_add_parser(cls, parser):
@@ -72,12 +76,20 @@ class Stm32flashBinaryRunner(ZephyrBinaryRunner):
         parser.add_argument('--serial-mode', default='8e1', required=False,
                             help='serial port mode, default \'8e1\'')
 
+<<<<<<< HEAD
         parser.add_argument('--reset', default=False, required=False, action='store_true',
                             help='reset device at exit, default False')
 
         parser.add_argument('--verify', default=False, required=False, action='store_true',
                             help='verify writes, default False')
 
+=======
+        parser.add_argument('--verify', default=False, required=False, action='store_true',
+                            help='verify writes, default False')
+
+        parser.set_defaults(reset=False)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     @classmethod
     def do_create(cls, cfg, args):
         return Stm32flashBinaryRunner(cfg, device=args.device, action=args.action,

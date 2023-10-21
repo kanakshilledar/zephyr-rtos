@@ -16,6 +16,11 @@
 #include <adsp_memory.h>
 #include <adsp_imr_layout.h>
 #include <zephyr/drivers/mm/mm_drv_intel_adsp_mtl_tlb.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/timer/system_timer.h>
+#include <mem_window.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LPSRAM_MAGIC_VALUE      0x13579BDF
 #define LPSCTL_BATTR_MASK       GENMASK(16, 12)
@@ -42,6 +47,11 @@ __imr void power_init(void)
 
 #define ALL_USED_INT_LEVELS_MASK (L2_INTERRUPT_MASK | L3_INTERRUPT_MASK)
 
+<<<<<<< HEAD
+=======
+#define CPU_POWERUP_TIMEOUT_USEC 10000
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Power down procedure.
  *
@@ -73,6 +83,17 @@ uint8_t *global_imr_ram_storage;
  * @biref a d3 restore boot entry point
  */
 extern void boot_entry_d3_restore(void);
+<<<<<<< HEAD
+=======
+
+/*
+ * @brief re-enables IDC interrupt for all cores after exiting D3 state
+ *
+ * Called once from core 0
+ */
+extern void soc_mp_on_d3_exit(void);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 
 /*
@@ -183,7 +204,11 @@ __asm__(".align 4\n\t"
 	"  call0 power_gate_exit\n\t");
 
 #ifdef CONFIG_ADSP_IMR_CONTEXT_SAVE
+<<<<<<< HEAD
 static void ALWAYS_INLINE power_off_exit(void)
+=======
+static ALWAYS_INLINE void power_off_exit(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	__asm__(
 		"  movi  a0, 0\n\t"
@@ -213,7 +238,11 @@ __imr void pm_state_imr_restore(void)
 }
 #endif /* CONFIG_ADSP_IMR_CONTEXT_SAVE */
 
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 	uint32_t cpu = arch_proc_id();
@@ -272,9 +301,18 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 					(void *)rom_entry;
 			sys_cache_data_flush_range(imr_layout, sizeof(*imr_layout));
 #endif /* CONFIG_ADSP_IMR_CONTEXT_SAVE */
+<<<<<<< HEAD
 			/* turn off all HPSRAM banks - get a full bitmap */
 			uint32_t ebb_banks = ace_hpsram_get_bank_count();
 			uint32_t hpsram_mask = (1 << ebb_banks) - 1;
+=======
+			uint32_t hpsram_mask = 0;
+#ifdef CONFIG_ADSP_POWER_DOWN_HPSRAM
+			/* turn off all HPSRAM banks - get a full bitmap */
+			uint32_t ebb_banks = ace_hpsram_get_bank_count();
+			hpsram_mask = (1 << ebb_banks) - 1;
+#endif /* CONFIG_ADSP_POWER_DOWN_HPSRAM */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* do power down - this function won't return */
 			power_down(true, uncache_to_cache(&hpsram_mask),
 				   true);
@@ -284,7 +322,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 	} else if (state == PM_STATE_RUNTIME_IDLE) {
 		DSPCS.bootctl[cpu].bctl &= ~DSPBR_BCTL_WAITIPPG;
 		DSPCS.bootctl[cpu].bctl &= ~DSPBR_BCTL_WAITIPCG;
+<<<<<<< HEAD
 		ACE_PWRCTL->wpdsphpxpg &= ~BIT(cpu);
+=======
+		soc_cpu_power_down(cpu);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (cpu == 0) {
 			uint32_t battr = DSPCS.bootctl[cpu].battr & (~LPSCTL_BATTR_MASK);
 
@@ -298,7 +340,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 	uint32_t cpu = arch_proc_id();
@@ -317,6 +363,12 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 			imr_layout->imr_state.header.adsp_imr_magic = 0;
 			imr_layout->imr_state.header.imr_restore_vector = NULL;
 			imr_layout->imr_state.header.imr_ram_storage = NULL;
+<<<<<<< HEAD
+=======
+			sys_clock_idle_exit();
+			mem_window_idle_exit();
+			soc_mp_on_d3_exit();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 #endif /* CONFIG_ADSP_IMR_CONTEXT_SAVE */
 		soc_cpus_active[cpu] = true;
@@ -333,10 +385,18 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 			return;
 		}
 
+<<<<<<< HEAD
 		ACE_PWRCTL->wpdsphpxpg |= BIT(cpu);
 
 		while ((ACE_PWRSTS->dsphpxpgs & BIT(cpu)) == 0) {
 			k_busy_wait(HW_STATE_CHECK_DELAY);
+=======
+		soc_cpu_power_up(cpu);
+
+		if (!WAIT_FOR(soc_cpu_is_powered(cpu),
+			      CPU_POWERUP_TIMEOUT_USEC, k_busy_wait(HW_STATE_CHECK_DELAY))) {
+			k_panic();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		DSPCS.bootctl[cpu].bctl |=

@@ -16,8 +16,11 @@
 #define MEC_I2C_PORT_MASK	0xFEFFU
 #elif defined(CONFIG_SOC_MEC1501_HSZ)
 #define MEC_I2C_PORT_MASK	0xFEFFU
+<<<<<<< HEAD
 #elif defined(CONFIG_SOC_MEC1701_QSZ)
 #define MEC_I2C_PORT_MASK	0x07FFU
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #define MCHP_I2C_PORT_0		0

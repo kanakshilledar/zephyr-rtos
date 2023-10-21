@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2021, NXP
+=======
+ * Copyright 2021,2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -25,7 +29,11 @@
 		zephyr,shell-uart = &lpuart1;
 		zephyr,canbus = &flexcan2;
 		zephyr,flash-controller = &is25wp128;
+<<<<<<< HEAD
 		zephyr,flash = &is25wp128;
+=======
+		zephyr,flash = &sram0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		nxp,m4-partition = &slot1_partition;
 		zephyr,ipc = &mailbox_b;
 	};

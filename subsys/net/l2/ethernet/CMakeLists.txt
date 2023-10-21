@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(
+  ${ZEPHYR_BASE}/include/zephyr/net/ethernet.h
+)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_include_directories(${ZEPHYR_BASE}/subsys/net/l2)
 
 zephyr_library()

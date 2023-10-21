@@ -166,6 +166,46 @@ struct bt_cap_stream {
  */
 void bt_cap_stream_ops_register(struct bt_cap_stream *stream, struct bt_bap_stream_ops *ops);
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Send data to Common Audio Profile stream
+ *
+ * See bt_bap_stream_send() for more information
+ *
+ * @note Support for sending must be supported, determined by @kconfig{CONFIG_BT_AUDIO_TX}.
+ *
+ * @param stream   Stream object.
+ * @param buf      Buffer containing data to be sent.
+ * @param seq_num  Packet Sequence number. This value shall be incremented for each call to this
+ *                 function and at least once per SDU interval for a specific channel.
+ * @param ts       Timestamp of the SDU in microseconds (us). This value can be used to transmit
+ *                 multiple SDUs in the same SDU interval in a CIG or BIG. Can be omitted by using
+ *                 @ref BT_ISO_TIMESTAMP_NONE which will simply enqueue the ISO SDU in a FIFO
+ *                 manner.
+ *
+ * @retval -EINVAL if stream object is NULL
+ * @retval Any return value from bt_bap_stream_send()
+ */
+int bt_cap_stream_send(struct bt_cap_stream *stream, struct net_buf *buf, uint16_t seq_num,
+		       uint32_t ts);
+
+/**
+ * @brief Get ISO transmission timing info for a Common Audio Profile stream
+ *
+ * See bt_bap_stream_get_tx_sync() for more information
+ *
+ * @note Support for sending must be supported, determined by @kconfig{CONFIG_BT_AUDIO_TX}.
+ *
+ * @param[in]  stream Stream object.
+ * @param[out] info   Transmit info object.
+ *
+ * @retval -EINVAL if stream object is NULL
+ * @retval Any return value from bt_bap_stream_get_tx_sync()
+ */
+int bt_cap_stream_get_tx_sync(struct bt_cap_stream *stream, struct bt_iso_tx_info *info);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct bt_cap_unicast_audio_start_stream_param {
 	/** Coordinated or ad-hoc set member. */
 	union bt_cap_set_member member;
@@ -179,6 +219,7 @@ struct bt_cap_unicast_audio_start_stream_param {
 	/**
 	 * @brief Codec configuration.
 	 *
+<<<<<<< HEAD
 	 * The @p codec.meta shall include a list of CCIDs
 	 * (@ref BT_AUDIO_METADATA_TYPE_CCID_LIST) as well as a non-0
 	 * stream context (@ref BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT) bitfield.
@@ -187,6 +228,13 @@ struct bt_cap_unicast_audio_start_stream_param {
 
 	/** Quality of Service configuration. */
 	struct bt_codec_qos *qos;
+=======
+	 * The @p codec_cfg.meta shall include a list of CCIDs
+	 * (@ref BT_AUDIO_METADATA_TYPE_CCID_LIST) as well as a non-0
+	 * stream context (@ref BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT) bitfield.
+	 */
+	struct bt_audio_codec_cfg *codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct bt_cap_unicast_audio_start_param {
@@ -204,15 +252,24 @@ struct bt_cap_unicast_audio_update_param {
 	/** @brief Stream for the @p member */
 	struct bt_cap_stream *stream;
 
+<<<<<<< HEAD
 	/** The number of entries in @p meta. */
 	size_t meta_count;
+=======
+	/** The length of @p meta. */
+	size_t meta_len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** @brief The new metadata.
 	 *
 	 * The metadata shall a list of CCIDs as
 	 * well as a non-0 context bitfield.
 	 */
+<<<<<<< HEAD
 	struct bt_codec_data *meta;
+=======
+	uint8_t *meta;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -303,6 +360,7 @@ struct bt_cap_initiator_broadcast_stream_param {
 	/** Audio stream */
 	struct bt_cap_stream *stream;
 
+<<<<<<< HEAD
 	/** The number of elements in the %p data array.
 	 *
 	 * The BIS specific data may be omitted and this set to 0.
@@ -311,6 +369,16 @@ struct bt_cap_initiator_broadcast_stream_param {
 
 	/** BIS Codec Specific Configuration */
 	struct bt_codec_data *data;
+=======
+	/** The length of the %p data array.
+	 *
+	 * The BIS specific data may be omitted and this set to 0.
+	 */
+	size_t data_len;
+
+	/** BIS Codec Specific Configuration */
+	uint8_t *data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct bt_cap_initiator_broadcast_subgroup_param {
@@ -321,7 +389,11 @@ struct bt_cap_initiator_broadcast_subgroup_param {
 	struct bt_cap_initiator_broadcast_stream_param *stream_params;
 
 	/** Subgroup Codec configuration. */
+<<<<<<< HEAD
 	struct bt_codec *codec;
+=======
+	struct bt_audio_codec_cfg *codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct bt_cap_initiator_broadcast_create_param {
@@ -332,7 +404,11 @@ struct bt_cap_initiator_broadcast_create_param {
 	struct bt_cap_initiator_broadcast_subgroup_param *subgroup_params;
 
 	/** Quality of Service configuration. */
+<<<<<<< HEAD
 	struct bt_codec_qos *qos;
+=======
+	struct bt_audio_codec_qos *qos;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** @brief Broadcast Source packing mode.
 	 *
@@ -408,15 +484,25 @@ int bt_cap_initiator_broadcast_audio_start(struct bt_cap_broadcast_source *broad
  * to be enabled.
  *
  * @param broadcast_source The broadcast source to update.
+<<<<<<< HEAD
  * @param meta_count       The number of entries in @p meta.
  * @param meta             The new metadata. The metadata shall contain a list
  *                         of CCIDs as well as a non-0 context bitfield.
+=======
+ * @param meta             The new metadata. The metadata shall contain a list
+ *                         of CCIDs as well as a non-0 context bitfield.
+ * @param meta_len         The length of @p meta.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @return 0 on success or negative error value on failure.
  */
 int bt_cap_initiator_broadcast_audio_update(struct bt_cap_broadcast_source *broadcast_source,
+<<<<<<< HEAD
 					    const struct bt_codec_data meta[],
 					    size_t meta_count);
+=======
+					    const uint8_t meta[], size_t meta_len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Stop broadcast audio streams for a Common Audio Profile broadcast source.

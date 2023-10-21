@@ -8,8 +8,11 @@
 #ifndef _TRACE_USER_H
 #define _TRACE_USER_H
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/kernel_structs.h>
 #include <zephyr/init.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,14 +23,24 @@ void sys_trace_thread_abort_user(struct k_thread *thread);
 void sys_trace_thread_suspend_user(struct k_thread *thread);
 void sys_trace_thread_resume_user(struct k_thread *thread);
 void sys_trace_thread_name_set_user(struct k_thread *thread);
+<<<<<<< HEAD
 void sys_trace_thread_switched_in_user(struct k_thread *thread);
 void sys_trace_thread_switched_out_user(struct k_thread *thread);
+=======
+void sys_trace_thread_switched_in_user(void);
+void sys_trace_thread_switched_out_user(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void sys_trace_thread_info_user(struct k_thread *thread);
 void sys_trace_thread_priority_set_user(struct k_thread *thread, int prio);
 void sys_trace_thread_sched_ready_user(struct k_thread *thread);
 void sys_trace_thread_pend_user(struct k_thread *thread);
+<<<<<<< HEAD
 void sys_trace_isr_enter_user(int nested_interrupts);
 void sys_trace_isr_exit_user(int nested_interrupts);
+=======
+void sys_trace_isr_enter_user(void);
+void sys_trace_isr_exit_user(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void sys_trace_idle_user(void);
 
 void sys_trace_thread_create(struct k_thread *thread);
@@ -282,8 +295,11 @@ void sys_trace_idle(void);
 #define sys_port_trace_k_pipe_get_enter(pipe, timeout)
 #define sys_port_trace_k_pipe_get_blocking(pipe, timeout)
 #define sys_port_trace_k_pipe_get_exit(pipe, timeout, ret)
+<<<<<<< HEAD
 #define sys_port_trace_k_pipe_block_put_enter(pipe, sem)
 #define sys_port_trace_k_pipe_block_put_exit(pipe, sem)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define sys_port_trace_k_heap_init(heap)
 #define sys_port_trace_k_heap_aligned_alloc_enter(heap, timeout)

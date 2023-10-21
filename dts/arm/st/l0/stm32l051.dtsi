@@ -72,9 +72,12 @@
 		eeprom: eeprom@8080000{
 			reg = <0x08080000 DT_SIZE_K(2)>;
 		};
+<<<<<<< HEAD
 
 		adc1: adc@40012400 {
 			temp-channel = <18>;
 		};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

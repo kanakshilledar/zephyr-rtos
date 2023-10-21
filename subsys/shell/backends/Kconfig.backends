@@ -16,6 +16,11 @@ DT_CHOSEN_Z_SHELL_UART := zephyr,shell-uart
 
 config SHELL_BACKEND_SERIAL
 	bool "Serial backend"
+<<<<<<< HEAD
+=======
+	# Serial (UART) requires interrupts and the RTT backend cannot be used from an ISR context.
+	default n if SHELL_BACKEND_RTT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default "$(dt_chosen_enabled,$(DT_CHOSEN_Z_SHELL_UART))" if HAS_DTS
 	default y if !HAS_DTS
 	select SERIAL
@@ -27,6 +32,10 @@ if SHELL_BACKEND_SERIAL
 
 config SHELL_BACKEND_SERIAL_INIT_PRIORITY
 	int "Initialization priority"
+<<<<<<< HEAD
+=======
+	default 55 if ACPI
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 0
 	range 0 99
 	help

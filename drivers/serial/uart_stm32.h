@@ -13,21 +13,42 @@
 #define ZEPHYR_DRIVERS_SERIAL_UART_STM32_H_
 
 #include <zephyr/drivers/pinctrl.h>
+<<<<<<< HEAD
 
 #include <stm32_ll_usart.h>
 
+=======
+#include <zephyr/drivers/reset.h>
+#include <zephyr/drivers/uart.h>
+
+#include <stm32_ll_usart.h>
+
+#define STM32_UART_DEFAULT_BAUDRATE	115200
+#define STM32_UART_DEFAULT_PARITY	UART_CFG_PARITY_NONE
+#define STM32_UART_DEFAULT_STOP_BITS	UART_CFG_STOP_BITS_1
+#define STM32_UART_DEFAULT_DATA_BITS	UART_CFG_DATA_BITS_8
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* device config */
 struct uart_stm32_config {
 	/* USART instance */
 	USART_TypeDef *usart;
+<<<<<<< HEAD
+=======
+	/* Reset controller device configuration */
+	const struct reset_dt_spec reset;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* clock subsystem driving this peripheral */
 	const struct stm32_pclken *pclken;
 	/* number of clock subsystems */
 	size_t pclk_len;
+<<<<<<< HEAD
 	/* initial hardware flow control, 1 for RTS/CTS */
 	bool hw_flow_control;
 	/* initial parity, 0 for none, 1 for odd, 2 for even */
 	int  parity;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* switch to enable single wire / half duplex feature */
 	bool single_wire;
 	/* enable tx/rx pin swap */
@@ -44,6 +65,10 @@ struct uart_stm32_config {
 	uint8_t de_deassert_time;
 	/* enable de pin inversion */
 	bool de_invert;
+<<<<<<< HEAD
+=======
+	/* pin muxing */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct pinctrl_dev_config *pcfg;
 #if defined(CONFIG_UART_INTERRUPT_DRIVEN) || defined(CONFIG_UART_ASYNC_API) || \
 	defined(CONFIG_PM)
@@ -78,12 +103,19 @@ struct uart_dma_stream {
 
 /* driver data */
 struct uart_stm32_data {
+<<<<<<< HEAD
 	/* Baud rate */
 	uint32_t baud_rate;
 	/* clock device */
 	const struct device *clock;
 	/* Reset controller device configuration */
 	const struct reset_dt_spec reset;
+=======
+	/* clock device */
+	const struct device *clock;
+	/* uart config */
+	struct uart_config *uart_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	uart_irq_callback_user_data_t user_cb;
 	void *user_data;

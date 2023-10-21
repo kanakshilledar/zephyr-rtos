@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_NRF5340_CPUNET) || defined(DPPI_PRESENT)
+=======
+#if defined(CONFIG_SOC_COMPATIBLE_NRF5340_CPUNET) || defined(DPPI_PRESENT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*******************************************************************************
  * Enable Radio on Event Timer tick:
@@ -98,7 +102,11 @@
 
 /* Wire a SW SWITCH TIMER EVENTS_COMPARE[<cc_offset>] event
  * to a PPI GROUP TASK DISABLE task (PPI group with index <index>).
+<<<<<<< HEAD
  * 2 adjacent PPIs (8 & 9) and 2 adjacent PPI groups are used for this wiring;
+=======
+ * 2 adjacent PPIs (14 & 15) and 2 adjacent PPI groups are used for this wiring;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * <index> must be 0 or 1. <offset> must be a valid TIMER CC register offset.
  */
 #define HAL_SW_SWITCH_GROUP_TASK_DISABLE_PPI_BASE 14
@@ -157,4 +165,8 @@
 #define SW_SWITCH_TIMER_TASK_GROUP_BASE 0
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 
+<<<<<<< HEAD
 #endif /* CONFIG_SOC_NRF5340_CPUNET || DPPI_PRESENT */
+=======
+#endif /* CONFIG_SOC_COMPATIBLE_NRF5340_CPUNET || DPPI_PRESENT */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

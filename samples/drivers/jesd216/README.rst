@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _jesd216-sample:
 
 JESD216 Sample
 ##############
+=======
+.. zephyr:code-sample:: jesd216
+   :name: JESD216 flash
+   :relevant-api: flash_interface
+
+   Use the JESD216 flash API to extract information from a compatible serial memory device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

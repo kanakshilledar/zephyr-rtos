@@ -11,7 +11,11 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/entropy.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int entropy_mcux_css_get_entropy(const struct device *dev, uint8_t *buffer, uint16_t length)
 {

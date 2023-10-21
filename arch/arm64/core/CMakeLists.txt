@@ -37,11 +37,19 @@ zephyr_library_sources_ifdef(CONFIG_THREAD_LOCAL_STORAGE tls.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_ARM_SMCCC smccc-call.S)
 zephyr_library_sources_ifdef(CONFIG_AARCH64_IMAGE_HEADER header.S)
 zephyr_library_sources_ifdef(CONFIG_SEMIHOST semihost.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_DEBUG_COREDUMP coredump.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if ((CONFIG_MP_MAX_NUM_CPUS GREATER 1) OR (CONFIG_SMP))
   zephyr_library_sources(smp.c)
 endif ()
 
 zephyr_cc_option_ifdef(CONFIG_USERSPACE -mno-outline-atomics)
+<<<<<<< HEAD
+=======
+zephyr_cc_option_ifdef(CONFIG_ARM64_ENABLE_FRAME_POINTER -mno-omit-leaf-frame-pointer)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # GCC may generate ldp/stp instructions with the Advanced SIMD Qn registers for
 # consecutive 32-byte loads and stores. Saving and restoring the Advanced SIMD
@@ -52,4 +60,8 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
   zephyr_cc_option(-moverride=tune=no_ldp_stp_qregs)
 endif()
 
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_SOC_XENVM xen)
+=======
+add_subdirectory_ifdef(CONFIG_XEN xen)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

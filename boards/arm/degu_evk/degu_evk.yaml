@@ -8,3 +8,7 @@ supported:
   - i2c
   - adc
   - usb_device
+<<<<<<< HEAD
+=======
+vendor: atmarktechno
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

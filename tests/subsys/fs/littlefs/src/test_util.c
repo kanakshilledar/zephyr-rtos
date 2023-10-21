@@ -9,7 +9,11 @@
 #include <string.h>
 #include <zephyr/ztest.h>
 #include "testfs_tests.h"
+<<<<<<< HEAD
 #include "testfs_util.h"
+=======
+#include "../../common/test_fs_util.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define MNT "/mnt"
 #define ELT1 "a"

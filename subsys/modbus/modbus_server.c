@@ -926,6 +926,41 @@ static bool mbs_fc16_hregs_write(struct modbus_context *ctx)
 	return true;
 }
 
+<<<<<<< HEAD
+=======
+static bool mbs_try_user_fc(struct modbus_context *ctx, uint8_t fc)
+{
+	struct modbus_custom_fc *p;
+
+	LOG_DBG("Searching for custom Modbus handlers for code %u", fc);
+
+	SYS_SLIST_FOR_EACH_CONTAINER(&ctx->user_defined_cbs, p, node) {
+		if (p->fc == fc) {
+			int iface = modbus_iface_get_by_ctx(ctx);
+			bool rval;
+
+			LOG_DBG("Found custom handler");
+
+			p->excep_code = MODBUS_EXC_NONE;
+			rval = p->cb(iface, &ctx->rx_adu, &ctx->tx_adu, &p->excep_code,
+					p->user_data);
+
+			if (p->excep_code != MODBUS_EXC_NONE) {
+				LOG_INF("Custom handler failed with code %d", p->excep_code);
+				mbs_exception_rsp(ctx, p->excep_code);
+			}
+
+			return rval;
+		}
+	}
+
+	LOG_ERR("Function code 0x%02x not implemented", fc);
+	mbs_exception_rsp(ctx, MODBUS_EXC_ILLEGAL_FC);
+
+	return true;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 bool modbus_server_handler(struct modbus_context *ctx)
 {
 	bool send_reply = false;
@@ -945,6 +980,10 @@ bool modbus_server_handler(struct modbus_context *ctx)
 	}
 
 	if (addr != 0 && addr != ctx->unit_id) {
+<<<<<<< HEAD
+=======
+		LOG_DBG("Unit ID doesn't match %u != %u", addr, ctx->unit_id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		update_noresp_ctr(ctx);
 		return false;
 	}
@@ -995,10 +1034,14 @@ bool modbus_server_handler(struct modbus_context *ctx)
 		break;
 
 	default:
+<<<<<<< HEAD
 		LOG_ERR("Function code 0x%02x not implemented", fc);
 		mbs_exception_rsp(ctx, MODBUS_EXC_ILLEGAL_FC);
 		send_reply = true;
 		break;
+=======
+		send_reply = mbs_try_user_fc(ctx, fc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (addr == 0) {

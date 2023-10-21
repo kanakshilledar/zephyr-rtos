@@ -1,6 +1,12 @@
 # Copyright (c) 2022 Bose Corporation
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+config ZEPHYR_LIBLC3_MODULE
+	bool
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config LIBLC3
 	bool "liblc3 Support"
 	depends on FPU

@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 / {
 	aliases {
 		led0 = &user_led;
@@ -24,6 +29,10 @@
 		user_bt: button_0 {
 			label = "SW_0";
 			gpios = <&gpio_prt0 4 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

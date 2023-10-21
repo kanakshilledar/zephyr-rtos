@@ -56,6 +56,7 @@ static void lpm_hsem_lock(void)
 }
 
 /* Invoke Low Power/System Off specific Tasks */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 {
 	if (state == PM_STATE_SOFT_OFF) {
@@ -67,6 +68,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		LL_PWR_SetPowerMode(LL_PWR_MODE_SHUTDOWN);
 
 	} else if (state == PM_STATE_SUSPEND_TO_IDLE) {
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+{
+	if (state == PM_STATE_SUSPEND_TO_IDLE) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		lpm_hsem_lock();
 
@@ -93,10 +99,21 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 			return;
 		}
 
+<<<<<<< HEAD
+=======
+		/* Release RCC semaphore */
+		z_stm32_hsem_unlock(CFG_HW_RCC_SEMID);
+
+		LL_LPM_EnableDeepSleep();
+
+		/* enter SLEEP mode : WFE or WFI */
+		k_cpu_idle();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		LOG_DBG("Unsupported power state %u", state);
 		return;
 	}
+<<<<<<< HEAD
 
 	/* Release RCC semaphore */
 	z_stm32_hsem_unlock(CFG_HW_RCC_SEMID);
@@ -109,6 +126,12 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 
 /* Handle SOC specific activity after Low Power Mode Exit */
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+}
+
+/* Handle SOC specific activity after Low Power Mode Exit */
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* Implementation of STM32 AN5289 algorithm to enter/exit lowpower */
 	/* Release ENTRY_STOP_MODE semaphore */
@@ -150,12 +173,15 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 /* Initialize STM32 Power */
 static int stm32_power_init(void)
 {
+<<<<<<< HEAD
 
 #ifdef CONFIG_DEBUG
 	/* Enable the Debug Module during STOP mode */
 	LL_DBGMCU_EnableDBGStopMode();
 #endif /* CONFIG_DEBUG */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

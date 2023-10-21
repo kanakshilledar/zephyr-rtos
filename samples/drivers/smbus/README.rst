@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _samples_smbus_shell:
 
 SMBus Shell Sample
 ##################
+=======
+.. zephyr:code-sample:: smbus-shell
+   :name: SMBus shell
+   :relevant-api: smbus_interface
+
+   Interact with SMBus peripherals using shell commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -12,7 +20,13 @@ driver supported exploring the SMBus communication with peripheral devices.
 Building and Running
 ********************
 
+<<<<<<< HEAD
 This project can be built and executed on as follows:
+=======
+This sample can be found under :zephyr_file:`samples/drivers/smbus` in the
+Zephyr tree.
+The sample can be built and run as follows for the ``qemu_x86_64`` board:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: zephyr/samples/drivers/smbus
@@ -22,15 +36,29 @@ This project can be built and executed on as follows:
    :compact:
 
 Sample Output
+<<<<<<< HEAD
 =============
 
 Output from console when application started::
+=======
+*************
+
+Output from console when application started:
+
+.. code-block:: console
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    *** Booting Zephyr OS build zephyr-v3.2.0-804-gfedd72615e82  ***
    Start SMBUS shell sample qemu_x86_64
    uart:~$
 
+<<<<<<< HEAD
 List avaibalbe SMBus shell commands with::
+=======
+List available SMBus shell commands with:
+
+.. code-block:: console
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    uart:~$ smbus
    smbus - smbus commands
@@ -56,7 +84,13 @@ List avaibalbe SMBus shell commands with::
      block_read       :SMBus: Block Read command
                        Usage: block_read <device> <addr> <cmd>
 
+<<<<<<< HEAD
 Scan for available SMBus devices with command::
+=======
+Scan for available SMBus devices with command:
+
+.. code-block:: console
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    uart:~$ smbus scan smbus@fb00
         0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f

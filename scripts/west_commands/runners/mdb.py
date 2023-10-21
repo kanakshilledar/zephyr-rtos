@@ -72,7 +72,11 @@ def mdb_do_run(mdb_runner, command):
     if mdb_runner.cores == 1:
         # single core's mdb command is different with multicores
         mdb_cmd = [commander] + mdb_basic_options + mdb_target + mdb_run + [mdb_runner.elf_name]
+<<<<<<< HEAD
     elif 1 < mdb_runner.cores <= 4:
+=======
+    elif 1 < mdb_runner.cores <= 12:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         mdb_multifiles = '-multifiles='
         for i in range(mdb_runner.cores):
             mdb_sub_cmd = [commander] + ['-pset={}'.format(i + 1), '-psetname=core{}'.format(i)]

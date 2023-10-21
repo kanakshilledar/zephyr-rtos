@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _wpan_serial-sample:
 
 802.15.4 "serial-radio" sample
 ##############################
+=======
+.. zephyr:code-sample:: wpan-serial
+   :name: 802.15.4 "serial-radio"
+   :relevant-api: ieee802154 uart_interface
+
+   Implement a slip-radio device for Contiki-based border routers.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -36,12 +36,20 @@ ZTEST_SUITE(bt_keys_store_key_bt_settings_enabled, NULL, NULL, tc_setup, NULL, N
 
 /*
  *  Store an existing key (ID = 0) and verify the result.
+<<<<<<< HEAD
  *  settings_save_one() returns 0 which represents success.
+=======
+ *  bt_settings_store_keys() returns 0 which represents success.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Constraints:
  *   - Key reference points to a valid item
  *   - Item ID is set to 0
+<<<<<<< HEAD
  *   - Return value from settings_save_one() is 0
+=======
+ *   - Return value from bt_settings_store_keys() is 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Expected behaviour:
  *   - bt_keys_store() returns 0 which represent success
@@ -57,26 +65,43 @@ ZTEST(bt_keys_store_key_bt_settings_enabled, test_id_equal_0_with_no_error)
 	returned_key = bt_keys_get_addr(id, addr);
 	zassert_true(returned_key != NULL, "bt_keys_get_addr() returned a non-valid reference");
 
+<<<<<<< HEAD
 	settings_save_one_fake.return_val = 0;
+=======
+	bt_settings_store_keys_fake.return_val = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Store the key */
 	returned_code = bt_keys_store(returned_key);
 
 	zassert_true(returned_code == 0, "bt_keys_store() returned a non-zero code");
 
+<<<<<<< HEAD
 	expect_not_called_u8_to_dec();
 	expect_single_call_bt_settings_encode_key_with_null_key(&returned_key->addr);
 	expect_single_call_settings_save_one(returned_key->storage_start);
+=======
+	expect_single_call_bt_settings_store_keys(returned_key->storage_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /*
  *  Store an existing key (ID = 0) and verify the result.
+<<<<<<< HEAD
  *  settings_save_one() returns a negative value of -1 which represents failure.
+=======
+ *  bt_settings_store_keys() returns a negative value of -1 which represents
+ *  failure.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Constraints:
  *   - Key reference points to a valid item
  *   - Item ID is set to 0
+<<<<<<< HEAD
  *   - Return value from settings_save_one() is -1
+=======
+ *   - Return value from bt_settings_store_keys() is -1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Expected behaviour:
  *   - bt_keys_store() returns a negative error code of -1
@@ -92,26 +117,42 @@ ZTEST(bt_keys_store_key_bt_settings_enabled, test_id_equal_0_with_error)
 	returned_key = bt_keys_get_addr(id, addr);
 	zassert_true(returned_key != NULL, "bt_keys_get_addr() returned a non-valid reference");
 
+<<<<<<< HEAD
 	settings_save_one_fake.return_val = -1;
+=======
+	bt_settings_store_keys_fake.return_val = -1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Store the key */
 	returned_code = bt_keys_store(returned_key);
 
 	zassert_true(returned_code == -1, "bt_keys_store() returned a non-zero code");
 
+<<<<<<< HEAD
 	expect_not_called_u8_to_dec();
 	expect_single_call_bt_settings_encode_key_with_null_key(&returned_key->addr);
 	expect_single_call_settings_save_one(returned_key->storage_start);
+=======
+	expect_single_call_bt_settings_store_keys(returned_key->storage_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /*
  *  Store an existing key (ID != 0) and verify the result.
+<<<<<<< HEAD
  *  settings_save_one() returns 0 which represents success.
+=======
+ *  bt_settings_store_keys() returns 0 which represents success.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Constraints:
  *   - Key reference points to a valid item
  *   - Item ID isn't set to 0
+<<<<<<< HEAD
  *   - Return value from settings_save_one() is 0
+=======
+ *   - Return value from bt_settings_store_keys() is 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Expected behaviour:
  *   - bt_keys_store() returns 0 which represent success
@@ -127,21 +168,34 @@ ZTEST(bt_keys_store_key_bt_settings_enabled, test_id_not_equal_0_with_no_error)
 	returned_key = bt_keys_get_addr(id, addr);
 	zassert_true(returned_key != NULL, "bt_keys_get_addr() returned a non-valid reference");
 
+<<<<<<< HEAD
 	settings_save_one_fake.return_val = 0;
+=======
+	bt_settings_store_keys_fake.return_val = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Store the key */
 	returned_code = bt_keys_store(returned_key);
 
 	zassert_true(returned_code == 0, "bt_keys_store() returned a non-zero code");
 
+<<<<<<< HEAD
 	expect_single_call_u8_to_dec(id);
 	expect_single_call_bt_settings_encode_key_with_not_null_key(&returned_key->addr);
 	expect_single_call_settings_save_one(returned_key->storage_start);
+=======
+	expect_single_call_bt_settings_store_keys(returned_key->storage_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /*
  *  Store an existing key (ID != 0) and verify the result
+<<<<<<< HEAD
  *  settings_save_one() returns a negative value of -1 which represents failure.
+=======
+ *  bt_settings_store_keys() returns a negative value of -1 which represents
+ *  failure.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  Constraints:
  *   - Key reference points to a valid item
@@ -162,14 +216,22 @@ ZTEST(bt_keys_store_key_bt_settings_enabled, test_id_not_equal_0_with_error)
 	returned_key = bt_keys_get_addr(id, addr);
 	zassert_true(returned_key != NULL, "bt_keys_get_addr() returned a non-valid reference");
 
+<<<<<<< HEAD
 	settings_save_one_fake.return_val = -1;
+=======
+	bt_settings_store_keys_fake.return_val = -1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Store the key */
 	returned_code = bt_keys_store(returned_key);
 
 	zassert_true(returned_code == -1, "bt_keys_store() returned a non-zero code");
 
+<<<<<<< HEAD
 	expect_single_call_u8_to_dec(id);
 	expect_single_call_bt_settings_encode_key_with_not_null_key(&returned_key->addr);
 	expect_single_call_settings_save_one(returned_key->storage_start);
+=======
+	expect_single_call_bt_settings_store_keys(returned_key->storage_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

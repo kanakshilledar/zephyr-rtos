@@ -16,7 +16,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(esp32_temp, CONFIG_SENSOR_LOG_LEVEL);
 
+<<<<<<< HEAD
 #if CONFIG_SOC_ESP32
+=======
+#if CONFIG_SOC_SERIES_ESP32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #error "Temperature sensor not supported on ESP32"
 #endif /* CONFIG_IDF_TARGET_ESP32 */
 

@@ -8,9 +8,19 @@ compatible: "nxp,pdcfg-power"
 include: zephyr,power-state.yaml
 
 properties:
+<<<<<<< HEAD
     deep-sleep-config:
         type: array
         description: |
           An array of values written to the PDSLEEPCFG registers that controls the power to various blocks
           while the CPU is in deep sleep mode. These values are programmed to the sleep configuration registers
           before entering deep sleep mode.
+=======
+  deep-sleep-config:
+    type: array
+    description: |
+      An array of values written to the PDSLEEPCFG registers that controls the
+      power to various blocks while the CPU is in deep sleep mode. These values
+      are programmed to the sleep configuration registers before entering deep
+      sleep mode.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

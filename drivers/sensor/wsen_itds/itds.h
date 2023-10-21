@@ -106,8 +106,13 @@ struct itds_device_data {
 	struct k_work work;
 #endif
 	int16_t samples[ITDS_SAMPLE_SIZE];
+<<<<<<< HEAD
 	int16_t temprature;
 	uint16_t scale;
+=======
+	int16_t temperature;
+	int16_t scale;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	enum operation_mode op_mode;
 	const struct device *dev;
 

@@ -435,7 +435,11 @@ track" command:
 
 
 Some server commands are available. These commands force
+<<<<<<< HEAD
 notifications of the various characterstics, for testing that the
+=======
+notifications of the various characteristics, for testing that the
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 client receives notifications. The values sent in the notifications
 caused by these testing commands are independent of the media player,
 so they do not correspond the actual values of the characteristics nor

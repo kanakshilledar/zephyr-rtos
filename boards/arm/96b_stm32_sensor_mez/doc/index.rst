@@ -242,7 +242,14 @@ References
    https://www.96boards.org/documentation/mezzanine/stm32/
 
 .. _STM32F446VE on www.st.com:
+<<<<<<< HEAD
    http://www.st.com/en/microcontrollers/stm32f446ve.html
 
 .. _STM32F446 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00135183.pdf
+=======
+   https://www.st.com/en/microcontrollers/stm32f446ve.html
+
+.. _STM32F446 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00135183.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

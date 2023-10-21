@@ -5,8 +5,14 @@
  */
 /dts-v1/;
 
+<<<<<<< HEAD
 #include <espressif/esp32s3.dtsi>
 #include "esp32s3_devkitm-pinctrl.dtsi"
+=======
+#include <espressif/esp32s3/esp32s3_mini_n8.dtsi>
+#include "esp32s3_devkitm-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "esp32s3_devkitm";
@@ -34,6 +40,10 @@
 		button0: button_0 {
 			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "BOOT Button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
@@ -93,6 +103,15 @@
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
+=======
+&twai {
+	pinctrl-0 = <&twai_default>;
+	pinctrl-names = "default";
+	bus-speed = <125000>;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &timer0 {
 	status = "disabled";
 };
@@ -117,6 +136,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&usb_serial {
+	status = "disabled";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &flash0 {
 	status = "okay";
 	partitions {

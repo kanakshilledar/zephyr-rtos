@@ -7,12 +7,22 @@
 #include <st/l5/stm32l552Xe.dtsi>
 #include <st/l5/stm32l552z(c-e)txq-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
 
 / {
 	leds {
 		compatible = "gpio-leds";
 		green_led_1: led_1 {
 			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	leds: leds {
+		compatible = "gpio-leds";
+		green_led_1: led_1 {
+			gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			label = "User LD1";
 		};
 		blue_led_1: led_2 {
@@ -30,6 +40,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -80,6 +94,11 @@
 &adc1 {
 	pinctrl-0 = <&adc1_in1_pc0>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 

@@ -12,18 +12,28 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/irq.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <stm32_ll_bus.h>
 #include <stm32_ll_cortex.h>
 #include <stm32_ll_pwr.h>
 #include <stm32_ll_rcc.h>
 #include <stm32_ll_system.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include "stm32_hsem.h"
 
+=======
+#include "stm32_hsem.h"
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -34,13 +44,17 @@
  */
 static int stm32h7_m4_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Enable ART Flash cache accelerator */
 	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_ART);
 	LL_ART_SetBaseAddress(DT_REG_ADDR(DT_CHOSEN(zephyr_flash)));
 	LL_ART_Enable();
 
+<<<<<<< HEAD
 	key = irq_lock();
 
 	/* Install default handler that simply resets the CPU
@@ -50,6 +64,8 @@ static int stm32h7_m4_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* In case CM4 has not been forced boot by CM7,
 	 * CM4 needs to wait until CM7 has setup clock configuration
 	 */

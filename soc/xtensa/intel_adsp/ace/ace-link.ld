@@ -403,8 +403,18 @@ SECTIONS {
     _unused_ram_start_marker = .;
     *(.unused_ram_start_marker)
     *(.unused_ram_start_marker.*)
+<<<<<<< HEAD
   } >ram
 
+=======
+    z_mapped_end = .;
+  } >ram
+
+  /* Heap start and end markers. Used with libc malloc code. */
+  . = SEGSTART_UNCACHED;
+  _end = ALIGN(8);
+  . = SEGSTART_CACHED;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   . = L2_SRAM_BASE + L2_SRAM_SIZE;
   . = SEGSTART_UNCACHED;
   _heap_end = .;

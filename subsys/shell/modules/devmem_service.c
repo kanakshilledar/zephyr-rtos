@@ -42,7 +42,11 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 	size_t data_offset;
 	mm_reg_t addr;
 	const size_t vsize = width / BITS_PER_BYTE;
+<<<<<<< HEAD
 	uint8_t data[SHELL_HEXDUMP_BYTES_IN_LINE];
+=======
+	uint8_t hex_data[SHELL_HEXDUMP_BYTES_IN_LINE];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_MMU) || defined(CONFIG_PCIE)
 	device_map((mm_reg_t *)&addr, phys_addr, size, K_MEM_CACHE_NONE);
@@ -60,7 +64,11 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 			switch (width) {
 			case 8:
 				value = sys_read8(addr + data_offset);
+<<<<<<< HEAD
 				data[data_offset] = value;
+=======
+				hex_data[data_offset] = value;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				break;
 			case 16:
 				value = sys_read16(addr + data_offset);
@@ -68,9 +76,15 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 					value = __bswap_16(value);
 				}
 
+<<<<<<< HEAD
 				data[data_offset] = (uint8_t)value;
 				value >>= 8;
 				data[data_offset + 1] = (uint8_t)value;
+=======
+				hex_data[data_offset] = (uint8_t)value;
+				value >>= 8;
+				hex_data[data_offset + 1] = (uint8_t)value;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				break;
 			case 32:
 				value = sys_read32(addr + data_offset);
@@ -78,6 +92,7 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 					value = __bswap_32(value);
 				}
 
+<<<<<<< HEAD
 				data[data_offset] = (uint8_t)value;
 				value >>= 8;
 				data[data_offset + 1] = (uint8_t)value;
@@ -85,6 +100,15 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 				data[data_offset + 2] = (uint8_t)value;
 				value >>= 8;
 				data[data_offset + 3] = (uint8_t)value;
+=======
+				hex_data[data_offset] = (uint8_t)value;
+				value >>= 8;
+				hex_data[data_offset + 1] = (uint8_t)value;
+				value >>= 8;
+				hex_data[data_offset + 2] = (uint8_t)value;
+				value >>= 8;
+				hex_data[data_offset + 3] = (uint8_t)value;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				break;
 			default:
 				shell_fprintf(sh, SHELL_NORMAL, "Incorrect data width\n");
@@ -92,7 +116,11 @@ static int memory_dump(const struct shell *sh, mem_addr_t phys_addr, size_t size
 			}
 		}
 
+<<<<<<< HEAD
 		shell_hexdump_line(sh, addr, data, MIN(size, SHELL_HEXDUMP_BYTES_IN_LINE));
+=======
+		shell_hexdump_line(sh, addr, hex_data, MIN(size, SHELL_HEXDUMP_BYTES_IN_LINE));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;

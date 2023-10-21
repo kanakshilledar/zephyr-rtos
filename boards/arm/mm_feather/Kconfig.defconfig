@@ -1,6 +1,10 @@
 # MM-FEATHER board
 
 # Copyright (c) 2021, MADMACHINE LIMITED
+<<<<<<< HEAD
+=======
+# Copyright 2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 if BOARD_MM_FEATHER
@@ -12,6 +16,15 @@ choice CODE_LOCATION
 	default CODE_FLEXSPI
 endchoice
 
+<<<<<<< HEAD
+=======
+config DEVICE_CONFIGURATION_DATA
+	default y
+
+config NXP_IMX_EXTERNAL_SDRAM
+	default y
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config DISK_DRIVER_SDMMC
 	default y if DISK_DRIVERS
 

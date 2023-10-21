@@ -37,8 +37,15 @@ _names = [
     'intel_adsp',
     'intel_cyclonev',
     'jlink',
+<<<<<<< HEAD
     'mdb',
     'misc',
+=======
+    'linkserver',
+    'mdb',
+    'misc',
+    'native_gdb',
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     'nios2',
     'nrfjprog',
     'nrfutil',

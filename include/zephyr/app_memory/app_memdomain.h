@@ -10,6 +10,16 @@
 #include <zephyr/sys/dlist.h>
 #include <zephyr/kernel.h>
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Application memory domain APIs
+ * @defgroup mem_domain_apis_app Application memory domain APIs
+ * @ingroup mem_domain_apis
+ * @{
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_USERSPACE
 
 /**
@@ -142,4 +152,12 @@ struct z_app_region {
 #define K_APPMEM_PARTITION_DEFINE(name)
 
 #endif /* CONFIG_USERSPACE */
+<<<<<<< HEAD
+=======
+
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_APP_MEMORY_APP_MEMDOMAIN_H_ */

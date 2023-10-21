@@ -527,10 +527,16 @@ static int mod_source(struct sync_state *state)
 {
 	const uint16_t pref_context = BT_AUDIO_CONTEXT_TYPE_CONVERSATIONAL;
 	struct bt_bap_scan_delegator_mod_src_param param;
+<<<<<<< HEAD
 	uint8_t pref_context_metadata[4] = {
 		0x03, /* length of the type and value */
 		BT_AUDIO_METADATA_TYPE_PREF_CONTEXT,
 		BT_BYTES_LIST_LE16(pref_context),
+=======
+	const uint8_t pref_context_metadata[] = {
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_PREF_CONTEXT,
+				    BT_BYTES_LIST_LE16(pref_context)),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	int err;
 

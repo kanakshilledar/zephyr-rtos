@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _modbus-rtu-client-sample:
 
 Modbus RTU Client Sample
 ########################
+=======
+.. zephyr:code-sample:: modbus-rtu-client
+   :name: Modbus RTU client
+   :relevant-api: modbus
+
+   Communicate with a Modbus RTU server.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -16,8 +24,12 @@ This sample has been tested with the nRF52840-DK and FRDM-K64F boards,
 but it should work with any board that has a free UART interface.
 
 RTU client example is running on an evaluation board and communicates
+<<<<<<< HEAD
 with another board that has been prepared according to the description
 `modbus-rtu-server-sample`.
+=======
+with another board running the :zephyr:code-sample:`modbus-rtu-server` sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 In addition to the evaluation board a RS-485 shield may be used.
 The shield converts UART TX, RX signals to RS-485.

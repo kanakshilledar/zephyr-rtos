@@ -24,8 +24,12 @@ source "subsys/logging/Kconfig.template.log_config"
 endmenu
 
 # The helper symbols below are put here due to an unusual setup: The simulated
+<<<<<<< HEAD
 # nrf52_bsim board uses the POSIX arch, but is compatible with Nordic ARM
 # boards
+=======
+# nrf5x_bsim boards use the POSIX arch, but are compatible with Nordic ARM boards
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config SOC_COMPATIBLE_NRF
 	bool
@@ -33,9 +37,24 @@ config SOC_COMPATIBLE_NRF
 config SOC_COMPATIBLE_NRF52X
 	bool
 
+<<<<<<< HEAD
 config SOC_COMPATIBLE_NRF52833
 	bool
 
+=======
+config SOC_COMPATIBLE_NRF53X
+	bool
+
+config SOC_COMPATIBLE_NRF52833
+	bool
+
+config SOC_COMPATIBLE_NRF5340_CPUNET
+	bool
+
+config SOC_COMPATIBLE_NRF5340_CPUAPP
+	bool
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #
 # SOC_*_LD: SoC specific Linker script additions
 #

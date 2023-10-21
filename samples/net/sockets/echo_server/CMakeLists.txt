@@ -5,8 +5,14 @@ cmake_minimum_required(VERSION 3.20.0)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(sockets_echo_server)
 
+<<<<<<< HEAD
 if(CONFIG_MBEDTLS_KEY_EXCHANGE_PSK_ENABLED AND
     (CONFIG_NET_SAMPLE_PSK_HEADER_FILE STREQUAL "dummy_psk.h"))
+=======
+if(CONFIG_NET_SOCKETS_SOCKOPT_TLS AND
+   CONFIG_MBEDTLS_KEY_EXCHANGE_PSK_ENABLED AND
+   (CONFIG_NET_SAMPLE_PSK_HEADER_FILE STREQUAL "dummy_psk.h"))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   add_custom_target(development_psk
     COMMAND ${CMAKE_COMMAND} -E echo "----------------------------------------------------------"
     COMMAND ${CMAKE_COMMAND} -E echo "--- WARNING: Using dummy PSK! Only suitable for        ---"

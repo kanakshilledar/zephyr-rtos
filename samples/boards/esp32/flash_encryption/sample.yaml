@@ -3,5 +3,12 @@ sample:
   name: flash_encryption
 tests:
   sample.board.esp32:
+<<<<<<< HEAD
     platform_allow: esp32
+=======
+    platform_allow:
+      - esp32_devkitc_wroom
+      - esp32_devkitc_wrover
+      - yd_esp32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags: esp32

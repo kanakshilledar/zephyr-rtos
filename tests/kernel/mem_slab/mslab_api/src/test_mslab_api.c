@@ -46,7 +46,11 @@ void tmslab_alloc_free(void *data)
 	}
 	for (int i = 0; i < BLK_NUM; i++) {
 		/* TESTPOINT: Free memory allocated from a memory slab.*/
+<<<<<<< HEAD
 		k_mem_slab_free(pslab, &block[i]);
+=======
+		k_mem_slab_free(pslab, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -65,7 +69,11 @@ static void tmslab_alloc_align(void *data)
 		zassert_true((uintptr_t)block[i] % BLK_ALIGN == 0U);
 	}
 	for (int i = 0; i < BLK_NUM; i++) {
+<<<<<<< HEAD
 		k_mem_slab_free(pslab, &block[i]);
+=======
+		k_mem_slab_free(pslab, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -102,7 +110,11 @@ static void tmslab_alloc_timeout(void *data)
 	}
 
 	for (int i = 0; i < BLK_NUM; i++) {
+<<<<<<< HEAD
 		k_mem_slab_free(pslab, &block[i]);
+=======
+		k_mem_slab_free(pslab, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -136,7 +148,11 @@ static void tmslab_used_get(void *data)
 	zassert_equal(k_mem_slab_num_used_get(pslab), BLK_NUM);
 
 	for (int i = 0; i < BLK_NUM; i++) {
+<<<<<<< HEAD
 		k_mem_slab_free(pslab, &block[i]);
+=======
+		k_mem_slab_free(pslab, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_equal(k_mem_slab_num_free_get(pslab), i + 1);
 		zassert_equal(k_mem_slab_num_used_get(pslab), BLK_NUM - 1 - i);
 	}
@@ -168,14 +184,22 @@ static void helper_thread(void *p0, void *p1, void *p2)
 	k_sem_give(&SEM_HELPERDONE);
 
 	k_sem_take(&SEM_REGRESSDONE, K_FOREVER);
+<<<<<<< HEAD
 	k_mem_slab_free(&kmslab, &ptr[0]);
+=======
+	k_mem_slab_free(&kmslab, ptr[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 	k_sem_take(&SEM_REGRESSDONE, K_FOREVER);
 
 	/* Free all the other blocks.  The first block are freed by this task */
 	for (int i = 1; i < BLK_NUM; i++) {
+<<<<<<< HEAD
 		k_mem_slab_free(&kmslab, &ptr[i]);
+=======
+		k_mem_slab_free(&kmslab, ptr[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_sem_give(&SEM_HELPERDONE);
@@ -336,5 +360,9 @@ ZTEST(mslab_api, test_mslab_pending)
 	k_sem_take(&SEM_HELPERDONE, K_FOREVER);
 
 	/* Free memory block */
+<<<<<<< HEAD
 	k_mem_slab_free(&kmslab, &b);
+=======
+	k_mem_slab_free(&kmslab, b);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

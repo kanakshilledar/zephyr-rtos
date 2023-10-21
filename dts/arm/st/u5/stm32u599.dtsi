@@ -5,3 +5,12 @@
  */
 
 #include <st/u5/stm32u595.dtsi>
+<<<<<<< HEAD
+=======
+
+/ {
+	soc {
+		compatible = "st,stm32u599", "st,stm32u5", "simple-bus";
+	};
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

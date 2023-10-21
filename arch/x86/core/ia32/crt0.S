@@ -44,6 +44,13 @@
 	GDATA(_sse_mxcsr_default_value)
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_THREAD_LOCAL_STORAGE)
+	GTEXT(z_x86_early_tls_update_gdt)
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	GDATA(x86_cpu_boot_arg)
 
 .macro install_page_tables
@@ -252,6 +259,14 @@ __csSet:
 #endif
 #endif /* Z_VM_KERNEL */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_THREAD_LOCAL_STORAGE
+	pushl %esp
+	call z_x86_early_tls_update_gdt
+	popl %esp
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Clear BSS */
 #ifdef CONFIG_LINKER_USE_BOOT_SECTION
 	call	z_bss_zero_boot

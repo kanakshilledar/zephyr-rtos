@@ -29,6 +29,10 @@
 #include <zephyr/sys/check.h>
 #include <zephyr/sys/mem_manage.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/debug/sparse.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/cache.h>
 
 #include <soc.h>
@@ -144,7 +148,11 @@ out:
 int sys_mm_drv_map_region(void *virt, uintptr_t phys,
 			  size_t size, uint32_t flags)
 {
+<<<<<<< HEAD
 	void *va = z_soc_cached_ptr(virt);
+=======
+	void *va = (__sparse_force void *)z_soc_cached_ptr(virt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return sys_mm_drv_simple_map_region(va, phys, size, flags);
 }
@@ -152,7 +160,11 @@ int sys_mm_drv_map_region(void *virt, uintptr_t phys,
 int sys_mm_drv_map_array(void *virt, uintptr_t *phys,
 			 size_t cnt, uint32_t flags)
 {
+<<<<<<< HEAD
 	void *va = z_soc_cached_ptr(virt);
+=======
+	void *va = (__sparse_force void *)z_soc_cached_ptr(virt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return sys_mm_drv_simple_map_array(va, phys, cnt, flags);
 }
@@ -201,7 +213,11 @@ out:
 
 int sys_mm_drv_unmap_region(void *virt, size_t size)
 {
+<<<<<<< HEAD
 	void *va = z_soc_cached_ptr(virt);
+=======
+	void *va = (__sparse_force void *)z_soc_cached_ptr(virt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return sys_mm_drv_simple_unmap_region(va, size);
 }
@@ -273,7 +289,11 @@ int sys_mm_drv_update_page_flags(void *virt, uint32_t flags)
 int sys_mm_drv_update_region_flags(void *virt, size_t size,
 				   uint32_t flags)
 {
+<<<<<<< HEAD
 	void *va = z_soc_cached_ptr(virt);
+=======
+	void *va = (__sparse_force void *)z_soc_cached_ptr(virt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return sys_mm_drv_simple_update_region_flags(va, size, flags);
 }
@@ -282,8 +302,13 @@ int sys_mm_drv_update_region_flags(void *virt, size_t size,
 int sys_mm_drv_remap_region(void *virt_old, size_t size,
 			    void *virt_new)
 {
+<<<<<<< HEAD
 	void *va_new = z_soc_cached_ptr(virt_new);
 	void *va_old = z_soc_cached_ptr(virt_old);
+=======
+	void *va_new = (__sparse_force void *)z_soc_cached_ptr(virt_new);
+	void *va_old = (__sparse_force void *)z_soc_cached_ptr(virt_old);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return sys_mm_drv_simple_remap_region(va_old, size, va_new);
 }
@@ -293,8 +318,13 @@ int sys_mm_drv_move_region(void *virt_old, size_t size, void *virt_new,
 {
 	int ret;
 
+<<<<<<< HEAD
 	void *va_new = z_soc_cached_ptr(virt_new);
 	void *va_old = z_soc_cached_ptr(virt_old);
+=======
+	void *va_new = (__sparse_force void *)z_soc_cached_ptr(virt_new);
+	void *va_old = (__sparse_force void *)z_soc_cached_ptr(virt_old);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = sys_mm_drv_simple_move_region(va_old, size, va_new, phys_new);
 
@@ -313,8 +343,13 @@ int sys_mm_drv_move_array(void *virt_old, size_t size, void *virt_new,
 {
 	int ret;
 
+<<<<<<< HEAD
 	void *va_new = z_soc_cached_ptr(virt_new);
 	void *va_old = z_soc_cached_ptr(virt_old);
+=======
+	void *va_new = (__sparse_force void *)z_soc_cached_ptr(virt_new);
+	void *va_old = (__sparse_force void *)z_soc_cached_ptr(virt_old);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = sys_mm_drv_simple_move_array(va_old, size, va_new,
 					    phys_new, phys_cnt);

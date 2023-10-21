@@ -412,7 +412,11 @@ int modbus_read_input_regs(const int iface,
 	sys_put_be16(start_addr, &ctx->tx_adu.data[0]);
 	sys_put_be16(num_regs, &ctx->tx_adu.data[2]);
 
+<<<<<<< HEAD
 	err = mbc_send_cmd(ctx, unit_id, 4, reg_buf);
+=======
+	err = mbc_send_cmd(ctx, unit_id, MODBUS_FC04_IN_REG_RD, reg_buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_unlock(&ctx->iface_lock);
 
 	return err;

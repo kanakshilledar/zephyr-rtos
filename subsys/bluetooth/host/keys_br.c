@@ -98,14 +98,22 @@ struct bt_keys_link_key *bt_keys_get_link_key(const bt_addr_t *addr)
 void bt_keys_link_key_clear(struct bt_keys_link_key *link_key)
 {
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
+<<<<<<< HEAD
 		char key[BT_SETTINGS_KEY_MAX];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bt_addr_le_t le_addr;
 
 		le_addr.type = BT_ADDR_LE_PUBLIC;
 		bt_addr_copy(&le_addr.a, &link_key->addr);
+<<<<<<< HEAD
 		bt_settings_encode_key(key, sizeof(key), "link_key",
 				       &le_addr, NULL);
 		settings_delete(key);
+=======
+
+		bt_settings_delete_link_key(&le_addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_DBG("%s", bt_addr_str(&link_key->addr));
@@ -135,16 +143,25 @@ void bt_keys_link_key_store(struct bt_keys_link_key *link_key)
 {
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		int err;
+<<<<<<< HEAD
 		char key[BT_SETTINGS_KEY_MAX];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bt_addr_le_t le_addr;
 
 		le_addr.type = BT_ADDR_LE_PUBLIC;
 		bt_addr_copy(&le_addr.a, &link_key->addr);
+<<<<<<< HEAD
 		bt_settings_encode_key(key, sizeof(key), "link_key",
 				       &le_addr, NULL);
 
 		err = settings_save_one(key, link_key->storage_start,
 					BT_KEYS_LINK_KEY_STORAGE_LEN);
+=======
+
+		err = bt_settings_store_link_key(&le_addr, link_key->storage_start,
+						 BT_KEYS_LINK_KEY_STORAGE_LEN);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err) {
 			LOG_ERR("Failed to save link key (err %d)", err);
 		}

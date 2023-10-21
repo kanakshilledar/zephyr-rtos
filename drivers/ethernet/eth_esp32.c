@@ -47,6 +47,12 @@ struct eth_esp32_dev_data {
 	struct k_thread rx_thread;
 };
 
+<<<<<<< HEAD
+=======
+static const struct device *eth_esp32_phy_dev = DEVICE_DT_GET(
+		DT_INST_PHANDLE(0, phy_handle));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static enum ethernet_hw_caps eth_esp32_caps(const struct device *dev)
 {
 	ARG_UNUSED(dev);
@@ -278,7 +284,10 @@ static void eth_esp32_iface_init(struct net_if *iface)
 {
 	const struct device *dev = net_if_get_device(iface);
 	struct eth_esp32_dev_data *dev_data = dev->data;
+<<<<<<< HEAD
 	const struct device *phy_dev = DEVICE_DT_GET(DT_INST_CHILD(0, phy));
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	dev_data->iface = iface;
 
@@ -288,8 +297,14 @@ static void eth_esp32_iface_init(struct net_if *iface)
 
 	ethernet_init(iface);
 
+<<<<<<< HEAD
 	if (device_is_ready(phy_dev)) {
 		phy_link_callback_set(phy_dev, phy_link_state_changed, (void *)dev);
+=======
+	if (device_is_ready(eth_esp32_phy_dev)) {
+		phy_link_callback_set(eth_esp32_phy_dev, phy_link_state_changed,
+				      (void *)dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		LOG_ERR("PHY device not ready");
 	}

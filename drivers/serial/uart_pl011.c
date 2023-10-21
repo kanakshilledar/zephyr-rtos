@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2018 Linaro Limited
  * Copyright (c) 2022 Arm Limited (or its affiliates). All rights reserved.
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Antmicro <www.antmicro.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -24,6 +28,7 @@
 #include <cmsis_compiler.h>
 #endif
 
+<<<<<<< HEAD
 /*
  * UART PL011 register map structure
  */
@@ -48,6 +53,10 @@ struct pl011_regs {
 	uint32_t icr;
 	uint32_t dmacr;
 };
+=======
+#include "uart_pl011_registers.h"
+#include "uart_pl011_ambiq.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct pl011_config {
 	DEVICE_MMIO_ROM;
@@ -58,6 +67,11 @@ struct pl011_config {
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	uart_irq_config_func_t irq_config_func;
 #endif
+<<<<<<< HEAD
+=======
+	int (*clk_enable_func)(const struct device *dev, uint32_t clk);
+	int (*pwr_on_func)(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Device data structure */
@@ -72,6 +86,7 @@ struct pl011_data {
 #endif
 };
 
+<<<<<<< HEAD
 #define PL011_BIT_MASK(x, y) (((2 << x) - 1) << y)
 
 /* PL011 Uart Flags Register */
@@ -174,6 +189,8 @@ volatile struct pl011_regs *const get_uart(const struct device *dev)
 	return (volatile struct pl011_regs *const)DEVICE_MMIO_GET(dev);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void pl011_enable(const struct device *dev)
 {
 	get_uart(dev)->cr |=  PL011_CR_UARTEN;
@@ -428,10 +445,29 @@ static int pl011_init(const struct device *dev)
 			return ret;
 		}
 #endif
+<<<<<<< HEAD
+=======
+		/* Call vendor-specific function to power on the peripheral */
+		if (config->pwr_on_func != NULL) {
+			ret = config->pwr_on_func();
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* disable the uart */
 		pl011_disable(dev);
 		pl011_disable_fifo(dev);
 
+<<<<<<< HEAD
+=======
+		/* Call vendor-specific function to enable clock for the peripheral */
+		if (config->clk_enable_func != NULL) {
+			ret = config->clk_enable_func(dev, config->sys_clk_freq);
+			if (ret) {
+				return ret;
+			}
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Set baud rate */
 		ret = pl011_set_baudrate(dev, config->sys_clk_freq,
 					 data->baud_rate);
@@ -482,6 +518,21 @@ static int pl011_init(const struct device *dev)
 #define PINCTRL_INIT(n)
 #endif /* CONFIG_PINCTRL */
 
+<<<<<<< HEAD
+=======
+#define PL011_GET_COMPAT_QUIRK_NONE(n)	NULL
+
+#define PL011_GET_COMPAT_CLK_QUIRK_0(n)					\
+	COND_CODE_1(DT_NODE_HAS_COMPAT(DT_DRV_INST(n), ambiq_uart),	\
+		    (clk_enable_ambiq_uart),				\
+		    PL011_GET_COMPAT_QUIRK_NONE(n))
+
+#define PL011_GET_COMPAT_PWR_QUIRK_0(n)					\
+	COND_CODE_1(DT_NODE_HAS_COMPAT(DT_DRV_INST(n), ambiq_uart),	\
+		    (pwr_on_ambiq_uart_##n),				\
+		    PL011_GET_COMPAT_QUIRK_NONE(n))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 void pl011_isr(const struct device *dev)
 {
@@ -517,6 +568,11 @@ void pl011_isr(const struct device *dev)
 		.sys_clk_freq = DT_INST_PROP_BY_PHANDLE(n, clocks, clock_frequency),	\
 		PINCTRL_INIT(n)	\
 		.irq_config_func = pl011_irq_config_func_##n,				\
+<<<<<<< HEAD
+=======
+		.clk_enable_func = PL011_GET_COMPAT_CLK_QUIRK_0(n),			\
+		.pwr_on_func = PL011_GET_COMPAT_PWR_QUIRK_0(n),				\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 #else
 #define PL011_CONFIG_PORT(n)								\
@@ -528,7 +584,12 @@ void pl011_isr(const struct device *dev)
 #endif /* CONFIG_UART_INTERRUPT_DRIVEN */
 
 #define PL011_INIT(n)						\
+<<<<<<< HEAD
 	PINCTRL_DEFINE(n)							\
+=======
+	PINCTRL_DEFINE(n)					\
+	PL011_QUIRK_AMBIQ_UART_DEFINE(n)			\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PL011_CONFIG_PORT(n)					\
 								\
 	static struct pl011_data pl011_data_port_##n = {	\

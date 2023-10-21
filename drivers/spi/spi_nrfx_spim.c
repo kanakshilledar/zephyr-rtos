@@ -22,6 +22,16 @@
 LOG_MODULE_REGISTER(spi_nrfx_spim, CONFIG_SPI_LOG_LEVEL);
 
 #include "spi_context.h"
+<<<<<<< HEAD
+=======
+#include "spi_nrfx_common.h"
+
+#if defined(CONFIG_SOC_NRF52832) && !defined(CONFIG_SOC_NRF52832_ALLOW_SPIM_DESPITE_PAN_58)
+#error  This driver is not available by default for nRF52832 because of Product Anomaly 58 \
+	(SPIM: An additional byte is clocked out when RXD.MAXCNT == 1 and TXD.MAXCNT <= 1). \
+	Use CONFIG_SOC_NRF52832_ALLOW_SPIM_DESPITE_PAN_58=y to override this limitation.
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if (CONFIG_SPI_NRFX_RAM_BUFFER_SIZE > 0)
 #define SPI_BUFFER_IN_RAM 1
@@ -53,6 +63,10 @@ struct spi_nrfx_config {
 #ifdef CONFIG_SOC_NRF52832_ALLOW_SPIM_DESPITE_PAN_58
 	bool anomaly_58_workaround;
 #endif
+<<<<<<< HEAD
+=======
+	uint32_t wake_pin;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static void event_handler(const nrfx_spim_evt_t *p_event, void *p_context);
@@ -173,6 +187,12 @@ static int configure(const struct device *dev,
 	config.mode      = get_nrf_spim_mode(spi_cfg->operation);
 	config.bit_order = get_nrf_spim_bit_order(spi_cfg->operation);
 
+<<<<<<< HEAD
+=======
+	nrfy_gpio_pin_write(nrfy_spim_sck_pin_get(dev_config->spim.p_reg),
+			    spi_cfg->operation & SPI_MODE_CPOL ? 1 : 0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (dev_data->initialized) {
 		nrfx_spim_uninit(&dev_config->spim);
 		dev_data->initialized = false;
@@ -387,6 +407,21 @@ static int transceive(const struct device *dev,
 	if (error == 0) {
 		dev_data->busy = true;
 
+<<<<<<< HEAD
+=======
+		if (dev_config->wake_pin != WAKE_PIN_NOT_USED) {
+			error = spi_nrfx_wake_request(dev_config->wake_pin);
+			if (error == -ETIMEDOUT) {
+				LOG_WRN("Waiting for WAKE acknowledgment timed out");
+				/* If timeout occurs, try to perform the transfer
+				 * anyway, just in case the slave device was unable
+				 * to signal that it was already awaken and prepared
+				 * for the transfer.
+				 */
+			}
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		spi_context_buffers_setup(&dev_data->ctx, tx_bufs, rx_bufs, 1);
 		spi_context_cs_control(&dev_data->ctx, true);
 
@@ -523,6 +558,21 @@ static int spi_nrfx_init(const struct device *dev)
 		return err;
 	}
 
+<<<<<<< HEAD
+=======
+	if (dev_config->wake_pin != WAKE_PIN_NOT_USED) {
+		err = spi_nrfx_wake_init(dev_config->wake_pin);
+		if (err == -ENODEV) {
+			LOG_ERR("Failed to allocate GPIOTE channel for WAKE");
+			return err;
+		}
+		if (err == -EIO) {
+			LOG_ERR("Failed to configure WAKE pin");
+			return err;
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	dev_config->irq_connect();
 
 	err = spi_context_cs_configure_all(&dev_data->ctx);
@@ -597,7 +647,16 @@ static int spi_nrfx_init(const struct device *dev)
 			(.anomaly_58_workaround =			       \
 				SPIM_PROP(idx, anomaly_58_workaround),),       \
 			())						       \
+<<<<<<< HEAD
 	};								       \
+=======
+		.wake_pin = NRF_DT_GPIOS_TO_PSEL_OR(SPIM(idx), wake_gpios,     \
+						    WAKE_PIN_NOT_USED),	       \
+	};								       \
+	BUILD_ASSERT(!DT_NODE_HAS_PROP(SPIM(idx), wake_gpios) ||	       \
+		     !(DT_GPIO_FLAGS(SPIM(idx), wake_gpios) & GPIO_ACTIVE_LOW),\
+		     "WAKE line must be configured as active high");	       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PM_DEVICE_DT_DEFINE(SPIM(idx), spim_nrfx_pm_action);		       \
 	DEVICE_DT_DEFINE(SPIM(idx),					       \
 		      spi_nrfx_init,					       \
@@ -613,6 +672,7 @@ static int spi_nrfx_init(const struct device *dev)
 			DT_PHANDLE(SPIM(idx), memory_regions)))))),	       \
 		())
 
+<<<<<<< HEAD
 #ifdef CONFIG_SPI_0_NRF_SPIM
 SPI_NRFX_SPIM_DEFINE(0);
 #endif
@@ -630,5 +690,24 @@ SPI_NRFX_SPIM_DEFINE(3);
 #endif
 
 #ifdef CONFIG_SPI_4_NRF_SPIM
+=======
+#ifdef CONFIG_HAS_HW_NRF_SPIM0
+SPI_NRFX_SPIM_DEFINE(0);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIM1
+SPI_NRFX_SPIM_DEFINE(1);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIM2
+SPI_NRFX_SPIM_DEFINE(2);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIM3
+SPI_NRFX_SPIM_DEFINE(3);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIM4
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 SPI_NRFX_SPIM_DEFINE(4);
 #endif

@@ -89,7 +89,11 @@ static void espi_handler(const struct device *dev, struct espi_callback *cb,
 
 	/* Even in case of errors, let the general handler send response */
 	hc_espi->state = ESPI_STATE_PROCESSING;
+<<<<<<< HEAD
 	k_sem_give(&hc_espi->rx_ctx->handler_owns);
+=======
+	ec_host_cmd_rx_notify();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int ec_host_cmd_espi_init(const struct ec_host_cmd_backend *backend,

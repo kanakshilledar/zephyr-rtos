@@ -6,8 +6,14 @@
 
 /dts-v1/;
 
+<<<<<<< HEAD
 #include <espressif/esp32s2.dtsi>
 #include "esp32s2_saola-pinctrl.dtsi"
+=======
+#include <espressif/esp32s2/esp32s2_wrover_n4r2.dtsi>
+#include "esp32s2_saola-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "esp32s2_saola";
@@ -26,6 +32,7 @@
 		zephyr,flash = &flash0;
 	};
 
+<<<<<<< HEAD
 	power-states {
 		light_sleep: light_sleep {
 			compatible = "zephyr,power-state";
@@ -42,18 +49,27 @@
 		};
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	gpio_keys {
 		compatible = "gpio-keys";
 		user_button: user_button {
 			label = "BOOT";
 			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
 
 &cpu0 {
 	clock-frequency = <ESP32_CLK_CPU_240M>;
+<<<<<<< HEAD
 	cpu-power-states = <&deep_sleep &light_sleep>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &uart0 {
@@ -120,8 +136,15 @@
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
 &flash0 {
 	status = "okay";
+=======
+
+&flash0 {
+	status = "okay";
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;

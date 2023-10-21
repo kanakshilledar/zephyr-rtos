@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/dt-bindings/pinctrl/npcx-pinctrl.h>
 #include <zephyr/kernel.h>
@@ -19,6 +23,10 @@ LOG_MODULE_REGISTER(pimux_npcx, LOG_LEVEL_ERR);
 struct npcx_scfg_config {
 	/* scfg device base address */
 	uintptr_t base_scfg;
+<<<<<<< HEAD
+=======
+	uintptr_t base_dbg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uintptr_t base_glue;
 };
 
@@ -45,6 +53,10 @@ static const struct npcx_alt def_alts[] = {
 
 static const struct npcx_scfg_config npcx_scfg_cfg = {
 	.base_scfg = DT_REG_ADDR_BY_NAME(DT_NODELABEL(scfg), scfg),
+<<<<<<< HEAD
+=======
+	.base_dbg = DT_REG_ADDR_BY_NAME(DT_NODELABEL(scfg), dbg),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.base_glue = DT_REG_ADDR_BY_NAME(DT_NODELABEL(scfg), glue),
 };
 
@@ -129,6 +141,7 @@ void npcx_host_interface_sel(enum npcx_hif_type hif_type)
 	SET_FIELD(inst_scfg->DEVCNT, NPCX_DEVCNT_HIF_TYP_SEL_FIELD, hif_type);
 }
 
+<<<<<<< HEAD
 /* Pin-control driver registration */
 static int npcx_scfg_init(void)
 {
@@ -142,6 +155,22 @@ static int npcx_scfg_init(void)
 		inst_scfg->DEVCNT |= BIT(7);
 	}
 
+=======
+void npcx_dbg_freeze_enable(bool enable)
+{
+	const uintptr_t dbg_base = npcx_scfg_cfg.base_dbg;
+
+	if (enable) {
+		NPCX_DBGFRZEN3(dbg_base) &= ~BIT(NPCX_DBGFRZEN3_GLBL_FRZ_DIS);
+	} else {
+		NPCX_DBGFRZEN3(dbg_base) |= BIT(NPCX_DBGFRZEN3_GLBL_FRZ_DIS);
+	}
+}
+
+/* Pin-control driver registration */
+static int npcx_scfg_init(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Change all pads whose default functionality isn't IO to GPIO */
 	for (int i = 0; i < ARRAY_SIZE(def_alts); i++) {
 		npcx_pinctrl_alt_sel(&def_alts[i], 0);

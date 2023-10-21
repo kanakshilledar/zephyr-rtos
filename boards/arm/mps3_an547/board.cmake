@@ -25,7 +25,11 @@ if (CONFIG_BUILD_WITH_TFM)
   # Override the binary used by qemu, to use the combined
   # TF-M (Secure) & Zephyr (Non Secure) image (when running
   # in-tree tests).
+<<<<<<< HEAD
   set(QEMU_KERNEL_OPTION "-device;loader,file=${CMAKE_BINARY_DIR}/zephyr/merged.hex")
+=======
+  set(QEMU_KERNEL_OPTION "-device;loader,file=${CMAKE_BINARY_DIR}/zephyr/tfm_merged.hex")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif()
 
 # FVP settings

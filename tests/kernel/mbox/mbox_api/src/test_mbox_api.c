@@ -30,10 +30,16 @@ static struct k_mbox mbox;
 static k_tid_t sender_tid, receiver_tid, random_tid;
 
 static K_THREAD_STACK_DEFINE(tstack, STACK_SIZE);
+<<<<<<< HEAD
 static K_THREAD_STACK_DEFINE(rtstack, STACK_SIZE);
 static K_THREAD_STACK_DEFINE(tstack_1, STACK_SIZE);
 static K_THREAD_STACK_ARRAY_DEFINE(waiting_get_stack, 5, STACK_SIZE);
 static struct k_thread tdata, rtdata, async_tid, waiting_get_tid[5];
+=======
+static K_THREAD_STACK_DEFINE(tstack_1, STACK_SIZE);
+static K_THREAD_STACK_ARRAY_DEFINE(waiting_get_stack, 5, STACK_SIZE);
+static struct k_thread tdata, async_tid, waiting_get_tid[5];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static struct k_sem end_sema, sync_sema;
 
@@ -164,7 +170,10 @@ static void tmbox_put(struct k_mbox *pmbox)
 		/* Get a msg and dispose it by making the size = 0 */
 		mmsg.size = 0;
 		mmsg.tx_data = data[1];
+<<<<<<< HEAD
 		mmsg.tx_block.data = NULL;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		mmsg.tx_target_thread = K_ANY;
 		zassert_true(k_mbox_put(pmbox, &mmsg, K_FOREVER) == 0);
 		break;
@@ -432,6 +441,7 @@ ZTEST(mbox_api, test_mbox_kdefine)
 	tmbox(&kmbox);
 }
 
+<<<<<<< HEAD
 static void thread_mbox_data_get_null(void *p1, void *p2, void *p3)
 {
 	struct k_mbox_msg get_msg = {0};
@@ -548,6 +558,8 @@ ZTEST(mbox_api, test_mbox_get_put_block_data)
 			     NULL);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static ZTEST_BMEM char __aligned(4) buffer[8];
 
 /**

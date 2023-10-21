@@ -8,6 +8,10 @@
 #include <st/l4/stm32l475Xg.dtsi>
 #include <st/l4/stm32l475v(c-e-g)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics B-L475E-IOT01Ax board";
@@ -39,6 +43,10 @@
 		user_button: button_0 {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -71,10 +79,13 @@
 	};
 };
 
+<<<<<<< HEAD
 &cpu0 {
 	cpu-power-states = <&stop0 &stop1 &stop2>;
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &clk_lsi {
 	status = "okay";
 };
@@ -290,10 +301,18 @@ zephyr_udc0: &usbotg_fs {
 };
 
 &adc1 {
+<<<<<<< HEAD
 	pinctrl-0 = <&adc1_in5_pa0 &adc1_in3_pc2
 		     &adc1_in4_pc3 &adc1_in13_pc4
 		     &adc1_in14_pc5>;
 	pinctrl-names = "default";
+=======
+	pinctrl-0 = <&adc1_in3_pc2 &adc1_in4_pc3
+		     &adc1_in13_pc4 &adc1_in14_pc5>;
+	pinctrl-names = "default";
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 

@@ -343,7 +343,12 @@ static int write_ndwords(const struct device *dev,
 
 	/* Perform the data write operation at the desired memory address */
 	for (i = 0; i < n; ++i) {
+<<<<<<< HEAD
 		flash[i] = data[i];
+=======
+		/* Source dword may be unaligned, so take extra care when dereferencing it */
+		flash[i] = UNALIGNED_GET(data + i);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Flush the data write */
 		barrier_dsync_fence_full();

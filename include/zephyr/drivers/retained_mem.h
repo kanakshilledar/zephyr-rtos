@@ -75,7 +75,11 @@ typedef int (*retained_mem_clear_api)(const struct device *dev);
  *
  * Note that drivers must implement all functions, none of the functions are optional.
  */
+<<<<<<< HEAD
 struct retained_mem_driver_api {
+=======
+__subsystem struct retained_mem_driver_api {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	retained_mem_size_api size;
 	retained_mem_read_api read;
 	retained_mem_write_api write;

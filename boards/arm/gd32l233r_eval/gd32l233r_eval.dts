@@ -7,6 +7,10 @@
 
 #include <gigadevice/gd32l23x/gd32l233rc.dtsi>
 #include "gd32l233r_eval-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "GigaDevice GD32L233R Evaluation Kit";
@@ -45,10 +49,18 @@
 		wakeup_key: wakeup_key {
 			label = "WAKEUP_KEY";
 			gpios = <&gpioa 0 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_WAKEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		tamper_key: tamper_key {
 			label = "TAMPER_KEY";
 			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

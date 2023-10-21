@@ -91,8 +91,19 @@ extern "C" {
 #define PROCESSOR_NAME "cortex-a53"
 #elif defined(CONFIG_CPU_CORTEX_A55)
 #define PROCESSOR_NAME "cortex-a55"
+<<<<<<< HEAD
 #elif defined(CONFIG_CPU_CORTEX_A72)
 #define PROCESSOR_NAME "cortex-a72"
+=======
+#elif defined(CONFIG_CPU_CORTEX_A57)
+#define PROCESSOR_NAME "cortex-a57"
+#elif defined(CONFIG_CPU_CORTEX_A72)
+#define PROCESSOR_NAME "cortex-a72"
+#elif defined(CONFIG_CPU_CORTEX_A76_A55)
+#define PROCESSOR_NAME "cortex-a76"
+#elif defined(CONFIG_CPU_CORTEX_A76)
+#define PROCESSOR_NAME "cortex-a76"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_CPU_CORTEX_R82)
 #define PROCESSOR_NAME "armv8.4-a+nolse"
 #endif
@@ -126,6 +137,11 @@ extern "C" {
 #define PROCESSOR_NAME "riscv"
 #elif defined(CONFIG_XTENSA)
 #define PROCESSOR_NAME "xtensa"
+<<<<<<< HEAD
+=======
+#elif defined(CONFIG_SPARC)
+#define PROCESSOR_NAME "sparc"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifndef PROCESSOR_NAME

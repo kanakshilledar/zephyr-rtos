@@ -118,6 +118,11 @@ source "drivers/flash/Kconfig.mcux"
 
 source "drivers/flash/Kconfig.nios2_qspi"
 
+<<<<<<< HEAD
+=======
+source "drivers/flash/Kconfig.npcx_fiu"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/flash/Kconfig.gecko"
 
 source "drivers/flash/Kconfig.nor"
@@ -150,4 +155,13 @@ source "drivers/flash/Kconfig.xmc4xxx"
 
 source "drivers/flash/Kconfig.ifx_cat1"
 
+<<<<<<< HEAD
+=======
+source "drivers/flash/Kconfig.numaker"
+
+source "drivers/flash/Kconfig.nxp_s32"
+
+source "drivers/flash/Kconfig.andes"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # FLASH

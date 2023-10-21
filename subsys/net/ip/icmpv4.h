@@ -19,8 +19,11 @@
 #include <zephyr/net/net_pkt.h>
 
 #define NET_ICMPV4_DST_UNREACH  3	/* Destination unreachable */
+<<<<<<< HEAD
 #define NET_ICMPV4_ECHO_REQUEST 8
 #define NET_ICMPV4_ECHO_REPLY   0
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define NET_ICMPV4_TIME_EXCEEDED 11	/* Time exceeded */
 #define NET_ICMPV4_BAD_IP_HEADER 12	/* Bad IP header */
 
@@ -36,6 +39,7 @@ struct net_icmpv4_echo_req {
 	uint16_t sequence;
 } __packed;
 
+<<<<<<< HEAD
 typedef enum net_verdict (*icmpv4_callback_handler_t)(
 					struct net_pkt *pkt,
 					struct net_ipv4_hdr *ip_hdr,
@@ -48,6 +52,8 @@ struct net_icmpv4_handler {
 	uint8_t code;
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Send ICMPv4 error message.
  * @param pkt Network packet that this error is related to.
@@ -57,6 +63,7 @@ struct net_icmpv4_handler {
  */
 int net_icmpv4_send_error(struct net_pkt *pkt, uint8_t type, uint8_t code);
 
+<<<<<<< HEAD
 /**
  * @brief Send ICMPv4 echo request message.
  *
@@ -113,13 +120,23 @@ void net_icmpv4_unregister_handler(struct net_icmpv4_handler *handler);
 enum net_verdict net_icmpv4_input(struct net_pkt *pkt,
 				  struct net_ipv4_hdr *ip_hdr);
 
+=======
+#if defined(CONFIG_NET_NATIVE_IPV4)
+enum net_verdict net_icmpv4_input(struct net_pkt *pkt,
+				  struct net_ipv4_hdr *ip_hdr);
+
+int net_icmpv4_create(struct net_pkt *pkt, uint8_t icmp_type, uint8_t icmp_code);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int net_icmpv4_finalize(struct net_pkt *pkt);
 
 void net_icmpv4_init(void);
 #else
 #define net_icmpv4_init(...)
+<<<<<<< HEAD
 #define net_icmpv4_register_handler(...)
 #define net_icmpv4_unregister_handler(...)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #endif /* __ICMPV4_H */

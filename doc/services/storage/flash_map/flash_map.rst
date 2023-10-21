@@ -76,7 +76,11 @@ nonvolatile storage API.
 
 Numeric flash area ID is obtained by passing DTS node label to
 :c:macro:`FIXED_PARTITION_ID()`; for example to obtain ID number
+<<<<<<< HEAD
 for ``slot0_partition``, user would invoke ``FIXED_PARITION_ID(slot0_partition)``.
+=======
+for ``slot0_partition``, user would invoke ``FIXED_PARTITION_ID(slot0_partition)``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 All :c:macro:`FIXED_PARTITION_` macros take DTS node labels as partition
 identifiers.
@@ -96,7 +100,11 @@ using :c:func:`flash_area_open` and DTS node label:
 .. code-block:: c
 
    const struct flash_area *my_area;
+<<<<<<< HEAD
    int err = flash_area_open(FIXED_PARITION_ID(slot0_partition), &my_area);
+=======
+   int err = flash_area_open(FIXED_PARTITION_ID(slot0_partition), &my_area);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    if (err != 0) {
    	handle_the_error(err);

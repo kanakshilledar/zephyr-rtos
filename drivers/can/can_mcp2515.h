@@ -46,7 +46,10 @@ struct mcp2515_data {
 	enum can_state old_state;
 	uint8_t mcp2515_mode;
 	bool started;
+<<<<<<< HEAD
 	uint8_t sjw;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct mcp2515_config {

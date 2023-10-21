@@ -40,7 +40,11 @@
 #define ROM_BASE DT_REG_ADDR(DT_CHOSEN(zephyr_flash))
 #endif /* CONFIG_FLASH_LOAD_OFFSET */
 #define ROM_SIZE DT_REG_SIZE(DT_CHOSEN(zephyr_flash))
+<<<<<<< HEAD
 #elif DT_NODE_HAS_COMPAT_STATUS(DT_CHOSEN(zephyr_flash), jedec_spi_nor, okay)
+=======
+#elif DT_NODE_HAS_COMPAT(DT_CHOSEN(zephyr_flash), jedec_spi_nor)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* For jedec,spi-nor we expect the spi controller to memory map the flash
  * and for that mapping to be the second register property of the spi
  * controller.
@@ -57,6 +61,7 @@
 #define RAM_BASE CONFIG_SRAM_BASE_ADDRESS
 #define RAM_SIZE KB(CONFIG_SRAM_SIZE)
 
+<<<<<<< HEAD
 /* Make linker section alignment comply with PMA granularity. */
 #if defined(CONFIG_SOC_ANDES_V5_PMA_REGION_MIN_ALIGN_AND_SIZE)
 _region_min_align = CONFIG_SOC_ANDES_V5_PMA_REGION_MIN_ALIGN_AND_SIZE;
@@ -76,6 +81,22 @@ _region_min_align = 4;
 #define MPU_MIN_SIZE_ALIGN
 #define MPU_ALIGN(region_size) \
     . = ALIGN(_region_min_align)
+=======
+#ifdef CONFIG_RISCV_PMP
+	#define MPU_MIN_SIZE CONFIG_PMP_GRANULARITY
+	#define MPU_MIN_SIZE_ALIGN . = ALIGN(MPU_MIN_SIZE);
+	#if defined(CONFIG_MPU_REQUIRES_POWER_OF_TWO_ALIGNMENT)
+		#define MPU_ALIGN(region_size) \
+			. = ALIGN(MPU_MIN_SIZE); \
+			. = ALIGN( 1 << LOG2CEIL(region_size))
+	#else
+		#define MPU_ALIGN(region_size) \
+			. = ALIGN(MPU_MIN_SIZE)
+	#endif
+#else
+	#define MPU_MIN_SIZE_ALIGN
+	#define MPU_ALIGN(region_size) . = ALIGN(4)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 MEMORY
@@ -113,18 +134,33 @@ SECTIONS
 	}
 
     GROUP_START(ROMABLE_REGION)
+<<<<<<< HEAD
     __rom_region_start = ROM_BASE;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     SECTION_PROLOGUE(rom_start,,)
     {
 		. = ALIGN(16);
+<<<<<<< HEAD
 		KEEP(*(.init.*))
+=======
+		MPU_ALIGN(__rom_region_size);
+		__rom_region_start = .;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Located in generated directory. This file is populated by calling
  * zephyr_linker_sources(ROM_START ...).
  */
 #include <snippets-rom-start.ld>
     } GROUP_LINK_IN(ROMABLE_REGION)
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CODE_DATA_RELOCATION
+#include <linker_relocate.ld>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     SECTION_PROLOGUE(_RESET_SECTION_NAME,,)
     {
 		KEEP(*(.reset.*))
@@ -176,18 +212,65 @@ SECTIONS
 
 #include <zephyr/linker/cplusplus-rom.ld>
 	__rodata_region_end = .;
+<<<<<<< HEAD
 	MPU_ALIGN(__rodata_region_end - __rom_region_start);
+=======
+
+	/* For non-XIP system, __rom_region_end symbol should be set to
+	 * the end of common ROMABLE_REGIONs (text and rodata) instead of
+	 * the linker script end, so it wouldn't mistakenly contain
+	 * RAMABLE_REGION in it.
+	 */
+#ifndef CONFIG_XIP
+#ifdef CONFIG_RISCV_PMP
+	SECTION_PROLOGUE(rom_mpu_padding,,)
+	{
+		MPU_ALIGN(__rodata_region_end - __rom_region_start);
+	} GROUP_LINK_IN(ROMABLE_REGION)
+#endif /* CONFIG_RISCV_PMP */
+
+	__rom_region_end = .;
+	__rom_region_size = __rom_region_end - __rom_region_start;
+#endif /* CONFIG_XIP */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     GROUP_END(ROMABLE_REGION)
 
     GROUP_START(RAMABLE_REGION)
 
+<<<<<<< HEAD
+=======
+	. = RAM_BASE;
+	_image_ram_start = .;
+
+#ifdef CONFIG_SOC_ANDES_V5_PMA
+#pragma push_macro("MPU_ALIGN")
+#undef MPU_ALIGN
+/* Make linker section alignment comply with PMA granularity. */
+#define MPU_ALIGN(region_size) \
+    . = ALIGN(CONFIG_SOC_ANDES_V5_PMA_REGION_MIN_ALIGN_AND_SIZE); \
+    . = ALIGN( 1 << LOG2CEIL(region_size))
+#endif
+
+/* Located in generated directory. This file is populated by the
+ * zephyr_linker_sources() Cmake function.
+ */
+#include <snippets-ram-sections.ld>
+
+#ifdef CONFIG_SOC_ANDES_V5_PMA
+#pragma pop_macro("MPU_ALIGN")
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_USERSPACE)
 #define APP_SHARED_ALIGN MPU_MIN_SIZE_ALIGN
 #define SMEM_PARTITION_ALIGN MPU_ALIGN
 
 #include <app_smem.ld>
 
+<<<<<<< HEAD
 	_image_ram_start = _app_smem_start;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	_app_smem_size = _app_smem_end - _app_smem_start;
 	_app_smem_rom_start = LOADADDR(_APP_SMEM_SECTION_NAME);
 #endif /* CONFIG_USERSPACE */
@@ -201,13 +284,24 @@ SECTIONS
 		 */
 		 . = ALIGN(4);
 		 __bss_start = .;
+<<<<<<< HEAD
 		 _image_ram_start = .;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		__kernel_ram_start = .;
 		 *(.sbss)
 		 *(".sbss.*")
 		 *(.bss)
 		 *(".bss.*")
 		 COMMON_SYMBOLS
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_CODE_DATA_RELOCATION
+#include <linker_sram_bss_relocate.ld>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 /*
 		  * As memory is cleared in words only, it is simpler to ensure the BSS
 		  * section ends on a 4 byte boundary. This wastes a maximum of 3 bytes.
@@ -216,14 +310,21 @@ SECTIONS
 	}  GROUP_DATA_LINK_IN(RAMABLE_REGION, RAMABLE_REGION)
 
 #include <zephyr/linker/common-noinit.ld>
+<<<<<<< HEAD
 #include <zephyr/linker/cplusplus-ram.ld>
 
     __data_region_start = .;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     SECTION_DATA_PROLOGUE(_DATA_SECTION_NAME,,)
 	{
 		 . = ALIGN(4);
 		/* _image_ram_start = .; */
+<<<<<<< HEAD
+=======
+		 __data_region_start = .;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 __data_start = .;
 
 		 *(.data)
@@ -251,6 +352,14 @@ SECTIONS
  * zephyr_linker_sources() Cmake function.
  */
 #include <snippets-rwdata.ld>
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_CODE_DATA_RELOCATION
+#include <linker_sram_data_relocate.ld>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 __data_end = .;
 
 	}  GROUP_DATA_LINK_IN(RAMABLE_REGION, ROMABLE_REGION)
@@ -261,11 +370,15 @@ SECTIONS
 
 #include <zephyr/linker/common-ram.ld>
 #include <zephyr/linker/kobject-data.ld>
+<<<<<<< HEAD
 
 /* Located in generated directory. This file is populated by the
  * zephyr_linker_sources() Cmake function.
  */
 #include <snippets-ram-sections.ld>
+=======
+#include <zephyr/linker/cplusplus-ram.ld>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Located in generated directory. This file is populated by the
  * zephyr_linker_sources() Cmake function.
@@ -274,11 +387,14 @@ SECTIONS
 
     __data_region_end = .;
 
+<<<<<<< HEAD
     MPU_MIN_SIZE_ALIGN
 
      _image_ram_end = .;
      _end = .; /* end of image */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	__kernel_ram_end = .;
 	__kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
 
@@ -294,7 +410,11 @@ GROUP_START(ITCM)
 	} GROUP_LINK_IN(ITCM AT> ROMABLE_REGION)
 
 	__itcm_size = __itcm_end - __itcm_start;
+<<<<<<< HEAD
 	__itcm_rom_start = LOADADDR(_ITCM_SECTION_NAME);
+=======
+	__itcm_load_start = LOADADDR(_ITCM_SECTION_NAME);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 GROUP_END(ITCM)
 #endif
@@ -329,7 +449,11 @@ GROUP_START(DTCM)
 
 	__dtcm_end = .;
 
+<<<<<<< HEAD
 	__dtcm_data_rom_start = LOADADDR(_DTCM_DATA_SECTION_NAME);
+=======
+	__dtcm_data_load_start = LOADADDR(_DTCM_DATA_SECTION_NAME);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 GROUP_END(DTCM)
 #endif
@@ -339,7 +463,15 @@ GROUP_END(DTCM)
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
      GROUP_END(RAMABLE_REGION)
+=======
+#define LAST_RAM_ALIGN MPU_MIN_SIZE_ALIGN
+
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/linker/debug-sections.ld>
 
@@ -351,6 +483,17 @@ GROUP_END(DTCM)
 	KEEP(*(.gnu.attributes))
 	}
 
+<<<<<<< HEAD
+=======
+    /* Sections generated from 'zephyr,memory-region' nodes */
+    LINKER_DT_SECTIONS()
+
+/* Because ROMABLE_REGION != RAMABLE_REGION in XIP-system, it is valid
+ * to set __rom_region_end symbol at the end of linker script and
+ * doesn't mistakenly contain the RAMABLE_REGION in it.
+ */
+#ifdef CONFIG_XIP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Must be last in romable region */
 SECTION_PROLOGUE(.last_section,,)
 {
@@ -361,9 +504,25 @@ SECTION_PROLOGUE(.last_section,,)
 #endif
 } GROUP_LINK_IN(ROMABLE_REGION)
 
+<<<<<<< HEAD
 /* To provide the image size as a const expression,
  * calculate this value here. */
 __rom_region_end = LOADADDR(.last_section) + SIZEOF(.last_section);
 __rom_region_size = __rom_region_end - __rom_region_start;
+=======
+#ifndef CONFIG_RISCV_PMP
+/* To provide the image size as a const expression,
+ * calculate this value here. */
+__rom_region_end = LOADADDR(.last_section) + SIZEOF(.last_section);
+#else
+SECTION_PROLOGUE(rom_mpu_padding,(NOLOAD),)
+{
+	MPU_ALIGN(__rom_region_size);
+	__rom_region_end = .;
+} GROUP_LINK_IN(ROMABLE_REGION)
+#endif /* !CONFIG_RISCV_PMP */
+__rom_region_size = __rom_region_end - __rom_region_start;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 }

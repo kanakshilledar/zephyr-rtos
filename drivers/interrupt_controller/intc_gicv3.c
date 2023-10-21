@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/sys/__assert.h>
@@ -16,6 +20,11 @@
 
 #include <string.h>
 
+<<<<<<< HEAD
+=======
+#define DT_DRV_COMPAT arm_gic_v3
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Redistributor base addresses for each core */
 mem_addr_t gic_rdists[CONFIG_MP_MAX_NUM_CPUS];
 
@@ -298,6 +307,19 @@ static void gicv3_rdist_enable(mem_addr_t rdist)
 		return;
 	}
 
+<<<<<<< HEAD
+=======
+	if (GICR_IIDR_PRODUCT_ID_GET(sys_read32(rdist + GICR_IIDR)) >= 0x2) {
+		if (sys_read32(rdist + GICR_PWRR) & BIT(GICR_PWRR_RDPD)) {
+			sys_set_bit(rdist + GICR_PWRR, GICR_PWRR_RDAG);
+			sys_clear_bit(rdist + GICR_PWRR, GICR_PWRR_RDPD);
+			while (sys_read32(rdist + GICR_PWRR) & BIT(GICR_PWRR_RDPD)) {
+				;
+			}
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sys_clear_bit(rdist + GICR_WAKER, GICR_WAKER_PS);
 	while (sys_read32(rdist + GICR_WAKER) & BIT(GICR_WAKER_CA)) {
 		;
@@ -585,16 +607,26 @@ static void __arm_gic_init(void)
 	gicv3_cpuif_init();
 }
 
+<<<<<<< HEAD
 int arm_gic_init(void)
 {
 
+=======
+int arm_gic_init(const struct device *dev)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	gicv3_dist_init();
 
 	__arm_gic_init();
 
 	return 0;
 }
+<<<<<<< HEAD
 SYS_INIT(arm_gic_init, PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, arm_gic_init, NULL, NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_SMP
 void arm_gic_secondary_init(void)

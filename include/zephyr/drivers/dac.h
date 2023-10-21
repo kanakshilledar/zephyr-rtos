@@ -26,6 +26,7 @@ extern "C" {
  */
 
 /**
+<<<<<<< HEAD
  * @struct dac_channel_cfg
  * @brief Structure for specifying the configuration of a DAC channel.
  *
@@ -39,6 +40,19 @@ extern "C" {
 struct dac_channel_cfg {
 	uint8_t channel_id;
 	uint8_t resolution;
+=======
+ * @brief Structure for specifying the configuration of a DAC channel.
+ */
+struct dac_channel_cfg {
+	/** Channel identifier of the DAC that should be configured. */
+	uint8_t channel_id;
+	/** Desired resolution of the DAC (depends on device capabilities). */
+	uint8_t resolution;
+	/** Enable output buffer for this channel.
+	 * This is relevant for instance if the output is directly connected to the load,
+	 * without an amplifierin between. The actual details on this are hardware dependent.
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bool buffered;
 };
 

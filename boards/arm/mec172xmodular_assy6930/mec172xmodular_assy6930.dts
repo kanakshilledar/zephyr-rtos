@@ -43,6 +43,7 @@
 			gpios = <MCHP_GPIO_DECODE_153 GPIO_ACTIVE_HIGH>;
 		};
 	};
+<<<<<<< HEAD
 
 	power-states {
 		idle: idle {
@@ -57,12 +58,17 @@
 			min-residency-us = <2000000>;
 		};
 	};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &cpu0 {
 	clock-frequency = <96000000>;
 	status = "okay";
+<<<<<<< HEAD
 	cpu-power-states = <&idle &suspend_to_ram>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Initialize ECIA. Does not initialize child devices */
@@ -138,6 +144,7 @@
 
 	pinctrl-0 = < &i2c00_scl_gpio004 &i2c00_sda_gpio003 >;
 	pinctrl-names = "default";
+<<<<<<< HEAD
 
 	pca9555@26 {
 		compatible = "nxp,pca95xx";
@@ -154,6 +161,8 @@
 		gpio-controller;
 		#gpio-cells = <2>;
 	};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &i2c00_scl_gpio004 {
@@ -208,10 +217,17 @@
 
 &spi0 {
 	status = "okay";
+<<<<<<< HEAD
 	clock-frequency = <4000000>;
 	lines = <4>;
 	chip_select = <0>;
 	port_sel = <0>; /* Shared SPI */
+=======
+	compatible = "microchip,xec-qmspi-ldma";
+	clock-frequency = <4000000>;
+	lines = <4>;
+	chip-select = <0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	pinctrl-0 = < &shd_cs0_n_gpio055
 		      &shd_clk_gpio056
@@ -225,6 +241,7 @@
 &kscan0 {
 	status = "okay";
 
+<<<<<<< HEAD
 	pinctrl-0 = < &ksi0_gpio017
 		      &ksi1_gpio020
 		      &ksi2_gpio021
@@ -248,6 +265,23 @@
 		      &kso12_gpio125
 		      &kso13_gpio126 >;
 	pinctrl-names = "default";
+=======
+	pinctrl-0 = < &ksi0_gpio017 &ksi1_gpio020 &ksi2_gpio021 &ksi3_gpio026
+		      &ksi4_gpio027 &ksi5_gpio030 &ksi6_gpio031 &ksi7_gpio032
+		      &kso00_gpio040 &kso01_gpio045 &kso02_gpio046 &kso03_gpio047
+		      &kso04_gpio107 &kso05_gpio112 &kso06_gpio113 &kso07_gpio120
+		      &kso08_gpio121 &kso09_gpio122 &kso10_gpio123 &kso11_gpio124
+		      &kso12_gpio125 &kso13_gpio126 >;
+	pinctrl-1 = < &ksi0_gpio017_sleep &ksi1_gpio020_sleep &ksi2_gpio021_sleep
+		      &ksi3_gpio026_sleep &ksi4_gpio027_sleep &ksi5_gpio030_sleep
+		      &ksi6_gpio031_sleep &ksi7_gpio032_sleep &kso00_gpio040_sleep
+		      &kso01_gpio045_sleep &kso02_gpio046_sleep &kso03_gpio047_sleep
+		      &kso04_gpio107_sleep &kso05_gpio112_sleep &kso06_gpio113_sleep
+		      &kso07_gpio120_sleep &kso08_gpio121_sleep &kso09_gpio122_sleep
+		      &kso10_gpio123_sleep &kso11_gpio124_sleep &kso12_gpio125_sleep
+		      &kso13_gpio126_sleep >;
+	pinctrl-names = "default", "sleep";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &ksi0_gpio017 {
@@ -299,3 +333,10 @@
 	pinctrl-0 = <&ps2_clk0a_gpio114 &ps2_dat0a_gpio115>;
 	pinctrl-names = "default";
 };
+<<<<<<< HEAD
+=======
+
+&timer5 {
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

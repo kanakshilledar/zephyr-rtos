@@ -5,11 +5,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #if !defined(CONFIG_BT_CTLR_TIFS_HW)
 #define SW_SWITCH_TIMER NRF_TIMER1
 #define SW_SWITCH_TIMER_EVTS_COMP_BASE 0
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* TXEN->TXIDLE + TXIDLE->TX in microseconds. */
 #define HAL_RADIO_NRF51_TXEN_TXIDLE_TX_US 140
 #define HAL_RADIO_NRF51_TXEN_TXIDLE_TX_NS 140000

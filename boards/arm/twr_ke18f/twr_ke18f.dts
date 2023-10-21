@@ -10,6 +10,10 @@
 #include <zephyr/dt-bindings/clock/kinetis_scg.h>
 #include <zephyr/dt-bindings/pwm/pwm.h>
 #include "twr_ke18f-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP Kinetis KE18 MCU Tower System Module";
@@ -123,10 +127,18 @@
 		user_button_2: button_0 {
 			label = "User SW2";
 			gpios = <&gpiod 3 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_3: button_1 {
 			label = "User SW3";
 			gpios = <&gpiod 6 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -140,7 +152,10 @@
 
 &cpu0 {
 	clock-frequency = <120000000>;
+<<<<<<< HEAD
 	cpu-power-states = <&idle &stop>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &idle {
@@ -264,6 +279,11 @@
 };
 
 &lpspi0 {
+<<<<<<< HEAD
+=======
+	dmas = <&edma 0 14>, <&edma 1 15>;
+	dma-names = "rx", "tx";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 	pinctrl-0 = <&lpspi0_default>;
 	pinctrl-names = "default";

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _updatehub_fota_sample:
 
 UpdateHub embedded Firmware Over-The-Air (FOTA) sample
 ######################################################
+=======
+.. zephyr:code-sample:: updatehub-fota
+   :name: UpdateHub embedded Firmware Over-The-Air (FOTA) update
+   :relevant-api: updatehub
+
+   Perform Firmware Over-The-Air (FOTA) updates using UpdateHub.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -203,7 +211,11 @@ Step 4.3: Build for Modem
 
 Modem needs add ``overlay-modem.conf``.  Now, a DTC overlay file is used to
 configure the glue between the modem and an arduino headers.  The modem config
+<<<<<<< HEAD
 uses PPP over GSM modem, see :ref:`gsm-modem-sample`.
+=======
+uses PPP over GSM modem, see :zephyr:code-sample:`gsm-modem` sample application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
     :zephyr-app: zephyr/samples/subsys/mgmt/updatehub
@@ -220,7 +232,11 @@ Step 4.4: Build for IEEE 802.15.4 [experimental]
 For IEEE 802.15.4 needs add ``overlay-802154.conf``.  This requires two nodes:
 one will be the host and the second one will be the device under test.  The
 validation needs a Linux kernel >= 4.9 with all 6loWPAN support.  The start
+<<<<<<< HEAD
 point is try reproduce the Zephyr :ref:`wpanusb-sample`. It is out of scope
+=======
+point is try reproduce the Zephyr :zephyr:code-sample:`wpan-usb`. It is out of scope
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 at this moment provide support since it is experimental.  The gateway was
 tested with both native linux driver and ``atusb`` and with ``wpanusb`` sample.
 

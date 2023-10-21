@@ -8,3 +8,10 @@ source $(dirname "${BASH_SOURCE[0]}")/../../_mesh_test.sh
 # Test Random value changes for different Random intervals (10s, 0 - on every beacon, 30s).
 conf=prj_mesh1d1_conf
 RunTest mesh_priv_beacon_adv beacon_rx_priv_adv beacon_tx_priv_adv
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_priv_beacon_adv_psa beacon_rx_priv_adv beacon_tx_priv_adv
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

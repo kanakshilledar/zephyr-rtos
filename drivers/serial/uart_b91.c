@@ -240,6 +240,10 @@ static void uart_b91_irq_handler(const struct device *dev)
 #endif
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_UART_USE_RUNTIME_CONFIGURE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* API implementation: configure */
 static int uart_b91_configure(const struct device *dev,
 			      const struct uart_config *cfg)
@@ -299,6 +303,10 @@ static int uart_b91_config_get(const struct device *dev,
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* API implementation: driver initialization */
 static int uart_b91_driver_init(const struct device *dev)
@@ -523,8 +531,15 @@ static const struct uart_driver_api uart_b91_driver_api = {
 	.poll_in = uart_b91_poll_in,
 	.poll_out = uart_b91_poll_out,
 	.err_check = uart_b91_err_check,
+<<<<<<< HEAD
 	.configure = uart_b91_configure,
 	.config_get = uart_b91_config_get,
+=======
+#ifdef CONFIG_UART_USE_RUNTIME_CONFIGURE
+	.configure = uart_b91_configure,
+	.config_get = uart_b91_config_get,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	.fifo_fill = uart_b91_fifo_fill,
 	.fifo_read = uart_b91_fifo_read,

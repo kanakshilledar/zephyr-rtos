@@ -7,6 +7,12 @@
 #include <zephyr/ztest.h>
 #include <zephyr/irq_offload.h>
 #include <zephyr/interrupt_util.h>
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_ARCH_POSIX)
+#include <soc.h>
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define STACK_SIZE	1024
 #define NUM_WORK	4
@@ -89,7 +95,15 @@ void isr_handler(const void *param)
 #define TEST_IRQ_DYN_LINE 26
 
 #elif defined(CONFIG_ARCH_POSIX)
+<<<<<<< HEAD
 #define TEST_IRQ_DYN_LINE 5
+=======
+#if defined(OFFLOAD_SW_IRQ)
+#define TEST_IRQ_DYN_LINE OFFLOAD_SW_IRQ
+#else
+#define TEST_IRQ_DYN_LINE 0
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #else
 #define TEST_IRQ_DYN_LINE 0

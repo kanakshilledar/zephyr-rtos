@@ -43,6 +43,10 @@ For more information about the LPC55S69 SoC and LPCXPRESSO55S69 board, see:
 - `LPCXPRESSO55S69 Website`_
 - `LPCXPRESSO55S69 User Guide`_
 - `LPCXPRESSO55S69 Schematics`_
+<<<<<<< HEAD
+=======
+- `LPCXPRESSO55S69 Debug Firmware`_
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Supported Features
 ==================
@@ -255,9 +259,17 @@ Dual Core samples
 System Clock
 ============
 
+<<<<<<< HEAD
 The LPC55S69 SoC is configured to use the internal FRO at 96MHz as a source for
 the system clock. Other sources for the system clock are provided in the SOC,
 depending on your system requirements.
+=======
+The LPC55S69 SoC is configured to use PLL1 clocked from the external 24MHz
+crystal, running at 144MHz as a source for the system clock. When the flash
+controller is enabled, the core clock will be reduced to 96MHz. The application
+may reconfigure clocks after initialization, provided that the core clock is
+always set to 96MHz when flash programming operations are performed.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Serial Port
 ===========
@@ -289,6 +301,15 @@ Follow the instructions in :ref:`lpclink2-jlink-onboard-debug-probe` to program
 the J-Link firmware. Please make sure you have the latest firmware for this
 board.
 
+<<<<<<< HEAD
+=======
+:ref:`lpclink2-cmsis-onboard-debug-probe`
+-----------------------------------------
+
+        1. Install the :ref:`linkserver-debug-host-tools` and make sure they are in your search path.
+        2. To update the debug firmware, please follow the instructions on `LPCXPRESSO55S69 Debug Firmware`
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 :ref:`opensda-daplink-onboard-debug-probe`
 ------------------------------------------
 
@@ -392,6 +413,12 @@ should see the following message in the terminal:
 .. _LPCXPRESSO55S69 User Guide:
    https://www.nxp.com/webapp/Download?colCode=UM11158
 
+<<<<<<< HEAD
+=======
+.. _LPCXPRESSO55S69 Debug Firmware:
+   https://www.nxp.com/docs/en/application-note/AN13206.pdf
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _LPCXPRESSO55S69 Schematics:
    https://www.nxp.com/webapp/Download?colCode=LPC55S69-SCH
 

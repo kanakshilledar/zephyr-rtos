@@ -28,6 +28,7 @@ Options
   ${BASE_PATH}/modules/${MODULE_NAME}/Kconfig.
 """
 
+<<<<<<< HEAD
 from distutils.command.build import build
 from itertools import chain
 import json
@@ -36,6 +37,13 @@ import os
 from pathlib import Path
 import re
 import sys
+=======
+import json
+import os
+import sys
+from itertools import chain
+from pathlib import Path
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
@@ -47,11 +55,18 @@ from sphinx.domains import Domain, ObjType
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import ExtensionError
 from sphinx.roles import XRefRole
+<<<<<<< HEAD
 from sphinx.util import progress_message
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.nodes import make_refnode
 
 
+=======
+from sphinx.util.display import progress_message
+from sphinx.util.docutils import SphinxDirective
+from sphinx.util.nodes import make_refnode
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 __version__ = "0.1.0"
 
 
@@ -64,8 +79,13 @@ sys.path.insert(0, str(SCRIPTS))
 KCONFIGLIB = SCRIPTS / "kconfig"
 sys.path.insert(0, str(KCONFIGLIB))
 
+<<<<<<< HEAD
 import zephyr_module
 import kconfiglib
+=======
+import kconfiglib
+import zephyr_module
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 def kconfig_load(app: Sphinx) -> Tuple[kconfiglib.Kconfig, Dict[str, str]]:
@@ -225,7 +245,11 @@ class KconfigDomain(Domain):
         """Register a new Kconfig option to the domain."""
 
         self.data["options"].append(
+<<<<<<< HEAD
             (option, option, "option", self.env.docname, option, -1)
+=======
+            (option, option, "option", self.env.docname, option, 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         )
 
 

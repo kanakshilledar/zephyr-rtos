@@ -173,6 +173,11 @@ The Zephyr nucleo_h563zi board configuration supports the following hardware fea
 +-----------+------------+-------------------------------------+
 | WATCHDOG  | on-chip    | independent watchdog                |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| USB       | on-chip    | USB full-speed host/device bus      |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 Other hardware features are not yet supported on this Zephyr port.
@@ -292,7 +297,11 @@ Debugging
 =========
 
 You can debug an application in the usual way.  Here is an example for the
+<<<<<<< HEAD
 :ref:`blinky-sample` application.
+=======
+:zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -306,7 +315,11 @@ You can debug an application in the usual way.  Here is an example for the
    https://www.st.com/resource/en/user_manual/um3115-stm32h5-nucleo144-board-mb1404-stmicroelectronics.pdf
 
 .. _STM32H563ZI on www.st.com:
+<<<<<<< HEAD
    http://www.st.com/en/microcontrollers/stm32h563zi.html
+=======
+   https://www.st.com/en/microcontrollers/stm32h563zi.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32H563 reference manual:
    https://www.st.com/resource/en/reference_manual/rm0481-stm32h563h573-and-stm32h562-armbased-32bit-mcus-stmicroelectronics.pdf

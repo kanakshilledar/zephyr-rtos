@@ -8,7 +8,12 @@
 #include <zephyr/kernel.h>
 #include <cmsis_os2.h>
 
+<<<<<<< HEAD
 #define TIMEOUT_TICKS   10
+=======
+#define WAIT_TICKS      5
+#define TIMEOUT_TICKS   (10 + WAIT_TICKS)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STACKSZ         CONFIG_CMSIS_V2_THREAD_MAX_STACK_SIZE
 
 int max_mtx_cnt = CONFIG_CMSIS_V2_MUTEX_MAX_COUNT;
@@ -117,7 +122,11 @@ void tThread_entry_lock_timeout(void *arg)
 	status = osMutexAcquire((osMutexId_t)arg, 0);
 	zassert_true(status == osErrorResource);
 
+<<<<<<< HEAD
 	status = osMutexAcquire((osMutexId_t)arg, TIMEOUT_TICKS - 5);
+=======
+	status = osMutexAcquire((osMutexId_t)arg, WAIT_TICKS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_true(status == osErrorTimeout);
 
 	status = osMutexRelease((osMutexId_t)arg);

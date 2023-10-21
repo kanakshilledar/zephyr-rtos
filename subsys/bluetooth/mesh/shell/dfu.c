@@ -375,13 +375,20 @@ static int cmd_dfu_metadata_encode(const struct shell *sh, size_t argc, char *ar
 
 static int cmd_dfu_slot_add(const struct shell *sh, size_t argc, char *argv[])
 {
+<<<<<<< HEAD
 	const struct bt_mesh_dfu_slot *slot;
+=======
+	struct bt_mesh_dfu_slot *slot;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t size;
 	uint8_t fwid[CONFIG_BT_MESH_DFU_FWID_MAXLEN];
 	size_t fwid_len = 0;
 	uint8_t metadata[CONFIG_BT_MESH_DFU_METADATA_MAXLEN];
 	size_t metadata_len = 0;
+<<<<<<< HEAD
 	const char *uri = "";
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err = 0;
 
 	size = shell_strtoul(argv[1], 0, &err);
@@ -390,16 +397,32 @@ static int cmd_dfu_slot_add(const struct shell *sh, size_t argc, char *argv[])
 		return err;
 	}
 
+<<<<<<< HEAD
 	if (argc > 2) {
 		fwid_len = hex2bin(argv[2], strlen(argv[2]), fwid,
 				   sizeof(fwid));
 	}
 
+=======
+	shell_print(sh, "Adding slot (size: %u)", size);
+	slot = bt_mesh_dfu_slot_reserve();
+
+	if (!slot) {
+		shell_print(sh, "Failed to reserve slot.");
+		return 0;
+	}
+
+	fwid_len = hex2bin(argv[2], strlen(argv[2]), fwid,
+			   sizeof(fwid));
+	bt_mesh_dfu_slot_fwid_set(slot, fwid, fwid_len);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (argc > 3) {
 		metadata_len = hex2bin(argv[3], strlen(argv[3]), metadata,
 				       sizeof(metadata));
 	}
 
+<<<<<<< HEAD
 	if (argc > 4) {
 		uri = argv[4];
 	}
@@ -416,6 +439,18 @@ static int cmd_dfu_slot_add(const struct shell *sh, size_t argc, char *argv[])
 	bt_mesh_dfu_slot_valid_set(slot, true);
 
 	shell_print(sh, "Slot added. ID: %u", bt_mesh_dfu_slot_idx_get(slot));
+=======
+	bt_mesh_dfu_slot_info_set(slot, size, metadata, metadata_len);
+
+	err = bt_mesh_dfu_slot_commit(slot);
+	if (err) {
+		shell_print(sh, "Failed to commit slot: %d", err);
+		bt_mesh_dfu_slot_release(slot);
+		return err;
+	}
+
+	shell_print(sh, "Slot added. Index: %u", bt_mesh_dfu_slot_img_idx_get(slot));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -451,6 +486,7 @@ static int cmd_dfu_slot_del(const struct shell *sh, size_t argc, char *argv[])
 
 static int cmd_dfu_slot_del_all(const struct shell *sh, size_t argc, char *argv[])
 {
+<<<<<<< HEAD
 	int err;
 
 	err = bt_mesh_dfu_slot_del_all();
@@ -459,6 +495,9 @@ static int cmd_dfu_slot_del_all(const struct shell *sh, size_t argc, char *argv[
 		return 0;
 	}
 
+=======
+	bt_mesh_dfu_slot_del_all();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	shell_print(sh, "All slots deleted.");
 	return 0;
 }
@@ -468,7 +507,10 @@ static void slot_info_print(const struct shell *sh, const struct bt_mesh_dfu_slo
 {
 	char fwid[2 * CONFIG_BT_MESH_DFU_FWID_MAXLEN + 1];
 	char metadata[2 * CONFIG_BT_MESH_DFU_METADATA_MAXLEN + 1];
+<<<<<<< HEAD
 	char uri[CONFIG_BT_MESH_DFU_URI_MAXLEN + 1];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t len;
 
 	len = bin2hex(slot->fwid, slot->fwid_len, fwid, sizeof(fwid));
@@ -476,8 +518,11 @@ static void slot_info_print(const struct shell *sh, const struct bt_mesh_dfu_slo
 	len = bin2hex(slot->metadata, slot->metadata_len, metadata,
 		      sizeof(metadata));
 	metadata[len] = '\0';
+<<<<<<< HEAD
 	memcpy(uri, slot->uri, slot->uri_len);
 	uri[slot->uri_len] = '\0';
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (idx != NULL) {
 		shell_print(sh, "Slot %u:", *idx);
@@ -487,7 +532,10 @@ static void slot_info_print(const struct shell *sh, const struct bt_mesh_dfu_slo
 	shell_print(sh, "\tSize:     %u bytes", slot->size);
 	shell_print(sh, "\tFWID:     %s", fwid);
 	shell_print(sh, "\tMetadata: %s", metadata);
+<<<<<<< HEAD
 	shell_print(sh, "\tURI:      %s", uri);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int cmd_dfu_slot_get(const struct shell *sh, size_t argc, char *argv[])
@@ -960,7 +1008,11 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
 		      "{<SigMID>|<VndCID> <VndMID>}...",
 		      cmd_dfu_comp_elem_add, 5, 10),
 	SHELL_CMD_ARG(comp-hash-get, NULL, "[<Key>]", cmd_dfu_comp_hash_get, 1, 1),
+<<<<<<< HEAD
 	SHELL_CMD_ARG(metadata-encode, NULL, "<Major> <Minor> <Rev> <BuildNum> <Size> "
+=======
+	SHELL_CMD_ARG(encode, NULL, "<Major> <Minor> <Rev> <BuildNum> <Size> "
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "<CoreType> <Hash> <Elems> [<UserData>]",
 		      cmd_dfu_metadata_encode, 9, 1),
 	SHELL_SUBCMD_SET_END);
@@ -970,8 +1022,13 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
 SHELL_STATIC_SUBCMD_SET_CREATE(
 	dfu_slot_cmds,
 	SHELL_CMD_ARG(add, NULL,
+<<<<<<< HEAD
 		      "<Size> [<FwID> [<Metadata> [<URI>]]]",
 		      cmd_dfu_slot_add, 2, 3),
+=======
+		      "<Size> <FwID> [<Metadata>]",
+		      cmd_dfu_slot_add, 3, 1),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SHELL_CMD_ARG(del, NULL, "<SlotIdx>", cmd_dfu_slot_del, 2, 0),
 	SHELL_CMD_ARG(del-all, NULL, NULL, cmd_dfu_slot_del_all, 1, 0),
 	SHELL_CMD_ARG(get, NULL, "<SlotIdx>", cmd_dfu_slot_get, 2, 0),

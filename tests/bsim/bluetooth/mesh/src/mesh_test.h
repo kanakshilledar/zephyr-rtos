@@ -66,21 +66,56 @@
 		}                                                              \
 	} while (0)
 
+<<<<<<< HEAD
 #define ASSERT_TRUE(cond, ...)                                                 \
+=======
+#define ASSERT_TRUE(cond)                                                      \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	do {                                                                   \
 		if (!(cond)) {                                                 \
 			bst_result = Failed;                                   \
 			bs_trace_error_time_line(                              \
+<<<<<<< HEAD
 				#cond " is false.", ##__VA_ARGS__);             \
 		}                                                              \
 	} while (0)
 
 #define ASSERT_FALSE(cond, ...)                                                \
+=======
+				#cond " is false.\n");                         \
+		}                                                              \
+	} while (0)
+
+#define ASSERT_TRUE_MSG(cond, fmt, ...)                                        \
+	do {                                                                   \
+		if (!(cond)) {                                                 \
+			bst_result = Failed;                                   \
+			bs_trace_error_time_line(                              \
+				#cond " is false. " fmt, ##__VA_ARGS__);       \
+		}                                                              \
+	} while (0)
+
+
+#define ASSERT_FALSE(cond)                                                     \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	do {                                                                   \
 		if (cond) {                                                    \
 			bst_result = Failed;                                   \
 			bs_trace_error_time_line(                              \
+<<<<<<< HEAD
 				#cond " is true.", ##__VA_ARGS__);             \
+=======
+				#cond " is true.\n");                          \
+		}                                                              \
+	} while (0)
+
+#define ASSERT_FALSE_MSG(cond, fmt, ...)                                       \
+	do {                                                                   \
+		if (cond) {                                                    \
+			bst_result = Failed;                                   \
+			bs_trace_error_time_line(                              \
+				#cond " is true. " fmt, ##__VA_ARGS__);        \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}                                                              \
 	} while (0)
 
@@ -94,6 +129,17 @@
 		}                                                              \
 	} while (0)
 
+<<<<<<< HEAD
+=======
+#define ASSERT_IN_RANGE(got, min, max)                                                             \
+	do {                                                                                       \
+		if (!IN_RANGE(got, min, max)) {                                            \
+			bst_result = Failed;                                                       \
+			bs_trace_error_time_line(#got " not in range %d <-> %d, " #got " = %d\n",  \
+						 (min), (max), (got));                             \
+		}                                                                                  \
+	} while (0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct bt_mesh_test_cfg {
 	uint16_t addr;
@@ -141,6 +187,7 @@ void bt_mesh_test_timeout(bs_time_t HW_device_time);
 
 void bt_mesh_device_setup(const struct bt_mesh_prov *prov, const struct bt_mesh_comp *comp);
 
+<<<<<<< HEAD
 int bt_mesh_test_recv(uint16_t len, uint16_t dst, k_timeout_t timeout);
 int bt_mesh_test_recv_msg(struct bt_mesh_test_msg *msg, k_timeout_t timeout);
 int bt_mesh_test_recv_clear(void);
@@ -148,6 +195,15 @@ int bt_mesh_test_recv_clear(void);
 int bt_mesh_test_send(uint16_t addr, size_t len,
 		      enum bt_mesh_test_send_flags flags, k_timeout_t timeout);
 int bt_mesh_test_send_async(uint16_t addr, size_t len,
+=======
+int bt_mesh_test_recv(uint16_t len, uint16_t dst, const uint8_t *uuid, k_timeout_t timeout);
+int bt_mesh_test_recv_msg(struct bt_mesh_test_msg *msg, k_timeout_t timeout);
+int bt_mesh_test_recv_clear(void);
+
+int bt_mesh_test_send(uint16_t addr, const uint8_t *uuid, size_t len,
+		      enum bt_mesh_test_send_flags flags, k_timeout_t timeout);
+int bt_mesh_test_send_async(uint16_t addr, const uint8_t *uuid, size_t len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    enum bt_mesh_test_send_flags flags,
 			    const struct bt_mesh_send_cb *send_cb,
 			    void *cb_data);

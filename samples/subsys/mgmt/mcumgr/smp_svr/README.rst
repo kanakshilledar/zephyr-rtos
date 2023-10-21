@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _smp_svr_sample:
 
 SMP Server Sample
 #################
+=======
+.. zephyr:code-sample:: smp-svr
+   :name: SMP server
+
+   Implement a Simple Management Protocol (SMP) server.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

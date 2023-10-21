@@ -87,7 +87,11 @@ struct light_ctl_state {
 	uint16_t last_dst_addr;
 	int64_t last_msg_timestamp;
 
+<<<<<<< HEAD
 	struct transition *transition;
+=======
+	struct transition_data *transition;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 extern struct vendor_state vnd_user_data;

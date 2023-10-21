@@ -11,7 +11,11 @@
 #include <zephyr/pm/pm.h>
 #include <soc.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "device_power.h"
 
 #include "soc_power_debug.h"
@@ -144,7 +148,11 @@ static void z_power_soc_sleep(void)
  * For deep sleep pm_system_suspend has executed all the driver
  * power management call backs.
  */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -168,7 +176,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
  * ISR on wake except for faults. We re-enable interrupts by undoing global disable
  * and alling irq_unlock with the same value, 0 zephyr core uses.
  */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	__enable_irq();
 	irq_unlock(0);

@@ -210,6 +210,11 @@ static int rm68200_init(const struct device *dev)
 
 	mdev.data_lanes = config->num_of_lanes;
 	mdev.pixfmt = config->pixel_format;
+<<<<<<< HEAD
+=======
+	/* RM68200 runs in video mode */
+	mdev.mode_flags = MIPI_DSI_MODE_VIDEO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = mipi_dsi_attach(config->mipi_dsi, config->channel, &mdev);
 	if (ret < 0) {

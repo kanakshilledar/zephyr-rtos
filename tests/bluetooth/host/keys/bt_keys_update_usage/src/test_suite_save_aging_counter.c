@@ -77,6 +77,10 @@ ZTEST(bt_keys_update_usage_save_aging_counter, test_update_usage_and_save_aging_
 			"bt_keys_update_usage() changed last updated key reference unexpectedly");
 
 		/* Check if bt_keys_store() was called */
+<<<<<<< HEAD
 		expect_single_call_settings_save_one(expected_updated_keys->storage_start);
+=======
+		expect_single_call_bt_settings_store_keys(expected_updated_keys->storage_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }

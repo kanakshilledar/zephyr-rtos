@@ -37,6 +37,17 @@ __imr int mem_win_init(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+void mem_window_idle_exit(void)
+{
+	mem_win_init(DEVICE_DT_GET(MEM_WINDOW_NODE(0)));
+	mem_win_init(DEVICE_DT_GET(MEM_WINDOW_NODE(1)));
+	mem_win_init(DEVICE_DT_GET(MEM_WINDOW_NODE(2)));
+	mem_win_init(DEVICE_DT_GET(MEM_WINDOW_NODE(3)));
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define MEM_WINDOW_DEFINE(n)                                                                       \
 	static const struct mem_win_config mem_win_config_##n = {                                  \
 		.base_addr = DT_REG_ADDR(MEM_WINDOW_NODE(n)),                                      \
@@ -46,8 +57,14 @@ __imr int mem_win_init(const struct device *dev)
 		.mem_base = DT_REG_ADDR(DT_PHANDLE(MEM_WINDOW_NODE(n), memory)) + WIN_OFFSET(n),   \
 		.initialize = DT_PROP(MEM_WINDOW_NODE(n), initialize),                             \
 	};                                                                                         \
+<<<<<<< HEAD
 	DEVICE_DT_DEFINE(MEM_WINDOW_NODE(n), mem_win_init, NULL, NULL, &mem_win_config_##n, EARLY, \
 			 CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, NULL);
+=======
+	DEVICE_DT_DEFINE(MEM_WINDOW_NODE(n), mem_win_init, NULL, NULL,                             \
+			&mem_win_config_##n, PRE_KERNEL_1,                                         \
+			CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if DT_NODE_HAS_STATUS(MEM_WINDOW_NODE(0), okay)
 MEM_WINDOW_DEFINE(0)

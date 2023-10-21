@@ -81,7 +81,11 @@ static bool init_buttons(void)
 		const struct button_spec *btn = &btn_spec[i];
 		int ret;
 
+<<<<<<< HEAD
 		if (!device_is_ready(btn->gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&btn->gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			printk("%s is not ready\n", btn->gpio.port->name);
 			return false;
 		}

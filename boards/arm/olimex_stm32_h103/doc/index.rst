@@ -63,6 +63,7 @@ Other hardware features have not been enabled yet for this board.
 Connections and IOs
 ===================
 
+<<<<<<< HEAD
 Default Zephyr Peripheral Mapping:
 ----------------------------------
 
@@ -77,16 +78,25 @@ Default Zephyr Peripheral Mapping:
 - USB_DC DM/DP/DISC/PWR: PA11/PA12/PC11/PC4 (not enabled)
 - ADC_1: PA1
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 System Clock
 ------------
 
 The on-board 8 MHz crystal is used to produce a 72 MHz system clock with PLL.
 
+<<<<<<< HEAD
 Serial Port
 -----------
 
 The board has 3 U(S)ARTs, UART1 and UART2 are enabled by default, with UART2
 used as Zephyr's console. Default settings are 115200 8N1.
+=======
+Zephyr Console
+--------------
+
+UART2 is used as Zephyr's console. Default settings are 115200 8N1.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 On-Board LEDs
 -------------
@@ -104,11 +114,21 @@ The board has one user button connected to PA0.
 USB
 ---
 
+<<<<<<< HEAD
 USB is not enabled by default, however PC4 is configured by default as an ADC
 input to sense the USB voltage (see schematic). It is possible to disconnect
 it by desoldering the appropriate pad in the PCB.
 
 The board uses PC11 to disconnect the pull-up resistor on the USB-DP line.
+=======
+USB is not enabled by default.
+
+PC4 can be configured as a GPIO input to detect power on the USB port. It is
+possible to disconnect it by desoldering the appropriate pad in the PCB.
+
+PC11 can be used to disconnect the pull-up resistor on the USB-DP line by
+setting it high.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 External Connectors
 -------------------
@@ -118,7 +138,11 @@ JTAG/SWD debug
 +-------+----------------------+-------+--------------+
 | PIN # | Signal Name          | PIN # | Signal Name  |
 +=======+======================+=======+==============+
+<<<<<<< HEAD
 | 1     | +3.3V                | 2     | TVCC 3.3V    |
+=======
+| 1     | TVCC +3.3V           | 2     | TVCC 3.3V    |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 +-------+----------------------+-------+--------------+
 | 3     | PB4 / TRST           | 4     | GND          |
 +-------+----------------------+-------+--------------+
@@ -144,6 +168,7 @@ EXTENSION 1
 +-------+-----------------------+-------+-----------------------+
 | PIN # | Name / STM32F103 Port | PIN # | Name / STM32F103 Port |
 +=======+=======================+=======+=======================+
+<<<<<<< HEAD
 | 1     | PA11 / USB_DM         | 2     | PA8 / **PWM_1_CH1**   |
 +-------+-----------------------+-------+-----------------------+
 | 3     | PA12 / USB_DP         | 4     | PA9 / **UART1_TX**    |
@@ -165,6 +190,29 @@ EXTENSION 1
 | 19    | PC0                   | 20    | PC1                   |
 +-------+-----------------------+-------+-----------------------+
 | 21    | PB0                   | 22    | PA7 / **SPI1_MOSI**   |
+=======
+| 1     | PA11 / **USB_DM**     | 2     | PA8                   |
++-------+-----------------------+-------+-----------------------+
+| 3     | PA12 / **USB_DP**     | 4     | PA9                   |
++-------+-----------------------+-------+-----------------------+
+| 5     | +3.3V                 | 6     | GND                   |
++-------+-----------------------+-------+-----------------------+
+| 7     | PA10                  | 8     | PC10                  |
++-------+-----------------------+-------+-----------------------+
+| 9     | PC11 / **USB_DISC**   | 10    | PC12 / **LED**        |
++-------+-----------------------+-------+-----------------------+
+| 11    | PD2                   | 12    | PB5                   |
++-------+-----------------------+-------+-----------------------+
+| 13    | PB6                   | 14    | PA6                   |
++-------+-----------------------+-------+-----------------------+
+| 15    | PB7                   | 16    | PB8                   |
++-------+-----------------------+-------+-----------------------+
+| 17    | PB9                   | 18    | PA5                   |
++-------+-----------------------+-------+-----------------------+
+| 19    | PC0                   | 20    | PC1                   |
++-------+-----------------------+-------+-----------------------+
+| 21    | PB0                   | 22    | PA7                   |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 +-------+-----------------------+-------+-----------------------+
 | 23    | VBAT                  | 24    | PC13                  |
 +-------+-----------------------+-------+-----------------------+
@@ -182,6 +230,7 @@ EXTENSION 2
 +-------+------------------------+-------+-----------------------+
 | 5     | +3.3V                  | 6     | GND                   |
 +-------+------------------------+-------+-----------------------+
+<<<<<<< HEAD
 | 7     | PA2 / **USART2_TX**    | 8     | PA1 / **ADC_1**       |
 +-------+------------------------+-------+-----------------------+
 | 9     | PC3                    | 10    | PA3 / **USART2_RX**   |
@@ -195,6 +244,21 @@ EXTENSION 2
 | 17    | PB12 / **SPI2_NSS**    | 18    | PB14 / **SPI2_MISO**  |
 +-------+------------------------+-------+-----------------------+
 | 19    | PB15 / **SPI2_MOSI**   | 20    | PC6                   |
+=======
+| 7     | PA2 / **USART2_TX**    | 8     | PA1                   |
++-------+------------------------+-------+-----------------------+
+| 9     | PC3                    | 10    | PA3 / **USART2_RX**   |
++-------+------------------------+-------+-----------------------+
+| 11    | PA4                    | 12    | PC4 / **USB_POWER**   |
++-------+------------------------+-------+-----------------------+
+| 13    | PC5                    | 14    | PB10                  |
++-------+------------------------+-------+-----------------------+
+| 15    | P11                    | 16    | PB13                  |
++-------+------------------------+-------+-----------------------+
+| 17    | PB12                   | 18    | PB14                  |
++-------+------------------------+-------+-----------------------+
+| 19    | PB15                   | 20    | PC6                   |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 +-------+------------------------+-------+-----------------------+
 | 21    | PC7                    | 22    | PC8                   |
 +-------+------------------------+-------+-----------------------+
@@ -216,10 +280,19 @@ SWD transport, but it is also possible to use JTAG with the Olimex ARM-USB-OCD-H
 probe, for instance. For the latter, you should replace the file ``openocd.cfg``
 by ``openocd_olimex_jtag.cfg``, located in the board's support directory.
 
+<<<<<<< HEAD
 Flashing
 ========
 
 Here is an example for the :ref:`button-sample` application.
+=======
+The ``blackmagicprobe`` can also be used to program the device.
+
+Flashing
+========
+
+Here is an example for the :zephyr:code-sample:`button` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/button
@@ -241,6 +314,13 @@ You can debug an application in the usual way.  Here is an example for the
 References
 **********
 
+<<<<<<< HEAD
+=======
+- `OLIMEX-STM32-H103 website`_
+- `OLIMEX-STM32-H103 user manual`_
+- `OLIMEX-STM32-H103 schematic`_
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _OLIMEX-STM32-H103 website:
    https://www.olimex.com/Products/ARM/ST/STM32-H103/
 

@@ -18,9 +18,15 @@ static int rf_init(void)
 
 
 	/* configure RFSW8001 GPIOs (110: RF1/RF2 coexistence mode) */
+<<<<<<< HEAD
 	if (!device_is_ready(rf1.port) ||
 	    !device_is_ready(rf2.port) ||
 	    !device_is_ready(rf3.port)) {
+=======
+	if (!gpio_is_ready_dt(&rf1) ||
+	    !gpio_is_ready_dt(&rf2) ||
+	    !gpio_is_ready_dt(&rf3)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 

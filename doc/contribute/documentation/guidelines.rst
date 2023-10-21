@@ -3,6 +3,11 @@
 Documentation Guidelines
 ########################
 
+<<<<<<< HEAD
+=======
+.. highlight:: rst
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. note::
 
    For instructions on building the documentation, see :ref:`zephyr_doc`.
@@ -11,11 +16,18 @@ Zephyr Project content is written using the `reStructuredText`_ markup
 language (.rst file extension) with Sphinx extensions, and processed
 using Sphinx to create a formatted standalone website.  Developers can
 view this content either in its raw form as .rst markup files, or (with
+<<<<<<< HEAD
 Sphinx installed) they can build the documentation using the Makefile
 on Linux systems, or make.bat on Windows, to
 generate the HTML content. The HTML content can then be viewed using a
 web browser. This same .rst content is also fed into the
 `Zephyr documentation`_ website (with a different theme applied).
+=======
+Sphinx installed) they can :ref:`build the documentation <zephyr_doc>` locally
+to generate the documentation in HTML or PDF format. The HTML content can
+then be viewed using a web browser. This same .rst content is served by the
+`Zephyr documentation`_ website.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 You can read details about `reStructuredText`_
 and about `Sphinx extensions`_ from their respective websites.
@@ -303,9 +315,13 @@ External Cross-Reference Linking
 With Sphinx's help, we can create
 link-references to any tagged text within the Zephyr Project documentation.
 
+<<<<<<< HEAD
 Target locations in a document are defined with a label directive:
 
    .. code-block:: rst
+=======
+Target locations in a document are defined with a label directive::
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       .. _my label name:
 
@@ -326,10 +342,14 @@ To enable easy cross-page linking within the site, each file should have
 a reference label before its title so it can
 be referenced from another file. These reference labels must be unique
 across the whole site, so generic names such as "samples" should be
+<<<<<<< HEAD
 avoided.  For example the top of this document's .rst file is:
 
 
 .. code-block:: rst
+=======
+avoided.  For example the top of this document's .rst file is::
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    .. _doc_guidelines:
 
@@ -580,6 +600,7 @@ in the Zephyr setup.  Within a tab, you can have most any content *other
 than a heading* (code-blocks, ordered and unordered lists, pictures,
 paragraphs, and such).  You can read more about sphinx-tabs from the
 link above.
+<<<<<<< HEAD
 
 Instruction Steps
 *****************
@@ -606,3 +627,5 @@ compare with the :ref:`getting_started` to see a full example.  As implemented,
 only one set of numbered steps is intended per document.
 
 For instructions on building the documentation, see :ref:`zephyr_doc`.
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

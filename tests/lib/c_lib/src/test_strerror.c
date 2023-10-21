@@ -4,6 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NEWLIB_LIBC
+#define _POSIX_C_SOURCE 200809
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <errno.h>
 #include <string.h>
 

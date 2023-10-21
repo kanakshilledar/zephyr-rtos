@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2017-2018 Nordic Semiconductor ASA
+=======
+ * Copyright (c) 2017-2023 Nordic Semiconductor ASA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * Copyright (c) 2016 Linaro Limited
  * Copyright (c) 2016 Intel Corporation
  *
@@ -116,6 +120,29 @@ static inline bool is_uicr_addr_valid(off_t addr, size_t len)
 #endif /* CONFIG_SOC_FLASH_NRF_UICR */
 }
 
+<<<<<<< HEAD
+=======
+#if CONFIG_SOC_FLASH_NRF_UICR && IS_ENABLED(NRF91_ERRATA_7_ENABLE_WORKAROUND)
+static inline void nrf91_errata_7_enter(void)
+{
+	__disable_irq();
+}
+
+static inline void nrf91_errata_7_exit(void)
+{
+	__DSB();
+	__enable_irq();
+}
+
+static void nrf_buffer_read_91_uicr(void *data, off_t addr, size_t len)
+{
+	nrf91_errata_7_enter();
+	nrf_nvmc_buffer_read(data, (uint32_t)addr, len);
+	nrf91_errata_7_exit();
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void nvmc_wait_ready(void)
 {
 	while (!nrfx_nvmc_write_done_check()) {
@@ -125,9 +152,17 @@ static void nvmc_wait_ready(void)
 static int flash_nrf_read(const struct device *dev, off_t addr,
 			    void *data, size_t len)
 {
+<<<<<<< HEAD
 	if (is_regular_addr_valid(addr, len)) {
 		addr += DT_REG_ADDR(SOC_NV_FLASH_NODE);
 	} else if (!is_uicr_addr_valid(addr, len)) {
+=======
+	const bool within_uicr = is_uicr_addr_valid(addr, len);
+
+	if (is_regular_addr_valid(addr, len)) {
+		addr += DT_REG_ADDR(SOC_NV_FLASH_NODE);
+	} else if (!within_uicr) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("invalid address: 0x%08lx:%zu",
 				(unsigned long)addr, len);
 		return -EINVAL;
@@ -137,6 +172,16 @@ static int flash_nrf_read(const struct device *dev, off_t addr,
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+#if CONFIG_SOC_FLASH_NRF_UICR && IS_ENABLED(NRF91_ERRATA_7_ENABLE_WORKAROUND)
+	if (within_uicr) {
+		nrf_buffer_read_91_uicr(data, (uint32_t)addr, len);
+		return 0;
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	nrf_nvmc_buffer_read(data, (uint32_t)addr, len);
 
 	return 0;

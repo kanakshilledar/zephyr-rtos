@@ -11,9 +11,16 @@ void bt_mesh_beacon_ivu_initiator(bool enable);
 
 void bt_mesh_beacon_recv(struct net_buf_simple *buf);
 
+<<<<<<< HEAD
 int bt_mesh_beacon_create(struct bt_mesh_subnet *sub,
 			  struct net_buf_simple *buf);
 
 void bt_mesh_beacon_init(void);
 void bt_mesh_beacon_update(struct bt_mesh_subnet *sub);
 void bt_mesh_beacon_priv_random_get(uint8_t *random, size_t size);
+=======
+int bt_mesh_beacon_create(struct bt_mesh_subnet *sub, struct net_buf_simple *buf, bool priv);
+
+void bt_mesh_beacon_init(void);
+void bt_mesh_beacon_update(struct bt_mesh_subnet *sub);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

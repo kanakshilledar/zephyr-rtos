@@ -227,7 +227,11 @@ typedef int (*i2c_api_transfer_cb_t)(const struct device *dev,
 				 i2c_callback_t cb,
 				 void *userdata);
 #endif /* CONFIG_I2C_CALLBACK */
+<<<<<<< HEAD
 #if defined(CONFIG_I2C_RTIO) || defined(DOXYGEN)
+=======
+#if defined(CONFIG_I2C_RTIO) || defined(__DOXYGEN__)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @typedef i2c_api_iodev_submit
@@ -352,6 +356,52 @@ typedef int (*i2c_target_read_requested_cb_t)(
 typedef int (*i2c_target_read_processed_cb_t)(
 		struct i2c_target_config *config, uint8_t *val);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_I2C_TARGET_BUFFER_MODE
+/** @brief Function called when a write to the device is completed.
+ *
+ * This function is invoked by the controller when it completes
+ * reception of data from the source buffer to the destination
+ * buffer in an ongoing write operation to the device.
+ *
+ * @param config the configuration structure associated with the
+ * device to which the operation is addressed.
+ *
+ * @param ptr pointer to the buffer that contains the data to be transferred.
+ *
+ * @param len the length of the data to be transferred.
+ */
+typedef void (*i2c_target_buf_write_received_cb_t)(
+		struct i2c_target_config *config, uint8_t *ptr, uint32_t len);
+
+/** @brief Function called when a read from the device is initiated.
+ *
+ * This function is invoked by the controller when the bus is ready to
+ * provide additional data by buffer for a read operation from the address
+ * associated with the device.
+ *
+ * The value returned in @p **ptr and @p *len will be transmitted. A success
+ * return shall cause the controller to react to additional read operations.
+ * An error return shall cause the controller to ignore bus operations until
+ * a new start condition is received.
+ *
+ * @param config the configuration structure associated with the
+ * device to which the operation is addressed.
+ *
+ * @param ptr pointer to storage for the address of data buffer to return
+ * for the read request.
+ *
+ * @param len pointer to storage for the length of the data to be transferred
+ * for the read request.
+ *
+ * @return 0 if data has been provided, or a negative error code.
+ */
+typedef int (*i2c_target_buf_read_requested_cb_t)(
+		struct i2c_target_config *config, uint8_t **ptr, uint32_t *len);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Function called when a stop condition is observed after a
  * start condition addressed to a particular device.
  *
@@ -379,6 +429,13 @@ struct i2c_target_callbacks {
 	i2c_target_read_requested_cb_t read_requested;
 	i2c_target_write_received_cb_t write_received;
 	i2c_target_read_processed_cb_t read_processed;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_I2C_TARGET_BUFFER_MODE
+	i2c_target_buf_write_received_cb_t buf_write_received;
+	i2c_target_buf_read_requested_cb_t buf_read_requested;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	i2c_target_stop_cb_t stop;
 };
 
@@ -441,33 +498,57 @@ static inline bool i2c_is_ready_dt(const struct i2c_dt_spec *spec)
  * D:    R len=01: 6c
  * @endcode
  *
+<<<<<<< HEAD
  * @param name Name of this dump, displayed at the top.
+=======
+ * @param dev Target for the messages being sent. Its name will be printed in the log.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param msgs Array of messages to dump.
  * @param num_msgs Number of messages to dump.
  * @param addr Address of the I2C target device.
  * @param dump_read Dump data from I2C reads, otherwise only writes have data dumped.
  */
+<<<<<<< HEAD
 void i2c_dump_msgs_rw(const char *name, const struct i2c_msg *msgs,
 		      uint8_t num_msgs, uint16_t addr, bool dump_read);
+=======
+void i2c_dump_msgs_rw(const struct device *dev, const struct i2c_msg *msgs, uint8_t num_msgs,
+		      uint16_t addr, bool dump_read);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Dump out an I2C message, before it is executed.
  *
  * This is equivalent to:
  *
+<<<<<<< HEAD
  *     i2c_dump_msgs_rw(name, msgs, num_msgs, addr, false);
  *
  * The read messages' data isn't dumped.
  *
  * @param name Name of this dump, displayed at the top.
+=======
+ *     i2c_dump_msgs_rw(dev, msgs, num_msgs, addr, false);
+ *
+ * The read messages' data isn't dumped.
+ *
+ * @param dev Target for the messages being sent. Its name will be printed in the log.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param msgs Array of messages to dump.
  * @param num_msgs Number of messages to dump.
  * @param addr Address of the I2C target device.
  */
+<<<<<<< HEAD
 static inline void i2c_dump_msgs(const char *name, const struct i2c_msg *msgs,
 				 uint8_t num_msgs, uint16_t addr)
 {
 	i2c_dump_msgs_rw(name, msgs, num_msgs, addr, false);
+=======
+static inline void i2c_dump_msgs(const struct device *dev, const struct i2c_msg *msgs,
+				 uint8_t num_msgs, uint16_t addr)
+{
+	i2c_dump_msgs_rw(dev, msgs, num_msgs, addr, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_I2C_STATS) || defined(__DOXYGEN__)
@@ -595,7 +676,11 @@ static inline void i2c_xfer_stats(const struct device *dev, struct i2c_msg *msgs
 	Z_DEVICE_DEFINE(node_id, Z_DEVICE_DT_DEV_ID(node_id),		\
 			DEVICE_DT_NAME(node_id),			\
 			&UTIL_CAT(Z_DEVICE_DT_DEV_ID(node_id), _init),	\
+<<<<<<< HEAD
 			pm_device, data, config, level, prio, api,	\
+=======
+			pm, data, config, level, prio, api,	\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			&(Z_DEVICE_STATE_NAME(Z_DEVICE_DT_DEV_ID(node_id)).devstate), \
 			__VA_ARGS__)
 
@@ -725,13 +810,21 @@ static inline int z_impl_i2c_transfer(const struct device *dev,
 	i2c_xfer_stats(dev, msgs, num_msgs);
 
 	if (IS_ENABLED(CONFIG_I2C_DUMP_MESSAGES)) {
+<<<<<<< HEAD
 		i2c_dump_msgs_rw(dev->name, msgs, num_msgs, addr, true);
+=======
+		i2c_dump_msgs_rw(dev, msgs, num_msgs, addr, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return res;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_I2C_CALLBACK
+=======
+#if defined(CONFIG_I2C_CALLBACK) || defined(__DOXYGEN__)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Perform data transfer to another I2C device in controller mode.
@@ -740,7 +833,11 @@ static inline int z_impl_i2c_transfer(const struct device *dev,
  * to another I2C device asynchronously with a callback completion.
  *
  * @see i2c_transfer()
+<<<<<<< HEAD
  * @funcprop \isr_ok
+=======
+ * @funcprops \isr_ok
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param dev Pointer to the device structure for an I2C controller
  *            driver configured in controller mode.
@@ -868,7 +965,11 @@ static inline int i2c_write_read_cb_dt(const struct i2c_dt_spec *spec, struct i2
 				 read_buf, num_read, cb, userdata);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_POLL
+=======
+#if defined(CONFIG_POLL) || defined(__DOXYGEN__)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @cond INTERNAL_HIDDEN */
 void z_i2c_transfer_signal_cb(const struct device *dev, int result, void *userdata);
@@ -881,14 +982,22 @@ void z_i2c_transfer_signal_cb(const struct device *dev, int result, void *userda
  * to another I2C device asynchronously with a k_poll_signal completion.
  *
  * @see i2c_transfer_cb()
+<<<<<<< HEAD
  * @funcprop \isr_ok
+=======
+ * @funcprops \isr_ok
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param dev Pointer to the device structure for an I2C controller
  *            driver configured in controller mode.
  * @param msgs Array of messages to transfer, must live until callback completes.
  * @param num_msgs Number of messages to transfer.
  * @param addr Address of the I2C target device.
+<<<<<<< HEAD
  * @param signal Signal to notify of transfer completion.
+=======
+ * @param sig Signal to notify of transfer completion.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
@@ -915,7 +1024,11 @@ static inline int i2c_transfer_signal(const struct device *dev,
 #endif /* CONFIG_I2C_CALLBACK */
 
 
+<<<<<<< HEAD
 #if defined(CONFIG_I2C_RTIO) || defined(DOXYGEN)
+=======
+#if defined(CONFIG_I2C_RTIO) || defined(__DOXYGEN__)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Submit request(s) to an I2C device with RTIO
@@ -940,7 +1053,12 @@ extern const struct rtio_iodev_api i2c_iodev_api;
  * These do not need to be shared globally but doing so
  * will save a small amount of memory.
  *
+<<<<<<< HEAD
  * @param node DT_NODE
+=======
+ * @param name Symbolic name of the iodev to define
+ * @param node_id Devicetree node identifier
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 #define I2C_DT_IODEV_DEFINE(name, node_id)					\
 	const struct i2c_dt_spec _i2c_dt_spec_##name =				\

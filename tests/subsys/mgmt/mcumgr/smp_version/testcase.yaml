@@ -4,19 +4,30 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 tests:
+<<<<<<< HEAD
   smp.version:
+=======
+  mgmt.mcumgr.smp.version:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - smp_version
       - mcumgr
     # FIXME: Exclude systems whereby the processor type is not known and emits a warning
     arch_exclude:
       - nios2
+<<<<<<< HEAD
       - sparc
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - mips
       - posix
     platform_exclude:
       - qemu_kvm_arm64
+<<<<<<< HEAD
   smp.version_no_legacy:
+=======
+  mgmt.mcumgr.smp.version_no_legacy:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - smp_version
       - mcumgr
@@ -25,7 +36,10 @@ tests:
     # FIXME: Exclude systems whereby the processor type is not known and emits a warning
     arch_exclude:
       - nios2
+<<<<<<< HEAD
       - sparc
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - mips
       - posix
     platform_exclude:

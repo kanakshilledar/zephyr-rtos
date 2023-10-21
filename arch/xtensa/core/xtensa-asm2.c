@@ -122,7 +122,11 @@ void z_xtensa_dump_stack(const z_arch_esf_t *stack)
 
 	LOG_ERR(" **  A0 %p  SP %p  A2 %p  A3 %p",
 		(void *)bsa->a0,
+<<<<<<< HEAD
 		((char *)bsa + sizeof(*bsa)),
+=======
+		(void *)((char *)bsa + sizeof(*bsa)),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		(void *)bsa->a2, (void *)bsa->a3);
 
 	if (reg_blks_remaining > 0) {
@@ -163,6 +167,7 @@ void z_xtensa_dump_stack(const z_arch_esf_t *stack)
 #endif
 
 	LOG_ERR(" ** SAR %p", (void *)bsa->sar);
+<<<<<<< HEAD
 
 #ifdef CONFIG_XTENSA_MMU
 	uint32_t vaddrstatus, vaddr0, vaddr1;
@@ -174,6 +179,8 @@ void z_xtensa_dump_stack(const z_arch_esf_t *stack)
 	LOG_ERR(" ** VADDRSTATUS %p VADDR0 %p VADDR1 %p",
 		(void *)vaddrstatus, (void *)vaddr0, (void *)vaddr1);
 #endif /* CONFIG_XTENSA_MMU */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline unsigned int get_bits(int offset, int num_bits, unsigned int val)
@@ -210,6 +217,23 @@ static inline void *return_to(void *interrupted)
 	return z_arch_get_next_switch_handle(interrupted);
 }
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_FPU) && defined(CONFIG_FPU_SHARING)
+int arch_float_disable(struct k_thread *thread)
+{
+	/* xtensa always has FPU enabled so cannot be disabled */
+	return -ENOTSUP;
+}
+
+int arch_float_enable(struct k_thread *thread, unsigned int options)
+{
+	/* xtensa always has FPU enabled so nothing to do here */
+	return 0;
+}
+#endif /* CONFIG_FPU && CONFIG_FPU_SHARING */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* The wrapper code lives here instead of in the python script that
  * generates _xtensa_handle_one_int*().  Seems cleaner, still kind of
  * ugly.
@@ -455,3 +479,19 @@ int z_xtensa_irq_is_enabled(unsigned int irq)
 
 	return (ie & (1 << irq)) != 0U;
 }
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_XTENSA_MORE_SPIN_RELAX_NOPS
+/* Some compilers might "optimize out" (i.e. remove) continuous NOPs.
+ * So force no optimization to avoid that.
+ */
+__no_optimization
+void arch_spin_relax(void)
+{
+#define NOP1(_, __) __asm__ volatile("nop.n;");
+	LISTIFY(CONFIG_XTENSA_NUM_SPIN_RELAX_NOPS, NOP1, (;))
+#undef NOP1
+}
+#endif /* CONFIG_XTENSA_MORE_SPIN_RELAX_NOPS */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

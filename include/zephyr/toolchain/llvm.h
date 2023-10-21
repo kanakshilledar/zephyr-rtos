@@ -7,6 +7,12 @@
 #ifndef ZEPHYR_INCLUDE_TOOLCHAIN_LLVM_H_
 #define ZEPHYR_INCLUDE_TOOLCHAIN_LLVM_H_
 
+<<<<<<< HEAD
+=======
+#ifndef ZEPHYR_INCLUDE_TOOLCHAIN_H_
+#error Please do not include toolchain-specific headers directly, use <zephyr/toolchain.h> instead
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define __no_optimization __attribute__((optnone))
 

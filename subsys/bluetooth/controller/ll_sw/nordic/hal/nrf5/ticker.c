@@ -5,8 +5,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <stdbool.h>
 #include <zephyr/sys/dlist.h>
+=======
+#include <stdint.h>
+#include <stdbool.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 
 #include "hal/cntr.h"

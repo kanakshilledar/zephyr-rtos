@@ -44,7 +44,11 @@ enum i3c_ibi_type {
 
 	I3C_IBI_TYPE_MAX = I3C_IBI_HOTJOIN,
 
+<<<<<<< HEAD
 	/*
+=======
+	/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * Not an actual IBI type, but simply used by
 	 * the IBI workq for generic callbacks.
 	 */
@@ -87,9 +91,18 @@ struct i3c_ibi_payload {
  */
 struct i3c_ibi_work {
 	/**
+<<<<<<< HEAD
 	 * Private, do not modify.
 	 */
 	sys_snode_t node;
+=======
+	 * @cond INTERNAL_HIDDEN
+	 *
+	 * Used for keeping track of work in a queue.
+	 */
+	sys_snode_t node;
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/**
 	 * k_work struct.

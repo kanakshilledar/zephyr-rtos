@@ -71,6 +71,14 @@ class xport : public TVirtualTransport<xport>
 
 		r = poll(&pollfds.front(), pollfds.size(), -1);
 		if (r == -1) {
+<<<<<<< HEAD
+=======
+			if (efd == -1 || fd == -1) {
+				/* channel has been closed */
+				return 0;
+			}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("failed to poll fds %d, %d: %d", fd, efd, errno);
 			throw system_error(errno, system_category(), "poll");
 		}

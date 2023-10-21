@@ -50,7 +50,11 @@ const enum { METAIRQ, COOP, PREEMPTIBLE } worker_priorities[] = {
 
 #define STACK_SIZE (640 + CONFIG_TEST_EXTRA_STACK_SIZE)
 
+<<<<<<< HEAD
 k_tid_t last_thread;
+=======
+k_tid_t last_wakeup_thread;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct k_thread manager_thread;
 
@@ -65,7 +69,11 @@ struct k_thread manager_thread;
 struct k_sem worker_sems[NUM_THREADS];
 
 /* Command to worker: who to wake up */
+<<<<<<< HEAD
 int target;
+=======
+int wakeup_target;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Command to worker: use a sched_lock()? */
 volatile int do_lock;
@@ -96,7 +104,11 @@ void wakeup_src_thread(int id)
 		return;
 	}
 
+<<<<<<< HEAD
 	last_thread = NULL;
+=======
+	last_wakeup_thread = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* A little bit of white-box inspection: check that all the
 	 * worker threads are pending.
@@ -112,7 +124,11 @@ void wakeup_src_thread(int id)
 	}
 
 	/* Wake the src worker up */
+<<<<<<< HEAD
 	last_thread = NULL;
+=======
+	last_wakeup_thread = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&worker_sems[id]);
 
 	while (do_sleep && !(src_thread->base.thread_state & _THREAD_PENDING)) {
@@ -121,15 +137,25 @@ void wakeup_src_thread(int id)
 	}
 
 	/* We are lowest priority, SOMEONE must have run */
+<<<<<<< HEAD
 	zassert_true(!!last_thread, "");
+=======
+	zassert_true(!!last_wakeup_thread, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void manager(void *p1, void *p2, void *p3)
 {
 	for (int src = 0; src < NUM_THREADS; src++) {
+<<<<<<< HEAD
 		for (target = 0; target < NUM_THREADS; target++) {
 
 			if (src == target) {
+=======
+		for (wakeup_target = 0; wakeup_target < NUM_THREADS; wakeup_target++) {
+
+			if (src == wakeup_target) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				continue;
 			}
 
@@ -157,7 +183,11 @@ void manager(void *p1, void *p2, void *p3)
 void irq_waker(const void *p)
 {
 	ARG_UNUSED(p);
+<<<<<<< HEAD
 	k_sem_give(&worker_sems[target]);
+=======
+	k_sem_give(&worker_sems[wakeup_target]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #define PRI(n) (worker_priorities[n])
@@ -244,12 +274,21 @@ void worker(void *p1, void *p2, void *p3)
 		 */
 		k_sem_take(&worker_sems[id], K_FOREVER);
 
+<<<<<<< HEAD
 		last_thread = curr;
 
 		/* If we're the wakeup target, setting last_thread is
 		 * all we do
 		 */
 		if (id == target) {
+=======
+		last_wakeup_thread = curr;
+
+		/* If we're the wakeup target, setting last_wakeup_thread is
+		 * all we do
+		 */
+		if (id == wakeup_target) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			continue;
 		}
 
@@ -262,14 +301,23 @@ void worker(void *p1, void *p2, void *p3)
 			 * ISR return does the right thing
 			 */
 			irq_offload(irq_waker, NULL);
+<<<<<<< HEAD
 			prev = last_thread;
+=======
+			prev = last_wakeup_thread;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			/* Do the sem_give() directly to validate that
 			 * the synchronous scheduling does the right
 			 * thing
 			 */
+<<<<<<< HEAD
 			k_sem_give(&worker_sems[target]);
 			prev = last_thread;
+=======
+			k_sem_give(&worker_sems[wakeup_target]);
+			prev = last_wakeup_thread;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		if (do_lock) {
@@ -278,7 +326,11 @@ void worker(void *p1, void *p2, void *p3)
 
 		if (do_yield) {
 			k_yield();
+<<<<<<< HEAD
 			prev = last_thread;
+=======
+			prev = last_wakeup_thread;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		if (do_sleep) {
@@ -288,10 +340,17 @@ void worker(void *p1, void *p2, void *p3)
 
 			zassert_true(k_uptime_get() - start > 0,
 				     "didn't sleep");
+<<<<<<< HEAD
 			prev = last_thread;
 		}
 
 		validate_wakeup(id, target, prev);
+=======
+			prev = last_wakeup_thread;
+		}
+
+		validate_wakeup(id, wakeup_target, prev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

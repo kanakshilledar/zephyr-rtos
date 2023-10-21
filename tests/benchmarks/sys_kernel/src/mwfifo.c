@@ -177,7 +177,11 @@ int fifo_test(void)
 	fprintf(output_file, sz_description,
 			"\n\tk_fifo_init"
 			"\n\tk_fifo_get(K_FOREVER)"
+<<<<<<< HEAD
 			"\n\tk_fifo_get(TICKS_NONE)"
+=======
+			"\n\tk_fifo_get(K_NO_WAIT)"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			"\n\tk_fifo_put"
 			"\n\tk_yield");
 	printf(sz_test_start_fmt);
@@ -225,6 +229,7 @@ int fifo_test(void)
 			 NULL, INT_TO_POINTER(number_of_loops / 2U), NULL,
 			 K_PRIO_COOP(3), 0, K_NO_WAIT);
 	for (i = 0; i < number_of_loops / 2U; i++) {
+<<<<<<< HEAD
 		intptr_t element[2];
 		intptr_t *pelement;
 
@@ -232,6 +237,15 @@ int fifo_test(void)
 		k_fifo_put(&fifo1, element);
 		element[1] = i;
 		k_fifo_put(&fifo1, element);
+=======
+		intptr_t more_element[2];
+		intptr_t *pelement;
+
+		more_element[1] = i;
+		k_fifo_put(&fifo1, more_element);
+		more_element[1] = i;
+		k_fifo_put(&fifo1, more_element);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		pelement = k_fifo_get(&fifo2, K_FOREVER);
 		if (pelement[1] != i) {

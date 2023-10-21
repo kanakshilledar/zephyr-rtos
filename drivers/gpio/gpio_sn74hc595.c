@@ -134,6 +134,7 @@ unlock:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int gpio_sn74hc595_pin_interrupt_configure(const struct device *dev, gpio_pin_t pin,
 						  enum gpio_int_mode mode, enum gpio_int_trig trig)
 {
@@ -144,6 +145,8 @@ static int gpio_sn74hc595_pin_interrupt_configure(const struct device *dev, gpio
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct gpio_driver_api gpio_sn74hc595_drv_api_funcs = {
 	.pin_configure = gpio_sn74hc595_config,
 	.port_get_raw = gpio_sn74hc595_port_get_raw,
@@ -151,7 +154,10 @@ static const struct gpio_driver_api gpio_sn74hc595_drv_api_funcs = {
 	.port_set_bits_raw = gpio_sn74hc595_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_sn74hc595_port_clear_bits_raw,
 	.port_toggle_bits = gpio_sn74hc595_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_sn74hc595_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -170,7 +176,11 @@ static int gpio_sn74hc595_init(const struct device *dev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->reset_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO port %s not ready", config->reset_gpio.port->name);
 		return -ENODEV;
 	}

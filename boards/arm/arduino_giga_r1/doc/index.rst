@@ -82,7 +82,11 @@ that run the command:
 
    west blobs fetch hal_infineon
 
+<<<<<<< HEAD
 .. note: Only Bluetooth functionality is currently supported.
+=======
+.. note:: Only Bluetooth functionality is currently supported.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Resources sharing
 =================
@@ -151,7 +155,11 @@ You should see the following message on the console:
 
 Similarly, you can build and flash samples on the M4 target.
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application on M4 core.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application on M4 core.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -177,7 +185,11 @@ as "JTAG". For example::
    https://www.st.com/content/st_com/en/products/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus/stm32-high-performance-mcus/stm32h7-series/stm32h747-757/stm32h747xi.html
 
 .. _STM32H747xx reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00176879.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00176879.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32H747xx datasheet:
    https://www.st.com/resource/en/datasheet/stm32h747xi.pdf

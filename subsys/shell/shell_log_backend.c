@@ -143,6 +143,12 @@ static bool copy_to_pbuffer(struct mpsc_pbuf_buffer *mpsc_buffer,
 	uint8_t *src_data = (uint8_t *)msg + sizeof(struct mpsc_pbuf_hdr);
 	size_t hdr_wlen = DIV_ROUND_UP(sizeof(struct mpsc_pbuf_hdr),
 					   sizeof(uint32_t));
+<<<<<<< HEAD
+=======
+	if (wlen <= hdr_wlen) {
+		return false;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	dst->hdr.data = msg->buf.hdr.data;
 	memcpy(dst_data, src_data, (wlen - hdr_wlen) * sizeof(uint32_t));

@@ -67,7 +67,11 @@ int main(void)
 	gpio_add_callback(button.port, &button_cb_data);
 	printk("Set up button at %s pin %d\n", button.port->name, button.pin);
 
+<<<<<<< HEAD
 	if (led.port && !device_is_ready(led.port)) {
+=======
+	if (led.port && !gpio_is_ready_dt(&led)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Error %d: LED device %s is not ready; ignoring it\n",
 		       ret, led.port->name);
 		led.port = NULL;

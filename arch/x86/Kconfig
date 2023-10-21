@@ -227,12 +227,15 @@ choice
 		  Reboot via the RST_CNT register, going back to BIOS.
 endchoice
 
+<<<<<<< HEAD
 config ACPI
 	bool "ACPI (Advanced Configuration and Power Interface) support"
 	depends on X86_PC_COMPATIBLE
 	help
 	  Allow retrieval of platform configuration at runtime.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config PCIE_MMIO_CFG
 	bool "Use MMIO PCI configuration space access"
 	select ACPI

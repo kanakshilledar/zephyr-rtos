@@ -343,13 +343,47 @@ DEF_EXCINT XCHAL_DEBUGLEVEL, _handle_excint, xtensa_debugint_c
 .global _Level1RealVector
 _Level1RealVector:
 	wsr a0, ZSR_ALLOCA
+<<<<<<< HEAD
 	rsr.exccause a0
+=======
+	rsync
+	rsr.exccause a0
+#ifdef CONFIG_XTENSA_MMU
+	beqi a0, EXCCAUSE_ITLB_MISS, _handle_tlb_miss_user
+	addi a0, a0, -EXCCAUSE_DTLB_MISS
+	beqz a0, _handle_tlb_miss_user
+	rsr.exccause a0
+#endif /* CONFIG_XTENSA_MMU */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bnei a0, EXCCAUSE_ALLOCA, _not_alloca
 
 	j _xt_alloca_exc
 _not_alloca:
 	rsr a0, ZSR_ALLOCA
 	j _Level1Vector
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_XTENSA_MMU
+_handle_tlb_miss_user:
+	/**
+	 * Handle TLB miss by loading the PTE page:
+	 * The way it works is, when we try to access an address that is not
+	 * mapped, we will have a miss. The HW then will try to get the
+	 * correspondent memory in the page table. As the page table is not
+	 * mapped in memory we will have a second miss, which will trigger
+	 * an exception. In the exception (here) what we do is to exploit
+	 * this hardware capability just trying to load the page table
+	 * (not mapped address), which will cause a miss, but then the hardware
+	 * will automatically map it again from the page table. This time
+	 * it will work since the page necessary to map the page table itself
+	 * are wired map.
+	 */
+	rsr.ptevaddr a0
+	l32i a0, a0, 0
+	rsr a0, ZSR_ALLOCA
+	rfe
+#endif /* CONFIG_XTENSA_MMU */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .popsection
 
 /* In theory you can have levels up to 15, but known hardware only uses 7. */
@@ -394,14 +428,21 @@ _handle_tlb_miss_kernel:
 _DoubleExceptionVector:
 #ifdef CONFIG_XTENSA_MMU
 	wsr a0, ZSR_ALLOCA
+<<<<<<< HEAD
 	wsr a1, ZSR_EXTRA0
+=======
+	rsync
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	rsr.exccause a0
 	addi a0, a0, -EXCCAUSE_DTLB_MISS
 	beqz a0, _handle_tlb_miss_dblexc
 
+<<<<<<< HEAD
 _not_handle_tlb_miss_dblexc:
 	rsr a1, ZSR_EXTRA0
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rsr a0, ZSR_ALLOCA
 #endif
 #if defined(CONFIG_SIMULATOR_XTENSA) || defined(XT_SIMULATOR)
@@ -424,6 +465,7 @@ _not_handle_tlb_miss_dblexc:
 
 #ifdef CONFIG_XTENSA_MMU
 _handle_tlb_miss_dblexc:
+<<<<<<< HEAD
 	/* The tiny space reserved for each vector is not enough
 	 * to accommodate code below, and beqz cannot jump too far.
 	 * So we have this here as a trampoline.
@@ -473,5 +515,21 @@ _dblexc_load_pte:
 	rfde
 .popsection
 #endif
+=======
+	/* Handle all data TLB misses here.
+	 * These data TLB misses are mostly caused by preloading
+	 * page table entries in the level 1 exception handler.
+	 * Failure to load the PTE will result in another exception
+	 * with different failure (exccause), which can be handled
+	 * when the CPU re-enters the double exception handler.
+	 */
+	rsr.ptevaddr a0
+	l32i a0, a0, 0
+
+	rsr a0, ZSR_ALLOCA
+	rfde
+#endif
+.popsection
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif

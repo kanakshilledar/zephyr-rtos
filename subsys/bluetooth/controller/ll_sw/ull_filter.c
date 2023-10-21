@@ -74,6 +74,13 @@ static uint8_t rl_enable;
 static uint8_t newest_prpa;
 static struct lll_prpa_cache prpa_cache[CONFIG_BT_CTLR_RPA_CACHE_SIZE];
 
+<<<<<<< HEAD
+=======
+/* Cache of known unknown target RPAs */
+static uint8_t newest_trpa;
+static struct lll_trpa_cache trpa_cache[CONFIG_BT_CTLR_TRPA_CACHE_SIZE];
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct prpa_resolve_work {
 	struct k_work prpa_work;
 	bt_addr_t     rpa;
@@ -99,6 +106,10 @@ static struct prpa_resolve_work resolve_work;
 static struct target_resolve_work t_work;
 
 BUILD_ASSERT(ARRAY_SIZE(prpa_cache) < FILTER_IDX_NONE);
+<<<<<<< HEAD
+=======
+BUILD_ASSERT(ARRAY_SIZE(trpa_cache) < FILTER_IDX_NONE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_BT_CTLR_SW_DEFERRED_PRIVACY */
 BUILD_ASSERT(ARRAY_SIZE(fal) < FILTER_IDX_NONE);
 BUILD_ASSERT(ARRAY_SIZE(rl) < FILTER_IDX_NONE);
@@ -158,6 +169,12 @@ static void prpa_cache_add(bt_addr_t *prpa_cache_addr);
 static uint8_t prpa_cache_try_resolve(bt_addr_t *rpa);
 static void prpa_cache_resolve(struct k_work *work);
 static void target_resolve(struct k_work *work);
+<<<<<<< HEAD
+=======
+static void trpa_cache_clear(void);
+static uint8_t trpa_cache_find(bt_addr_t *prpa_cache_addr, uint8_t rl_idx);
+static void trpa_cache_add(bt_addr_t *prpa_cache_addr, uint8_t rl_idx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_BT_CTLR_SW_DEFERRED_PRIVACY */
 #endif /* CONFIG_BT_CTLR_FILTER_ACCEPT_LIST */
 
@@ -326,6 +343,10 @@ uint8_t ll_rl_add(bt_addr_le_t *id_addr, const uint8_t pirk[IRK_SIZE],
 #if defined(CONFIG_BT_CTLR_SW_DEFERRED_PRIVACY)
 		/* a new key was added, invalidate the known/unknown list */
 		prpa_cache_clear();
+<<<<<<< HEAD
+=======
+		trpa_cache_clear();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	}
 	if (rl[i].lirk) {
@@ -629,6 +650,10 @@ void ull_filter_reset(bool init)
 	rl_clear();
 #if defined(CONFIG_BT_CTLR_SW_DEFERRED_PRIVACY)
 	prpa_cache_clear();
+<<<<<<< HEAD
+=======
+	trpa_cache_clear();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	if (init) {
 		k_work_init_delayable(&rpa_work, rpa_timeout);
@@ -748,6 +773,10 @@ void ull_filter_rpa_update(bool timeout)
 				 * invalidate the known/unknown peer RPA cache
 				 */
 				prpa_cache_clear();
+<<<<<<< HEAD
+=======
+				trpa_cache_clear();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 			}
 
@@ -1496,12 +1525,33 @@ static void target_resolve(struct k_work *work)
 	if (rl[idx].taken && bt_addr_eq(&(rl[idx].target_rpa), search_rpa)) {
 		j = idx;
 	} else {
+<<<<<<< HEAD
 		/* No match - so not in list Need to see if we can resolve */
 		if (bt_rpa_irk_matches(rl[idx].local_irk, search_rpa)) {
+=======
+		uint8_t i;
+
+		/* No match - so not in list; Need to see if we can resolve */
+
+		i = trpa_cache_find(search_rpa, idx);
+		if (i != FILTER_IDX_NONE) {
+			/* Found a known unknown - do nothing */
+			j = FILTER_IDX_NONE;
+		} else if (bt_rpa_irk_matches(rl[idx].local_irk, search_rpa)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Could resolve, store RPA */
 			(void)memcpy(rl[idx].target_rpa.val, search_rpa->val,
 				     sizeof(bt_addr_t));
 			j = idx;
+<<<<<<< HEAD
+=======
+		} else if (rl[idx].taken) {
+			/* No match - thus cannot resolve, we have an unknown
+			 * so insert in known unknown list
+			 */
+			trpa_cache_add(search_rpa, idx);
+			j = FILTER_IDX_NONE;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			/* Could not resolve, and not in table */
 			j = FILTER_IDX_NONE;
@@ -1629,4 +1679,48 @@ const struct lll_prpa_cache *ull_filter_lll_prpa_cache_get(void)
 {
 	return prpa_cache;
 }
+<<<<<<< HEAD
+=======
+
+static void trpa_cache_clear(void)
+{
+	/* Note the first element will not be in use before wrap around
+	 * is reached.
+	 * The first element in actual use will be at index 1.
+	 * There is no element waisted with this implementation, as
+	 * element 0 will eventually be allocated.
+	 */
+	newest_trpa = 0U;
+
+	for (uint8_t i = 0; i < CONFIG_BT_CTLR_TRPA_CACHE_SIZE; i++) {
+		trpa_cache[i].rl_idx = FILTER_IDX_NONE;
+	}
+}
+
+static void trpa_cache_add(bt_addr_t *rpa, uint8_t rl_idx)
+{
+	newest_trpa = (newest_trpa + 1) % CONFIG_BT_CTLR_TRPA_CACHE_SIZE;
+
+	(void)memcpy(trpa_cache[newest_trpa].rpa.val, rpa->val,
+		     sizeof(bt_addr_t));
+	trpa_cache[newest_trpa].rl_idx = rl_idx;
+}
+
+static uint8_t trpa_cache_find(bt_addr_t *rpa, uint8_t rl_idx)
+{
+	for (uint8_t i = 0; i < CONFIG_BT_CTLR_TRPA_CACHE_SIZE; i++) {
+		if (trpa_cache[i].rl_idx == rl_idx &&
+		    bt_addr_eq(&(trpa_cache[i].rpa), rpa)) {
+			return i;
+		}
+	}
+	return FILTER_IDX_NONE;
+}
+
+const struct lll_trpa_cache *ull_filter_lll_trpa_cache_get(void)
+{
+	return trpa_cache;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* !CONFIG_BT_CTLR_SW_DEFERRED_PRIVACY */

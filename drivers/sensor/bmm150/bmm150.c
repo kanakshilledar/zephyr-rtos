@@ -2,6 +2,10 @@
 
 /*
  * Copyright (c) 2017 Intel Corporation
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 FTP Technologies
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -80,6 +84,7 @@ failed:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int bmm150_set_power_mode(const struct device *dev,
 				 enum bmm150_power_modes mode,
 				 int state)
@@ -115,6 +120,24 @@ static int bmm150_set_power_mode(const struct device *dev,
 
 }
 
+=======
+/* Power control = 'bit' */
+static int bmm150_power_control(const struct device *dev, uint8_t bit)
+{
+	return bmm150_reg_update_byte(dev, BMM150_REG_POWER,
+				      BMM150_MASK_POWER_CTL, bit);
+}
+
+/* OpMode = 'mode' */
+static int bmm150_opmode(const struct device *dev, uint8_t mode)
+{
+	return bmm150_reg_update_byte(dev, BMM150_REG_OPMODE_ODR,
+				      BMM150_MASK_OPMODE,
+				      mode << BMM150_SHIFT_OPMODE);
+}
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int bmm150_set_odr(const struct device *dev, uint8_t val)
 {
 	uint8_t i;
@@ -389,7 +412,11 @@ static int bmm150_channel_get(const struct device *dev,
 		bmm150_convert(val + 2, drv_data->sample_z);
 		break;
 	default:
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -513,6 +540,7 @@ static const struct sensor_driver_api bmm150_api_funcs = {
 #endif
 	.sample_fetch = bmm150_sample_fetch,
 	.channel_get = bmm150_channel_get,
+<<<<<<< HEAD
 };
 
 static int bmm150_init_chip(const struct device *dev)
@@ -542,6 +570,71 @@ static int bmm150_init_chip(const struct device *dev)
 	k_sleep(K_MSEC(3));
 
 	/* Read chip ID */
+=======
+
+#ifdef CONFIG_BMM150_TRIGGER
+	.trigger_set = bmm150_trigger_set,
+#endif
+};
+
+static int bmm150_full_por(const struct device *dev)
+{
+	int ret;
+
+	/* Ensure we are not in suspend mode so soft reset is not ignored */
+	ret = bmm150_power_control(dev, 1);
+	if (ret != 0) {
+		LOG_ERR("failed to ensure not in suspend mode: %d", ret);
+		return ret;
+	}
+
+	k_sleep(BMM150_START_UP_TIME);
+
+	/* Soft reset always brings the device into sleep mode */
+	ret = bmm150_reg_update_byte(dev, BMM150_REG_POWER,
+				     BMM150_MASK_SOFT_RESET,
+				     BMM150_SOFT_RESET);
+	if (ret != 0) {
+		LOG_ERR("failed soft reset: %d", ret);
+		return ret;
+	}
+
+	/*
+	 * To perform full POR (after soft reset), bring the device into suspend
+	 * mode then back into sleep mode, see datasheet section 5.6
+	 */
+	ret = bmm150_power_control(dev, 0);
+	if (ret != 0) {
+		LOG_ERR("failed to enter suspend mode: %d", ret);
+		return ret;
+	}
+
+	k_sleep(BMM150_POR_TIME);
+
+	/* Full POR - back into sleep mode */
+	ret = bmm150_power_control(dev, 1);
+	if (ret != 0) {
+		LOG_ERR("failed to go back into sleep mode: %d", ret);
+		return ret;
+	}
+
+	k_sleep(BMM150_START_UP_TIME);
+
+	return 0;
+}
+
+static int bmm150_init_chip(const struct device *dev)
+{
+	struct bmm150_data *data = dev->data;
+	struct bmm150_preset preset;
+	uint8_t chip_id;
+
+	if (bmm150_full_por(dev) != 0) {
+		goto err_poweroff;
+	}
+
+	/* Read chip ID (can only be read in sleep mode)*/
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (bmm150_reg_read(dev, BMM150_REG_CHIP_ID, &chip_id, 1) < 0) {
 		LOG_ERR("failed reading chip id");
 		goto err_poweroff;
@@ -574,9 +667,14 @@ static int bmm150_init_chip(const struct device *dev)
 	}
 
 	/* Set chip normal mode */
+<<<<<<< HEAD
 	if (bmm150_set_power_mode(dev, BMM150_POWER_MODE_NORMAL, 1)
 	    < 0) {
 		LOG_ERR("failed to power on device");
+=======
+	if (bmm150_opmode(dev, BMM150_MODE_NORMAL) < 0) {
+		LOG_ERR("failed to enter normal mode");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Reads the trim registers of the sensor */
@@ -603,11 +701,53 @@ static int bmm150_init_chip(const struct device *dev)
 	return 0;
 
 err_poweroff:
+<<<<<<< HEAD
 	bmm150_set_power_mode(dev, BMM150_POWER_MODE_NORMAL, 0);
 	bmm150_set_power_mode(dev, BMM150_POWER_MODE_SUSPEND, 1);
 	return -EIO;
 }
 
+=======
+	(void)bmm150_power_control(dev, 0); /* Suspend */
+
+	return -EIO;
+}
+
+#ifdef CONFIG_PM_DEVICE
+static int pm_action(const struct device *dev, enum pm_device_action action)
+{
+	int ret;
+
+	switch (action) {
+	case PM_DEVICE_ACTION_RESUME:
+		/* Need to enter sleep mode before setting OpMode to normal */
+		ret = bmm150_power_control(dev, 1);
+		if (ret != 0) {
+			LOG_ERR("failed to enter sleep mode: %d", ret);
+		}
+
+		k_sleep(BMM150_START_UP_TIME);
+
+		ret |= bmm150_opmode(dev, BMM150_MODE_NORMAL);
+		if (ret != 0) {
+			LOG_ERR("failed to enter normal mode: %d", ret);
+		}
+		break;
+	case PM_DEVICE_ACTION_SUSPEND:
+		ret = bmm150_power_control(dev, 0); /* Suspend */
+		if (ret != 0) {
+			LOG_ERR("failed to enter suspend mode: %d", ret);
+		}
+		break;
+	default:
+		return -ENOTSUP;
+	}
+
+	return ret;
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int bmm150_init(const struct device *dev)
 {
 	int err = 0;
@@ -623,6 +763,16 @@ static int bmm150_init(const struct device *dev)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BMM150_TRIGGER
+	if (bmm150_trigger_mode_init(dev) < 0) {
+		LOG_ERR("Cannot set up trigger mode.");
+		return -EINVAL;
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -641,6 +791,16 @@ static int bmm150_init(const struct device *dev)
 		    (BMM150_CONFIG_I2C(inst)),	\
 		    (BMM150_CONFIG_SPI(inst)))
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BMM150_TRIGGER)
+#define BMM150_INT_CFG(inst)					\
+	.drdy_int = GPIO_DT_SPEC_INST_GET(inst, drdy_gpios),
+#else
+#define BMM150_INT_CFG(inst)
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Main instantiation macro, which selects the correct bus-specific
  * instantiation macros for the instance.
@@ -649,9 +809,20 @@ static int bmm150_init(const struct device *dev)
 	static struct bmm150_data bmm150_data_##inst;			\
 	static const struct bmm150_config bmm150_config_##inst = {	\
 		BMM150_BUS_CFG(inst)					\
+<<<<<<< HEAD
 	};								\
 	SENSOR_DEVICE_DT_INST_DEFINE(inst,				\
 				     bmm150_init, NULL,			\
+=======
+		BMM150_INT_CFG(inst)					\
+	};								\
+									\
+	PM_DEVICE_DT_INST_DEFINE(inst, pm_action);			\
+									\
+	SENSOR_DEVICE_DT_INST_DEFINE(inst,				\
+				     bmm150_init,			\
+				     PM_DEVICE_DT_INST_GET(inst),	\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &bmm150_data_##inst,		\
 				     &bmm150_config_##inst,		\
 				     POST_KERNEL,			\

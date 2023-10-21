@@ -18,6 +18,10 @@
 		cpu0: cpu@0 {
 			device_type = "cpu";
 			compatible = "intel,niosv";
+<<<<<<< HEAD
+=======
+			riscv,isa = "rv32ia_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0>;
 			clock-frequency = <50000000>;
 
@@ -51,7 +55,11 @@
 		uart0: serial@90078 {
 			compatible = "altr,jtag-uart";
 			interrupts = <16>;
+<<<<<<< HEAD
 			status = "disable";
+=======
+			status = "disabled";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

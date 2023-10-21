@@ -7,7 +7,11 @@
 #include <zephyr/ztress.h>
 #include <zephyr/sys/ring_buffer.h>
 #include <zephyr/sys/mutex.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdint.h>
 
 /**
@@ -26,7 +30,11 @@
 
 static ZTEST_BMEM SYS_MUTEX_DEFINE(mutex);
 RING_BUF_ITEM_DECLARE(ringbuf, RINGBUFFER);
+<<<<<<< HEAD
 static uint32_t output[LENGTH];
+=======
+static uint32_t data_output[LENGTH];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static uint32_t databuffer1[LENGTH];
 static uint32_t databuffer2[LENGTH];
 
@@ -74,7 +82,11 @@ static bool user_handler(void *user_data, uint32_t iter_cnt, bool last, int prio
 	/* Try to write data into the ringbuffer */
 	data_write(buffer);
 	/* Try to get data from the ringbuffer and check */
+<<<<<<< HEAD
 	data_read(output);
+=======
+	data_read(data_output);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return true;
 }

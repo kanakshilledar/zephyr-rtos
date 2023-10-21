@@ -165,7 +165,11 @@ int main(void)
 
 #if defined(HAS_LED)
 	printk("Checking LED device...");
+<<<<<<< HEAD
 	if (!device_is_ready(led.port)) {
+=======
+	if (!gpio_is_ready_dt(&led)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("failed.\n");
 		return 0;
 	}

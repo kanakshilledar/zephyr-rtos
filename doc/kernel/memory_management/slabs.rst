@@ -71,7 +71,11 @@ A memory slab is defined using a variable of type :c:type:`k_mem_slab`.
 It must then be initialized by calling :c:func:`k_mem_slab_init`.
 
 The following code defines and initializes a memory slab that has 6 blocks
+<<<<<<< HEAD
 that are 400 bytes long, each of which is aligned to a 4-byte boundary..
+=======
+that are 400 bytes long, each of which is aligned to a 4-byte boundary.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. code-block:: c
 
@@ -109,7 +113,11 @@ A warning is printed if a suitable block is not obtained.
 
     char *block_ptr;
 
+<<<<<<< HEAD
     if (k_mem_slab_alloc(&my_slab, &block_ptr, 100) == 0)) {
+=======
+    if (k_mem_slab_alloc(&my_slab, (void **)&block_ptr, K_MSEC(100)) == 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         memset(block_ptr, 0, 400);
 	...
     } else {
@@ -128,9 +136,15 @@ then releases it once it is no longer needed.
 
     char *block_ptr;
 
+<<<<<<< HEAD
     k_mem_slab_alloc(&my_slab, &block_ptr, K_FOREVER);
     ... /* use memory block pointed at by block_ptr */
     k_mem_slab_free(&my_slab, &block_ptr);
+=======
+    k_mem_slab_alloc(&my_slab, (void **)&block_ptr, K_FOREVER);
+    ... /* use memory block pointed at by block_ptr */
+    k_mem_slab_free(&my_slab, (void *)block_ptr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Suggested Uses
 **************

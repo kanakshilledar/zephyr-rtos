@@ -18,7 +18,11 @@ This sample uses the VL53L0X sensor controlled using the I2C interface.
 References
 **********
 
+<<<<<<< HEAD
  - VL53L0X: http://www.st.com/en/imaging-and-photonics-solutions/vl53l0x.html
+=======
+ - VL53L0X: https://www.st.com/en/imaging-and-photonics-solutions/vl53l0x.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

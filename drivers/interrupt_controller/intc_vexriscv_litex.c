@@ -4,17 +4,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #define DT_DRV_COMPAT litex_eth0
 
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/init.h>
+=======
+#define DT_DRV_COMPAT vexriscv_intc0
+
+#include <zephyr/kernel.h>
+#include <zephyr/arch/cpu.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/irq.h>
 #include <zephyr/device.h>
 #include <zephyr/types.h>
 
+<<<<<<< HEAD
 #define IRQ_MASK		DT_REG_ADDR_BY_NAME(DT_INST(0, vexriscv_intc0), irq_mask)
 #define IRQ_PENDING		DT_REG_ADDR_BY_NAME(DT_INST(0, vexriscv_intc0), irq_pending)
+=======
+#define IRQ_MASK		DT_INST_REG_ADDR_BY_NAME(0, irq_mask)
+#define IRQ_PENDING		DT_INST_REG_ADDR_BY_NAME(0, irq_pending)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define TIMER0_IRQ		DT_IRQN(DT_INST(0, litex_timer0))
 #define UART0_IRQ		DT_IRQN(DT_INST(0, litex_uart0))
@@ -120,7 +132,11 @@ int arch_irq_is_enabled(unsigned int irq)
 	return vexriscv_litex_irq_getmask() & (1 << irq);
 }
 
+<<<<<<< HEAD
 static int vexriscv_litex_irq_init(void)
+=======
+static int vexriscv_litex_irq_init(const struct device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	__asm__ volatile ("csrrs x0, mie, %0"
 			:: "r"(1 << RISCV_MACHINE_EXT_IRQ));
@@ -131,5 +147,10 @@ static int vexriscv_litex_irq_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(vexriscv_litex_irq_init, PRE_KERNEL_2,
 		CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, vexriscv_litex_irq_init, NULL, NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

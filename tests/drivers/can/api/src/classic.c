@@ -1031,11 +1031,17 @@ ZTEST_USER(can_classic, test_set_bitrate_while_started)
  */
 ZTEST_USER(can_classic, test_set_timing_while_started)
 {
+<<<<<<< HEAD
 	struct can_timing timing;
 	int err;
 
 	timing.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+	struct can_timing timing = { 0 };
+	int err;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = can_calc_timing(can_dev, &timing, TEST_BITRATE_1, TEST_SAMPLE_POINT);
 	zassert_ok(err, "failed to calculate timing (err %d)", err);
 

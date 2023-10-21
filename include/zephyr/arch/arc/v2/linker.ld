@@ -246,8 +246,11 @@ SECTIONS {
 
 	MPU_MIN_SIZE_ALIGN
 	/* Define linker symbols */
+<<<<<<< HEAD
 	_image_ram_end = .;
 	_end = .; /* end of image */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	__kernel_ram_end = .;
 	__kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
@@ -278,13 +281,23 @@ SECTIONS {
 	} GROUP_DATA_LINK_IN(YCCM, RAMABLE_REGION)
 #endif
 
+<<<<<<< HEAD
 	GROUP_END(RAMABLE_REGION)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Located in generated directory. This file is populated by the
  * zephyr_linker_sources() Cmake function.
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
+=======
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/linker/debug-sections.ld>
 
 	SECTION_PROLOGUE(.ARC.attributes, 0,) {

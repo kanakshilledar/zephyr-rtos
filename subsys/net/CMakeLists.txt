@@ -20,4 +20,11 @@ if(CONFIG_NETWORKING)
 endif()
 
 add_subdirectory(lib)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_NET_CONNECTION_MANAGER conn_mgr)
+=======
+
+if(CONFIG_NET_CONNECTION_MANAGER)
+  add_subdirectory(conn_mgr)
+endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

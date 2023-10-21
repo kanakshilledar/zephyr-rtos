@@ -80,12 +80,18 @@ struct i2c_stm32_data {
 #endif
 };
 
+<<<<<<< HEAD
 int32_t stm32_i2c_msg_write(const struct device *dev, struct i2c_msg *msg,
 			    uint8_t *flg,
 			    uint16_t sadr);
 int32_t stm32_i2c_msg_read(const struct device *dev, struct i2c_msg *msg,
 			   uint8_t *flg,
 			   uint16_t sadr);
+=======
+int32_t stm32_i2c_transaction(const struct device *dev,
+			    struct i2c_msg msg, uint8_t *next_msg_flags,
+			    uint16_t periph);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int32_t stm32_i2c_configure_timing(const struct device *dev, uint32_t clk);
 int i2c_stm32_runtime_configure(const struct device *dev, uint32_t config);
 

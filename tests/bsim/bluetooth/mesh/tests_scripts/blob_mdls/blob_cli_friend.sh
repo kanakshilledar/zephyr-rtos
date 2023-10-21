@@ -15,3 +15,16 @@ RunTest blob_transfer_lpn \
 	blob_srv_lpn_pull \
 	blob_srv_lpn_pull \
 	blob_srv_lpn_pull
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest blob_transfer_lpn_psa \
+	blob_cli_friend_pull \
+	blob_srv_lpn_pull \
+	blob_srv_lpn_pull \
+	blob_srv_lpn_pull \
+	blob_srv_lpn_pull \
+	blob_srv_lpn_pull
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

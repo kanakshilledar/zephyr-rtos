@@ -34,7 +34,11 @@
 	.if \off == 0
 		stl \d, [\s]
 	.else
+<<<<<<< HEAD
 		.if \off > 256
+=======
+		.if \off > 255
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			STR.as \d, \s, \off / 8
 		.else
 			stl    \d, [\s, \off]

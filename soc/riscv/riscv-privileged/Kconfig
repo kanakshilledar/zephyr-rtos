@@ -28,10 +28,18 @@ config RISCV_HAS_CLIC
 	help
 	  Does the SOC provide support for a Core-Local Interrupt Controller (CLIC).
 
+<<<<<<< HEAD
 config RISCV_MTVEC_VECTORED_MODE
 	bool "Should the SOC use mtvec in vectored mode"
 	depends on SOC_FAMILY_RISCV_PRIVILEGED
 	help
 	  Should the SOC use mtvec in vectored mode
+=======
+config RISCV_VECTORED_MODE
+	bool "Should the SOC use vectored mode"
+	depends on SOC_FAMILY_RISCV_PRIVILEGED
+	help
+	  Should the SOC use vectored mode.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 source "soc/riscv/riscv-privileged/*/Kconfig.soc"

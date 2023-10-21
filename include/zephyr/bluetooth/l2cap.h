@@ -453,6 +453,10 @@ struct bt_l2cap_server {
 	 *  authorization.
 	 *
 	 *  @param conn The connection that is requesting authorization
+<<<<<<< HEAD
+=======
+	 *  @param server Pointer to the server structure this callback relates to
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 *  @param chan Pointer to received the allocated channel
 	 *
 	 *  @return 0 in case of success or negative value in case of error.
@@ -460,7 +464,12 @@ struct bt_l2cap_server {
 	 *  @return -EACCES if application did not authorize the connection.
 	 *  @return -EPERM if encryption key size is too short.
 	 */
+<<<<<<< HEAD
 	int (*accept)(struct bt_conn *conn, struct bt_l2cap_chan **chan);
+=======
+	int (*accept)(struct bt_conn *conn, struct bt_l2cap_server *server,
+		      struct bt_l2cap_chan **chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	sys_snode_t node;
 };

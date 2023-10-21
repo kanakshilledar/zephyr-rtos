@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+# FIXME: SHADOW_VARS: Remove this once we have enabled -Wshadow globally.
+add_compile_options($<TARGET_PROPERTY:compiler,warning_shadow_variables>)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_definitions(-D__ZEPHYR_SUPERVISOR__)
 
 add_subdirectory(disk)
@@ -12,11 +18,19 @@ add_subdirectory(usb_c)
 add_subdirectory_ifdef(CONFIG_ADC adc)
 add_subdirectory_ifdef(CONFIG_AUDIO audio)
 add_subdirectory_ifdef(CONFIG_BBRAM bbram)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_BOARD_XENVM xen)
+=======
+add_subdirectory_ifdef(CONFIG_XEN xen)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_BT_DRIVERS bluetooth)
 add_subdirectory_ifdef(CONFIG_CACHE_MANAGEMENT cache)
 add_subdirectory_ifdef(CONFIG_CAN can)
 add_subdirectory_ifdef(CONFIG_CLOCK_CONTROL clock_control)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_CHARGER charger)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_CONSOLE console)
 add_subdirectory_ifdef(CONFIG_COREDUMP_DEVICE coredump)
 add_subdirectory_ifdef(CONFIG_COUNTER counter)
@@ -28,9 +42,15 @@ add_subdirectory_ifdef(CONFIG_AUXDISPLAY auxdisplay)
 add_subdirectory_ifdef(CONFIG_DMA dma)
 add_subdirectory_ifdef(CONFIG_EDAC edac)
 add_subdirectory_ifdef(CONFIG_EEPROM eeprom)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_ENTROPY_HAS_DRIVER entropy)
 add_subdirectory_ifdef(CONFIG_ESPI espi)
 add_subdirectory_ifdef(CONFIG_FLASH_HAS_DRIVER_ENABLED flash)
+=======
+add_subdirectory_ifdef(CONFIG_ENTROPY_GENERATOR entropy)
+add_subdirectory_ifdef(CONFIG_ESPI espi)
+add_subdirectory_ifdef(CONFIG_FLASH flash)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_FPGA fpga)
 add_subdirectory_ifdef(CONFIG_FUEL_GAUGE fuel_gauge)
 add_subdirectory_ifdef(CONFIG_GPIO gpio)
@@ -55,7 +75,10 @@ add_subdirectory_ifdef(CONFIG_MM_DRV mm)
 add_subdirectory_ifdef(CONFIG_MODEM modem)
 add_subdirectory_ifdef(CONFIG_NET_DRIVERS net)
 add_subdirectory_ifdef(CONFIG_NET_L2_ETHERNET ethernet)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_NEURAL_NET_ACCEL neural_net)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_PECI peci)
 add_subdirectory_ifdef(CONFIG_PINCTRL pinctrl)
 add_subdirectory_ifdef(CONFIG_PM_CPU_OPS pm_cpu_ops)
@@ -68,7 +91,11 @@ add_subdirectory_ifdef(CONFIG_RESET reset)
 add_subdirectory_ifdef(CONFIG_RETAINED_MEM retained_mem)
 add_subdirectory_ifdef(CONFIG_SDHC sdhc)
 add_subdirectory_ifdef(CONFIG_SENSOR sensor)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_SERIAL_HAS_DRIVER serial)
+=======
+add_subdirectory_ifdef(CONFIG_SERIAL serial)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_SPI spi)
 add_subdirectory_ifdef(CONFIG_SYSCON syscon)
 add_subdirectory_ifdef(CONFIG_SYS_CLOCK_EXISTS timer)
@@ -79,3 +106,7 @@ add_subdirectory_ifdef(CONFIG_WATCHDOG watchdog)
 add_subdirectory_ifdef(CONFIG_WIFI wifi)
 add_subdirectory_ifdef(CONFIG_RTC rtc)
 add_subdirectory_ifdef(CONFIG_ARM_SIP_SVC_DRIVER sip_svc)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_HWSPINLOCK  hwspinlock)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

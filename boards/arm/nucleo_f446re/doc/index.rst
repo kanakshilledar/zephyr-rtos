@@ -211,6 +211,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo F446RE website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f446re.html
 
 .. _STM32 Nucleo-64 board User Manual:
@@ -221,6 +222,18 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F446 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00135183.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f446re.html
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+
+.. _STM32F446RE on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f446re.html
+
+.. _STM32F446 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00135183.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _RS485 CAN Shield:
    https://www.waveshare.com/wiki/RS485_CAN_Shield

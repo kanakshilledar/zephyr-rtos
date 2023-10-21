@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .. _crypto_sample:
 
 Crypto
@@ -6,6 +7,17 @@ Crypto
 Overview
 ********
 An example to illustrate the usage of crypto APIs.
+=======
+.. zephyr:code-sample:: crypto
+   :name: Crypto
+   :relevant-api: crypto
+
+   Use the crypto APIs to perform various encryption/decryption operations.
+
+Overview
+********
+An example to illustrate the usage of :ref:`crypto APIs <crypto_api>`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

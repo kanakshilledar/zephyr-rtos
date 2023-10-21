@@ -13,8 +13,11 @@ Follow this guide to:
 
 .. _host_setup:
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Select and Update OS
 ********************
 
@@ -46,8 +49,11 @@ Click the operating system you are using.
 
 .. _install-required-tools:
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Install dependencies
 ********************
 
@@ -98,7 +104,13 @@ The current minimum required version for the main dependencies are:
               python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \
               make gcc gcc-multilib g++-multilib libsdl2-dev libmagic1
 
+<<<<<<< HEAD
       #. Verify the versions of the main dependencies installed on your system by entering::
+=======
+      #. Verify the versions of the main dependencies installed on your system by entering:
+
+         .. code-block:: bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
             cmake --version
             python3 --version
@@ -157,13 +169,21 @@ The current minimum required version for the main dependencies are:
       #. Disable global confirmation to avoid having to confirm the
          installation of individual programs:
 
+<<<<<<< HEAD
          .. code-block:: console
+=======
+         .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
             choco feature enable -n allowGlobalConfirmation
 
       #. Use ``choco`` to install the required dependencies:
 
+<<<<<<< HEAD
          .. code-block:: console
+=======
+         .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
             choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
             choco install ninja gperf python git dtc-msys2 wget 7zip
@@ -178,8 +198,11 @@ The current minimum required version for the main dependencies are:
 .. _install_py_requirements:
 .. _gs_python_deps:
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Get Zephyr and install Python dependencies
 ******************************************
 
@@ -252,7 +275,11 @@ additional Python dependencies.
                automatically load boilerplate code required for building Zephyr
                applications.
 
+<<<<<<< HEAD
                .. code-block:: console
+=======
+               .. code-block:: bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west zephyr-export
 
@@ -286,7 +313,11 @@ additional Python dependencies.
                automatically load boilerplate code required for building Zephyr
                applications.
 
+<<<<<<< HEAD
                .. code-block:: console
+=======
+               .. code-block:: bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west zephyr-export
 
@@ -342,7 +373,11 @@ additional Python dependencies.
                automatically load boilerplate code required for building Zephyr
                applications.
 
+<<<<<<< HEAD
                .. code-block:: console
+=======
+               .. code-block:: bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west zephyr-export
 
@@ -373,7 +408,11 @@ additional Python dependencies.
                automatically load boilerplate code required for building Zephyr
                applications.
 
+<<<<<<< HEAD
                .. code-block:: console
+=======
+               .. code-block:: bash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west zephyr-export
 
@@ -417,13 +456,21 @@ additional Python dependencies.
 
             #. Install west:
 
+<<<<<<< HEAD
                .. code-block:: bash
+=======
+               .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   pip install west
 
             #. Get the Zephyr source code:
 
+<<<<<<< HEAD
                .. code-block:: bash
+=======
+               .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west init zephyrproject
                   cd zephyrproject
@@ -433,14 +480,22 @@ additional Python dependencies.
                automatically load boilerplate code required for building Zephyr
                applications.
 
+<<<<<<< HEAD
                .. code-block:: console
+=======
+               .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   west zephyr-export
 
             #. Zephyr's ``scripts\requirements.txt`` file declares additional Python
                dependencies. Install them with ``pip``.
 
+<<<<<<< HEAD
                .. code-block:: bash
+=======
+               .. code-block:: bat
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                   pip install -r %HOMEPATH%\zephyrproject\zephyr\scripts\requirements.txt
 
@@ -476,8 +531,11 @@ additional Python dependencies.
 
                   pip3 install -r %HOMEPATH%\zephyrproject\zephyr\scripts\requirements.txt
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Install Zephyr SDK
 ******************
@@ -497,13 +555,22 @@ that are used to emulate, flash and debug Zephyr applications.
       .. _ubuntu_zephyr_sdk:
 
       #. Download and verify the `Zephyr SDK bundle
+<<<<<<< HEAD
          <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.1>`_:
+=======
+         <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.3>`_:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          .. code-block:: bash
 
             cd ~
+<<<<<<< HEAD
             wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/zephyr-sdk-0.16.1_linux-x86_64.tar.xz
             wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/sha256.sum | shasum --check --ignore-missing
+=======
+            wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/zephyr-sdk-0.16.3_linux-x86_64.tar.xz
+            wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/sha256.sum | shasum --check --ignore-missing
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          If your host architecture is 64-bit ARM (for example, Raspberry Pi), replace ``x86_64``
          with ``aarch64`` in order to download the 64-bit ARM Linux SDK.
@@ -512,7 +579,11 @@ that are used to emulate, flash and debug Zephyr applications.
 
          .. code-block:: bash
 
+<<<<<<< HEAD
             tar xvf zephyr-sdk-0.16.1_linux-x86_64.tar.xz
+=======
+            tar xvf zephyr-sdk-0.16.3_linux-x86_64.tar.xz
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          .. note::
             It is recommended to extract the Zephyr SDK bundle at one of the following locations:
@@ -524,15 +595,25 @@ that are used to emulate, flash and debug Zephyr applications.
             * ``/opt``
             * ``/usr/local``
 
+<<<<<<< HEAD
             The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.1`` directory and, when
             extracted under ``$HOME``, the resulting installation path will be
             ``$HOME/zephyr-sdk-0.16.1``.
+=======
+            The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.3`` directory and, when
+            extracted under ``$HOME``, the resulting installation path will be
+            ``$HOME/zephyr-sdk-0.16.3``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       #. Run the Zephyr SDK bundle setup script:
 
          .. code-block:: bash
 
+<<<<<<< HEAD
             cd zephyr-sdk-0.16.1
+=======
+            cd zephyr-sdk-0.16.3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             ./setup.sh
 
          .. note::
@@ -546,7 +627,11 @@ that are used to emulate, flash and debug Zephyr applications.
 
          .. code-block:: bash
 
+<<<<<<< HEAD
             sudo cp ~/zephyr-sdk-0.16.1/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+=======
+            sudo cp ~/zephyr-sdk-0.16.3/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             sudo udevadm control --reload
 
    .. group-tab:: macOS
@@ -554,13 +639,22 @@ that are used to emulate, flash and debug Zephyr applications.
       .. _macos_zephyr_sdk:
 
       #. Download and verify the `Zephyr SDK bundle
+<<<<<<< HEAD
          <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.1>`_:
+=======
+         <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.3>`_:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          .. code-block:: bash
 
             cd ~
+<<<<<<< HEAD
             wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/zephyr-sdk-0.16.1_macos-x86_64.tar.xz
             wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/sha256.sum | shasum --check --ignore-missing
+=======
+            wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/zephyr-sdk-0.16.3_macos-x86_64.tar.xz
+            wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/sha256.sum | shasum --check --ignore-missing
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          If your host architecture is 64-bit ARM (Apple Silicon, also known as M1), replace
          ``x86_64`` with ``aarch64`` in order to download the 64-bit ARM macOS SDK.
@@ -569,7 +663,11 @@ that are used to emulate, flash and debug Zephyr applications.
 
          .. code-block:: bash
 
+<<<<<<< HEAD
             tar xvf zephyr-sdk-0.16.1_macos-x86_64.tar.xz
+=======
+            tar xvf zephyr-sdk-0.16.3_macos-x86_64.tar.xz
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          .. note::
             It is recommended to extract the Zephyr SDK bundle at one of the following locations:
@@ -581,15 +679,25 @@ that are used to emulate, flash and debug Zephyr applications.
             * ``/opt``
             * ``/usr/local``
 
+<<<<<<< HEAD
             The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.1`` directory and, when
             extracted under ``$HOME``, the resulting installation path will be
             ``$HOME/zephyr-sdk-0.16.1``.
+=======
+            The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.3`` directory and, when
+            extracted under ``$HOME``, the resulting installation path will be
+            ``$HOME/zephyr-sdk-0.16.3``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       #. Run the Zephyr SDK bundle setup script:
 
          .. code-block:: bash
 
+<<<<<<< HEAD
             cd zephyr-sdk-0.16.1
+=======
+            cd zephyr-sdk-0.16.3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             ./setup.sh
 
          .. note::
@@ -605,6 +713,7 @@ that are used to emulate, flash and debug Zephyr applications.
       #. Open a ``cmd.exe`` window by pressing the Windows key typing "cmd.exe".
 
       #. Download the `Zephyr SDK bundle
+<<<<<<< HEAD
          <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.1>`_:
 
          .. code-block:: console
@@ -617,6 +726,20 @@ that are used to emulate, flash and debug Zephyr applications.
          .. code-block:: console
 
             7z x zephyr-sdk-0.16.1_windows-x86_64.7z
+=======
+         <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.3>`_:
+
+         .. code-block:: bat
+
+            cd %HOMEPATH%
+            wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/zephyr-sdk-0.16.3_windows-x86_64.7z
+
+      #. Extract the Zephyr SDK bundle archive:
+
+         .. code-block:: bat
+
+            7z x zephyr-sdk-0.16.3_windows-x86_64.7z
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
          .. note::
             It is recommended to extract the Zephyr SDK bundle at one of the following locations:
@@ -624,6 +747,7 @@ that are used to emulate, flash and debug Zephyr applications.
             * ``%HOMEPATH%``
             * ``%PROGRAMFILES%``
 
+<<<<<<< HEAD
             The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.1`` directory and, when
             extracted under ``%HOMEPATH%``, the resulting installation path will be
             ``%HOMEPATH%\zephyr-sdk-0.16.1``.
@@ -633,6 +757,17 @@ that are used to emulate, flash and debug Zephyr applications.
          .. code-block:: console
 
             cd zephyr-sdk-0.16.1
+=======
+            The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.3`` directory and, when
+            extracted under ``%HOMEPATH%``, the resulting installation path will be
+            ``%HOMEPATH%\zephyr-sdk-0.16.3``.
+
+      #. Run the Zephyr SDK bundle setup script:
+
+         .. code-block:: bat
+
+            cd zephyr-sdk-0.16.3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             setup.cmd
 
          .. note::
@@ -643,21 +778,32 @@ that are used to emulate, flash and debug Zephyr applications.
 
 .. _getting_started_run_sample:
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Build the Blinky Sample
 ***********************
 
 .. note::
 
+<<<<<<< HEAD
    Blinky is compatible with most, but not all, :ref:`boards`. If your board
+=======
+   :zephyr:code-sample:`blinky` is compatible with most, but not all, :ref:`boards`. If your board
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    does not meet Blinky's :ref:`blinky-sample-requirements`, then
    :ref:`hello_world` is a good alternative.
 
    If you are unsure what name west uses for your board, ``west boards``
    can be used to obtain a list of all boards Zephyr supports.
 
+<<<<<<< HEAD
 Build the :ref:`blinky-sample` with :ref:`west build <west-building>`, changing
+=======
+Build the :zephyr:code-sample:`blinky` with :ref:`west build <west-building>`, changing
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ``<your-board-name>`` appropriately for your board:
 
 .. tabs::
@@ -688,8 +834,11 @@ users. Users may also use the ``-p auto`` option, which will use
 heuristics to determine if a pristine build is required, such as when building
 another sample.
 
+<<<<<<< HEAD
 .. rst-class:: numbered-step
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Flash the Sample
 ****************
 
@@ -698,7 +847,11 @@ If in doubt about what to do, check your board's page in :ref:`boards`.
 
 Then flash the sample using :ref:`west flash <west-flashing>`:
 
+<<<<<<< HEAD
 .. code-block:: console
+=======
+.. code-block:: shell
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    west flash
 

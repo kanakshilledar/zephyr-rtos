@@ -42,6 +42,7 @@
 #include "hal/debug.h"
 
 static struct ll_conn_iso_group cig = { 0 };
+<<<<<<< HEAD
 static struct ll_conn_iso_stream cis = { .established = 1};
 
 struct ll_conn_iso_stream *ll_conn_iso_stream_get_by_acl(struct ll_conn *conn, uint16_t *cis_iter)
@@ -50,13 +51,28 @@ struct ll_conn_iso_stream *ll_conn_iso_stream_get_by_acl(struct ll_conn *conn, u
 }
 
 struct ll_conn_iso_stream *ll_conn_iso_stream_get(uint16_t handle)
+=======
+static struct ll_conn_iso_stream cis = { .established = 1, .group = &cig };
+
+__weak struct ll_conn_iso_stream *ll_conn_iso_stream_get_by_acl(struct ll_conn *conn,
+								uint16_t *cis_iter)
+{
+	return NULL;
+}
+
+__weak struct ll_conn_iso_stream *ll_conn_iso_stream_get(uint16_t handle)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return &cis;
 }
 
 struct ll_conn_iso_stream *ll_iso_stream_connected_get(uint16_t handle)
 {
+<<<<<<< HEAD
 	return &cis;
+=======
+	return NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 struct ll_conn_iso_group *ll_conn_iso_group_get_by_id(uint8_t id)

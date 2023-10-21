@@ -9,7 +9,11 @@
 #include <kernel_internal.h>
 
 static atomic_t global_lock;
+<<<<<<< HEAD
 static atomic_t start_flag;
+=======
+static atomic_t cpu_start_flag;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static atomic_t ready_flag;
 
 unsigned int z_smp_global_lock(void)
@@ -56,10 +60,17 @@ static inline void local_delay(void)
 	}
 }
 
+<<<<<<< HEAD
 static void wait_for_start_signal(atomic_t *cpu_start_flag)
 {
 	/* Wait for the signal to begin scheduling */
 	while (!atomic_get(cpu_start_flag)) {
+=======
+static void wait_for_start_signal(atomic_t *start_flag)
+{
+	/* Wait for the signal to begin scheduling */
+	while (!atomic_get(start_flag)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		local_delay();
 	}
 }
@@ -85,7 +96,13 @@ static inline FUNC_NORETURN void smp_init_top(void *arg)
 
 	wait_for_start_signal(arg);
 	z_dummy_thread_init(&dummy_thread);
+<<<<<<< HEAD
 	smp_timer_init();
+=======
+#ifdef CONFIG_SYS_CLOCK_EXISTS
+	smp_timer_init();
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	z_swap_unlocked();
 
@@ -105,20 +122,35 @@ static void start_cpu(int id, atomic_t *start_flag)
 
 void z_smp_start_cpu(int id)
 {
+<<<<<<< HEAD
 	(void)atomic_set(&start_flag, 1); /* async, don't care */
 	start_cpu(id, &start_flag);
+=======
+	(void)atomic_set(&cpu_start_flag, 1); /* async, don't care */
+	start_cpu(id, &cpu_start_flag);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void z_smp_init(void)
 {
+<<<<<<< HEAD
 	(void)atomic_clear(&start_flag);
+=======
+	(void)atomic_clear(&cpu_start_flag);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	unsigned int num_cpus = arch_num_cpus();
 
 	for (int i = 1; i < num_cpus; i++) {
+<<<<<<< HEAD
 		start_cpu(i, &start_flag);
 	}
 	(void)atomic_set(&start_flag, 1);
+=======
+		start_cpu(i, &cpu_start_flag);
+	}
+	(void)atomic_set(&cpu_start_flag, 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 bool z_smp_cpu_mobile(void)

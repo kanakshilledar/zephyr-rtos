@@ -309,6 +309,7 @@ ZTEST_USER(timer_api_error, test_timer_add_timeout)
 	ztest_test_pass();
 }
 
+<<<<<<< HEAD
 extern uint64_t sys_clock_timeout_end_calc(k_timeout_t timeout);
 extern void sys_clock_announce(int32_t ticks);
 
@@ -330,6 +331,8 @@ ZTEST(timer_api_error, test_timeout_end_calc)
 	zassert_true(ret, "timeout end calc forever");
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Tests for the Timer kernel object
  * @defgroup kernel_timer_tests Timer

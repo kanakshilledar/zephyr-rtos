@@ -7,8 +7,13 @@
 Zephyr's NTC Thermistor DTS Table generator
 ###########################################
 
+<<<<<<< HEAD
 This script can be used to generate a "zephyr,ntc-thermistor-rt-table" compatible
 Device Tree node for NTC thermistors.  This uses the Beta Parameter Equation
+=======
+This script can be used to generate an NTC thermistor DTS node with a
+"zephyr,compensation-table" property. This uses the Beta Parameter Equation
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 https://devxplained.eu/en/blog/temperature-measurement-with-ntcs#beta-parameter-equation
 
@@ -47,22 +52,33 @@ def main(
     temps_range = range(temp_init, temp_final + interval - 1, interval)
 
     print(f"/* NTC Thermistor Table Generated with {os.path.basename(__file__)} */\n")
+<<<<<<< HEAD
     print(f"/ {{")
     print(
         f"\tthermistor_R25_{int(r25)}_B_{int(beta)}: thermistor-R25-{int(r25)}-B-{int(beta)} {{"
     )
     print(f'\t\tstatus = "disabled";')
     print(f'\t\tcompatible = "zephyr,ntc-thermistor-rt-table";\n')
+=======
+    print(
+        f"thermistor_R25_{int(r25)}_B_{int(beta)}: thermistor-R25-{int(r25)}-B-{int(beta)} {{"
+    )
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     table = []
     for temp in temps_range:
         resistance = beta_equation_calc_resistance(r25, beta, temp)
         table.append(f"<({int(temp)}) {int(resistance)}>")
 
+<<<<<<< HEAD
     tbl_string = ',\n\t\t\t'.join(table)
     print(f"\t\t/* TR Table Format <temp resistance> */")
     print(f"\t\ttr-table = {tbl_string};")
     print(f"\t}};")
+=======
+    tbl_string = ',\n\t\t'.join(table)
+    print(f"\tzephyr,compensation-table = {tbl_string};")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     print(f"}};")
 
 

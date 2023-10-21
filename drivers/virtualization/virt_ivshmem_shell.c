@@ -8,7 +8,11 @@
 #include <stdlib.h>
 #include <zephyr/drivers/virtualization/ivshmem.h>
 
+<<<<<<< HEAD
 static const struct device *ivshmem;
+=======
+static const struct device *ivshmem = DEVICE_DT_GET_ONE(qemu_ivshmem);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_IVSHMEM_DOORBELL
 
@@ -48,6 +52,7 @@ static void doorbell_notification_thread(const struct shell *sh)
 
 static bool get_ivshmem(const struct shell *sh)
 {
+<<<<<<< HEAD
 	if (ivshmem == NULL) {
 		ivshmem = DEVICE_DT_GET_ONE(qemu_ivshmem);
 		if (!device_is_ready(ivshmem)) {
@@ -56,6 +61,14 @@ static bool get_ivshmem(const struct shell *sh)
 	}
 
 	return ivshmem != NULL ? true : false;
+=======
+	if (!device_is_ready(ivshmem)) {
+		shell_error(sh, "IVshmem device is not ready");
+		return false;
+	}
+
+	return true;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int cmd_ivshmem_shmem(const struct shell *sh,
@@ -76,7 +89,11 @@ static int cmd_ivshmem_shmem(const struct shell *sh,
 
 	shell_fprintf(sh, SHELL_NORMAL,
 		      "IVshmem up and running: \n"
+<<<<<<< HEAD
 		      "\tShared memory: 0x%x of size %u bytes\n"
+=======
+		      "\tShared memory: 0x%lx of size %lu bytes\n"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "\tPeer id: %u\n"
 		      "\tNotification vectors: %u\n",
 		      mem, size, id, vectors);
@@ -214,6 +231,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_ivshmem_cmds,
 
 SHELL_CMD_REGISTER(ivshmem, &sub_ivshmem_cmds,
 		   "IVshmem information", cmd_ivshmem_shmem);
+<<<<<<< HEAD
 
 SHELL_CMD_ARG_REGISTER(ivshmem_dump, &sub_ivshmem_cmds,
 		       "Dump shared memory content",
@@ -226,3 +244,5 @@ SHELL_CMD_ARG_REGISTER(ivshmem_int, &sub_ivshmem_cmds,
 SHELL_CMD_ARG_REGISTER(ivshmem_get_notified, &sub_ivshmem_cmds,
 		       "Get notification on vector",
 		       cmd_ivshmem_get_notified, 2, 0);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

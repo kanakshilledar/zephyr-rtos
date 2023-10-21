@@ -251,7 +251,11 @@ int ism330dhcx_init_interrupt(const struct device *dev)
 	const struct ism330dhcx_config *cfg = dev->config;
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->drdy_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->drdy_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device not ready");
 		return -ENODEV;
 	}
@@ -283,8 +287,13 @@ int ism330dhcx_init_interrupt(const struct device *dev)
 	}
 
 	/* enable interrupt on int1/int2 in pulse mode */
+<<<<<<< HEAD
 	if (ism330dhcx_int_notification_set(ism330dhcx->ctx,
 					    ISM330DHCX_ALL_INT_PULSED) < 0) {
+=======
+	if (ism330dhcx_data_ready_mode_set(ism330dhcx->ctx,
+					   ISM330DHCX_DRDY_PULSED) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Could not set pulse mode");
 		return -EIO;
 	}

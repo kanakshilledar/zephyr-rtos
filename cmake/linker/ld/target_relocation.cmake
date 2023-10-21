@@ -10,6 +10,17 @@ macro(toolchain_ld_relocation)
        "${PROJECT_BINARY_DIR}/include/generated/linker_sram_bss_relocate.ld")
   set(MEM_RELOCATION_CODE "${PROJECT_BINARY_DIR}/code_relocation.c")
   set(MEM_REGION_DEFAULT_RAM RAM)
+<<<<<<< HEAD
+=======
+  set(DICT_FILE "${PROJECT_BINARY_DIR}/relocation_dict.txt")
+
+  file(GENERATE
+  OUTPUT
+    ${DICT_FILE}
+  CONTENT
+    $<TARGET_PROPERTY:code_data_relocation_target,COMPILE_DEFINITIONS>
+  )
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   add_custom_command(
     OUTPUT ${MEM_RELOCATION_CODE} ${MEM_RELOCATION_LD}
@@ -18,7 +29,11 @@ macro(toolchain_ld_relocation)
     ${ZEPHYR_BASE}/scripts/build/gen_relocate_app.py
     $<$<BOOL:${CMAKE_VERBOSE_MAKEFILE}>:--verbose>
     -d ${APPLICATION_BINARY_DIR}
+<<<<<<< HEAD
     -i \"$<TARGET_PROPERTY:code_data_relocation_target,COMPILE_DEFINITIONS>\"
+=======
+    -i ${DICT_FILE}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     -o ${MEM_RELOCATION_LD}
     -s ${MEM_RELOCATION_SRAM_DATA_LD}
     -b ${MEM_RELOCATION_SRAM_BSS_LD}

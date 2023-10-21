@@ -1413,39 +1413,67 @@ static int create_socket(struct modem_socket *sock, const struct sockaddr *addr)
 	}
 
 	if (sock->ip_proto == IPPROTO_TLS_1_2) {
+<<<<<<< HEAD
 		char buf[sizeof("AT+USECPRF=#,#,#######\r")];
 
 		/* Enable socket security */
 		snprintk(buf, sizeof(buf), "AT+USOSEC=%d,1,%d", sock->id, sock->id);
 		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, buf,
+=======
+		char atbuf[sizeof("AT+USECPRF=#,#,#######\r")];
+
+		/* Enable socket security */
+		snprintk(atbuf, sizeof(atbuf), "AT+USOSEC=%d,1,%d", sock->id, sock->id);
+		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, atbuf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &mdata.sem_response, MDM_CMD_TIMEOUT);
 		if (ret < 0) {
 			goto error;
 		}
 		/* Reset the security profile */
+<<<<<<< HEAD
 		snprintk(buf, sizeof(buf), "AT+USECPRF=%d", sock->id);
 		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, buf,
+=======
+		snprintk(atbuf, sizeof(atbuf), "AT+USECPRF=%d", sock->id);
+		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, atbuf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &mdata.sem_response, MDM_CMD_TIMEOUT);
 		if (ret < 0) {
 			goto error;
 		}
 		/* Validate server cert against the CA.  */
+<<<<<<< HEAD
 		snprintk(buf, sizeof(buf), "AT+USECPRF=%d,0,1", sock->id);
 		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, buf,
+=======
+		snprintk(atbuf, sizeof(atbuf), "AT+USECPRF=%d,0,1", sock->id);
+		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, atbuf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &mdata.sem_response, MDM_CMD_TIMEOUT);
 		if (ret < 0) {
 			goto error;
 		}
 		/* Use TLSv1.2 only */
+<<<<<<< HEAD
 		snprintk(buf, sizeof(buf), "AT+USECPRF=%d,1,3", sock->id);
 		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, buf,
+=======
+		snprintk(atbuf, sizeof(atbuf), "AT+USECPRF=%d,1,3", sock->id);
+		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, atbuf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &mdata.sem_response, MDM_CMD_TIMEOUT);
 		if (ret < 0) {
 			goto error;
 		}
 		/* Set root CA filename */
+<<<<<<< HEAD
 		snprintk(buf, sizeof(buf), "AT+USECPRF=%d,3,\"ca\"", sock->id);
 		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, buf,
+=======
+		snprintk(atbuf, sizeof(atbuf), "AT+USECPRF=%d,3,\"ca\"", sock->id);
+		ret = modem_cmd_send(&mctx.iface, &mctx.cmd_handler, NULL, 0U, atbuf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &mdata.sem_response, MDM_CMD_TIMEOUT);
 		if (ret < 0) {
 			goto error;

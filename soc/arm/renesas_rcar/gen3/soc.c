@@ -7,6 +7,7 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
 #include <zephyr/sys/barrier.h>
 
@@ -27,6 +28,10 @@ static int soc_init(void)
 	return 0;
 }
 
+=======
+#include <zephyr/sys/barrier.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void z_arm_platform_init(void)
 {
 	L1C_DisableCaches();
@@ -40,5 +45,8 @@ void z_arm_platform_init(void)
 	L1C_EnableCaches();
 	L1C_EnableBTAC();
 }
+<<<<<<< HEAD
 
 SYS_INIT(soc_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

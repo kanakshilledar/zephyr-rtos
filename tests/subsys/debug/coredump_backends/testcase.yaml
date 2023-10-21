@@ -5,7 +5,11 @@ common:
   integration_platforms:
     - qemu_x86
 tests:
+<<<<<<< HEAD
   coredump.backends.logging:
+=======
+  debug.coredump.backends.logging:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: CONFIG_ARCH_SUPPORTS_COREDUMP
     platform_exclude: acrn_ehl_crb
     harness: console
@@ -15,11 +19,25 @@ tests:
         - "E: #CD:BEGIN#"
         - "E: #CD:5([aA])45([0-9a-fA-F]+)"
         - "E: #CD:END#"
+<<<<<<< HEAD
   coredump.backends.flash:
     filter: CONFIG_ARCH_SUPPORTS_COREDUMP
     extra_args: CONF_FILE=prj_flash_partition.conf
     platform_allow: qemu_x86
   coredump.backends.other:
+=======
+  debug.coredump.backends.flash:
+    filter: CONFIG_ARCH_SUPPORTS_COREDUMP
+    extra_args: CONF_FILE=prj_flash_partition.conf
+    platform_allow:
+      - qemu_x86
+      - esp32_devkitc_wroom
+      - esp32_devkitc_wrover
+      - esp32s2_saola
+      - esp32s3_devkitm
+      - esp32c3_devkitm
+  debug.coredump.backends.other:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: CONFIG_ARCH_SUPPORTS_COREDUMP
     extra_args: CONF_FILE=prj_backend_other.conf
     platform_exclude: acrn_ehl_crb

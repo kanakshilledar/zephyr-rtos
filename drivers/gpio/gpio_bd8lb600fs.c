@@ -193,12 +193,15 @@ static int bd8lb600fs_port_toggle_bits(const struct device *dev, uint32_t mask)
 	return result;
 }
 
+<<<<<<< HEAD
 static int bd8lb600fs_pin_interrupt_configure(const struct device *dev, gpio_pin_t pin,
 					      enum gpio_int_mode mode, enum gpio_int_trig trig)
 {
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct gpio_driver_api api_table = {
 	.pin_configure = bd8lb600fs_pin_configure,
 	.port_get_raw = bd8lb600fs_port_get_raw,
@@ -206,7 +209,10 @@ static const struct gpio_driver_api api_table = {
 	.port_set_bits_raw = bd8lb600fs_port_set_bits_raw,
 	.port_clear_bits_raw = bd8lb600fs_port_clear_bits_raw,
 	.port_toggle_bits = bd8lb600fs_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = bd8lb600fs_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static int bd8lb600fs_init(const struct device *dev)

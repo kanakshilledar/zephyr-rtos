@@ -199,7 +199,11 @@ SHORT_NAMES            = NO
 # description.)
 # The default value is: NO.
 
+<<<<<<< HEAD
 JAVADOC_AUTOBRIEF      = NO
+=======
+JAVADOC_AUTOBRIEF      = YES
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # If the JAVADOC_BANNER tag is set to YES then doxygen will interpret a line
 # such as
@@ -217,7 +221,11 @@ JAVADOC_BANNER         = NO
 # requiring an explicit \brief command for a brief description.)
 # The default value is: NO.
 
+<<<<<<< HEAD
 QT_AUTOBRIEF           = NO
+=======
+QT_AUTOBRIEF           = YES
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # The MULTILINE_CPP_IS_BRIEF tag can be set to YES to make doxygen treat a
 # multi-line C++ special comment block (i.e. a block of //! or /// comments) as
@@ -2368,6 +2376,11 @@ PREDEFINED             = __DOXYGEN__ \
                          CONFIG_HEAP_MEM_POOL_SIZE \
                          CONFIG_MMU \
                          CONFIG_NET_L2_ETHERNET_MGMT \
+<<<<<<< HEAD
+=======
+                         CONFIG_NET_L2_IEEE802154_MGMT \
+                         CONFIG_NET_L2_IEEE802154_SECURITY \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                          CONFIG_NET_MGMT_EVENT \
                          CONFIG_NET_SOCKETS_POSIX_NAMES \
                          CONFIG_NET_TCP \
@@ -2377,7 +2390,10 @@ PREDEFINED             = __DOXYGEN__ \
                          CONFIG_SCHED_DEADLINE \
                          CONFIG_SETTINGS_RUNTIME \
                          CONFIG_SMP \
+<<<<<<< HEAD
                          CONFIG_SPI_ASYNC \
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                          CONFIG_SYS_CLOCK_EXISTS \
                          CONFIG_THREAD_CUSTOM_DATA \
                          CONFIG_THREAD_MONITOR \
@@ -2391,6 +2407,10 @@ PREDEFINED             = __DOXYGEN__ \
                          NET_MGMT_DEFINE_REQUEST_HANDLER(x)= \
                          DEVICE_DEFINE()= \
                          BUILD_ASSERT()= \
+<<<<<<< HEAD
+=======
+			 XEN_GUEST_HANDLE_64(x)= \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                          _LINKER \
                          __deprecated= \
                          __packed= \

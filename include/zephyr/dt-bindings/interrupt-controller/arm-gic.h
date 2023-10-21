@@ -6,7 +6,11 @@
 #ifndef __DT_BINDING_ARM_GIC_H
 #define __DT_BINDING_ARM_GIC_H
 
+<<<<<<< HEAD
 #include <zephyr/sys/util_macro.h>
+=======
+#include <zephyr/dt-bindings/dt-util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* CPU Interrupt numbers */
 #define	GIC_INT_VIRT_MAINT		25

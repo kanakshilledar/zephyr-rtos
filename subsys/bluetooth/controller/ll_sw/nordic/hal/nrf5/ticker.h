@@ -5,8 +5,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #define HAL_TICKER_CNTR_CLK_FREQ_HZ 32768U
 #define HAL_TICKER_CNTR_CLK_UNIT_FS 30517578125UL
+=======
+#define HAL_TICKER_CNTR_CLK_FREQ_HZ   32768U
+#define HAL_TICKER_CNTR_CLK_UNIT_FSEC 30517578125UL
+#define HAL_TICKER_FSEC_PER_USEC      1000000000UL
+#define HAL_TICKER_PSEC_PER_USEC      1000000UL
+#define HAL_TICKER_FSEC_PER_PSEC      1000UL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Macro defining the minimum counter compare offset */
 #define HAL_TICKER_CNTR_CMP_OFFSET_MIN 3
@@ -25,33 +33,66 @@
  */
 #define HAL_TICKER_US_TO_TICKS(x) \
 	( \
+<<<<<<< HEAD
 		((uint32_t)(((uint64_t) (x) * 1000000000UL) / \
 		 HAL_TICKER_CNTR_CLK_UNIT_FS)) & HAL_TICKER_CNTR_MASK \
+=======
+		((uint32_t)(((uint64_t) (x) * HAL_TICKER_FSEC_PER_USEC) / \
+			    HAL_TICKER_CNTR_CLK_UNIT_FSEC)) & \
+		HAL_TICKER_CNTR_MASK \
+	)
+
+/* Macro to translate microseconds to tick units.
+ * NOTE: This returns the ceil value.
+ */
+#define HAL_TICKER_US_TO_TICKS_CEIL(x) \
+	( \
+		DIV_ROUND_UP(((uint64_t) (x) * HAL_TICKER_FSEC_PER_USEC), \
+			     HAL_TICKER_CNTR_CLK_UNIT_FSEC) & \
+		HAL_TICKER_CNTR_MASK \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	)
 
 /* Macro to translate tick units to microseconds. */
 #define HAL_TICKER_TICKS_TO_US(x) \
 	( \
+<<<<<<< HEAD
 		((uint32_t)(((uint64_t)(x) * HAL_TICKER_CNTR_CLK_UNIT_FS) / \
 		 1000000000UL)) \
+=======
+		((uint32_t)(((uint64_t)(x) * HAL_TICKER_CNTR_CLK_UNIT_FSEC) / \
+		 HAL_TICKER_FSEC_PER_USEC)) \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	)
 
 /* Macro returning remainder in picoseconds (to fit in 32-bits) */
 #define HAL_TICKER_REMAINDER(x) \
 	( \
 		( \
+<<<<<<< HEAD
 			((uint64_t) (x) * 1000000000UL) \
 			- ((uint64_t)HAL_TICKER_US_TO_TICKS(x) * \
 			   HAL_TICKER_CNTR_CLK_UNIT_FS) \
 		) \
 		/ 1000UL \
+=======
+			((uint64_t) (x) * HAL_TICKER_FSEC_PER_USEC) \
+			- ((uint64_t)HAL_TICKER_US_TO_TICKS(x) * \
+			   HAL_TICKER_CNTR_CLK_UNIT_FSEC) \
+		) \
+		/ HAL_TICKER_FSEC_PER_PSEC \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	)
 
 /* Macro defining the remainder resolution/range
  * ~ 1000000 * HAL_TICKER_TICKS_TO_US(1)
  */
 #define HAL_TICKER_REMAINDER_RANGE \
+<<<<<<< HEAD
 	HAL_TICKER_TICKS_TO_US(1000000)
+=======
+	HAL_TICKER_TICKS_TO_US(HAL_TICKER_PSEC_PER_USEC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Macro defining the margin for positioning re-scheduled nodes */
 #define HAL_TICKER_RESCHEDULE_MARGIN \
@@ -62,6 +103,7 @@ static inline void hal_ticker_remove_jitter(uint32_t *ticks,
 					    uint32_t *remainder)
 {
 	/* Is remainder less than 1 us */
+<<<<<<< HEAD
 	if ((*remainder & BIT(31)) || !(*remainder / 1000000UL)) {
 		*ticks -= 1U;
 		*remainder += HAL_TICKER_CNTR_CLK_UNIT_FS / 1000UL;
@@ -69,12 +111,22 @@ static inline void hal_ticker_remove_jitter(uint32_t *ticks,
 
 	/* pico seconds to micro seconds unit */
 	*remainder /= 1000000UL;
+=======
+	if ((*remainder & BIT(31)) || !(*remainder / HAL_TICKER_PSEC_PER_USEC)) {
+		*ticks -= 1U;
+		*remainder += HAL_TICKER_CNTR_CLK_UNIT_FSEC / HAL_TICKER_FSEC_PER_PSEC;
+	}
+
+	/* pico seconds to micro seconds unit */
+	*remainder /= HAL_TICKER_PSEC_PER_USEC;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Add ticks and return positive remainder value in microseconds */
 static inline void hal_ticker_add_jitter(uint32_t *ticks, uint32_t *remainder)
 {
 	/* Is remainder less than 1 us */
+<<<<<<< HEAD
 	if ((*remainder & BIT(31)) || !(*remainder / 1000000UL)) {
 		*ticks += 1U;
 		*remainder += HAL_TICKER_CNTR_CLK_UNIT_FS / 1000UL;
@@ -82,4 +134,13 @@ static inline void hal_ticker_add_jitter(uint32_t *ticks, uint32_t *remainder)
 
 	/* pico seconds to micro seconds unit */
 	*remainder /= 1000000UL;
+=======
+	if ((*remainder & BIT(31)) || !(*remainder / HAL_TICKER_PSEC_PER_USEC)) {
+		*ticks += 1U;
+		*remainder += HAL_TICKER_CNTR_CLK_UNIT_FSEC / HAL_TICKER_FSEC_PER_PSEC;
+	}
+
+	/* pico seconds to micro seconds unit */
+	*remainder /= HAL_TICKER_PSEC_PER_USEC;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

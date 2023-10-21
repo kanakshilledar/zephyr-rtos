@@ -11,7 +11,11 @@
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/settings/settings.h>
+<<<<<<< HEAD
 #include <zephyr/toolchain/gcc.h>
+=======
+#include <zephyr/toolchain.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <stdint.h>
 #include <string.h>

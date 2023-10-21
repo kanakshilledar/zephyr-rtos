@@ -30,6 +30,12 @@ struct posix_thread {
 	/* List of keys that thread has called pthread_setspecific() on */
 	sys_slist_t key_list;
 
+<<<<<<< HEAD
+=======
+	/* Dynamic stack */
+	k_thread_stack_t *dynamic_stack;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Exit status */
 	void *retval;
 

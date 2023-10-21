@@ -124,7 +124,11 @@ This interface is supported by the openocd version included in the Zephyr SDK.
 Flashing an application to Nucleo L031K6
 ----------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -151,7 +155,11 @@ References
 .. target-notes::
 
 .. _Nucleo L031K6 website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-l031k6.html
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-l031k6.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32L0x1 reference manual:
    https://www.st.com/resource/en/reference_manual/dm00108282-ultralowpower-stm32l0x1-advanced-armbased-32bit-mcus-stmicroelectronics.pdf

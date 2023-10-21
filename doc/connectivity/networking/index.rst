@@ -16,3 +16,7 @@ operation of the stacks and how they were implemented.
    networking_with_host.rst
    network_monitoring.rst
    api/index.rst
+<<<<<<< HEAD
+=======
+   conn_mgr/index.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

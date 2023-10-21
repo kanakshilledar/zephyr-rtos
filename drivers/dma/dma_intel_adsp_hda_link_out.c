@@ -29,7 +29,12 @@ static const struct dma_driver_api intel_adsp_hda_dma_link_out_api = {
 		.base = DT_INST_REG_ADDR(inst),                                                    \
 		.regblock_size  = DT_INST_REG_SIZE(inst),					   \
 		.dma_channels = DT_INST_PROP(inst, dma_channels),                                  \
+<<<<<<< HEAD
 		.direction = MEMORY_TO_PERIPHERAL						   \
+=======
+		.direction = MEMORY_TO_PERIPHERAL,						   \
+		.irq_config = NULL								   \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};											   \
 												   \
 	static struct intel_adsp_hda_dma_data intel_adsp_hda_dma##inst##_data = {};                \

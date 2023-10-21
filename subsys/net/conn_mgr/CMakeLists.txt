@@ -4,7 +4,11 @@ zephyr_include_directories(.)
 
 zephyr_library()
 zephyr_library_sources(
+<<<<<<< HEAD
 	conn_mgr.c
+=======
+	conn_mgr_monitor.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	events_handler.c
 	conn_mgr_connectivity.c
 	)

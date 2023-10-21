@@ -7,6 +7,10 @@ Device Management
     :maxdepth: 1
 
     mcumgr.rst
+<<<<<<< HEAD
+=======
+    mcumgr_handlers.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     mcumgr_callbacks.rst
     mcumgr_backporting.rst
     smp_protocol.rst
@@ -24,5 +28,9 @@ SMP Groups
     smp_groups/smp_group_0.rst
     smp_groups/smp_group_1.rst
     smp_groups/smp_group_2.rst
+<<<<<<< HEAD
+=======
+    smp_groups/smp_group_3.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     smp_groups/smp_group_8.rst
     smp_groups/smp_group_9.rst

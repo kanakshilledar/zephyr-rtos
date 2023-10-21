@@ -576,10 +576,34 @@ int pm_device_power_domain_remove(const struct device *dev,
  *
  * @param dev Device instance.
  *
+<<<<<<< HEAD
  * @retval true If device is currently powered
  * @retval false If device is not currently powered
  */
 bool pm_device_is_powered(const struct device *dev);
+=======
+ * @retval true If device is currently powered, or is assumed to be powered
+ * (i.e. it does not support PM or is not under a PM domain)
+ * @retval false If device is not currently powered
+ */
+bool pm_device_is_powered(const struct device *dev);
+
+/**
+ * @brief Setup a device driver into the lowest valid power mode
+ *
+ * This helper function is intended to be called at the end of a driver
+ * init function to automatically setup the device into the lowest power
+ * mode. It assumes that the device has been configured as if it is in
+ * @ref PM_DEVICE_STATE_OFF.
+ *
+ * @param dev Device instance.
+ * @param action_cb Device PM control callback function.
+ * @retval 0 On success.
+ * @retval -errno Error code from @a action_cb on failure.
+ */
+int pm_device_driver_init(const struct device *dev, pm_device_action_cb_t action_cb);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 static inline int pm_device_state_get(const struct device *dev,
 				      enum pm_device_state *state)
@@ -652,12 +676,22 @@ static inline bool pm_device_on_power_domain(const struct device *dev)
 static inline int pm_device_power_domain_add(const struct device *dev,
 					     const struct device *domain)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(dev);
+	ARG_UNUSED(domain);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return -ENOSYS;
 }
 
 static inline int pm_device_power_domain_remove(const struct device *dev,
 						const struct device *domain)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(dev);
+	ARG_UNUSED(domain);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return -ENOSYS;
 }
 
@@ -666,6 +700,22 @@ static inline bool pm_device_is_powered(const struct device *dev)
 	ARG_UNUSED(dev);
 	return true;
 }
+<<<<<<< HEAD
+=======
+
+static inline int pm_device_driver_init(const struct device *dev, pm_device_action_cb_t action_cb)
+{
+	int rc;
+
+	/* When power management is not enabled, all drivers should initialise to active state */
+	rc = action_cb(dev, PM_DEVICE_ACTION_TURN_ON);
+	if (rc == 0) {
+		rc = action_cb(dev, PM_DEVICE_ACTION_RESUME);
+	}
+	return rc;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_PM_DEVICE */
 
 /** @} */

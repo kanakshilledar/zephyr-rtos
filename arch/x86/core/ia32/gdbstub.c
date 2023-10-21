@@ -11,7 +11,11 @@
 #include <zephyr/debug/gdbstub.h>
 
 
+<<<<<<< HEAD
 static struct gdb_ctx ctx;
+=======
+static struct gdb_ctx debug_ctx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * Currently we just handle vectors 1 and 3 but lets keep it generic
@@ -80,6 +84,7 @@ static unsigned int get_exception(unsigned int vector)
  */
 static void z_gdb_interrupt(unsigned int vector, z_arch_esf_t *esf)
 {
+<<<<<<< HEAD
 	ctx.exception = get_exception(vector);
 
 	ctx.registers[GDB_EAX] = esf->eax;
@@ -117,18 +122,65 @@ static void z_gdb_interrupt(unsigned int vector, z_arch_esf_t *esf)
 	esf->es = ctx.registers[GDB_ES];
 	esf->fs = ctx.registers[GDB_FS];
 	esf->gs = ctx.registers[GDB_GS];
+=======
+	debug_ctx.exception = get_exception(vector);
+
+	debug_ctx.registers[GDB_EAX] = esf->eax;
+	debug_ctx.registers[GDB_ECX] = esf->ecx;
+	debug_ctx.registers[GDB_EDX] = esf->edx;
+	debug_ctx.registers[GDB_EBX] = esf->ebx;
+	debug_ctx.registers[GDB_ESP] = esf->esp;
+	debug_ctx.registers[GDB_EBP] = esf->ebp;
+	debug_ctx.registers[GDB_ESI] = esf->esi;
+	debug_ctx.registers[GDB_EDI] = esf->edi;
+	debug_ctx.registers[GDB_PC] = esf->eip;
+	debug_ctx.registers[GDB_CS] = esf->cs;
+	debug_ctx.registers[GDB_EFLAGS]  = esf->eflags;
+	debug_ctx.registers[GDB_SS] = esf->ss;
+	debug_ctx.registers[GDB_DS] = esf->ds;
+	debug_ctx.registers[GDB_ES] = esf->es;
+	debug_ctx.registers[GDB_FS] = esf->fs;
+	debug_ctx.registers[GDB_GS] = esf->gs;
+
+	z_gdb_main_loop(&debug_ctx);
+
+	esf->eax = debug_ctx.registers[GDB_EAX];
+	esf->ecx = debug_ctx.registers[GDB_ECX];
+	esf->edx = debug_ctx.registers[GDB_EDX];
+	esf->ebx = debug_ctx.registers[GDB_EBX];
+	esf->esp = debug_ctx.registers[GDB_ESP];
+	esf->ebp = debug_ctx.registers[GDB_EBP];
+	esf->esi = debug_ctx.registers[GDB_ESI];
+	esf->edi = debug_ctx.registers[GDB_EDI];
+	esf->eip = debug_ctx.registers[GDB_PC];
+	esf->cs = debug_ctx.registers[GDB_CS];
+	esf->eflags = debug_ctx.registers[GDB_EFLAGS];
+	esf->ss = debug_ctx.registers[GDB_SS];
+	esf->ds = debug_ctx.registers[GDB_DS];
+	esf->es = debug_ctx.registers[GDB_ES];
+	esf->fs = debug_ctx.registers[GDB_FS];
+	esf->gs = debug_ctx.registers[GDB_GS];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void arch_gdb_continue(void)
 {
 	/* Clear the TRAP FLAG bit */
+<<<<<<< HEAD
 	ctx.registers[GDB_EFLAGS] &= ~BIT(8);
+=======
+	debug_ctx.registers[GDB_EFLAGS] &= ~BIT(8);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void arch_gdb_step(void)
 {
 	/* Set the TRAP FLAG bit */
+<<<<<<< HEAD
 	ctx.registers[GDB_EFLAGS] |= BIT(8);
+=======
+	debug_ctx.registers[GDB_EFLAGS] |= BIT(8);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 size_t arch_gdb_reg_readall(struct gdb_ctx *ctx, uint8_t *buf, size_t buflen)

@@ -94,7 +94,11 @@ Building and Running
 ********************
 
 Use this configuration to run basic Zephyr applications and kernel tests as Xen
+<<<<<<< HEAD
 guest, for example, with the :ref:`synchronization_sample`:
+=======
+guest, for example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 - if your hardware is based on GICv2:
 

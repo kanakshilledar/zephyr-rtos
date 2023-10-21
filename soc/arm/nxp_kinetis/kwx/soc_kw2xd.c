@@ -13,8 +13,13 @@
 #include <zephyr/drivers/uart.h>
 #include <fsl_common.h>
 #include <fsl_clock.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define PLLFLLSEL_MCGFLLCLK	(0)
 #define PLLFLLSEL_MCGPLLCLK	(1)
@@ -149,18 +154,22 @@ static ALWAYS_INLINE void clock_init(void)
  */
 static int kw2xd_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int oldLevel; /* old interrupt lock level */
 
 	/* disable interrupts */
 	oldLevel = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* release I/O power hold to allow normal run state */
 	PMC->REGSC |= PMC_REGSC_ACKISO_MASK;
 
 	/* Initialize PLL/system clock to 48 MHz */
 	clock_init();
 
+<<<<<<< HEAD
 	/*
 	 * install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
@@ -169,6 +178,8 @@ static int kw2xd_init(void)
 
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

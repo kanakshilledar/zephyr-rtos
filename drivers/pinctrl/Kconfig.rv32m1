@@ -7,3 +7,13 @@ config PINCTRL_RV32M1
 	depends on DT_HAS_OPENISA_RV32M1_PINMUX_ENABLED
 	help
 	  Enable the RV32M1 pin controller driver.
+<<<<<<< HEAD
+=======
+
+config PINCTRL_RV32M1_INIT_PRIORITY
+	int "RV32M1 initialization priority"
+	default 35
+	depends on PINCTRL_RV32M1
+	help
+	  RV32M1 pin controller initialization priority.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

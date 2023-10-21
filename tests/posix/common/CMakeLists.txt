@@ -5,4 +5,9 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(posix_common)
 
 FILE(GLOB app_sources src/*.c)
+<<<<<<< HEAD
+=======
+zephyr_include_directories(${ZEPHYR_BASE}/lib/posix)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 target_sources(app PRIVATE ${app_sources})

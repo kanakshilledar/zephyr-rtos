@@ -53,7 +53,11 @@ static void tmslab_api(void *p1, void *p2, void *p3)
 		}
 		for (int i = 0; i < BLK_NUM; i++) {
 			if (block[i]) {
+<<<<<<< HEAD
 				k_mem_slab_free(slab, &block[i]);
+=======
+				k_mem_slab_free(slab, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				block[i] = NULL;
 			}
 		}

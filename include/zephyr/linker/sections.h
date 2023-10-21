@@ -39,6 +39,14 @@
 #define _SW_ISR_TABLE_SECTION_NAME	.gnu.linkonce.sw_isr_table
 #define _SW_ISR_TABLE_SECTION_SYMS	.gnu.linkonce.sw_isr_table*
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SHARED_INTERRUPTS
+#define _SHARED_SW_ISR_TABLE_SECTION_NAME	.gnu.linkonce.shared_sw_isr_table
+#define _SHARED_SW_ISR_TABLE_SECTION_SYMS	.gnu.linkonce.shared_sw_isr_table*
+#endif /* CONFIG_SHARED_INTERRUPTS */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Architecture-specific sections */
 #if defined(CONFIG_ARM)
 #define _KINETIS_FLASH_CONFIG_SECTION_NAME  kinetis_flash_config

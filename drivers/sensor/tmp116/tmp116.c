@@ -257,8 +257,41 @@ static int tmp116_attr_set(const struct device *dev,
 	}
 }
 
+<<<<<<< HEAD
 static const struct sensor_driver_api tmp116_driver_api = {
 	.attr_set = tmp116_attr_set,
+=======
+static int tmp116_attr_get(const struct device *dev, enum sensor_channel chan,
+			   enum sensor_attribute attr, struct sensor_value *val)
+{
+	uint16_t data;
+	int rc;
+
+	if (chan != SENSOR_CHAN_AMBIENT_TEMP) {
+		return -ENOTSUP;
+	}
+
+	switch (attr) {
+	case SENSOR_ATTR_CONFIGURATION:
+		rc = tmp116_reg_read(dev, TMP116_REG_CFGR, &data);
+		if (rc < 0) {
+			return rc;
+		}
+		break;
+	default:
+		return -ENOTSUP;
+	}
+
+	val->val1 = data;
+	val->val2 = 0;
+
+	return 0;
+}
+
+static const struct sensor_driver_api tmp116_driver_api = {
+	.attr_set = tmp116_attr_set,
+	.attr_get = tmp116_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.sample_fetch = tmp116_sample_fetch,
 	.channel_get = tmp116_channel_get
 };

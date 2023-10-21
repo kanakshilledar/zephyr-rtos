@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 .. _samples_kernel_condvar:
 
 Condition Variables
 ###################
+=======
+.. zephyr:code-sample:: kernel-condvar
+   :name: Condition Variables
+   :relevant-api: condvar_apis
+
+   Manipulate condition variables in a multithreaded application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample demonstrates the usage of condition variables in a
+=======
+This sample demonstrates the usage of :ref:`condition variables <condvar>` in a
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 multithreaded application. Condition variables are used with a mutex
 to signal changing states (conditions) from one thread to another
 thread. A thread uses a condition variable to wait for a condition to

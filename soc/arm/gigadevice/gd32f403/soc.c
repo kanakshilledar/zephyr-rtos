@@ -13,7 +13,11 @@
 
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/irq.h>
+=======
+#include <soc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Perform basic hardware initialization at boot.
@@ -25,6 +29,7 @@
  */
 static int gigadevice_gd32_soc_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
@@ -34,6 +39,9 @@ static int gigadevice_gd32_soc_init(void)
 	NMI_INIT();
 
 	irq_unlock(key);
+=======
+	SystemInit();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

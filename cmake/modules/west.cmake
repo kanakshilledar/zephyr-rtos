@@ -72,6 +72,7 @@ else()
   ${PYTHON_EXECUTABLE_OUT_OF_SYNC}\n")
   endif()
 
+<<<<<<< HEAD
   # Set WEST to a COMMAND prefix as if it were a find_program()
   # result.
   #
@@ -87,6 +88,11 @@ else()
   # Need to cache this so the Zephyr Eclipse plugin knows
   # how to invoke West.
   set(WEST ${PYTHON_EXECUTABLE} -m ${WEST_MODULE} CACHE INTERNAL "West")
+=======
+  # Set WEST to a COMMAND prefix as if it were a find_program() result, and
+  # cache the value so the Zephyr Eclipse plugin knows how to invoke West.
+  set(WEST ${PYTHON_EXECUTABLE} -m west CACHE INTERNAL "West")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   # Print information about the west module we're relying on. This
   # will still work even after output is one line.

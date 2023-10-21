@@ -21,6 +21,12 @@ supported:
   - counter
   - sdhc
   - usb_device
+<<<<<<< HEAD
   - kscan:touch
   - display
   - memc
+=======
+  - display
+  - memc
+vendor: st
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

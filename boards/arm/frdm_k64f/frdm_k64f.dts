@@ -4,6 +4,10 @@
 
 #include <nxp/nxp_k6x.dtsi>
 #include "frdm_k64f-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP Freedom MK64F board";
@@ -27,6 +31,10 @@
 		zephyr,shell-uart = &uart0;
 		zephyr,uart-pipe = &uart0;
 		zephyr,canbus = &flexcan0;
+<<<<<<< HEAD
+=======
+		zephyr,uart-mcumgr = &uart0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	leds {
@@ -50,10 +58,18 @@
 		user_button_2: button_0 {
 			label = "User SW2";
 			gpios = <&gpioc 6 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_3: button_1 {
 			label = "User SW3";
 			gpios = <&gpioa 4 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

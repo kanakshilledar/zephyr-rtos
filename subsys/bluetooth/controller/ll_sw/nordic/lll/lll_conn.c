@@ -814,12 +814,20 @@ void lll_conn_pdu_tx_prep(struct lll_conn *lll, struct pdu_data **pdu_data_tx)
 }
 
 #if defined(CONFIG_BT_CTLR_FORCE_MD_AUTO)
+<<<<<<< HEAD
 uint8_t lll_conn_force_md_cnt_set(uint8_t force_md_cnt)
+=======
+uint8_t lll_conn_force_md_cnt_set(uint8_t reload_cnt)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	uint8_t previous;
 
 	previous = force_md_cnt_reload;
+<<<<<<< HEAD
 	force_md_cnt_reload = force_md_cnt;
+=======
+	force_md_cnt_reload = reload_cnt;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return previous;
 }

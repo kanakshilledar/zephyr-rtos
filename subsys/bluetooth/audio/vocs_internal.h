@@ -30,7 +30,16 @@ struct bt_vocs_state {
 	uint8_t change_counter;
 } __packed;
 
+<<<<<<< HEAD
 struct bt_vocs_client {
+=======
+struct bt_vocs {
+	bool client_instance;
+};
+
+struct bt_vocs_client {
+	struct bt_vocs vocs;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_vocs_state state;
 	bool location_writable;
 	uint32_t location;
@@ -46,7 +55,10 @@ struct bt_vocs_client {
 	struct bt_gatt_subscribe_params state_sub_params;
 	struct bt_gatt_subscribe_params location_sub_params;
 	struct bt_gatt_subscribe_params desc_sub_params;
+<<<<<<< HEAD
 	uint8_t subscribe_cnt;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bool cp_retried;
 
 	bool busy;
@@ -58,7 +70,19 @@ struct bt_vocs_client {
 	struct bt_conn *conn;
 };
 
+<<<<<<< HEAD
 struct bt_vocs_server {
+=======
+enum bt_vocs_notify {
+	NOTIFY_STATE,
+	NOTIFY_LOCATION,
+	NOTIFY_OUTPUT_DESC,
+	NOTIFY_NUM,
+};
+
+struct bt_vocs_server {
+	struct bt_vocs vocs;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_vocs_state state;
 	uint32_t location;
 	bool initialized;
@@ -66,6 +90,7 @@ struct bt_vocs_server {
 	struct bt_vocs_cb *cb;
 
 	struct bt_gatt_service *service_p;
+<<<<<<< HEAD
 };
 
 struct bt_vocs {
@@ -83,5 +108,18 @@ int bt_vocs_client_location_set(struct bt_vocs *inst, uint32_t location);
 int bt_vocs_client_description_get(struct bt_vocs *inst);
 int bt_vocs_client_description_set(struct bt_vocs *inst,
 				   const char *description);
+=======
+
+	ATOMIC_DEFINE(notify, NOTIFY_NUM);
+	struct k_work_delayable notify_work;
+};
+
+int bt_vocs_client_state_get(struct bt_vocs_client *inst);
+int bt_vocs_client_state_set(struct bt_vocs_client *inst, int16_t offset);
+int bt_vocs_client_location_get(struct bt_vocs_client *inst);
+int bt_vocs_client_location_set(struct bt_vocs_client *inst, uint32_t location);
+int bt_vocs_client_description_get(struct bt_vocs_client *inst);
+int bt_vocs_client_description_set(struct bt_vocs_client *inst, const char *description);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_AUDIO_VOCS_INTERNAL_ */

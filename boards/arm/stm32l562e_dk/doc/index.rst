@@ -381,7 +381,11 @@ You can debug an application in the usual way.  Here is an example for the
    https://www.st.com/en/microcontrollers/stm32l562qe.html
 
 .. _STM32L562 reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/DM00346336.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/DM00346336.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32CubeProgrammer:
    https://www.st.com/en/development-tools/stm32cubeprog.html

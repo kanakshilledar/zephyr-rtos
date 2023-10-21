@@ -100,4 +100,9 @@ source "drivers/interrupt_controller/Kconfig.xmc4xxx"
 
 source "drivers/interrupt_controller/Kconfig.nxp_pint"
 
+<<<<<<< HEAD
+=======
+source "drivers/interrupt_controller/Kconfig.vim"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu

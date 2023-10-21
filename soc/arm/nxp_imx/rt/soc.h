@@ -26,6 +26,7 @@ void imxrt_audio_codec_pll_init(uint32_t clock_name, uint32_t clk_src,
 
 #endif
 
+<<<<<<< HEAD
 #if (DT_DEP_ORD(DT_NODELABEL(ocram)) != DT_DEP_ORD(DT_CHOSEN(zephyr_sram))) && \
 	CONFIG_OCRAM_NOCACHE
 /* OCRAM addresses will be defined by linker */
@@ -39,6 +40,8 @@ extern char __ocram_data_end;
 extern char __ocram_end;
 extern char __ocram_data_load_start;
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if CONFIG_MIPI_DSI
 void imxrt_pre_init_display_interface(void);
 

@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 # Copyright 2022 NXP
+=======
+# Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 config WDT_NXP_S32
 	bool "NXP S32 SWT driver"
 	default y
 	depends on DT_HAS_NXP_S32_SWT_ENABLED
+<<<<<<< HEAD
 	select NOCACHE_MEMORY
+=======
+	select CLOCK_CONTROL
+	select NOCACHE_MEMORY if ARCH_HAS_NOCACHE_MEMORY_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the Software Watchdog Timer (SWT) driver.

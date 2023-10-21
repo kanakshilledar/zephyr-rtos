@@ -85,7 +85,11 @@ build command:
 
 Alternatively, set use of this shield in the project's ``CMakeLists.txt`` file:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: cmake
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	set(SHIELD x_nucleo_idb05a1)
 
@@ -95,7 +99,11 @@ References
 .. target-notes::
 
 .. _X-NUCLEO-IDB05A1 website:
+<<<<<<< HEAD
    http://www.st.com/en/ecosystems/x-nucleo-idb05a1.html
+=======
+   https://www.st.com/en/ecosystems/x-nucleo-idb05a1.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _X-NUCLEO-IDB05A1 databrief:
    https://www.st.com/resource/en/data_brief/x-nucleo-idb05a1.pdf

@@ -81,12 +81,21 @@ void eventfd_poll_set_common(int fd)
 	zassert_equal(ret, 1, "eventfd is not blocked after read");
 }
 
+<<<<<<< HEAD
 static struct eventfd_fixture fixture;
 
 static void *setup(void)
 {
 	fixture.fd = -1;
 	return &fixture;
+=======
+static struct eventfd_fixture efd_fixture;
+
+static void *setup(void)
+{
+	efd_fixture.fd = -1;
+	return &efd_fixture;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void before(void *arg)

@@ -23,7 +23,10 @@
 		zephyr,flash-controller = &flashcontroller0;
 		zephyr,display = &sdl_dc;
 		zephyr,canbus = &can_loopback0;
+<<<<<<< HEAD
 		zephyr,keyboard-scan = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	aliases {
@@ -31,7 +34,10 @@
 		i2c-0 = &i2c0;
 		spi-0 = &spi0;
 		led0 = &led0;
+<<<<<<< HEAD
 		kscan0 = &kscan_input;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rtc = &rtc;
 	};
 
@@ -43,6 +49,14 @@
 		};
 	};
 
+<<<<<<< HEAD
+=======
+	lvgl_pointer {
+		compatible = "zephyr,lvgl-pointer-input";
+		input = <&input_sdl_touch>;
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -179,17 +193,25 @@
 		width = <320>;
 	};
 
+<<<<<<< HEAD
 	input-sdl-touch {
 		compatible = "zephyr,input-sdl-touch";
 		kscan_input: kscan-input {
 			compatible = "zephyr,kscan-input";
 		};
+=======
+	input_sdl_touch: input-sdl-touch {
+		compatible = "zephyr,input-sdl-touch";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	can_loopback0: can_loopback0 {
 		status = "okay";
 		compatible = "zephyr,can-loopback";
+<<<<<<< HEAD
 		sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		sample-point = <875>;
 		bus-speed = <125000>;
 	};
@@ -201,7 +223,10 @@
 		 * name, e.g.: sudo ip link property add dev vcan0 altname zcan0
 		 */
 		host-interface = "zcan0";
+<<<<<<< HEAD
 		sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		sample-point = <875>;
 		bus-speed = <125000>;
 	};

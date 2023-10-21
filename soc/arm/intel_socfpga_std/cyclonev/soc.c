@@ -11,11 +11,19 @@
 #include <zephyr/init.h>
 #include <zephyr/sys/util.h>
 #include <mmu.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/mmu/arm_mmu.h>
 #include <zephyr/arch/arm/aarch32/cortex_a_r/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include "soc.h"
 
+=======
+#include <zephyr/arch/arm/mmu/arm_mmu.h>
+#include "soc.h"
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void arch_reserved_pages_update(void)
 {
 /* Function created to reserve the vector table  */
@@ -72,7 +80,10 @@ const struct arm_mmu_config mmu_config = {
  */
 static int soc_intel_cyclonev_init(void)
 {
+<<<<<<< HEAD
 	NMI_INIT();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	unsigned int sctlr = __get_SCTLR(); /* modifying some registers prior to initialization */
 
 	sctlr &= ~SCTLR_A_Msk;

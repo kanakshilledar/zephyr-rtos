@@ -5,6 +5,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+/* Override EVENT_TIMER_ID from 4 to 0, as nRF5340 does not have 4 timer
+ * instances.
+ */
+#if defined(CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER)
+#undef EVENT_TIMER_ID
+#define EVENT_TIMER_ID 0
+
+#undef EVENT_TIMER
+#define EVENT_TIMER    _CONCAT(NRF_TIMER, EVENT_TIMER_ID)
+
+#undef SW_SWITCH_TIMER
+#define SW_SWITCH_TIMER EVENT_TIMER
+#endif /* CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* NRF Radio HW timing constants
  * - provided in US and NS (for higher granularity)
  * - based on empirical measurements and sniffer logs
@@ -337,6 +354,7 @@
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 #endif /* !CONFIG_BT_CTLR_RADIO_ENABLE_FAST */
 
+<<<<<<< HEAD
 #if !defined(CONFIG_BT_CTLR_TIFS_HW)
 #if defined(CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER)
 #undef EVENT_TIMER_ID
@@ -387,6 +405,8 @@
 #endif /* !CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* nRF5340 supports +3dBm Tx Power using high voltage request, define +3dBm
  * value for Controller use.
  */

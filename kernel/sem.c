@@ -21,7 +21,11 @@
 #include <zephyr/kernel_structs.h>
 
 #include <zephyr/toolchain.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/dlist.h>
 #include <ksched.h>
 #include <zephyr/init.h>
@@ -38,6 +42,13 @@
  */
 static struct k_spinlock lock;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_SEM
+static struct k_obj_type obj_type_sem;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int z_impl_k_sem_init(struct k_sem *sem, unsigned int initial_count,
 		      unsigned int limit)
 {
@@ -61,6 +72,13 @@ int z_impl_k_sem_init(struct k_sem *sem, unsigned int initial_count,
 #endif
 	z_object_init(sem);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_SEM
+	k_obj_core_init_and_link(K_OBJ_CORE(sem), &obj_type_sem);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -200,3 +218,27 @@ static inline unsigned int z_vrfy_k_sem_count_get(struct k_sem *sem)
 #include <syscalls/k_sem_count_get_mrsh.c>
 
 #endif
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_SEM
+static int init_sem_obj_core_list(void)
+{
+	/* Initialize semaphore object type */
+
+	z_obj_type_init(&obj_type_sem, K_OBJ_TYPE_SEM_ID,
+			offsetof(struct k_sem, obj_core));
+
+	/* Initialize and link statically defined semaphores */
+
+	STRUCT_SECTION_FOREACH(k_sem, sem) {
+		k_obj_core_init_and_link(K_OBJ_CORE(sem), &obj_type_sem);
+	}
+
+	return 0;
+}
+
+SYS_INIT(init_sem_obj_core_list, PRE_KERNEL_1,
+	 CONFIG_KERNEL_INIT_PRIORITY_OBJECTS);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

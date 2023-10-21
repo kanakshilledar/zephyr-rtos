@@ -12,5 +12,9 @@ config SOC_SERIES_MEC172X
 	select CPU_HAS_ARM_MPU
 	select SOC_FAMILY_MEC
 	select HAS_SWO
+<<<<<<< HEAD
+=======
+	select HAS_PM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for Microchip MEC Cortex-M4F MCU series

@@ -5,6 +5,10 @@ config MDIO_NXP_S32_NETC
 	bool "NXP S32 NETC External MDIO driver"
 	default y
 	depends on DT_HAS_NXP_S32_NETC_EMDIO_ENABLED
+<<<<<<< HEAD
 	select NOCACHE_MEMORY
+=======
+	select NOCACHE_MEMORY if ARCH_HAS_NOCACHE_MEMORY_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable NETC External MDIO Controller driver for NXP S32 SoCs.

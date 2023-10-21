@@ -30,20 +30,38 @@
 	crg {
 		osc: osc {
 			rc32k: rc32k {
+<<<<<<< HEAD
 				compatible = "fixed-clock";
 				clock-frequency = <DT_FREQ_K(32)>;
+=======
+				compatible = "renesas,smartbond-lp-osc";
+				clock-frequency = <DT_FREQ_K(32)>;
+				calibration-interval = <1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				#clock-cells = <0>;
 				status = "okay";
 			};
 			xtal32k: xtal32k {
+<<<<<<< HEAD
 				compatible = "fixed-clock";
 				clock-frequency = <32768>;
+=======
+				compatible = "renesas,smartbond-lp-osc";
+				clock-frequency = <32768>;
+				settle-time = <8000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				#clock-cells = <0>;
 				status = "disabled";
 			};
 			rcx: rcx {
+<<<<<<< HEAD
 				compatible = "fixed-clock";
 				clock-frequency = <DT_FREQ_K(15)>;
+=======
+				compatible = "renesas,smartbond-lp-osc";
+				clock-frequency = <DT_FREQ_K(15)>;
+				calibration-interval = <1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				#clock-cells = <0>;
 				status = "disabled";
 			};
@@ -103,6 +121,12 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 
+<<<<<<< HEAD
+=======
+			read-cs-idle-delay = <50>;
+			erase-cs-idle-delay = <50>;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			flash0: flash@16000000 {
 				compatible = "soc-nv-flash";
 				erase-block-size = <4096>;
@@ -149,6 +173,45 @@
 			status = "okay";
 		};
 
+<<<<<<< HEAD
+=======
+		timer1: timer@50010200 {
+			compatible = "renesas,smartbond-timer";
+			reg = <0x50010200 0x300>;
+			clock-src = <&lp_clk>;
+			interrupts = <16 0>;
+			prescaler = <1>;
+			status = "disabled";
+		};
+
+		timer2: timer@50010300 {
+			compatible = "renesas,smartbond-timer";
+			reg = <0x50010300 0x300>;
+			clock-src = <&divn_clk>;
+			interrupts = <17 0>;
+			prescaler = <32>;
+			status = "disabled";
+		};
+
+		timer3: timer@50040a00 {
+			compatible = "renesas,smartbond-timer";
+			reg = <0x50040a00 0x300>;
+			clock-src = <&lp_clk>;
+			interrupts = <34 0>;
+			prescaler = <31>;
+			status = "disabled";
+		};
+
+		timer4: timer@50040b00 {
+			compatible = "renesas,smartbond-timer";
+			reg = <0x50040b00 0x300>;
+			clock-src = <&divn_clk>;
+			interrupts = <35 0>;
+			prescaler = <32>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uart: uart@50020000 {
 			compatible = "renesas,smartbond-uart";
 			reg = <0x50020000 0x100>;

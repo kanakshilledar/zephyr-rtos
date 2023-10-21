@@ -99,6 +99,10 @@ enum {
 	RP_ENC_STATE_WAIT_RX_ENC_REQ,
 	RP_ENC_STATE_WAIT_TX_ENC_RSP,
 	RP_ENC_STATE_WAIT_LTK_REPLY,
+<<<<<<< HEAD
+=======
+	RP_ENC_STATE_WAIT_LTK_REPLY_CONTINUE,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	RP_ENC_STATE_WAIT_TX_START_ENC_REQ,
 	RP_ENC_STATE_WAIT_TX_REJECT_IND,
 	RP_ENC_STATE_WAIT_RX_START_ENC_RSP,
@@ -705,10 +709,17 @@ static struct node_tx *llcp_rp_enc_tx(struct ll_conn *conn, struct proc_ctx *ctx
 		break;
 	case PDU_DATA_LLCTRL_TYPE_REJECT_IND:
 		if (conn->llcp.fex.valid && feature_ext_rej_ind(conn)) {
+<<<<<<< HEAD
 			llcp_pdu_encode_reject_ext_ind(pdu, PDU_DATA_LLCTRL_TYPE_ENC_REQ,
 						       BT_HCI_ERR_PIN_OR_KEY_MISSING);
 		} else {
 			llcp_pdu_encode_reject_ind(pdu, BT_HCI_ERR_PIN_OR_KEY_MISSING);
+=======
+			llcp_pdu_encode_reject_ext_ind(pdu, ctx->reject_ext_ind.reject_opcode,
+						       ctx->reject_ext_ind.error_code);
+		} else {
+			llcp_pdu_encode_reject_ind(pdu, ctx->reject_ext_ind.error_code);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 		break;
 	default:
@@ -842,6 +853,7 @@ static void rp_enc_send_reject_ind(struct ll_conn *conn, struct proc_ctx *ctx, u
 	} else {
 		llcp_rp_enc_tx(conn, ctx, PDU_DATA_LLCTRL_TYPE_REJECT_IND);
 		llcp_rr_complete(conn);
+<<<<<<< HEAD
 		ctx->state = RP_ENC_STATE_UNENCRYPTED;
 
 		/* Resume Tx data */
@@ -850,6 +862,32 @@ static void rp_enc_send_reject_ind(struct ll_conn *conn, struct proc_ctx *ctx, u
 		ull_conn_resume_rx_data(conn);
 		/* Resume possibly paused local procedure */
 		llcp_lr_resume(conn);
+=======
+
+		if (ctx->data.enc.error == BT_HCI_ERR_PIN_OR_KEY_MISSING) {
+			/* Start encryption rejected due to missing key.
+			 *
+			 * Resume paused data and local procedures.
+			 */
+
+			ctx->state = RP_ENC_STATE_UNENCRYPTED;
+
+			/* Resume Tx data */
+			llcp_tx_resume_data(conn, LLCP_TX_QUEUE_PAUSE_DATA_ENCRYPTION);
+			/* Resume Rx data */
+			ull_conn_resume_rx_data(conn);
+			/* Resume possibly paused local procedure */
+			llcp_lr_resume(conn);
+		} else if (ctx->data.enc.error == BT_HCI_ERR_LMP_PDU_NOT_ALLOWED) {
+			/* Pause encryption rejected due to invalid behaviour.
+			 *
+			 * Nothing special needs to be done.
+			 */
+		} else {
+			/* Shouldn't happen */
+			LL_ASSERT(0);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -965,10 +1003,35 @@ static void rp_enc_state_wait_ltk_reply(struct ll_conn *conn, struct proc_ctx *c
 {
 	switch (evt) {
 	case RP_ENC_EVT_LTK_REQ_REPLY:
+<<<<<<< HEAD
 		rp_enc_send_start_enc_req(conn, ctx, evt, param);
 		break;
 	case RP_ENC_EVT_LTK_REQ_NEG_REPLY:
 		rp_enc_send_reject_ind(conn, ctx, evt, param);
+=======
+		/* Continue procedure in next prepare run */
+		ctx->state = RP_ENC_STATE_WAIT_LTK_REPLY_CONTINUE;
+		break;
+	case RP_ENC_EVT_LTK_REQ_NEG_REPLY:
+		ctx->data.enc.error = BT_HCI_ERR_PIN_OR_KEY_MISSING;
+		ctx->reject_ext_ind.reject_opcode = PDU_DATA_LLCTRL_TYPE_ENC_REQ;
+		ctx->reject_ext_ind.error_code = BT_HCI_ERR_PIN_OR_KEY_MISSING;
+		/* Send reject in next prepare run */
+		ctx->state = RP_ENC_STATE_WAIT_TX_REJECT_IND;
+		break;
+	default:
+		/* Ignore other evts */
+		break;
+	}
+}
+
+static void rp_enc_state_wait_ltk_reply_continue(struct ll_conn *conn, struct proc_ctx *ctx,
+						 uint8_t evt, void *param)
+{
+	switch (evt) {
+	case RP_ENC_EVT_RUN:
+		rp_enc_send_start_enc_req(conn, ctx, evt, param);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		/* Ignore other evts */
@@ -1046,6 +1109,29 @@ static void rp_enc_state_wait_rx_pause_enc_req(struct ll_conn *conn, struct proc
 {
 	switch (evt) {
 	case RP_ENC_EVT_PAUSE_ENC_REQ:
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_CTLR_PERIPHERAL_ISO)
+		{
+			/* Central is not allowed to send a LL_PAUSE_ENC_REQ while the ACL is
+			 * associated with a CIS that has been created.
+			 *
+			 * Handle this invalid case, by rejecting.
+			 */
+			struct ll_conn_iso_stream *cis = ll_conn_iso_stream_get_by_acl(conn, NULL);
+
+			if (cis) {
+				ctx->data.enc.error = BT_HCI_ERR_LMP_PDU_NOT_ALLOWED;
+				ctx->reject_ext_ind.reject_opcode =
+					PDU_DATA_LLCTRL_TYPE_PAUSE_ENC_REQ;
+				ctx->reject_ext_ind.error_code = BT_HCI_ERR_LMP_PDU_NOT_ALLOWED;
+				rp_enc_send_reject_ind(conn, ctx, evt, param);
+				break;
+			}
+		}
+#endif /* CONFIG_BT_CTLR_PERIPHERAL_ISO */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Pause Tx data */
 		llcp_tx_pause_data(conn, LLCP_TX_QUEUE_PAUSE_DATA_ENCRYPTION);
 		/*
@@ -1109,6 +1195,12 @@ static void rp_enc_execute_fsm(struct ll_conn *conn, struct proc_ctx *ctx, uint8
 	case RP_ENC_STATE_WAIT_LTK_REPLY:
 		rp_enc_state_wait_ltk_reply(conn, ctx, evt, param);
 		break;
+<<<<<<< HEAD
+=======
+	case RP_ENC_STATE_WAIT_LTK_REPLY_CONTINUE:
+		rp_enc_state_wait_ltk_reply_continue(conn, ctx, evt, param);
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case RP_ENC_STATE_WAIT_TX_START_ENC_REQ:
 		rp_enc_state_wait_tx_start_enc_req(conn, ctx, evt, param);
 		break;

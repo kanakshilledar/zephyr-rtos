@@ -10,7 +10,11 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/modem/gsm_ppp.h>
 #include <zephyr/devicetree.h>
 

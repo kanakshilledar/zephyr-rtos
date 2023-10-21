@@ -13,6 +13,11 @@ schema;append-schema:
       type: str
     EXTRA_CONF_FILE:
       type: str
+<<<<<<< HEAD
+=======
+    DTS_EXTRA_CPPFLAGS:
+      type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 type: map
 mapping:
@@ -25,7 +30,11 @@ mapping:
 
         name: foo
         append:
+<<<<<<< HEAD
           DTC_OVERLAY_FILE: m3.overlay
+=======
+          EXTRA_DTC_OVERLAY_FILE: m3.overlay
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     include: append-schema
   boards:
     example: |
@@ -35,7 +44,11 @@ mapping:
         boards:
           qemu_cortex_m3:
             append:
+<<<<<<< HEAD
               DTC_OVERLAY_FILE: m3.overlay
+=======
+              EXTRA_DTC_OVERLAY_FILE: m3.overlay
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     type: map
     mapping:
       regex;(.*):

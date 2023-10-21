@@ -17,6 +17,10 @@
 #include <zephyr/sys/__assert.h>
 #include <zephyr/drivers/clock_control/stm32_clock_control.h>
 #include "clock_stm32_ll_common.h"
+<<<<<<< HEAD
+=======
+#include "clock_stm32_ll_mco.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "stm32_hsem.h"
 
 /* Macros to fill up prescaler values */
@@ -34,12 +38,15 @@
 #define apb2_prescaler(v) fn_apb2_prescaler(v)
 #endif
 
+<<<<<<< HEAD
 #define fn_mco1_prescaler(v) LL_RCC_MCO1_DIV_ ## v
 #define mco1_prescaler(v) fn_mco1_prescaler(v)
 
 #define fn_mco2_prescaler(v) LL_RCC_MCO2_DIV_ ## v
 #define mco2_prescaler(v) fn_mco2_prescaler(v)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if DT_NODE_HAS_PROP(DT_NODELABEL(rcc), ahb4_prescaler)
 #define RCC_CALC_FLASH_FREQ __LL_RCC_CALC_HCLK4_FREQ
 #define GET_CURRENT_FLASH_PRESCALER LL_RCC_GetAHB4Prescaler
@@ -138,6 +145,16 @@ static int enabled_clock(uint32_t src_clk)
 		}
 		break;
 #endif /* STM32_SRC_LSI */
+<<<<<<< HEAD
+=======
+#if defined(STM32_SRC_HSI14)
+	case STM32_SRC_HSI14:
+		if (!IS_ENABLED(STM32_HSI14_ENABLED)) {
+			r = -ENOTSUP;
+		}
+		break;
+#endif /* STM32_SRC_HSI14 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(STM32_SRC_HSI48)
 	case STM32_SRC_HSI48:
 		if (!IS_ENABLED(STM32_HSI48_ENABLED)) {
@@ -472,6 +489,7 @@ static void stm32_clock_switch_to_hsi(void)
 	}
 }
 
+<<<<<<< HEAD
 /*
  * MCO configure doesn't active requested clock source,
  * so please make sure the clock source was enabled.
@@ -493,6 +511,8 @@ static inline void stm32_clock_control_mco_init(void)
 #endif /* CONFIG_CLOCK_STM32_MCO2_SRC_NOCLOCK */
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 __unused
 static void set_up_plls(void)
 {
@@ -688,6 +708,18 @@ static void set_up_fixed_clock_sources(void)
 		z_stm32_hsem_unlock(CFG_HW_RCC_SEMID);
 	}
 
+<<<<<<< HEAD
+=======
+#if defined(STM32_HSI14_ENABLED)
+	/* For all series with HSI 14 clock support */
+	if (IS_ENABLED(STM32_HSI14_ENABLED)) {
+		LL_RCC_HSI14_Enable();
+		while (LL_RCC_HSI14_IsReady() != 1) {
+		}
+	}
+#endif /* STM32_HSI48_ENABLED */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(STM32_HSI48_ENABLED)
 	/* For all series with HSI 48 clock support */
 	if (IS_ENABLED(STM32_HSI48_ENABLED)) {
@@ -733,6 +765,7 @@ int stm32_clock_control_init(const struct device *dev)
 	/* Some clocks would be activated by default */
 	config_enable_default_clocks();
 
+<<<<<<< HEAD
 #if defined(STM32_PLL_ENABLED) && defined(CONFIG_SOC_SERIES_STM32F7X)
 	/* Assuming we stay on Power Scale default value: Power Scale 1 */
 	if (CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC > 180000000) {
@@ -748,6 +781,8 @@ int stm32_clock_control_init(const struct device *dev)
 	}
 #endif /* STM32_PLL_ENABLED && CONFIG_SOC_SERIES_STM32F7X */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(FLASH_ACR_LATENCY)
 	uint32_t old_flash_freq;
 	uint32_t new_flash_freq;
@@ -758,9 +793,15 @@ int stm32_clock_control_init(const struct device *dev)
 	new_flash_freq = RCC_CALC_FLASH_FREQ(CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC,
 				      STM32_FLASH_PRESCALER);
 
+<<<<<<< HEAD
 	/* If freq increases, set flash latency before any clock setting */
 	if (old_flash_freq < CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC) {
 		LL_SetFlashLatency(CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC);
+=======
+	/* If HCLK increases, set flash latency before any clock setting */
+	if (old_flash_freq < new_flash_freq) {
+		LL_SetFlashLatency(new_flash_freq);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 #endif /* FLASH_ACR_LATENCY */
 
@@ -804,9 +845,15 @@ int stm32_clock_control_init(const struct device *dev)
 	}
 
 #if defined(FLASH_ACR_LATENCY)
+<<<<<<< HEAD
 	/* If freq not increased, set flash latency after all clock setting */
 	if (old_flash_freq >= CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC) {
 		LL_SetFlashLatency(CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC);
+=======
+	/* If HCLK not increased, set flash latency after all clock setting */
+	if (old_flash_freq >= new_flash_freq) {
+		LL_SetFlashLatency(new_flash_freq);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 #endif /* FLASH_ACR_LATENCY */
 
@@ -826,6 +873,18 @@ int stm32_clock_control_init(const struct device *dev)
 #if DT_NODE_HAS_PROP(DT_NODELABEL(rcc), ahb4_prescaler)
 	LL_RCC_SetAHB4Prescaler(ahb_prescaler(STM32_AHB4_PRESCALER));
 #endif
+<<<<<<< HEAD
+=======
+#if DT_NODE_HAS_PROP(DT_NODELABEL(rcc), adc_prescaler)
+	LL_RCC_SetADCClockSource(adc_prescaler(STM32_ADC_PRESCALER));
+#endif
+#if DT_NODE_HAS_PROP(DT_NODELABEL(rcc), adc12_prescaler)
+	LL_RCC_SetADCClockSource(adc_prescaler(STM32_ADC12_PRESCALER));
+#endif
+#if DT_NODE_HAS_PROP(DT_NODELABEL(rcc), adc34_prescaler)
+	LL_RCC_SetADCClockSource(adc_prescaler(STM32_ADC34_PRESCALER));
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* configure MCO1/MCO2 based on Kconfig */
 	stm32_clock_control_mco_init();

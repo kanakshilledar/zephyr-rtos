@@ -12,6 +12,7 @@
 #include "gatt.h"
 #include "expects_util.h"
 
+<<<<<<< HEAD
 #define expect_bt_gatt_attr_read_called_once(_conn, _attr, _buf, _buf_len, _offset, _value,        \
 					     _value_len)                                           \
 do {                                                                                               \
@@ -57,6 +58,8 @@ do {                                                                            
 				 _value_len);))                                                    \
 } while (0)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define expect_bt_gatt_notify_cb_called_once(_conn, _uuid, _attr, _data, _len)                     \
 do {                                                                                               \
 	const char *func_name = "bt_gatt_notify_cb";                                               \
@@ -92,6 +95,7 @@ do {                                                                            
 		     expect_data(func_name, "params->data", _data, params->data, _len);))          \
 } while (0)
 
+<<<<<<< HEAD
 static inline void expect_bt_gatt_attr_read_not_called(void)
 {
 	const char *func_name = "bt_gatt_attr_read";
@@ -100,6 +104,8 @@ static inline void expect_bt_gatt_attr_read_not_called(void)
 		      "'%s()' was called unexpectedly", func_name);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline void expect_bt_gatt_notify_cb_not_called(void)
 {
 	const char *func_name = "bt_gatt_notify_cb";

@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "ubx_evkninab3_nrf52840-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "u-blox EVK NINA-B3 nRF52840";
@@ -56,6 +60,7 @@
 	buttons {
 		compatible = "gpio-keys";
 		button0: button_0 {
+<<<<<<< HEAD
 			gpios = <&gpio0 25 (GPIO_PULL_UP | \
 					    GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 0 (SW1)";
@@ -64,6 +69,16 @@
 			gpios = <&gpio0 2 (GPIO_PULL_UP | \
 					   GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 1 (SW2)";
+=======
+			gpios = <&gpio0 25 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 0 (SW1)";
+			zephyr,code = <INPUT_KEY_0>;
+		};
+		button1: button_1 {
+			gpios = <&gpio0 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 1 (SW2)";
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -128,6 +143,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };

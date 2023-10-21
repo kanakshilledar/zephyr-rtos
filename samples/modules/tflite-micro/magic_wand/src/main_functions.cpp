@@ -21,14 +21,21 @@
 #include "gesture_predictor.hpp"
 #include "magic_wand_model_data.hpp"
 #include "output_handler.hpp"
+<<<<<<< HEAD
 #include <tensorflow/lite/micro/micro_error_reporter.h>
+=======
+#include <tensorflow/lite/micro/micro_log.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <tensorflow/lite/micro/micro_interpreter.h>
 #include <tensorflow/lite/micro/micro_mutable_op_resolver.h>
 #include <tensorflow/lite/schema/schema_generated.h>
 
 /* Globals, used for compatibility with Arduino-style sketches. */
 namespace {
+<<<<<<< HEAD
 	tflite::ErrorReporter *error_reporter = nullptr;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const tflite::Model *model = nullptr;
 	tflite::MicroInterpreter *interpreter = nullptr;
 	TfLiteTensor *model_input = nullptr;
@@ -45,6 +52,7 @@ namespace {
 /* The name of this function is important for Arduino compatibility. */
 void setup(void)
 {
+<<<<<<< HEAD
 	/* Set up logging. Google style is to avoid globals or statics because of
 	 * lifetime uncertainty, but since this has a trivial destructor it's okay.
 	 */
@@ -52,15 +60,23 @@ void setup(void)
 
 	error_reporter = &micro_error_reporter;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Map the model into a usable data structure. This doesn't involve any
 	 * copying or parsing, it's a very lightweight operation.
 	 */
 	model = tflite::GetModel(g_magic_wand_model_data);
 	if (model->version() != TFLITE_SCHEMA_VERSION) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter,
 				     "Model provided is schema version %d not equal "
 				     "to supported version %d.",
 				     model->version(), TFLITE_SCHEMA_VERSION);
+=======
+		MicroPrintf("Model provided is schema version %d not equal "
+				    "to supported version %d.",
+				    model->version(), TFLITE_SCHEMA_VERSION);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -79,7 +95,11 @@ void setup(void)
 
 	/* Build an interpreter to run the model with. */
 	static tflite::MicroInterpreter static_interpreter(
+<<<<<<< HEAD
 		model, micro_op_resolver, tensor_arena, kTensorArenaSize, error_reporter);
+=======
+		model, micro_op_resolver, tensor_arena, kTensorArenaSize);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	interpreter = &static_interpreter;
 
 	/* Allocate memory from the tensor_arena for the model's tensors. */
@@ -91,16 +111,26 @@ void setup(void)
 	    (model_input->dims->data[1] != 128) ||
 	    (model_input->dims->data[2] != kChannelNumber) ||
 	    (model_input->type != kTfLiteFloat32)) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter,
 				     "Bad input tensor parameters in model");
+=======
+		MicroPrintf("Bad input tensor parameters in model");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
 	input_length = model_input->bytes / sizeof(float);
 
+<<<<<<< HEAD
 	TfLiteStatus setup_status = SetupAccelerometer(error_reporter);
 	if (setup_status != kTfLiteOk) {
 		TF_LITE_REPORT_ERROR(error_reporter, "Set up failed\n");
+=======
+	TfLiteStatus setup_status = SetupAccelerometer();
+	if (setup_status != kTfLiteOk) {
+		MicroPrintf("Set up failed\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -108,7 +138,11 @@ void loop(void)
 {
 	/* Attempt to read new data from the accelerometer. */
 	bool got_data =
+<<<<<<< HEAD
 		ReadAccelerometer(error_reporter, model_input->data.f, input_length);
+=======
+		ReadAccelerometer(model_input->data.f, input_length);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* If there was no new data, wait until next time. */
 	if (!got_data) {
@@ -118,13 +152,21 @@ void loop(void)
 	/* Run inference, and report any error */
 	TfLiteStatus invoke_status = interpreter->Invoke();
 	if (invoke_status != kTfLiteOk) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter, "Invoke failed on index: %d\n",
 				     begin_index);
+=======
+		MicroPrintf("Invoke failed on index: %d\n", begin_index);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 	/* Analyze the results to obtain a prediction */
 	int gesture_index = PredictGesture(interpreter->output(0)->data.f);
 
 	/* Produce an output */
+<<<<<<< HEAD
 	HandleOutput(error_reporter, gesture_index);
+=======
+	HandleOutput(gesture_index);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

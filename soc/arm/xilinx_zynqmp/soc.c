@@ -7,6 +7,7 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
 #include <zephyr/arch/arm/aarch32/cortex_a_r/cmsis.h>
 
@@ -28,6 +29,10 @@ static int soc_init(void)
 }
 
 SYS_INIT(soc_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void z_arm_platform_init(void)
 {

@@ -10,7 +10,11 @@ description: |
   Can be optionally be associated to a specific device to listen for events
   only from that device. Example configuration:
 
+<<<<<<< HEAD
   #include <dt-bindings/input/input-event-codes.h>
+=======
+  #include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   longpress {
           input = <&buttons>;

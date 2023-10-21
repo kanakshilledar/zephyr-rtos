@@ -70,7 +70,11 @@ Programming and Debugging
 *************************
 
 Use this configuration to run basic Zephyr applications and kernel tests in the QEMU
+<<<<<<< HEAD
 emulated environment, for example, with the :ref:`synchronization_sample`:
+=======
+emulated environment, for example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/synchronization

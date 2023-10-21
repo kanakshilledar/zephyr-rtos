@@ -4,7 +4,11 @@
 config ARM_SIP_SVC_HAS_INTEL_SDM_MAILBOX_FIFO
 	bool
 	default y
+<<<<<<< HEAD
 	depends on DT_HAS_INTEL_AGILEX_SOCFPGA_SIP_SMC_ENABLED
+=======
+	depends on DT_HAS_INTEL_SOCFPGA_AGILEX_SIP_SMC_ENABLED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	imply ARM_SIP_SVC_HAS_DRIVER
 	help
 	  Support for SDM mailbox fifo in Intel SoC FPGA Agilex via SMC calls.

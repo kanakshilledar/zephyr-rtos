@@ -17,7 +17,11 @@
 #include <zephyr/net/sntp.h>
 #include <zephyr/net/tls_credentials.h>
 #include <zephyr/data/json.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/posix/time.h>
 #include <zephyr/logging/log.h>
 
@@ -58,7 +62,11 @@ static bool do_subscribe; /* Trigger client to subscribe */
 #define TLS_TAG_DEVICE_PRIVATE_KEY 1
 #define TLS_TAG_AWS_CA_CERTIFICATE 2
 
+<<<<<<< HEAD
 static sec_tag_t sec_tls_tags[] = {
+=======
+static const sec_tag_t sec_tls_tags[] = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TLS_TAG_DEVICE_CERTIFICATE,
 	TLS_TAG_AWS_CA_CERTIFICATE,
 };

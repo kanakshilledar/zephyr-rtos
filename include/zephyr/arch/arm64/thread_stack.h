@@ -7,11 +7,19 @@
 #ifndef ZEPHYR_INCLUDE_ARCH_ARM64_THREAD_STACK_H_
 #define ZEPHYR_INCLUDE_ARCH_ARM64_THREAD_STACK_H_
 
+<<<<<<< HEAD
 
 #define ARCH_STACK_PTR_ALIGN			16
 
 #if CONFIG_USERSPACE
 #include <zephyr/arch/arm64/mm.h>
+=======
+#include <zephyr/arch/arm64/mm.h>
+
+#define ARCH_STACK_PTR_ALIGN			16
+
+#if defined(CONFIG_USERSPACE) || defined(CONFIG_ARM64_STACK_PROTECTION)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define Z_ARM64_STACK_BASE_ALIGN		MEM_DOMAIN_ALIGN_AND_SIZE
 #define Z_ARM64_STACK_SIZE_ALIGN		MEM_DOMAIN_ALIGN_AND_SIZE
 #else
@@ -19,6 +27,17 @@
 #define Z_ARM64_STACK_SIZE_ALIGN		ARCH_STACK_PTR_ALIGN
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_ARM64_STACK_PROTECTION)
+#define Z_ARM64_STACK_GUARD_SIZE		MEM_DOMAIN_ALIGN_AND_SIZE
+#define Z_ARM64_K_STACK_BASE_ALIGN		MEM_DOMAIN_ALIGN_AND_SIZE
+#else
+#define Z_ARM64_STACK_GUARD_SIZE		0
+#define Z_ARM64_K_STACK_BASE_ALIGN		ARCH_STACK_PTR_ALIGN
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * [ see also comments in arch/arm64/core/thread.c ]
  *
@@ -36,6 +55,11 @@
  * |                   |
  * +-------------------+ <- thread.stack_info.start
  * | Privileged stack  | } K_(THREAD|KERNEL)_STACK_RESERVED
+<<<<<<< HEAD
+=======
+ * +-------------------+ <- thread stack limit (update on every context switch)
+ * |    Stack guard    | } Z_ARM64_STACK_GUARD_SIZE (protected by MMU/MPU)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * +-------------------+ <- thread.stack_obj
  *
  * Low Memory addresses
@@ -45,11 +69,20 @@
 #define ARCH_THREAD_STACK_OBJ_ALIGN(size)	Z_ARM64_STACK_BASE_ALIGN
 #define ARCH_THREAD_STACK_SIZE_ADJUST(size)	\
 	ROUND_UP((size), Z_ARM64_STACK_SIZE_ALIGN)
+<<<<<<< HEAD
 #define ARCH_THREAD_STACK_RESERVED		CONFIG_PRIVILEGED_STACK_SIZE
 
 /* kernel stack */
 #define ARCH_KERNEL_STACK_RESERVED		0
 #define ARCH_KERNEL_STACK_OBJ_ALIGN		ARCH_STACK_PTR_ALIGN
+=======
+#define ARCH_THREAD_STACK_RESERVED		CONFIG_PRIVILEGED_STACK_SIZE + \
+	Z_ARM64_STACK_GUARD_SIZE
+
+/* kernel stack */
+#define ARCH_KERNEL_STACK_RESERVED		Z_ARM64_STACK_GUARD_SIZE
+#define ARCH_KERNEL_STACK_OBJ_ALIGN		Z_ARM64_K_STACK_BASE_ALIGN
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef _ASMLANGUAGE
 

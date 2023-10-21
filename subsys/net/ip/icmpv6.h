@@ -144,8 +144,11 @@ struct net_icmpv6_mld_mcast_record {
 #define NET_ICMPV6_PACKET_TOO_BIG 2	/* Packet too big */
 #define NET_ICMPV6_TIME_EXCEEDED  3	/* Time exceeded */
 #define NET_ICMPV6_PARAM_PROBLEM  4	/* IPv6 header is bad */
+<<<<<<< HEAD
 #define NET_ICMPV6_ECHO_REQUEST 128
 #define NET_ICMPV6_ECHO_REPLY   129
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define NET_ICMPV6_MLD_QUERY    130	/* Multicast Listener Query */
 #define NET_ICMPV6_RS           133	/* Router Solicitation */
 #define NET_ICMPV6_RA           134	/* Router Advertisement */
@@ -170,6 +173,7 @@ struct net_icmpv6_mld_mcast_record {
 /* ICMPv6 header has 4 unused bytes that must be zero, RFC 4443 ch 3.1 */
 #define NET_ICMPV6_UNUSED_LEN 4
 
+<<<<<<< HEAD
 typedef enum net_verdict (*icmpv6_callback_handler_t)(
 						struct net_pkt *pkt,
 						struct net_ipv6_hdr *ip_hdr,
@@ -184,6 +188,10 @@ struct net_icmpv6_handler {
 	uint8_t code;
 };
 
+=======
+const char *net_icmpv6_type2str(int icmpv6_type);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Send ICMPv6 error message.
  * @param pkt Network packet that this error is related to.
@@ -197,6 +205,7 @@ struct net_icmpv6_handler {
 int net_icmpv6_send_error(struct net_pkt *pkt, uint8_t type, uint8_t code,
 			  uint32_t param);
 
+<<<<<<< HEAD
 /**
  * @brief Send ICMPv6 echo request message.
  *
@@ -248,6 +257,9 @@ static inline int net_icmpv6_send_echo_request(struct net_if *iface,
 #if defined(CONFIG_NET_NATIVE_IPV6)
 void net_icmpv6_register_handler(struct net_icmpv6_handler *handler);
 void net_icmpv6_unregister_handler(struct net_icmpv6_handler *handler);
+=======
+#if defined(CONFIG_NET_NATIVE_IPV6)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum net_verdict net_icmpv6_input(struct net_pkt *pkt,
 				  struct net_ipv6_hdr *ip_hdr);
 
@@ -257,8 +269,11 @@ int net_icmpv6_finalize(struct net_pkt *pkt);
 void net_icmpv6_init(void);
 #else
 #define net_icmpv6_init(...)
+<<<<<<< HEAD
 #define net_icmpv6_register_handler(...)
 #define net_icmpv6_unregister_handler(...)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #endif /* __ICMPV6_H */

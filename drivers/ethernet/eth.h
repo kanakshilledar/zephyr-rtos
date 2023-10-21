@@ -8,7 +8,11 @@
 #define ZEPHYR_DRIVERS_ETHERNET_ETH_H_
 
 #include <zephyr/types.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* helper macro to return mac address octet from local_mac_address prop */
 #define NODE_MAC_ADDR_OCTET(node, n) DT_PROP_BY_IDX(node, local_mac_address, n)

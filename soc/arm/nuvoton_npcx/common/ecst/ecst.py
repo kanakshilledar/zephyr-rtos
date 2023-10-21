@@ -213,8 +213,13 @@ def _check_chip(output, ecst_args):
 
     if ecst_args.chip_name == INVALID_INPUT:
         message = f'Invalid chip name, '
+<<<<<<< HEAD
         message += "should be npcx9m8, npcx9m7, npcx9m6, npcx7m7," \
                    " npcx7m6, npcx7m5, npcx5m5 or npcx5m6."
+=======
+        message += "should be npcx4m3, npcx4m8, npcx9m8, npcx9m7, npcx9m6, " \
+                   "npcx7m7, npcx7m6, npcx7m5."
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         _exit_with_failure_delete_file(output, message)
 
 def _set_anchor(output, ecst_args):
@@ -924,7 +929,11 @@ def _crc_update(cur, crc, table):
     :param crc
     :param table
     """
+<<<<<<< HEAD
     l_crc = (0x000000ff & cur)
+=======
+    l_crc = 0x000000ff & cur
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     tmp = crc ^ l_crc
     crc = (crc >> 8) ^ table[(tmp & 0xff)]

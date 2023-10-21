@@ -270,7 +270,11 @@ static int ls0xx_init(const struct device *dev)
 	}
 
 #if DT_INST_NODE_HAS_PROP(0, disp_en_gpios)
+<<<<<<< HEAD
 	if (!device_is_ready(config->disp_en_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->disp_en_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("DISP port device not ready");
 		return -ENODEV;
 	}
@@ -279,7 +283,11 @@ static int ls0xx_init(const struct device *dev)
 #endif
 
 #if DT_INST_NODE_HAS_PROP(0, extcomin_gpios)
+<<<<<<< HEAD
 	if (!device_is_ready(config->extcomin_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->extcomin_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("EXTCOMIN port device not ready");
 		return -ENODEV;
 	}

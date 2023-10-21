@@ -72,3 +72,14 @@ tests:
     min_ram: 36
     extra_configs:
       - CONFIG_MODEM_IFACE_UART_ASYNC=y
+<<<<<<< HEAD
+=======
+  drivers.modem.modem_cellular.build:
+    extra_args: CONF_FILE=modem_cellular.conf
+    platform_allow:
+      - native_posix_64
+      - native_posix
+      - qemu_x86
+      - qemu_x86_64
+    min_ram: 36
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

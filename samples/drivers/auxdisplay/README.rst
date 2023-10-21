@@ -1,13 +1,26 @@
+<<<<<<< HEAD
 .. _auxdisplay-sample:
 
 Auxiliary display sample
 ########################
+=======
+.. zephyr:code-sample:: auxdisplay
+   :name: Auxiliary display
+   :relevant-api: auxdisplay_interface
+
+   Output "Hello  World" to an auxiliary display.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample shows how to use the auxiliary display drivers by outputting a
 sample "Hello World" text to one.
+=======
+This sample shows how to use the :ref:`auxiliary display driver <auxdisplay_api>`
+by outputting a sample "Hello World" text to one.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

@@ -26,7 +26,11 @@ In order to run this sample, make sure to enable ``backup_sram`` node in your
 board DT file.
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/memc/stm32_backup_sram
+=======
+   :zephyr-app: samples/boards/stm32/backup_sram
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: nucleo_h743zi
    :goals: build
    :compact:

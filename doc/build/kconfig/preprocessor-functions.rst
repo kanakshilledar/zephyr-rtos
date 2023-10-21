@@ -47,6 +47,13 @@ while the ``*_hex`` version returns a hexadecimal value starting with ``0x``.
    $(dt_node_reg_addr_hex,<node path>[,<index>,<unit>])
    $(dt_node_reg_size_int,<node path>[,<index>,<unit>])
    $(dt_node_reg_size_hex,<node path>[,<index>,<unit>])
+<<<<<<< HEAD
+=======
+   $(dt_nodelabel_reg_addr_int,<node label>[,<index>,<unit>])
+   $(dt_nodelabel_reg_addr_hex,<node label>[,<index>,<unit>])
+   $(dt_nodelabel_reg_size_int,<node label>[,<index>,<unit>])
+   $(dt_nodelabel_reg_size_hex,<node label>[,<index>,<unit>])
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    $(dt_compat_enabled,<compatible string>)
    $(dt_chosen_enabled,<property in /chosen>)
    $(dt_node_bool_prop,<node path>,<prop>)
@@ -71,7 +78,11 @@ Example Usage
 
 Assume that the devicetree for some board looks like this:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    {
    	soc {
@@ -90,14 +101,22 @@ The second entry in ``reg`` in ``spi@1001400`` (``<0x20010000 0x3c0900>``)
 corresponds to ``mem``, and has the address ``0x20010000``. This address can be
 inserted into Kconfig as follows:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    config FLASH_BASE_ADDRESS
    	default $(dt_node_reg_addr_hex,/soc/spi@1001400,1)
 
 After preprocessor expansion, this turns into the definition below:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    config FLASH_BASE_ADDRESS
    	default 0x20010000

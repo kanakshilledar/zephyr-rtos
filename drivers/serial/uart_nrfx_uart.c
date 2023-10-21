@@ -285,7 +285,11 @@ static void uart_nrfx_poll_out(const struct device *dev, unsigned char c)
 	nrf_uart_txd_set(uart0_addr, (uint8_t)c);
 
 	/* Wait until the transmitter is ready, i.e. the character is sent. */
+<<<<<<< HEAD
 	int res;
+=======
+	bool res;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	NRFX_WAIT_FOR(event_txdrdy_check(), 1000, 1, res);
 
@@ -405,6 +409,14 @@ static int uart_nrfx_callback_set(const struct device *dev,
 	uart0_cb.callback = callback;
 	uart0_cb.user_data = user_data;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS) && defined(CONFIG_UART_0_INTERRUPT_DRIVEN)
+	irq_callback = NULL;
+	irq_cb_data = NULL;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -923,6 +935,14 @@ static void uart_nrfx_irq_callback_set(const struct device *dev,
 	(void)dev;
 	irq_callback = cb;
 	irq_cb_data = cb_data;
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_UART_0_ASYNC) && defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	uart0_cb.callback = NULL;
+	uart0_cb.user_data = NULL;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**

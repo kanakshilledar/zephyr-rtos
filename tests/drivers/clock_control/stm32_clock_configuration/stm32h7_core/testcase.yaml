@@ -3,37 +3,65 @@ common:
   tags: clock_control
 
 tests:
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_pll_hse_96:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_pll_hse_96:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/pll_hse_96.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_pll_hsi_96:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_pll_hsi_96:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/pll_hsi_96.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_hsi_64:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_hsi_64:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/hsi_64.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_csi_4:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_csi_4:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/csi_4.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_hse_8:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_hse_8:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/hse_8.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_pll_csi_96:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_pll_csi_96:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/pll_csi_96.overlay"
     platform_allow: nucleo_h743zi
     integration_platforms:
       - nucleo_h743zi
+<<<<<<< HEAD
   drivers.stm32_clock_configuration.h7_core.sysclksrc_pll_hse_550:
+=======
+  drivers.clock.stm32_clock_configuration.h7_core.sysclksrc_pll_hse_550:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: DTC_OVERLAY_FILE="boards/clear_clocks.overlay;boards/pll_hse_550.overlay"
     platform_allow:
       - nucleo_h723zg

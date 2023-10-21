@@ -15,3 +15,7 @@ supported:
   - feather_serial
   - feather_i2c
   - feather_spi
+<<<<<<< HEAD
+=======
+vendor: adafruit
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

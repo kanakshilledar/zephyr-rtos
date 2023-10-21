@@ -27,10 +27,13 @@ extern void soc_start_core(int cpu_num);
 extern bool soc_cpus_active[CONFIG_MP_MAX_NUM_CPUS];
 
 /* Legacy cache APIs still used in a few places */
+<<<<<<< HEAD
 #define SOC_DCACHE_FLUSH(addr, size)		\
 	sys_cache_data_flush_range((addr), (size))
 #define SOC_DCACHE_INVALIDATE(addr, size)	\
 	sys_cache_data_invd_range((addr), (size))
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define z_soc_cached_ptr(p) arch_xtensa_cached_ptr(p)
 #define z_soc_uncached_ptr(p) arch_xtensa_uncached_ptr(p)
 

@@ -33,7 +33,11 @@ BUILD_ASSERT(DT_NODE_EXISTS(DT_PATH(cpus)),
  * @param node_id A CPU node identifier.
  */
 #define CHECK_POWER_STATES_CONSISTENCY(node_id)				       \
+<<<<<<< HEAD
 	LISTIFY(DT_NUM_CPU_POWER_STATES(node_id),			       \
+=======
+	LISTIFY(DT_PROP_LEN_OR(node_id, cpu_power_states, 0),		       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		CHECK_POWER_STATE_CONSISTENCY, (;), node_id);		       \
 
 /* Check that all power states are consistent */
@@ -48,12 +52,20 @@ DT_FOREACH_CHILD(DT_PATH(cpus), DEFINE_CPU_STATES);
 
 /** CPU power states information for each CPU */
 static const struct pm_state_info *cpus_states[] = {
+<<<<<<< HEAD
 	DT_FOREACH_CHILD_SEP(DT_PATH(cpus), CPU_STATE_REF, (,))
+=======
+	DT_FOREACH_CHILD_STATUS_OKAY_SEP(DT_PATH(cpus), CPU_STATE_REF, (,))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /** Number of states for each CPU */
 static const uint8_t states_per_cpu[] = {
+<<<<<<< HEAD
 	DT_FOREACH_CHILD_SEP(DT_PATH(cpus), DT_NUM_CPU_POWER_STATES, (,))
+=======
+	DT_FOREACH_CHILD_STATUS_OKAY_SEP(DT_PATH(cpus), DT_NUM_CPU_POWER_STATES, (,))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 uint8_t pm_state_cpu_get_all(uint8_t cpu, const struct pm_state_info **states)

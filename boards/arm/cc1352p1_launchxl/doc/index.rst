@@ -58,6 +58,11 @@ features:
 +-----------+------------+----------------------+
 | WDT       | on-chip    | watchdog             |
 +-----------+------------+----------------------+
+<<<<<<< HEAD
+=======
+| HWINFO    | on-chip    | hwinfo               |
++-----------+------------+----------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Other hardware features have not been enabled yet for this board.
 

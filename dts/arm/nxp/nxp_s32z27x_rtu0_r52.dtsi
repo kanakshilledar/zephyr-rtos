@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -20,6 +24,10 @@
 			compatible = "nxp,s32-sys-timer";
 			reg = <0x76200000 0x10000>;
 			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_RTU0_REG_INTF_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -27,6 +35,10 @@
 			compatible = "nxp,s32-sys-timer";
 			reg = <0x76210000 0x10000>;
 			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_RTU0_REG_INTF_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -34,6 +46,10 @@
 			compatible = "nxp,s32-sys-timer";
 			reg = <0x76020000 0x10000>;
 			interrupts = <GIC_SPI 15 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_RTU0_REG_INTF_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -41,6 +57,10 @@
 			compatible = "nxp,s32-sys-timer";
 			reg = <0x76030000 0x10000>;
 			interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_RTU0_REG_INTF_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -48,6 +68,10 @@
 			compatible = "nxp,s32-swt";
 			reg = <0x76000000 0x10000>;
 			interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_FIRC_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -55,6 +79,10 @@
 			compatible = "nxp,s32-swt";
 			reg = <0x76010000 0x10000>;
 			interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_FIRC_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -62,6 +90,10 @@
 			compatible = "nxp,s32-swt";
 			reg = <0x76220000 0x10000>;
 			interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_FIRC_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -69,6 +101,10 @@
 			compatible = "nxp,s32-swt";
 			reg = <0x76230000 0x10000>;
 			interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_FIRC_CLK>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -76,6 +112,19 @@
 			compatible = "nxp,s32-swt";
 			reg = <0x76140000 0x10000>;
 			interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+<<<<<<< HEAD
+=======
+			clocks = <&clock NXP_S32_FIRC_CLK>;
+			status = "disabled";
+		};
+
+		pit0: pit@76150000 {
+			compatible = "nxp,kinetis-pit";
+			reg = <0x76150000 0x10000>;
+			interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+			clocks = <&clock NXP_S32_P0_REG_INTF_CLK>;
+			max-load-value = <0x00ffffff>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 	};

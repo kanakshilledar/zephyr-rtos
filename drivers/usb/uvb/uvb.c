@@ -6,7 +6,11 @@
 
 #include <stdio.h>
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/dlist.h>
 #include <zephyr/sys/iterable_sections.h>
 
@@ -72,7 +76,11 @@ struct uvb_packet *uvb_alloc_pkt(const enum uvb_request request,
 
 void uvb_free_pkt(struct uvb_packet *const pkt)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(&uvb_pkt_slab, (void **)&pkt);
+=======
+	k_mem_slab_free(&uvb_pkt_slab, (void *)pkt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static ALWAYS_INLINE int submit_new_work(struct uvb_msg *const msg)
@@ -311,7 +319,11 @@ static void uvb_work_handler(struct k_work *work)
 		break;
 	}
 
+<<<<<<< HEAD
 	k_mem_slab_free(&uvb_msg_slab, (void **)&msg);
+=======
+	k_mem_slab_free(&uvb_msg_slab, (void *)msg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!k_fifo_is_empty(&uvb_queue)) {
 		(void)k_work_submit(work);
 	}

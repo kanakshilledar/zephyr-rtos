@@ -15,7 +15,11 @@
 #if defined(CONFIG_X86) || defined(CONFIG_X86_64)
 #include <zephyr/arch/x86/arch_inlines.h>
 #elif defined(CONFIG_ARM)
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/arch_inlines.h>
+=======
+#include <zephyr/arch/arm/arch_inlines.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_ARM64)
 #include <zephyr/arch/arm64/arch_inlines.h>
 #elif defined(CONFIG_ARC)

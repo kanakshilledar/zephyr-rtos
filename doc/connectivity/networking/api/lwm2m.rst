@@ -227,7 +227,11 @@ The full list of registered objects and resource IDs can be found in the
 
 Zephyr's LwM2M library lives in the :zephyr_file:`subsys/net/lib/lwm2m`, with a
 client sample in :zephyr_file:`samples/net/lwm2m_client`.  For more information
+<<<<<<< HEAD
 about the provided sample see: :ref:`lwm2m-client-sample`  The sample can be
+=======
+about the provided sample see: :zephyr:code-sample:`lwm2m-client`. The sample can be
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 configured to use normal unsecure network sockets or sockets secured via DTLS.
 
 The Zephyr LwM2M library implements the following items:
@@ -318,6 +322,17 @@ events, setup a callback function:
 			LOG_DBG("Disconnected");
 			break;
 
+<<<<<<< HEAD
+=======
+		case LWM2M_RD_CLIENT_EVENT_REG_UPDATE:
+			LOG_DBG("Registration update");
+			break;
+
+		case LWM2M_RD_CLIENT_EVENT_DEREGISTER:
+			LOG_DBG("Deregistration client");
+			break;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 
@@ -364,6 +379,7 @@ endpoint name.  This is important as it needs to be unique per LwM2M server:
 	(void)memset(&client, 0x0, sizeof(client));
 	lwm2m_rd_client_start(&client, "unique-endpoint-name", 0, rd_client_event);
 
+<<<<<<< HEAD
 Using LwM2M library with DTLS
 *****************************
 
@@ -372,6 +388,46 @@ communication by selecting :kconfig:option:`CONFIG_LWM2M_DTLS_SUPPORT`.  In the 
 initialization we need to create a PSK and identity.  These need to match
 the security information loaded onto the LwM2M server.  Normally, the
 endpoint name is used to lookup the related security information:
+=======
+.. _lwm2m_security:
+
+LwM2M security modes
+********************
+
+The Zephyr LwM2M library can be used either without security or use DTLS to secure the communication channel.
+When using DTLS with the LwM2M engine, PSK (Pre-Shared Key) and X.509 certificates are the security modes that can be used to secure the communication.
+The engine uses LwM2M Security object (Id 0) to read the stored credentials and feed keys from the security object into
+the TLS credential subsystem, see :ref:`secure sockets documentation <secure_sockets_interface>`.
+Enable the :kconfig:option:`CONFIG_LWM2M_DTLS_SUPPORT` Kconfig option to use the security.
+
+Depending on the selected mode, the security object must contain following data:
+
+PSK
+  Security Mode (Resource ID 2) set to zero (Pre-Shared Key mode).
+  Identity (Resource ID 3) contains PSK ID in binary form.
+  Secret key (Resource ID 5) contains the PSK key in binary form.
+  If the key or identity is provided as a hex string, it must be converted to binary before storing into the security object.
+
+X509
+  When X509 certificates are used, set Security Mode (ID 2) to ``2`` (Certificate mode).
+  Identity (ID 3) is used to store the client certificate and Secret key (ID 5) must have a private key associated with the certificate.
+  Server Public Key resource (ID 4) must contain a server certificate or CA certificate used to sign the certificate chain.
+  If the :kconfig:option:`CONFIG_MBEDTLS_PEM_CERTIFICATE_FORMAT` Kconfig option is enabled, certificates and private key can be entered in PEM format.
+  Otherwise, they must be in binary DER format.
+
+NoSec
+  When no security is used, set Security Mode (Resource ID 2) to ``3`` (NoSec).
+
+In all modes, Server URI resource (ID 0) must contain the full URI for the target server.
+When DNS names are used, the DNS resolver must be enabled.
+
+LwM2M stack provides callbacks in the :c:struct:`lwm2m_ctx` structure.
+They are used to feed keys from the LwM2M security object into the TLS credential subsystem.
+By default, these callbacks can be left as NULL pointers, in which case default callbacks are used.
+When an external TLS stack, or non-default socket options are required, you can overwrite the :c:func:`lwm2m_ctx.load_credentials` or :c:func:`lwm2m_ctx.set_socketoptions` callbacks.
+
+An example of setting up the security object for PSK mode:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. code-block:: c
 
@@ -383,6 +439,7 @@ endpoint name is used to lookup the related security information:
 
 	static const char client_identity[] = "Client_identity";
 
+<<<<<<< HEAD
 Next we alter the ``Security`` object resources to include DTLS security
 information.  The server URL should begin with ``coaps://`` to indicate security
 is required.  Assign a 0 value (Pre-shared Key mode) to the ``Security Mode``
@@ -398,6 +455,28 @@ resource.  Lastly, set the client identity and PSK resources.
 	lwm2m_set_string(&LWM2M_OBJ(0, 0, 3), (char *)client_identity);
 	/* Set the client pre-shared key (PSK) */
 	lwm2m_set_opaque(&LWM2M_OBJ(0, 0, 5), (void *)client_psk, sizeof(client_psk));
+=======
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 0), "coaps://lwm2m.example.com");
+	lwm2m_set_u8(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 2), LWM2M_SECURITY_PSK);
+	/* Set the client identity as a string, but this could be binary as well */
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 3), client_identity);
+	/* Set the client pre-shared key (PSK) */
+	lwm2m_set_opaque(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 5), client_psk, sizeof(client_psk));
+
+An example of setting up the security object for X509 certificate mode:
+
+.. code-block:: c
+
+	static const char certificate[] = "-----BEGIN CERTIFICATE-----\nMIIB6jCCAY+gAw...";
+	static const char key[] = "-----BEGIN EC PRIVATE KEY-----\nMHcCAQ...";
+	static const char root_ca[] = "-----BEGIN CERTIFICATE-----\nMIIBaz...";
+
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 0), "coaps://lwm2m.example.com");
+	lwm2m_set_u8(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 2), LWM2M_SECURITY_CERT);
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 3), certificate);
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 5), key);
+	lwm2m_set_string(&LWM2M_OBJ(LWM2M_OBJECT_SECURITY_ID, 0, 5), root_ca);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Before calling :c:func:`lwm2m_rd_client_start` assign the tls_tag # where the
 LwM2M library should store the DTLS information prior to connection (normally a
@@ -409,7 +488,11 @@ value of 1 is ok here).
 	client.tls_tag = 1; /* <---- */
 	lwm2m_rd_client_start(&client, "endpoint-name", 0, rd_client_event);
 
+<<<<<<< HEAD
 For a more detailed LwM2M client sample see: :ref:`lwm2m-client-sample`.
+=======
+For a more detailed LwM2M client sample see: :zephyr:code-sample:`lwm2m-client`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Multi-thread usage
 ******************
@@ -598,6 +681,7 @@ required actions from the server side.
 
 .. code-block:: console
 
+<<<<<<< HEAD
    uart:~$ lwm2m
    lwm2m - LwM2M commands
    Subcommands:
@@ -607,10 +691,26 @@ required actions from the server side.
    read    :Read value from LwM2M resource
             read PATH [OPTIONS]
             -s   Read value as string (default)
+=======
+  uart:~$ lwm2m
+  lwm2m - LwM2M commands
+  Subcommands:
+    send    :send PATHS
+            LwM2M SEND operation
+
+    exec    :exec PATH [PARAM]
+            Execute a resource
+
+    read    :read PATH [OPTIONS]
+            Read value from LwM2M resource
+            -x   Read value as hex stream (default)
+            -s   Read value as string
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             -b   Read value as bool (1/0)
             -uX  Read value as uintX_t
             -sX  Read value as intX_t
             -f   Read value as float
+<<<<<<< HEAD
 
    write   :Write into LwM2M resource
             write PATH [OPTIONS] VALUE
@@ -632,6 +732,43 @@ required actions from the server side.
 
    pause   :LwM2M engine thread pause
    resume  :LwM2M engine thread resume
+=======
+            -t   Read value as time_t
+
+    write   :write PATH [OPTIONS] VALUE
+            Write into LwM2M resource
+            -s   Write value as string (default)
+            -b   Write value as bool
+            -uX  Write value as uintX_t
+            -sX  Write value as intX_t
+            -f   Write value as float
+            -t   Write value as time_t
+
+    create  :create PATH
+            Create object instance
+
+    cache   :cache PATH NUM
+            Enable data cache for resource
+            PATH is LwM2M path
+            NUM how many elements to cache
+
+    start   :start EP_NAME [BOOTSTRAP FLAG]
+            Start the LwM2M RD (Registration / Discovery) Client
+            -b   Set the bootstrap flag (default 0)
+
+    stop    :stop [OPTIONS]
+            Stop the LwM2M RD (De-register) Client
+            -f   Force close the connection
+
+    update  :Trigger Registration Update of the LwM2M RD Client
+
+    pause   :LwM2M engine thread pause
+    resume  :LwM2M engine thread resume
+    lock    :Lock the LwM2M registry
+    unlock  :Unlock the LwM2M registry
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 .. _lwm2m_api_reference:

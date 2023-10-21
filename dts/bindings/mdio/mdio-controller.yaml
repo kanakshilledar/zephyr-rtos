@@ -8,6 +8,7 @@ include: base.yaml
 bus: mdio
 
 properties:
+<<<<<<< HEAD
   protocol:
     type: string
     description: |
@@ -22,3 +23,12 @@ properties:
       - "clause 45"
       - "micrel SMI"
     default: "clause 22"
+=======
+  "#address-cells":
+    required: true
+    const: 1
+
+  "#size-cells":
+    required: true
+    const: 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

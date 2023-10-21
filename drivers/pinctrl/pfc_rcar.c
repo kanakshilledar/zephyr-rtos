@@ -10,10 +10,20 @@
 #include <zephyr/arch/cpu.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/pinctrl.h>
+<<<<<<< HEAD
 #include <soc.h>
 #include <zephyr/sys/util.h>
 
 #define PFC_REG_BASE  DT_INST_REG_ADDR(0)
+=======
+#include <zephyr/init.h>
+#include <zephyr/sys/util.h>
+#include <zephyr/sys/device_mmio.h>
+
+DEVICE_MMIO_TOPLEVEL_STATIC(pfc, DT_DRV_INST(0));
+
+#define PFC_REG_BASE  DEVICE_MMIO_TOPLEVEL_GET(pfc)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define PFC_RCAR_PMMR 0x0
 #define PFC_RCAR_GPSR 0x100
 #define PFC_RCAR_IPSR 0x200
@@ -214,3 +224,14 @@ int pinctrl_configure_pins(const pinctrl_soc_pin_t *pins, uint8_t pin_cnt,
 
 	return ret;
 }
+<<<<<<< HEAD
+=======
+
+__boot_func static int pfc_rcar_driver_init(void)
+{
+	DEVICE_MMIO_TOPLEVEL_MAP(pfc, K_MEM_CACHE_NONE);
+	return 0;
+}
+
+SYS_INIT(pfc_rcar_driver_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -837,7 +837,11 @@ static int cmd_mcc_set_current_track_obj_id(const struct shell *sh, size_t argc,
 	}
 
 	if (!IN_RANGE(id, BT_OTS_OBJ_ID_MIN, BT_OTS_OBJ_ID_MAX)) {
+<<<<<<< HEAD
 		shell_error(sh, "Invalid id: %lu", id);
+=======
+		shell_error(sh, "Invalid id: %llu", id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		return -ENOEXEC;
 	}
@@ -875,7 +879,11 @@ static int cmd_mcc_set_next_track_obj_id(const struct shell *sh, size_t argc,
 	}
 
 	if (!IN_RANGE(id, BT_OTS_OBJ_ID_MIN, BT_OTS_OBJ_ID_MAX)) {
+<<<<<<< HEAD
 		shell_error(sh, "Invalid id: %lu", id);
+=======
+		shell_error(sh, "Invalid id: %llu", id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		return -ENOEXEC;
 	}
@@ -925,7 +933,11 @@ static int cmd_mcc_set_current_group_obj_id(const struct shell *sh, size_t argc,
 	}
 
 	if (!IN_RANGE(id, BT_OTS_OBJ_ID_MIN, BT_OTS_OBJ_ID_MAX)) {
+<<<<<<< HEAD
 		shell_error(sh, "Invalid id: %lu", id);
+=======
+		shell_error(sh, "Invalid id: %llu", id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		return -ENOEXEC;
 	}
@@ -1448,9 +1460,22 @@ static int cmd_mcc_send_search_raw(const struct shell *sh, size_t argc,
 				   char *argv[])
 {
 	int result;
+<<<<<<< HEAD
 	struct mpl_search search;
 
 	search.len = strlen(argv[1]);
+=======
+	size_t len;
+	struct mpl_search search;
+
+	len = strlen(argv[1]);
+	if (len > sizeof(search.search)) {
+		shell_print(sh, "Fail: Invalid argument");
+		return -EINVAL;
+	}
+
+	search.len = len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memcpy(search.search, argv[1], search.len);
 	LOG_DBG("Search string: %s", argv[1]);
 
@@ -1691,7 +1716,11 @@ static int cmd_mcc_otc_select(const struct shell *sh, size_t argc, char *argv[])
 	}
 
 	if (!IN_RANGE(id, BT_OTS_OBJ_ID_MIN, BT_OTS_OBJ_ID_MAX)) {
+<<<<<<< HEAD
 		shell_error(sh, "Invalid id: %lu", id);
+=======
+		shell_error(sh, "Invalid id: %llu", id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		return -ENOEXEC;
 	}
@@ -1787,7 +1816,11 @@ static int cmd_mcc_otc_read_track_segments_object(const struct shell *sh,
 static int cmd_mcc_otc_read_current_track_object(const struct shell *sh,
 						 size_t argc, char *argv[])
 {
+<<<<<<< HEAD
 	/* Assumes the Curent Track Object has already been selected by ID */
+=======
+	/* Assumes the Current Track Object has already been selected by ID */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	int result;
 

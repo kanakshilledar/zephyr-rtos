@@ -49,10 +49,17 @@ static void assert_path_list_order(sys_slist_t *lwm2m_path_list)
 	struct lwm2m_obj_path_list *prev = NULL;
 	struct lwm2m_obj_path_list *entry, *tmp;
 
+<<<<<<< HEAD
 	uint16_t obj_id_max;
 	uint16_t obj_inst_id_max;
 	uint16_t res_id_max;
 	uint16_t res_inst_id_max;
+=======
+	uint16_t obj_id_max = 0;
+	uint16_t obj_inst_id_max = 0;
+	uint16_t res_id_max = 0;
+	uint16_t res_inst_id_max = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (sys_slist_is_empty(lwm2m_path_list)) {
 		return;
@@ -228,7 +235,10 @@ static void run_insertion_test(char const *insert_path_str[], int insertions_cou
 
 	/* WHEN: inserting each path */
 	struct lwm2m_obj_path insert_path;
+<<<<<<< HEAD
 	char name[20];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (int i = 0; i < insertions_count; ++i) {
 		ret = lwm2m_string_to_path(insert_path_str[i], &insert_path, '/');
@@ -237,7 +247,10 @@ static void run_insertion_test(char const *insert_path_str[], int insertions_cou
 		ret = lwm2m_engine_add_path_to_list(&lwm2m_path_list, &lwm2m_path_free_list,
 							&insert_path);
 
+<<<<<<< HEAD
 		sprintf(name, "Insertion: %d", i);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_true(ret >= 0, "Insertion #%d failed", i);
 		/* THEN: path order is maintained */
 		assert_path_list_order(&lwm2m_path_list);

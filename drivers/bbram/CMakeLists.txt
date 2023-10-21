@@ -5,6 +5,10 @@ zephyr_library()
 
 zephyr_library_sources_ifdef(CONFIG_BBRAM_SHELL bbram_shell.c)
 
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_USERSPACE bbram_handlers.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_BBRAM_NPCX bbram_npcx.c)
 zephyr_library_sources_ifdef(CONFIG_BBRAM_IT8XXX2 bbram_it8xxx2.c)
 zephyr_library_sources_ifdef(CONFIG_BBRAM_EMUL bbram_emul.c)

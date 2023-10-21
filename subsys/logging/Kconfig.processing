@@ -9,7 +9,12 @@ config LOG_PRINTK
 	bool "Process printk messages"
 	default y if PRINTK && (!ZTEST || ZTEST_NEW_API)
 	help
+<<<<<<< HEAD
 	  LOG_PRINTK messages are formatted in place and logged unconditionally.
+=======
+	  If enabled, printk messages are redirected to the logging subsystem.
+	  The messages are formatted in place and logged unconditionally.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if LOG_MODE_DEFERRED && !LOG_FRONTEND_ONLY
 

@@ -188,6 +188,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo F411RE website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f411re.html
 
 .. _STM32 Nucleo-64 board User Manual:
@@ -198,3 +199,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F411 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00119316.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f411re.html
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+
+.. _STM32F411RE on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f411re.html
+
+.. _STM32F411 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00119316.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

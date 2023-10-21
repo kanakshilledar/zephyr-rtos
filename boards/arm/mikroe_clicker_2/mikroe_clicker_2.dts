@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <st/f4/stm32f407Xg.dtsi>
 #include <st/f4/stm32f407v(e-g)tx-pinctrl.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "MikroE clicker 2 for STM32";
@@ -37,10 +41,18 @@
 		user_button_0: key_0 {
 			label = "Key PE0";
 			gpios = <&gpioe 0 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_1: key_1 {
 			label = "Key K1";
 			gpios = <&gpioe 10 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -143,6 +155,11 @@ zephyr_udc0: &usbotg_fs {
 	status ="okay";
 	pinctrl-0 = <&adc1_in2_pa2 &adc1_in3_pa3>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &vref {

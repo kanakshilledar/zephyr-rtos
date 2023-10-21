@@ -11,6 +11,10 @@ target_sources(app PRIVATE
 	src/main.c
 	src/test_time_incrementing.c
 	src/test_time.c
+<<<<<<< HEAD
+=======
+	src/test_y2k.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 )
 
 if(DEFINED CONFIG_RTC_ALARM)

@@ -213,13 +213,21 @@ static bool get_next_rx_buffer(struct i2s_nrfx_drv_data *drv_data,
 static void free_tx_buffer(struct i2s_nrfx_drv_data *drv_data,
 			   const void *buffer)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(drv_data->tx.cfg.mem_slab, (void **)&buffer);
+=======
+	k_mem_slab_free(drv_data->tx.cfg.mem_slab, (void *)buffer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("Freed TX %p", buffer);
 }
 
 static void free_rx_buffer(struct i2s_nrfx_drv_data *drv_data, void *buffer)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(drv_data->rx.cfg.mem_slab, &buffer);
+=======
+	k_mem_slab_free(drv_data->rx.cfg.mem_slab, buffer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("Freed RX %p", buffer);
 }
 
@@ -583,6 +591,10 @@ static int i2s_nrfx_write(const struct device *dev,
 			  void *mem_block, size_t size)
 {
 	struct i2s_nrfx_drv_data *drv_data = dev->data;
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!drv_data->tx_configured) {
 		LOG_ERR("Device is not configured");
@@ -601,6 +613,7 @@ static int i2s_nrfx_write(const struct device *dev,
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	if (drv_data->state == I2S_STATE_RUNNING &&
 	    drv_data->next_tx_buffer_needed) {
 		nrfx_i2s_buffers_t next = { .p_tx_buffer = mem_block };
@@ -608,10 +621,43 @@ static int i2s_nrfx_write(const struct device *dev,
 		drv_data->next_tx_buffer_needed = false;
 
 		LOG_DBG("Next TX %p", mem_block);
+=======
+	ret = k_msgq_put(&drv_data->tx_queue,
+			 &mem_block,
+			 SYS_TIMEOUT_MS(drv_data->tx.cfg.timeout));
+	if (ret < 0) {
+		return ret;
+	}
+
+	LOG_DBG("Queued TX %p", mem_block);
+
+	/* Check if interrupt wanted to get next TX buffer before current buffer
+	 * was queued. Do not move this check before queuing because doing so
+	 * opens the possibility for a race condition between this function and
+	 * data_handler() that is called in interrupt context.
+	 */
+	if (drv_data->state == I2S_STATE_RUNNING &&
+	    drv_data->next_tx_buffer_needed) {
+		nrfx_i2s_buffers_t next = { 0 };
+
+		if (!get_next_tx_buffer(drv_data, &next)) {
+			/* Log error because this is definitely unexpected.
+			 * Do not return error because the caller is no longer
+			 * responsible for releasing the buffer.
+			 */
+			LOG_ERR("Cannot reacquire queued buffer");
+			return 0;
+		}
+
+		drv_data->next_tx_buffer_needed = false;
+
+		LOG_DBG("Next TX %p", next.p_tx_buffer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (!supply_next_buffers(drv_data, &next)) {
 			return -EIO;
 		}
+<<<<<<< HEAD
 	} else {
 		int ret = k_msgq_put(&drv_data->tx_queue,
 				     &mem_block,
@@ -621,6 +667,9 @@ static int i2s_nrfx_write(const struct device *dev,
 		}
 
 		LOG_DBG("Queued TX %p", mem_block);
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;

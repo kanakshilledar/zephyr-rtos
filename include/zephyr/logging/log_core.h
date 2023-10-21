@@ -84,8 +84,11 @@ extern "C" {
 #define Z_LOG_EVAL1(_eval_level, _iftrue, _iffalse) \
 	__COND_CODE(_LOG_ZZZZ##_eval_level, _iftrue, _iffalse)
 
+<<<<<<< HEAD
 #define _LOG_ZZZZ0  _LOG_YYYY,
 #define _LOG_ZZZZ0U _LOG_YYYY,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define _LOG_ZZZZ1  _LOG_YYYY,
 #define _LOG_ZZZZ1U _LOG_YYYY,
 #define _LOG_ZZZZ2  _LOG_YYYY,
@@ -251,13 +254,23 @@ static inline char z_log_minimal_level_to_char(int level)
 #define Z_LOG(_level, ...) \
 	Z_LOG2(_level, 0, __log_current_const_data, __log_current_dynamic_data, __VA_ARGS__)
 
+<<<<<<< HEAD
 #define Z_LOG_INSTANCE(_level, _inst, ...) \
+=======
+#define Z_LOG_INSTANCE(_level, _inst, ...) do { \
+	(void)_inst; \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	Z_LOG2(_level, 1, \
 		COND_CODE_1(CONFIG_LOG_RUNTIME_FILTERING, (NULL), (Z_LOG_INST(_inst))), \
 		(struct log_source_dynamic_data *)COND_CODE_1( \
 						CONFIG_LOG_RUNTIME_FILTERING, \
 						(Z_LOG_INST(_inst)), (NULL)), \
+<<<<<<< HEAD
 		__VA_ARGS__)
+=======
+		__VA_ARGS__); \
+} while (0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*****************************************************************************/
 /****************** Macros for hexdump logging *******************************/

@@ -13,7 +13,11 @@ jobs:
     if: github.repository == 'zephyrproject-rtos/zephyr'
     runs-on: zephyr-runner-linux-x64-4xlarge
     container:
+<<<<<<< HEAD
       image: ghcr.io/zephyrproject-rtos/ci:v0.26.4
+=======
+      image: ghcr.io/zephyrproject-rtos/ci:v0.26.5
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       options: '--entrypoint /bin/bash'
       volumes:
         - /repo-cache/zephyrproject:/github/cache/zephyrproject
@@ -22,7 +26,11 @@ jobs:
       matrix:
         platform: ["native_posix", "qemu_x86", "unit_testing"]
     env:
+<<<<<<< HEAD
       ZEPHYR_SDK_INSTALL_DIR: /opt/toolchains/zephyr-sdk-0.16.1
+=======
+      ZEPHYR_SDK_INSTALL_DIR: /opt/toolchains/zephyr-sdk-0.16.3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     steps:
       - name: Apply container owner mismatch workaround
         run: |

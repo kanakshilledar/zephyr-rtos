@@ -9,10 +9,19 @@
 
 #include <zephyr/kernel_structs.h>
 #include <kernel_internal.h>
+<<<<<<< HEAD
 #include <zephyr/timeout_q.h>
 #include <zephyr/tracing/tracing.h>
 #include <stdbool.h>
 
+=======
+#include <timeout_q.h>
+#include <zephyr/tracing/tracing.h>
+#include <stdbool.h>
+
+bool z_is_thread_essential(void);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 BUILD_ASSERT(K_LOWEST_APPLICATION_THREAD_PRIO
 	     >= K_HIGHEST_APPLICATION_THREAD_PRIO);
 
@@ -268,6 +277,7 @@ static ALWAYS_INLINE void z_sched_unlock_no_reschedule(void)
 	++_current->base.sched_locked;
 }
 
+<<<<<<< HEAD
 static ALWAYS_INLINE bool z_is_thread_timeout_expired(struct k_thread *thread)
 {
 #ifdef CONFIG_SYS_CLOCK_EXISTS
@@ -277,6 +287,8 @@ static ALWAYS_INLINE bool z_is_thread_timeout_expired(struct k_thread *thread)
 #endif
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * APIs for working with the Zephyr kernel scheduler. Intended for use in
  * management of IPC objects, either in the core kernel or other IPC

@@ -5,7 +5,10 @@ if(DEFINED TOOLCHAIN_HOME)
 endif()
 
 find_program(CMAKE_C_COMPILER clang ${find_program_clang_args} REQUIRED)
+<<<<<<< HEAD
 find_program(CMAKE_CXX_COMPILER clang++ ${find_program_clang_args})
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 find_program(CMAKE_LLVM_COV llvm-cov ${find_program_clang_args})
 set(CMAKE_GCOV "${CMAKE_LLVM_COV} gcov")
 

@@ -192,6 +192,7 @@ static int gpio_npm6001_port_toggle_bits(const struct device *dev,
 						~val & NPM6001_PIN_MSK);
 }
 
+<<<<<<< HEAD
 static int gpio_npm6001_pin_interrupt_configure(const struct device *dev,
 						gpio_pin_t pin,
 						enum gpio_int_mode mode,
@@ -205,6 +206,8 @@ static int gpio_npm6001_pin_interrupt_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct gpio_driver_api gpio_npm6001_api = {
 	.pin_configure = gpio_npm6001_configure,
 	.port_get_raw = gpio_npm6001_port_get_raw,
@@ -212,7 +215,10 @@ static const struct gpio_driver_api gpio_npm6001_api = {
 	.port_set_bits_raw = gpio_npm6001_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_npm6001_port_clear_bits_raw,
 	.port_toggle_bits = gpio_npm6001_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_npm6001_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static int gpio_npm6001_init(const struct device *dev)

@@ -10,13 +10,21 @@
 #include <zephyr/sys/heap_listener.h>
 #include <zephyr/sys/mem_blocks.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+#include <string.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void *alloc_blocks(sys_mem_blocks_t *mem_block, size_t num_blocks)
 {
 	size_t offset;
 	int r;
 	uint8_t *blk;
+<<<<<<< HEAD
 	void *ret = NULL;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
 	k_spinlock_key_t  key = k_spin_lock(&mem_block->lock);
@@ -24,6 +32,7 @@ static void *alloc_blocks(sys_mem_blocks_t *mem_block, size_t num_blocks)
 
 	/* Find an unallocated block */
 	r = sys_bitarray_alloc(mem_block->bitmap, num_blocks, &offset);
+<<<<<<< HEAD
 	if (r == 0) {
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
@@ -47,6 +56,35 @@ static void *alloc_blocks(sys_mem_blocks_t *mem_block, size_t num_blocks)
 }
 
 static int free_blocks(sys_mem_blocks_t *mem_block, void *ptr, size_t num_blocks)
+=======
+	if (r != 0) {
+#ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
+		k_spin_unlock(&mem_block->lock, key);
+#endif
+		return NULL;
+	}
+
+
+#ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
+	mem_block->info.used_blocks += (uint32_t)num_blocks;
+
+	if (mem_block->info.max_used_blocks < mem_block->info.used_blocks) {
+		mem_block->info.max_used_blocks = mem_block->info.used_blocks;
+	}
+
+	k_spin_unlock(&mem_block->lock, key);
+#endif
+
+	/* Calculate the start address of the newly allocated block */
+
+	blk = mem_block->buffer + (offset << mem_block->info.blk_sz_shift);
+
+	return blk;
+}
+
+static int free_blocks(sys_mem_blocks_t *mem_block, void *ptr,
+		       size_t num_blocks)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	size_t offset;
 	uint8_t *blk = ptr;
@@ -58,8 +96,13 @@ static int free_blocks(sys_mem_blocks_t *mem_block, void *ptr, size_t num_blocks
 		goto out;
 	}
 
+<<<<<<< HEAD
 	offset = (blk - mem_block->buffer) >> mem_block->blk_sz_shift;
 	if (offset >= mem_block->num_blocks) {
+=======
+	offset = (blk - mem_block->buffer) >> mem_block->info.blk_sz_shift;
+	if (offset >= mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = -EFAULT;
 		goto out;
 	}
@@ -71,7 +114,11 @@ static int free_blocks(sys_mem_blocks_t *mem_block, void *ptr, size_t num_blocks
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
 	if (ret == 0) {
+<<<<<<< HEAD
 		mem_block->used_blocks -= (uint32_t) num_blocks;
+=======
+		mem_block->info.used_blocks -= (uint32_t)num_blocks;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_spin_unlock(&mem_block->lock, key);
@@ -82,7 +129,11 @@ out:
 }
 
 int sys_mem_blocks_alloc_contiguous(sys_mem_blocks_t *mem_block, size_t count,
+<<<<<<< HEAD
 				   void **out_block)
+=======
+				    void **out_block)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int ret = 0;
 
@@ -95,7 +146,11 @@ int sys_mem_blocks_alloc_contiguous(sys_mem_blocks_t *mem_block, size_t count,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (count > mem_block->num_blocks) {
+=======
+	if (count > mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Definitely not enough blocks to be allocated */
 		ret = -ENOMEM;
 		goto out;
@@ -111,11 +166,19 @@ int sys_mem_blocks_alloc_contiguous(sys_mem_blocks_t *mem_block, size_t count,
 	*out_block = ptr;
 #ifdef CONFIG_SYS_MEM_BLOCKS_LISTENER
 	heap_listener_notify_alloc(HEAP_ID_FROM_POINTER(mem_block),
+<<<<<<< HEAD
 				   ptr, count << mem_block->blk_sz_shift);
 #endif
 
 out:
 		return ret;
+=======
+				   ptr, count << mem_block->info.blk_sz_shift);
+#endif
+
+out:
+	return ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int sys_mem_blocks_alloc(sys_mem_blocks_t *mem_block, size_t count,
@@ -134,7 +197,11 @@ int sys_mem_blocks_alloc(sys_mem_blocks_t *mem_block, size_t count,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (count > mem_block->num_blocks) {
+=======
+	if (count > mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Definitely not enough blocks to be allocated */
 		ret = -ENOMEM;
 		goto out;
@@ -151,7 +218,12 @@ int sys_mem_blocks_alloc(sys_mem_blocks_t *mem_block, size_t count,
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_LISTENER
 		heap_listener_notify_alloc(HEAP_ID_FROM_POINTER(mem_block),
+<<<<<<< HEAD
 					   ptr, BIT(mem_block->blk_sz_shift));
+=======
+					   ptr,
+					   BIT(mem_block->info.blk_sz_shift));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	}
 
@@ -165,7 +237,12 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 int sys_mem_blocks_is_region_free(sys_mem_blocks_t *mem_block, void *in_block, size_t count)
+=======
+int sys_mem_blocks_is_region_free(sys_mem_blocks_t *mem_block, void *in_block,
+				  size_t count)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	bool result;
 	size_t offset;
@@ -174,11 +251,21 @@ int sys_mem_blocks_is_region_free(sys_mem_blocks_t *mem_block, void *in_block, s
 	__ASSERT_NO_MSG(mem_block->bitmap != NULL);
 	__ASSERT_NO_MSG(mem_block->buffer != NULL);
 
+<<<<<<< HEAD
 	offset = ((uint8_t *)in_block - mem_block->buffer) >> mem_block->blk_sz_shift;
 
 	__ASSERT_NO_MSG(offset + count <= mem_block->num_blocks);
 
 	result = sys_bitarray_is_region_cleared(mem_block->bitmap, count, offset);
+=======
+	offset = ((uint8_t *)in_block - mem_block->buffer) >>
+		 mem_block->info.blk_sz_shift;
+
+	__ASSERT_NO_MSG(offset + count <= mem_block->info.num_blocks);
+
+	result = sys_bitarray_is_region_cleared(mem_block->bitmap, count,
+						offset);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return result;
 }
 
@@ -196,9 +283,16 @@ int sys_mem_blocks_get(sys_mem_blocks_t *mem_block, void *in_block, size_t count
 		goto out;
 	}
 
+<<<<<<< HEAD
 	offset = ((uint8_t *)in_block - mem_block->buffer) >> mem_block->blk_sz_shift;
 
 	if (offset + count > mem_block->num_blocks) {
+=======
+	offset = ((uint8_t *)in_block - mem_block->buffer) >>
+		 mem_block->info.blk_sz_shift;
+
+	if (offset + count > mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Definitely not enough blocks to be allocated */
 		ret = -ENOMEM;
 		goto out;
@@ -208,7 +302,12 @@ int sys_mem_blocks_get(sys_mem_blocks_t *mem_block, void *in_block, size_t count
 	k_spinlock_key_t  key = k_spin_lock(&mem_block->lock);
 #endif
 
+<<<<<<< HEAD
 	ret = sys_bitarray_test_and_set_region(mem_block->bitmap, count, offset, true);
+=======
+	ret = sys_bitarray_test_and_set_region(mem_block->bitmap, count,
+					       offset, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (ret != 0) {
 #ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
@@ -219,10 +318,17 @@ int sys_mem_blocks_get(sys_mem_blocks_t *mem_block, void *in_block, size_t count
 	}
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_RUNTIME_STATS
+<<<<<<< HEAD
 	mem_block->used_blocks += (uint32_t)count;
 
 	if (mem_block->max_used_blocks < mem_block->used_blocks) {
 		mem_block->max_used_blocks = mem_block->used_blocks;
+=======
+	mem_block->info.used_blocks += (uint32_t)count;
+
+	if (mem_block->info.max_used_blocks < mem_block->info.used_blocks) {
+		mem_block->info.max_used_blocks = mem_block->info.used_blocks;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_spin_unlock(&mem_block->lock, key);
@@ -230,7 +336,11 @@ int sys_mem_blocks_get(sys_mem_blocks_t *mem_block, void *in_block, size_t count
 
 #ifdef CONFIG_SYS_MEM_BLOCKS_LISTENER
 	heap_listener_notify_alloc(HEAP_ID_FROM_POINTER(mem_block),
+<<<<<<< HEAD
 			in_block, count << mem_block->blk_sz_shift);
+=======
+			in_block, count << mem_block->info.blk_sz_shift);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 out:
@@ -254,7 +364,11 @@ int sys_mem_blocks_free(sys_mem_blocks_t *mem_block, size_t count,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (count > mem_block->num_blocks) {
+=======
+	if (count > mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = -EINVAL;
 		goto out;
 	}
@@ -275,7 +389,11 @@ int sys_mem_blocks_free(sys_mem_blocks_t *mem_block, size_t count,
 			 * notifying at the end of function.
 			 */
 			heap_listener_notify_free(HEAP_ID_FROM_POINTER(mem_block),
+<<<<<<< HEAD
 						  ptr, BIT(mem_block->blk_sz_shift));
+=======
+						  ptr, BIT(mem_block->info.blk_sz_shift));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 #endif
 	}
@@ -297,7 +415,11 @@ int sys_mem_blocks_free_contiguous(sys_mem_blocks_t *mem_block, void *block, siz
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (count > mem_block->num_blocks) {
+=======
+	if (count > mem_block->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = -EINVAL;
 		goto out;
 	}
@@ -309,7 +431,11 @@ int sys_mem_blocks_free_contiguous(sys_mem_blocks_t *mem_block, void *block, siz
 	}
 #ifdef CONFIG_SYS_MEM_BLOCKS_LISTENER
 	heap_listener_notify_free(HEAP_ID_FROM_POINTER(mem_block),
+<<<<<<< HEAD
 			block, count << mem_block->blk_sz_shift);
+=======
+			block, count << mem_block->info.blk_sz_shift);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 out:
@@ -355,7 +481,11 @@ int sys_multi_mem_blocks_alloc(sys_multi_mem_blocks_t *group,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (count > allocator->num_blocks) {
+=======
+	if (count > allocator->info.num_blocks) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = -ENOMEM;
 		goto out;
 	}
@@ -363,7 +493,11 @@ int sys_multi_mem_blocks_alloc(sys_multi_mem_blocks_t *group,
 	ret = sys_mem_blocks_alloc(allocator, count, out_blocks);
 
 	if ((ret == 0) && (blk_size != NULL)) {
+<<<<<<< HEAD
 		*blk_size = BIT(allocator->blk_sz_shift);
+=======
+		*blk_size = BIT(allocator->info.blk_sz_shift);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 out:
@@ -395,7 +529,12 @@ int sys_multi_mem_blocks_free(sys_multi_mem_blocks_t *group,
 
 		one_alloc = group->allocators[i];
 		start = one_alloc->buffer;
+<<<<<<< HEAD
 		end = start + (BIT(one_alloc->blk_sz_shift) * one_alloc->num_blocks);
+=======
+		end = start + (BIT(one_alloc->info.blk_sz_shift) *
+			       one_alloc->info.num_blocks);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (((uint8_t *)in_blocks[0] >= start) &&
 		    ((uint8_t *)in_blocks[0] < end)) {
@@ -422,12 +561,22 @@ int sys_mem_blocks_runtime_stats_get(sys_mem_blocks_t *mem_block,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	stats->allocated_bytes = mem_block->used_blocks <<
 				 mem_block->blk_sz_shift;
 	stats->free_bytes = (mem_block->num_blocks << mem_block->blk_sz_shift) -
 			    stats->allocated_bytes;
 	stats->max_allocated_bytes = mem_block->max_used_blocks <<
 				     mem_block->blk_sz_shift;
+=======
+	stats->allocated_bytes = mem_block->info.used_blocks <<
+				 mem_block->info.blk_sz_shift;
+	stats->free_bytes = (mem_block->info.num_blocks <<
+			     mem_block->info.blk_sz_shift) -
+			    stats->allocated_bytes;
+	stats->max_allocated_bytes = mem_block->info.max_used_blocks <<
+				     mem_block->info.blk_sz_shift;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -438,8 +587,116 @@ int sys_mem_blocks_runtime_stats_reset_max(sys_mem_blocks_t *mem_block)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	mem_block->max_used_blocks = mem_block->used_blocks;
+=======
+	mem_block->info.max_used_blocks = mem_block->info.used_blocks;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
 #endif
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_STATS_SYS_MEM_BLOCKS
+static int sys_mem_blocks_stats_raw(struct k_obj_core *obj_core, void *stats)
+{
+	struct sys_mem_blocks *block;
+	k_spinlock_key_t  key;
+
+	block = CONTAINER_OF(obj_core, struct sys_mem_blocks, obj_core);
+
+	key = k_spin_lock(&block->lock);
+
+	memcpy(stats, &block->info, sizeof(block->info));
+
+	k_spin_unlock(&block->lock, key);
+
+	return 0;
+}
+
+static int sys_mem_blocks_stats_query(struct k_obj_core *obj_core, void *stats)
+{
+	struct sys_mem_blocks *block;
+	k_spinlock_key_t  key;
+	struct sys_memory_stats *ptr = stats;
+
+	block = CONTAINER_OF(obj_core, struct sys_mem_blocks, obj_core);
+
+	key = k_spin_lock(&block->lock);
+
+	ptr->free_bytes = (block->info.num_blocks - block->info.used_blocks) <<
+			  block->info.blk_sz_shift;
+	ptr->allocated_bytes = block->info.used_blocks <<
+			       block->info.blk_sz_shift;
+	ptr->max_allocated_bytes = block->info.max_used_blocks <<
+				   block->info.blk_sz_shift;
+
+	k_spin_unlock(&block->lock, key);
+
+	return 0;
+}
+
+static int sys_mem_blocks_stats_reset(struct k_obj_core *obj_core)
+{
+	struct sys_mem_blocks *block;
+	k_spinlock_key_t  key;
+
+	block = CONTAINER_OF(obj_core, struct sys_mem_blocks, obj_core);
+
+	key = k_spin_lock(&block->lock);
+	block->info.max_used_blocks = block->info.used_blocks;
+	k_spin_unlock(&block->lock, key);
+
+	return 0;
+}
+
+static struct k_obj_type obj_type_sys_mem_blocks;
+
+static struct k_obj_core_stats_desc sys_mem_blocks_stats_desc = {
+	.raw_size = sizeof(struct sys_mem_blocks_info),
+	.query_size = sizeof(struct sys_memory_stats),
+	.raw = sys_mem_blocks_stats_raw,
+	.query = sys_mem_blocks_stats_query,
+	.reset = sys_mem_blocks_stats_reset,
+	.disable = NULL,
+	.enable = NULL,
+};
+#endif
+
+#ifdef CONFIG_OBJ_CORE_SYS_MEM_BLOCKS
+static struct k_obj_type obj_type_sys_mem_blocks;
+
+static int init_sys_mem_blocks_obj_core_list(void)
+{
+	/* Initialize the sys_mem_blocks object type */
+
+	z_obj_type_init(&obj_type_sys_mem_blocks, K_OBJ_TYPE_MEM_BLOCK_ID,
+			offsetof(struct sys_mem_blocks, obj_core));
+
+#ifdef CONFIG_OBJ_CORE_STATS_SYS_MEM_BLOCKS
+	k_obj_type_stats_init(&obj_type_sys_mem_blocks,
+			      &sys_mem_blocks_stats_desc);
+#endif
+
+	/* Initialize statically defined sys_mem_blocks */
+
+	STRUCT_SECTION_FOREACH_ALTERNATE(sys_mem_blocks_ptr,
+					 sys_mem_blocks *, block_pp) {
+		k_obj_core_init_and_link(K_OBJ_CORE(*block_pp),
+					 &obj_type_sys_mem_blocks);
+#ifdef CONFIG_OBJ_CORE_STATS_SYS_MEM_BLOCKS
+		k_obj_core_stats_register(K_OBJ_CORE(*block_pp),
+					  &(*block_pp)->info,
+					  sizeof(struct sys_mem_blocks_info));
+#endif
+	}
+
+	return 0;
+}
+
+SYS_INIT(init_sys_mem_blocks_obj_core_list, PRE_KERNEL_1,
+	 CONFIG_KERNEL_INIT_PRIORITY_OBJECTS);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

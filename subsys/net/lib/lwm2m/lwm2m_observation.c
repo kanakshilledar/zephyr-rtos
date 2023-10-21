@@ -373,6 +373,10 @@ int lwm2m_notify_observer_path(const struct lwm2m_obj_path *path)
 				LOG_DBG("NOTIFY EVENT %u/%u/%u", path->obj_id, path->obj_inst_id,
 					path->res_id);
 				ret++;
+<<<<<<< HEAD
+=======
+				lwm2m_engine_wake_up();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 	}
@@ -437,7 +441,11 @@ static void engine_observe_node_init(struct observe_node *obs, const uint8_t *to
 		obs->event_timestamp = 0;
 	}
 	obs->resource_update = false;
+<<<<<<< HEAD
 	obs->active_tx_operation = false;
+=======
+	obs->active_notify = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	obs->format = format;
 	obs->counter = OBSERVE_COUNTER_START;
 	sys_slist_append(&ctx->observer, &obs->node);
@@ -595,6 +603,15 @@ static int engine_add_observer(struct lwm2m_message *msg, const uint8_t *token, 
 		memcpy(obs->token, token, tkl);
 		obs->tkl = tkl;
 
+<<<<<<< HEAD
+=======
+		/* Cancel ongoing notification */
+		if (obs->active_notify != NULL) {
+			lwm2m_reset_message(obs->active_notify, true);
+			obs->active_notify = NULL;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("OBSERVER DUPLICATE %u/%u/%u(%u) [%s]", msg->path.obj_id,
 			msg->path.obj_inst_id, msg->path.res_id, msg->path.level,
 			lwm2m_sprint_ip_addr(&msg->ctx->remote_addr));
@@ -678,6 +695,15 @@ static int engine_add_composite_observer(struct lwm2m_message *msg, const uint8_
 		memcpy(obs->token, token, tkl);
 		obs->tkl = tkl;
 
+<<<<<<< HEAD
+=======
+		/* Cancel ongoing notification */
+		if (obs->active_notify != NULL) {
+			lwm2m_reset_message(obs->active_notify, true);
+			obs->active_notify = NULL;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("OBSERVER Composite DUPLICATE [%s]",
 			lwm2m_sprint_ip_addr(&msg->ctx->remote_addr));
 
@@ -913,7 +939,11 @@ static int lwm2m_engine_observer_timestamp_update(sys_slist_t *observer,
 
 	/* update observe_node accordingly */
 	SYS_SLIST_FOR_EACH_CONTAINER(observer, obs, node) {
+<<<<<<< HEAD
 		if (!obs->resource_update) {
+=======
+		if (obs->resource_update) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Resource Update on going skip this*/
 			continue;
 		}

@@ -24,9 +24,12 @@
  *
  */
 
+<<<<<<< HEAD
 #include <pthread.h>
 #include <stdbool.h>
 #include <unistd.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/arch/posix/posix_soc_if.h>
 #include "posix_soc.h"
 #include "posix_board_if.h"
@@ -34,6 +37,7 @@
 #include "posix_arch_internal.h"
 #include "kernel_internal.h"
 #include "soc.h"
+<<<<<<< HEAD
 
 #define POSIX_ARCH_SOC_DEBUG_PRINTS 0
 
@@ -62,6 +66,17 @@ int posix_is_cpu_running(void)
 }
 
 
+=======
+#include "nce_if.h"
+
+static void *nce_st;
+
+int posix_is_cpu_running(void)
+{
+	return nce_is_cpu_running(nce_st);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * Helper function which changes the status of the CPU (halted or running)
  * and waits until somebody else changes it to the opposite
@@ -75,6 +90,7 @@ int posix_is_cpu_running(void)
  */
 void posix_change_cpu_state_and_wait(bool halted)
 {
+<<<<<<< HEAD
 	PC_SAFE_CALL(pthread_mutex_lock(&mtx_cpu));
 
 	PS_DEBUG("Going to halted = %d\n", halted);
@@ -100,6 +116,13 @@ void posix_change_cpu_state_and_wait(bool halted)
 	PS_DEBUG("Awaken after halted = %d\n", halted);
 
 	PC_SAFE_CALL(pthread_mutex_unlock(&mtx_cpu));
+=======
+	if (halted) {
+		nce_halt_cpu(nce_st);
+	} else {
+		nce_wake_cpu(nce_st);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -111,6 +134,7 @@ void posix_interrupt_raised(void)
 	/* We change the CPU to running state (we awake it), and block this
 	 * thread until the CPU is halted again
 	 */
+<<<<<<< HEAD
 	posix_change_cpu_state_and_wait(false);
 
 	/*
@@ -120,6 +144,9 @@ void posix_interrupt_raised(void)
 	if (soc_terminate) {
 		posix_exit(0);
 	}
+=======
+	nce_wake_cpu(nce_st);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 
@@ -136,7 +163,11 @@ void posix_halt_cpu(void)
 	 * We set the CPU in the halted state (this blocks this pthread
 	 * until the CPU is awoken again by the HW models)
 	 */
+<<<<<<< HEAD
 	posix_change_cpu_state_and_wait(true);
+=======
+	nce_halt_cpu(nce_st);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* We are awoken, normally that means some interrupt has just come
 	 * => let the "irq handler" check if/what interrupt was raised
@@ -164,6 +195,7 @@ void posix_atomic_halt_cpu(unsigned int imask)
 	posix_irq_unlock(imask);
 }
 
+<<<<<<< HEAD
 
 /**
  * Just a wrapper function to call Zephyr's z_cstart()
@@ -192,6 +224,8 @@ static void *zephyr_wrapper(void *a)
 }
 
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * The HW models will call this function to "boot" the CPU
  * == spawn the Zephyr init thread, which will then spawn
@@ -199,6 +233,7 @@ static void *zephyr_wrapper(void *a)
  */
 void posix_boot_cpu(void)
 {
+<<<<<<< HEAD
 	PC_SAFE_CALL(pthread_mutex_lock(&mtx_cpu));
 
 	cpu_halted = false;
@@ -250,6 +285,11 @@ void run_native_tasks(int level)
 			(*fptr)();
 		}
 	}
+=======
+	nce_st = nce_init();
+	posix_arch_init();
+	nce_boot_cpu(nce_st, z_cstart);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -259,6 +299,7 @@ void run_native_tasks(int level)
  */
 void posix_soc_clean_up(void)
 {
+<<<<<<< HEAD
 	/* LCOV_EXCL_START */ /* See Note1 */
 	/*
 	 * If we are being called from a HW thread we can cleanup
@@ -303,3 +344,9 @@ void posix_soc_clean_up(void)
  * we exclude this function from the coverage check
  *
  */
+=======
+	nce_terminate(nce_st);
+	posix_arch_clean_up();
+	run_native_tasks(_NATIVE_ON_EXIT_LEVEL);
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

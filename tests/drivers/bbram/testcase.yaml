@@ -22,3 +22,11 @@ tests:
     filter: dt_compat_enabled("st,stm32-bbram")
     integration_platforms:
       - stm32f746g_disco
+<<<<<<< HEAD
+=======
+  drivers.bbram.stm32_rtc:
+    extra_args: OVERLAY_CONFIG="stm32_rtc.conf"
+    filter: dt_compat_enabled("st,stm32-bbram")
+    integration_platforms:
+      - stm32f746g_disco
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

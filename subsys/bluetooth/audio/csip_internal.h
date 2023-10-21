@@ -16,6 +16,7 @@
 #define BT_CSIP_RELEASE_VALUE                   0x01
 #define BT_CSIP_LOCK_VALUE                      0x02
 
+<<<<<<< HEAD
 struct csip_pending_notifications {
 	bt_addr_le_t addr;
 	bool pending;
@@ -30,6 +31,8 @@ struct csip_pending_notifications {
 #endif /* CONFIG_BT_KEYS_OVERWRITE_OLDEST */
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct bt_csip_set_sirk {
 	uint8_t type;
 	uint8_t value[BT_CSIP_SET_SIRK_SIZE];

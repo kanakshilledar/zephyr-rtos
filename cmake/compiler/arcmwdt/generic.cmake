@@ -2,6 +2,7 @@
 
 # Configures CMake for using ccac
 
+<<<<<<< HEAD
 # MWDT compiler (CCAC) can't be used for preprocessing the DTS sources as it has
 # weird restrictions about file extensions. Synopsys Jira issue: P10019563-38578
 # Let's temporarily use GNU compiler instead.
@@ -17,6 +18,10 @@ endif()
 if(NOT CMAKE_DTS_PREPROCESSOR)
   message(FATAL_ERROR "Zephyr was unable to find any GNU compiler (ARC or host one) for DTS preprocessing")
 endif()
+=======
+find_program(CMAKE_DTS_PREPROCESSOR ${ZEPHYR_SDK_CROSS_COMPILE}gcc PATHS ${ZEPHYR_SDK_INSTALL_DIR} NO_DEFAULT_PATH)
+message(STATUS "Found dts preprocessor: ${CMAKE_DTS_PREPROCESSOR} (Zephyr SDK ${SDK_VERSION})")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 find_program(CMAKE_C_COMPILER ${CROSS_COMPILE}ccac PATHS ${TOOLCHAIN_HOME} NO_DEFAULT_PATH)
 find_program(CMAKE_LLVM_COV ${CROSS_COMPILE}llvm-cov PATHS ${TOOLCHAIN_HOME} NO_DEFAULT_PATH)

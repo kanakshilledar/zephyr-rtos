@@ -57,7 +57,14 @@ struct bst_test_list *test_id_settings_install(struct bst_test_list *tests)
 
 bst_test_install_t test_installers[] = {test_id_settings_install, NULL};
 
+<<<<<<< HEAD
 void main(void)
 {
 	bst_main();
+=======
+int main(void)
+{
+	bst_main();
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

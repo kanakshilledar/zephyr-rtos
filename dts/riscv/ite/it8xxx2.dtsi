@@ -29,10 +29,15 @@
 		#size-cells = <0>;
 		cpu0: cpu@0 {
 			compatible = "ite,riscv-ite";
+<<<<<<< HEAD
+=======
+			riscv,isa = "rv32imafc_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			device_type = "cpu";
 			reg = <0>;
 			cpu-power-states = <&standby>;
 		};
+<<<<<<< HEAD
 	};
 
 	power-states {
@@ -40,6 +45,15 @@
 			compatible = "zephyr,power-state";
 			power-state-name = "standby";
 			min-residency-us = <500>;
+=======
+
+		power-states {
+			standby: standby {
+				compatible = "zephyr,power-state";
+				power-state-name = "standby";
+				min-residency-us = <500>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -106,7 +120,11 @@
 			reg = <0x00f02700 0x0020>;
 			status = "disabled";
 			current-speed = <115200>;
+<<<<<<< HEAD
 			clock-frequency = <1804800>;
+=======
+			clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <38 IRQ_TYPE_EDGE_RISING>;
 			interrupt-parent = <&intc>;
 			reg-shift = <0>;
@@ -116,7 +134,11 @@
 			reg = <0x00f02800 0x0020>;
 			status = "disabled";
 			current-speed = <460800>;
+<<<<<<< HEAD
 			clock-frequency = <1804800>;
+=======
+			clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <39 IRQ_TYPE_EDGE_RISING>;
 			interrupt-parent = <&intc>;
 			reg-shift = <0>;
@@ -708,6 +730,15 @@
 			kso17-gpios = <&gpioc 5 (GPIO_OPEN_DRAIN | GPIO_PULL_UP)>;
 		};
 
+<<<<<<< HEAD
+=======
+		sha0: sha@f0202d {
+			compatible = "ite,it8xxx2-sha";
+			reg = <0x00f0202d 0x3>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		usbpd0: usbpd@f03700 {
 			compatible = "ite,it8xxx2-usbpd";
 			reg = <0x00f03700 0x100>;

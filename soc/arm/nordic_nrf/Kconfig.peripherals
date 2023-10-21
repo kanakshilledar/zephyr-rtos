@@ -13,10 +13,17 @@ config HAS_HW_NRF_BPROT
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NORDIC_NRF_BPROT))
 
 config HAS_HW_NRF_CC310
+<<<<<<< HEAD
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NORDIC_NRF_CC310))
 
 config HAS_HW_NRF_CC312
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NORDIC_NRF_CC312))
+=======
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_ARM_CRYPTOCELL_310))
+
+config HAS_HW_NRF_CC312
+	def_bool $(dt_compat_enabled,$(DT_COMPAT_ARM_CRYPTOCELL_312))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config HAS_HW_NRF_CCM
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NORDIC_NRF_CCM))
@@ -24,6 +31,12 @@ config HAS_HW_NRF_CCM
 config HAS_HW_NRF_CCM_LFLEN_8BIT
 	def_bool $(dt_nodelabel_bool_prop,ccm,length-field-length-8-bits)
 
+<<<<<<< HEAD
+=======
+config HAS_HW_NRF_CCM_HEADERMASK
+	def_bool $(dt_nodelabel_bool_prop,ccm,headermask-supported)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config HAS_HW_NRF_CLOCK
 	def_bool $(dt_compat_enabled,$(DT_COMPAT_NORDIC_NRF_CLOCK))
 

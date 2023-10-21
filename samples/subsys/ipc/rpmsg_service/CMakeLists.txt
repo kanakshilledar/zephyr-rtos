@@ -18,8 +18,15 @@ elseif("${BOARD}" STREQUAL "mps2_an521")
   set(BOARD_REMOTE "mps2_an521_remote")
 elseif("${BOARD}" STREQUAL "v2m_musca_b1")
   set(BOARD_REMOTE "v2m_musca_b1_ns")
+<<<<<<< HEAD
 elseif("${BOARD}" STREQUAL "esp32")
   set(BOARD_REMOTE "esp32_net")
+=======
+elseif("${BOARD}" STREQUAL "esp32_devkitc_wrover")
+  set(BOARD_REMOTE "esp32_net")
+elseif("${BOARD}" STREQUAL "esp32s3_devkitm")
+  set(BOARD_REMOTE "esp32s3_devkitm_appcpu")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 else()
   message(FATAL_ERROR "${BOARD} was not supported for this sample")
 endif()
@@ -33,7 +40,11 @@ enable_language(C ASM)
 
 target_sources(app PRIVATE src/main.c)
 
+<<<<<<< HEAD
 if("${BOARD}" STREQUAL "esp32")
+=======
+if("${BOARD}" STREQUAL "esp32_devkitc_wrover" OR "${BOARD}" STREQUAL "esp32s3_devkitm")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   set_source_files_properties(${REMOTE_ZEPHYR_DIR}/esp32_net_firmware.c PROPERTIES GENERATED TRUE)
   target_sources(app PRIVATE src/main.c ${REMOTE_ZEPHYR_DIR}/esp32_net_firmware.c)
 endif()
@@ -52,7 +63,11 @@ ExternalProject_Add(
 
 if(("${BOARD}" STREQUAL "lpcxpresso54114_m4"))
 	add_dependencies(core_m0_inc_target rpmsg_service_remote)
+<<<<<<< HEAD
 elseif("${BOARD}" STREQUAL "esp32")
+=======
+elseif("${BOARD}" STREQUAL "esp32_devkitc_wrover" OR "${BOARD}" STREQUAL "esp32s3_devkitm")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   add_dependencies(app rpmsg_service_remote)
 endif()
 

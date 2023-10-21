@@ -41,13 +41,22 @@ struct adc_npcx_threshold_param {
  * @note This function is available only if @kconfig{CONFIG_ADC_CMP_NPCX}
  * is selected.
  *
+<<<<<<< HEAD
+=======
+ * @param dev       Pointer to the device structure for the driver instance.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param val_mv    Input value in millivolts to be converted.
  * @param thrval    Pointer of variable to hold the result of conversion.
  *
  * @returns 0 on success, negative result if input cannot be converted due to
  *          overflow.
  */
+<<<<<<< HEAD
 int adc_npcx_threshold_mv_to_thrval(uint32_t val_mv, uint32_t *thrval);
+=======
+int adc_npcx_threshold_mv_to_thrval(const struct device *dev, uint32_t val_mv,
+								uint32_t *thrval);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Set ADC threshold parameter.

@@ -23,6 +23,10 @@ config CPU_AARCH64_CORTEX_R
 	select HAS_FLASH_LOAD_OFFSET
 	select CPU_HAS_DCACHE
 	select CPU_HAS_ICACHE
+<<<<<<< HEAD
+=======
+	select ARCH_HAS_STACK_PROTECTION
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select CPU_HAS_FPU
 	imply FPU
 	imply FPU_SHARING
@@ -43,6 +47,16 @@ config CPU_CORTEX_A55
 	help
 	  This option signifies the use of a Cortex-A55 CPU
 
+<<<<<<< HEAD
+=======
+config CPU_CORTEX_A57
+	bool
+	select CPU_CORTEX_A
+	select ARMV8_A
+	help
+	  This option signifies the use of a Cortex-A57 CPU
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config CPU_CORTEX_A72
 	bool
 	select CPU_CORTEX_A
@@ -50,6 +64,23 @@ config CPU_CORTEX_A72
 	help
 	  This option signifies the use of a Cortex-A72 CPU
 
+<<<<<<< HEAD
+=======
+config CPU_CORTEX_A76
+	bool
+	select CPU_CORTEX_A
+	select ARMV8_A
+	help
+	  This option signifies the use of a Cortex-A76 CPU
+
+config CPU_CORTEX_A76_A55
+	bool
+	select CPU_CORTEX_A
+	select ARMV8_A
+	help
+	  This option signifies the use of a Cortex-A76 and A55 big little CPU cluster
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config CPU_CORTEX_R82
 	bool
 	select CPU_AARCH64_CORTEX_R
@@ -121,6 +152,18 @@ config ARM64_SAFE_EXCEPTION_STACK
 	  used for user stack overflow checking, because kernel stack support
 	  the checking work.
 
+<<<<<<< HEAD
+=======
+config ARM64_ENABLE_FRAME_POINTER
+	bool
+	default y
+	depends on OVERRIDE_FRAME_POINTER_DEFAULT && !OMIT_FRAME_POINTER
+	help
+	  Hidden option to simplify access to OVERRIDE_FRAME_POINTER_DEFAULT
+	  and OMIT_FRAME_POINTER. It is automatically enabled when the frame
+	  pointer unwinding is enabled.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config ARM64_SAFE_EXCEPTION_STACK_SIZE
 	int "The stack size of the safe exception stack"
 	default 4096
@@ -129,6 +172,29 @@ config ARM64_SAFE_EXCEPTION_STACK_SIZE
 	  The stack size of the safe exception stack. The safe exception stack
 	  requires to be enough to do the stack overflow check.
 
+<<<<<<< HEAD
+=======
+config ARM64_FALLBACK_ON_RESERVED_CORES
+	bool "To enable fallback on reserved cores"
+	help
+	  Give the ability to define more cores in the device tree than required
+	  via CONFIG_MP_MAX_NUM_CPUS.  The extra cores in the device tree
+	  become reserved.  If there is an issue powering on a core during boot
+	  then that core will be skipped and the next core in the device tree
+	  will be used.
+
+config ARM64_STACK_PROTECTION
+	bool
+	default y if HW_STACK_PROTECTION
+	depends on ARM_MPU
+	select THREAD_STACK_INFO
+	select ARM64_SAFE_EXCEPTION_STACK
+	help
+	  This option leverages the MMU or MPU to cause a system fatal error if
+	  the bounds of the current process stack are overflowed. This is done
+	  by preceding all stack areas with a fixed guard region.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if CPU_CORTEX_A
 
 config ARMV8_A_NS
@@ -158,6 +224,11 @@ config ARMV8_A
 	  so that it can support some features included in the AArch64 state.
 	  It supports the T32 and A32 instruction sets.
 
+<<<<<<< HEAD
+=======
+rsource "xen/Kconfig"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # CPU_CORTEX_A
 
 if CPU_AARCH64_CORTEX_R
@@ -225,7 +296,11 @@ if ARM_MMU
 config MMU_PAGE_SIZE
 	default 0x1000
 
+<<<<<<< HEAD
 choice
+=======
+choice ARM64_VA_BITS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	prompt "Virtual address space size"
 	default ARM64_VA_BITS_32
 	help
@@ -257,7 +332,11 @@ config ARM64_VA_BITS
 	default 42 if ARM64_VA_BITS_42
 	default 48 if ARM64_VA_BITS_48
 
+<<<<<<< HEAD
 choice
+=======
+choice ARM64_PA_BITS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	prompt "Physical address space size"
 	default ARM64_PA_BITS_32
 	help

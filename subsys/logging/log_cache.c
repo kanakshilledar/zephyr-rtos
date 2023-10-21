@@ -89,7 +89,11 @@ bool log_cache_get(struct log_cache *cache, uintptr_t id, uint8_t **data)
 
 void log_cache_put(struct log_cache *cache, uint8_t *data)
 {
+<<<<<<< HEAD
 	struct log_cache_entry *entry = CONTAINER_OF(data, struct log_cache_entry, data);
+=======
+	struct log_cache_entry *entry = CONTAINER_OF(data, struct log_cache_entry, data[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	LOG_CACHE_DBG_ENTRY("cache_put", entry);
 	sys_slist_prepend(&cache->active, &entry->node);
@@ -97,7 +101,11 @@ void log_cache_put(struct log_cache *cache, uint8_t *data)
 
 void log_cache_release(struct log_cache *cache, uint8_t *data)
 {
+<<<<<<< HEAD
 	struct log_cache_entry *entry = CONTAINER_OF(data, struct log_cache_entry, data);
+=======
+	struct log_cache_entry *entry = CONTAINER_OF(data, struct log_cache_entry, data[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	LOG_CACHE_DBG_ENTRY("cache_release", entry);
 	sys_slist_prepend(&cache->idle, &entry->node);

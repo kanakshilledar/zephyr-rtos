@@ -7,12 +7,20 @@
 /dts-v1/;
 
 #include <nxp/nxp_lpc11u68.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "lpcxpresso11u68-pinctrl.dtsi"
 
 / {
 	model = "NXP LPCXPRESSO11U68 board";
+<<<<<<< HEAD
 	compatible = "lpcxpresso11u68", "nxp,lpc";
+=======
+	compatible = "nxp,lpcxpresso11u68", "nxp,lpc";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	chosen {
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
@@ -34,10 +42,18 @@
 		isp_button: button_0 {
 			gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
 			label = "ISP enable button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		wake_up_button: button_1 {
 			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
 			label = "Wake-up button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_WAKEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

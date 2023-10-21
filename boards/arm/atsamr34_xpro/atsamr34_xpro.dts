@@ -7,10 +7,18 @@
 /dts-v1/;
 #include <atmel/samr34.dtsi>
 #include "atsamr34_xpro-pinctrl.dtsi"
+<<<<<<< HEAD
 
 / {
 	model = "SAM R34 Xplained Pro";
 	compatible = "atsamr34,xpro", "atmel,samr34j18b", "atmel,samr34";
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "SAM R34 Xplained Pro";
+	compatible = "atmel,atsamr34xpro", "atmel,samr34j18b", "atmel,samr34";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	chosen {
 		zephyr,console = &sercom0;
@@ -46,6 +54,10 @@
 		user_button: button_0 {
 			gpios = <&porta 28 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "SW0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

@@ -20,7 +20,11 @@ on :ref:`mimxrt685_evk`.
 References
 **********
 
+<<<<<<< HEAD
 - LSM6DSO http://www.st.com/en/mems-and-sensors/lsm6dso.html
+=======
+- LSM6DSO https://www.st.com/en/mems-and-sensors/lsm6dso.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

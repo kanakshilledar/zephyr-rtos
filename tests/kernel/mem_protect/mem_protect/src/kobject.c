@@ -9,14 +9,22 @@
 
 /* Kernel objects */
 
+<<<<<<< HEAD
 K_THREAD_STACK_DEFINE(child_stack, KOBJECT_STACK_SIZE);
+=======
+K_THREAD_STACK_DECLARE(child_stack, KOBJECT_STACK_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 K_THREAD_STACK_DEFINE(extra_stack, KOBJECT_STACK_SIZE);
 
 K_SEM_DEFINE(kobject_sem, SEMAPHORE_INIT_COUNT, SEMAPHORE_MAX_COUNT);
 K_SEM_DEFINE(kobject_public_sem, SEMAPHORE_INIT_COUNT, SEMAPHORE_MAX_COUNT);
 K_MUTEX_DEFINE(kobject_mutex);
 
+<<<<<<< HEAD
 struct k_thread child_thread;
+=======
+extern struct k_thread child_thread;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct k_thread extra_thread;
 
 struct k_sem *random_sem_type;
@@ -1034,6 +1042,7 @@ ZTEST(mem_protect_kobj, test_create_new_invalid_prio_thread_from_user)
 /* Function to init thread's stack objects */
 static void thread_stack_init_objects(void *p1, void *p2, void *p3)
 {
+<<<<<<< HEAD
 	int ret;
 	struct z_object *ko;
 
@@ -1046,6 +1055,13 @@ static void thread_stack_init_objects(void *p1, void *p2, void *p3)
 	ko = z_object_find(child_stack);
 	ret = z_object_validate(ko, K_OBJ_ANY, _OBJ_INIT_TRUE);
 	zassert_equal(ret, _OBJ_INIT_TRUE);
+=======
+	/* check that thread is initialized when running */
+	zassert_true(k_object_is_valid(&child_thread, K_OBJ_ANY));
+
+	/* check that stack is initialized when running */
+	zassert_true(k_object_is_valid(child_stack, K_OBJ_ANY));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -1328,13 +1344,21 @@ struct k_thread t;
 struct k_timer timer;
 struct z_thread_stack_element zs;
 struct k_futex f;
+<<<<<<< HEAD
 struct k_condvar c;
+=======
+struct k_condvar condvar;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void entry_error_perm(void *p1, void *p2, void *p3)
 {
 	set_fault_valid(true);
+<<<<<<< HEAD
 	k_object_access_grant(p2, k_current_get());
 
+=======
+	k_object_access_grant(p1, k_current_get());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -1350,7 +1374,13 @@ static void entry_error_perm(void *p1, void *p2, void *p3)
  */
 ZTEST(mem_protect_kobj, test_kobject_perm_error)
 {
+<<<<<<< HEAD
 	void *kobj[16];
+=======
+#define NUM_KOBJS 13
+
+	void *kobj[NUM_KOBJS];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	kobj[0] = &ms;
 	kobj[1] = &mq;
@@ -1364,18 +1394,33 @@ ZTEST(mem_protect_kobj, test_kobject_perm_error)
 	kobj[9] = &timer;
 	kobj[10] = &zs;
 	kobj[11] = &f;
+<<<<<<< HEAD
 	kobj[12] = &c;
 
 	for (int i = 0; i < 12 ; i++) {
+=======
+	kobj[12] = &condvar;
+
+	for (int i = 0; i < NUM_KOBJS; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		k_tid_t tid = k_thread_create(&child_thread, child_stack,
 			K_THREAD_STACK_SIZEOF(child_stack),
 			(k_thread_entry_t)entry_error_perm,
+<<<<<<< HEAD
 			(void *)&tid, kobj[i], NULL,
+=======
+			kobj[i], NULL, NULL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			1, K_USER, K_NO_WAIT);
 
 		k_thread_join(tid, K_FOREVER);
 	}
+<<<<<<< HEAD
+=======
+
+#undef NUM_KOBJS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 extern const char *otype_to_str(enum k_objects otype);

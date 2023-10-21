@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,6 +13,11 @@
 
 #if defined(CONFIG_SOC_S32Z27_R52)
 #include <S32Z2_MSCM.h>
+<<<<<<< HEAD
+=======
+#elif defined(CONFIG_SOC_S32K344_M7)
+#include <S32K344_MSCM.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 /* Required by OsIf timer initialization but not used with Zephyr, so no values configured */

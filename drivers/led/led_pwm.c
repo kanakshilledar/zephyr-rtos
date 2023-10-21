@@ -65,7 +65,11 @@ static int led_pwm_set_brightness(const struct device *dev,
 	dt_led = &config->led[led];
 
 	return pwm_set_pulse_dt(&config->led[led],
+<<<<<<< HEAD
 				dt_led->period * value / 100);
+=======
+			(uint32_t) ((uint64_t) dt_led->period * value / 100));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int led_pwm_on(const struct device *dev, uint32_t led)

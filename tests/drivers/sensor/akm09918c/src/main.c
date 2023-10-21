@@ -10,6 +10,10 @@
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/ztest.h>
 
+<<<<<<< HEAD
+=======
+#include "akm09918c.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "akm09918c_emul.h"
 #include "akm09918c_reg.h"
 
@@ -72,19 +76,31 @@ static void test_fetch_magnetic_field(const struct akm09918c_fixture *fixture,
 
 	/* Assert the data is within 0.000005 Gauss */
 	actual_ugauss = values[0].val1 * INT64_C(1000000) + values[0].val2;
+<<<<<<< HEAD
 	expect_ugauss = magn_percent[0] * INT64_C(500);
+=======
+	expect_ugauss = magn_percent[0] * AKM09918C_MICRO_GAUSS_PER_BIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_within(expect_ugauss, actual_ugauss, INT64_C(5),
 		       "(X) expected %" PRIi64 " micro-gauss, got %" PRIi64 " micro-gauss",
 		       expect_ugauss, actual_ugauss);
 
 	actual_ugauss = values[1].val1 * INT64_C(1000000) + values[1].val2;
+<<<<<<< HEAD
 	expect_ugauss = magn_percent[1] * INT64_C(500);
+=======
+	expect_ugauss = magn_percent[1] * AKM09918C_MICRO_GAUSS_PER_BIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_within(expect_ugauss, actual_ugauss, INT64_C(5),
 		       "(Y) expected %" PRIi64 " micro-gauss, got %" PRIi64 " micro-gauss",
 		       expect_ugauss, actual_ugauss);
 
 	actual_ugauss = values[2].val1 * INT64_C(1000000) + values[2].val2;
+<<<<<<< HEAD
 	expect_ugauss = magn_percent[2] * INT64_C(500);
+=======
+	expect_ugauss = magn_percent[2] * AKM09918C_MICRO_GAUSS_PER_BIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_within(expect_ugauss, actual_ugauss, INT64_C(5),
 		       "(Z) expected %" PRIi64 " micro-gauss, got %" PRIi64 " micro-gauss",
 		       expect_ugauss, actual_ugauss);
@@ -94,9 +110,15 @@ ZTEST_F(akm09918c, test_fetch_magn)
 {
 	/* Use (0.25, -0.33..., 0.91) as the factors */
 	const int16_t magn_percent[3] = {
+<<<<<<< HEAD
 		INT16_C(32752) / INT16_C(4),
 		INT16_C(-32751) / INT16_C(3),
 		(int16_t)(INT16_C(32752) * INT32_C(91) / INT32_C(100)),
+=======
+		INT16_C(AKM09918C_MAGN_MAX_DATA_REG) / INT16_C(4),
+		INT16_C(AKM09918C_MAGN_MIN_DATA_REG) / INT16_C(3),
+		(int16_t)(INT16_C(AKM09918C_MAGN_MAX_DATA_REG) * INT32_C(91) / INT32_C(100)),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	test_fetch_magnetic_field(fixture, magn_percent);

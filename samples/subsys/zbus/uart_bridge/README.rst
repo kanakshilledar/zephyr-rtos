@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _zbus-uart-bridge-sample:
 
 UART bridge sample
 ##################
+=======
+.. zephyr:code-sample:: zbus-uart-bridge
+   :name: UART bridge
+   :relevant-api: zbus_apis
+
+   Redirect channel events to the host over UART.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

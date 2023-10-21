@@ -20,3 +20,13 @@ properties:
       Indicates whether the CCM peripheral supports the extended length
       (8 bits) of the LENGTH field in encrypted/decrypted packets.
       If not set, only the default length (5 bits) is supported.
+<<<<<<< HEAD
+=======
+
+  headermask-supported:
+    type: boolean
+    description: |
+      Indicates whether the CCM peripheral supports the headermask register to
+      set the PDU header bitmask used to derive the additional authentication
+      data (AAD) in CCM for Bluetooth Low Energy ACL, BIS and CIS PDUs.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -9,12 +9,20 @@
 #include "nucleo_l452re_common.dtsi"
 #include <st/l4/stm32l452r(c-e)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include "st_morpho_connector.dtsi"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32L452RE-NUCLEO board";
 	compatible = "st,stm32l452re-nucleo";
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led: led_0 {
 			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;

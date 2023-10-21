@@ -81,3 +81,11 @@ struct _isr_table_entry __sw_isr_table _sw_isr_table[IRQ_TABLE_SIZE] = {
 				       (void *)&z_irq_spurious},
 };
 #endif
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_SHARED_INTERRUPTS
+struct z_shared_isr_table_entry __shared_sw_isr_table z_shared_sw_isr_table[IRQ_TABLE_SIZE] = {
+};
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

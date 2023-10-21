@@ -97,11 +97,19 @@ source "drivers/eeprom/Kconfig.stm32"
 source "drivers/eeprom/Kconfig.eeprom_emu"
 source "drivers/eeprom/Kconfig.tmp116"
 source "drivers/eeprom/Kconfig.xec"
+<<<<<<< HEAD
+=======
+source "drivers/eeprom/Kconfig.mb85rcxx"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config EEPROM_SIMULATOR
 	bool "Simulated EEPROM driver"
 	default y
 	depends on DT_HAS_ZEPHYR_SIM_EEPROM_ENABLED
+<<<<<<< HEAD
+=======
+	depends on !(ARCH_POSIX && !EXTERNAL_LIBC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select STATS
 	select STATS_NAMES
 	help

@@ -6,6 +6,12 @@
 
 /**
  * @file
+<<<<<<< HEAD
+=======
+ * @defgroup doubly-linked-list_apis Doubly-linked list
+ * @ingroup datastructure_apis
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Doubly-linked list implementation
  *
  * Doubly-linked list implementation using inline macros/functions.
@@ -15,6 +21,11 @@
  * The lists are expected to be initialized such that both the head and tail
  * pointers point to the list itself.  Initializing the lists in such a fashion
  * simplifies the adding and removing of nodes to/from the list.
+<<<<<<< HEAD
+=======
+ *
+ * @{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 
 #ifndef ZEPHYR_INCLUDE_SYS_DLIST_H_
@@ -28,11 +39,14 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /**
  * @defgroup doubly-linked-list_apis Doubly-linked list
  * @ingroup datastructure_apis
  * @{
  */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct _dnode {
 	union {
@@ -45,7 +59,17 @@ struct _dnode {
 	};
 };
 
+<<<<<<< HEAD
 typedef struct _dnode sys_dlist_t;
+=======
+/**
+ * @brief Doubly-linked list structure.
+ */
+typedef struct _dnode sys_dlist_t;
+/**
+ * @brief Doubly-linked list node structure.
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 typedef struct _dnode sys_dnode_t;
 
 
@@ -116,7 +140,11 @@ typedef struct _dnode sys_dnode_t;
 	     __dn != NULL; __dn = __dns,				\
 		     __dns = sys_dlist_peek_next(__dl, __dn))
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to resolve the container of a list node
  * Note: it is safe to use with NULL pointer nodes
  *
@@ -126,7 +154,11 @@ typedef struct _dnode sys_dnode_t;
  */
 #define SYS_DLIST_CONTAINER(__dn, __cn, __n) \
 	((__dn != NULL) ? CONTAINER_OF(__dn, __typeof__(*__cn), __n) : NULL)
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to peek container of the list head
  *
  * @param __dl A pointer on a sys_dlist_t to peek
@@ -136,7 +168,11 @@ typedef struct _dnode sys_dnode_t;
 #define SYS_DLIST_PEEK_HEAD_CONTAINER(__dl, __cn, __n) \
 	SYS_DLIST_CONTAINER(sys_dlist_peek_head(__dl), __cn, __n)
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to peek the next container
  *
  * @param __dl A pointer on a sys_dlist_t to peek
@@ -200,6 +236,12 @@ static inline void sys_dlist_init(sys_dlist_t *list)
 	list->tail = (sys_dnode_t *)list;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Static initializer for a doubly-linked list
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define SYS_DLIST_STATIC_INIT(ptr_to_list) { {(ptr_to_list)}, {(ptr_to_list)} }
 
 /**
@@ -525,6 +567,27 @@ static inline sys_dnode_t *sys_dlist_get(sys_dlist_t *list)
 	return node;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Compute the size of the given list in O(n) time
+ *
+ * @param list A pointer on the list
+ *
+ * @return an integer equal to the size of the list, or 0 if empty
+ */
+static inline size_t sys_dlist_len(sys_dlist_t *list)
+{
+	size_t len = 0;
+	sys_dnode_t *node = NULL;
+
+	SYS_DLIST_FOR_EACH_NODE(list, node) {
+		len++;
+	}
+	return len;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @} */
 
 #ifdef __cplusplus

@@ -5,7 +5,11 @@ description: imxRT watchdog
 
 compatible: "nxp,imx-wdog"
 
+<<<<<<< HEAD
 include: base.yaml
+=======
+include: [base.yaml, pinctrl-device.yaml]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   reg:

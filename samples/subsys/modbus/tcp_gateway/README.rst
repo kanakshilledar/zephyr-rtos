@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _modbus-gateway-sample:
 
 Modbus TCP to serial line gateway sample
 ########################################
+=======
+.. zephyr:code-sample:: modbus-gateway
+   :name: Modbus TCP-to-serial gateway
+   :relevant-api: modbus bsd_sockets
+
+   Implement a gateway between an Ethernet TCP-IP network and a Modbus serial line.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -16,8 +24,13 @@ This sample has been tested with FRDM-K64F board,
 but it should work with any board or shield that has a network interface.
 
 Gateway example is running on an evaluation board and communicates
+<<<<<<< HEAD
 with another board that has been prepared according to the description
 `modbus-rtu-server-sample`. Client is running on a PC or laptop.
+=======
+with another board that has been prepared according to the instructions in
+:zephyr:code-sample:`modbus-rtu-server` sample. Client is running on a PC or laptop.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The description of this sample uses `PyModbus`_ (Pymodbus REPL).
 The user can of course try out other client implementations with this sample.

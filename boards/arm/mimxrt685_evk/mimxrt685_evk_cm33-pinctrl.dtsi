@@ -220,4 +220,16 @@
 			drive-strength = "normal";
 		};
 	};
+<<<<<<< HEAD
+=======
+
+	pinmux_ctimer2_pwm: pinmux_ctimer2_pwm {
+		group0 {
+			pinmux = <CTIMER2_MATCH0_PIO0_14>;
+			slew-rate = "normal";
+			drive-strength = "normal";
+		};
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };

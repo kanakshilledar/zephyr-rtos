@@ -60,19 +60,31 @@ static isoal_status_t custom_sink_sdu_alloc_test(const struct isoal_sink *sink_c
 #define ZASSERT_ISOAL_SDU_ALLOC_TEST(_typ, _sink, _pdu)                                            \
 	zassert_equal_ptr(_sink,                                                                   \
 			  sink_sdu_alloc_test_fake.arg0_##_typ,                                    \
+<<<<<<< HEAD
 			  "\t\t%p != %p",                                                          \
+=======
+			  "\t\tExpected alloc sink at %p, got %p.",                                \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  _sink,                                                                   \
 			  sink_sdu_alloc_test_fake.arg0_##_typ);                                   \
 	zassert_equal_ptr(_pdu,                                                                    \
 			  sink_sdu_alloc_test_fake.arg1_##_typ,                                    \
+<<<<<<< HEAD
 			  "\t\t%p != %p",                                                          \
+=======
+			  "\t\tExpected alloc PDU buffer at %p, got %p.",                          \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  _pdu,                                                                    \
 			  sink_sdu_alloc_test_fake.arg1_##_typ)
 
 #define ZASSERT_ISOAL_SDU_ALLOC_TEST_CALL_COUNT(_expected)                                         \
 	zassert_equal(_expected,                                                                   \
 		      sink_sdu_alloc_test_fake.call_count,                                         \
+<<<<<<< HEAD
 		      "Expected %u got %u",                                                        \
+=======
+		      "Expected alloc called %u times, actual %u.",                                \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _expected,                                                                   \
 		      sink_sdu_alloc_test_fake.call_count)
 
@@ -125,31 +137,54 @@ static isoal_status_t custom_sink_sdu_emit_test(const struct isoal_sink *sink_ct
 				    _sdu_status)                                                   \
 	zassert_equal_ptr(_sink,                                                                   \
 			  sink_sdu_emit_test_fake.arg0_##_typ,                                     \
+<<<<<<< HEAD
 			  "\t\t%p != %p",                                                          \
+=======
+			  "\t\tExpected sink at %p, got %p.",                                      \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  _sink,                                                                   \
 			  sink_sdu_emit_test_fake.arg0_##_typ);                                    \
 	zassert_equal(_state,                                                                      \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_state,                       \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
 		      _state,                                                                      \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_state);                      \
 	zassert_equal(_frag_sz,                                                                    \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_frag_size,                   \
 		      "\t\t%d != %d",                                                              \
+=======
+		      "\t\tExpected SDU state '%s', got '%s'.",                                    \
+		      STATE_TO_STR(_state),                                                        \
+		      STATE_TO_STR(sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_state));        \
+	zassert_equal(_frag_sz,                                                                    \
+		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_frag_size,                   \
+		      "\t\tExpected SDU frag of size %u, got %u.",                                 \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _frag_sz,                                                                    \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu_frag_size);                  \
 	zassert_equal(_frag_status,                                                                \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.status,                      \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
 		      _frag_status,                                                                \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.status);                     \
 	zassert_equal(_timestamp,                                                                  \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.timestamp,                   \
 		      "\t\t%d != %d",                                                              \
+=======
+		      "\t\tExpected SDU with status '%s', got '%s'.",                              \
+		      DU_ERR_TO_STR(_frag_status),                                                 \
+		      DU_ERR_TO_STR(sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.status));      \
+	zassert_equal(_timestamp,                                                                  \
+		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.timestamp,                   \
+		      "\t\tExpected SDU with timestamp %u, got %u.",                               \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _timestamp,                                                                  \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.timestamp);                  \
 	zassert_equal(_sn,                                                                         \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.sn,                          \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
 		      _sn,                                                                         \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.sn);                         \
@@ -161,23 +196,50 @@ static isoal_status_t custom_sink_sdu_emit_test(const struct isoal_sink *sink_ct
 	zassert_equal(_dbuf_sz,                                                                    \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.contents.size,               \
 		      "\t\t%d != %d",                                                              \
+=======
+		      "\t\tExpected SDU with sequence number %u, got  %u.",                        \
+		      _sn,                                                                         \
+		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.sn);                         \
+	zassert_equal_ptr(_dbuf,                                                                   \
+			  sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.contents.dbuf,           \
+			  "\t\tExpected SDU data buffer at %p, got %p.",                           \
+			  _dbuf,                                                                   \
+			  sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.contents.dbuf);          \
+	zassert_equal(_dbuf_sz,                                                                    \
+		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.contents.size,               \
+		      "\t\tExpected SDU data buffer of size %u, got %u.",                          \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _dbuf_sz,                                                                    \
 		      sink_sdu_emit_test_handler_fake.arg1_##_typ.sdu.contents.size);              \
 	zassert_equal(_total_sz,                                                                   \
 		      sink_sdu_emit_test_handler_fake.arg2_##_typ.total_sdu_size,                  \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
+=======
+		      "\t\tExpected total size of SDU %u,got %u.",                                 \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _total_sz,                                                                   \
 		      sink_sdu_emit_test_handler_fake.arg2_##_typ.total_sdu_size);                 \
 	zassert_equal(_sdu_status,                                                                 \
 		      sink_sdu_emit_test_handler_fake.arg2_##_typ.collated_status,                 \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
 		      _sdu_status,                                                                 \
 		      sink_sdu_emit_test_handler_fake.arg2_##_typ.collated_status)
+=======
+		      "\t\tExpected SDU with status '%s', got '%s'.",                              \
+		      DU_ERR_TO_STR(_sdu_status),                                                  \
+		      DU_ERR_TO_STR(sink_sdu_emit_test_handler_fake.arg2_##_typ.collated_status))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define ZASSERT_ISOAL_SDU_EMIT_TEST_CALL_COUNT(_expected)                                          \
 	zassert_equal(_expected,                                                                   \
 		      sink_sdu_emit_test_fake.call_count,                                          \
+<<<<<<< HEAD
 		      "Expected %u got %u",                                                        \
+=======
+		      "Expected emit called %u times,  actual %u.",                                \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _expected,                                                                   \
 		      sink_sdu_emit_test_fake.call_count)
 
@@ -212,24 +274,40 @@ custom_sink_sdu_write_test(void *dbuf, const uint8_t *pdu_payload, const size_t 
 #define ZASSERT_ISOAL_SDU_WRITE_TEST(_typ, _frag_buf, _payload_buf, _length)                       \
 	zassert_equal_ptr(_frag_buf,                                                               \
 			  sink_sdu_write_test_fake.arg0_##_typ,                                    \
+<<<<<<< HEAD
 			  "\t\t%p != %p",                                                          \
+=======
+			  "\t\tExpected write buffer at %p, got %p.",                              \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  _frag_buf,                                                               \
 			  sink_sdu_write_test_fake.arg0_##_typ);                                   \
 	zassert_equal_ptr(_payload_buf,                                                            \
 			  sink_sdu_write_test_fake.arg1_##_typ,                                    \
+<<<<<<< HEAD
 			  "\t\t%p != %p",                                                          \
+=======
+			  "\t\tExpected write source at %p, got %p.",                              \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			  _payload_buf,                                                            \
 			  sink_sdu_write_test_fake.arg1_##_typ);                                   \
 	zassert_equal(_length,                                                                     \
 		      sink_sdu_write_test_fake.arg2_##_typ,                                        \
+<<<<<<< HEAD
 		      "\t\t%d != %d",                                                              \
+=======
+		      "\t\tExpected write length of %u, got %u.",                                  \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _length,                                                                     \
 		      sink_sdu_write_test_fake.arg2_##_typ)
 
 #define ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(_expected)                                         \
 	zassert_equal(_expected,                                                                   \
 		      sink_sdu_write_test_fake.call_count,                                         \
+<<<<<<< HEAD
 		      "Expected %u got %u",                                                        \
+=======
+		     "Expected write called %u times,  actual %u.",                                \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      _expected,                                                                   \
 		      sink_sdu_write_test_fake.call_count)
 
@@ -2767,7 +2845,11 @@ ZTEST(test_rx_unframed, test_rx_unframed_single_pdu_err)
 	seqn = 0;
 	testdata_indx = 0;
 	testdata_size = 13;
+<<<<<<< HEAD
 	sdu_size = 13;
+=======
+	sdu_size = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status = COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_ERRORS, ISOAL_SDU_STATUS_ERRORS);
 
@@ -2804,11 +2886,17 @@ ZTEST(test_rx_unframed, test_rx_unframed_single_pdu_err)
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
 				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
 
+<<<<<<< HEAD
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -2838,7 +2926,10 @@ ZTEST(test_rx_unframed, test_rx_unframed_single_pdu_err)
 	sdu_timestamp = (uint32_t)((int64_t)pdu_timestamp + latency);
 	testdata_indx = testdata_size;
 	testdata_size += 10;
+<<<<<<< HEAD
 	sdu_size = 10;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status =
 		COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_LOST_DATA, ISOAL_SDU_STATUS_LOST_DATA);
@@ -2866,11 +2957,17 @@ ZTEST(test_rx_unframed, test_rx_unframed_single_pdu_err)
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
 				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
 
+<<<<<<< HEAD
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -3239,7 +3336,10 @@ ZTEST(test_rx_unframed, test_rx_unframed_seq_pdu_err1)
 	payload_number++;
 	testdata_indx = testdata_size;
 	testdata_size += 10;
+<<<<<<< HEAD
 	sdu_size += 10;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status =
 		COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_LOST_DATA, ISOAL_SDU_STATUS_LOST_DATA);
@@ -3263,12 +3363,20 @@ ZTEST(test_rx_unframed, test_rx_unframed_seq_pdu_err1)
 
 	/* Test recombine (Black Box) */
 	/* A new SDU should not be allocated */
+<<<<<<< HEAD
 
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	ZASSERT_ISOAL_SDU_ALLOC_TEST_CALL_COUNT(1);
+
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(1);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -3535,7 +3643,11 @@ ZTEST(test_rx_unframed, test_rx_unframed_seq_pdu_err2)
 	payload_number++;
 	testdata_indx = testdata_size;
 	testdata_size += 10;
+<<<<<<< HEAD
 	sdu_size = 10;
+=======
+	sdu_size = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, 50);
 	collated_status =
 		COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_LOST_DATA, ISOAL_SDU_STATUS_LOST_DATA);
@@ -3565,11 +3677,17 @@ ZTEST(test_rx_unframed, test_rx_unframed_seq_pdu_err2)
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
 				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
 
+<<<<<<< HEAD
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(1);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -4569,7 +4687,11 @@ ZTEST(test_rx_unframed, test_rx_unframed_padding_error1)
 	seqn = 0;
 	testdata_indx = 0;
 	testdata_size = 13;
+<<<<<<< HEAD
 	sdu_size = 13;
+=======
+	sdu_size = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status = COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_ERRORS, ISOAL_SDU_STATUS_ERRORS);
 
@@ -4607,11 +4729,17 @@ ZTEST(test_rx_unframed, test_rx_unframed_padding_error1)
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
 				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
 
+<<<<<<< HEAD
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -5935,7 +6063,10 @@ ZTEST(test_rx_unframed, test_rx_unframed_dbl_pdu_invalid_llid2_pdu_err)
 	payload_number++;
 	testdata_indx = testdata_size;
 	testdata_size += 10;
+<<<<<<< HEAD
 	sdu_size += 10;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status = COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_ERRORS, ISOAL_SDU_STATUS_ERRORS);
 
@@ -5958,12 +6089,20 @@ ZTEST(test_rx_unframed, test_rx_unframed_dbl_pdu_invalid_llid2_pdu_err)
 
 	/* Test recombine (Black Box) */
 	/* A new SDU should not be allocated */
+<<<<<<< HEAD
 
 	/* SDU payload should be written */
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf,                 /* SDU buffer */
 				     &rx_pdu_meta_buf.pdu[3],          /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
+=======
+	ZASSERT_ISOAL_SDU_ALLOC_TEST_CALL_COUNT(1);
+
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(1);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* SDU should be emitted */
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -8332,6 +8471,7 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err1)
  */
 ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 {
+<<<<<<< HEAD
 	struct rx_pdu_meta_buffer rx_pdu_meta_buf;
 	struct rx_sdu_frag_buffer rx_sdu_frag_buf;
 	struct isoal_sdu_buffer sdu_buffer;
@@ -8340,19 +8480,43 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	uint32_t stream_sync_delay;
 	uint32_t group_sync_delay;
 	isoal_sdu_len_t sdu_size;
+=======
+	const uint8_t test_data_size = 33;
+	const uint8_t max_sdu_burst = 2;
+
+	struct rx_sdu_frag_buffer rx_sdu_frag_buf[max_sdu_burst];
+	struct isoal_sdu_buffer sdu_buffer[max_sdu_burst];
+	isoal_sdu_status_t collated_status[max_sdu_burst];
+	struct rx_pdu_meta_buffer rx_pdu_meta_buf;
+	isoal_sdu_len_t sdu_size[max_sdu_burst];
+	uint16_t total_sdu_size[max_sdu_burst];
+	uint32_t sdu_timestamp[max_sdu_burst];
+	uint8_t testdata[test_data_size];
+	isoal_sink_handle_t sink_hdl;
+	uint32_t stream_sync_delay;
+	uint32_t group_sync_delay;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t iso_interval_int;
 	uint16_t pdu_data_loc[5];
 	uint32_t iso_interval_us;
 	uint64_t payload_number;
+<<<<<<< HEAD
 	uint16_t total_sdu_size;
 	uint32_t sdu_timeoffset;
 	uint32_t pdu_timestamp;
 	uint32_t sdu_timestamp;
+=======
+	uint32_t sdu_timeoffset;
+	uint32_t pdu_timestamp;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t testdata_indx;
 	uint16_t testdata_size;
 	uint32_t sdu_interval;
 	isoal_sdu_cnt_t seqn;
+<<<<<<< HEAD
 	uint8_t testdata[33];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	isoal_status_t err;
 	uint32_t latency;
 	uint8_t role;
@@ -8371,12 +8535,23 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 
 	/* PDU 1 -------------------------------------------------------------*/
 	isoal_test_init_rx_pdu_buffer(&rx_pdu_meta_buf);
+<<<<<<< HEAD
 	isoal_test_init_rx_sdu_buffer(&rx_sdu_frag_buf);
 	init_test_data_buffer(testdata, 33);
 	memset(pdu_data_loc, 0, sizeof(pdu_data_loc));
 
 	sdu_buffer.dbuf = &rx_sdu_frag_buf;
 	sdu_buffer.size = TEST_RX_SDU_FRAG_PAYLOAD_MAX;
+=======
+	isoal_test_init_rx_sdu_buffer(&rx_sdu_frag_buf[0]);
+	init_test_data_buffer(testdata, test_data_size);
+	memset(pdu_data_loc, 0, sizeof(pdu_data_loc));
+
+	sdu_buffer[0].dbuf = &rx_sdu_frag_buf[0];
+	sdu_buffer[0].size = TEST_RX_SDU_FRAG_PAYLOAD_MAX;
+	sdu_buffer[1].dbuf = &rx_sdu_frag_buf[1];
+	sdu_buffer[1].size = TEST_RX_SDU_FRAG_PAYLOAD_MAX;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	payload_number = 1000 * BN;
 	pdu_timestamp = 9249;
 	latency = calc_rx_latency_by_role(role,
@@ -8388,6 +8563,7 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 					  group_sync_delay);
 	sdu_timeoffset = group_sync_delay - 50;
 	/* PDU will have errors. Time stamp is only an approximation */
+<<<<<<< HEAD
 	sdu_timestamp = (uint32_t)((int64_t)pdu_timestamp + latency - iso_interval_us);
 	seqn = 0;
 	testdata_indx = 0;
@@ -8395,6 +8571,15 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	sdu_size = 0;
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status =
+=======
+	sdu_timestamp[0] = (uint32_t)((int64_t)pdu_timestamp + latency - iso_interval_us);
+	seqn = 0;
+	testdata_indx = 0;
+	testdata_size = 23;
+	sdu_size[0] = 0;
+	total_sdu_size[0] = COLLATED_RX_SDU_INFO(sdu_size[0], sdu_size[0]);
+	collated_status[0] =
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_LOST_DATA, ISOAL_SDU_STATUS_LOST_DATA);
 
 	sink_hdl = basic_rx_test_setup(0xADAD,            /* Handle */
@@ -8418,7 +8603,11 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 							   &rx_pdu_meta_buf.pdu_meta);
 
 	/* Set callback function return values */
+<<<<<<< HEAD
 	push_custom_sink_sdu_alloc_test_output_buffer(&sdu_buffer);
+=======
+	push_custom_sink_sdu_alloc_test_output_buffer(&sdu_buffer[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sink_sdu_alloc_test_fake.return_val = ISOAL_STATUS_OK;
 	sink_sdu_write_test_fake.return_val = ISOAL_STATUS_OK;
 	sink_sdu_emit_test_fake.return_val = ISOAL_STATUS_OK;
@@ -8428,6 +8617,7 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	zassert_equal(err, ISOAL_STATUS_OK, "err = 0x%02x", err);
 
 	/* Test recombine (Black Box) */
+<<<<<<< HEAD
 	/* A new SDU should be allocated */
 	ZASSERT_ISOAL_SDU_ALLOC_TEST(val,
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
@@ -8447,6 +8637,16 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 				    sdu_buffer.size,                    /* Buffer size */
 				    total_sdu_size,                     /* Total size */
 				    collated_status);                   /* SDU status */
+=======
+	/* A new SDU should not be allocated */
+	ZASSERT_ISOAL_SDU_ALLOC_TEST_CALL_COUNT(0);
+
+	/* SDU payload should not be written */
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(0);
+
+	/* SDU should not be emitted */
+	ZASSERT_ISOAL_SDU_EMIT_TEST_CALL_COUNT(0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Test recombine (White Box) */
 	zassert_equal(isoal_global.sink_state[sink_hdl].sdu_production.fsm,
@@ -8457,11 +8657,16 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 
 	/* PDU 2 -------------------------------------------------------------*/
 	isoal_test_init_rx_pdu_buffer(&rx_pdu_meta_buf);
+<<<<<<< HEAD
 	isoal_test_init_rx_sdu_buffer(&rx_sdu_frag_buf);
+=======
+	isoal_test_init_rx_sdu_buffer(&rx_sdu_frag_buf[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	payload_number++;
 
 	sdu_timeoffset = get_next_time_offset(sdu_timeoffset, iso_interval_us, sdu_interval, false);
+<<<<<<< HEAD
 	sdu_timestamp = (uint32_t)((int64_t)pdu_timestamp + latency - sdu_timeoffset);
 	seqn++;
 	testdata_indx = testdata_size;
@@ -8469,6 +8674,14 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	sdu_size = 10;
 	total_sdu_size = COLLATED_RX_SDU_INFO(sdu_size, sdu_size);
 	collated_status = COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_VALID, ISOAL_SDU_STATUS_VALID);
+=======
+	sdu_timestamp[1] = (uint32_t)((int64_t)pdu_timestamp + latency - sdu_timeoffset);
+	testdata_indx = testdata_size;
+	testdata_size += 10;
+	sdu_size[1] = 10;
+	total_sdu_size[1] = COLLATED_RX_SDU_INFO(sdu_size[1], sdu_size[1]);
+	collated_status[1] = COLLATED_RX_SDU_INFO(ISOAL_SDU_STATUS_VALID, ISOAL_SDU_STATUS_VALID);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	isoal_test_create_framed_pdu_base(payload_number,
 					  pdu_timestamp,
@@ -8480,7 +8693,11 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 							   &rx_pdu_meta_buf.pdu_meta);
 
 	/* Set callback function return values */
+<<<<<<< HEAD
 	push_custom_sink_sdu_alloc_test_output_buffer(&sdu_buffer);
+=======
+	push_custom_sink_sdu_alloc_test_output_buffer(&sdu_buffer[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sink_sdu_alloc_test_fake.return_val = ISOAL_STATUS_OK;
 	sink_sdu_write_test_fake.return_val = ISOAL_STATUS_OK;
 	sink_sdu_emit_test_fake.return_val = ISOAL_STATUS_OK;
@@ -8490,14 +8707,46 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	zassert_equal(err, ISOAL_STATUS_OK, "err = 0x%02x", err);
 
 	/* Test recombine (Black Box) */
+<<<<<<< HEAD
+=======
+	/* SDU 0 -------------------------------------------------------------*/
+	/* A new SDU should be allocated */
+	ZASSERT_ISOAL_SDU_ALLOC_TEST(history[0],
+				     &isoal_global.sink_state[sink_hdl], /* Sink */
+				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
+
+	/* SDU payload should not be written */
+
+	/* SDU should be emitted */
+	ZASSERT_ISOAL_SDU_EMIT_TEST(history[0],
+				    &isoal_global.sink_state[sink_hdl], /* Sink */
+				    BT_ISO_SINGLE,                      /* Frag state */
+				    sdu_size[0],                        /* Frag size */
+				    ISOAL_SDU_STATUS_LOST_DATA,         /* Frag status */
+				    sdu_timestamp[0],                   /* Timestamp */
+				    seqn,                               /* Seq. number */
+				    sdu_buffer[0].dbuf,                 /* Buffer */
+				    sdu_buffer[0].size,                 /* Buffer size */
+				    total_sdu_size[0],                  /* Total size */
+				    collated_status[0]);                /* SDU status */
+
+	/* SDU 1 -------------------------------------------------------------*/
+	seqn++;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* A new SDU should be allocated */
 	ZASSERT_ISOAL_SDU_ALLOC_TEST(val,
 				     &isoal_global.sink_state[sink_hdl], /* Sink */
 				     &rx_pdu_meta_buf.pdu_meta);         /* PDU */
 
 	/* SDU payload should be written */
+<<<<<<< HEAD
 	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
 				     &rx_sdu_frag_buf, /* SDU buffer */
+=======
+	ZASSERT_ISOAL_SDU_WRITE_TEST_CALL_COUNT(1);
+	ZASSERT_ISOAL_SDU_WRITE_TEST(val,
+				     &rx_sdu_frag_buf[1], /* SDU buffer */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     &rx_pdu_meta_buf.pdu[3 + pdu_data_loc[1]],
 				     /* PDU payload */
 				     (testdata_size - testdata_indx)); /* Size */
@@ -8506,6 +8755,7 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 	ZASSERT_ISOAL_SDU_EMIT_TEST(val,
 				    &isoal_global.sink_state[sink_hdl], /* Sink */
 				    BT_ISO_SINGLE,                      /* Frag state */
+<<<<<<< HEAD
 				    sdu_size,                           /* Frag size */
 				    ISOAL_SDU_STATUS_VALID,             /* Frag status */
 				    sdu_timestamp,                      /* Timestamp */
@@ -8514,6 +8764,16 @@ ZTEST(test_rx_framed, test_rx_framed_dbl_pdu_dbl_sdu_pdu_err2)
 				    sdu_buffer.size,                    /* Buffer size */
 				    total_sdu_size,                     /* Total size */
 				    collated_status);                   /* SDU status */
+=======
+				    sdu_size[1],                        /* Frag size */
+				    ISOAL_SDU_STATUS_VALID,             /* Frag status */
+				    sdu_timestamp[1],                   /* Timestamp */
+				    seqn,                               /* Seq. number */
+				    sdu_buffer[1].dbuf,                 /* Buffer */
+				    sdu_buffer[1].size,                 /* Buffer size */
+				    total_sdu_size[1],                  /* Total size */
+				    collated_status[1]);                /* SDU status */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Test recombine (White Box) */
 	zassert_equal(isoal_global.sink_state[sink_hdl].sdu_production.fsm,

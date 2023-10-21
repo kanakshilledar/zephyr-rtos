@@ -14,6 +14,10 @@ zephyr_library_sources(
     lwm2m_obj_device.c
     lwm2m_rw_link_format.c
     lwm2m_rw_plain_text.c
+<<<<<<< HEAD
+=======
+    lwm2m_rw_opaque.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     lwm2m_util.c
     lwm2m_rd_client.c
     )

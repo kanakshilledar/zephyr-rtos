@@ -17,10 +17,17 @@
 #include <kernel_internal.h>
 #include <zephyr/linker/linker-defs.h>
 
+<<<<<<< HEAD
 __weak void z_arm64_mm_init(bool is_primary_core) { }
 
 extern void z_arm64_mm_init(bool is_primary_core);
 
+=======
+extern void z_arm64_mm_init(bool is_primary_core);
+
+__weak void z_arm64_mm_init(bool is_primary_core) { }
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * These simple memset/memcpy alternatives are necessary as the optimized
  * ones depend on the MMU to be active (see commit c5b898743a20).

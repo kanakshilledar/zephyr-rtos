@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/dma.h)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library()
 
 zephyr_library_sources_ifdef(CONFIG_DMA_SAM_XDMAC	dma_sam_xdmac.c)
@@ -13,6 +18,10 @@ zephyr_library_sources_ifdef(CONFIG_DMA_NIOS2_MSGDMA	dma_nios2_msgdma.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_SAM0		dma_sam0.c)
 zephyr_library_sources_ifdef(CONFIG_USERSPACE		dma_handlers.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_MCUX_EDMA	dma_mcux_edma.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_DMA_MCUX_EDMA_V3	dma_mcux_edma.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_DMA_MCUX_LPC	dma_mcux_lpc.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_PL330		dma_pl330.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_IPROC_PAX	dma_iproc_pax_v1.c)
@@ -29,3 +38,8 @@ zephyr_library_sources_ifdef(CONFIG_DMA_ESP32		dma_esp32_gdma.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_MCHP_XEC	dma_mchp_xec.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_XMC4XXX		dma_xmc4xxx.c)
 zephyr_library_sources_ifdef(CONFIG_DMA_RPI_PICO	dma_rpi_pico.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_MCUX_PXP		dma_mcux_pxp.c)
+zephyr_library_sources_ifdef(CONFIG_DMA_MCUX_SMARTDMA	dma_mcux_smartdma.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

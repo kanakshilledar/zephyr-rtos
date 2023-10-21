@@ -519,6 +519,13 @@ static int set_up_plls(void)
 	LL_RCC_PLL1_SetN(STM32_PLL_N_MULTIPLIER);
 
 	LL_RCC_PLL1FRACN_Disable();
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(STM32_PLL_FRACN_ENABLED)) {
+		LL_RCC_PLL1_SetFRACN(STM32_PLL_FRACN_VALUE);
+		LL_RCC_PLL1FRACN_Enable();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(STM32_PLL_P_ENABLED)) {
 		LL_RCC_PLL1_SetP(STM32_PLL_P_DIVISOR);
@@ -569,6 +576,13 @@ static int set_up_plls(void)
 	LL_RCC_PLL2_SetN(STM32_PLL2_N_MULTIPLIER);
 
 	LL_RCC_PLL2FRACN_Disable();
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(STM32_PLL2_FRACN_ENABLED)) {
+		LL_RCC_PLL2_SetFRACN(STM32_PLL2_FRACN_VALUE);
+		LL_RCC_PLL2FRACN_Enable();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(STM32_PLL2_P_ENABLED)) {
 		LL_RCC_PLL2_SetP(STM32_PLL2_P_DIVISOR);
@@ -617,6 +631,13 @@ static int set_up_plls(void)
 	LL_RCC_PLL3_SetN(STM32_PLL3_N_MULTIPLIER);
 
 	LL_RCC_PLL3FRACN_Disable();
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(STM32_PLL3_FRACN_ENABLED)) {
+		LL_RCC_PLL3_SetFRACN(STM32_PLL3_FRACN_VALUE);
+		LL_RCC_PLL3FRACN_Enable();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(STM32_PLL3_P_ENABLED)) {
 		LL_RCC_PLL3_SetP(STM32_PLL3_P_DIVISOR);
@@ -758,10 +779,31 @@ static void set_up_fixed_clock_sources(void)
 	}
 
 	if (IS_ENABLED(STM32_LSI_ENABLED)) {
+<<<<<<< HEAD
+=======
+		if (!LL_AHB3_GRP1_IsEnabledClock(LL_AHB3_GRP1_PERIPH_PWR)) {
+			/* Enable the power interface clock */
+			LL_AHB3_GRP1_EnableClock(LL_AHB3_GRP1_PERIPH_PWR);
+		}
+
+		if (!LL_PWR_IsEnabledBkUpAccess()) {
+			/* Enable write access to Backup domain */
+			LL_PWR_EnableBkUpAccess();
+			while (!LL_PWR_IsEnabledBkUpAccess()) {
+				/* Wait for Backup domain access */
+			}
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Enable LSI oscillator */
 		LL_RCC_LSI_Enable();
 		while (LL_RCC_LSI_IsReady() != 1) {
 		}
+<<<<<<< HEAD
+=======
+
+		LL_PWR_DisableBkUpAccess();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (IS_ENABLED(STM32_HSI48_ENABLED)) {

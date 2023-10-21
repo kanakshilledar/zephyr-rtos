@@ -356,10 +356,28 @@ SECTIONS
 
     __data_region_end = .;
 
+<<<<<<< HEAD
     MPU_MIN_SIZE_ALIGN
 
      _image_ram_end = .;
      _end = .; /* end of image */
+=======
+	SECTION_DATA_PROLOGUE(.h2ram_pool,(NOLOAD),)
+	{
+		/*
+		 * Since __sha256_ram_block section must in the first 4KB,
+		 * h2ram_pool section is no longer included first inside the
+		 * RAMABLE_REGION.
+		 * Append h2ram_pool section at the end of used memory, so gap
+		 * due to alignment is still available for newly added variables
+		 */
+		. = ALIGN(0x1000);
+		_h2ram_pool_start = .;
+		KEEP(*(.h2ram_pool))
+		_h2ram_pool_end = .;
+	}  GROUP_DATA_LINK_IN(RAMABLE_REGION, RAMABLE_REGION)
+	_h2ram_pool_size = ABSOLUTE(_h2ram_pool_end - _h2ram_pool_start);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	__kernel_ram_end = .;
 	__kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
@@ -369,7 +387,15 @@ SECTIONS
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
      GROUP_END(RAMABLE_REGION)
+=======
+#define LAST_RAM_ALIGN MPU_MIN_SIZE_ALIGN
+
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/linker/debug-sections.ld>
 

@@ -1,14 +1,26 @@
+<<<<<<< HEAD
 .. _sockets-big-http-download:
 
 Socket Big HTTP Download Example
 ################################
+=======
+.. zephyr:code-sample:: sockets-big-http-download
+   :name: Large HTTP download
+   :relevant-api: bsd_sockets tls_credentials
+
+   Download a large file from a web server using BSD sockets.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
 The sockets/big_http_download sample application for Zephyr implements
 a simple HTTP GET client using a BSD Sockets compatible API. Unlike
+<<<<<<< HEAD
 the :ref:`sockets-http-get` sample application, it downloads a file of
+=======
+the :zephyr:code-sample:`sockets-http-get` sample application, it downloads a file of
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 several megabytes in size, and verifies its integrity using hashing. It
 also performs download repeatedly, tracking the total number of bytes
 transferred. Thus, it can serve as a "load testing" application for
@@ -78,11 +90,19 @@ An alternative way is to specify ``-DEXTRA_CONF_FILE=overlay-tls.conf`` when
 running ``west build`` or ``cmake``.
 
 The TLS version of this sample downloads a file from
+<<<<<<< HEAD
 https://www.7-zip.org/a/7z1805.exe (1.1MB). The certificate
 used by the sample is in the sample's ``src`` directory and is configured
 to access the default website configured in the sample for TLS
 communication (https://www.7-zip.org). To access a different
 web page over TLS, you'll need to provide a different certificate
+=======
+https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/git/1:2.34.1-1ubuntu1/git_2.34.1.orig.tar.xz
+(6.6MB). The certificates used by the sample are in the sample's ``src``
+directory and are used to access the default website configured in the sample
+for TLS communication (https://launchpad.net) and possible redirects. To access
+a different web page over TLS, you'll need to provide a different certificate
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 to authenticate to that server.
 
 Note, that TLS support in the sample depends on non-posix, TLS socket

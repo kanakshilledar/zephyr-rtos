@@ -64,7 +64,11 @@ enum pong_state {
 	CONNECTED,
 };
 
+<<<<<<< HEAD
 static enum pong_state state = INIT;
+=======
+static enum pong_state pg_state = INIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct pong_choice {
 	int val;
@@ -202,9 +206,15 @@ static void mode_selected(int val)
 {
 	struct mb_display *disp = mb_display_get();
 
+<<<<<<< HEAD
 	state = val;
 
 	switch (state) {
+=======
+	pg_state = val;
+
+	switch (pg_state) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case SINGLE:
 		game_init(true);
 		k_sem_give(&disp_update);
@@ -216,7 +226,11 @@ static void mode_selected(int val)
 				 SCROLL_SPEED, "Connecting...");
 		break;
 	default:
+<<<<<<< HEAD
 		printk("Unknown state %d\n", state);
+=======
+		printk("Unknown state %d\n", pg_state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 }
@@ -318,13 +332,21 @@ static void game_refresh(struct k_work *work)
 		k_thread_foreach(game_stack_dump, NULL);
 	}
 
+<<<<<<< HEAD
 	if (state == INIT) {
+=======
+	if (pg_state == INIT) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pong_select(&mode_selection);
 		return;
 	}
 
 	if (ended) {
+<<<<<<< HEAD
 		game_init(state == SINGLE || remote_lost);
+=======
+		game_init(pg_state == SINGLE || remote_lost);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_sem_give(&disp_update);
 		return;
 	}
@@ -334,7 +356,11 @@ static void game_refresh(struct k_work *work)
 
 	/* Ball went over to the other side */
 	if (ball_vel.y < 0 && ball_pos.y < BALL_POS_Y_MIN) {
+<<<<<<< HEAD
 		if (state == SINGLE) {
+=======
+		if (pg_state == SINGLE) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			ball_pos.y = -ball_pos.y;
 			ball_vel.y = -ball_vel.y;
 			sound_set(SOUND_WALL);
@@ -362,7 +388,11 @@ static void game_refresh(struct k_work *work)
 		if (ball_pos.x < REAL_TO_VIRT(paddle_x) ||
 		    ball_pos.x >= REAL_TO_VIRT(paddle_x + 2)) {
 			game_ended(false);
+<<<<<<< HEAD
 			if (state == CONNECTED) {
+=======
+			if (pg_state == CONNECTED) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				ble_send_lost();
 			}
 			return;
@@ -421,14 +451,24 @@ static void button_pressed(const struct device *dev, struct gpio_callback *cb,
 			printk("WARNING: Data-race (work and event)\n");
 		}
 
+<<<<<<< HEAD
 		game_init(state == SINGLE || remote_lost);
+=======
+		game_init(pg_state == SINGLE || remote_lost);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_sem_give(&disp_update);
 		return;
 	}
 
+<<<<<<< HEAD
 	if (state == MULTI) {
 		ble_cancel_connect();
 		state = INIT;
+=======
+	if (pg_state == MULTI) {
+		ble_cancel_connect();
+		pg_state = INIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pong_select(&mode_selection);
 		return;
 	}
@@ -474,14 +514,22 @@ static void button_pressed(const struct device *dev, struct gpio_callback *cb,
 
 void pong_conn_ready(bool initiator)
 {
+<<<<<<< HEAD
 	state = CONNECTED;
+=======
+	pg_state = CONNECTED;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	game_init(initiator);
 	k_sem_give(&disp_update);
 }
 
 void pong_remote_disconnected(void)
 {
+<<<<<<< HEAD
 	state = INIT;
+=======
+	pg_state = INIT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_work_reschedule(&refresh, K_SECONDS(1));
 }
 
@@ -496,7 +544,11 @@ static void configure_buttons(void)
 	static struct gpio_callback button_cb_data;
 
 	/* since sw0_gpio.port == sw1_gpio.port, we only need to check ready once */
+<<<<<<< HEAD
 	if (!device_is_ready(sw0_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&sw0_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", sw0_gpio.port->name);
 		return;
 	}
@@ -521,7 +573,11 @@ int main(void)
 
 	k_work_init_delayable(&refresh, game_refresh);
 
+<<<<<<< HEAD
 	if (!device_is_ready(pwm.dev)) {
+=======
+	if (!pwm_is_ready_dt(&pwm)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", pwm.dev->name);
 		return 0;
 	}

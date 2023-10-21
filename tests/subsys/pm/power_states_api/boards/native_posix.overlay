@@ -5,6 +5,7 @@
  */
 
 / {
+<<<<<<< HEAD
 	power_states: power_states {
 		compatible = "test-power-states-api";
 		cpu-power-states = <&state0 &state1 &state2>;
@@ -27,5 +28,38 @@
 	state2: state2 {
 		compatible = "zephyr,power-state";
 		power-state-name = "standby";
+=======
+	cpus {
+		cpu@0 {
+			cpu-power-states = <&state0 &state1 &state2 &state3>;
+		};
+
+		power-states {
+			state0: state0 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				min-residency-us = <10000>;
+				exit-latency-us = <100>;
+			};
+
+			state1: state1 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-ram";
+				min-residency-us = <50000>;
+				exit-latency-us = <500>;
+			};
+
+			state2: state2 {
+				compatible = "zephyr,power-state";
+				power-state-name = "standby";
+			};
+
+			state3: state3 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-ram";
+				status = "disabled";
+			};
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

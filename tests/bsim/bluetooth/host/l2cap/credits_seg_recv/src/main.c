@@ -141,7 +141,12 @@ static struct bt_l2cap_chan_ops ops = {
 	.sent = sent_cb,
 };
 
+<<<<<<< HEAD
 int server_accept_cb(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+=======
+int server_accept_cb(struct bt_conn *conn, struct bt_l2cap_server *server,
+		     struct bt_l2cap_chan **chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct bt_l2cap_le_chan *le_chan = &test_ctx.le_chan;
 

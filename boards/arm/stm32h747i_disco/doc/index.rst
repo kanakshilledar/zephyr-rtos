@@ -27,6 +27,10 @@ Additionally, the board features:
 - USB OTG HS
 - Stereo speaker outputs
 - ST-MEMS digital microphones
+<<<<<<< HEAD
+=======
+- 2 x 512-Mbit QUAD-SPI NOR Flash memory
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - 256-Mbit SDRAM
 - 4 color user LEDs
 - 1 user and reset push-button
@@ -71,6 +75,11 @@ The current Zephyr stm32h747i_disco board configuration supports the following h
 +-----------+------------+-------------------------------------+
 | SPI       | on-chip    | spi                                 |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| QSPI NOR  | on-chip    | off-chip flash                      |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | SDMMC     | on-chip    | disk access                         |
 +-----------+------------+-------------------------------------+
 | IPM       | on-chip    | virtual mailbox based on HSEM       |
@@ -255,7 +264,11 @@ You should see the following message on the console:
 Similarly, you can build and flash samples on the M4 target. For this, please
 take care of the resource sharing (UART port used for console for instance).
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application on M4 core.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application on M4 core.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -278,13 +291,21 @@ In order to debug a Zephyr application on Cortex M4 side, you can use
 `STM32CubeIDE`_.
 
 .. _STM32H747I-DISCO website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/stm32h747i-disco.html
+=======
+   https://www.st.com/en/evaluation-tools/stm32h747i-disco.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32H747XI on www.st.com:
    https://www.st.com/content/st_com/en/products/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus/stm32-high-performance-mcus/stm32h7-series/stm32h747-757/stm32h747xi.html
 
 .. _STM32H747xx reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00176879.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00176879.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32H747xx datasheet:
    https://www.st.com/resource/en/datasheet/stm32h747xi.pdf

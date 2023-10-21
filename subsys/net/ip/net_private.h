@@ -14,13 +14,24 @@
 #include <zephyr/sys/printk.h>
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_pkt.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/icmp.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_NET_MGMT_EVENT_INFO
 
 #include <zephyr/net/net_event.h>
 
+<<<<<<< HEAD
 /* For struct wifi_scan_result */
 #include <zephyr/net/wifi_mgmt.h>
+=======
+#ifdef CONFIG_NET_L2_WIFI_MGMT
+/* For struct wifi_scan_result */
+#include <zephyr/net/wifi_mgmt.h>
+#endif /* CONFIG_NET_L2_WIFI_MGMT */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define DEFAULT_NET_EVENT_INFO_SIZE 32
 /* NOTE: Update this union with all *big* event info structs */
@@ -28,6 +39,7 @@ union net_mgmt_events {
 #if defined(CONFIG_NET_DHCPV4)
 	struct net_if_dhcpv4 dhcpv4;
 #endif /* CONFIG_NET_DHCPV4 */
+<<<<<<< HEAD
 #if defined(CONFIG_NET_L2_WIFI_MGMT)
 	struct wifi_scan_result wifi_scan_result;
 #if defined(CONFIG_WIFI_MGMT_RAW_SCAN_RESULTS)
@@ -37,6 +49,20 @@ union net_mgmt_events {
 #if defined(CONFIG_NET_IPV6) && defined(CONFIG_NET_IPV6_MLD)
 	struct net_event_ipv6_route ipv6_route;
 #endif /* CONFIG_NET_IPV6 && CONFIG_NET_IPV6_MLD */
+=======
+#if defined(CONFIG_NET_DHCPV6)
+	struct net_if_dhcpv6 dhcpv6;
+#endif /* CONFIG_NET_DHCPV6 */
+#if defined(CONFIG_NET_L2_WIFI_MGMT)
+	union wifi_mgmt_events wifi;
+#endif /* CONFIG_NET_L2_WIFI_MGMT */
+#if defined(CONFIG_NET_IPV6)
+	struct net_event_ipv6_prefix ipv6_prefix;
+#if defined(CONFIG_NET_IPV6_MLD)
+	struct net_event_ipv6_route ipv6_route;
+#endif /* CONFIG_NET_IPV6_MLD */
+#endif /* CONFIG_NET_IPV6 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	char default_event[DEFAULT_NET_EVENT_INFO_SIZE];
 };
 
@@ -53,9 +79,24 @@ extern void net_if_stats_reset_all(void);
 extern void net_process_rx_packet(struct net_pkt *pkt);
 extern void net_process_tx_packet(struct net_pkt *pkt);
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_NATIVE) || defined(CONFIG_NET_OFFLOAD)
 extern void net_context_init(void);
 extern const char *net_context_state(struct net_context *context);
+=======
+extern int net_icmp_call_ipv4_handlers(struct net_pkt *pkt,
+				       struct net_ipv4_hdr *ipv4_hdr,
+				       struct net_icmp_hdr *icmp_hdr);
+extern int net_icmp_call_ipv6_handlers(struct net_pkt *pkt,
+				       struct net_ipv6_hdr *ipv6_hdr,
+				       struct net_icmp_hdr *icmp_hdr);
+
+#if defined(CONFIG_NET_NATIVE) || defined(CONFIG_NET_OFFLOAD)
+extern void net_context_init(void);
+extern const char *net_context_state(struct net_context *context);
+extern bool net_context_is_reuseaddr_set(struct net_context *context);
+extern bool net_context_is_reuseport_set(struct net_context *context);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 extern void net_pkt_init(void);
 extern void net_tc_tx_init(void);
 extern void net_tc_rx_init(void);
@@ -69,6 +110,19 @@ static inline const char *net_context_state(struct net_context *context)
 	ARG_UNUSED(context);
 	return NULL;
 }
+<<<<<<< HEAD
+=======
+static inline bool net_context_is_reuseaddr_set(struct net_context *context)
+{
+	ARG_UNUSED(context);
+	return false;
+}
+static inline bool net_context_is_reuseport_set(struct net_context *context)
+{
+	ARG_UNUSED(context);
+	return false;
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #if defined(CONFIG_NET_NATIVE)

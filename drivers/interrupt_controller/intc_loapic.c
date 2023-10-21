@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+
+#define DT_DRV_COMPAT intel_loapic
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * driver for x86 CPU local APIC (as an interrupt controller)
  */
@@ -59,6 +65,7 @@
 #define LOAPIC_SPURIOUS_VECTOR_ID CONFIG_LOAPIC_SPURIOUS_VECTOR_ID
 #endif
 
+<<<<<<< HEAD
 #define LOPIC_SSPND_BITS_PER_IRQ  1  /* Just the one for enable disable*/
 #define LOPIC_SUSPEND_BITS_REQD (ROUND_UP((LOAPIC_IRQ_COUNT * LOPIC_SSPND_BITS_PER_IRQ), 32))
 #ifdef CONFIG_PM_DEVICE
@@ -71,6 +78,17 @@ uint32_t loapic_suspend_buf[LOPIC_SUSPEND_BITS_REQD / 32] = {0};
 __pinned_bss
 mm_reg_t z_loapic_regs;
 #endif
+=======
+#define LOAPIC_SSPND_BITS_PER_IRQ  1  /* Just the one for enable disable*/
+#define LOAPIC_SUSPEND_BITS_REQD (ROUND_UP((LOAPIC_IRQ_COUNT * LOAPIC_SSPND_BITS_PER_IRQ), 32))
+#ifdef CONFIG_PM_DEVICE
+#include <zephyr/pm/device.h>
+__pinned_bss
+uint32_t loapic_suspend_buf[LOAPIC_SUSPEND_BITS_REQD / 32] = {0};
+#endif
+
+DEVICE_MMIO_TOPLEVEL(LOAPIC_REGS_STR, DT_DRV_INST(0));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 __pinned_func
 void send_eoi(void)
@@ -87,11 +105,16 @@ __pinned_func
 void z_loapic_enable(unsigned char cpu_number)
 {
 	int32_t loApicMaxLvt; /* local APIC Max LVT */
+<<<<<<< HEAD
 
 #ifdef DEVICE_MMIO_IS_IN_RAM
 	device_map(&z_loapic_regs, CONFIG_LOAPIC_BASE_ADDRESS, 0x1000,
 		   K_MEM_CACHE_NONE);
 #endif /* DEVICE_MMIO_IS_IN_RAM */
+=======
+	DEVICE_MMIO_TOPLEVEL_MAP(LOAPIC_REGS_STR, K_MEM_CACHE_NONE);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifndef CONFIG_X2APIC
 	/*
 	 * in xAPIC and flat model, bits 24-31 in LDR (Logical APIC ID) are
@@ -340,7 +363,11 @@ static int loapic_suspend(const struct device *port)
 
 	ARG_UNUSED(port);
 
+<<<<<<< HEAD
 	(void)memset(loapic_suspend_buf, 0, (LOPIC_SUSPEND_BITS_REQD >> 3));
+=======
+	(void)memset(loapic_suspend_buf, 0, (LOAPIC_SUSPEND_BITS_REQD >> 3));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (loapic_irq = 0; loapic_irq < LOAPIC_IRQ_COUNT; loapic_irq++) {
 
@@ -416,10 +443,17 @@ static int loapic_pm_action(const struct device *dev,
 }
 #endif /* CONFIG_PM_DEVICE */
 
+<<<<<<< HEAD
 PM_DEVICE_DEFINE(loapic, loapic_pm_action);
 
 DEVICE_DEFINE(loapic, "loapic", loapic_init, PM_DEVICE_GET(loapic), NULL, NULL,
 	      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+=======
+PM_DEVICE_DT_INST_DEFINE(0, loapic_pm_action);
+
+DEVICE_DT_INST_DEFINE(0, loapic_init, PM_DEVICE_DT_INST_GET(0), NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if CONFIG_LOAPIC_SPURIOUS_VECTOR
 extern void z_loapic_spurious_handler(void);

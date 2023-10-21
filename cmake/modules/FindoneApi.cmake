@@ -12,6 +12,11 @@
 # 'ONEAPI_VERSION'
 # The version of the oneAPI toolchain.
 
+<<<<<<< HEAD
+=======
+include(FindPackageHandleStandardArgs)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CMAKE_C_COMPILER)
   # Parse the 'clang --version' output to find the installed version.
   execute_process(COMMAND ${CMAKE_C_COMPILER} --version OUTPUT_VARIABLE ONEAPI_VERSION)

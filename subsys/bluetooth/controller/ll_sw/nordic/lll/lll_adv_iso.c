@@ -188,6 +188,10 @@ static int prepare_cb_common(struct lll_prepare_param *p)
 	struct ull_hdr *ull;
 	uint32_t remainder;
 	uint32_t start_us;
+<<<<<<< HEAD
+=======
+	uint32_t ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t phy;
 
 	DEBUG_RADIO_START_A(1);
@@ -360,7 +364,13 @@ static int prepare_cb_common(struct lll_prepare_param *p)
 						 RADIO_PKT_CONF_CTE_DISABLED);
 		radio_pkt_configure(RADIO_PKT_CONF_LENGTH_8BIT,
 				    (lll->max_pdu + PDU_MIC_SIZE), pkt_flags);
+<<<<<<< HEAD
 		radio_pkt_tx_set(radio_ccm_tx_pkt_set(&lll->ccm_tx, pdu));
+=======
+		radio_pkt_tx_set(radio_ccm_iso_tx_pkt_set(&lll->ccm_tx,
+						RADIO_PKT_CONF_PDU_TYPE_BIS,
+						pdu));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		uint8_t pkt_flags;
 
@@ -417,16 +427,29 @@ static int prepare_cb_common(struct lll_prepare_param *p)
 	ARG_UNUSED(start_us);
 #endif /* !HAL_RADIO_GPIO_HAVE_PA_PIN */
 
+<<<<<<< HEAD
 	if (0) {
 #if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
 	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
 	/* check if preempt to start has changed */
 	} else if (lll_preempt_calc(ull, (TICKER_ID_ADV_ISO_BASE + lll->handle),
 				    ticks_at_event)) {
+=======
+#if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
+	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
+	uint32_t overhead;
+
+	overhead = lll_preempt_calc(ull, (TICKER_ID_ADV_ISO_BASE + lll->handle), ticks_at_event);
+	/* check if preempt to start has changed */
+	if (overhead) {
+		LL_ASSERT_OVERHEAD(overhead);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		radio_isr_set(lll_isr_abort, lll);
 		radio_disable();
 
 		return -ECANCELED;
+<<<<<<< HEAD
 #endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
 	} else {
 		uint32_t ret;
@@ -434,6 +457,13 @@ static int prepare_cb_common(struct lll_prepare_param *p)
 		ret = lll_prepare_done(lll);
 		LL_ASSERT(!ret);
 	}
+=======
+	}
+#endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
+
+	ret = lll_prepare_done(lll);
+	LL_ASSERT(!ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Calculate ahead the next subevent channel index */
 	next_chan_calc(lll, event_counter, data_chan_id);
@@ -689,7 +719,13 @@ static void isr_tx_common(void *param,
 		(void)memcpy(lll->ccm_tx.iv, lll->giv, 4U);
 		mem_xor_32(lll->ccm_tx.iv, lll->ccm_tx.iv, access_addr);
 
+<<<<<<< HEAD
 		radio_pkt_tx_set(radio_ccm_tx_pkt_set(&lll->ccm_tx, pdu));
+=======
+		radio_pkt_tx_set(radio_ccm_iso_tx_pkt_set(&lll->ccm_tx,
+						RADIO_PKT_CONF_PDU_TYPE_BIS,
+						pdu));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		radio_pkt_tx_set(pdu);
 	}
@@ -711,7 +747,11 @@ static void isr_tx_common(void *param,
 					    pkt_flags);
 		}
 
+<<<<<<< HEAD
 		radio_switch_complete_and_disable();
+=======
+		radio_switch_complete_and_b2b_tx_disable();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		radio_isr_set(isr_done_term, lll);
 	} else {

@@ -9,6 +9,10 @@ sensors and LED wearables to sophisticated embedded controllers, smart
 watches, and IoT wireless applications.
 
 The Zephyr kernel supports multiple architectures, including:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  - ARCv2 (EM and HS) and ARCv3 (HS6X)
  - ARMv6-M, ARMv7-M, and ARMv8-M (Cortex-M)
  - ARMv7-A and ARMv8-A (Cortex-A, 32- and 64-bit)
@@ -107,8 +111,13 @@ Zephyr offers a large and ever growing number of features including:
 **Optimized Device Driver Model**
    Provides a consistent device model for configuring the drivers that are part
    of the platform/system and a consistent model for initializing all the
+<<<<<<< HEAD
    drivers configured into the system and Allows the reuse of drivers across
    platforms that have common devices/IP blocks
+=======
+   drivers configured into the system and allows the reuse of drivers across
+   platforms that have common devices/IP blocks.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 **Devicetree Support**
    Use of :ref:`devicetree <dt-guide>` to describe hardware.
@@ -125,8 +134,13 @@ Zephyr offers a large and ever growing number of features including:
    (LE Link Layer). Includes Bluetooth mesh and a Bluetooth qualification-ready
    Bluetooth controller.
 
+<<<<<<< HEAD
    * Generic Access Profile (GAP) with all possible LE roles.
    * GATT (Generic Attribute Profile)
+=======
+   * Generic Access Profile (GAP) with all possible LE roles
+   * Generic Attribute Profile (GATT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * Pairing support, including the Secure Connections feature from Bluetooth
      4.2
    * Clean HCI driver abstraction
@@ -143,6 +157,7 @@ Zephyr offers a large and ever growing number of features including:
 
 **Native Linux, macOS, and Windows Development**
    A command-line CMake build environment runs on popular developer OS
+<<<<<<< HEAD
    systems. A native POSIX port, lets you build and run Zephyr as a native
    application on Linux and other OSes, aiding development and testing.
 
@@ -154,6 +169,18 @@ Zephyr offers a large and ever growing number of features including:
 **Powerful multi-backend logging Framework**
    Support for log filtering, object dumping, panic mode, multiple backends
    (memory, networking, filesystem, console, ..) and integration with the shell
+=======
+   systems. A native POSIX port lets you build and run Zephyr as a native
+   application on Linux and other OSes, aiding development and testing.
+
+**Virtual File System Interface with ext2, FatFs, and LittleFS Support**
+   ext2, LittleFS and FatFS support; FCB (Flash Circular Buffer) for memory constrained
+   applications.
+
+**Powerful multi-backend logging Framework**
+   Support for log filtering, object dumping, panic mode, multiple backends
+   (memory, networking, filesystem, console, ...) and integration with the shell
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    subsystem.
 
 **User friendly and full-featured Shell interface**
@@ -163,7 +190,11 @@ Zephyr offers a large and ever growing number of features including:
 
 **Settings on non-volatile storage**
    The settings subsystem gives modules a way to store persistent per-device
+<<<<<<< HEAD
    configuration and runtime state.  Settings items are stored as key-value pair
+=======
+   configuration and runtime state. Settings items are stored as key-value pair
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    strings.
 
 **Non-volatile storage (NVS)**

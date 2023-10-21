@@ -11,6 +11,11 @@ if SDHC
 source "drivers/sdhc/Kconfig.imx"
 source "drivers/sdhc/Kconfig.spi"
 source "drivers/sdhc/Kconfig.mcux_sdif"
+<<<<<<< HEAD
+=======
+source "drivers/sdhc/Kconfig.sam_hsmci"
+source "drivers/sdhc/Kconfig.intel"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config SDHC_INIT_PRIORITY
 	int "SDHC driver init priority"
@@ -49,5 +54,8 @@ module = SDHC
 module-str = sdhc
 source "subsys/logging/Kconfig.template.log_config"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # SDHC

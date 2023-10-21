@@ -47,6 +47,7 @@
 
 		/* Additional Secure peripherals */
 		cryptocell: crypto@50840000 {
+<<<<<<< HEAD
 			compatible = "nordic,nrf-cc310";
 			reg = <0x50840000 0x1000>;
 			status = "okay";
@@ -57,6 +58,13 @@
 				reg = <0x50841000 0x1000>;
 				interrupts = <64 NRF_DEFAULT_IRQ_PRIORITY>;
 			};
+=======
+			compatible = "nordic,cryptocell", "arm,cryptocell-310";
+			reg = <0x50840000 0x1000>, <0x50841000 0x1000>;
+			reg-names = "wrapper", "core";
+			interrupts = <64 NRF_DEFAULT_IRQ_PRIORITY>;
+			status = "disabled";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		ctrlap: ctrlap@50006000 {

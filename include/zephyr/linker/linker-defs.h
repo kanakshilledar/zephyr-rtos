@@ -133,6 +133,10 @@ extern char _flash_used[];
 /* datas, bss, noinit */
 extern char _image_ram_start[];
 extern char _image_ram_end[];
+<<<<<<< HEAD
+=======
+extern char _image_ram_size[];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 extern char __text_region_start[];
 extern char __text_region_end[];

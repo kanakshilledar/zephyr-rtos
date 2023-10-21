@@ -10,7 +10,11 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/net/mqtt_sn.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/socket.h>
 
@@ -22,7 +26,11 @@ static void process_thread(void);
 K_THREAD_DEFINE(udp_thread_id, STACK_SIZE, process_thread, NULL, NULL, NULL, THREAD_PRIORITY,
 		IS_ENABLED(CONFIG_USERSPACE) ? K_USER : 0, -1);
 
+<<<<<<< HEAD
 static APP_BMEM struct mqtt_sn_client client;
+=======
+static APP_BMEM struct mqtt_sn_client mqtt_client;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static APP_BMEM struct mqtt_sn_transport_udp tp;
 static APP_DMEM struct mqtt_sn_data client_id = MQTT_SN_DATA_STRING_LITERAL("ZEPHYR");
 
@@ -70,14 +78,22 @@ static int do_work(void)
 	const int64_t now = k_uptime_get();
 	int err;
 
+<<<<<<< HEAD
 	err = mqtt_sn_input(&client);
+=======
+	err = mqtt_sn_input(&mqtt_client);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err < 0) {
 		LOG_ERR("failed: input: %d", err);
 		return err;
 	}
 
 	if (mqtt_sn_connected && !subscribed) {
+<<<<<<< HEAD
 		err = mqtt_sn_subscribe(&client, MQTT_SN_QOS_0, &topic_s);
+=======
+		err = mqtt_sn_subscribe(&mqtt_client, MQTT_SN_QOS_0, &topic_s);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err < 0) {
 			return err;
 		}
@@ -97,7 +113,11 @@ static int do_work(void)
 
 		pubdata.size = MIN(sizeof(out), err);
 
+<<<<<<< HEAD
 		err = mqtt_sn_publish(&client, MQTT_SN_QOS_0, &topic_p, false, &pubdata);
+=======
+		err = mqtt_sn_publish(&mqtt_client, MQTT_SN_QOS_0, &topic_p, false, &pubdata);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err < 0) {
 			LOG_ERR("failed: publish: %d", err);
 			return err;
@@ -126,11 +146,19 @@ static void process_thread(void)
 	err = mqtt_sn_transport_udp_init(&tp, (struct sockaddr *)&gateway, sizeof((gateway)));
 	__ASSERT(err == 0, "mqtt_sn_transport_udp_init() failed %d", err);
 
+<<<<<<< HEAD
 	err = mqtt_sn_client_init(&client, &client_id, &tp.tp, evt_cb, tx_buf, sizeof(tx_buf),
 				  rx_buf, sizeof(rx_buf));
 	__ASSERT(err == 0, "mqtt_sn_client_init() failed %d", err);
 
 	err = mqtt_sn_connect(&client, false, true);
+=======
+	err = mqtt_sn_client_init(&mqtt_client, &client_id, &tp.tp, evt_cb, tx_buf, sizeof(tx_buf),
+				  rx_buf, sizeof(rx_buf));
+	__ASSERT(err == 0, "mqtt_sn_client_init() failed %d", err);
+
+	err = mqtt_sn_connect(&mqtt_client, false, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	__ASSERT(err == 0, "mqtt_sn_connect() failed %d", err);
 
 	while (err == 0) {

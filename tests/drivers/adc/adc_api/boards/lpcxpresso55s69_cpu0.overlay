@@ -8,7 +8,11 @@
 
 / {
 	zephyr,user {
+<<<<<<< HEAD
 		io-channels = <&adc0 0>, <&adc0 1>;
+=======
+		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 
@@ -16,21 +20,62 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Channel 0 is used in single ended mode, with 12 bit resolution
+	 * CH0A is routed to P19 pin 4
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	channel@0 {
 		reg = <0>;
 		zephyr,gain = "ADC_GAIN_1";
 		zephyr,reference = "ADC_REF_EXTERNAL0";
+<<<<<<< HEAD
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
 		zephyr,resolution = <12>;
                 zephyr,input-positive = <MCUX_LPADC_CH0A>;
 	};
 
+=======
+		zephyr,vref-mv = <3300>;
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <13>;
+		zephyr,input-positive = <MCUX_LPADC_CH0A>;
+	};
+
+	/*
+	 * Channel 1 is used in single ended mode, with 16 bit resolution
+	 * CH4A is routed to P17 pin 19
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	channel@1 {
 		reg = <1>;
 		zephyr,gain = "ADC_GAIN_1";
 		zephyr,reference = "ADC_REF_EXTERNAL0";
+<<<<<<< HEAD
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
 		zephyr,resolution = <12>;
                 zephyr,input-positive = <MCUX_LPADC_CH1A>;
+=======
+		zephyr,vref-mv = <3300>;
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <16>;
+		zephyr,input-positive = <MCUX_LPADC_CH4A>;
+	};
+
+	/*
+	 * Channel 2 is used in single ended mode, with 12 bit resolution
+	 * CH4B is routed to P18 pin 1
+	 */
+	channel@2 {
+		reg = <2>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_EXTERNAL0";
+		zephyr,vref-mv = <3300>;
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		zephyr,input-positive = <MCUX_LPADC_CH4B>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

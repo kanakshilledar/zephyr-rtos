@@ -40,11 +40,23 @@ static uint8_t bat_status = LWM2M_DEVICE_BATTERY_STATUS_CHARGING;
 static int mem_free = 15;
 static int mem_total = 25;
 
+<<<<<<< HEAD
 static struct lwm2m_ctx client;
+=======
+static struct lwm2m_ctx client_ctx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static const char *endpoint =
 	(sizeof(CONFIG_LWM2M_APP_ID) > 1 ? CONFIG_LWM2M_APP_ID : CONFIG_BOARD);
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_LWM2M_DTLS_SUPPORT)
+BUILD_ASSERT(sizeof(endpoint) <= CONFIG_LWM2M_SECURITY_KEY_SIZE,
+		"Client ID length is too long");
+#endif /* CONFIG_LWM2M_DTLS_SUPPORT */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct k_sem quit_lock;
 
 static int device_reboot_cb(uint16_t obj_inst_id,
@@ -226,6 +238,12 @@ static void rd_client_event(struct lwm2m_ctx *client,
 	case LWM2M_RD_CLIENT_EVENT_REG_UPDATE:
 		LOG_DBG("Registration update");
 		break;
+<<<<<<< HEAD
+=======
+	case LWM2M_RD_CLIENT_EVENT_DEREGISTER:
+		LOG_DBG("Client De-register");
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -273,6 +291,7 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	(void)memset(&client, 0x0, sizeof(client));
 #if defined(CONFIG_LWM2M_DTLS_SUPPORT)
 	client.tls_tag = CONFIG_LWM2M_APP_TLS_TAG;
@@ -280,6 +299,15 @@ int main(void)
 
 	/* client.sec_obj_inst is 0 as a starting point */
 	lwm2m_rd_client_start(&client, endpoint, flags, rd_client_event, observe_cb);
+=======
+	(void)memset(&client_ctx, 0x0, sizeof(client_ctx));
+#if defined(CONFIG_LWM2M_DTLS_SUPPORT)
+	client_ctx.tls_tag = CONFIG_LWM2M_APP_TLS_TAG;
+#endif
+
+	/* client_ctx.sec_obj_inst is 0 as a starting point */
+	lwm2m_rd_client_start(&client_ctx, endpoint, flags, rd_client_event, observe_cb);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_sem_take(&quit_lock, K_FOREVER);
 	return 0;

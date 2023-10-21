@@ -14,8 +14,13 @@
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/drivers/pinctrl.h>
 #include <cyhal_i2c.h>
+<<<<<<< HEAD
 #include <cyhal_utils_psoc.h>
 #include <cyhal_utils_psoc.h>
+=======
+#include <cyhal_utils_impl.h>
+#include <cyhal_utils_impl.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <cyhal_scb_common.h>
 
 #include <zephyr/logging/log.h>

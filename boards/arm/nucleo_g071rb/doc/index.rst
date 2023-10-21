@@ -159,7 +159,11 @@ Nucleo G071RB board includes an ST-LINK/V3 embedded debug tool interface.
 Flashing an application to Nucleo G071RB
 ----------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -186,6 +190,7 @@ References
 .. target-notes::
 
 .. _Nucleo G071RB website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-g071rb.html
 
 .. _STM32G071 reference manual:
@@ -196,3 +201,15 @@ References
 
 .. _G071RB on www.st.com:
    http://www.st.com/en/microcontrollers/stm32g071rb.html
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-g071rb.html
+
+.. _STM32G071 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00371828.pdf
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00452640.pdf
+
+.. _G071RB on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32g071rb.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

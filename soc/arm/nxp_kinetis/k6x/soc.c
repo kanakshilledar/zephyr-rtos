@@ -20,8 +20,13 @@
 #include <zephyr/drivers/uart.h>
 #include <fsl_common.h>
 #include <fsl_clock.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LPUART0SRC_OSCERCLK     (1)
 
@@ -129,15 +134,21 @@ static ALWAYS_INLINE void clock_init(void)
 
 static int k6x_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int oldLevel; /* old interrupt lock level */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_ARM_MPU)
 	uint32_t temp_reg;
 #endif /* !CONFIG_ARM_MPU */
 
+<<<<<<< HEAD
 	/* disable interrupts */
 	oldLevel = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* release I/O power hold to allow normal run state */
 	PMC->REGSC |= PMC_REGSC_ACKISO_MASK;
 
@@ -168,6 +179,7 @@ static int k6x_init(void)
 	/* Initialize PLL/system clock up to 180 MHz */
 	clock_init();
 
+<<<<<<< HEAD
 	/*
 	 * install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
@@ -176,6 +188,8 @@ static int k6x_init(void)
 
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

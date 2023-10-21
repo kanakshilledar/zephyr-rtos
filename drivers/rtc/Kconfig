@@ -35,8 +35,24 @@ config RTC_CALIBRATION
 	  This is an option which enables driver support for RTC clock
 	  calibration.
 
+<<<<<<< HEAD
 source "drivers/rtc/Kconfig.emul"
 source "drivers/rtc/Kconfig.pcf8523"
 source "drivers/rtc/Kconfig.mc146818"
+=======
+config RTC_SHELL
+	bool "RTC Shell commands"
+	depends on SHELL
+	help
+	  RTC Shell commands
+
+source "drivers/rtc/Kconfig.am1805"
+source "drivers/rtc/Kconfig.emul"
+source "drivers/rtc/Kconfig.fake"
+source "drivers/rtc/Kconfig.pcf8523"
+source "drivers/rtc/Kconfig.pcf8563"
+source "drivers/rtc/Kconfig.mc146818"
+source "drivers/rtc/Kconfig.stm32"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endif # RTC

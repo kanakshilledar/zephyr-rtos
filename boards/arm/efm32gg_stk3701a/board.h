@@ -8,10 +8,13 @@
 #ifndef __INC_BOARD_H
 #define __INC_BOARD_H
 
+<<<<<<< HEAD
 /* This pin is used to enable the serial port using the board controller */
 #define BC_ENABLE_GPIO_NODE		DT_NODELABEL(gpioe)
 #define BC_ENABLE_GPIO_PIN		1
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Ethernet specific pins */
 #ifdef CONFIG_ETH_GECKO
 #define ETH_PWR_ENABLE_GPIO_NODE	DT_NODELABEL(gpioi)

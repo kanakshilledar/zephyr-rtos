@@ -236,13 +236,24 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Disco L475 IoT1 website:
+<<<<<<< HEAD
    http://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-discovery-kits/b-l475e-iot01a.html
 
 .. _STM32 Disco L475 IoT1 board User Manual:
    http://www.st.com/resource/en/user_manual/dm00347848.pdf
+=======
+   https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-eval-tools/stm32-mcu-eval-tools/stm32-mcu-discovery-kits/b-l475e-iot01a.html
+
+.. _STM32 Disco L475 IoT1 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00347848.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32L475VG on www.st.com:
    https://www.st.com/en/microcontrollers-microprocessors/stm32l475vg.html
 
 .. _STM32L475 reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00083560.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00083560.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

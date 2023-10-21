@@ -105,8 +105,13 @@ static const struct kscan_driver_api kscan_input_driver_api = {
 		kscan_input_cb(DEVICE_DT_GET(DT_INST(index, DT_DRV_COMPAT)),   \
 			       evt);                                           \
 	}                                                                      \
+<<<<<<< HEAD
 	INPUT_LISTENER_CB_DEFINE(DEVICE_DT_GET(DT_INST_PARENT(index)),         \
 				 kscan_input_cb_##index);                      \
+=======
+	INPUT_CALLBACK_DEFINE(DEVICE_DT_GET(DT_INST_PARENT(index)),            \
+			      kscan_input_cb_##index);                         \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static const struct kscan_input_config kscan_input_config_##index = {  \
 		.input_dev = DEVICE_DT_GET(DT_INST_PARENT(index)),             \
 	};                                                                     \

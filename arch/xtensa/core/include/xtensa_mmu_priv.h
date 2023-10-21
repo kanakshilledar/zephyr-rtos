@@ -40,6 +40,11 @@
 #define Z_XTENSA_L2_POS(vaddr) \
 	(((vaddr) & Z_XTENSA_L2_MASK) >> Z_XTENSA_PPN_SHIFT)
 
+<<<<<<< HEAD
+=======
+/* Kernel specific ASID. Ring field in the PTE */
+#define Z_XTENSA_KERNEL_RING 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Number of data TLB ways [0-9] */
 #define Z_XTENSA_DTLB_WAYS 10

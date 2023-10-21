@@ -77,10 +77,28 @@ struct coap_client_option {
 };
 
 /** @cond INTERNAL_HIDDEN */
+<<<<<<< HEAD
+=======
+struct coap_client_internal_request {
+	uint8_t request_token[COAP_TOKEN_MAX_LEN];
+	uint32_t offset;
+	uint32_t last_id;
+	uint8_t request_tkl;
+	uint8_t retry_count;
+	bool request_ongoing;
+	struct coap_block_context recv_blk_ctx;
+	struct coap_block_context send_blk_ctx;
+	struct coap_pending pending;
+	struct coap_client_request coap_request;
+	struct coap_packet request;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct coap_client {
 	int fd;
 	struct sockaddr address;
 	socklen_t socklen;
+<<<<<<< HEAD
 	uint8_t send_buf[MAX_COAP_MSG_LEN];
 	uint8_t recv_buf[MAX_COAP_MSG_LEN];
 	uint8_t request_token[COAP_TOKEN_MAX_LEN];
@@ -98,6 +116,13 @@ struct coap_client {
 	atomic_t coap_client_recv_active;
 
 	K_THREAD_STACK_MEMBER(coap_thread_stack, CONFIG_COAP_CLIENT_STACK_SIZE);
+=======
+	bool response_ready;
+	struct k_mutex send_mutex;
+	uint8_t send_buf[MAX_COAP_MSG_LEN];
+	uint8_t recv_buf[MAX_COAP_MSG_LEN];
+	struct coap_client_internal_request requests[CONFIG_COAP_CLIENT_MAX_REQUESTS];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 /** @endcond */
 
@@ -123,7 +148,11 @@ int coap_client_init(struct coap_client *client, const char *info);
  *
  * @param client Client instance.
  * @param sock Open socket file descriptor.
+<<<<<<< HEAD
  * @param addr the destination address of the request.
+=======
+ * @param addr the destination address of the request, NULL if socket is already connected.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param req CoAP request structure
  * @param retries How many times to retry or -1 to use default.
  * @return zero when operation started successfully or negative error code otherwise.

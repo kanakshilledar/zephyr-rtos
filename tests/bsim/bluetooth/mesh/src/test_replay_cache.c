@@ -4,7 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include "mesh_test.h"
+<<<<<<< HEAD
 #include "settings_test_backend.h"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "mesh/mesh.h"
 #include "mesh/net.h"
 #include "mesh/rpl.h"
@@ -125,7 +128,10 @@ static void rx_sar_conf(void)
 
 static void test_tx_immediate_replay_attack(void)
 {
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_setup();
 	tx_sar_conf();
 
@@ -174,21 +180,31 @@ static void test_tx_immediate_replay_attack(void)
 
 static void test_rx_immediate_replay_attack(void)
 {
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_setup();
 	rx_sar_conf();
 	bt_mesh_test_ra_cb_setup(rx_ended);
 
 	k_sleep(K_SECONDS(6 * TEST_DATA_WAITING_TIME));
 
+<<<<<<< HEAD
 	ASSERT_TRUE(rx_cnt == 3, "Device didn't receive expected data");
+=======
+	ASSERT_TRUE_MSG(rx_cnt == 3, "Device didn't receive expected data\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	PASS();
 }
 
 static void test_tx_power_replay_attack(void)
 {
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_setup();
 	tx_sar_conf();
 
@@ -239,7 +255,11 @@ static void test_rx_power_replay_attack(void)
 
 	k_sleep(K_SECONDS(6 * TEST_DATA_WAITING_TIME));
 
+<<<<<<< HEAD
 	ASSERT_TRUE(rx_cnt == 3, "Device didn't receive expected data");
+=======
+	ASSERT_TRUE_MSG(rx_cnt == 3, "Device didn't receive expected data\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	PASS();
 }
@@ -254,7 +274,11 @@ static void send_end_cb(int err, void *cb_data)
 
 static bool msg_send(uint16_t src, uint16_t dst)
 {
+<<<<<<< HEAD
 	struct bt_mesh_send_cb cb = {
+=======
+	static struct bt_mesh_send_cb cb = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.end = send_end_cb,
 	};
 	struct bt_mesh_msg_ctx ctx = {
@@ -319,9 +343,17 @@ static bool ivi_update_toggle(void)
 	return res;
 }
 
+<<<<<<< HEAD
 static void test_rx_rpl_frag(void)
 {
 	settings_test_backend_clear();
+=======
+/* 1 second delays have been added to prevent interfering tail of
+ * the previous rx transaction with the beginning of the new tx transaction.
+ */
+static void test_rx_rpl_frag(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_setup();
 
 	k_sleep(K_SECONDS(10));
@@ -331,6 +363,11 @@ static void test_rx_rpl_frag(void)
 		ASSERT_TRUE(msg_recv(100 + i));
 	}
 
+<<<<<<< HEAD
+=======
+	k_sleep(K_SECONDS(1));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Ask tx node to proceed to next test step. */
 	ASSERT_TRUE(msg_send(rx_cfg.addr, tx_cfg.addr));
 
@@ -343,6 +380,11 @@ static void test_rx_rpl_frag(void)
 	ASSERT_TRUE(msg_recv(100));
 	ASSERT_TRUE(msg_recv(102));
 
+<<<<<<< HEAD
+=======
+	k_sleep(K_SECONDS(1));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Ask tx node to proceed to next test step. */
 	ASSERT_TRUE(msg_send(rx_cfg.addr, tx_cfg.addr));
 
@@ -353,6 +395,11 @@ static void test_rx_rpl_frag(void)
 	ASSERT_TRUE(msg_recv(100));
 	ASSERT_TRUE(msg_recv(102));
 
+<<<<<<< HEAD
+=======
+	k_sleep(K_SECONDS(1));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Start IVI Update again. */
 	/* RPL entry with odd address should be removed causing fragmentation in RPL. old_iv flag
 	 * for even entries will be set to 1.
@@ -385,9 +432,17 @@ static void test_rx_rpl_frag(void)
 	PASS();
 }
 
+<<<<<<< HEAD
 static void test_tx_rpl_frag(void)
 {
 	settings_test_backend_clear();
+=======
+/* 1 second delays have been added to prevent interfering tail of
+ * the previous rx transaction with the beginning of the new tx transaction.
+ */
+static void test_tx_rpl_frag(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_setup();
 
 	k_sleep(K_SECONDS(10));
@@ -397,11 +452,19 @@ static void test_tx_rpl_frag(void)
 		ASSERT_TRUE(msg_send(100 + i, rx_cfg.addr));
 	}
 
+<<<<<<< HEAD
 	k_sleep(K_SECONDS(3));
 
 	/* Wait for the rx node. */
 	ASSERT_TRUE(msg_recv(rx_cfg.addr));
 
+=======
+	/* Wait for the rx node. */
+	ASSERT_TRUE(msg_recv(rx_cfg.addr));
+
+	k_sleep(K_SECONDS(1));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Start IVI Update. */
 	ASSERT_TRUE(ivi_update_toggle());
 
@@ -412,6 +475,11 @@ static void test_tx_rpl_frag(void)
 	/* Wait for the rx node. */
 	ASSERT_TRUE(msg_recv(rx_cfg.addr));
 
+<<<<<<< HEAD
+=======
+	k_sleep(K_SECONDS(1));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Complete IVI Update. */
 	ASSERT_FALSE(ivi_update_toggle());
 

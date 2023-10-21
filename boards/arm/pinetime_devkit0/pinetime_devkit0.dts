@@ -11,6 +11,10 @@
 /dts-v1/;
 #include <nordic/nrf52832_qfaa.dtsi>
 #include "pinetime_devkit0-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Pine64 PineTime DevKit0";
@@ -25,7 +29,10 @@
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &slot0_partition;
 		zephyr,display = &st7789v;
+<<<<<<< HEAD
 		zephyr,keyboard-scan = &cst816s;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	aliases {
@@ -34,7 +41,10 @@
 		led2 = &blled2;	/* backlight high */
 		led3 = &statusled;	/* status led, may be not populated */
 		sw0 = &key_in;  /* key in */
+<<<<<<< HEAD
 		kscan0 = &cst816s;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		watchdog0 = &wdt0;
 	};
 
@@ -63,11 +73,21 @@
 		key_in: button_0 {
 			gpios = <&gpio0 13 GPIO_ACTIVE_HIGH>;
 			label = "Key in";
+<<<<<<< HEAD
 		};
 	};
 	key_out {
 		compatible = "pine64,pinetime-key-out";
 		gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>;
+=======
+			zephyr,code = <INPUT_KEY_0>;
+		};
+	};
+
+	lvgl_pointer {
+		compatible = "zephyr,lvgl-pointer-input";
+		input = <&cst816s>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	vbatt {
@@ -82,12 +102,34 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &gpio0 {
 	status = "okay";
+=======
+&uicr {
+	nfct-pins-as-gpios;
+};
+
+&gpio0 {
+	status = "okay";
+
+	key-out {
+		gpio-hog;
+		gpios = <15 GPIO_ACTIVE_HIGH>;
+		output-high;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &uart0 {

@@ -11,7 +11,11 @@
 
 / {
 	model = "cy8cproto_062_4343w with an Cypress PSoC™ 6 SoC";
+<<<<<<< HEAD
 	compatible = "cy8cproto_062_4343w", "PSoC6";
+=======
+	compatible = "cypress,cy8cproto_062_4343w", "cypress,PSoC6";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	aliases {
 		uart-5 = &uart5;
@@ -28,6 +32,13 @@
 	};
 };
 
+<<<<<<< HEAD
+=======
+&counter0_0 {
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 uart5: &scb5 {
 	compatible = "infineon,cat1-uart";
 	status = "okay";

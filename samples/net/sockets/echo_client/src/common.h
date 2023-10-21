@@ -73,6 +73,10 @@ extern const char lorem_ipsum[];
 extern const int ipsum_len;
 extern struct configs conf;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_NET_UDP)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* init_udp initializes kernel objects, hence it has to be called from
  * supervisor thread.
  */
@@ -80,6 +84,15 @@ void init_udp(void);
 int start_udp(void);
 int process_udp(void);
 void stop_udp(void);
+<<<<<<< HEAD
+=======
+#else
+static inline void init_udp(void) { }
+static inline int start_udp(void) { return 0; }
+static inline int process_udp(void) { return 0; }
+static inline void stop_udp(void) { }
+#endif /* defined(CONFIG_NET_UDP) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int start_tcp(void);
 int process_tcp(void);

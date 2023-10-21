@@ -69,7 +69,11 @@ static int mcux_wwdt_disable(const struct device *dev)
  * This prescaler is different from the clock divider specified in Device Tree.
  */
 #define MSEC_TO_WWDT_TICKS(clock_freq, msec) \
+<<<<<<< HEAD
 	((uint32_t)(clock_freq * msec / MSEC_PER_SEC / 4))
+=======
+	((uint32_t)((clock_freq / MSEC_PER_SEC) * msec) / 4)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int mcux_wwdt_install_timeout(const struct device *dev,
 				     const struct wdt_timeout_cfg *cfg)
@@ -115,7 +119,18 @@ static int mcux_wwdt_install_timeout(const struct device *dev,
 		LOG_DBG("Enabling SoC reset");
 	}
 
+<<<<<<< HEAD
 	data->callback = cfg->callback;
+=======
+	if (cfg->callback && (CONFIG_WDT_MCUX_WWDT_WARNING_INTERRUPT_CFG > 0)) {
+		data->callback = cfg->callback;
+		data->wwdt_config.warningValue = CONFIG_WDT_MCUX_WWDT_WARNING_INTERRUPT_CFG;
+	} else if (cfg->callback) {
+		return -ENOTSUP;
+	}
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	data->timeout_valid = true;
 	LOG_DBG("Installed timeout (timeoutValue = %d)",
 		data->wwdt_config.timeoutValue);

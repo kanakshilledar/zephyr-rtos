@@ -18,5 +18,9 @@ config SOC_SERIES_EFM32GG11B
 	select SOC_GECKO_EMU
 	select SOC_GECKO_GPIO
 	select SOC_GECKO_TRNG
+<<<<<<< HEAD
+=======
+	select SOC_GECKO_SERIES1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for EFM32 GiantGecko MCU series

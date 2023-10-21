@@ -39,7 +39,11 @@ struct mcux_flexcomm_config {
 	clock_control_subsys_t clock_subsys;
 	uint32_t baud_rate;
 	uint8_t parity;
+<<<<<<< HEAD
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
+=======
+#ifdef CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	void (*irq_config_func)(const struct device *dev);
 #endif
 	const struct pinctrl_dev_config *pincfg;
@@ -279,6 +283,14 @@ static void mcux_flexcomm_irq_callback_set(const struct device *dev,
 
 	data->irq_callback = cb;
 	data->irq_cb_data = cb_data;
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	data->async_callback = NULL;
+	data->async_cb_data = NULL;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif /* CONFIG_UART_INTERRUPT_DRIVEN */
 
@@ -400,6 +412,15 @@ static int mcux_flexcomm_uart_callback_set(const struct device *dev,
 	data->async_callback = callback;
 	data->async_cb_data = user_data;
 
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	data->irq_callback = NULL;
+	data->irq_cb_data = NULL;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -916,7 +937,11 @@ static int flexcomm_uart_async_init(const struct device *dev)
 
 #endif /* CONFIG_UART_ASYNC_API */
 
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void mcux_flexcomm_isr(const struct device *dev)
 {
 	struct mcux_flexcomm_data *data = dev->data;
@@ -985,8 +1010,14 @@ static void mcux_flexcomm_isr(const struct device *dev)
 		}
 
 	}
+<<<<<<< HEAD
 #endif
 }
+=======
+#endif /* CONFIG_UART_ASYNC_API */
+}
+#endif /* CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 static int mcux_flexcomm_init(const struct device *dev)
@@ -1041,7 +1072,11 @@ static int mcux_flexcomm_init(const struct device *dev)
 
 	USART_Init(config->base, &usart_config, clock_freq);
 
+<<<<<<< HEAD
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
+=======
+#ifdef CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	config->irq_config_func(dev);
 #endif
 
@@ -1090,7 +1125,11 @@ static const struct uart_driver_api mcux_flexcomm_driver_api = {
 };
 
 
+<<<<<<< HEAD
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
+=======
+#ifdef CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define UART_MCUX_FLEXCOMM_IRQ_CFG_FUNC(n)					\
 	static void mcux_flexcomm_irq_config_func_##n(const struct device *dev)	\
 	{									\
@@ -1105,7 +1144,11 @@ static const struct uart_driver_api mcux_flexcomm_driver_api = {
 #else
 #define UART_MCUX_FLEXCOMM_IRQ_CFG_FUNC(n)
 #define UART_MCUX_FLEXCOMM_IRQ_CFG_FUNC_INIT(n)
+<<<<<<< HEAD
 #endif /* CONFIG_UART_INTERRUPT_DRIVEN */
+=======
+#endif /* CONFIG_UART_MCUX_FLEXCOMM_ISR_SUPPORT */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_UART_ASYNC_API
 #define UART_MCUX_FLEXCOMM_TX_TIMEOUT_FUNC(n)					\

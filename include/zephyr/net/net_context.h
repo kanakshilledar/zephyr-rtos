@@ -323,6 +323,15 @@ __net_socket struct net_context {
 #if defined(CONFIG_NET_CONTEXT_DSCP_ECN)
 		uint8_t dscp_ecn;
 #endif
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_NET_CONTEXT_REUSEADDR)
+		bool reuseaddr;
+#endif
+#if defined(CONFIG_NET_CONTEXT_REUSEPORT)
+		bool reuseport;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} options;
 
 	/** Protocol (UDP, TCP or IEEE 802.3 protocol value) */
@@ -1073,6 +1082,11 @@ enum net_context_option {
 	NET_OPT_RCVBUF		= 6,
 	NET_OPT_SNDBUF		= 7,
 	NET_OPT_DSCP_ECN	= 8,
+<<<<<<< HEAD
+=======
+	NET_OPT_REUSEADDR	= 9,
+	NET_OPT_REUSEPORT	= 10,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**

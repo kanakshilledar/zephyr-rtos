@@ -56,11 +56,19 @@ where:
 
     +-----------------------+---------------------------------------------------+
     | "argv"                | array consisting of strings representing command  |
+<<<<<<< HEAD
     |                       | and its arguments                                 |
     +-----------------------+---------------------------------------------------+
     | <cmd>                 | command to be executed                            |
     +-----------------------+---------------------------------------------------+
     | <arg>                 | optional arguments to command                     |
+=======
+    |                       | and its arguments.                                |
+    +-----------------------+---------------------------------------------------+
+    | <cmd>                 | command to be executed.                           |
+    +-----------------------+---------------------------------------------------+
+    | <arg>                 | optional arguments to command.                    |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     +-----------------------+---------------------------------------------------+
 
 Shell command line execute response
@@ -88,17 +96,41 @@ CBOR data of successful response:
 
 In case of error the CBOR data takes the form:
 
+<<<<<<< HEAD
 .. code-block:: none
 
     {
         (str)"rc"           : (int)
     }
+=======
+.. tabs::
+
+   .. group-tab:: SMP version 2
+
+      .. code-block:: none
+
+          {
+              (str)"err" : {
+                  (str)"group"    : (uint)
+                  (str)"rc"       : (uint)
+              }
+          }
+
+   .. group-tab:: SMP version 1 (and non-group SMP version 2)
+
+      .. code-block:: none
+
+          {
+              (str)"rc"       : (int)
+          }
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 where:
 
 .. table::
     :align: center
 
+<<<<<<< HEAD
     +-----------------------+-----------------------------------------------+
     | "rc"                  | :c:enum:`mcumgr_err_t`                        |
     |                       | only appears if non-zero (error condition).   |
@@ -107,6 +139,22 @@ where:
     +-----------------------+-----------------------------------------------+
     | "ret"                 | return code from shell command execution      |
     +-----------------------+-----------------------------------------------+
+=======
+    +------------------+-------------------------------------------------------------------------+
+    | "o"              | command output.                                                         |
+    +------------------+-------------------------------------------------------------------------+
+    | "ret"            | return code from shell command execution.                               |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "group" | :c:enum:`mcumgr_group_t` group of the group-based error code. Only      |
+    |                  | appears if an error is returned when using SMP version 2.               |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "rc"    | contains the index of the group-based error code. Only appears if       |
+    |                  | non-zero (error condition) when using SMP version 2.                    |
+    +------------------+-------------------------------------------------------------------------+
+    | "rc"             | :c:enum:`mcumgr_err_t` only appears if non-zero (error condition) when  |
+    |                  | using SMP version 1 or for SMP errors when using SMP version 2.         |
+    +------------------+-------------------------------------------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. note::
     In older versions of Zephyr, "rc" was used for both the mcumgr status code

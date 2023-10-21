@@ -22,6 +22,7 @@ CONFIG_UART_CONSOLE=y
 # enable GPIO
 CONFIG_GPIO=y
 
+<<<<<<< HEAD
 # additional board options
 CONFIG_GPIO_AS_PINRESET=y
 
@@ -30,3 +31,8 @@ CONFIG_GPIO_AS_PINRESET=y
 # Enable this on your prj.conf to include Bluetooth support
 
 CONFIG_PINCTRL=y
+=======
+# Bluetooth not enabled by default on nRF52811 due to RAM limitations when
+# running the default set of kernel tests.
+# Enable this on your prj.conf to include Bluetooth support
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -16,7 +16,11 @@
 			compatible = "microchip,miv", "riscv";
 			device_type = "cpu";
 			reg = <0>;
+<<<<<<< HEAD
 			riscv,isa = "rv32imac";
+=======
+			riscv,isa = "rv32ima_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -54,10 +58,14 @@
 			#interrupt-cells = <2>;
 			interrupt-controller;
 			interrupts-extended = <&hlic 11>;
+<<<<<<< HEAD
 			reg = <0x40000000 0x2000
 			       0x40002000 0x1fe000
 			       0x40200000 0x2000000>;
 			reg-names = "prio", "irq_en", "reg";
+=======
+			reg = <0x40000000 0x04000000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			riscv,max-priority = <1>;
 			riscv,ndev = <31>;
 		};

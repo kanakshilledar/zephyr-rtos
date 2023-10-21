@@ -6,7 +6,11 @@
 #ifndef _POSIX_CORE_BOARD_PROVIDED_IF_H
 #define _POSIX_CORE_BOARD_PROVIDED_IF_H
 
+<<<<<<< HEAD
 #include "zephyr/types.h"
+=======
+#include <zephyr/types.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * This file lists the functions the posix "inf_clock" soc

@@ -28,6 +28,17 @@ static inline int z_vrfy_flash_write(const struct device *dev, off_t offset,
 }
 #include <syscalls/flash_write_mrsh.c>
 
+<<<<<<< HEAD
+=======
+static inline int z_vrfy_flash_erase(const struct device *dev, off_t offset,
+				     size_t size)
+{
+	Z_OOPS(Z_SYSCALL_DRIVER_FLASH(dev, erase));
+	return z_impl_flash_erase((const struct device *)dev, offset, size);
+}
+#include <syscalls/flash_erase_mrsh.c>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline size_t z_vrfy_flash_get_write_block_size(const struct device *dev)
 {
 	Z_OOPS(Z_SYSCALL_OBJ(dev, K_OBJ_DRIVER_FLASH));

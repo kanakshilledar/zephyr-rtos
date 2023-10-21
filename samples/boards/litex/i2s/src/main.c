@@ -110,7 +110,11 @@ int main(void)
 		i2s_read(host_i2s_rx_dev, &rx_mem_block, &size);
 		memcpy(tx_mem_block, rx_mem_block, size);
 		i2s_write(host_i2s_tx_dev, tx_mem_block, size);
+<<<<<<< HEAD
 		k_mem_slab_free(&i2s_rx_mem_slab, &rx_mem_block);
+=======
+		k_mem_slab_free(&i2s_rx_mem_slab, rx_mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	return 0;
 }

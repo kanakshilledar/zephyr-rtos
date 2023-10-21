@@ -133,8 +133,13 @@ CA certificate and hostname can be set:
 Once configured, socket can be used just like a regular TCP socket.
 
 Several samples in Zephyr use secure sockets for communication. For a sample use
+<<<<<<< HEAD
 see e.g. :ref:`echo-server sample application <sockets-echo-server-sample>` or
 :ref:`HTTP GET sample application <sockets-http-get>`.
+=======
+see e.g. :zephyr:code-sample:`echo-server sample application <sockets-echo-server>` or
+:zephyr:code-sample:`HTTP GET sample application <sockets-http-get>`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Secure Sockets options
 ======================

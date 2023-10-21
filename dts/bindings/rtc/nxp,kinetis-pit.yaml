@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Copyright 2020 NXP
+=======
+# Copyright 2020,2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 description: NXP MCUX Periodic Interrupt Timer (PIT)
@@ -11,6 +15,12 @@ properties:
   reg:
     required: true
 
+<<<<<<< HEAD
+=======
+  clocks:
+    required: true
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   pit-channel:
     type: int
     required: true
@@ -20,3 +30,11 @@ properties:
     type: int
     required: true
     description: pit default period in us
+<<<<<<< HEAD
+=======
+
+  max-load-value:
+    type: int
+    required: true
+    description: maximum load value supported
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

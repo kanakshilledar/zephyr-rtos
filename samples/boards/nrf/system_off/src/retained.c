@@ -4,13 +4,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <string.h>
+=======
+#include "retained.h"
+
+#include <stdint.h>
+#include <string.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/sys/crc.h>
+<<<<<<< HEAD
 #include <hal/nrf_power.h>
 #include "retained.h"
+=======
+
+#include <hal/nrf_power.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* nRF52 RAM (really, RAM AHB slaves) are partitioned as:
  * * Up to 8 blocks of two 4 KiBy byte "small" sections

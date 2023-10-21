@@ -181,6 +181,7 @@ mikrobus_serial: &flexcomm2 {
 mikrobus_spi: &hs_lspi {
 };
 
+<<<<<<< HEAD
 &dma0 {
 	/*
 	 * The total number of dma channels available is defined by
@@ -195,6 +196,8 @@ mikrobus_spi: &hs_lspi {
 	status = "okay";
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &flexcomm0 {
 	pinctrl-0 = <&pinmux_flexcomm0_usart>;
 	pinctrl-names = "default";

@@ -38,6 +38,7 @@ static void gptp_md_follow_up_prepare(struct net_pkt *pkt,
 	hdr = GPTP_HDR(pkt);
 	fup = GPTP_FOLLOW_UP(pkt);
 
+<<<<<<< HEAD
 	/*
 	 * Compute correction field according to IEEE802.1AS 11.2.14.2.3.
 	 *
@@ -54,6 +55,8 @@ static void gptp_md_follow_up_prepare(struct net_pkt *pkt,
 	hdr->correction_field <<= 16;
 	hdr->correction_field = htonll(hdr->correction_field);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memcpy(&hdr->port_id.clk_id, &sync_send->src_port_id.clk_id,
 	       GPTP_CLOCK_ID_LEN);
 
@@ -61,6 +64,7 @@ static void gptp_md_follow_up_prepare(struct net_pkt *pkt,
 
 	hdr->log_msg_interval = sync_send->log_msg_interval;
 
+<<<<<<< HEAD
 	fup->prec_orig_ts_secs_high =
 		htons(sync_send->precise_orig_ts._sec.high);
 	fup->prec_orig_ts_secs_low =
@@ -68,6 +72,8 @@ static void gptp_md_follow_up_prepare(struct net_pkt *pkt,
 	fup->prec_orig_ts_nsecs =
 		htonl(sync_send->precise_orig_ts.nanosecond);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	fup->tlv_hdr.type = htons(GPTP_TLV_ORGANIZATION_EXT);
 	fup->tlv_hdr.len = htons(sizeof(struct gptp_follow_up_tlv));
 	fup->tlv.org_id[0] = GPTP_FUP_TLV_ORG_ID_BYTE_0;

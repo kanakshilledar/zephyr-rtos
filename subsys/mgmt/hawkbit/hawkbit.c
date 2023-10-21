@@ -203,8 +203,13 @@ static const struct json_obj_descr json_dep_fbk_descr[] = {
 static bool start_http_client(void)
 {
 	int ret = -1;
+<<<<<<< HEAD
 	struct addrinfo *addr;
 	struct addrinfo hints;
+=======
+	struct zsock_addrinfo *addr;
+	struct zsock_addrinfo hints;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int resolve_attempts = 10;
 
 #if defined(CONFIG_NET_SOCKETS_SOCKOPT_TLS)
@@ -224,7 +229,11 @@ static bool start_http_client(void)
 	}
 
 	while (resolve_attempts--) {
+<<<<<<< HEAD
 		ret = getaddrinfo(CONFIG_HAWKBIT_SERVER, CONFIG_HAWKBIT_PORT, &hints, &addr);
+=======
+		ret = zsock_getaddrinfo(CONFIG_HAWKBIT_SERVER, CONFIG_HAWKBIT_PORT, &hints, &addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (ret == 0) {
 			break;
 		}
@@ -237,7 +246,11 @@ static bool start_http_client(void)
 		return false;
 	}
 
+<<<<<<< HEAD
 	hb_context.sock = socket(addr->ai_family, SOCK_STREAM, protocol);
+=======
+	hb_context.sock = zsock_socket(addr->ai_family, SOCK_STREAM, protocol);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (hb_context.sock < 0) {
 		LOG_ERR("Failed to create TCP socket");
 		goto err;
@@ -260,11 +273,16 @@ static bool start_http_client(void)
 	}
 #endif
 
+<<<<<<< HEAD
 	if (connect(hb_context.sock, addr->ai_addr, addr->ai_addrlen) < 0) {
+=======
+	if (zsock_connect(hb_context.sock, addr->ai_addr, addr->ai_addrlen) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Failed to connect to server");
 		goto err_sock;
 	}
 
+<<<<<<< HEAD
 	freeaddrinfo(addr);
 	return true;
 
@@ -272,12 +290,25 @@ err_sock:
 	close(hb_context.sock);
 err:
 	freeaddrinfo(addr);
+=======
+	zsock_freeaddrinfo(addr);
+	return true;
+
+err_sock:
+	zsock_close(hb_context.sock);
+err:
+	zsock_freeaddrinfo(addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return false;
 }
 
 static void cleanup_connection(void)
 {
+<<<<<<< HEAD
 	if (close(hb_context.sock) < 0) {
+=======
+	if (zsock_close(hb_context.sock) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Could not close the socket");
 	}
 }

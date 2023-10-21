@@ -1,11 +1,20 @@
+<<<<<<< HEAD
 .. _soc-flash-nrf-sample:
 
 nRF SoC flash sample
 ####################
+=======
+.. zephyr:code-sample:: soc-flash-nrf
+   :name: nRF SoC flash
+   :relevant-api: flash_interface flash_area_api
+
+   Use the flash API to interact with the SoC flash.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample demonstrates using the flash API on a SoC internal flash.
 The sample uses :ref:`flash_map_api` to obtain device for flash, using
 DTS node label, and then directly uses :ref:`flash_api` to perform
@@ -13,6 +22,15 @@ flash operations.
 
 Within the sample user may observe how read/write/erase operations
 are performed on a device and how to first check whether device is
+=======
+This sample demonstrates using the :ref:`Flash API <flash_api>` on an SoC internal flash.
+The sample uses :ref:`Flash map API <flash_map_api>` to obtain device for flash, using
+DTS node label, and then directly uses :ref:`Flash API <flash_api>` to perform
+flash operations.
+
+Within the sample, user may observe how read/write/erase operations
+are performed on a device, and how to first check whether device is
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ready for operation.
 
 Building and Running

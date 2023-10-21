@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _character_frame_buffer_sample:
 
 Character frame buffer
 ######################
+=======
+.. zephyr:code-sample:: character-frame-buffer
+   :name: Character frame buffer
+   :relevant-api: monochrome_character_framebuffer
+
+   Display character strings using the Character Frame Buffer (CFB).
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

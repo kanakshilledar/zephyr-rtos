@@ -3,6 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+<<<<<<< HEAD
 tests:
   os.mgmt.info:
     # FIXME: Exclude architectures that lack a reboot handler function
@@ -59,6 +60,35 @@ tests:
       - xtensa
       - mips
       - posix
+=======
+common:
+  tags:
+    - mcumgr
+    - os_mgmt_info
+  # FIXME: Exclude architectures that lack a reboot handler function
+  arch_exclude:
+    - arm64
+    - nios2
+    - sparc
+    - arc
+    - xtensa
+    - mips
+    - posix
+tests:
+  mgmt.mcumgr.os.info: {}
+  mgmt.mcumgr.os.info.no_hooks:
+    extra_configs:
+      - CONFIG_MCUMGR_GRP_OS_INFO_CUSTOM_HOOKS=n
+      - CONFIG_MCUMGR_MGMT_NOTIFICATION_HOOKS=n
+  mgmt.mcumgr.os.info.bt:
+    depends_on: ble
+    extra_configs:
+      - CONFIG_BT=y
+      - CONFIG_BT_DEVICE_NAME="a_bt_name"
+  mgmt.mcumgr.os.info.net:
+    depends_on: netif
+    # FIXME: Exclude systems whereby the processor type is not known and emits a warning
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_exclude:
       - qemu_cortex_a9
       - qemu_x86
@@ -69,12 +99,16 @@ tests:
       - qemu_riscv32_smp
       - qemu_cortex_m3
       - mps2_an385
+<<<<<<< HEAD
     tags: os_mgmt_info
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_NETWORKING=y
       - CONFIG_NET_HOSTNAME_ENABLE=y
       - CONFIG_NET_HOSTNAME="test_net_name"
       - CONFIG_TEST_RANDOM_GENERATOR=y
+<<<<<<< HEAD
   os.mgmt.info_build_date:
     # FIXME: Exclude architectures that lack a reboot handler function
     # FIXME: Exclude systems whereby the processor type is not known and emits a warning
@@ -101,6 +135,12 @@ tests:
       - mips
       - posix
     tags: os_mgmt_info
+=======
+  mgmt.mcumgr.os.info.build_date:
+    extra_configs:
+      - CONFIG_BUILD_DATE_TIME_TEST=y
+  mgmt.mcumgr.os.info.limited_size:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_LIMITED_TEST=y
       - CONFIG_MCUMGR_TRANSPORT_DUMMY_RX_BUF_SIZE=64

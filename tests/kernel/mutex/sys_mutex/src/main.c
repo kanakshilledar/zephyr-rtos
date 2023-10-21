@@ -397,7 +397,11 @@ ZTEST_USER_OR_NOT(mutex_complex, test_mutex)
 	k_thread_create(&thread_12_thread_data, thread_12_stack_area, STACKSIZE,
 			(k_thread_entry_t)thread_12, NULL, NULL, NULL,
 			K_PRIO_PREEMPT(12), PARTICIPANT_THREAD_OPTIONS, K_NO_WAIT);
+<<<<<<< HEAD
 	k_sleep(K_MSEC(1));     /* Give thread_12 a chance to block on the mutex */
+=======
+	k_sleep(K_MSEC(5));     /* Give thread_12 a chance to block on the mutex */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	sys_mutex_unlock(&private_mutex);
 	sys_mutex_unlock(&private_mutex); /* thread_12 should now have lock */

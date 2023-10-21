@@ -7,7 +7,10 @@ config SOC_SERIES_CYCLONE5
 	bool "Intel SoC FPGA Cyclone5 Series"
 	select ARM
 	select CPU_CORTEX_A9
+<<<<<<< HEAD
 	select GIC_V1
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select SOC_FAMILY_INTEL_SOCFPGA_STD
 	select ARM_ARCH_TIMER_ERRATUM_740657 if ARM_ARCH_TIMER
 	select HAS_SPI_DW if SPI

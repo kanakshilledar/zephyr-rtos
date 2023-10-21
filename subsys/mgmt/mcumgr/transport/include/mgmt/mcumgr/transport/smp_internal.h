@@ -9,6 +9,10 @@
 #define MGMT_MCUMGR_SMP_INTERNAL_H_
 
 #include <stdint.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/kernel.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/buf.h>
 #include <zephyr/mgmt/mcumgr/transport/smp.h>
 
@@ -47,6 +51,18 @@ struct zephyr_smp_transport;
  */
 void smp_rx_req(struct smp_transport *smtp, struct net_buf *nb);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP_CLIENT
+/**
+ * @brief Trig SMP client request packet for transmission.
+ *
+ * @param work	The transport to use to send the corresponding response(s).
+ */
+void smp_tx_req(struct k_work *work);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 __deprecated static inline
 void zephyr_smp_rx_req(struct zephyr_smp_transport *smpt, struct net_buf *nb)
 {

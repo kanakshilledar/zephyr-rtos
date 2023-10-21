@@ -38,7 +38,11 @@ endif()
 # https://gcc.gnu.org/git/gitweb.cgi?p=gcc.git;h=be9dd80f933480
 # Add check for GCC version >= 13.1
 execute_process(
+<<<<<<< HEAD
     COMMAND ${CMAKE_C_COMPILER} -dumpversion
+=======
+    COMMAND ${CMAKE_C_COMPILER} -dumpfullversion
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     OUTPUT_VARIABLE temp_compiler_version
     )
 

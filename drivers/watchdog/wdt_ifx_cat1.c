@@ -36,6 +36,10 @@ static void ifx_cat1_wdt_isr_handler(const struct device *dev)
 	if (dev_data->callback) {
 		dev_data->callback(dev, 0);
 	}
+<<<<<<< HEAD
+=======
+	Cy_WDT_MaskInterrupt();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif /* IFX_CAT1_WDT_IS_IRQ_EN */
 

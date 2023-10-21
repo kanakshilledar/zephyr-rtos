@@ -1,5 +1,9 @@
 /*
  * Copyright (c) 2019 Mohamed ElShahawi (extremegtx@hotmail.com)
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Espressif Systems (Shanghai) Co., Ltd.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,7 @@
 
 /* Include esp-idf headers first to avoid redefining BIT() macro */
 /* TODO: include w/o prefix */
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32
 #include <esp32/rom/ets_sys.h>
 #include <esp32/rom/gpio.h>
@@ -22,12 +27,34 @@
 #elif defined(CONFIG_SOC_ESP32C3)
 #include <esp32c3/rom/ets_sys.h>
 #include <esp32c3/rom/gpio.h>
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32
+#include <esp32/rom/ets_sys.h>
+#include <esp32/rom/gpio.h>
+#include <soc/dport_reg.h>
+#elif defined(CONFIG_SOC_SERIES_ESP32S2)
+#include <esp32s2/rom/ets_sys.h>
+#include <esp32s2/rom/gpio.h>
+#include <soc/dport_reg.h>
+#elif defined(CONFIG_SOC_SERIES_ESP32S3)
+#include <esp32s3/rom/ets_sys.h>
+#include <esp32s3/rom/gpio.h>
+#include <zephyr/dt-bindings/clock/esp32s3_clock.h>
+#elif defined(CONFIG_SOC_SERIES_ESP32C3)
+#include <esp32c3/rom/ets_sys.h>
+#include <esp32c3/rom/gpio.h>
+#include <zephyr/dt-bindings/clock/esp32c3_clock.h>
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_ASYNC_API
 #include <zephyr/drivers/dma.h>
 #include <zephyr/drivers/dma/dma_esp32.h>
 #include <hal/uhci_ll.h>
+<<<<<<< HEAD
 #include <zephyr/dt-bindings/clock/esp32c3_clock.h>
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 #include <soc/uart_struct.h>
 #include <hal/uart_ll.h>
@@ -41,7 +68,11 @@
 #include <soc.h>
 #include <zephyr/drivers/uart.h>
 
+<<<<<<< HEAD
 #ifndef CONFIG_SOC_ESP32C3
+=======
+#ifndef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/interrupt_controller/intc_esp32.h>
 #else
 #include <zephyr/drivers/interrupt_controller/intc_esp32c3.h>
@@ -53,7 +84,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uart_esp32, CONFIG_UART_LOG_LEVEL);
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32C3
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define ISR_HANDLER isr_handler_t
 #else
 #define ISR_HANDLER intr_handler_t
@@ -64,6 +99,10 @@ struct uart_esp32_config {
 	const struct pinctrl_dev_config *pcfg;
 	const clock_control_subsys_t clock_subsys;
 	int irq_source;
+<<<<<<< HEAD
+=======
+	int irq_priority;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if CONFIG_UART_ASYNC_API
 	const struct device *dma_dev;
 	uint8_t tx_dma_channel;
@@ -94,7 +133,10 @@ struct uart_esp32_async_data {
 struct uart_esp32_data {
 	struct uart_config uart_config;
 	uart_hal_context_t hal;
+<<<<<<< HEAD
 	int irq_line;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	uart_irq_callback_user_data_t irq_cb;
 	void *irq_cb_data;
@@ -433,6 +475,14 @@ static void uart_esp32_irq_callback_set(const struct device *dev, uart_irq_callb
 
 	data->irq_cb = cb;
 	data->irq_cb_data = cb_data;
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	data->async.cb = NULL;
+	data->async.user_data = NULL;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #endif /* CONFIG_UART_INTERRUPT_DRIVEN */
@@ -466,6 +516,10 @@ static void uart_esp32_isr(void *arg)
 	struct uart_esp32_data *data = dev->data;
 	uint32_t uart_intr_status = uart_hal_get_intsts_mask(&data->hal);
 	const struct uart_esp32_config *config = dev->config;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (uart_intr_status == 0) {
 		return;
 	}
@@ -659,6 +713,14 @@ static int uart_esp32_async_callback_set(const struct device *dev, uart_callback
 	data->async.cb = callback;
 	data->async.user_data = user_data;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	data->irq_cb = NULL;
+	data->irq_cb_data = NULL;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -884,9 +946,27 @@ static int uart_esp32_init(const struct device *dev)
 	struct uart_esp32_data *data = dev->data;
 	int ret = uart_esp32_configure(dev, &data->uart_config);
 
+<<<<<<< HEAD
 #if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
 	data->irq_line = esp_intr_alloc(config->irq_source, 0, (ISR_HANDLER)uart_esp32_isr,
 					(void *)dev, NULL);
+=======
+	if (ret < 0) {
+		LOG_ERR("Error configuring UART (%d)", ret);
+		return ret;
+	}
+
+#if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
+	ret = esp_intr_alloc(config->irq_source,
+			config->irq_priority,
+			(ISR_HANDLER)uart_esp32_isr,
+			(void *)dev,
+			NULL);
+	if (ret < 0) {
+		LOG_ERR("Error allocating UART interrupt (%d)", ret);
+		return ret;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 #if CONFIG_UART_ASYNC_API
 	if (config->dma_dev) {
@@ -905,7 +985,11 @@ static int uart_esp32_init(const struct device *dev)
 		k_work_init_delayable(&data->async.rx_timeout_work, uart_esp32_async_rx_timeout);
 	}
 #endif
+<<<<<<< HEAD
 	return ret;
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static const DRAM_ATTR struct uart_driver_api uart_esp32_api = {
@@ -952,9 +1036,18 @@ static const DRAM_ATTR struct uart_driver_api uart_esp32_api = {
 #define ESP_UART_UHCI_INIT(n)                                                                      \
 	.uhci_dev = COND_CODE_1(DT_INST_NODE_HAS_PROP(n, dmas), (&UHCI0), (NULL))
 
+<<<<<<< HEAD
 #else
 #define ESP_UART_DMA_INIT(n)
 #define ESP_UART_UHCI_INIT(n)
+=======
+#define UART_IRQ_PRIORITY ESP_INTR_FLAG_LEVEL2
+
+#else
+#define ESP_UART_DMA_INIT(n)
+#define ESP_UART_UHCI_INIT(n)
+#define UART_IRQ_PRIORITY (0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #define ESP32_UART_INIT(idx)                                                                       \
@@ -966,6 +1059,10 @@ static const DRAM_ATTR struct uart_driver_api uart_esp32_api = {
 		.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(idx),                                       \
 		.clock_subsys = (clock_control_subsys_t)DT_INST_CLOCKS_CELL(idx, offset),          \
 		.irq_source = DT_INST_IRQN(idx),                                                   \
+<<<<<<< HEAD
+=======
+		.irq_priority = UART_IRQ_PRIORITY,                                                 \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ESP_UART_DMA_INIT(idx)};                                                           \
                                                                                                    \
 	static struct uart_esp32_data uart_esp32_data_##idx = {                                    \

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _kscan-sample:
 
 KSCAN Interface
 ####################################
+=======
+.. zephyr:code-sample:: kscan
+   :name: KSCAN
+   :relevant-api: kscan_interface timer_apis
+
+   Use the KSCAN API to read key presses and releases on a keyboard matrix.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

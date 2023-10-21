@@ -9,6 +9,10 @@
 #ifndef ZEPHYR_INCLUDE_BLUETOOTH_AUDIO_TMAP_
 #define ZEPHYR_INCLUDE_BLUETOOTH_AUDIO_TMAP_
 
+<<<<<<< HEAD
+=======
+#include <zephyr/bluetooth/conn.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 
 /** @brief TMAP Role characteristic */
@@ -52,7 +56,11 @@ int bt_tmap_register(enum bt_tmap_role role);
  *
  * @return 0 on success or negative error value on failure.
  */
+<<<<<<< HEAD
 int bt_tmap_discover(struct bt_conn *conn, struct bt_tmap_cb *tmap_cb);
+=======
+int bt_tmap_discover(struct bt_conn *conn, const struct bt_tmap_cb *tmap_cb);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Set one or multiple TMAP roles dynamically.

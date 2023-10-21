@@ -130,6 +130,10 @@ config MCUMGR_GRP_FS_HASH_SHA256
 
 config MCUMGR_GRP_FS_CHECKSUM_HASH_SUPPORTED_CMD
 	bool "Supported hash/checksum command"
+<<<<<<< HEAD
+=======
+	select MCUMGR_SMP_CBOR_MIN_ENCODING_LEVEL_3 if ZCBOR_CANONICAL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the supported hash/checksum command which will return details on
 	  supported hash and checksum types that can be used.

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _settings_subsys_sample:
 
 Settings sample
 ###############
+=======
+.. zephyr:code-sample:: settings
+   :name: Settings API
+   :relevant-api: settings settings_rt settings_name_proc
+
+   Load and save configuration values using the settings API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

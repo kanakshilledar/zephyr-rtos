@@ -100,7 +100,10 @@ NET_CONNECTION_MANAGER,n,experimental
 NET_GPTP,n,experimental
 NET_IPV4_AUTO,n,experimental
 NET_L2_IEEE802154_SECURITY,n,experimental
+<<<<<<< HEAD
 NET_L2_PPP,n,experimental
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 NET_PROMISCUOUS_MODE,n,experimental
 NET_SOCKETS_CAN,n,experimental
 NET_SOCKETS_ENABLE_DTLS,n,experimental

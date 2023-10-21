@@ -18,3 +18,13 @@ RunTest mesh_prov_pb_remote_nppi_robustness \
 	prov_provisioner_pb_remote_client_nppi_robustness \
 	prov_device_pb_remote_server_unproved \
 	prov_device_pb_remote_server_nppi_robustness
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_prov_pb_remote_nppi_robustness_psa \
+	prov_provisioner_pb_remote_client_nppi_robustness \
+	prov_device_pb_remote_server_unproved \
+	prov_device_pb_remote_server_nppi_robustness
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

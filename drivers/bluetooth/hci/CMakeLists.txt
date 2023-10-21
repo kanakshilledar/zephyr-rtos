@@ -11,3 +11,7 @@ zephyr_library_sources_ifdef(CONFIG_BT_STM32_IPM   ipm_stm32wb.c)
 zephyr_library_sources_ifdef(CONFIG_BT_USERCHAN    userchan.c)
 zephyr_library_sources_ifdef(CONFIG_BT_SILABS_HCI  slz_hci.c)
 zephyr_library_sources_ifdef(CONFIG_BT_PSOC6_BLESS hci_psoc6_bless.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_SOC_NRF5340_CPUAPP nrf53_support.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

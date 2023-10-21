@@ -7,6 +7,10 @@
 
 /dts-v1/;
 #include <silabs/efm32gg11b820f2048gl192.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Silicon Labs EFM32GG STK3701A board";
@@ -46,11 +50,19 @@
 			/* gpio flags need validation */
 			gpios = <&gpioc 8 GPIO_ACTIVE_LOW>;
 			label = "User Push Button 0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button1: button_1 {
 			/* gpio flags need validation */
 			gpios = <&gpioc 9 GPIO_ACTIVE_LOW>;
 			label = "User Push Button 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
@@ -116,6 +128,15 @@
 
 &gpioe {
 	status = "okay";
+<<<<<<< HEAD
+=======
+
+	board-controller-enable {
+		gpio-hog;
+		gpios = <1 GPIO_ACTIVE_HIGH>;
+		output-high;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &gpiof {

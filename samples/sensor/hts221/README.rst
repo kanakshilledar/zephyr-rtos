@@ -17,7 +17,11 @@ This sample uses the HTS221 sensor controlled using the I2C interface.
 References
 **********
 
+<<<<<<< HEAD
  - HTS211: http://www.st.com/en/mems-and-sensors/hts221.html
+=======
+ - HTS211: https://www.st.com/en/mems-and-sensors/hts221.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

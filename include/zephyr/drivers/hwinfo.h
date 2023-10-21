@@ -30,6 +30,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #define RESET_PIN				BIT(0)
 #define RESET_SOFTWARE				BIT(1)
 #define RESET_BROWNOUT				BIT(2)
@@ -45,6 +46,46 @@ extern "C" {
 #define RESET_HARDWARE				BIT(12)
 #define RESET_USER				BIT(13)
 #define RESET_TEMPERATURE			BIT(14)
+=======
+/**
+ * @name Reset cause flags
+ * @anchor reset_cause
+ * @{
+ */
+/** External pin */
+#define RESET_PIN				BIT(0)
+/** Software reset */
+#define RESET_SOFTWARE				BIT(1)
+/** Brownout (drop in voltage) */
+#define RESET_BROWNOUT				BIT(2)
+/** Power-on reset (POR) */
+#define RESET_POR				BIT(3)
+/** Watchdog timer expiration */
+#define RESET_WATCHDOG				BIT(4)
+/** Debug event */
+#define RESET_DEBUG				BIT(5)
+/** Security violation */
+#define RESET_SECURITY				BIT(6)
+/** Waking up from low power mode */
+#define RESET_LOW_POWER_WAKE			BIT(7)
+/** CPU lock-up detected */
+#define RESET_CPU_LOCKUP			BIT(8)
+/** Parity error */
+#define RESET_PARITY				BIT(9)
+/** PLL error */
+#define RESET_PLL				BIT(10)
+/** Clock error */
+#define RESET_CLOCK				BIT(11)
+/** Hardware reset */
+#define RESET_HARDWARE				BIT(12)
+/** User reset */
+#define RESET_USER				BIT(13)
+/** Temperature reset */
+#define RESET_TEMPERATURE			BIT(14)
+/**
+ * @}
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Copy the device id to a buffer
@@ -73,7 +114,11 @@ ssize_t z_impl_hwinfo_get_device_id(uint8_t *buffer, size_t length);
 /**
  * @brief      Retrieve cause of device reset.
  *
+<<<<<<< HEAD
  * @param      cause  OR'd `reset_cause` flags
+=======
+ * @param      cause  OR'd @ref reset_cause "reset cause" flags
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * This routine retrieves the flags that indicate why the device was reset.
  *
@@ -110,7 +155,11 @@ int z_impl_hwinfo_clear_reset_cause(void);
 /**
  * @brief      Get supported reset cause flags
  *
+<<<<<<< HEAD
  * @param      supported  OR'd `reset_cause` flags that are supported
+=======
+ * @param      supported  OR'd @ref reset_cause "reset cause" flags that are supported
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * Retrieves all `reset_cause` flags that are supported by this device.
  *

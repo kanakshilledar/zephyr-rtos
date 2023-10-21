@@ -263,7 +263,11 @@ static void shi_ite_parse_header(const struct device *dev)
 		shi_ite_host_request_data(data->rx_ctx->buf + sizeof(*r),
 					  data->rx_ctx->len - sizeof(*r));
 
+<<<<<<< HEAD
 		k_sem_give(&data->rx_ctx->handler_owns);
+=======
+		ec_host_cmd_rx_notify();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		/* Invalid version number */
 		LOG_ERR("Invalid version number");

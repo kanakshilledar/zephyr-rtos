@@ -57,7 +57,11 @@
 	};
 
 	gic: interrupt-controller@38800000 {
+<<<<<<< HEAD
 		compatible = "arm,gic";
+=======
+		compatible = "arm,gic-v3", "arm,gic";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		reg = <0x38800000 0x10000>, /* GIC Dist */
 		      <0x38880000 0xc0000>; /* GICR (RD_base + SGI_base) */
 		interrupt-controller;

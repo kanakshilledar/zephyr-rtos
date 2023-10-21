@@ -8,8 +8,13 @@
 #include <zephyr/shell/shell.h>
 #include <zephyr/bluetooth/mesh.h>
 
+<<<<<<< HEAD
 #include "../net.h"
 #include "../access.h"
+=======
+#include "mesh/net.h"
+#include "mesh/access.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "utils.h"
 #include <zephyr/bluetooth/mesh/shell.h>
 
@@ -98,6 +103,7 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (page != 0x00 && page != 0x01 && page != 0x80) {
 		shell_print(sh, "Got page 0x%02x. No parser available.",
 			    page);
@@ -105,6 +111,16 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 	}
 
 	if (page != 1) {
+=======
+	if (page != 0 && page != 128 &&
+	    ((page != 1 && page != 129) || !IS_ENABLED(CONFIG_BT_MESH_COMP_PAGE_1)) &&
+	    ((page != 2 && page != 130) || !IS_ENABLED(CONFIG_BT_MESH_COMP_PAGE_2))) {
+		shell_print(sh, "Got page %d. No parser available.", page);
+		return 0;
+	}
+
+	if (page == 0 || page == 128) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = bt_mesh_comp_p0_get(&comp, &buf);
 
 		if (err) {
@@ -113,7 +129,12 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 			return 0;
 		}
 
+<<<<<<< HEAD
 		shell_print(sh, "Got Composition Data for 0x%04x:", bt_mesh_shell_target_ctx.dst);
+=======
+		shell_print(sh, "Got Composition Data for 0x%04x, page: %d:",
+			    bt_mesh_shell_target_ctx.dst, page);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		shell_print(sh, "\tCID      0x%04x", comp.cid);
 		shell_print(sh, "\tPID      0x%04x", comp.pid);
 		shell_print(sh, "\tVID      0x%04x", comp.vid);
@@ -153,7 +174,11 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 		}
 	}
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BT_MESH_COMP_PAGE_1) && page == 1) {
+=======
+	if (IS_ENABLED(CONFIG_BT_MESH_COMP_PAGE_1) && (page == 1 || page == 129)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* size of 32 is chosen arbitrary, as sufficient for testing purposes */
 		NET_BUF_SIMPLE_DEFINE(p1_buf, 32);
 		NET_BUF_SIMPLE_DEFINE(p1_item_buf, 32);
@@ -167,7 +192,11 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 			return 0;
 		}
 		shell_print(sh,
+<<<<<<< HEAD
 			    "Got Composition Data for 0x%04x, page: 0x%02x:",
+=======
+			    "Got Composition Data for 0x%04x, page: %d:",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    bt_mesh_shell_target_ctx.dst, page);
 
 		while (bt_mesh_comp_p1_elem_pull(&buf, &p1_elem)) {
@@ -253,6 +282,44 @@ static int cmd_get_comp(const struct shell *sh, size_t argc, char *argv[])
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_BT_MESH_COMP_PAGE_2) && (page == 2 || page == 130)) {
+		/* size of 32 is chosen arbitrary, as sufficient for testing purposes */
+		NET_BUF_SIMPLE_DEFINE(p2_elem_offset_buf, 32);
+		NET_BUF_SIMPLE_DEFINE(p2_data_buf, 32);
+		struct bt_mesh_comp_p2_record p2_elem = {
+			.elem_buf = &p2_elem_offset_buf,
+			.data_buf = &p2_data_buf
+		};
+
+		if (!buf.len) {
+			shell_error(sh, "Composition data empty");
+			return 0;
+		}
+		shell_print(sh, "Got Composition Data for 0x%04x, page: %d:",
+			    bt_mesh_shell_target_ctx.dst, page);
+
+		while (bt_mesh_comp_p2_record_pull(&buf, &p2_elem)) {
+
+			shell_print(sh, "\tMesh Profile id: %04x ", p2_elem.id);
+			shell_print(sh, "\t\tVersion: %d.%d.%d ", p2_elem.version.x,
+				    p2_elem.version.y, p2_elem.version.z);
+			shell_print(sh, "\t\tElement offsets:");
+
+			while (p2_elem.elem_buf->len) {
+				shell_print(sh, "\t\t\t%d ",
+					    net_buf_simple_pull_u8(p2_elem.elem_buf));
+			}
+
+			if (p2_elem.data_buf->len) {
+				shell_print(sh, "\t\t%d bytes of additional data is available",
+					    p2_elem.data_buf->len);
+			}
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (buf.len) {
 		shell_print(sh, "\t\t...truncated data!");
 	}
@@ -530,7 +597,15 @@ static int cmd_net_key_add(const struct shell *sh, size_t argc, char *argv[])
 				return 0;
 			}
 
+<<<<<<< HEAD
 			memcpy(key_val, subnet->keys[0].net_key, 16);
+=======
+			if (bt_mesh_cdb_subnet_key_export(subnet, 0, key_val)) {
+				shell_error(sh, "Unable to export subnet key from cdb 0x%03x",
+					    key_net_idx);
+				return 0;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			subnet = bt_mesh_cdb_subnet_alloc(key_net_idx);
 			if (!subnet) {
@@ -538,7 +613,15 @@ static int cmd_net_key_add(const struct shell *sh, size_t argc, char *argv[])
 				return 0;
 			}
 
+<<<<<<< HEAD
 			memcpy(subnet->keys[0].net_key, key_val, 16);
+=======
+			if (bt_mesh_cdb_subnet_key_import(subnet, 0, key_val)) {
+				shell_error(sh, "Unable to import subnet key into cdb 0x%03x",
+					    key_net_idx);
+				return 0;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			bt_mesh_cdb_subnet_store(subnet);
 		}
 	}
@@ -684,7 +767,15 @@ static int cmd_app_key_add(const struct shell *sh, size_t argc, char *argv[])
 				return 0;
 			}
 
+<<<<<<< HEAD
 			memcpy(key_val, app_key->keys[0].app_key, 16);
+=======
+			if (bt_mesh_cdb_app_key_export(app_key, 0, key_val)) {
+				shell_error(sh, "Unable to export app key 0x%03x from cdb",
+					    key_app_idx);
+				return 0;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			app_key = bt_mesh_cdb_app_key_alloc(key_net_idx, key_app_idx);
 			if (!app_key) {
@@ -692,7 +783,15 @@ static int cmd_app_key_add(const struct shell *sh, size_t argc, char *argv[])
 				return 0;
 			}
 
+<<<<<<< HEAD
 			memcpy(app_key->keys[0].app_key, key_val, 16);
+=======
+			if (bt_mesh_cdb_app_key_import(app_key, 0, key_val)) {
+				shell_error(sh, "Unable to import app key 0x%03x into cdb",
+					    key_app_idx);
+				return 0;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			bt_mesh_cdb_app_key_store(app_key);
 		}
 	}

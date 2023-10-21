@@ -95,8 +95,15 @@ mapping:
             type: int
             required: false
           "pytest_root":
+<<<<<<< HEAD
             type: str
             required: false
+=======
+            type: seq
+            required: false
+            sequence:
+              - type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           "pytest_args":
             type: seq
             required: false
@@ -145,6 +152,14 @@ mapping:
         matching: "all"
         sequence:
           - type: str
+<<<<<<< HEAD
+=======
+      "required_snippets":
+        type: seq
+        required: false
+        sequence:
+          - type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       "tags":
         type: any
         required: false
@@ -243,6 +258,14 @@ mapping:
           "extra_sections":
             type: any
             required: false
+<<<<<<< HEAD
+=======
+          "required_snippets":
+            type: seq
+            required: false
+            sequence:
+              - type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           "filter":
             type: str
             required: false
@@ -283,8 +306,15 @@ mapping:
                 type: int
                 required: false
               "pytest_root":
+<<<<<<< HEAD
                 type: str
                 required: false
+=======
+                type: seq
+                required: false
+                sequence:
+                  - type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
               "pytest_args":
                 type: seq
                 required: false

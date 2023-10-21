@@ -72,6 +72,13 @@ _ASM_FILE_PROLOGUE
 	.endif
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ARM64_ENABLE_FRAME_POINTER
+	str	x29, [sp, ___esf_t_fp_OFFSET]
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	mrs	\xreg0, spsr_el1
 	mrs	\xreg1, elr_el1
 	stp	\xreg0, \xreg1, [sp, ___esf_t_spsr_elr_OFFSET]
@@ -335,6 +342,13 @@ SECTION_FUNC(TEXT, z_arm64_exit_exc)
 	ldp	x16, x17, [sp, ___esf_t_x16_x17_OFFSET]
 	ldp	x18, lr, [sp, ___esf_t_x18_lr_OFFSET]
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ARM64_ENABLE_FRAME_POINTER
+	ldr	x29, [sp,  ___esf_t_fp_OFFSET]
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	add	sp, sp, ___esf_t_SIZEOF
 
 	/*

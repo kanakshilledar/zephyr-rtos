@@ -113,7 +113,11 @@ endchoice
 #
 config MBEDTLS
 #config TINYCRYPT
+<<<<<<< HEAD
 	default y if CSPRING_ENABLED
+=======
+	default y if CSPRNG_ENABLED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	depends on ENTROPY_GENERATOR
 
 if MBEDTLS

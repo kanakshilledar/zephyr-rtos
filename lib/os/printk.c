@@ -20,6 +20,10 @@
 #include <zephyr/syscall_handler.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/cbprintf.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/llext/symbol.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <sys/types.h>
 
 /* Option present only when CONFIG_USERSPACE enabled. */
@@ -210,6 +214,10 @@ void printk(const char *fmt, ...)
 
 	va_end(ap);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(printk);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* defined(CONFIG_PRINTK) */
 
 #ifndef CONFIG_PICOLIBC

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _mdns-responder-sample:
 
 mDNS Responder Application
 ##########################
+=======
+.. zephyr:code-sample:: mdns-responder
+   :name: mDNS responder
+   :relevant-api: net_core dns_sd bsd_sockets
+
+   Listen and respond to mDNS queries.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

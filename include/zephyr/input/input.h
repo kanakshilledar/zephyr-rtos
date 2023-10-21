@@ -135,7 +135,11 @@ struct input_listener {
  * @param _dev @ref device pointer or NULL.
  * @param _callback The callback function.
  */
+<<<<<<< HEAD
 #define INPUT_LISTENER_CB_DEFINE(_dev, _callback)                              \
+=======
+#define INPUT_CALLBACK_DEFINE(_dev, _callback)                                 \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static const STRUCT_SECTION_ITERABLE(input_listener,                   \
 					     _input_listener__##_callback) = { \
 		.dev = _dev,                                                   \

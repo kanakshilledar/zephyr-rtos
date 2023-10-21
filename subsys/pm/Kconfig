@@ -4,9 +4,21 @@
 
 menu "Power Management"
 
+<<<<<<< HEAD
 menuconfig PM
 	bool "System Power Management"
 	depends on SYS_CLOCK_EXISTS && !HAS_NO_PM
+=======
+config HAS_PM
+	bool
+	help
+	  This option must be selected by SoCs that provide PM hooks, that is,
+	  calls to configure low-power states.
+
+config PM
+	bool "System Power Management"
+	depends on SYS_CLOCK_EXISTS && HAS_PM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  This option enables the board to implement extra power management
 	  policies whenever the kernel becomes idle. The kernel informs the
@@ -31,6 +43,16 @@ config PM_S2RAM
 	help
 	  This option enables suspend-to-RAM (S2RAM).
 
+<<<<<<< HEAD
+=======
+config PM_NEED_ALL_DEVICES_IDLE
+	bool "System Low Power Mode Needs All Devices Idle"
+	depends on PM_DEVICE && !SMP
+	help
+	  When this option is enabled, check that no devices are busy before
+	  entering into system low power mode.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 choice PM_POLICY
 	prompt "Idle State Power Management Policy"
 	default PM_POLICY_DEFAULT
@@ -54,6 +76,7 @@ endchoice
 
 endif # PM
 
+<<<<<<< HEAD
 config HAS_NO_PM
 	bool
 	help
@@ -62,6 +85,8 @@ config HAS_NO_PM
 	  on support core of a multi-core device where SoC power management is
 	  the responsibility of a different core.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config PM_DEVICE
 	bool "Device Power Management"
 	help
@@ -90,8 +115,12 @@ config PM_DEVICE_POWER_DOMAIN
 
 config PM_DEVICE_POWER_DOMAIN_DYNAMIC
 	bool "Dynamically bind devices to a Power Pomain"
+<<<<<<< HEAD
 	depends on PM_DEVICE_POWER_DOMAIN
 	select HAS_DYNAMIC_DEVICE_HANDLES
+=======
+	depends on PM_DEVICE_POWER_DOMAIN && DEVICE_DEPS_DYNAMIC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for dynamically bind devices to a Power Domain.
 

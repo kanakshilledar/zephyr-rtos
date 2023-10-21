@@ -5,6 +5,11 @@ source "lib/libc/Kconfig"
 
 source "lib/cpp/Kconfig"
 
+<<<<<<< HEAD
+=======
+source "lib/crc/Kconfig"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 menu "Additional libraries"
 
 source "lib/hash/Kconfig"
@@ -17,4 +22,10 @@ source "lib/open-amp/Kconfig"
 
 source "lib/smf/Kconfig"
 
+<<<<<<< HEAD
+=======
+source "lib/acpi/Kconfig"
+
+source "lib/runtime/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu

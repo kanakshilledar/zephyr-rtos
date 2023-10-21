@@ -111,7 +111,11 @@ int lis3mdl_init_interrupt(const struct device *dev)
 	struct lis3mdl_data *drv_data = dev->data;
 	const struct lis3mdl_config *config = dev->config;
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->irq_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device not ready");
 		return -ENODEV;
 	}

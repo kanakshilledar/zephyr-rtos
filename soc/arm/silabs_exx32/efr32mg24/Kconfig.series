@@ -14,6 +14,10 @@ config SOC_SERIES_EFR32MG24
 	select ARMV8_M_DSP
 	select ARM_TRUSTZONE_M
 	select SOC_FAMILY_EXX32
+<<<<<<< HEAD
+=======
+	select SOC_GECKO_HAS_RADIO
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select SOC_GECKO_SERIES2
 	select HAS_SILABS_GECKO
 	select HAS_SWO
@@ -22,5 +26,9 @@ config SOC_SERIES_EFR32MG24
 	select SOC_GECKO_GPIO
 	select SOC_GECKO_DEV_INIT
 	select SOC_GECKO_SE
+<<<<<<< HEAD
+=======
+	select HAS_PM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for EFR32MG24 Mighty Gecko MCU series

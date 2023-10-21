@@ -24,6 +24,10 @@ LOG_MODULE_DECLARE(net_ipv6, CONFIG_NET_IPV6_LOG_LEVEL);
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/dns_resolve.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/icmp.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "net_private.h"
 #include "connection.h"
 #include "icmpv6.h"
@@ -807,6 +811,7 @@ enum net_verdict net_ipv6_prepare_for_send(struct net_pkt *pkt)
 				}
 			}
 
+<<<<<<< HEAD
 			/* We "fake" the sending of the packet here so that
 			 * tcp.c:tcp_retry_expired() will increase the ref
 			 * count when re-sending the packet. This is crucial
@@ -817,6 +822,8 @@ enum net_verdict net_ipv6_prepare_for_send(struct net_pkt *pkt)
 				net_pkt_set_sent(pkt, true);
 			}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* We need to unref here because we simulate the packet
 			 * sending.
 			 */
@@ -1141,13 +1148,25 @@ static void ns_routing_info(struct net_pkt *pkt,
 	}
 }
 
+<<<<<<< HEAD
 static enum net_verdict handle_ns_input(struct net_pkt *pkt,
 					struct net_ipv6_hdr *ip_hdr,
 					struct net_icmp_hdr *icmp_hdr)
+=======
+static int handle_ns_input(struct net_icmp_ctx *ctx,
+			   struct net_pkt *pkt,
+			   struct net_icmp_ip_hdr *hdr,
+			   struct net_icmp_hdr *icmp_hdr,
+			   void *user_data)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(ns_access,
 					      struct net_icmpv6_ns_hdr);
 	NET_PKT_DATA_ACCESS_DEFINE(nd_access, struct net_icmpv6_nd_opt_hdr);
+<<<<<<< HEAD
+=======
+	struct net_ipv6_hdr *ip_hdr = hdr->ipv6;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t length = net_pkt_get_len(pkt);
 	uint8_t flags = 0U;
 	bool routing = false;
@@ -1389,18 +1408,30 @@ send_na:
 
 	if (!net_ipv6_send_na(net_pkt_iface(pkt), na_src,
 			      na_dst, tgt, flags)) {
+<<<<<<< HEAD
 		net_pkt_unref(pkt);
 		return NET_OK;
+=======
+		return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	NET_DBG("DROP: Cannot send NA");
 
+<<<<<<< HEAD
 	return NET_DROP;
+=======
+	return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 drop:
 	net_stats_update_ipv6_nd_drop(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	return NET_DROP;
+=======
+	return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif /* CONFIG_NET_IPV6_NBR_CACHE */
 
@@ -1722,13 +1753,25 @@ send_pending:
 	return true;
 }
 
+<<<<<<< HEAD
 static enum net_verdict handle_na_input(struct net_pkt *pkt,
 					struct net_ipv6_hdr *ip_hdr,
 					struct net_icmp_hdr *icmp_hdr)
+=======
+static int handle_na_input(struct net_icmp_ctx *ctx,
+			   struct net_pkt *pkt,
+			   struct net_icmp_ip_hdr *hdr,
+			   struct net_icmp_hdr *icmp_hdr,
+			   void *user_data)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(na_access,
 					      struct net_icmpv6_na_hdr);
 	NET_PKT_DATA_ACCESS_DEFINE(nd_access, struct net_icmpv6_nd_opt_hdr);
+<<<<<<< HEAD
+=======
+	struct net_ipv6_hdr *ip_hdr = hdr->ipv6;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t length = net_pkt_get_len(pkt);
 	uint16_t tllao_offset = 0U;
 	struct net_icmpv6_nd_opt_hdr *nd_opt_hdr;
@@ -1825,14 +1868,22 @@ static enum net_verdict handle_na_input(struct net_pkt *pkt,
 		goto drop;
 	}
 
+<<<<<<< HEAD
 	net_pkt_unref(pkt);
 
 	return NET_OK;
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 drop:
 	net_stats_update_ipv6_nd_drop(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	return NET_DROP;
+=======
+	return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int net_ipv6_send_ns(struct net_if *iface,
@@ -2393,13 +2444,25 @@ static inline bool handle_ra_rdnss(struct net_pkt *pkt, uint8_t len)
 }
 #endif
 
+<<<<<<< HEAD
 static enum net_verdict handle_ra_input(struct net_pkt *pkt,
 					struct net_ipv6_hdr *ip_hdr,
 					struct net_icmp_hdr *icmp_hdr)
+=======
+static int handle_ra_input(struct net_icmp_ctx *ctx,
+			   struct net_pkt *pkt,
+			   struct net_icmp_ip_hdr *hdr,
+			   struct net_icmp_hdr *icmp_hdr,
+			   void *user_data)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(ra_access,
 					      struct net_icmpv6_ra_hdr);
 	NET_PKT_DATA_ACCESS_DEFINE(nd_access, struct net_icmpv6_nd_opt_hdr);
+<<<<<<< HEAD
+=======
+	struct net_ipv6_hdr *ip_hdr = hdr->ipv6;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t length = net_pkt_get_len(pkt);
 	struct net_nbr *nbr = NULL;
 	struct net_icmpv6_nd_opt_hdr *nd_opt_hdr;
@@ -2408,6 +2471,11 @@ static enum net_verdict handle_ra_input(struct net_pkt *pkt,
 	uint32_t mtu, reachable_time, retrans_timer;
 	uint16_t router_lifetime;
 
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(user_data);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (net_if_flag_is_set(net_pkt_iface(pkt), NET_IF_IPV6_NO_ND)) {
 		goto drop;
 	}
@@ -2608,18 +2676,27 @@ static enum net_verdict handle_ra_input(struct net_pkt *pkt,
 	/* Cancel the RS timer on iface */
 	net_if_stop_rs(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	net_pkt_unref(pkt);
 
 	return NET_OK;
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 drop:
 	net_stats_update_ipv6_nd_drop(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	return NET_DROP;
+=======
+	return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif /* CONFIG_NET_IPV6_ND */
 
 #if defined(CONFIG_NET_IPV6_NBR_CACHE)
+<<<<<<< HEAD
 static struct net_icmpv6_handler ns_input_handler = {
 	.type = NET_ICMPV6_NS,
 	.code = 0,
@@ -2639,19 +2716,59 @@ static struct net_icmpv6_handler ra_input_handler = {
 	.code = 0,
 	.handler = handle_ra_input,
 };
+=======
+static struct net_icmp_ctx ns_ctx;
+static struct net_icmp_ctx na_ctx;
+#endif /* CONFIG_NET_IPV6_NBR_CACHE */
+
+#if defined(CONFIG_NET_IPV6_ND)
+static struct net_icmp_ctx ra_ctx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_NET_IPV6_ND */
 
 void net_ipv6_nbr_init(void)
 {
+<<<<<<< HEAD
 #if defined(CONFIG_NET_IPV6_NBR_CACHE)
 	net_icmpv6_register_handler(&ns_input_handler);
 	net_icmpv6_register_handler(&na_input_handler);
+=======
+	int ret;
+
+#if defined(CONFIG_NET_IPV6_NBR_CACHE)
+	ret = net_icmp_init_ctx(&ns_ctx, NET_ICMPV6_NS, 0, handle_ns_input);
+	if (ret < 0) {
+		NET_ERR("Cannot register %s handler (%d)", STRINGIFY(NET_ICMPV6_NS),
+			ret);
+	}
+
+	ret = net_icmp_init_ctx(&na_ctx, NET_ICMPV6_NA, 0, handle_na_input);
+	if (ret < 0) {
+		NET_ERR("Cannot register %s handler (%d)", STRINGIFY(NET_ICMPV6_NA),
+			ret);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_work_init_delayable(&ipv6_ns_reply_timer, ipv6_ns_reply_timeout);
 	k_sem_init(&nbr_lock, 1, K_SEM_MAX_LIMIT);
 #endif
 #if defined(CONFIG_NET_IPV6_ND)
+<<<<<<< HEAD
 	net_icmpv6_register_handler(&ra_input_handler);
 	k_work_init_delayable(&ipv6_nd_reachable_timer,
 			      ipv6_nd_reachable_timeout);
 #endif
+=======
+	ret = net_icmp_init_ctx(&ra_ctx, NET_ICMPV6_RA, 0, handle_ra_input);
+	if (ret < 0) {
+		NET_ERR("Cannot register %s handler (%d)", STRINGIFY(NET_ICMPV6_RA),
+			ret);
+	}
+
+	k_work_init_delayable(&ipv6_nd_reachable_timer,
+			      ipv6_nd_reachable_timeout);
+#endif
+
+	ARG_UNUSED(ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

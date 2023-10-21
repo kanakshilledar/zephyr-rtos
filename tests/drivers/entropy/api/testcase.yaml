@@ -5,7 +5,13 @@ tests:
       - drivers
       - entropy
   drivers.entropy.bt_hci:
+<<<<<<< HEAD
     platform_allow: nrf52_bsim
+=======
+    platform_allow:
+      - nrf52_bsim
+      - nrf5340bsim_nrf5340_cpunet
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args:
       - DTC_OVERLAY_FILE=./entropy_bt_hci.overlay
       - OVERLAY_CONFIG=./entropy_bt_hci.conf

@@ -10,3 +10,13 @@ include: base.yaml
 properties:
   reg:
     required: true
+<<<<<<< HEAD
+=======
+
+  context-buffer-size:
+    type: int
+    required: true
+    description: |
+      Size of the pre-allocated buffer for the SHA ROM API to store the
+      intermdiate computation result and final digest.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

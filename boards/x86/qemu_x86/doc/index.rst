@@ -79,7 +79,11 @@ Flashing
 
 While this board is emulated and you can't "flash" it, you can use this
 configuration to run basic Zephyr applications and kernel tests in the QEMU
+<<<<<<< HEAD
 emulated environment. For example, with the :ref:`synchronization_sample`:
+=======
+emulated environment. For example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/synchronization
@@ -111,6 +115,7 @@ to run Zephyr applications and kernel tests, but you need to set up
 some environment configurations as follows:
 
 * Please install uefi-run in your system environment according to this
+<<<<<<< HEAD
   reference link https://github.com/Richard-W/uefi-run.
 
 * Please install OVMF in your system environment according to this
@@ -128,6 +133,38 @@ For example, with the test "sample.basic.helloworld.uefi":
         west build -t run
 
 This will build an image with the hello_world sample app, boot it on
+=======
+  reference link https://github.com/Richard-W/uefi-run. Note that uefi-run
+  from snapstore may not work because of strict snap confinements.
+  The preferred method is installing with cargo.
+
+* Please install OVMF in your system environment according to this
+  reference link https://github.com/tianocore/tianocore.github.io/wiki/OVMF.
+  The easiest way is to install a special ``ovmf`` package found in many distros.
+  For example, use the following command in Ubuntu:
+
+  .. code-block:: console
+
+     sudo apt install ovmf
+
+* Set system environment variable OVMF_FD_PATH,
+  for example:
+
+  .. code-block:: console
+
+     export OVMF_FD_PATH=/usr/share/OVMF/OVMF_CODE.fd
+
+Now you can build application, for example UEFI boot test sample found under
+:zephyr_file:`tests/boot/uefi`:
+
+.. zephyr-app-commands::
+   :zephyr-app: tests/boot/uefi
+   :host-os: unix
+   :board: qemu_x86_64
+   :goals: run
+
+This will build an image with the uefi boot test app, boot it on
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 qemu_x86_64 using UEFI, and display the following console output:
 
 .. code-block:: console

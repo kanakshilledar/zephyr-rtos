@@ -64,6 +64,13 @@ static int sx9500_channel_get(const struct device *dev,
 
 	__ASSERT_NO_MSG(chan == SENSOR_CHAN_PROX);
 
+<<<<<<< HEAD
+=======
+	if (chan != SENSOR_CHAN_PROX) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	val->val1 = !!(data->prox_stat &
 		       (1 << (4 + CONFIG_SX9500_PROX_CHANNEL)));
 	val->val2 = 0;

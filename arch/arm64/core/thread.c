@@ -13,7 +13,10 @@
 
 #include <zephyr/kernel.h>
 #include <ksched.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/arch/cpu.h>
 
 /*
@@ -29,19 +32,50 @@
  *   normal execution. When at exception is taken or a syscall is called the
  *   stack pointer switches to SP_EL1 and the execution starts using the
  *   privileged portion of the user stack without touching SP_EL0. This portion
+<<<<<<< HEAD
  *   is marked as not user accessible in the MMU.
  *
  *   Kernel threads:
  *
+=======
+ *   is marked as not user accessible in the MMU/MPU.
+ *
+ * - a stack guard region will be added bellow the kernel stack when
+ *   ARM64_STACK_PROTECTION is enabled. In this case, SP_EL0 will always point
+ *   to the safe exception stack in the kernel space. For the kernel thread,
+ *   SP_EL0 will not change always pointing to safe exception stack. For the
+ *   userspace thread, SP_EL0 will switch from the user stack to the safe
+ *   exception stack when entering the EL1 mode, and restore to the user stack
+ *   when backing to userspace (EL0).
+ *
+ *   Kernel threads:
+ *
+ * High memory addresses
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *    +---------------+ <- stack_ptr
  *  E |     ESF       |
  *  L |<<<<<<<<<<<<<<<| <- SP_EL1
  *  1 |               |
+<<<<<<< HEAD
  *    +---------------+
 
  *
  *   User threads:
  *
+=======
+ *    +---------------+ <- stack limit
+ *    |  Stack guard  | } Z_ARM64_STACK_GUARD_SIZE (protected by MMU/MPU)
+ *    +---------------+ <- stack_obj
+ *
+ * Low Memory addresses
+ *
+ *
+ *   User threads:
+ *
+ * High memory addresses
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *    +---------------+ <- stack_ptr
  *  E |               |
  *  L |<<<<<<<<<<<<<<<| <- SP_EL0
@@ -50,7 +84,15 @@
  *  E |     ESF       |               |  Privileged portion of the stack
  *  L +>>>>>>>>>>>>>>>+ <- SP_EL1     |_ used during exceptions and syscalls
  *  1 |               |               |  of size ARCH_THREAD_STACK_RESERVED
+<<<<<<< HEAD
  *    +---------------+ <- stack_obj..|
+=======
+ *    +---------------+ <- stack limit|
+ *    |  Stack guard  | } Z_ARM64_STACK_GUARD_SIZE (protected by MMU/MPU)
+ *    +---------------+ <- stack_obj
+ *
+ * Low Memory addresses
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  When a kernel thread switches to user mode the SP_EL0 and SP_EL1
  *  values are reset accordingly in arch_user_mode_enter().
@@ -71,6 +113,15 @@ void arch_new_thread(struct k_thread *thread, k_thread_stack_t *stack,
 	z_arch_esf_t *pInitCtx;
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Clean the thread->arch to avoid unexpected behavior because the
+	 * thread->arch might be dirty
+	 */
+	memset(&thread->arch, 0, sizeof(thread->arch));
+
+	/*
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * The ESF is now hosted at the top of the stack. For user threads this
 	 * is also fine because at this stage they are still running in EL1.
 	 * The context will be relocated by arch_user_mode_enter() before
@@ -100,9 +151,17 @@ void arch_new_thread(struct k_thread *thread, k_thread_stack_t *stack,
 	} else {
 		pInitCtx->elr = (uint64_t)z_thread_entry;
 	}
+<<<<<<< HEAD
 #else
 	pInitCtx->elr = (uint64_t)z_thread_entry;
 #endif
+=======
+
+#else
+	pInitCtx->elr = (uint64_t)z_thread_entry;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Keep using SP_EL1 */
 	pInitCtx->spsr = SPSR_MODE_EL1H | DAIF_FIQ_BIT;
 
@@ -118,6 +177,13 @@ void arch_new_thread(struct k_thread *thread, k_thread_stack_t *stack,
 	thread->callee_saved.lr = (uint64_t)z_arm64_exit_exc;
 
 	thread->switch_handle = thread;
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_ARM64_STACK_PROTECTION)
+	thread->arch.stack_limit = (uint64_t)stack + Z_ARM64_STACK_GUARD_SIZE;
+	z_arm64_thread_mem_domains_init(thread);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #ifdef CONFIG_USERSPACE

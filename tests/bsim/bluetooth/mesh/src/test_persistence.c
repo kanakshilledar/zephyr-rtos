@@ -5,12 +5,19 @@
  */
 
 #include "mesh_test.h"
+<<<<<<< HEAD
 #include "settings_test_backend.h"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/bluetooth/mesh.h>
 #include <zephyr/sys/reboot.h>
 #include "mesh/net.h"
 #include "mesh/app_keys.h"
+<<<<<<< HEAD
 #include "mesh/crypto.h"
+=======
+#include "mesh/keys.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <bs_cmd_line.h>
 
 #define LOG_MODULE_NAME test_persistence
@@ -54,6 +61,12 @@ static uint8_t test_prov_devkey[16] = { 0x11 };
 #define TEST_VA_1_ADDR 0x8700
 #define TEST_VA_1_UUID (uint8_t[16]) { 0xdf, 0xca, 0xa3, 0x54, 0x23, 0xfa, 0x33, 0xed, \
 				       0x1a, 0xbe, 0xa0, 0xaa, 0xbd, 0xfa, 0x0f, 0xaf }
+<<<<<<< HEAD
+=======
+#define TEST_VA_1_ADDR_COL 0x8700
+#define TEST_VA_1_UUID_COL (uint8_t[16]) { 0x01, 0xcc, 0x74, 0x51, 0x71, 0x9e, 0x56, 0x71, \
+					   0x5b, 0x8a, 0x18, 0xaf, 0x13, 0x86, 0x0e, 0x4a }
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define TEST_APPKEY_0_IDX 0x12
 #define TEST_APPKEY_0_KEY { 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, \
@@ -82,6 +95,29 @@ static uint8_t test_prov_devkey[16] = { 0x11 };
 		.transmit = BT_MESH_TRANSMIT(2, 20),                                               \
 	}
 
+<<<<<<< HEAD
+=======
+#define TEST_MOD_PUB_PARAMS_2 {                                                                    \
+		.addr = TEST_GROUP_1,                                                              \
+		.uuid = NULL,                                                                      \
+		.app_idx = TEST_APPKEY_1_IDX,                                                      \
+		.cred_flag = false,                                                                \
+		.ttl = 3,                                                                          \
+		.period = BT_MESH_PUB_PERIOD_10SEC(3),                                             \
+		.transmit = BT_MESH_TRANSMIT(3, 20),                                               \
+	}
+
+#define TEST_VND_MOD_PUB_PARAMS_2 {                                                                \
+		.addr = TEST_VA_1_ADDR,                                                            \
+		.uuid = TEST_VA_1_UUID,                                                            \
+		.app_idx = TEST_APPKEY_0_IDX,                                                      \
+		.cred_flag = false,                                                                \
+		.ttl = 3,                                                                          \
+		.period = BT_MESH_PUB_PERIOD_10SEC(2),                                             \
+		.transmit = BT_MESH_TRANSMIT(3, 20),                                               \
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define DISABLED_MOD_PUB_PARAMS {                                                                  \
 		.addr = 0,                                                                         \
 		.uuid = NULL,                                                                      \
@@ -120,7 +156,12 @@ static const struct access_cfg access_cfgs[][2] = {
 		{
 			.pub_params = TEST_MOD_PUB_PARAMS,
 			.appkeys_count = 2, .appkeys = { TEST_APPKEY_0_IDX, TEST_APPKEY_1_IDX },
+<<<<<<< HEAD
 			.subs_count = 2, .subs = { TEST_GROUP_0, TEST_VA_0_ADDR },
+=======
+			.subs_count = 4, .subs = { TEST_GROUP_0, TEST_VA_0_ADDR, TEST_VA_1_ADDR,
+						   TEST_VA_1_ADDR /* collision */ },
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.mod_data_len = sizeof(test_mod_data),
 		},
 
@@ -128,7 +169,12 @@ static const struct access_cfg access_cfgs[][2] = {
 		{
 			.pub_params = TEST_VND_MOD_PUB_PARAMS,
 			.appkeys_count = 2, .appkeys = { TEST_APPKEY_0_IDX, TEST_APPKEY_1_IDX },
+<<<<<<< HEAD
 			.subs_count = 2, .subs = { TEST_GROUP_0, TEST_VA_0_ADDR },
+=======
+			.subs_count = 4, .subs = { TEST_GROUP_0, TEST_VA_0_ADDR, TEST_VA_1_ADDR,
+						   TEST_VA_1_ADDR /* collision */ },
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.mod_data_len = sizeof(vnd_test_mod_data),
 		},
 	},
@@ -136,7 +182,11 @@ static const struct access_cfg access_cfgs[][2] = {
 	[NEW_SUBS] = {
 		/* SIG model. */
 		{
+<<<<<<< HEAD
 			.pub_params = TEST_MOD_PUB_PARAMS,
+=======
+			.pub_params = TEST_MOD_PUB_PARAMS_2,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.appkeys_count = 2, .appkeys = { TEST_APPKEY_0_IDX, TEST_APPKEY_1_IDX },
 			.subs_count = 1, .subs = { TEST_GROUP_0 },
 			.mod_data_len = sizeof(test_mod_data),
@@ -144,7 +194,11 @@ static const struct access_cfg access_cfgs[][2] = {
 
 		/* Vendor model. */
 		{
+<<<<<<< HEAD
 			.pub_params = TEST_VND_MOD_PUB_PARAMS,
+=======
+			.pub_params = TEST_VND_MOD_PUB_PARAMS_2,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.appkeys_count = 2, .appkeys = { TEST_APPKEY_0_IDX, TEST_APPKEY_1_IDX },
 			.subs_count = 1, .subs = { TEST_VA_0_ADDR },
 			.mod_data_len = sizeof(vnd_test_mod_data),
@@ -180,6 +234,17 @@ static const struct stack_cfg {
 		enum bt_mesh_feat_state state;
 		uint8_t transmit;
 	} relay;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BT_MESH_PRIV_BEACONS
+	uint8_t priv_beacon;
+	uint8_t priv_beacon_int;
+	uint8_t priv_beacon_gatt;
+#endif
+#ifdef CONFIG_BT_MESH_OD_PRIV_PROXY_SRV
+	uint8_t priv_proxy_val;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 } stack_cfgs[] = {
 	{
 		.beacon = 1,
@@ -188,6 +253,17 @@ static const struct stack_cfg {
 		.friend = 1,
 		.net_transmit = BT_MESH_TRANSMIT(3, 20),
 		.relay = { .state = BT_MESH_FEATURE_ENABLED, .transmit = BT_MESH_TRANSMIT(2, 20) },
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BT_MESH_PRIV_BEACONS
+		.priv_beacon = 1,
+		.priv_beacon_int = 123,
+		.priv_beacon_gatt = 0,
+#endif
+#ifdef CONFIG_BT_MESH_OD_PRIV_PROXY_SRV
+		.priv_proxy_val = 10,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	},
 	{
 		.beacon = 0,
@@ -196,12 +272,26 @@ static const struct stack_cfg {
 		.friend = 0,
 		.net_transmit = BT_MESH_TRANSMIT(1, 30),
 		.relay = { .state = BT_MESH_FEATURE_ENABLED, .transmit = BT_MESH_TRANSMIT(1, 10) },
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BT_MESH_PRIV_BEACONS
+		.priv_beacon = 1,
+		.priv_beacon_int = 100,
+		.priv_beacon_gatt = 1,
+#endif
+#ifdef CONFIG_BT_MESH_OD_PRIV_PROXY_SRV
+		.priv_proxy_val = 20,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	},
 };
 static const struct stack_cfg *current_stack_cfg;
 
+<<<<<<< HEAD
 static bool clear_settings;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void test_args_parse(int argc, char *argv[])
 {
 	char *access_cfg_str = NULL;
@@ -221,6 +311,7 @@ static void test_args_parse(int argc, char *argv[])
 			.name = "{0, 1}",
 			.option = "stack-cfg",
 			.descript = ""
+<<<<<<< HEAD
 		},
 		{
 			.dest = &clear_settings,
@@ -229,6 +320,9 @@ static void test_args_parse(int argc, char *argv[])
 			.option = "clear-settings",
 			.descript = "",
 		},
+=======
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	bs_args_parse_all_cmd_line(argc, argv, args_struct);
@@ -405,7 +499,14 @@ static void provisioner_setup(void)
 	/* Adding a subnet for test_netkey as it is not primary. */
 	subnet = bt_mesh_cdb_subnet_alloc(test_netkey_idx);
 	ASSERT_TRUE(subnet != NULL);
+<<<<<<< HEAD
 	memcpy(subnet->keys[0].net_key, test_netkey, 16);
+=======
+	err = bt_mesh_cdb_subnet_key_import(subnet, 0, test_netkey);
+	if (err) {
+		FAIL("Unable to import test_netkey (err: %d)", err);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_cdb_subnet_store(subnet);
 
 	err = bt_mesh_cfg_cli_net_key_add(0, TEST_PROV_ADDR, test_netkey_idx, test_netkey, &status);
@@ -418,7 +519,10 @@ static void provisioner_setup(void)
 
 static void test_provisioning_data_save(void)
 {
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_cfg_set(NULL, WAIT_TIME);
 
 	if (device_setup_and_self_provision()) {
@@ -443,8 +547,15 @@ static void test_provisioning_data_load(void)
 	/* explicitly verify that the keys resolves for a given addr and net_idx */
 	struct bt_mesh_msg_ctx ctx;
 	struct bt_mesh_net_tx tx = { .ctx = &ctx };
+<<<<<<< HEAD
 	const uint8_t *dkey;
 	uint8_t aid;
+=======
+	const struct bt_mesh_key *dkey;
+	uint8_t aid;
+	uint8_t net_key[16];
+	uint8_t dev_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	tx.ctx->addr = TEST_ADDR;
 	tx.ctx->net_idx = test_netkey_idx;
@@ -456,12 +567,27 @@ static void test_provisioning_data_load(void)
 		FAIL("Failed to resolve keys");
 	}
 
+<<<<<<< HEAD
 	if (memcmp(dkey, test_devkey, sizeof(test_devkey))) {
 		FAIL("Resolved dev_key does not match");
 	}
 
 	if (memcmp(tx.sub->keys[0].net, test_netkey, sizeof(test_netkey))) {
 		FAIL("Resolved net_key does not match");
+=======
+	ASSERT_OK(bt_mesh_key_export(dev_key, dkey));
+	LOG_HEXDUMP_INF(dev_key, sizeof(dev_key), "Exported device key:");
+
+	if (memcmp(dev_key, test_devkey, sizeof(test_devkey))) {
+		FAIL("Resolved dev_key does not match");
+	}
+
+	ASSERT_OK(bt_mesh_key_export(net_key, &tx.sub->keys[0].net));
+	LOG_HEXDUMP_INF(net_key, sizeof(net_key), "Exported network key:");
+
+	if (memcmp(net_key, test_netkey, sizeof(test_netkey))) {
+		FAIL("Resolved raw value of the net_key does not match");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (tx.sub->kr_phase != ((test_flags & 1) << 1)) {
@@ -523,12 +649,32 @@ static void node_configure(void)
 		FAIL("Mod sub add failed (err %d, status %u)", err, status);
 	}
 
+<<<<<<< HEAD
 	err = bt_mesh_cfg_cli_mod_sub_va_add(test_netkey_idx, TEST_ADDR, TEST_ADDR, TEST_VA_0_UUID,
 					 TEST_MOD_ID, &va, &status);
 	if (err || status) {
 		FAIL("Mod sub add failed (err %d, status %u)", err, status);
 	}
 	ASSERT_EQUAL(TEST_VA_0_ADDR, va);
+=======
+	struct {
+		const uint8_t *uuid;
+		uint16_t addr;
+	} va_subs[] = {
+		{ .uuid = TEST_VA_0_UUID,     .addr = TEST_VA_0_ADDR, },
+		{ .uuid = TEST_VA_1_UUID,     .addr = TEST_VA_1_ADDR, },
+		{ .uuid = TEST_VA_1_UUID_COL, .addr = TEST_VA_1_ADDR, },
+	};
+
+	for (size_t i = 0; i < ARRAY_SIZE(va_subs); i++) {
+		err = bt_mesh_cfg_cli_mod_sub_va_add(test_netkey_idx, TEST_ADDR, TEST_ADDR,
+						     va_subs[i].uuid, TEST_MOD_ID, &va, &status);
+		if (err || status) {
+			FAIL("Mod sub add failed (err %d, status %u)", err, status);
+		}
+		ASSERT_EQUAL(va_subs[i].addr, va);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	memcpy(&pub_params, &(struct bt_mesh_cfg_cli_mod_pub)TEST_MOD_PUB_PARAMS,
 	       sizeof(struct bt_mesh_cfg_cli_mod_pub));
@@ -561,6 +707,7 @@ static void node_configure(void)
 		FAIL("Mod sub add failed (err %d, status %u)", err, status);
 	}
 
+<<<<<<< HEAD
 	err = bt_mesh_cfg_cli_mod_sub_va_add_vnd(test_netkey_idx, TEST_ADDR, TEST_ADDR,
 						 TEST_VA_0_UUID, TEST_VND_MOD_ID,
 						 TEST_VND_COMPANY_ID, &va, &status);
@@ -570,6 +717,18 @@ static void node_configure(void)
 
 	ASSERT_EQUAL(TEST_VA_0_ADDR, va);
 
+=======
+	for (size_t i = 0; i < ARRAY_SIZE(va_subs); i++) {
+		err = bt_mesh_cfg_cli_mod_sub_va_add_vnd(test_netkey_idx, TEST_ADDR, TEST_ADDR,
+							 va_subs[i].uuid, TEST_VND_MOD_ID,
+							 TEST_VND_COMPANY_ID, &va, &status);
+		if (err || status) {
+			FAIL("Mod sub add failed (err %d, status %u)", err, status);
+		}
+		ASSERT_EQUAL(va_subs[i].addr, va);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memcpy(&pub_params, &(struct bt_mesh_cfg_cli_mod_pub)TEST_VND_MOD_PUB_PARAMS,
 	       sizeof(struct bt_mesh_cfg_cli_mod_pub));
 	err = bt_mesh_cfg_cli_mod_pub_set_vnd(test_netkey_idx, TEST_ADDR, TEST_ADDR,
@@ -589,7 +748,10 @@ static void node_configure(void)
 
 static void test_access_data_save(void)
 {
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_cfg_set(NULL, WAIT_TIME);
 
 	if (device_setup_and_self_provision()) {
@@ -686,6 +848,10 @@ static void test_access_data_load(void)
 
 static void test_access_sub_overwrite(void)
 {
+<<<<<<< HEAD
+=======
+	struct bt_mesh_cfg_cli_mod_pub pub_params;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t va;
 	uint8_t status;
 	int err;
@@ -703,6 +869,18 @@ static void test_access_sub_overwrite(void)
 		FAIL("Mod sub overwrite failed (err %d, status %u)", err, status);
 	}
 
+<<<<<<< HEAD
+=======
+	memcpy(&pub_params, &(struct bt_mesh_cfg_cli_mod_pub)TEST_MOD_PUB_PARAMS_2,
+	       sizeof(struct bt_mesh_cfg_cli_mod_pub));
+	err = bt_mesh_cfg_cli_mod_pub_set(test_netkey_idx, TEST_ADDR, TEST_ADDR, TEST_MOD_ID,
+				      &pub_params, &status);
+	if (err || status) {
+		FAIL("Mod pub set failed (err %d, status %u)", err, status);
+	}
+
+	/* Vendor model. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_mesh_cfg_cli_mod_sub_va_overwrite_vnd(test_netkey_idx, TEST_ADDR, TEST_ADDR,
 						   TEST_VA_0_UUID, TEST_VND_MOD_ID,
 						   TEST_VND_COMPANY_ID, &va, &status);
@@ -711,6 +889,18 @@ static void test_access_sub_overwrite(void)
 	}
 	ASSERT_EQUAL(TEST_VA_0_ADDR, va);
 
+<<<<<<< HEAD
+=======
+	memcpy(&pub_params, &(struct bt_mesh_cfg_cli_mod_pub)TEST_VND_MOD_PUB_PARAMS_2,
+	       sizeof(struct bt_mesh_cfg_cli_mod_pub));
+	err = bt_mesh_cfg_cli_mod_pub_set_vnd(test_netkey_idx, TEST_ADDR, TEST_ADDR,
+					      TEST_VND_MOD_ID, TEST_VND_COMPANY_ID, &pub_params,
+					      &status);
+	if (err || status) {
+		FAIL("Mod pub set failed (err %d, status %u)", err, status);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sleep(K_SECONDS(CONFIG_BT_MESH_STORE_TIMEOUT));
 
 	PASS();
@@ -810,7 +1000,10 @@ static void test_cfg_save(void)
 
 	ASSERT_TRUE(current_stack_cfg != NULL);
 
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_cfg_set(NULL, WAIT_TIME);
 
 	if (device_setup_and_self_provision()) {
@@ -858,6 +1051,38 @@ static void test_cfg_save(void)
 		     current_stack_cfg->relay.transmit);
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BT_MESH_PRIV_BEACONS
+	struct bt_mesh_priv_beacon priv_beacon_state = {
+		.enabled = current_stack_cfg->priv_beacon,
+		.rand_interval = current_stack_cfg->priv_beacon_int,
+	};
+
+	err = bt_mesh_priv_beacon_cli_set(test_netkey_idx, TEST_ADDR, &priv_beacon_state);
+	if (err) {
+		FAIL("Failed to enable Private Beacon (err %d)", err);
+	}
+
+	uint8_t priv_beacon_gatt = current_stack_cfg->priv_beacon_gatt;
+
+	err = bt_mesh_priv_beacon_cli_gatt_proxy_set(test_netkey_idx, TEST_ADDR, &priv_beacon_gatt);
+	if (err) {
+		FAIL("Failed to enable Private Beacon GATT proxy (err %d)", err);
+	}
+#endif
+
+#if defined(CONFIG_BT_MESH_OD_PRIV_PROXY_SRV) && defined(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI)
+	uint8_t priv_proxy_val;
+
+	err = bt_mesh_od_priv_proxy_cli_set(test_netkey_idx, TEST_ADDR,
+					    current_stack_cfg->priv_proxy_val, &priv_proxy_val);
+	if (err || priv_proxy_val != current_stack_cfg->priv_proxy_val) {
+		FAIL("Failed to set OD Private proxy (err %d, value %d)", err, priv_proxy_val);
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sleep(K_SECONDS(CONFIG_BT_MESH_STORE_TIMEOUT));
 
 	PASS();
@@ -909,6 +1134,36 @@ static void test_cfg_load(void)
 		FAIL("Relay get failed (err %d, state %u, transmit %x)", err, status, transmit);
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BT_MESH_PRIV_BEACONS
+	struct bt_mesh_priv_beacon priv_beacon_state;
+	uint8_t priv_beacon_gatt;
+
+	err = bt_mesh_priv_beacon_cli_get(test_netkey_idx, TEST_ADDR, &priv_beacon_state);
+	if (err || priv_beacon_state.enabled != current_stack_cfg->priv_beacon ||
+	    priv_beacon_state.rand_interval != current_stack_cfg->priv_beacon_int) {
+		FAIL("Private beacon get failed (err %d, enabled %u, interval %x)", err,
+		     priv_beacon_state.enabled, priv_beacon_state.rand_interval);
+	}
+
+	err = bt_mesh_priv_beacon_cli_gatt_proxy_get(test_netkey_idx, TEST_ADDR, &priv_beacon_gatt);
+	if (err || priv_beacon_gatt != current_stack_cfg->priv_beacon_gatt) {
+		FAIL("Private beacon GATT proxy get failed (err %d, enabled %u)", err,
+		     priv_beacon_gatt);
+	}
+#endif
+
+#if defined(CONFIG_BT_MESH_OD_PRIV_PROXY_SRV) && defined(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI)
+	uint8_t priv_proxy_val;
+
+	err = bt_mesh_od_priv_proxy_cli_get(test_netkey_idx, TEST_ADDR, &priv_proxy_val);
+	if (err || priv_proxy_val != current_stack_cfg->priv_proxy_val) {
+		FAIL("Private proxy get failed (err %d, value %u)", err, priv_proxy_val);
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PASS();
 }
 
@@ -926,10 +1181,13 @@ static int mesh_settings_load_cb(const char *key, size_t len, settings_read_cb r
  */
 static void test_reprovisioning_device(void)
 {
+<<<<<<< HEAD
 	if (clear_settings) {
 		settings_test_backend_clear();
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_cfg_set(NULL, WAIT_TIME);
 
 	device_setup();
@@ -961,7 +1219,10 @@ static void test_reprovisioning_provisioner(void)
 	int err;
 	bool status;
 
+<<<<<<< HEAD
 	settings_test_backend_clear();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_mesh_test_cfg_set(NULL, WAIT_TIME);
 
 	provisioner_setup();

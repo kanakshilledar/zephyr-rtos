@@ -18,7 +18,11 @@ LOG_MODULE_REGISTER(wpan_serial, CONFIG_USB_DEVICE_LOG_LEVEL);
 #include <zephyr/drivers/uart.h>
 #include <zephyr/kernel.h>
 #include <zephyr/usb/usb_device.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/net/buf.h>
 #include <net_private.h>
@@ -521,7 +525,11 @@ int net_recv_data(struct net_if *iface, struct net_pkt *pkt)
 	return 0;
 }
 
+<<<<<<< HEAD
 enum net_verdict ieee802154_radio_handle_ack(struct net_if *iface, struct net_pkt *pkt)
+=======
+enum net_verdict ieee802154_handle_ack(struct net_if *iface, struct net_pkt *pkt)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return NET_CONTINUE;
 }

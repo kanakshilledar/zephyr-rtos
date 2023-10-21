@@ -546,7 +546,11 @@ static int bmp388_init(const struct device *dev)
 	}
 
 #ifdef CONFIG_BMP388_TRIGGER
+<<<<<<< HEAD
 	if (bmp388_trigger_mode_init(dev) < 0) {
+=======
+	if (cfg->gpio_int.port != NULL && bmp388_trigger_mode_init(dev) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Cannot set up trigger mode.");
 		return -EINVAL;
 	}
@@ -572,7 +576,11 @@ static int bmp388_init(const struct device *dev)
 
 #if defined(CONFIG_BMP388_TRIGGER)
 #define BMP388_INT_CFG(inst) \
+<<<<<<< HEAD
 	.gpio_int = GPIO_DT_SPEC_INST_GET(inst, int_gpios),
+=======
+	.gpio_int = GPIO_DT_SPEC_INST_GET_OR(inst, int_gpios, {0}),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #define BMP388_INT_CFG(inst)
 #endif

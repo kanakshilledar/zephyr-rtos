@@ -30,7 +30,11 @@ struct sm351lt_data {
 	const struct sensor_trigger *changed_trigger;
 
 #if defined(CONFIG_SM351LT_TRIGGER_OWN_THREAD)
+<<<<<<< HEAD
 	K_THREAD_STACK_MEMBER(thread_stack, CONFIG_SM351LT_THREAD_STACK_SIZE);
+=======
+	K_KERNEL_STACK_MEMBER(thread_stack, CONFIG_SM351LT_THREAD_STACK_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct k_thread thread;
 	struct k_sem gpio_sem;
 #elif defined(CONFIG_SM351LT_TRIGGER_GLOBAL_THREAD)

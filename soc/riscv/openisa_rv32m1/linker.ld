@@ -5,7 +5,11 @@
  *
  * This file is based on:
  *
+<<<<<<< HEAD
  * - include/arch/arm/aarch32/cortex_m/scripts/linker.ld
+=======
+ * - include/arch/arm/cortex_m/scripts/linker.ld
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * - include/arch/riscv/common/linker.ld
  * - include/arch/riscv/pulpino/linker.ld
  *
@@ -233,16 +237,26 @@ SECTIONS
  */
 #include <snippets-ram-sections.ld>
 
+<<<<<<< HEAD
      _image_ram_end = .;
      _end = .; /* end of image */
 
      GROUP_END(RAM)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Located in generated directory. This file is populated by the
  * zephyr_linker_sources() Cmake function.
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
+=======
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_GEN_ISR_TABLES
 /* Bogus section, post-processed during the build to initialize interrupts. */
 #include <zephyr/linker/intlist.ld>

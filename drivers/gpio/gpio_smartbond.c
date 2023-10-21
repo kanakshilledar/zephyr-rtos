@@ -13,6 +13,10 @@
 #include <zephyr/irq.h>
 
 #include <DA1469xAB.h>
+<<<<<<< HEAD
+=======
+#include <da1469x_pdc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define GPIO_MODE_RESET		0x200
 
@@ -56,6 +60,11 @@ struct gpio_smartbond_wkup_regs {
 struct gpio_smartbond_data {
 	/* gpio_driver_data needs to be first */
 	struct gpio_driver_data common;
+<<<<<<< HEAD
+=======
+	/* Pins that are configured for both edges (handled by software) */
+	gpio_port_pins_t both_edges_pins;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sys_slist_t callbacks;
 };
 
@@ -66,6 +75,11 @@ struct gpio_smartbond_config {
 	volatile uint32_t *mode_regs;
 	volatile struct gpio_smartbond_latch_regs *latch_regs;
 	volatile struct gpio_smartbond_wkup_regs *wkup_regs;
+<<<<<<< HEAD
+=======
+	/* Value of TRIG_SELECT for PDC_CTRLx_REG entry */
+	uint8_t wkup_trig_select;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static void gpio_smartbond_wkup_init(void)
@@ -184,18 +198,47 @@ static int gpio_smartbond_port_toggle_bits(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void gpio_smartbond_arm_next_edge_interrupt(const struct device *dev,
+						   uint32_t pin_mask)
+{
+	const struct gpio_smartbond_config *config = dev->config;
+	uint32_t pin_value;
+
+	do {
+		pin_value = config->data_regs->data & pin_mask;
+		if (pin_value) {
+			config->wkup_regs->pol |= pin_mask;
+		} else {
+			config->wkup_regs->pol &= ~pin_mask;
+		}
+	} while (pin_value != (config->data_regs->data & pin_mask));
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int gpio_smartbond_pin_interrupt_configure(const struct device *dev,
 						gpio_pin_t pin,
 						enum gpio_int_mode mode,
 						enum gpio_int_trig trig)
 {
 	const struct gpio_smartbond_config *config = dev->config;
+<<<<<<< HEAD
+=======
+	struct gpio_smartbond_data *data = dev->data;
+	uint32_t pin_mask = BIT(pin);
+#if CONFIG_PM
+	int trig_select_id = (config->wkup_trig_select << 5) | pin;
+	int pdc_ix;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Not supported by hardware */
 	if (mode == GPIO_INT_MODE_LEVEL) {
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	if (mode == GPIO_INT_MODE_DISABLED) {
 		config->wkup_regs->sel &= ~BIT(pin);
 		config->wkup_regs->clear = BIT(pin);
@@ -212,6 +255,39 @@ static int gpio_smartbond_pin_interrupt_configure(const struct device *dev,
 		}
 
 		config->wkup_regs->sel |= BIT(pin);
+=======
+#if CONFIG_PM
+	pdc_ix = da1469x_pdc_find(trig_select_id, MCU_PDC_MASTER_M33, MCU_PDC_EN_XTAL);
+#endif
+	if (mode == GPIO_INT_MODE_DISABLED) {
+		config->wkup_regs->sel &= ~pin_mask;
+		config->wkup_regs->clear = pin_mask;
+		data->both_edges_pins &= ~pin_mask;
+#if CONFIG_PM
+		da1469x_pdc_del(pdc_ix);
+#endif
+	} else {
+		if (trig == GPIO_INT_TRIG_BOTH) {
+			/* Not supported by hardware */
+			data->both_edges_pins |= pin_mask;
+			gpio_smartbond_arm_next_edge_interrupt(dev, pin_mask);
+		} else if (trig == GPIO_INT_TRIG_HIGH) {
+			config->wkup_regs->pol &= ~pin_mask;
+		} else {
+			config->wkup_regs->pol |= pin_mask;
+		}
+
+		config->wkup_regs->sel |= pin_mask;
+#if CONFIG_PM
+		if (pdc_ix < 0) {
+			pdc_ix = da1469x_pdc_add(trig_select_id, MCU_PDC_MASTER_M33,
+						 MCU_PDC_EN_XTAL);
+		}
+		if (pdc_ix < 0) {
+			return -ENOMEM;
+		}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -230,10 +306,27 @@ static void gpio_smartbond_isr(const struct device *dev)
 	const struct gpio_smartbond_config *config = dev->config;
 	struct gpio_smartbond_data *data = dev->data;
 	uint32_t stat;
+<<<<<<< HEAD
+=======
+	uint32_t two_edge_triggered;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	WAKEUP->WKUP_RESET_IRQ_REG = WAKEUP_WKUP_RESET_IRQ_REG_WKUP_IRQ_RST_Msk;
 
 	stat = config->wkup_regs->status;
+<<<<<<< HEAD
+=======
+
+	two_edge_triggered = stat & data->both_edges_pins;
+	while (two_edge_triggered) {
+		int pos = find_lsb_set(two_edge_triggered) - 1;
+
+		two_edge_triggered &= ~BIT(pos);
+		/* Re-arm for other edge */
+		gpio_smartbond_arm_next_edge_interrupt(dev, BIT(pos));
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	config->wkup_regs->clear = stat;
 
 	gpio_fire_callbacks(&data->callbacks, dev, stat);
@@ -264,6 +357,10 @@ static const struct gpio_driver_api gpio_smartbond_drv_api_funcs = {
 						DT_INST_REG_ADDR_BY_NAME(id, latch),	\
 		.wkup_regs = (volatile struct gpio_smartbond_wkup_regs *)		\
 						DT_INST_REG_ADDR_BY_NAME(id, wkup),	\
+<<<<<<< HEAD
+=======
+		.wkup_trig_select = id,							\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};										\
 											\
 	static struct gpio_smartbond_data gpio_smartbond_p##id##_data;			\
@@ -283,7 +380,11 @@ static const struct gpio_driver_api gpio_smartbond_drv_api_funcs = {
 			      NULL,							\
 			      &gpio_smartbond_p##id##_data,				\
 			      &gpio_smartbond_p##id##_config,				\
+<<<<<<< HEAD
 			      POST_KERNEL,						\
+=======
+			      PRE_KERNEL_1,						\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      CONFIG_GPIO_INIT_PRIORITY,				\
 			      &gpio_smartbond_drv_api_funcs);
 

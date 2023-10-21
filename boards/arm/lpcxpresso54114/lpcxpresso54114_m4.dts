@@ -8,6 +8,10 @@
 
 #include <nxp/nxp_lpc54xxx_m4.dtsi>
 #include "lpcxpresso54114.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP LPCXpresso54114 board";
@@ -32,14 +36,26 @@
 		user_button_1: button_0 {
 			label = "User SW1";
 			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_2: button_1 {
 			label = "User SW2";
 			gpios = <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_3: button_2 {
 			label = "User SW3";
 			gpios = <&gpio0 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

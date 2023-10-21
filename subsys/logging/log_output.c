@@ -23,10 +23,17 @@
 #define HEXDUMP_BYTES_IN_LINE 16
 
 #define  DROPPED_COLOR_PREFIX \
+<<<<<<< HEAD
 	Z_LOG_EVAL(CONFIG_LOG_BACKEND_SHOW_COLOR, (LOG_COLOR_CODE_RED), ())
 
 #define DROPPED_COLOR_POSTFIX \
 	Z_LOG_EVAL(CONFIG_LOG_BACKEND_SHOW_COLOR, (LOG_COLOR_CODE_DEFAULT), ())
+=======
+	COND_CODE_1(CONFIG_LOG_BACKEND_SHOW_COLOR, (LOG_COLOR_CODE_RED), ())
+
+#define DROPPED_COLOR_POSTFIX \
+	COND_CODE_1(CONFIG_LOG_BACKEND_SHOW_COLOR, (LOG_COLOR_CODE_DEFAULT), ())
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static const char *const severity[] = {
 	NULL,
@@ -325,8 +332,15 @@ static void color_postfix(const struct log_output *output,
 static int ids_print(const struct log_output *output,
 		     bool level_on,
 		     bool func_on,
+<<<<<<< HEAD
 		     const char *domain,
 		     const char *source,
+=======
+		     bool thread_on,
+		     const char *domain,
+		     const char *source,
+		     const k_tid_t tid,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		     uint32_t level)
 {
 	int total = 0;
@@ -335,6 +349,18 @@ static int ids_print(const struct log_output *output,
 		total += print_formatted(output, "<%s> ", severity[level]);
 	}
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_LOG_THREAD_ID_PREFIX) && thread_on) {
+		if (IS_ENABLED(CONFIG_THREAD_NAME)) {
+			total += print_formatted(output, "[%s] ",
+				tid == NULL ? "irq" : k_thread_name_get(tid));
+		} else {
+			total += print_formatted(output, "[%p] ", tid);
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (domain) {
 		total += print_formatted(output, "%s/", domain);
 	}
@@ -430,6 +456,10 @@ static uint32_t prefix_print(const struct log_output *output,
 			     log_timestamp_t timestamp,
 			     const char *domain,
 			     const char *source,
+<<<<<<< HEAD
+=======
+			     const k_tid_t tid,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     uint8_t level)
 {
 	__ASSERT_NO_MSG(level <= LOG_LEVEL_DBG);
@@ -438,6 +468,11 @@ static uint32_t prefix_print(const struct log_output *output,
 	bool stamp = flags & LOG_OUTPUT_FLAG_TIMESTAMP;
 	bool colors_on = flags & LOG_OUTPUT_FLAG_COLORS;
 	bool level_on = flags & LOG_OUTPUT_FLAG_LEVEL;
+<<<<<<< HEAD
+=======
+	bool thread_on = IS_ENABLED(CONFIG_LOG_THREAD_ID_PREFIX) &&
+			 (flags & LOG_OUTPUT_FLAG_THREAD);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const char *tag = IS_ENABLED(CONFIG_LOG) ? z_log_get_tag() : NULL;
 
 	if (IS_ENABLED(CONFIG_LOG_BACKEND_NET) &&
@@ -475,7 +510,11 @@ static uint32_t prefix_print(const struct log_output *output,
 		color_prefix(output, colors_on, level);
 	}
 
+<<<<<<< HEAD
 	length += ids_print(output, level_on, func_on, domain, source, level);
+=======
+	length += ids_print(output, level_on, func_on, thread_on, domain, source, tid, level);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return length;
 }
@@ -492,6 +531,10 @@ void log_output_process(const struct log_output *output,
 			log_timestamp_t timestamp,
 			const char *domain,
 			const char *source,
+<<<<<<< HEAD
+=======
+			const k_tid_t tid,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			uint8_t level,
 			const uint8_t *package,
 			const uint8_t *data,
@@ -503,7 +546,12 @@ void log_output_process(const struct log_output *output,
 	cbprintf_cb cb;
 
 	if (!raw_string) {
+<<<<<<< HEAD
 		prefix_offset = prefix_print(output, flags, 0, timestamp, domain, source, level);
+=======
+		prefix_offset = prefix_print(output, flags, 0, timestamp,
+					     domain, source, tid, level);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		cb = out_func;
 	} else {
 		prefix_offset = 0;
@@ -560,7 +608,11 @@ void log_output_msg_process(const struct log_output *output,
 	uint8_t *package = log_msg_get_package(msg, &plen);
 	uint8_t *data = log_msg_get_data(msg, &dlen);
 
+<<<<<<< HEAD
 	log_output_process(output, timestamp, NULL, sname, level,
+=======
+	log_output_process(output, timestamp, NULL, sname, (k_tid_t)log_msg_get_tid(msg), level,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   plen > 0 ? package : NULL, data, dlen, flags);
 }
 

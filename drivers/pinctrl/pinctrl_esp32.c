@@ -12,7 +12,11 @@
 #include <zephyr/drivers/pinctrl.h>
 #include <zephyr/drivers/pinctrl/pinctrl_esp32_common.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32C3
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* gpio structs in esp32c3 series are different from xtensa ones */
 #define out out.data
 #define in in.data
@@ -147,13 +151,25 @@ static int esp32_pin_apply_config(uint32_t pin, uint32_t flags)
 		gpio_ll_output_enable(&GPIO, io_pin);
 		esp_rom_gpio_matrix_out(io_pin, SIG_GPIO_OUT_IDX, false, false);
 	} else {
+<<<<<<< HEAD
 		gpio_ll_output_disable(&GPIO, io_pin);
+=======
+		if (!(flags & ESP32_PIN_OUT_EN_FLAG)) {
+			gpio_ll_output_disable(&GPIO, io_pin);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (flags & ESP32_DIR_INP_FLAG) {
 		gpio_ll_input_enable(&GPIO, io_pin);
 	} else {
+<<<<<<< HEAD
 		gpio_ll_input_disable(&GPIO, io_pin);
+=======
+		if (!(flags & ESP32_PIN_IN_EN_FLAG)) {
+			gpio_ll_input_disable(&GPIO, io_pin);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 end:
@@ -223,6 +239,20 @@ static int esp32_pin_configure(const uint32_t pin_mux, const uint32_t pin_cfg)
 		break;
 	}
 
+<<<<<<< HEAD
+=======
+	switch (ESP32_PIN_EN_DIR(pin_cfg)) {
+	case ESP32_PIN_OUT_EN:
+		flags |= ESP32_PIN_OUT_EN_FLAG;
+		break;
+	case ESP32_PIN_IN_EN:
+		flags |= ESP32_PIN_IN_EN_FLAG;
+		break;
+	default:
+		break;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (flags & ESP32_PIN_OUT_HIGH_FLAG) {
 		if (ESP32_PORT_IDX(pin_num) == 0) {
 			gpio_dev_t *const gpio_dev =

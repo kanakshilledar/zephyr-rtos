@@ -1,5 +1,9 @@
 tests:
+<<<<<<< HEAD
   logging.log_benchmark:
+=======
+  logging.benchmark:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - native_posix
     tags: logging
@@ -7,7 +11,11 @@ tests:
       - CONFIG_LOG_MODE_DEFERRED=y
       - CONFIG_CBPRINTF_COMPLETE=y
 
+<<<<<<< HEAD
   logging.log_benchmark_speed:
+=======
+  logging.benchmark_speed:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - native_posix
     tags: logging
@@ -16,7 +24,11 @@ tests:
       - CONFIG_CBPRINTF_COMPLETE=y
       - CONFIG_LOG_SPEED=y
 
+<<<<<<< HEAD
   logging.log_benchmark_user:
+=======
+  logging.benchmark_user:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - native_posix
     tags: logging

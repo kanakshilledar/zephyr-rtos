@@ -14,7 +14,11 @@ LOG_MODULE_DECLARE(net_ipv4, CONFIG_NET_IPV4_LOG_LEVEL);
 #include <zephyr/net/net_stats.h>
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_mgmt.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "net_private.h"
 #include "connection.h"
 #include "icmpv4.h"
@@ -121,8 +125,14 @@ static void reassembly_info(char *str, struct net_ipv4_reassembly *reass)
 
 static void reassembly_timeout(struct k_work *work)
 {
+<<<<<<< HEAD
 	struct net_ipv4_reassembly *reass =
 		CONTAINER_OF(work, struct net_ipv4_reassembly, timer);
+=======
+	struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+	struct net_ipv4_reassembly *reass =
+		CONTAINER_OF(dwork, struct net_ipv4_reassembly, timer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	reassembly_info("Reassembly cancelled", reass);
 
@@ -612,6 +622,7 @@ enum net_verdict net_ipv4_prepare_for_send(struct net_pkt *pkt)
 				}
 			}
 
+<<<<<<< HEAD
 			/* We "fake" the sending of the packet here so that
 			 * tcp.c:tcp_retry_expired() will increase the ref count when re-sending
 			 * the packet. This is crucial to do here and will cause free memory
@@ -621,6 +632,8 @@ enum net_verdict net_ipv4_prepare_for_send(struct net_pkt *pkt)
 				net_pkt_set_sent(pkt, true);
 			}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* We need to unref here because we simulate the packet being sent. */
 			net_pkt_unref(pkt);
 

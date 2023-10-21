@@ -27,7 +27,11 @@ LOG_MODULE_REGISTER(net_test, CONFIG_NET_IPV6_LOG_LEVEL);
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
 
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "icmpv6.h"
 #include "ipv6.h"
@@ -50,7 +54,11 @@ static struct in6_addr peer_addr = { { { 0x20, 0x01, 0x0d, 0xb8, 0, 0, 0, 0,
 static struct in6_addr mcast_addr = { { { 0x20, 0x01, 0x0d, 0xb8, 0, 0, 0, 0,
 					  0, 0, 0, 0, 0, 0, 0, 0x1 } } };
 
+<<<<<<< HEAD
 static struct net_if *iface;
+=======
+static struct net_if *net_iface;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static bool is_group_joined;
 static bool is_group_left;
 static bool is_join_msg_ok;
@@ -206,11 +214,19 @@ static void *test_mld_setup(void)
 
 	setup_mgmt_events();
 
+<<<<<<< HEAD
 	iface = net_if_get_first_by_type(&NET_L2_GET_NAME(DUMMY));
 
 	zassert_not_null(iface, "Interface is NULL");
 
 	ifaddr = net_if_ipv6_addr_add(iface, &my_addr,
+=======
+	net_iface = net_if_get_first_by_type(&NET_L2_GET_NAME(DUMMY));
+
+	zassert_not_null(net_iface, "Interface is NULL");
+
+	ifaddr = net_if_ipv6_addr_add(net_iface, &my_addr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				      NET_ADDR_MANUAL, 0);
 
 	zassert_not_null(ifaddr, "Cannot add IPv6 address");
@@ -225,7 +241,11 @@ static void test_join_group(void)
 	/* Using adhoc multicast group outside standard range */
 	net_ipv6_addr_create(&mcast_addr, 0xff10, 0, 0, 0, 0, 0, 0, 0x0001);
 
+<<<<<<< HEAD
 	ret = net_ipv6_mld_join(iface, &mcast_addr);
+=======
+	ret = net_ipv6_mld_join(net_iface, &mcast_addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (ignore_already) {
 		zassert_true(ret == 0 || ret == -EALREADY,
@@ -244,7 +264,11 @@ static void test_leave_group(void)
 
 	net_ipv6_addr_create(&mcast_addr, 0xff10, 0, 0, 0, 0, 0, 0, 0x0001);
 
+<<<<<<< HEAD
 	ret = net_ipv6_mld_leave(iface, &mcast_addr);
+=======
+	ret = net_ipv6_mld_leave(net_iface, &mcast_addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(ret, 0, "Cannot leave IPv6 multicast group");
 
@@ -429,10 +453,25 @@ static void leave_mldv2_capable_routers_group(void)
 }
 
 /* We are not really interested to parse the query at this point */
+<<<<<<< HEAD
 static enum net_verdict handle_mld_query(struct net_pkt *pkt,
 					 struct net_ipv6_hdr *ip_hdr,
 					 struct net_icmp_hdr *icmp_hdr)
 {
+=======
+static int handle_mld_query(struct net_icmp_ctx *ctx,
+			    struct net_pkt *pkt,
+			    struct net_icmp_ip_hdr *hdr,
+			    struct net_icmp_hdr *icmp_hdr,
+			    void *user_data)
+{
+	ARG_UNUSED(ctx);
+	ARG_UNUSED(pkt);
+	ARG_UNUSED(hdr);
+	ARG_UNUSED(icmp_hdr);
+	ARG_UNUSED(user_data);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	is_query_received = true;
 
 	NET_DBG("Handling MLD query");
@@ -440,6 +479,7 @@ static enum net_verdict handle_mld_query(struct net_pkt *pkt,
 	return NET_DROP;
 }
 
+<<<<<<< HEAD
 static struct net_icmpv6_handler mld_query_input_handler = {
 	.type = NET_ICMPV6_MLD_QUERY,
 	.code = 0,
@@ -448,11 +488,25 @@ static struct net_icmpv6_handler mld_query_input_handler = {
 
 static void test_catch_query(void)
 {
+=======
+static void test_catch_query(void)
+{
+	struct net_icmp_ctx ctx;
+	int ret;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	join_mldv2_capable_routers_group();
 
 	is_query_received = false;
 
+<<<<<<< HEAD
 	net_icmpv6_register_handler(&mld_query_input_handler);
+=======
+	ret = net_icmp_init_ctx(&ctx, NET_ICMPV6_MLD_QUERY,
+				0, handle_mld_query);
+	zassert_equal(ret, 0, "Cannot register %s handler (%d)",
+		      STRINGIFY(NET_ICMPV6_MLD_QUERY), ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	send_query(net_if_get_first_by_type(&NET_L2_GET_NAME(DUMMY)));
 
@@ -468,9 +522,15 @@ static void test_catch_query(void)
 
 	is_query_received = false;
 
+<<<<<<< HEAD
 	net_icmpv6_unregister_handler(&mld_query_input_handler);
 
 	leave_mldv2_capable_routers_group();
+=======
+	leave_mldv2_capable_routers_group();
+
+	net_icmp_cleanup_ctx(&ctx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void test_verify_send_report(void)
@@ -557,12 +617,20 @@ ZTEST(net_mld_test_suite, test_no_mld_flag)
 	is_join_msg_ok = false;
 	is_leave_msg_ok = false;
 
+<<<<<<< HEAD
 	net_if_flag_set(iface, NET_IF_IPV6_NO_MLD);
+=======
+	net_if_flag_set(net_iface, NET_IF_IPV6_NO_MLD);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Using adhoc multicast group outside standard range */
 	net_ipv6_addr_create(&mcast_addr, 0xff10, 0, 0, 0, 0, 0, 0, 0x0001);
 
+<<<<<<< HEAD
 	ret = net_ipv6_mld_join(iface, &mcast_addr);
+=======
+	ret = net_ipv6_mld_join(net_iface, &mcast_addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "Cannot add multicast address");
 
 	/* Let the network stack to proceed */
@@ -570,7 +638,11 @@ ZTEST(net_mld_test_suite, test_no_mld_flag)
 
 	zassert_false(is_join_msg_ok, "Received join message when not expected");
 
+<<<<<<< HEAD
 	ret = net_ipv6_mld_leave(iface, &mcast_addr);
+=======
+	ret = net_ipv6_mld_leave(net_iface, &mcast_addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "Cannot remove multicast address");
 
 	/* Let the network stack to proceed */
@@ -578,7 +650,11 @@ ZTEST(net_mld_test_suite, test_no_mld_flag)
 
 	zassert_false(is_leave_msg_ok, "Received leave message when not expected");
 
+<<<<<<< HEAD
 	net_if_flag_clear(iface, NET_IF_IPV6_NO_MLD);
+=======
+	net_if_flag_clear(net_iface, NET_IF_IPV6_NO_MLD);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST_SUITE(net_mld_test_suite, NULL, test_mld_setup, NULL, NULL, NULL);

@@ -9,6 +9,10 @@ from gdbstubs.arch.x86_64 import GdbStub_x86_64
 from gdbstubs.arch.arm_cortex_m import GdbStub_ARM_CortexM
 from gdbstubs.arch.risc_v import GdbStub_RISC_V
 from gdbstubs.arch.xtensa import GdbStub_Xtensa
+<<<<<<< HEAD
+=======
+from gdbstubs.arch.arm64 import GdbStub_ARM64
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 class TgtCode:
     UNKNOWN = 0
@@ -17,6 +21,10 @@ class TgtCode:
     ARM_CORTEX_M = 3
     RISC_V = 4
     XTENSA = 5
+<<<<<<< HEAD
+=======
+    ARM64 = 6
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 def get_gdbstub(logfile, elffile):
     stub = None
@@ -33,5 +41,10 @@ def get_gdbstub(logfile, elffile):
         stub = GdbStub_RISC_V(logfile=logfile, elffile=elffile)
     elif tgt_code == TgtCode.XTENSA:
         stub = GdbStub_Xtensa(logfile=logfile, elffile=elffile)
+<<<<<<< HEAD
+=======
+    elif tgt_code == TgtCode.ARM64:
+        stub = GdbStub_ARM64(logfile=logfile, elffile=elffile)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     return stub

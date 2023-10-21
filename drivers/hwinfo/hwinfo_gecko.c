@@ -35,7 +35,11 @@ ssize_t z_impl_hwinfo_get_device_id(uint8_t *buffer, size_t length)
 int z_impl_hwinfo_get_reset_cause(uint32_t *cause)
 {
 	uint32_t flags = 0;
+<<<<<<< HEAD
 	uint32_t rmu_flags = RMU_ResetCauseGet();
+=======
+	uint32_t __maybe_unused rmu_flags = RMU_ResetCauseGet();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef RMU_RSTCAUSE_PORST
 	if (rmu_flags & RMU_RSTCAUSE_PORST) {

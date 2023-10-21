@@ -7,7 +7,10 @@
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
 #include <zephyr/kernel_structs.h>
+<<<<<<< HEAD
 #include <zephyr/timeout_q.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/init.h>
 #include <string.h>
 #include <zephyr/drivers/timer/system_timer.h>
@@ -107,6 +110,7 @@ static void pm_resume_devices(void)
 #endif  /* !CONFIG_PM_DEVICE_RUNTIME_EXCLUSIVE */
 #endif	/* CONFIG_PM_DEVICE */
 
+<<<<<<< HEAD
 static inline void pm_exit_pos_ops(struct pm_state_info *info)
 {
 	extern __weak void
@@ -136,6 +140,8 @@ static inline void state_set(struct pm_state_info *info)
 	}
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Function called to notify when the system is entering / exiting a
  * power state
@@ -178,7 +184,11 @@ void pm_system_resume(void)
 	 * and it may schedule another thread.
 	 */
 	if (atomic_test_and_clear_bit(z_post_ops_required, id)) {
+<<<<<<< HEAD
 		pm_exit_pos_ops(&z_cpus_pm_state[id]);
+=======
+		pm_state_exit_post_ops(z_cpus_pm_state[id].state, z_cpus_pm_state[id].substate_id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pm_state_notify(false);
 		z_cpus_pm_state[id] = (struct pm_state_info){PM_STATE_ACTIVE,
 			0, 0};
@@ -266,7 +276,11 @@ bool pm_system_suspend(int32_t ticks)
 	/* Enter power state */
 	pm_state_notify(true);
 	atomic_set_bit(z_post_ops_required, id);
+<<<<<<< HEAD
 	state_set(&z_cpus_pm_state[id]);
+=======
+	pm_state_set(z_cpus_pm_state[id].state, z_cpus_pm_state[id].substate_id);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	pm_stats_stop();
 
 	/* Wake up sequence starts here */

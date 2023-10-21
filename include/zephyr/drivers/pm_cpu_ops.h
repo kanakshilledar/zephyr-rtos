@@ -20,6 +20,12 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
+=======
+/* System reset types. */
+#define SYS_WARM_RESET 0
+#define SYS_COLD_RESET 1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @defgroup power_management_cpu_api CPU Power Management
  * @ingroup subsys_pm
@@ -53,6 +59,7 @@ int pm_cpu_off(void);
 int pm_cpu_on(unsigned long cpuid, uintptr_t entry_point);
 
 /**
+<<<<<<< HEAD
  * @brief Power down the system
  *
  * This call is used to power down the whole system.
@@ -64,6 +71,17 @@ int pm_cpu_on(unsigned long cpuid, uintptr_t entry_point);
  * @retval -ENOTSUP If the operation is not supported
  */
 int pm_system_off(void);
+=======
+ * @brief System reset
+ *
+ * This function provides a method for performing a system cold or warm reset.
+ *
+ * @param reset system reset type, cold or warm.
+ *
+ * @retval 0 on success, a negative errno otherwise
+ */
+int pm_system_reset(unsigned char reset);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 }

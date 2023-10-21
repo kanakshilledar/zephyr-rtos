@@ -214,7 +214,10 @@ if (CONFIG_BUILD_WITH_TFM)
     ${TFM_INTERFACE_SOURCE_DIR}/tfm_platform_api.c
     ${TFM_INTERFACE_SOURCE_DIR}/tfm_ps_api.c
     ${TFM_INTERFACE_SOURCE_DIR}/tfm_psa_ns_api.c
+<<<<<<< HEAD
     ${TFM_INTERFACE_SOURCE_DIR}/tfm_psa_ns_connection_api.c
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     # Specific to nordic_nrf platform
     ${TFM_INTERFACE_SOURCE_DIR}/tfm_ioctl_core_ns_api.c
@@ -409,7 +412,10 @@ if (CONFIG_BUILD_WITH_TFM)
     zephyr_library_sources_ifdef(CONFIG_TFM_PARTITION_INITIAL_ATTESTATION      ${TFM_INTERFACE_SOURCE_DIR}/tfm_attest_api.c)
     zephyr_library_sources_ifdef(CONFIG_TFM_PARTITION_FIRMWARE_UPDATE          ${TFM_INTERFACE_SOURCE_DIR}/tfm_fwu_api.c)
 
+<<<<<<< HEAD
     zephyr_library_sources_ifdef(CONFIG_TFM_CONNECTION_BASED_SERVICE_API       ${TFM_INTERFACE_SOURCE_DIR}/tfm_psa_ns_connection_api.c)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     zephyr_library_sources(${TFM_INTERFACE_SOURCE_DIR}/tfm_psa_ns_api.c)
 
     if(CONFIG_SOC_FAMILY_NRF)

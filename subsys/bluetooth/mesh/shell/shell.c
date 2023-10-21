@@ -492,6 +492,7 @@ static void prov_node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr,
 }
 
 #if defined(CONFIG_BT_MESH_PROVISIONER)
+<<<<<<< HEAD
 static enum {
 	AUTH_NO_OOB,
 	AUTH_STATIC_OOB,
@@ -518,6 +519,43 @@ static void capabilities(const struct bt_mesh_dev_capabilities *cap)
 	}
 
 	bt_mesh_auth_method_set_none();
+=======
+static const char * const output_meth_string[] = {
+	"Blink",
+	"Beep",
+	"Vibrate",
+	"Display Number",
+	"Display String",
+};
+
+static const char *const input_meth_string[] = {
+	"Push",
+	"Twist",
+	"Enter Number",
+	"Enter String",
+};
+
+static void capabilities(const struct bt_mesh_dev_capabilities *cap)
+{
+	shell_print_ctx("Provisionee capabilities:");
+	shell_print_ctx("\tStatic OOB is %ssupported", cap->oob_type & 1 ? "" : "not ");
+
+	shell_print_ctx("\tAvailable output actions (%d bytes max):%s", cap->output_size,
+			cap->output_actions ? "" : "\n\t\tNone");
+	for (int i = 0; i < ARRAY_SIZE(output_meth_string); i++) {
+		if (cap->output_actions & BIT(i)) {
+			shell_print_ctx("\t\t%s", output_meth_string[i]);
+		}
+	}
+
+	shell_print_ctx("\tAvailable input actions (%d bytes max):%s", cap->input_size,
+			cap->input_actions ? "" : "\n\t\tNone");
+	for (int i = 0; i < ARRAY_SIZE(input_meth_string); i++) {
+		if (cap->input_actions & BIT(i)) {
+			shell_print_ctx("\t\t%s", input_meth_string[i]);
+		}
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif
 
@@ -602,7 +640,11 @@ static void link_close(bt_mesh_prov_bearer_t bearer)
 	shell_print_ctx("Provisioning link closed on %s", bearer2str(bearer));
 }
 
+<<<<<<< HEAD
 static uint8_t static_val[16];
+=======
+static uint8_t static_val[32];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct bt_mesh_prov bt_mesh_shell_prov = {
 	.uuid = dev_uuid,
@@ -636,7 +678,11 @@ static int cmd_static_oob(const struct shell *sh, size_t argc, char *argv[])
 		bt_mesh_shell_prov.static_val_len = 0U;
 	} else {
 		bt_mesh_shell_prov.static_val_len = hex2bin(argv[1], strlen(argv[1]),
+<<<<<<< HEAD
 					      static_val, 16);
+=======
+					      static_val, 32);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (bt_mesh_shell_prov.static_val_len) {
 			bt_mesh_shell_prov.static_val = static_val;
 		} else {
@@ -877,16 +923,27 @@ static int cmd_auth_method_set_output(const struct shell *sh, size_t argc, char 
 static int cmd_auth_method_set_static(const struct shell *sh, size_t argc, char *argv[])
 {
 	size_t len;
+<<<<<<< HEAD
 	uint8_t static_val[16];
 	int err = 0;
 
 	len = hex2bin(argv[1], strlen(argv[1]), static_val, sizeof(static_val));
+=======
+	uint8_t static_oob_auth[32];
+	int err = 0;
+
+	len = hex2bin(argv[1], strlen(argv[1]), static_oob_auth, sizeof(static_oob_auth));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (len < 1) {
 		shell_warn(sh, "Unable to parse input string argument");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	err = bt_mesh_auth_method_set_static(static_val, len);
+=======
+	err = bt_mesh_auth_method_set_static(static_oob_auth, len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		shell_error(sh, "Setting static OOB authentication failed (err %d)", err);
 	}
@@ -935,7 +992,11 @@ static int cmd_provision_adv(const struct shell *sh, size_t argc,
 
 static int cmd_provision_local(const struct shell *sh, size_t argc, char *argv[])
 {
+<<<<<<< HEAD
 	const uint8_t *net_key = bt_mesh_shell_default_key;
+=======
+	uint8_t *net_key = (uint8_t *)bt_mesh_shell_default_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t net_idx, addr;
 	uint32_t iv_index;
 	int err = 0;
@@ -955,6 +1016,7 @@ static int cmd_provision_local(const struct shell *sh, size_t argc, char *argv[]
 	}
 
 	if (IS_ENABLED(CONFIG_BT_MESH_CDB)) {
+<<<<<<< HEAD
 		const struct bt_mesh_cdb_subnet *sub;
 
 		sub = bt_mesh_cdb_subnet_get(net_idx);
@@ -969,6 +1031,23 @@ static int cmd_provision_local(const struct shell *sh, size_t argc, char *argv[]
 
 	err = bt_mesh_provision(net_key, net_idx, 0, iv_index, addr,
 				bt_mesh_shell_default_key);
+=======
+		struct bt_mesh_cdb_subnet *sub;
+
+		sub = bt_mesh_cdb_subnet_get(net_idx);
+		if (!sub) {
+			shell_error(sh, "No cdb entry for subnet 0x%03x", net_idx);
+			return 0;
+		}
+
+		if (bt_mesh_cdb_subnet_key_export(sub, SUBNET_KEY_TX_IDX(sub), net_key)) {
+			shell_error(sh, "Unable to export key for subnet 0x%03x", net_idx);
+			return 0;
+		}
+	}
+
+	err = bt_mesh_provision(net_key, net_idx, 0, iv_index, addr, bt_mesh_shell_default_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		shell_error(sh, "Provisioning failed (err %d)", err);
 	}
@@ -1207,6 +1286,10 @@ static void cdb_print_nodes(const struct shell *sh)
 	struct bt_mesh_cdb_node *node;
 	int i, total = 0;
 	bool configured;
+<<<<<<< HEAD
+=======
+	uint8_t dev_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	shell_print(sh, "Address  Elements  Flags  %-32s  DevKey", "UUID");
 
@@ -1221,7 +1304,15 @@ static void cdb_print_nodes(const struct shell *sh)
 
 		total++;
 		bin2hex(node->uuid, 16, uuid_hex_str, sizeof(uuid_hex_str));
+<<<<<<< HEAD
 		bin2hex(node->dev_key, 16, key_hex_str, sizeof(key_hex_str));
+=======
+		if (bt_mesh_cdb_node_key_export(node, dev_key)) {
+			shell_error(sh, "Unable to export key for node 0x%04x", node->addr);
+			continue;
+		}
+		bin2hex(dev_key, 16, key_hex_str, sizeof(key_hex_str));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		shell_print(sh, "0x%04x   %-8d  %-5s  %s  %s", node->addr,
 			    node->num_elem, configured ? "C" : "-",
 			    uuid_hex_str, key_hex_str);
@@ -1235,6 +1326,10 @@ static void cdb_print_subnets(const struct shell *sh)
 	struct bt_mesh_cdb_subnet *subnet;
 	char key_hex_str[32 + 1];
 	int i, total = 0;
+<<<<<<< HEAD
+=======
+	uint8_t net_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	shell_print(sh, "NetIdx  NetKey");
 
@@ -1244,11 +1339,23 @@ static void cdb_print_subnets(const struct shell *sh)
 			continue;
 		}
 
+<<<<<<< HEAD
 		total++;
 		bin2hex(subnet->keys[0].net_key, 16, key_hex_str,
 			sizeof(key_hex_str));
 		shell_print(sh, "0x%03x   %s", subnet->net_idx,
 			    key_hex_str);
+=======
+		if (bt_mesh_cdb_subnet_key_export(subnet, 0, net_key)) {
+			shell_error(sh, "Unable to export key for subnet 0x%03x",
+					subnet->net_idx);
+			continue;
+		}
+
+		total++;
+		bin2hex(net_key, 16, key_hex_str, sizeof(key_hex_str));
+		shell_print(sh, "0x%03x   %s", subnet->net_idx, key_hex_str);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	shell_print(sh, "> Total subnets: %d", total);
@@ -1256,23 +1363,45 @@ static void cdb_print_subnets(const struct shell *sh)
 
 static void cdb_print_app_keys(const struct shell *sh)
 {
+<<<<<<< HEAD
 	struct bt_mesh_cdb_app_key *app_key;
 	char key_hex_str[32 + 1];
 	int i, total = 0;
+=======
+	struct bt_mesh_cdb_app_key *key;
+	char key_hex_str[32 + 1];
+	int i, total = 0;
+	uint8_t app_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	shell_print(sh, "NetIdx  AppIdx  AppKey");
 
 	for (i = 0; i < ARRAY_SIZE(bt_mesh_cdb.app_keys); ++i) {
+<<<<<<< HEAD
 		app_key = &bt_mesh_cdb.app_keys[i];
 		if (app_key->net_idx == BT_MESH_KEY_UNUSED) {
+=======
+		key = &bt_mesh_cdb.app_keys[i];
+		if (key->net_idx == BT_MESH_KEY_UNUSED) {
+			continue;
+		}
+
+		if (bt_mesh_cdb_app_key_export(key, 0, app_key)) {
+			shell_error(sh, "Unable to export app key 0x%03x", key->app_idx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			continue;
 		}
 
 		total++;
+<<<<<<< HEAD
 		bin2hex(app_key->keys[0].app_key, 16, key_hex_str,
 			sizeof(key_hex_str));
 		shell_print(sh, "0x%03x   0x%03x   %s",
 			    app_key->net_idx, app_key->app_idx, key_hex_str);
+=======
+		bin2hex(app_key, 16, key_hex_str, sizeof(key_hex_str));
+		shell_print(sh, "0x%03x   0x%03x   %s", key->net_idx, key->app_idx, key_hex_str);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	shell_print(sh, "> Total app-keys: %d", total);
@@ -1333,7 +1462,15 @@ static int cmd_cdb_node_add(const struct shell *sh, size_t argc,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	memcpy(node->dev_key, dev_key, 16);
+=======
+	err = bt_mesh_cdb_node_key_import(node, dev_key);
+	if (err) {
+		shell_warn(sh, "Unable to import device key into cdb");
+		return err;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		bt_mesh_cdb_node_store(node);
@@ -1399,7 +1536,14 @@ static int cmd_cdb_subnet_add(const struct shell *sh, size_t argc,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	memcpy(sub->keys[0].net_key, net_key, 16);
+=======
+	if (bt_mesh_cdb_subnet_key_import(sub, 0, net_key)) {
+		shell_error(sh, "Unable to import key for subnet 0x%03x", net_idx);
+		return 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		bt_mesh_cdb_subnet_store(sub);
@@ -1466,7 +1610,14 @@ static int cmd_cdb_app_key_add(const struct shell *sh, size_t argc,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	memcpy(key->keys[0].app_key, app_key, 16);
+=======
+	if (bt_mesh_cdb_app_key_import(key, 0, app_key)) {
+		shell_error(sh, "Unable to import app key 0x%03x", app_idx);
+		return 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		bt_mesh_cdb_app_key_store(key);
@@ -1570,6 +1721,38 @@ static int cmd_appidx(const struct shell *sh, size_t argc, char *argv[])
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_STATISTIC)
+static int cmd_stat_get(const struct shell *sh, size_t argc, char *argv[])
+{
+	struct bt_mesh_statistic st;
+
+	bt_mesh_stat_get(&st);
+
+	shell_print(sh, "Received frames over:");
+	shell_print(sh, "adv:       %d", st.rx_adv);
+	shell_print(sh, "loopback:  %d", st.rx_loopback);
+	shell_print(sh, "proxy:     %d", st.rx_proxy);
+	shell_print(sh, "unknown:   %d", st.rx_uknown);
+
+	shell_print(sh, "Transmitted frames: <planned> - <succeeded>");
+	shell_print(sh, "relay adv:   %d - %d", st.tx_adv_relay_planned, st.tx_adv_relay_succeeded);
+	shell_print(sh, "local adv:   %d - %d", st.tx_local_planned, st.tx_local_succeeded);
+	shell_print(sh, "friend:      %d - %d", st.tx_friend_planned, st.tx_friend_succeeded);
+
+	return 0;
+}
+
+static int cmd_stat_clear(const struct shell *sh, size_t argc, char *argv[])
+{
+	bt_mesh_stat_reset();
+
+	return 0;
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_MESH_SHELL_CDB)
 SHELL_STATIC_SUBCMD_SET_CREATE(
 	cdb_cmds,
@@ -1599,7 +1782,11 @@ SHELL_STATIC_SUBCMD_SET_CREATE(auth_cmds,
 		      cmd_auth_method_set_output, 3, 0),
 	SHELL_CMD_ARG(static, NULL, "<Val(1-16 hex)>", cmd_auth_method_set_static, 2,
 		      0),
+<<<<<<< HEAD
 	SHELL_CMD_ARG(none, NULL, NULL, cmd_auth_method_set_none, 2, 0),
+=======
+	SHELL_CMD_ARG(none, NULL, NULL, cmd_auth_method_set_none, 1, 0),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SHELL_SUBCMD_SET_END);
 #endif
 
@@ -1698,6 +1885,16 @@ SHELL_STATIC_SUBCMD_SET_CREATE(target_cmds,
 	SHELL_CMD_ARG(app, NULL, "[AppKeyIdx]", cmd_appidx, 1, 1),
 	SHELL_SUBCMD_SET_END);
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_STATISTIC)
+SHELL_STATIC_SUBCMD_SET_CREATE(stat_cmds,
+	SHELL_CMD_ARG(get, NULL, NULL, cmd_stat_get, 1, 0),
+	SHELL_CMD_ARG(clear, NULL, NULL, cmd_stat_clear, 1, 0),
+	SHELL_SUBCMD_SET_END);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Placeholder for model shell modules that is configured in the application */
 SHELL_SUBCMD_SET_CREATE(model_cmds, (mesh, models));
 
@@ -1735,6 +1932,13 @@ SHELL_STATIC_SUBCMD_SET_CREATE(mesh_cmds,
 #endif
 	SHELL_CMD(target, &target_cmds, "Target commands", bt_mesh_shell_mdl_cmds_help),
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_STATISTIC)
+	SHELL_CMD(stat, &stat_cmds, "Statistic commands", bt_mesh_shell_mdl_cmds_help),
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SHELL_SUBCMD_SET_END
 );
 

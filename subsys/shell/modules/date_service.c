@@ -8,9 +8,21 @@
 #include <zephyr/shell/shell.h>
 #include <zephyr/init.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/posix/time.h>
 #include <zephyr/sys/timeutil.h>
 
+=======
+
+#include <zephyr/sys/timeutil.h>
+
+#if defined(CONFIG_ARCH_POSIX) && defined(CONFIG_EXTERNAL_LIBC)
+#include <time.h>
+#else
+#include <zephyr/posix/time.h>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define HELP_NONE      "[none]"
 #define HELP_DATE_SET  "[Y-m-d] <H:M:S>"
 

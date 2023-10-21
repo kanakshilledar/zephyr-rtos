@@ -23,10 +23,19 @@ add_compile_definitions(CONFIG_LWM2M_RD_CLIENT_ENDPOINT_NAME_MAX_LENGTH=32)
 add_compile_definitions(CONFIG_LWM2M_RD_CLIENT_MAX_RETRIES=2)
 add_compile_definitions(CONFIG_LWM2M_COAP_BLOCK_SIZE=256)
 add_compile_definitions(CONFIG_LWM2M_COAP_MAX_MSG_SIZE=512)
+<<<<<<< HEAD
 add_compile_definitions(CONFIG_LWM2M_ENGINE_DEFAULT_LIFETIME=60)
+=======
+add_compile_definitions(CONFIG_LWM2M_ENGINE_DEFAULT_LIFETIME=20)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_compile_definitions(CONFIG_LWM2M_SECURITY_INSTANCE_COUNT=1)
 add_compile_definitions(CONFIG_LWM2M_SECONDS_TO_UPDATE_EARLY=10)
 add_compile_definitions(CONFIG_LWM2M_QUEUE_MODE_UPTIME=10)
 add_compile_definitions(CONFIG_LWM2M_LOG_LEVEL=4)
 add_compile_definitions(CONFIG_LWM2M_QUEUE_MODE_ENABLED=1)
 add_compile_definitions(CONFIG_LWM2M_TLS_SESSION_CACHING=1)
+<<<<<<< HEAD
+=======
+add_compile_definitions(CONFIG_LWM2M_RD_CLIENT_LISTEN_AT_IDLE=1)
+add_compile_definitions(CONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP=1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

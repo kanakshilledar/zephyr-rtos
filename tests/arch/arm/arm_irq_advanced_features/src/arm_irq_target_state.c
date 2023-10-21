@@ -6,7 +6,11 @@
 
 #include <zephyr/ztest.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_ARM_SECURE_FIRMWARE) && \
 	defined(CONFIG_ARMV7_M_ARMV8_M_MAINLINE)

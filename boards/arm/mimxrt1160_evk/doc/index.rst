@@ -78,6 +78,26 @@ these references:
 - `MIMXRT1160-EVK Website`_
 - `MIMXRT1160-EVK Board Hardware User's Guide`_
 
+<<<<<<< HEAD
+=======
+External Memory
+===============
+
+This platform has the following external memories:
+
++--------------------+------------+-------------------------------------+
+| Device             | Controller | Status                              |
++====================+============+=====================================+
+| W9825G6KH          | SEMC       | Enabled via device configuration    |
+|                    |            | data block, which sets up SEMC at   |
+|                    |            | boot time                           |
++--------------------+------------+-------------------------------------+
+| IS25WP128          | FLEXSPI    | Enabled via flash configurationn    |
+|                    |            | block, which sets up FLEXSPI at     |
+|                    |            | boot time.                          |
++--------------------+------------+-------------------------------------+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Supported Features
 ==================
 

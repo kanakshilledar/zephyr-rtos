@@ -107,9 +107,18 @@ struct lorawan_join_otaa {
 	 * increasing for each OTAA join with the same EUI. The DevNonce
 	 * should be stored in non-volatile memory by the application.
 	 */
+<<<<<<< HEAD
 	uint32_t dev_nonce;
 };
 
+=======
+	uint16_t dev_nonce;
+};
+
+/**
+ * @brief LoRaWAN join parameters for activation by personalization (ABP)
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct lorawan_join_abp {
 	/** Device address on the network */
 	uint32_t dev_addr;
@@ -121,6 +130,12 @@ struct lorawan_join_abp {
 	uint8_t *app_eui;
 };
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief LoRaWAN join parameters
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct lorawan_join_config {
 	union {
 		struct lorawan_join_otaa otaa;
@@ -130,16 +145,33 @@ struct lorawan_join_config {
 	/** Device EUI. Optional if a secure element is present. */
 	uint8_t *dev_eui;
 
+<<<<<<< HEAD
+=======
+	/** Activation mode */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	enum lorawan_act_type mode;
 };
 
 #define LW_RECV_PORT_ANY UINT16_MAX
 
+<<<<<<< HEAD
 struct lorawan_downlink_cb {
 	/* Port to handle messages for:
 	 *               Port 0: TX packet acknowledgements
 	 *          Ports 1-255: Standard downlink port
 	 *     LW_RECV_PORT_ANY: All downlinks
+=======
+/**
+ * @brief LoRaWAN downlink callback parameters
+ */
+struct lorawan_downlink_cb {
+	/**
+	 * @brief Port to handle messages for.
+	 *
+	 * - Port 0: TX packet acknowledgements
+	 * - Ports 1-255: Standard downlink port
+	 * - LW_RECV_PORT_ANY: All downlinks
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 */
 	uint16_t port;
 	/**

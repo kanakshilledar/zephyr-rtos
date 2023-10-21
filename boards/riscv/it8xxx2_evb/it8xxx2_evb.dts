@@ -11,7 +11,11 @@
 
 / {
 	model = "IT8XXX2 EV-Board";
+<<<<<<< HEAD
 	compatible = "riscv,it8xxx2-evb";
+=======
+	compatible = "ite,it8xxx2-evb";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	aliases {
 		i2c-0 = &i2c0;
@@ -99,12 +103,20 @@
 &uart1 {
 	status = "okay";
 	current-speed = <115200>;
+<<<<<<< HEAD
 	clock-frequency = <1804800>;
+=======
+	clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 &uart2 {
 	status = "okay";
 	current-speed = <460800>;
+<<<<<<< HEAD
 	clock-frequency = <1804800>;
+=======
+	clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 &ite_uart1_wrapper {
 	status = "okay";
@@ -179,6 +191,12 @@
 	pinctrl-0 = <&peci_gpf6_default>;
 	pinctrl-names = "default";
 };
+<<<<<<< HEAD
+=======
+&sha0 {
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &flash0 {
 	partitions {
 		compatible = "fixed-partitions";

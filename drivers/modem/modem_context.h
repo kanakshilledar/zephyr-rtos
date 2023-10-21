@@ -105,7 +105,11 @@ struct modem_context *modem_context_from_id(int id);
 /**
  * @brief  Finds modem context which owns the iface device.
  *
+<<<<<<< HEAD
  * @param  *dev: device used by the modem iface.
+=======
+ * @param  dev: device used by the modem iface.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval Modem context or NULL.
  */
@@ -116,7 +120,11 @@ struct modem_context *modem_context_from_iface_dev(const struct device *dev);
  *
  * @note   Prepares modem context to be used.
  *
+<<<<<<< HEAD
  * @param  *ctx: modem context to register.
+=======
+ * @param  ctx: modem context to register.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval 0 if ok, < 0 if error.
  */

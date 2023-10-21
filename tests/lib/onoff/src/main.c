@@ -8,10 +8,17 @@
 #include <zephyr/ztest.h>
 #include <zephyr/sys/onoff.h>
 
+<<<<<<< HEAD
 static struct onoff_client cli;
 struct onoff_transitions transitions;
 static struct onoff_manager srv;
 static struct onoff_monitor mon;
+=======
+static struct onoff_client onoff_cli;
+struct onoff_transitions transitions;
+static struct onoff_manager onoff_srv;
+static struct onoff_monitor onoff_mon;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct transition_record {
 	uint32_t state;
@@ -101,9 +108,15 @@ static inline int cli_result(const struct onoff_client *cp)
 static void check_result(int res,
 			 const char *tag)
 {
+<<<<<<< HEAD
 	zassert_equal(cli_result(&cli), res,
 		      "cli res %d != %d: %s",
 		      cli_result(&cli), res, tag);
+=======
+	zassert_equal(cli_result(&onoff_cli), res,
+		      "cli res %d != %d: %s",
+		      cli_result(&onoff_cli), res, tag);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 struct transit_state {
@@ -148,27 +161,45 @@ static struct transit_state start_state = {
 	.tag = "start",
 };
 static void start(struct onoff_manager *srv,
+<<<<<<< HEAD
 		  onoff_notify_fn notify)
 {
 	run_transit(srv, notify, &start_state);
+=======
+		  onoff_notify_fn notify_fn)
+{
+	run_transit(srv, notify_fn, &start_state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static struct transit_state stop_state = {
 	.tag = "stop",
 };
 static void stop(struct onoff_manager *srv,
+<<<<<<< HEAD
 		 onoff_notify_fn notify)
 {
 	run_transit(srv, notify, &stop_state);
+=======
+		 onoff_notify_fn notify_fn)
+{
+	run_transit(srv, notify_fn, &stop_state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static struct transit_state reset_state = {
 	.tag = "reset",
 };
 static void reset(struct onoff_manager *srv,
+<<<<<<< HEAD
 		  onoff_notify_fn notify)
 {
 	run_transit(srv, notify, &reset_state);
+=======
+		  onoff_notify_fn notify_fn)
+{
+	run_transit(srv, notify_fn, &reset_state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static struct k_sem isr_sync;
@@ -215,8 +246,13 @@ static void isr_reset(struct k_timer *timer)
 
 static void reset_cli(void)
 {
+<<<<<<< HEAD
 	cli = (struct onoff_client){};
 	sys_notify_init_callback(&cli.notify, callback);
+=======
+	onoff_cli = (struct onoff_client){};
+	sys_notify_init_callback(&onoff_cli.notify, callback);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void reset_callback(void)
@@ -238,6 +274,7 @@ static void setup_test(void)
 
 	transitions = (struct onoff_transitions)
 		      ONOFF_TRANSITIONS_INITIALIZER(start, stop, reset);
+<<<<<<< HEAD
 	rc = onoff_manager_init(&srv, &transitions);
 	zassert_equal(rc, 0,
 		      "service init");
@@ -246,6 +283,16 @@ static void setup_test(void)
 		.callback = trans_callback,
 	};
 	rc = onoff_monitor_register(&srv, &mon);
+=======
+	rc = onoff_manager_init(&onoff_srv, &transitions);
+	zassert_equal(rc, 0,
+		      "service init");
+
+	onoff_mon = (struct onoff_monitor){
+		.callback = trans_callback,
+	};
+	rc = onoff_monitor_register(&onoff_srv, &onoff_mon);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 0,
 		      "mon reg");
 
@@ -259,12 +306,20 @@ static void setup_error(void)
 	setup_test();
 	start_state.retval = -1;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req 0 0");
 	check_result(start_state.retval,
 		     "err req");
+<<<<<<< HEAD
 	zassert_true(onoff_has_error(&srv),
+=======
+	zassert_true(onoff_has_error(&onoff_srv),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		     "has_err");
 
 	reset_cli();
@@ -280,23 +335,39 @@ ZTEST(onoff_api, test_manager_init)
 	rc = onoff_manager_init(NULL, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "init 0 0");
+<<<<<<< HEAD
 	rc = onoff_manager_init(&srv, NULL);
+=======
+	rc = onoff_manager_init(&onoff_srv, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EINVAL,
 		      "init srv 0");
 	rc = onoff_manager_init(NULL, &transitions);
 	zassert_equal(rc, -EINVAL,
 		      "init 0 xit");
+<<<<<<< HEAD
 	rc = onoff_manager_init(&srv, &xit);
+=======
+	rc = onoff_manager_init(&onoff_srv, &xit);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EINVAL,
 		      "init 0 xit-start");
 
 	xit.start = start;
+<<<<<<< HEAD
 	rc = onoff_manager_init(&srv, &xit);
+=======
+	rc = onoff_manager_init(&onoff_srv, &xit);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EINVAL,
 		      "init srv xit-stop");
 
 	xit.stop = stop;
+<<<<<<< HEAD
 	rc = onoff_manager_init(&srv, &xit);
+=======
+	rc = onoff_manager_init(&onoff_srv, &xit);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 0,
 		      "init srv xit ok");
 }
@@ -311,11 +382,19 @@ ZTEST(onoff_api, test_mon_reg)
 
 	zassert_equal(onoff_monitor_register(NULL, NULL), -EINVAL,
 		      "mon reg 0 0");
+<<<<<<< HEAD
 	zassert_equal(onoff_monitor_register(&srv, NULL), -EINVAL,
 		      "mon reg srv 0");
 	zassert_equal(onoff_monitor_register(NULL, &mon), -EINVAL,
 		      "mon reg 0 mon");
 	zassert_equal(onoff_monitor_register(&srv, &mon), -EINVAL,
+=======
+	zassert_equal(onoff_monitor_register(&onoff_srv, NULL), -EINVAL,
+		      "mon reg srv 0");
+	zassert_equal(onoff_monitor_register(NULL, &mon), -EINVAL,
+		      "mon reg 0 mon");
+	zassert_equal(onoff_monitor_register(&onoff_srv, &mon), -EINVAL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "mon reg srv mon(!cb)");
 }
 
@@ -327,6 +406,7 @@ ZTEST(onoff_api, test_mon_unreg)
 
 	zassert_equal(onoff_monitor_unregister(NULL, NULL), -EINVAL,
 		      "mon unreg 0 0");
+<<<<<<< HEAD
 	zassert_equal(onoff_monitor_unregister(&srv, NULL), -EINVAL,
 		      "mon unreg srv 0");
 	zassert_equal(onoff_monitor_unregister(NULL, &mon), -EINVAL,
@@ -334,6 +414,15 @@ ZTEST(onoff_api, test_mon_unreg)
 	zassert_equal(onoff_monitor_unregister(&srv, &mon), 0,
 		      "mon unreg 0 mon");
 	zassert_equal(onoff_monitor_unregister(&srv, &mon), -EINVAL,
+=======
+	zassert_equal(onoff_monitor_unregister(&onoff_srv, NULL), -EINVAL,
+		      "mon unreg srv 0");
+	zassert_equal(onoff_monitor_unregister(NULL, &onoff_mon), -EINVAL,
+		      "mon unreg 0 mon");
+	zassert_equal(onoff_monitor_unregister(&onoff_srv, &onoff_mon), 0,
+		      "mon unreg 0 mon");
+	zassert_equal(onoff_monitor_unregister(&onoff_srv, &onoff_mon), -EINVAL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "mon unreg 0 mon");
 }
 
@@ -347,6 +436,7 @@ ZTEST(onoff_api, test_request)
 	rc = onoff_request(NULL, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "req 0 0");
+<<<<<<< HEAD
 	rc = onoff_request(&srv, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "req srv 0");
@@ -365,12 +455,37 @@ ZTEST(onoff_api, test_request)
 
 	cli.notify.flags &= ~BIT(ONOFF_CLIENT_EXTENSION_POS);
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, NULL);
+	zassert_equal(rc, -EINVAL,
+		      "req srv 0");
+	rc = onoff_request(NULL, &onoff_cli);
+	zassert_equal(rc, -EINVAL,
+		      "req 0 cli");
+
+	rc = onoff_request(&onoff_srv, &cli2);
+	zassert_equal(rc, -EINVAL,
+		      "req srv cli-uninit");
+
+	onoff_cli.notify.flags |= BIT(ONOFF_CLIENT_EXTENSION_POS);
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, -EINVAL,
+		      "req srv cli-flags");
+
+	onoff_cli.notify.flags &= ~BIT(ONOFF_CLIENT_EXTENSION_POS);
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 0,
 		      "req srv cli ok");
 
 	reset_cli();
+<<<<<<< HEAD
 	srv.refs = -1;
 	rc = onoff_request(&srv, &cli);
+=======
+	onoff_srv.refs = -1;
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EAGAIN,
 		      "req srv cli ofl");
 
@@ -386,6 +501,7 @@ ZTEST(onoff_api, test_basic_sync)
 	start_state.retval = 16;
 	stop_state.retval = 23;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req: %d", rc);
@@ -395,6 +511,17 @@ ZTEST(onoff_api, test_basic_sync)
 	zassert_equal(callback_srv, &srv,
 		      "callback wrong srv");
 	zassert_equal(callback_cli, &cli,
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "req: %d", rc);
+	zassert_equal(onoff_srv.refs, 1U,
+		      "req refs: %u", onoff_srv.refs);
+	check_result(start_state.retval, "req");
+	zassert_equal(callback_srv, &onoff_srv,
+		      "callback wrong srv");
+	zassert_equal(callback_cli, &onoff_cli,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "callback wrong cli");
 	check_callback(ONOFF_STATE_ON, start_state.retval,
 		       "req");
@@ -405,11 +532,19 @@ ZTEST(onoff_api, test_basic_sync)
 	check_trans(1, ONOFF_STATE_ON, start_state.retval,
 		   "trans on");
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "rel: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "rel refs: %u", srv.refs);
+=======
+	rc = onoff_release(&onoff_srv);
+	zassert_equal(rc, ONOFF_STATE_ON,
+		      "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "rel refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ntrans, 4U,
 		      "rel trans");
 	check_trans(2, ONOFF_STATE_TO_OFF, 0,
@@ -417,7 +552,11 @@ ZTEST(onoff_api, test_basic_sync)
 	check_trans(3, ONOFF_STATE_OFF, stop_state.retval,
 		   "trans off");
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
+=======
+	rc = onoff_release(&onoff_srv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -ENOTSUP,
 		      "re-rel: %d", rc);
 }
@@ -434,11 +573,19 @@ ZTEST(onoff_api, test_basic_async)
 	stop_state.async = true;
 	stop_state.retval = 17;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "async req: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "to-on refs: %u", srv.refs);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "async req: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "to-on refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	check_result(-EAGAIN, "async req");
 	zassert_equal(ntrans, 1U,
 		      "async req trans");
@@ -446,27 +593,45 @@ ZTEST(onoff_api, test_basic_async)
 		   "trans to-on");
 
 	notify(&start_state);
+<<<<<<< HEAD
 	zassert_equal(srv.refs, 1U,
 		      "on refs: %u", srv.refs);
+=======
+	zassert_equal(onoff_srv.refs, 1U,
+		      "on refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	check_result(start_state.retval, "async req");
 	zassert_equal(ntrans, 2U,
 		      "async req trans");
 	check_trans(1, ONOFF_STATE_ON, start_state.retval,
 		   "trans on");
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
 	zassert_true(rc >= 0,
 		     "rel: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "on refs: %u", srv.refs);
+=======
+	rc = onoff_release(&onoff_srv);
+	zassert_true(rc >= 0,
+		     "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "on refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ntrans, 3U,
 		      "async rel trans");
 	check_trans(2, ONOFF_STATE_TO_OFF, 0,
 		   "trans to-off");
 
 	notify(&stop_state);
+<<<<<<< HEAD
 	zassert_equal(srv.refs, 0U,
 		      "rel refs: %u", srv.refs);
+=======
+	zassert_equal(onoff_srv.refs, 0U,
+		      "rel refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ntrans, 4U,
 		      "rel trans");
 	check_trans(3, ONOFF_STATE_OFF, stop_state.retval,
@@ -484,6 +649,7 @@ ZTEST(onoff_api, test_reset)
 	rc = onoff_reset(NULL, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "rst 0 0");
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "rst srv 0");
@@ -491,21 +657,42 @@ ZTEST(onoff_api, test_reset)
 	zassert_equal(rc, -EINVAL,
 		      "rst 0 cli");
 	rc = onoff_reset(&srv, &cli2);
+=======
+	rc = onoff_reset(&onoff_srv, NULL);
+	zassert_equal(rc, -EINVAL,
+		      "rst srv 0");
+	rc = onoff_reset(NULL, &onoff_cli);
+	zassert_equal(rc, -EINVAL,
+		      "rst 0 cli");
+	rc = onoff_reset(&onoff_srv, &cli2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EINVAL,
 		      "rst srv cli-cfg");
 
 	transitions.reset = NULL;
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli);
+=======
+	rc = onoff_reset(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -ENOTSUP,
 		      "rst srv cli-cfg");
 
 	transitions.reset = reset;
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli);
+=======
+	rc = onoff_reset(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ERROR,
 		      "rst srv cli");
 
 	reset_cli();
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli);
+=======
+	rc = onoff_reset(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EALREADY,
 		      "re-rst srv cli");
 }
@@ -528,7 +715,11 @@ ZTEST(onoff_api, test_basic_reset)
 	reset_cli();
 	reset_state.retval = 12;
 
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli);
+=======
+	rc = onoff_reset(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ERROR,
 		      "rst");
 	check_result(reset_state.retval,
@@ -555,11 +746,19 @@ ZTEST(onoff_api, test_multi_start)
 	start_state.async = true;
 	start_state.retval = 16;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "req refs: %u", srv.refs);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "req: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "req refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	check_result(-EAGAIN, "req");
 	zassert_equal(ntrans, 1U,
 		      "req trans");
@@ -568,7 +767,11 @@ ZTEST(onoff_api, test_multi_start)
 
 	sys_notify_init_spinwait(&cli2.notify);
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli2);
+=======
+	rc = onoff_request(&onoff_srv, &cli2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_ON,
 		      "req2: %d", rc);
 	zassert_equal(cli_result(&cli2), -EAGAIN,
@@ -598,11 +801,19 @@ ZTEST(onoff_api, test_indep_req)
 	sys_notify_init_spinwait(&cli0.notify);
 	start_state.retval = 62;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli0);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req0: %d", rc);
 	zassert_equal(srv.refs, 1U,
 		      "req0 refs: %u", srv.refs);
+=======
+	rc = onoff_request(&onoff_srv, &cli0);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "req0: %d", rc);
+	zassert_equal(onoff_srv.refs, 1U,
+		      "req0 refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(cli_result(&cli0), start_state.retval,
 		      "req0 result");
 	zassert_equal(ntrans, 2U,
@@ -614,7 +825,11 @@ ZTEST(onoff_api, test_indep_req)
 
 	++start_state.retval;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "req: %d", rc);
 	check_result(0,
@@ -622,6 +837,7 @@ ZTEST(onoff_api, test_indep_req)
 
 	zassert_equal(ntrans, 2U,
 		      "async req trans");
+<<<<<<< HEAD
 	zassert_equal(srv.refs, 2U,
 		      "srv refs: %u", srv.refs);
 
@@ -629,14 +845,30 @@ ZTEST(onoff_api, test_indep_req)
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "rel: %d", rc);
 	zassert_equal(srv.refs, 1U,
+=======
+	zassert_equal(onoff_srv.refs, 2U,
+		      "srv refs: %u", onoff_srv.refs);
+
+	rc = onoff_release(&onoff_srv); /* pair with cli0 */
+	zassert_equal(rc, ONOFF_STATE_ON,
+		      "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 1U,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "srv refs");
 	zassert_equal(ntrans, 2U,
 		      "async req trans");
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv); /* pair with cli */
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "rel: %d", rc);
 	zassert_equal(srv.refs, 0U,
+=======
+	rc = onoff_release(&onoff_srv); /* pair with cli */
+	zassert_equal(rc, ONOFF_STATE_ON,
+		      "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "srv refs");
 	zassert_equal(ntrans, 4U,
 		      "async req trans");
@@ -653,7 +885,11 @@ ZTEST(onoff_api, test_delayed_req)
 	 * processed on completion of the transition to off.
 	 */
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req: %d", rc);
 	check_result(start_state.retval, "req");
@@ -668,11 +904,19 @@ ZTEST(onoff_api, test_delayed_req)
 	stop_state.async = true;
 	stop_state.retval = 14;
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
 	zassert_true(rc >= 0,
 		     "rel: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "on refs: %u", srv.refs);
+=======
+	rc = onoff_release(&onoff_srv);
+	zassert_true(rc >= 0,
+		     "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "on refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ntrans, 3U,
 		      "async rel trans");
 	check_trans(2, ONOFF_STATE_TO_OFF, 0,
@@ -680,7 +924,11 @@ ZTEST(onoff_api, test_delayed_req)
 
 	reset_cli();
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_OFF,
 		      "del req: %d", rc);
 	zassert_equal(ntrans, 3U,
@@ -715,21 +963,36 @@ ZTEST(onoff_api, test_recheck_start)
 	 */
 
 	setup_test();
+<<<<<<< HEAD
 	rc = onoff_monitor_unregister(&srv, &mon);
+=======
+	rc = onoff_monitor_unregister(&onoff_srv, &onoff_mon);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 0,
 		      "mon unreg");
 
 	start_state.async = true;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req");
 	rc = onoff_cancel(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "req");
+	rc = onoff_cancel(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_ON,
 		      "cancel");
 
 	notify(&start_state);
+<<<<<<< HEAD
 	zassert_equal(srv.flags, ONOFF_STATE_OFF,
+=======
+	zassert_equal(onoff_srv.flags, ONOFF_STATE_OFF,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "completed");
 }
 
@@ -745,30 +1008,50 @@ ZTEST(onoff_api, test_recheck_stop)
 	 */
 
 	setup_test();
+<<<<<<< HEAD
 	rc = onoff_monitor_unregister(&srv, &mon);
 	zassert_equal(rc, 0,
 		      "mon unreg");
 
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_monitor_unregister(&onoff_srv, &onoff_mon);
+	zassert_equal(rc, 0,
+		      "mon unreg");
+
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req");
 	check_result(start_state.retval,
 		     "req");
 
 	stop_state.async = true;
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
+=======
+	rc = onoff_release(&onoff_srv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "rel");
 
 	reset_cli();
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_OFF,
 		      "delayed req");
 	check_result(-EAGAIN,
 		     "delayed req");
 
 	notify(&stop_state);
+<<<<<<< HEAD
 	zassert_equal(srv.flags, ONOFF_STATE_ON,
+=======
+	zassert_equal(onoff_srv.flags, ONOFF_STATE_ON,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "completed");
 }
 
@@ -794,7 +1077,11 @@ ZTEST(onoff_api, test_rel_in_req_cb)
 	setup_test();
 	callback_fn = rel_in_req_cb;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req");
 
@@ -824,12 +1111,20 @@ ZTEST(onoff_api, test_multi_reset)
 	setup_test();
 	start_state.retval = -23;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req err");
 	check_result(start_state.retval,
 		     "req err");
+<<<<<<< HEAD
 	zassert_true(onoff_has_error(&srv),
+=======
+	zassert_true(onoff_has_error(&onoff_srv),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		     "has_error");
 	zassert_equal(ntrans, 2U,
 		      "err trans");
@@ -842,7 +1137,11 @@ ZTEST(onoff_api, test_multi_reset)
 	reset_state.retval = 21;
 
 	sys_notify_init_spinwait(&cli2.notify);
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli2);
+=======
+	rc = onoff_reset(&onoff_srv, &cli2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ERROR,
 		      "rst2");
 	zassert_equal(cli_result(&cli2), -EAGAIN,
@@ -853,7 +1152,11 @@ ZTEST(onoff_api, test_multi_reset)
 		   "trans resetting");
 
 	reset_cli();
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli);
+=======
+	rc = onoff_reset(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_RESETTING,
 		      "rst");
 	zassert_equal(ntrans, 3U,
@@ -880,17 +1183,26 @@ ZTEST(onoff_api, test_error)
 
 	setup_error();
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, -EIO,
 		      "req in err");
 
 	rc = onoff_release(&srv);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, -EIO,
+		      "req in err");
+
+	rc = onoff_release(&onoff_srv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EIO,
 		      "rel in err");
 
 	reset_state.async = true;
 	sys_notify_init_spinwait(&cli2.notify);
 
+<<<<<<< HEAD
 	rc = onoff_reset(&srv, &cli2);
 	zassert_equal(rc, ONOFF_STATE_ERROR,
 		      "rst");
@@ -900,6 +1212,17 @@ ZTEST(onoff_api, test_error)
 		      "req in err");
 
 	rc = onoff_release(&srv);
+=======
+	rc = onoff_reset(&onoff_srv, &cli2);
+	zassert_equal(rc, ONOFF_STATE_ERROR,
+		      "rst");
+
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, -ENOTSUP,
+		      "req in err");
+
+	rc = onoff_release(&onoff_srv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -ENOTSUP,
 		      "rel in err");
 }
@@ -915,6 +1238,7 @@ ZTEST(onoff_api, test_cancel_req)
 	rc = onoff_cancel(NULL, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "can 0 0");
+<<<<<<< HEAD
 	rc = onoff_cancel(&srv, NULL);
 	zassert_equal(rc, -EINVAL,
 		      "can srv 0");
@@ -923,6 +1247,16 @@ ZTEST(onoff_api, test_cancel_req)
 		      "can 0 cli");
 
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_cancel(&onoff_srv, NULL);
+	zassert_equal(rc, -EINVAL,
+		      "can srv 0");
+	rc = onoff_cancel(NULL, &onoff_cli);
+	zassert_equal(rc, -EINVAL,
+		      "can 0 cli");
+
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "async req: %d", rc);
 	check_result(-EAGAIN, "async req");
@@ -931,11 +1265,19 @@ ZTEST(onoff_api, test_cancel_req)
 	check_trans(0, ONOFF_STATE_TO_ON, 0,
 		   "trans to-on");
 
+<<<<<<< HEAD
 	rc = onoff_cancel(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_TO_ON,
 		      "cancel req: %d", rc);
 
 	rc = onoff_cancel(&srv, &cli);
+=======
+	rc = onoff_cancel(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_TO_ON,
+		      "cancel req: %d", rc);
+
+	rc = onoff_cancel(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, -EALREADY,
 		      "re-cancel req: %d", rc);
 
@@ -959,7 +1301,11 @@ ZTEST(onoff_api, test_cancel_delayed_req)
 
 	setup_test();
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req: %d", rc);
 	check_result(start_state.retval, "req");
@@ -973,11 +1319,19 @@ ZTEST(onoff_api, test_cancel_delayed_req)
 	stop_state.async = true;
 	stop_state.retval = 14;
 
+<<<<<<< HEAD
 	rc = onoff_release(&srv);
 	zassert_true(rc >= 0,
 		     "rel: %d", rc);
 	zassert_equal(srv.refs, 0U,
 		      "on refs: %u", srv.refs);
+=======
+	rc = onoff_release(&onoff_srv);
+	zassert_true(rc >= 0,
+		     "rel: %d", rc);
+	zassert_equal(onoff_srv.refs, 0U,
+		      "on refs: %u", onoff_srv.refs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ntrans, 3U,
 		      "async rel trans");
 	check_trans(2, ONOFF_STATE_TO_OFF, 0,
@@ -985,14 +1339,22 @@ ZTEST(onoff_api, test_cancel_delayed_req)
 
 	reset_cli();
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_OFF,
 		      "del req: %d", rc);
 	zassert_equal(ntrans, 3U,
 		      "async rel trans");
 	check_result(-EAGAIN, "del req");
 
+<<<<<<< HEAD
 	rc = onoff_cancel(&srv, &cli);
+=======
+	rc = onoff_cancel(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_OFF,
 		      "can del req: %d", rc);
 
@@ -1017,10 +1379,17 @@ ZTEST(onoff_api, test_cancel_or_release)
 	setup_test();
 	start_state.async = true;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req");
 	rc = onoff_cancel_or_release(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+	zassert_equal(rc, ONOFF_STATE_OFF,
+		      "req");
+	rc = onoff_cancel_or_release(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_TO_ON,
 		      "c|r to-on");
 	notify(&start_state);
@@ -1037,13 +1406,21 @@ ZTEST(onoff_api, test_cancel_or_release)
 	setup_test();
 	start_state.async = false;
 
+<<<<<<< HEAD
 	rc = onoff_request(&srv, &cli);
+=======
+	rc = onoff_request(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_OFF,
 		      "req");
 	zassert_equal(ntrans, 2U,
 		      "req trans");
 
+<<<<<<< HEAD
 	rc = onoff_cancel_or_release(&srv, &cli);
+=======
+	rc = onoff_cancel_or_release(&onoff_srv, &onoff_cli);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, ONOFF_STATE_ON,
 		      "c|r to-on");
 	zassert_equal(ntrans, 4U,
@@ -1065,12 +1442,20 @@ ZTEST(onoff_api, test_sync_basic)
 	zassert_equal(rc, 0,
 		      "init req");
 
+<<<<<<< HEAD
 	rc = onoff_sync_finalize(&srv, key, &cli, res, true);
+=======
+	rc = onoff_sync_finalize(&srv, key, &onoff_cli, res, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 1,
 		      "req count");
 	zassert_equal(callback_srv, NULL,
 		      "sync cb srv");
+<<<<<<< HEAD
 	zassert_equal(callback_cli, &cli,
+=======
+	zassert_equal(callback_cli, &onoff_cli,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "sync cb cli");
 	check_callback(ONOFF_STATE_ON, res, "sync req");
 
@@ -1082,7 +1467,11 @@ ZTEST(onoff_api, test_sync_basic)
 		      "init rel");
 
 	++res;
+<<<<<<< HEAD
 	rc = onoff_sync_finalize(&srv, key, &cli, res, true);
+=======
+	rc = onoff_sync_finalize(&srv, key, &onoff_cli, res, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(rc, 2,
 		      "req2 count");
 	check_callback(ONOFF_STATE_ON, res, "sync req2");
@@ -1143,7 +1532,11 @@ ZTEST(onoff_api, test_sync_error)
 	zassert_equal(rc, 0,
 		      "init req");
 
+<<<<<<< HEAD
 	rc = onoff_sync_finalize(&srv, key, &cli, res, true);
+=======
+	rc = onoff_sync_finalize(&srv, key, &onoff_cli, res, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(rc, res,
 		      "err final");
@@ -1151,7 +1544,11 @@ ZTEST(onoff_api, test_sync_error)
 		      "srv err count");
 	zassert_equal(callback_srv, NULL,
 		      "sync cb srv");
+<<<<<<< HEAD
 	zassert_equal(callback_cli, &cli,
+=======
+	zassert_equal(callback_cli, &onoff_cli,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      "sync cb cli");
 	check_callback(ONOFF_STATE_ERROR, res, "err final");
 
@@ -1168,7 +1565,11 @@ ZTEST(onoff_api, test_sync_error)
 
 	/* Error is cleared by non-negative finalize result */
 	res = 3;
+<<<<<<< HEAD
 	rc = onoff_sync_finalize(&srv, key, &cli, res, true);
+=======
+	rc = onoff_sync_finalize(&srv, key, &onoff_cli, res, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(rc, 1,
 		      "req count %d", rc);

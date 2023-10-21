@@ -1,9 +1,14 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <arm/nxp/nxp_s32z27x_r52.dtsi>
 #include "s32z270dc2_r52-pinctrl.dtsi"
 
@@ -100,6 +105,22 @@
 		compatible = "ethernet-phy";
 		address = <0x7>;
 		mdio = <&emdio>;
+=======
+#include "s32z270dc2_r52-pinctrl-common.dtsi"
+
+&swt0 {
+	status = "okay";
+};
+
+&emdio {
+	pinctrl-0 = <&emdio_default>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	phy0: ethernet-phy@7 {
+		compatible = "ethernet-phy";
+		reg = <0x7>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		status = "okay";
 	};
 };
@@ -109,13 +130,18 @@
 	pinctrl-0 = <&eth0_default>;
 	pinctrl-names = "default";
 	clock-frequency = <300000000>;
+<<<<<<< HEAD
 	phy-dev = <&phy0>;
+=======
+	phy-handle = <&phy0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
 &can0 {
 	pinctrl-0 = <&can0_default>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
 	clock-frequency = <80000000>;
 	bus-speed = <125000>;
 	sample-point = <875>;
@@ -123,12 +149,19 @@
 	bus-speed-data = <1000000>;
 	sample-point-data = <875>;
 	sjw-data = <1>;
+=======
+	bus-speed = <125000>;
+	sample-point = <875>;
+	bus-speed-data = <1000000>;
+	sample-point-data = <875>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
 &can1 {
 	pinctrl-0 = <&can1_default>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
 	clock-frequency = <80000000>;
 	bus-speed = <125000>;
 	sample-point = <875>;
@@ -136,4 +169,10 @@
 	bus-speed-data = <1000000>;
 	sample-point-data = <875>;
 	sjw-data = <1>;
+=======
+	bus-speed = <125000>;
+	sample-point = <875>;
+	bus-speed-data = <1000000>;
+	sample-point-data = <875>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };

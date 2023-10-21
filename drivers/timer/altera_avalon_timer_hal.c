@@ -6,7 +6,11 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/timer/system_timer.h>
 #include <altera_common.h>
 #include <zephyr/irq.h>

@@ -145,7 +145,19 @@ int pm_device_runtime_get(const struct device *dev)
 	}
 
 	if (!k_is_pre_kernel()) {
+<<<<<<< HEAD
 		(void)k_sem_take(&pm->lock, K_FOREVER);
+=======
+		ret = k_sem_take(&pm->lock, k_is_in_isr() ? K_NO_WAIT : K_FOREVER);
+		if (ret < 0) {
+			return -EWOULDBLOCK;
+		}
+	}
+
+	if (k_is_in_isr() && (pm->state == PM_DEVICE_STATE_SUSPENDING)) {
+		ret = -EWOULDBLOCK;
+		goto unlock;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/*

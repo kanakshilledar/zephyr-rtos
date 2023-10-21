@@ -190,6 +190,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _32F412GDISCOVERY website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32f412gdiscovery.html
 
 .. _32F412GDISCOVERY board User Manual:
@@ -200,3 +201,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F412 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00180369.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32f412gdiscovery.html
+
+.. _32F412GDISCOVERY board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00275919.pdf
+
+.. _STM32F412ZG on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f412zg.html
+
+.. _STM32F412 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00180369.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

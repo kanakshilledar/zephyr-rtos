@@ -116,10 +116,13 @@ static int random_byte_get(void)
 	return retval;
 }
 
+<<<<<<< HEAD
 #pragma GCC push_options
 #if defined(CONFIG_BT_CTLR_FAST_ENC)
 #pragma GCC optimize ("Ofast")
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static uint16_t rng_pool_get(struct rng_pool *rngp, uint8_t *buf, uint16_t len)
 {
 	uint32_t last  = rngp->last;
@@ -175,7 +178,10 @@ static uint16_t rng_pool_get(struct rng_pool *rngp, uint8_t *buf, uint16_t len)
 
 	return len;
 }
+<<<<<<< HEAD
 #pragma GCC pop_options
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int rng_pool_put(struct rng_pool *rngp, uint8_t byte)
 {

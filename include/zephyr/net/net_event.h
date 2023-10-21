@@ -79,6 +79,12 @@ enum net_event_ipv6_cmd {
 	NET_EVENT_IPV6_CMD_DAD_FAILED,
 	NET_EVENT_IPV6_CMD_NBR_ADD,
 	NET_EVENT_IPV6_CMD_NBR_DEL,
+<<<<<<< HEAD
+=======
+	NET_EVENT_IPV6_CMD_DHCP_START,
+	NET_EVENT_IPV6_CMD_DHCP_BOUND,
+	NET_EVENT_IPV6_CMD_DHCP_STOP,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define NET_EVENT_IPV6_ADDR_ADD					\
@@ -129,6 +135,18 @@ enum net_event_ipv6_cmd {
 #define NET_EVENT_IPV6_NBR_DEL					\
 	(_NET_EVENT_IPV6_BASE | NET_EVENT_IPV6_CMD_NBR_DEL)
 
+<<<<<<< HEAD
+=======
+#define NET_EVENT_IPV6_DHCP_START				\
+	(_NET_EVENT_IPV4_BASE |	NET_EVENT_IPV6_CMD_DHCP_START)
+
+#define NET_EVENT_IPV6_DHCP_BOUND				\
+	(_NET_EVENT_IPV4_BASE |	NET_EVENT_IPV6_CMD_DHCP_BOUND)
+
+#define NET_EVENT_IPV6_DHCP_STOP				\
+	(_NET_EVENT_IPV4_BASE |	NET_EVENT_IPV6_CMD_DHCP_STOP)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* IPv4 Events*/
 #define _NET_IPV4_LAYER		NET_MGMT_LAYER_L3
 #define _NET_IPV4_CORE_CODE	0x004
@@ -214,7 +232,10 @@ enum net_event_l4_cmd {
 
 /** @endcond */
 
+<<<<<<< HEAD
 #ifdef CONFIG_NET_MGMT_EVENT_INFO
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Network Management event information structure
  * Used to pass information on network events like
@@ -236,7 +257,11 @@ struct net_event_ipv6_addr {
  *   NET_EVENT_IPV6_NBR_DEL
  * when CONFIG_NET_MGMT_EVENT_INFO enabled and event generator pass the
  * information.
+<<<<<<< HEAD
  * @Note: idx will be '-1' in case of NET_EVENT_IPV6_NBR_DEL event.
+=======
+ * @note: idx will be '-1' in case of NET_EVENT_IPV6_NBR_DEL event.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 struct net_event_ipv6_nbr {
 	struct in6_addr addr;
@@ -257,7 +282,23 @@ struct net_event_ipv6_route {
 	uint8_t prefix_len;
 };
 
+<<<<<<< HEAD
 #endif /* CONFIG_NET_MGMT_EVENT_INFO */
+=======
+/**
+ * @brief Network Management event information structure
+ * Used to pass information on network events like
+ *   NET_EVENT_IPV6_PREFIX_ADD and
+ *   NET_EVENT_IPV6_PREFIX_DEL
+ * when CONFIG_NET_MGMT_EVENT_INFO is enabled and event generator pass the
+ * information.
+ */
+struct net_event_ipv6_prefix {
+	struct in6_addr addr; /* prefix */
+	uint8_t len;
+	uint32_t lifetime;
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 }

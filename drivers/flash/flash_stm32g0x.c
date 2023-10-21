@@ -40,6 +40,7 @@ LOG_MODULE_REGISTER(LOG_DOMAIN);
 #define STM32G0_PAGES_PER_BANK		\
 	((STM32G0_FLASH_SIZE / STM32G0_FLASH_PAGE_SIZE) / STM32G0_BANK_COUNT)
 
+<<<<<<< HEAD
 /*
  * offset and len must be aligned on 8 for write,
  * positive and not beyond end of flash
@@ -54,6 +55,8 @@ bool flash_stm32_valid_range(const struct device *dev, off_t offset,
 		flash_stm32_range_exists(dev, offset, len);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline void flush_cache(FLASH_TypeDef *regs)
 {
 	if (regs->ACR & FLASH_ACR_ICEN) {
@@ -245,7 +248,11 @@ int  flash_stm32_check_configuration(void)
 {
 #if defined(STM32G0_DBANK_SUPPORT) && (CONFIG_FLASH_SIZE == 256)
 	/* Single bank mode not supported on dual bank SoCs with 256kiB flash */
+<<<<<<< HEAD
 	if ((regs->OPTR & FLASH_OPTR_DUAL_BANK) == 0) {
+=======
+	if ((FLASH->OPTR & FLASH_OPTR_DUAL_BANK) == 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Single bank configuration not supported by the driver");
 		return -ENOTSUP;
 	}

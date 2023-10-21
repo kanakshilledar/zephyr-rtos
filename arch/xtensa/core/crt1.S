@@ -25,6 +25,13 @@
 .type	z_cstart, @function
 .type	z_mp_entry, @function
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_XTENSA_MMU
+.type	z_xtensa_mmu_init, @function
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Macros to abstract away ABI differences */
 
@@ -189,6 +196,13 @@ _start:
 
 #endif /* !XCHAL_HAVE_BOOTLOADER */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_XTENSA_MMU
+	CALL	z_xtensa_mmu_init
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Enter C domain, never returns from here */
 	CALL	z_cstart
 

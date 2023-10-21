@@ -9,3 +9,10 @@ RunTest mesh_adv_tx_cb_multi adv_tx_cb_multi
 
 conf=prj_mesh1d1_conf
 RunTest mesh_adv_tx_cb_multi_1d1 adv_tx_cb_multi
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_adv_tx_cb_multi_psa adv_tx_cb_multi
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -55,7 +55,11 @@ where:
     :align: center
 
     +-----------------------+---------------------------------------------------+
+<<<<<<< HEAD
     | "name"                | is group name                                     |
+=======
+    | "name"                | group name.                                       |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     +-----------------------+---------------------------------------------------+
 
 Statistics: group data response
@@ -86,17 +90,42 @@ CBOR data of successful response:
 
 In case of error the CBOR data takes the form:
 
+<<<<<<< HEAD
 .. code-block:: none
 
     {
         (str)"rc"       : (int)
     }
+=======
+
+.. tabs::
+
+   .. group-tab:: SMP version 2
+
+      .. code-block:: none
+
+          {
+              (str)"err" : {
+                  (str)"group"    : (uint)
+                  (str)"rc"       : (uint)
+              }
+          }
+
+   .. group-tab:: SMP version 1 (and non-group SMP version 2)
+
+      .. code-block:: none
+
+          {
+              (str)"rc"       : (int)
+          }
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 where:
 
 .. table::
     :align: center
 
+<<<<<<< HEAD
     +-----------------------+---------------------------------------------------+
     | "name"                | this is name of group the response contains data  |
     |                       | for                                               |
@@ -111,6 +140,26 @@ where:
     | "rc"                  | :c:enum:`mcumgr_err_t`                            |
     |                       | only appears if non-zero (error condition).       |
     +-----------------------+---------------------------------------------------+
+=======
+    +------------------+-------------------------------------------------------------------------+
+    | "name"           | this is name of group the response contains data for.                   |
+    +------------------+-------------------------------------------------------------------------+
+    | "fields"         | this is map of entries within groups that consists of pairs where the   |
+    |                  | entry name is mapped to value it represents in statistics.              |
+    +------------------+-------------------------------------------------------------------------+
+    | <entry_name>     | single entry to value mapping; value is hardcoded to unsigned integer   |
+    |                  | type, in a CBOR meaning.                                                |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "group" | :c:enum:`mcumgr_group_t` group of the group-based error code. Only      |
+    |                  | appears if an error is returned when using SMP version 2.               |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "rc"    | contains the index of the group-based error code. Only appears if       |
+    |                  | non-zero (error condition) when using SMP version 2.                    |
+    +------------------+-------------------------------------------------------------------------+
+    | "rc"             | :c:enum:`mcumgr_err_t` only appears if non-zero (error condition) when  |
+    |                  | using SMP version 1 or for SMP errors when using SMP version 2.         |
+    +------------------+-------------------------------------------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Statistics: list of groups
 **************************
@@ -164,17 +213,42 @@ CBOR data of successful response:
 
 In case of error the CBOR data takes the form:
 
+<<<<<<< HEAD
 .. code-block:: none
 
     {
         (str)"rc"       : (int)
     }
+=======
+
+.. tabs::
+
+   .. group-tab:: SMP version 2
+
+      .. code-block:: none
+
+          {
+              (str)"err" : {
+                  (str)"group"    : (uint)
+                  (str)"rc"       : (uint)
+              }
+          }
+
+   .. group-tab:: SMP version 1 (and non-group SMP version 2)
+
+      .. code-block:: none
+
+          {
+              (str)"rc"       : (int)
+          }
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 where:
 
 .. table::
     :align: center
 
+<<<<<<< HEAD
     +-----------------------+---------------------------------------------------+
     | "stat_list"           | array of strings representing group names; this   |
     |                       | array may be empty if there are no groups         |
@@ -182,3 +256,18 @@ where:
     | "rc"                  | :c:enum:`mcumgr_err_t`                            |
     |                       | only appears if non-zero (error condition).       |
     +-----------------------+---------------------------------------------------+
+=======
+    +------------------+-------------------------------------------------------------------------+
+    | "stat_list"      | array of strings representing group names; this array may be empty if   |
+    |                  | there are no groups.                                                    |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "group" | :c:enum:`mcumgr_group_t` group of the group-based error code. Only      |
+    |                  | appears if an error is returned when using SMP version 2.               |
+    +------------------+-------------------------------------------------------------------------+
+    | "err" -> "rc"    | contains the index of the group-based error code. Only appears if       |
+    |                  | non-zero (error condition) when using SMP version 2.                    |
+    +------------------+-------------------------------------------------------------------------+
+    | "rc"             | :c:enum:`mcumgr_err_t` only appears if non-zero (error condition) when  |
+    |                  | using SMP version 1 or for SMP errors when using SMP version 2.         |
+    +------------------+-------------------------------------------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

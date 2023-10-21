@@ -9,6 +9,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/drivers/uart.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/pinctrl.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Driverlib includes */
 #include <inc/hw_types.h>
@@ -21,6 +25,10 @@
 struct uart_cc32xx_dev_config {
 	unsigned long base;
 	uint32_t sys_clk_freq;
+<<<<<<< HEAD
+=======
+	const struct pinctrl_dev_config *pcfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	uart_irq_config_func_t irq_config_func;
 #endif
@@ -53,12 +61,24 @@ static int uart_cc32xx_init(const struct device *dev)
 {
 	const struct uart_cc32xx_dev_config *config = dev->config;
 	const struct uart_cc32xx_dev_data_t *data = dev->data;
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	MAP_PRCMPeripheralClkEnable(data->prcm,
 		    PRCM_RUN_MODE_CLK | PRCM_SLP_MODE_CLK);
 
 	MAP_PRCMPeripheralReset(data->prcm);
 
+<<<<<<< HEAD
+=======
+	ret = pinctrl_apply_state(config->pcfg, PINCTRL_STATE_DEFAULT);
+	if (ret < 0) {
+		return ret;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* This also calls MAP_UARTEnable() to enable the FIFOs: */
 	MAP_UARTConfigSetExpClk(config->base,
 				MAP_PRCMPeripheralClockGet(data->prcm),
@@ -305,6 +325,10 @@ static const struct uart_driver_api uart_cc32xx_driver_api = {
 };
 
 #define UART_32XX_DEVICE(idx) \
+<<<<<<< HEAD
+=======
+PINCTRL_DT_INST_DEFINE(idx); \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 IF_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN, \
 	(static void uart_cc32xx_cfg_func_##idx(const struct device *dev) \
 	{ \
@@ -319,6 +343,10 @@ IF_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN, \
 static const struct uart_cc32xx_dev_config uart_cc32xx_dev_cfg_##idx = { \
 	.base = DT_INST_REG_ADDR(idx), \
 	.sys_clk_freq = DT_INST_PROP_BY_PHANDLE(idx, clocks, clock_frequency),\
+<<<<<<< HEAD
+=======
+	.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(idx), \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	IF_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN, \
 		    (.irq_config_func = uart_cc32xx_cfg_func_##idx,)) \
 }; \

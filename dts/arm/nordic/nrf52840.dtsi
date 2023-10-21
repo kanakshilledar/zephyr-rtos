@@ -116,6 +116,10 @@
 			reg = <0x40003000 0x1000>;
 			clock-frequency = <I2C_BITRATE_STANDARD>;
 			interrupts = <3 NRF_DEFAULT_IRQ_PRIORITY>;
+<<<<<<< HEAD
+=======
+			easydma-maxcnt-bits = <16>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -151,6 +155,10 @@
 			reg = <0x40004000 0x1000>;
 			clock-frequency = <I2C_BITRATE_STANDARD>;
 			interrupts = <4 NRF_DEFAULT_IRQ_PRIORITY>;
+<<<<<<< HEAD
+=======
+			easydma-maxcnt-bits = <16>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -537,6 +545,7 @@
 		};
 
 		cryptocell: crypto@5002a000 {
+<<<<<<< HEAD
 			compatible = "nordic,nrf-cc310";
 			reg = <0x5002A000 0x1000>;
 			status = "okay";
@@ -557,6 +566,15 @@
 		clock-prescaler = <0>;
 		#pwm-cells = <3>;
 	};
+=======
+			compatible = "nordic,cryptocell", "arm,cryptocell-310";
+			reg = <0x5002a000 0x1000>, <0x5002b000 0x1000>;
+			reg-names = "wrapper", "core";
+			interrupts = <42 NRF_DEFAULT_IRQ_PRIORITY>;
+			status = "disabled";
+		};
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &nvic {

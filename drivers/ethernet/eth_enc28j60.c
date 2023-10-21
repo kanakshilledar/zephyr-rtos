@@ -797,7 +797,11 @@ static int eth_enc28j60_init(const struct device *dev)
 	}
 
 	/* Initialize GPIO */
+<<<<<<< HEAD
 	if (!device_is_ready(config->interrupt.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->interrupt)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: GPIO port %s not ready", dev->name, config->interrupt.port->name);
 		return -EINVAL;
 	}

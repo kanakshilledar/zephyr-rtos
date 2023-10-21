@@ -198,6 +198,10 @@ static int gpio_xlnx_axi_port_toggle_bits(const struct device *dev, gpio_port_pi
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#if DT_ANY_INST_HAS_PROP_STATUS_OKAY(interrupts)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * Enables interrupts for the given pins on the channel
  * The axi gpio can only enable interrupts for an entire port, so we need to track
@@ -206,7 +210,10 @@ static int gpio_xlnx_axi_port_toggle_bits(const struct device *dev, gpio_port_pi
 static int gpio_xlnx_axi_pin_interrupt_configure(const struct device *dev, gpio_pin_t pin,
 						 enum gpio_int_mode mode, enum gpio_int_trig trig)
 {
+<<<<<<< HEAD
 #if DT_ANY_INST_HAS_PROP_STATUS_OKAY(interrupts)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct gpio_xlnx_axi_config *config = dev->config;
 	struct gpio_xlnx_axi_data *data = dev->data;
 	const uint32_t pin_mask = BIT(pin);
@@ -390,9 +397,17 @@ static const struct gpio_driver_api gpio_xlnx_axi_driver_api = {
 	.port_set_bits_raw = gpio_xlnx_axi_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_xlnx_axi_port_clear_bits_raw,
 	.port_toggle_bits = gpio_xlnx_axi_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_xlnx_axi_pin_interrupt_configure,
 	.manage_callback = gpio_xlnx_axi_manage_callback,
 	.get_pending_int = gpio_xlnx_axi_get_pending_int,
+=======
+#if DT_ANY_INST_HAS_PROP_STATUS_OKAY(interrupts)
+	.pin_interrupt_configure = gpio_xlnx_axi_pin_interrupt_configure,
+	.manage_callback = gpio_xlnx_axi_manage_callback,
+	.get_pending_int = gpio_xlnx_axi_get_pending_int,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define GPIO_XLNX_AXI_GPIO2_HAS_COMPAT_STATUS_OKAY(n)                                              \

@@ -10,3 +10,13 @@ RunTest mesh_priv_beacon_on_key_refresh \
   beacon_rx_on_key_refresh \
   beacon_tx_priv_on_key_refresh \
   -- -argstest rand-int=1
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_priv_beacon_on_key_refresh_psa \
+  beacon_rx_on_key_refresh \
+  beacon_tx_priv_on_key_refresh \
+  -- -argstest rand-int=1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

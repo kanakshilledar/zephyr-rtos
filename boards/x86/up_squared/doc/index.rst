@@ -76,6 +76,7 @@ Build Zephyr application
       A Zephyr EFI image file named :file:`zephyr.efi` is automatically
       created in the build directory after the application is built.
 
+<<<<<<< HEAD
 Preparing the Boot Device
 =========================
 
@@ -147,10 +148,30 @@ Boot the UP Squared board to the EFI shell with USB flash drive connected.
 
          WARNING: no console will be available to OS
 
+=======
+Booting the UP Squared Board using UEFI
+=======================================
+
+.. include:: ../../common/efi_boot.rst
+
+
+.. note::
+   Refer to the `UP Squared Serial Console Wiki page
+   <https://wiki.up-community.org/Serial_console>`_ for instructions on how to
+   connect serial console.
+
+.. note::
+   You can safely ignore this message if it appears:
+
+   .. code-block:: console
+
+      WARNING: no console will be available to OS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Booting the UP Squared Board over network
 =========================================
 
+<<<<<<< HEAD
 Build Zephyr image
 ------------------
 
@@ -249,6 +270,29 @@ Booting UP Squared
 
 #. When the boot process completes, you have finished booting the
    Zephyr application image.
+=======
+.. include:: ../../common/net_boot.rst
+
+.. note::
+   Refer to the `UP Squared Serial Console Wiki page
+   <https://wiki.up-community.org/Serial_console>`_ for instructions on how to
+   connect serial console.
+
+.. note::
+   To enable PXE boot for Up Squared board do the following:
+
+   #. Enable network from BIOS settings.
+
+      .. code-block:: console
+
+         Advanced -> Network Stack Configuration -> Enable Network Stack -> Enable Ipv4 PXE Support
+
+   #. Make network boot as the first boot option.
+
+      .. code-block:: console
+
+         Boot -> Boot Option #1 : [Network]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _UP Squared: https://www.up-board.org/upsquared/specifications
 

@@ -12,7 +12,11 @@
 #include <zephyr/drivers/usb/usb_dc.h>
 #include <zephyr/usb/usb_device.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/pinctrl.h>
 #include "usb.h"
@@ -89,7 +93,11 @@ K_HEAP_DEFINE(ep_buf_pool, 1024 * EP_BUF_NUMOF_BLOCKS);
 
 struct usb_ep_ctrl_data {
 	usb_device_callback_message_struct_t transfer_message;
+<<<<<<< HEAD
 	struct k_mem_block block;
+=======
+	void *block;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	usb_dc_ep_callback callback;
 	uint16_t ep_mps;
 	uint8_t ep_enabled : 1;
@@ -276,6 +284,7 @@ int usb_dc_ep_configure(const struct usb_dc_ep_cfg_data *const cfg)
 	/* Allocate buffers used during read operation */
 	if (USB_EP_DIR_IS_OUT(cfg->ep_addr)) {
 #endif
+<<<<<<< HEAD
 		struct k_mem_block *block;
 
 		block = &(eps->block);
@@ -286,11 +295,27 @@ int usb_dc_ep_configure(const struct usb_dc_ep_cfg_data *const cfg)
 
 		block->data = k_heap_alloc(&ep_buf_pool, cfg->ep_mps, K_NO_WAIT);
 		if (block->data == NULL) {
+=======
+		void **block;
+
+		block = &(eps->block);
+		if (*block) {
+			k_heap_free(&ep_buf_pool, *block);
+			*block = NULL;
+		}
+
+		*block = k_heap_alloc(&ep_buf_pool, cfg->ep_mps, K_NO_WAIT);
+		if (*block == NULL) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Failed to allocate memory");
 			return -ENOMEM;
 		}
 
+<<<<<<< HEAD
 		memset(block->data, 0, cfg->ep_mps);
+=======
+		memset(*block, 0, cfg->ep_mps);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_USB_DC_NXP_LPCIP3511
 	}
 #endif
@@ -362,7 +387,11 @@ int usb_dc_ep_clear_stall(const uint8_t ep)
 	    (USB_EP_DIR_IS_OUT(ep))) {
 		status = dev_state.dev_struct.controllerInterface->deviceRecv(
 				dev_state.dev_struct.controllerHandle, ep,
+<<<<<<< HEAD
 				(uint8_t *)dev_state.eps[ep_abs_idx].block.data,
+=======
+				(uint8_t *)dev_state.eps[ep_abs_idx].block,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				(uint32_t)dev_state.eps[ep_abs_idx].ep_mps);
 		if (kStatus_USB_Success != status) {
 			LOG_ERR("Failed to enable reception on 0x%02x", ep);
@@ -438,7 +467,11 @@ int usb_dc_ep_enable(const uint8_t ep)
 	    (USB_EP_DIR_IS_OUT(ep))) {
 		status = dev_state.dev_struct.controllerInterface->deviceRecv(
 				dev_state.dev_struct.controllerHandle, ep,
+<<<<<<< HEAD
 				(uint8_t *)dev_state.eps[ep_abs_idx].block.data,
+=======
+				(uint8_t *)dev_state.eps[ep_abs_idx].block,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				(uint32_t)dev_state.eps[ep_abs_idx].ep_mps);
 		if (kStatus_USB_Success != status) {
 			LOG_ERR("Failed to enable reception on 0x%02x", ep);
@@ -520,7 +553,11 @@ int usb_dc_ep_write(const uint8_t ep, const uint8_t *const data,
 	 * if available.
 	 */
 #ifndef CONFIG_USB_DC_NXP_LPCIP3511
+<<<<<<< HEAD
 	buffer = (uint8_t *)dev_state.eps[ep_abs_idx].block.data;
+=======
+	buffer = (uint8_t *)dev_state.eps[ep_abs_idx].block;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (data_len > dev_state.eps[ep_abs_idx].ep_mps) {
 		len_to_send = dev_state.eps[ep_abs_idx].ep_mps;
@@ -674,7 +711,11 @@ int usb_dc_ep_read_continue(uint8_t ep)
 
 	status = dev_state.dev_struct.controllerInterface->deviceRecv(
 			    dev_state.dev_struct.controllerHandle, ep,
+<<<<<<< HEAD
 			    (uint8_t *)dev_state.eps[ep_abs_idx].block.data,
+=======
+			    (uint8_t *)dev_state.eps[ep_abs_idx].block,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    dev_state.eps[ep_abs_idx].ep_mps);
 	if (kStatus_USB_Success != status) {
 		LOG_ERR("Failed to enable reception on ep 0x%02x", ep);

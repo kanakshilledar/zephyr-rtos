@@ -19,7 +19,13 @@
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
+=======
+#include <zephyr/device.h>
+
+#define DT_DRV_COMPAT snps_arcv2_intc
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_ARC_CONNECT
 static void arc_shared_intc_init(void)
@@ -134,7 +140,11 @@ void arc_core_private_intc_init(void)
 #endif /* CONFIG_ARC_CONNECT */
 }
 
+<<<<<<< HEAD
 static int arc_irq_init(void)
+=======
+static int arc_irq_init(const struct device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 #ifdef CONFIG_ARC_CONNECT
 	arc_shared_intc_init();
@@ -149,4 +159,9 @@ static int arc_irq_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(arc_irq_init, PRE_KERNEL_1, 0);
+=======
+DEVICE_DT_INST_DEFINE(0, arc_irq_init, NULL,  NULL,  NULL,
+		      PRE_KERNEL_1, 0, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

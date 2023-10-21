@@ -51,7 +51,11 @@ enum net_verdict ieee802154_6lo_decode_pkt(struct net_if *iface, struct net_pkt 
  *  @param iface A valid pointer on the network interface the package is
  *               sent to
  *  @param pkt A valid pointer on a non-compressed IPv6 packet
+<<<<<<< HEAD
  *  @param f_ctx A valid pointer on a fragmentation context.
+=======
+ *  @param frag_ctx A valid pointer on a fragmentation context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  @param ll_hdr_len required headroom for the LL header (after fragmentation)
  *  @param authtag_len required tailroom for the authentication tag in the frame (after
  *                     fragmentation)
@@ -60,7 +64,11 @@ enum net_verdict ieee802154_6lo_decode_pkt(struct net_if *iface, struct net_pkt 
  *          fragmentation is needed, negative value on error
  */
 int ieee802154_6lo_encode_pkt(struct net_if *iface, struct net_pkt *pkt,
+<<<<<<< HEAD
 			      struct ieee802154_6lo_fragment_ctx *f_ctx, uint8_t ll_hdr_len,
+=======
+			      struct ieee802154_6lo_fragment_ctx *frag_ctx, uint8_t ll_hdr_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      uint8_t authtag_len);
 
 #endif /* __NET_IEEE802154_6LO_H__ */

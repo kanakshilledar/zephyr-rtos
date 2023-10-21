@@ -341,6 +341,7 @@ static int get_bool(struct lwm2m_input_context *in, bool *value)
 	return sizeof(uint8_t);
 }
 
+<<<<<<< HEAD
 static int get_opaque(struct lwm2m_input_context *in, uint8_t *value,
 		      size_t buflen, struct lwm2m_opaque_context *opaque,
 		      bool *last_block)
@@ -384,6 +385,8 @@ static int get_opaque(struct lwm2m_input_context *in, uint8_t *value,
 					    opaque, last_block);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int get_objlnk(struct lwm2m_input_context *in,
 		      struct lwm2m_objlnk *value)
 {
@@ -432,7 +435,10 @@ const struct lwm2m_reader plain_text_reader = {
 	.get_time = get_time,
 	.get_float = get_float,
 	.get_bool = get_bool,
+<<<<<<< HEAD
 	.get_opaque = get_opaque,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.get_objlnk = get_objlnk,
 };
 

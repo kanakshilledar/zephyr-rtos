@@ -162,6 +162,7 @@ This interface is supported by the openocd version included in Zephyr SDK.
 
 
 .. _Nucleo F413ZH website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f413zh.html
 
 .. _STM32 Nucleo-144 board User Manual:
@@ -172,3 +173,15 @@ This interface is supported by the openocd version included in Zephyr SDK.
 
 .. _STM32F413/423 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00305666.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f413zh.html
+
+.. _STM32 Nucleo-144 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00244518.pdf
+
+.. _STM32F413ZH on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f413zh.html
+
+.. _STM32F413/423 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00305666.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

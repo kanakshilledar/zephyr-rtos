@@ -128,10 +128,19 @@ struct init_entry {
  * @brief Init entry section.
  *
  * Each init entry is placed in a section with a name crafted so that it allows
+<<<<<<< HEAD
  * linker scripts to sort them according to the specified level/priority.
  */
 #define Z_INIT_ENTRY_SECTION(level, prio)                                      \
 	__attribute__((__section__(".z_init_" #level STRINGIFY(prio)"_")))
+=======
+ * linker scripts to sort them according to the specified
+ * level/priority/sub-priority.
+ */
+#define Z_INIT_ENTRY_SECTION(level, prio, sub_prio)                           \
+	__attribute__((__section__(                                           \
+		".z_init_" #level STRINGIFY(prio)"_" STRINGIFY(sub_prio)"_")))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @endcond */
 
@@ -186,7 +195,11 @@ struct init_entry {
  */
 #define SYS_INIT_NAMED(name, init_fn_, level, prio)                            \
 	static const Z_DECL_ALIGN(struct init_entry)                           \
+<<<<<<< HEAD
 		Z_INIT_ENTRY_SECTION(level, prio) __used __noasan              \
+=======
+		Z_INIT_ENTRY_SECTION(level, prio, 0) __used __noasan           \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		Z_INIT_ENTRY_NAME(name) = {                                    \
 			.init_fn = {.sys = (init_fn_)},                        \
 			.dev = NULL,                                           \

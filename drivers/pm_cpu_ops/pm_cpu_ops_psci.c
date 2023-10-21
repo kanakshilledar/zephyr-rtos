@@ -1,6 +1,11 @@
 /*
  * Copyright 2020 Carlo Caione <ccaione@baylibre.com>
  *
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023, Intel Corporation.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -19,7 +24,17 @@ LOG_MODULE_REGISTER(psci);
 #include <zephyr/drivers/pm_cpu_ops.h>
 #include "pm_cpu_ops_psci.h"
 
+<<<<<<< HEAD
 static struct psci psci_data;
+=======
+#ifdef CONFIG_POWEROFF
+#include <zephyr/sys/__assert.h>
+#include <zephyr/sys/poweroff.h>
+#endif /* CONFIG_POWEROFF */
+
+/* PSCI data object. */
+static struct psci_data_t psci_data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int psci_to_dev_err(int ret)
 {
@@ -66,7 +81,44 @@ int pm_cpu_on(unsigned long cpuid,
 	return psci_to_dev_err(ret);
 }
 
+<<<<<<< HEAD
 int pm_system_off(void)
+=======
+#ifdef CONFIG_POWEROFF
+void z_sys_poweroff(void)
+{
+	int ret;
+
+	__ASSERT_NO_MSG(psci_data.conduit != SMCCC_CONDUIT_NONE);
+
+	ret = psci_data.invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
+	if (ret < 0) {
+		printk("System power off failed (%d) - halting\n", ret);
+	}
+
+	for (;;) {
+		/* wait for power off */
+	}
+}
+#endif /* CONFIG_POWEROFF */
+
+/**
+ * This function checks whether the given ID is supported or not, using
+ * PSCI_FEATURES command.PSCI_FEATURES is supported from version 1.0 onwards.
+ */
+static int psci_features_check(unsigned long function_id)
+{
+	/* PSCI_FEATURES function ID is supported from PSCI 1.0 onwards. */
+	if (!(PSCI_VERSION_MAJOR(psci_data.ver) >= 1)) {
+		LOG_ERR("Function ID %lu not supported", function_id);
+		return -ENOTSUP;
+	}
+
+	return psci_data.invoke_psci_fn(PSCI_FN_NATIVE(1_0, PSCI_FEATURES), function_id, 0, 0);
+}
+
+int pm_system_reset(unsigned char reset_type)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int ret;
 
@@ -74,10 +126,25 @@ int pm_system_off(void)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	/* A compliant PSCI implementation will never return from this call */
 	ret = psci_data.invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
 
 	return psci_to_dev_err(ret);
+=======
+	if ((reset_type == SYS_WARM_RESET) &&
+	    (!psci_features_check(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2)))) {
+		ret = psci_data.invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2), 0, 0, 0);
+	} else if (reset_type == SYS_COLD_RESET) {
+		ret = psci_data.invoke_psci_fn(PSCI_FN_NATIVE(0_2, SYSTEM_RESET), 0, 0, 0);
+	} else {
+		LOG_ERR("Invalid system reset type issued");
+		return -EINVAL;
+	}
+
+	return psci_to_dev_err(ret);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static unsigned long __invoke_psci_fn_hvc(unsigned long function_id,
@@ -107,6 +174,7 @@ static uint32_t psci_get_version(void)
 	return psci_data.invoke_psci_fn(PSCI_0_2_FN_PSCI_VERSION, 0, 0, 0);
 }
 
+<<<<<<< HEAD
 static int set_conduit_method(void)
 {
 	const char *method;
@@ -117,6 +185,16 @@ static int set_conduit_method(void)
 		psci_data.conduit = SMCCC_CONDUIT_HVC;
 		psci_data.invoke_psci_fn = __invoke_psci_fn_hvc;
 	} else if (!strcmp("smc", method)) {
+=======
+static int set_conduit_method(const struct device *dev)
+{
+	const struct psci_config_t *dev_config = (const struct psci_config_t *)dev->config;
+
+	if (!strcmp("hvc", dev_config->method)) {
+		psci_data.conduit = SMCCC_CONDUIT_HVC;
+		psci_data.invoke_psci_fn = __invoke_psci_fn_hvc;
+	} else if (!strcmp("smc", dev_config->method)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		psci_data.conduit = SMCCC_CONDUIT_SMC;
 		psci_data.invoke_psci_fn = __invoke_psci_fn_smc;
 	} else {
@@ -154,13 +232,48 @@ static int psci_init(const struct device *dev)
 {
 	psci_data.conduit = SMCCC_CONDUIT_NONE;
 
+<<<<<<< HEAD
 	if (set_conduit_method()) {
+=======
+	if (set_conduit_method(dev)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENOTSUP;
 	}
 
 	return psci_detect();
 }
 
+<<<<<<< HEAD
 DEVICE_DT_INST_DEFINE(0, psci_init, NULL,
 	&psci_data, NULL, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEVICE,
 	NULL);
+=======
+/**
+ * Each PSCI interface versions have different DT compatible strings like arm,psci-0.2,
+ * arm,psci-1.1 and so on. However, the same driver can be used for all the versions with
+ * the below mentioned DT method where we need to #undef the default version arm,psci-0.2
+ * and #define the required version like arm,psci-1.0 or arm,psci-1.1.
+ */
+#define PSCI_DEFINE(inst, ver)						\
+	static const struct psci_config_t psci_config_##inst##ver = {	\
+		.method = DT_PROP(DT_DRV_INST(inst), method)		\
+	};								\
+	DEVICE_DT_INST_DEFINE(inst,					\
+			&psci_init,					\
+			NULL,						\
+			&psci_data,					\
+			&psci_config_##inst##ver,				\
+			PRE_KERNEL_1,					\
+			CONFIG_KERNEL_INIT_PRIORITY_DEVICE,		\
+			NULL);
+
+#define PSCI_0_2_INIT(n) PSCI_DEFINE(n, PSCI_0_2)
+#undef DT_DRV_COMPAT
+#define DT_DRV_COMPAT arm_psci_0_2
+DT_INST_FOREACH_STATUS_OKAY(PSCI_0_2_INIT)
+
+#define PSCI_1_1_INIT(n) PSCI_DEFINE(n, PSCI_1_1)
+#undef DT_DRV_COMPAT
+#define DT_DRV_COMPAT arm_psci_1_1
+DT_INST_FOREACH_STATUS_OKAY(PSCI_1_1_INIT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

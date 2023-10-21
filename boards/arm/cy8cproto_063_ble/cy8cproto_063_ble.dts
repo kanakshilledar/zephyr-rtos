@@ -9,10 +9,18 @@
 #include <infineon/psoc6/mpns/CYBLE_416045_02.dtsi>
 #include <infineon/psoc6/system_clocks.dtsi>
 #include "cy8cproto_063_ble-pinctrl.dtsi"
+<<<<<<< HEAD
 
 / {
 	model = "CY8CPROTO-063-BLE PSoC™ 6 BLE Prototyping Kit";
 	compatible = "cy8cproto_063_ble", "PSoC6";
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "CY8CPROTO-063-BLE PSoC™ 6 BLE Prototyping Kit";
+	compatible = "cypress,cy8cproto_063_ble", "cypress,PSoC6";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	aliases {
 		uart-5 = &uart5;
@@ -44,6 +52,10 @@
 		user_bt: button_0 {
 			label = "SW_0";
 			gpios = <&gpio_prt0 4 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

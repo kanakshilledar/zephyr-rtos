@@ -38,9 +38,32 @@ static void rpr_scan_report(struct bt_mesh_rpr_cli *cli,
 		uint8_t len, type;
 		uint8_t data[31];
 
+<<<<<<< HEAD
 		len = net_buf_simple_pull_u8(adv_data) - 1;
 		type = net_buf_simple_pull_u8(adv_data);
 		memcpy(data, net_buf_simple_pull_mem(adv_data, len), len);
+=======
+		len = net_buf_simple_pull_u8(adv_data);
+		if (len == 0) {
+			/* No data in this AD Structure. */
+			continue;
+		}
+
+		if (len > adv_data->len) {
+			/* Malformed AD Structure. */
+			break;
+		}
+
+		type = net_buf_simple_pull_u8(adv_data);
+		if ((--len) > 0) {
+			uint8_t dlen;
+
+			/* Pull all length, but print only what fits into `data` array. */
+			dlen = MIN(len, sizeof(data) - 1);
+			memcpy(data, net_buf_simple_pull_mem(adv_data, len), dlen);
+			len = dlen;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		data[len] = '\0';
 
 		if (type == BT_DATA_URI) {

@@ -148,6 +148,7 @@ static void thrift_test_before(void *data)
 static void thrift_test_after(void *data)
 {
 	ARG_UNUSED(data);
+<<<<<<< HEAD
 	void *unused;
 
 	context.server->stop();
@@ -156,11 +157,23 @@ static void thrift_test_after(void *data)
 
 	context.server.reset();
 	context.client.reset();
+=======
+
+	context.server->stop();
+
+	pthread_join(context.server_thread, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (auto &fd : context.fds) {
 		close(fd);
 		fd = -1;
 	}
+<<<<<<< HEAD
+=======
+
+	context.client.reset();
+	context.server.reset();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST_SUITE(thrift, NULL, thrift_test_setup, thrift_test_before, thrift_test_after, NULL);

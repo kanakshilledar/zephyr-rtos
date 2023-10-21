@@ -14,6 +14,7 @@
 
 BUILD_ASSERT(CONFIG_MP_MAX_NUM_CPUS > 1);
 
+<<<<<<< HEAD
 #define CPU1_STACK_SIZE 1024
 
 K_THREAD_STACK_DEFINE(cpu1_stack, CPU1_STACK_SIZE);
@@ -21,6 +22,15 @@ K_THREAD_STACK_DEFINE(cpu1_stack, CPU1_STACK_SIZE);
 int cpu_arg;
 
 volatile int cpu_running;
+=======
+#define CPU_STACK_SIZE 1024
+
+K_THREAD_STACK_ARRAY_DEFINE(cpu_stacks, CONFIG_MP_MAX_NUM_CPUS, CPU_STACK_SIZE);
+
+int cpu_arg;
+
+volatile int cpu_running[CONFIG_MP_MAX_NUM_CPUS];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Tests for multi processing
@@ -32,11 +42,24 @@ volatile int cpu_running;
  * @{
  * @}
  */
+<<<<<<< HEAD
 FUNC_NORETURN void cpu1_fn(void *arg)
 {
 	zassert_true(arg == &cpu_arg && *(int *)arg == 12345, "wrong arg");
 
 	cpu_running = 1;
+=======
+FUNC_NORETURN void cpu_fn(void *arg)
+{
+	zassert_true(arg == &cpu_arg, "mismatched arg");
+
+	int cpu_id = (*(int *)arg) / 12345;
+	int mod = (*(int *)arg) % 12345;
+
+	zassert_true(mod == 0, "wrong arg");
+
+	cpu_running[cpu_id] = 1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	while (1) {
 	}
@@ -93,6 +116,7 @@ FUNC_NORETURN void cpu1_fn(void *arg)
  */
 ZTEST(multiprocessing, test_mp_start)
 {
+<<<<<<< HEAD
 	cpu_arg = 12345;
 
 	arch_start_cpu(1, cpu1_stack, CPU1_STACK_SIZE, cpu1_fn, &cpu_arg);
@@ -101,6 +125,30 @@ ZTEST(multiprocessing, test_mp_start)
 	}
 
 	zassert_true(cpu_running, "cpu1 didn't start");
+=======
+	for (int i = 1; i < CONFIG_MP_MAX_NUM_CPUS; i++) {
+		int wait_count;
+
+		TC_PRINT("Starting CPU #%d...\n", i);
+
+		cpu_arg = 12345 * i;
+
+		arch_start_cpu(i, cpu_stacks[i], CPU_STACK_SIZE, cpu_fn, &cpu_arg);
+
+		/* Wait for about 5 (500 * 10ms) seconds for CPU to start. */
+		wait_count = 500;
+		while (!cpu_running[i]) {
+			k_busy_wait(10 * USEC_PER_MSEC);
+
+			wait_count--;
+			if (wait_count < 0) {
+				break;
+			}
+		}
+
+		zassert_true(cpu_running[i], "cpu #%d didn't start", i);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST_SUITE(multiprocessing, NULL, NULL, NULL, NULL, NULL);

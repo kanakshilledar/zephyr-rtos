@@ -61,7 +61,11 @@ static int pinctrl_rv32m1_init(const struct device *dev)
 			    NULL,					\
 			    NULL, &pinctrl_rv32m1_##n##_config,		\
 			    PRE_KERNEL_1,				\
+<<<<<<< HEAD
 			    1,						\
+=======
+			    CONFIG_PINCTRL_RV32M1_INIT_PRIORITY,	\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(PINCTRL_RV32M1_INIT)

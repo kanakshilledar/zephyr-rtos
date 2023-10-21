@@ -22,6 +22,15 @@
 @{
 @}
 
+<<<<<<< HEAD
+=======
+@brief Multi Function Device Drivers APIs
+@defgroup mfd_interfaces Multi Function Device Drivers APIs
+@ingroup io_interfaces
+@{
+@}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 @brief Testing
 @defgroup testing Testing
 @{
@@ -30,6 +39,7 @@
 @brief Connectivity
 @defgroup connectivity Connectivity
 @{
+<<<<<<< HEAD
 
 @brief USB
 @defgroup usb USB
@@ -38,6 +48,16 @@
 
 @}
 
+=======
+@}
+
+@brief USB
+@defgroup usb USB
+@ingroup connectivity
+@{
+@}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 @brief Utilities
 @defgroup utilities Utilities
 @{
@@ -54,4 +74,12 @@
 @{
 @}
 
+<<<<<<< HEAD
+=======
+@brief Modem APIs
+@defgroup modem Modem APIs
+@{
+@}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 */

@@ -353,7 +353,11 @@ static int st7789v_init(const struct device *dev)
 	}
 
 	if (config->reset_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->reset_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Reset GPIO device not ready");
 			return -ENODEV;
 		}
@@ -365,7 +369,11 @@ static int st7789v_init(const struct device *dev)
 	}
 
 	if (config->cmd_data_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->cmd_data_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->cmd_data_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("CMD/DATA GPIO device not ready");
 			return -ENODEV;
 		}

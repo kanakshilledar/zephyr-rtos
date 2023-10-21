@@ -3,11 +3,19 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #include <zephyr/device.h>
 #include <zephyr/drivers/timer/system_timer.h>
 #include <zephyr/sys_clock.h>
 #include <zephyr/spinlock.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <zephyr/init.h>
+#include <zephyr/drivers/timer/system_timer.h>
+#include <zephyr/sys_clock.h>
+#include <zephyr/spinlock.h>
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/irq.h>
 #include <zephyr/sys/util.h>
 
@@ -36,6 +44,15 @@ static struct k_spinlock lock;
 
 static uint32_t last_load;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CORTEX_M_SYSTICK_64BIT_CYCLE_COUNTER
+#define cycle_t uint64_t
+#else
+#define cycle_t uint32_t
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * This local variable holds the amount of SysTick HW cycles elapsed
  * and it is updated in sys_clock_isr() and sys_clock_set_timeout().
@@ -46,13 +63,28 @@ static uint32_t last_load;
  *
  * t = cycle_counter + elapsed();
  */
+<<<<<<< HEAD
 static uint32_t cycle_count;
+=======
+static cycle_t cycle_count;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * This local variable holds the amount of elapsed SysTick HW cycles
  * that have been announced to the kernel.
+<<<<<<< HEAD
  */
 static uint32_t announced_cycles;
+=======
+ *
+ * Note:
+ * Additions/subtractions/comparisons of 64-bits values on 32-bits systems
+ * are very cheap. Divisions are not. Make sure the difference between
+ * cycle_count and announced_cycles is stored in a 32-bit variable before
+ * dividing it by CYC_PER_TICK.
+ */
+static cycle_t announced_cycles;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * This local variable holds the amount of elapsed HW cycles due to
@@ -89,10 +121,26 @@ static uint32_t elapsed(void)
 	uint32_t ctrl = SysTick->CTRL;	/* B */
 	uint32_t val2 = SysTick->VAL;	/* C */
 
+<<<<<<< HEAD
 	/* SysTick behavior: The counter wraps at zero automatically,
 	 * setting the COUNTFLAG field of the CTRL register when it
 	 * does.  Reading the control register automatically clears
 	 * that field.
+=======
+	/* SysTick behavior: The counter wraps after zero automatically.
+	 * The COUNTFLAG field of the CTRL register is set when it
+	 * decrements from 1 to 0. Reading the control register
+	 * automatically clears that field. When a timer is started,
+	 * count begins at zero then wraps after the first cycle.
+	 * Reference:
+	 *  Armv6-m (B3.3.1) https://developer.arm.com/documentation/ddi0419
+	 *  Armv7-m (B3.3.1) https://developer.arm.com/documentation/ddi0403
+	 *  Armv8-m (B11.1)  https://developer.arm.com/documentation/ddi0553
+	 *
+	 * First, manually wrap/realign val1 and val2 from [0:last_load-1]
+	 * to [1:last_load]. This allows subsequent code to assume that
+	 * COUNTFLAG and wrapping occur on the same cycle.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 *
 	 * If the count wrapped...
 	 * 1) Before A then COUNTFLAG will be set and val1 >= val2
@@ -103,6 +151,16 @@ static uint32_t elapsed(void)
 	 * So the count in val2 is post-wrap and last_load needs to be
 	 * added if and only if COUNTFLAG is set or val1 < val2.
 	 */
+<<<<<<< HEAD
+=======
+	if (val1 == 0) {
+		val1 = last_load;
+	}
+	if (val2 == 0) {
+		val2 = last_load;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if ((ctrl & SysTick_CTRL_COUNTFLAG_Msk)
 	    || (val1 < val2)) {
 		overflow_cyc += last_load;
@@ -119,6 +177,10 @@ static uint32_t elapsed(void)
 void sys_clock_isr(void *arg)
 {
 	ARG_UNUSED(arg);
+<<<<<<< HEAD
+=======
+	uint32_t dcycles;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t dticks;
 
 	/* Update overflow_cyc and clear COUNTFLAG by invoking elapsed() */
@@ -143,7 +205,12 @@ void sys_clock_isr(void *arg)
 		 * We can assess if this is the case by inspecting COUNTFLAG.
 		 */
 
+<<<<<<< HEAD
 		dticks = (cycle_count - announced_cycles) / CYC_PER_TICK;
+=======
+		dcycles = cycle_count - announced_cycles;
+		dticks = dcycles / CYC_PER_TICK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		announced_cycles += dticks * CYC_PER_TICK;
 		sys_clock_announce(dticks);
 	} else {
@@ -240,7 +307,12 @@ uint32_t sys_clock_elapsed(void)
 	}
 
 	k_spinlock_key_t key = k_spin_lock(&lock);
+<<<<<<< HEAD
 	uint32_t cyc = elapsed() + cycle_count - announced_cycles;
+=======
+	uint32_t unannounced = cycle_count - announced_cycles;
+	uint32_t cyc = elapsed() + unannounced;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_spin_unlock(&lock, key);
 	return cyc / CYC_PER_TICK;
@@ -249,11 +321,30 @@ uint32_t sys_clock_elapsed(void)
 uint32_t sys_clock_cycle_get_32(void)
 {
 	k_spinlock_key_t key = k_spin_lock(&lock);
+<<<<<<< HEAD
 	uint32_t ret = elapsed() + cycle_count;
+=======
+	uint32_t ret = cycle_count;
+
+	ret += elapsed();
+	k_spin_unlock(&lock, key);
+	return ret;
+}
+
+#ifdef CONFIG_CORTEX_M_SYSTICK_64BIT_CYCLE_COUNTER
+uint64_t sys_clock_cycle_get_64(void)
+{
+	k_spinlock_key_t key = k_spin_lock(&lock);
+	uint64_t ret = cycle_count + elapsed();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_spin_unlock(&lock, key);
 	return ret;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void sys_clock_idle_exit(void)
 {
@@ -271,9 +362,15 @@ static int sys_clock_driver_init(void)
 {
 
 	NVIC_SetPriority(SysTick_IRQn, _IRQ_PRIO_OFFSET);
+<<<<<<< HEAD
 	last_load = CYC_PER_TICK - 1;
 	overflow_cyc = 0U;
 	SysTick->LOAD = last_load;
+=======
+	last_load = CYC_PER_TICK;
+	overflow_cyc = 0U;
+	SysTick->LOAD = last_load - 1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SysTick->VAL = 0; /* resets timer to last_load */
 	SysTick->CTRL |= (SysTick_CTRL_ENABLE_Msk |
 			  SysTick_CTRL_TICKINT_Msk |

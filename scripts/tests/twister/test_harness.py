@@ -40,6 +40,10 @@ def gtest():
     mock_platform.name = "mock_platform"
     mock_testsuite = mock.Mock()
     mock_testsuite.name = "mock_testsuite"
+<<<<<<< HEAD
+=======
+    mock_testsuite.detailed_test_id = True
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     mock_testsuite.id = "id"
     mock_testsuite.testcases = []
     instance = TestInstance(testsuite=mock_testsuite, platform=mock_platform, outdir="")

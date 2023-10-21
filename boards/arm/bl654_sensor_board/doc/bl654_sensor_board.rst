@@ -233,8 +233,13 @@ Testing the LED and button on the BL654 Sensor Board
 There are 2 samples that allow you to test that the button (switch) and LED on
 the board are working properly with Zephyr:
 
+<<<<<<< HEAD
 * :ref:`blinky-sample`
 * :ref:`button-sample`
+=======
+* :zephyr:code-sample:`blinky`
+* :zephyr:code-sample:`button`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 You can build and flash the examples to make sure Zephyr is running correctly on
 your board. The button and LED definitions can be found in

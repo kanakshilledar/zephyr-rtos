@@ -37,7 +37,11 @@ config PERCEPIO_TRACERECORDER
 	select THREAD_NAME
 	select INIT_STACKS
 	select THREAD_MONITOR
+<<<<<<< HEAD
 	depends on ZEPHYR_TRACERECORDER_MODULE
+=======
+	depends on ZEPHYR_PERCEPIO_MODULE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config SEGGER_SYSTEMVIEW
 	bool "Segger SystemView support"
@@ -308,6 +312,21 @@ config TRACING_EVENT
 	help
 	  Enable tracing Events.
 
+<<<<<<< HEAD
+=======
+config TRACING_POLLING
+	bool "Tracing Polling"
+	default y
+	help
+	  Enable tracing Work Polling and Polling API.
+
+config TRACING_PM
+	bool "Tracing Power Management"
+	default y
+	help
+	  Enable tracing Power Management.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu  # Tracing Configuration
 
 endif

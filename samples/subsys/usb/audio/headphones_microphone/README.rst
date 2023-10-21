@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb_audio_headphones_microphone:
 
 USB Audio Sample Application
 ############################
+=======
+.. zephyr:code-sample:: usb-audio-headphones-microphone
+   :name: USB Audio microphone & headphones
+   :relevant-api: _usb_device_core_api
+
+   Implement a USB Audio microphone + headphones device with audio IN/OUT loopback.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

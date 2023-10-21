@@ -4,6 +4,10 @@ config BOARD_QEMU_RISCV32
 	bool "QEMU RISCV32 target"
 	depends on SOC_RISCV_VIRT
 	select QEMU_TARGET
+<<<<<<< HEAD
+=======
+	select HAS_COVERAGE_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select CPU_HAS_FPU
 	select RISCV_ISA_RV32I
 	select RISCV_ISA_EXT_ZICSR
@@ -13,6 +17,10 @@ config BOARD_QEMU_RISCV32_SMP
 	bool "QEMU RISCV32 SMP target"
 	depends on SOC_RISCV_VIRT
 	select QEMU_TARGET
+<<<<<<< HEAD
+=======
+	select HAS_COVERAGE_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select CPU_HAS_FPU
 	select RISCV_ISA_RV32I
 	select RISCV_ISA_EXT_ZICSR
@@ -22,6 +30,10 @@ config BOARD_QEMU_RISCV32_XIP
 	bool "QEMU RISCV32 XIP target"
 	depends on SOC_RISCV_SIFIVE_FREEDOM
 	select QEMU_TARGET
+<<<<<<< HEAD
+=======
+	select HAS_COVERAGE_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select CPU_HAS_FPU
 	select RISCV_ISA_RV32I
 	select RISCV_ISA_EXT_ZICSR

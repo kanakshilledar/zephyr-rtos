@@ -50,7 +50,11 @@ and the X-NUCLEO-EEPRMA2 in particular, see these ST Microelectronics documents:
 Samples
 *******
 
+<<<<<<< HEAD
 The :ref:`samples_eeprom` can be used to demonstrate the expansion boards
+=======
+The :zephyr:code-sample:`eeprom` sample can be used to demonstrate the expansion boards
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 functionality.
 Per default the shield sets an ``eeprom-0`` alias for the M24C02-FMC6TG EEPROM,
 which can be overwritten to use the other EEPROM devices instead.

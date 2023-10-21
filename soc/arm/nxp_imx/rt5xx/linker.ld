@@ -21,4 +21,8 @@
         FLEXSPI2  (wx) : ORIGIN = DT_REG_ADDR_BY_IDX(DT_NODELABEL(flexspi2), 1), LENGTH = DT_REG_SIZE_BY_IDX(DT_NODELABEL(flexspi2), 1)
 #endif
      }
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/scripts/linker.ld>
+=======
+#include <zephyr/arch/arm/cortex_m/scripts/linker.ld>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

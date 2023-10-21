@@ -7,7 +7,11 @@ common:
     - qemu_x86_64
   filter: CONFIG_CONSOLE_HAS_DRIVER
 tests:
+<<<<<<< HEAD
   libraries.cbprintf_fp.printk:
+=======
+  libraries.cbprintf.fp.printk:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_APP_FORMATTER_PRINTK=y
     harness_config:
@@ -16,7 +20,11 @@ tests:
       regex:
         - "Hello with printk"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printf:
+=======
+  libraries.cbprintf.fp.printf:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_APP_FORMATTER_PRINTF=y
     harness_config:
@@ -25,7 +33,11 @@ tests:
       regex:
         - "Hello with printf"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printf_nl:
+=======
+  libraries.cbprintf.fp.printf_nl:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: TOOLCHAIN_HAS_NEWLIB == 1
     extra_configs:
       - CONFIG_APP_FORMATTER_PRINTF=y
@@ -36,7 +48,11 @@ tests:
       regex:
         - "Hello with printf/newlib"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printfcb:
+=======
+  libraries.cbprintf.fp.printfcb:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_APP_FORMATTER_PRINTFCB=y
     harness_config:
@@ -45,7 +61,11 @@ tests:
       regex:
         - "Hello with printfcb"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printfcb_nl:
+=======
+  libraries.cbprintf.fp.printfcb_nl:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: TOOLCHAIN_HAS_NEWLIB == 1
     extra_configs:
       - CONFIG_APP_FORMATTER_PRINTFCB=y
@@ -56,7 +76,11 @@ tests:
       regex:
         - "Hello with printfcb/newlib"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.fprintf:
+=======
+  libraries.cbprintf.fp.fprintf:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_APP_FORMATTER_FPRINTF=y
     harness_config:
@@ -65,7 +89,11 @@ tests:
       regex:
         - "Hello with fprintf"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.fprintfcb:
+=======
+  libraries.cbprintf.fp.fprintfcb:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_APP_FORMATTER_FPRINTFCB=y
     harness_config:
@@ -74,7 +102,11 @@ tests:
       regex:
         - "Hello with fprintfcb"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printf.picolibc:
+=======
+  libraries.cbprintf.fp.printf.picolibc:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: CONFIG_PICOLIBC_SUPPORTED
     tags: picolibc
     extra_configs:
@@ -86,7 +118,11 @@ tests:
       regex:
         - "Hello with printf"
         - "Complete"
+<<<<<<< HEAD
   libraries.cbprintf_fp.printfcb.picolibc:
+=======
+  libraries.cbprintf.fp.printfcb.picolibc:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: CONFIG_PICOLIBC_SUPPORTED
     tags: picolibc
     extra_configs:

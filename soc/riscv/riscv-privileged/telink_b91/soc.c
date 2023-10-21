@@ -6,7 +6,12 @@
 
 #include "sys.h"
 #include "clock.h"
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+#include <zephyr/devicetree.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Software reset defines */
 #define reg_reset                   REG_ADDR8(0x1401ef)

@@ -6,3 +6,7 @@ zephyr_library_sources_ifdef(CONFIG_AUDIO_TLV320DAC	tlv320dac310x.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_MPXXDTYY	mpxxdtyy.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_MPXXDTYY	mpxxdtyy-i2s.c)
 zephyr_library_sources_ifdef(CONFIG_AUDIO_DMIC_NRFX_PDM	dmic_nrfx_pdm.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_AUDIO_TAS6422DAC tas6422dac.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

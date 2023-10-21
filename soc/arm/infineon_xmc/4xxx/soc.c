@@ -31,7 +31,18 @@ void z_arm_platform_init(void)
 	temp |= PMU_FLASH_WS;
 	FLASH0->FCON = temp;
 
+<<<<<<< HEAD
 	XMC_SCU_CLOCK_SetSleepConfig(XMC_SCU_CLOCK_SLEEP_MODE_CONFIG_SYSCLK_FPLL);
+=======
+	XMC_SCU_CLOCK_SetSleepConfig(XMC_SCU_CLOCK_SLEEP_MODE_CONFIG_SYSCLK_FPLL
+#ifdef CONFIG_PWM_XMC4XXX_CCU4
+				     | XMC_SCU_CLOCK_SLEEP_MODE_CONFIG_ENABLE_CCU
+#endif
+#ifdef CONFIG_PWM_XMC4XXX_CCU8
+				     | XMC_SCU_CLOCK_SLEEP_MODE_CONFIG_ENABLE_CCU
+#endif
+	);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* configure PLL & system clock */
 	SystemCoreClockSetup();

@@ -46,7 +46,11 @@ int main(void)
 	uint32_t i, j;
 
 	/* Initialize write buffer */
+<<<<<<< HEAD
 	for (uint32_t i = 0; i < BUF_SIZE; i++) {
+=======
+	for (i = 0; i < BUF_SIZE; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		memc_write_buffer[i] = (uint8_t)i;
 	}
 	printk("Writing to memory region with base 0x%0x, size 0x%0x\n\n",

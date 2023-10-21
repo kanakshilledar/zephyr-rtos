@@ -16,7 +16,12 @@ SD Host Controller
 
 An SD host controller is a device capable of sending SD commands to an attached
 SD card. These commands can be sent using the native SD protocol, or over SPI.
+<<<<<<< HEAD
 the SDHC api is designed to provide a generic way to send commands to and
+=======
+Some SD host controllers are also capable of communicating with MMC devices.
+The SDHC api is designed to provide a generic way to send commands to and
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 interact with attached SD devices.
 
 Requests

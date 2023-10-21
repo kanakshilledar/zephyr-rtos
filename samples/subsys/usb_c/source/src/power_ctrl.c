@@ -9,6 +9,10 @@
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/adc.h>
 #include <zephyr/drivers/gpio.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/usb_c/usbc.h>
 #include <zephyr/drivers/pwm.h>
 
@@ -89,6 +93,7 @@ static int power_ctrl_init(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(source_en.port)) {
 		LOG_ERR("Error: Source Enable device %s is not ready\n",
 			source_en.port->name);
@@ -116,45 +121,98 @@ static int power_ctrl_init(void)
 	if (!device_is_ready(pwm_ctl.dev)) {
 		LOG_ERR("Error: PWM CTL device is not ready\n");
 		return -ENOENT;
+=======
+	if (!gpio_is_ready_dt(&source_en)) {
+		LOG_ERR("Error: Source Enable device %s is not ready",
+			source_en.port->name);
+		return -ENODEV;
+	}
+
+	if (!gpio_is_ready_dt(&dcdc_en)) {
+		LOG_ERR("Error: DCDC Enable device %s is not ready",
+			dcdc_en.port->name);
+		return -ENODEV;
+	}
+
+	if (!gpio_is_ready_dt(&vconn1_en)) {
+		LOG_ERR("Error: VCONN1 Enable device %s is not ready",
+			vconn1_en.port->name);
+		return -ENODEV;
+	}
+
+	if (!gpio_is_ready_dt(&vconn2_en)) {
+		LOG_ERR("Error: VCONN2 Enable device %s is not ready",
+			vconn2_en.port->name);
+		return -ENODEV;
+	}
+
+	if (!pwm_is_ready_dt(&pwm_ctl)) {
+		LOG_ERR("Error: PWM CTL device is not ready");
+		return -ENODEV;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	ret = gpio_pin_configure_dt(&source_en, GPIO_OUTPUT);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to configure Source Enable device %s pin %d\n",
+=======
+		LOG_ERR("Error %d: failed to configure Source Enable device %s pin %d",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			ret, source_en.port->name, source_en.pin);
 		return ret;
 	}
 
 	ret = gpio_pin_configure_dt(&dcdc_en, GPIO_OUTPUT);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to configure DCDC Enable device %s pin %d\n",
+=======
+		LOG_ERR("Error %d: failed to configure DCDC Enable device %s pin %d",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			ret, dcdc_en.port->name, dcdc_en.pin);
 		return ret;
 	}
 
 	ret = gpio_pin_configure_dt(&vconn1_en, GPIO_OUTPUT | GPIO_OPEN_DRAIN);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to configure VCONN1 Enable device %s pin %d\n",
+=======
+		LOG_ERR("Error %d: failed to configure VCONN1 Enable device %s pin %d",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			ret, vconn1_en.port->name, vconn1_en.pin);
 		return ret;
 	}
 
 	ret = gpio_pin_configure_dt(&vconn2_en, GPIO_OUTPUT | GPIO_OPEN_DRAIN);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to configure VCONN2 Enable device %s pin %d\n",
+=======
+		LOG_ERR("Error %d: failed to configure VCONN2 Enable device %s pin %d",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			ret, vconn2_en.port->name, vconn1_en.pin);
 		return ret;
 	}
 
 	ret = gpio_pin_set_dt(&source_en, 1);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to enable source\n", ret);
+=======
+		LOG_ERR("Error %d: failed to enable source", ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return ret;
 	}
 
 	ret = gpio_pin_set_dt(&dcdc_en, 1);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to enable dcdc converter\n", ret);
+=======
+		LOG_ERR("Error %d: failed to enable dcdc converter", ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return ret;
 	}
 
@@ -162,7 +220,11 @@ static int power_ctrl_init(void)
 
 	ret = source_ctrl_set(SOURCE_0V);
 	if (ret != 0) {
+<<<<<<< HEAD
 		LOG_ERR("Error %d: failed to set VBUS to 0V\n", ret);
+=======
+		LOG_ERR("Error %d: failed to set VBUS to 0V", ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return ret;
 	}
 

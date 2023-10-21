@@ -23,12 +23,20 @@ description: |
                   status = "okay";
                   #address-cells = <1>;
                   #size-cells = <0>;
+<<<<<<< HEAD
                   phy@1 {
+=======
+                  ethernet-phy@1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     reg = <0x1>;
                     compatible = "adi,adin2111-phy";
                     status = "okay";
                   };
+<<<<<<< HEAD
                   phy@2 {
+=======
+                  ethernet-phy@2 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     reg = <0x2>;
                     compatible = "adi,adin2111-phy";
                     status = "okay";

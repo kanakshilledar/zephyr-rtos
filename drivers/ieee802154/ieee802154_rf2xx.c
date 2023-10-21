@@ -29,7 +29,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 #include <zephyr/sys/byteorder.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/linker/sections.h>
 #include <zephyr/sys/atomic.h>
 
@@ -141,11 +145,19 @@ static void rf2xx_set_rssi_base(const struct device *dev, uint16_t channel)
 	struct rf2xx_context *ctx = dev->data;
 	int8_t base;
 
+<<<<<<< HEAD
 	if (ctx->cc_page == RF2XX_TRX_CC_PAGE_0) {
 		base = channel == 0
 				? RF2XX_RSSI_BPSK_20
 				: RF2XX_RSSI_BPSK_40;
 	} else if (ctx->cc_page == RF2XX_TRX_CC_PAGE_2) {
+=======
+	if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915) {
+		base = channel == 0
+				? RF2XX_RSSI_BPSK_20
+				: RF2XX_RSSI_BPSK_40;
+	} else if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_TWO_OQPSK_868_915) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		base = channel == 0
 				? RF2XX_RSSI_OQPSK_SIN_RC_100
 				: RF2XX_RSSI_OQPSK_SIN_250;
@@ -179,8 +191,13 @@ static void rf2xx_trx_rx(const struct device *dev)
 		pkt_len = rx_buf[RX2XX_FRAME_PHR_INDEX];
 	}
 
+<<<<<<< HEAD
 	if (pkt_len < RX2XX_FRAME_MIN_PHR_SIZE) {
 		LOG_ERR("invalid RX frame length");
+=======
+	if (!ctx->promiscuous && pkt_len < RX2XX_FRAME_MIN_PHR_SIZE) {
+		LOG_ERR("Invalid RX frame length");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -189,6 +206,7 @@ static void rf2xx_trx_rx(const struct device *dev)
 
 	rf2xx_iface_frame_read(dev, rx_buf, frame_len);
 
+<<<<<<< HEAD
 	trac = rx_buf[pkt_len + RX2XX_FRAME_TRAC_INDEX];
 	trac = (trac >> RF2XX_RX_TRAC_STATUS) & RF2XX_RX_TRAC_BIT_MASK;
 
@@ -203,28 +221,65 @@ static void rf2xx_trx_rx(const struct device *dev)
 
 	if (!IS_ENABLED(CONFIG_IEEE802154_RAW_MODE) &&
 	    !IS_ENABLED(CONFIG_NET_L2_OPENTHREAD)) {
+=======
+	if (ctx->trx_model != RF2XX_TRX_MODEL_231) {
+		trac = rx_buf[pkt_len + RX2XX_FRAME_TRAC_INDEX];
+		trac = (trac >> RF2XX_RX_TRAC_STATUS) & RF2XX_RX_TRAC_BIT_MASK;
+
+		ctx->pkt_ed = rx_buf[pkt_len + RX2XX_FRAME_ED_INDEX];
+	} else {
+		trac = (rf2xx_iface_reg_read(dev, RF2XX_TRX_STATE_REG)
+			>> RF2XX_TRAC_STATUS) & RF2XX_TRAC_BIT_MASK;
+
+		ctx->pkt_ed = (rf2xx_iface_reg_read(dev, RF2XX_PHY_RSSI_REG)
+			       >> RF2XX_RSSI) & RF2XX_RSSI_MASK;
+	}
+	ctx->pkt_lqi = rx_buf[pkt_len + RX2XX_FRAME_LQI_INDEX];
+
+	if (!ctx->promiscuous && trac == RF2XX_TRX_PHY_STATE_TRAC_INVALID) {
+		LOG_ERR("Invalid RX frame");
+		return;
+	}
+
+	if (!IS_ENABLED(CONFIG_IEEE802154_RAW_MODE) &&
+	    !IS_ENABLED(CONFIG_NET_L2_OPENTHREAD) &&
+	    pkt_len >= RX2XX_FRAME_FCS_LENGTH) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pkt_len -= RX2XX_FRAME_FCS_LENGTH;
 	}
 
 	pkt = net_pkt_rx_alloc_with_buffer(ctx->iface, pkt_len,
 					   AF_UNSPEC, 0, K_NO_WAIT);
+<<<<<<< HEAD
 
 	if (!pkt) {
 		LOG_ERR("No buf available");
+=======
+	if (!pkt) {
+		LOG_ERR("No RX buffer available");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
 	memcpy(pkt->buffer->data, rx_buf + RX2XX_FRAME_HEADER_SIZE, pkt_len);
 	net_buf_add(pkt->buffer, pkt_len);
 	net_pkt_set_ieee802154_lqi(pkt, ctx->pkt_lqi);
+<<<<<<< HEAD
 	net_pkt_set_ieee802154_rssi(pkt, ctx->pkt_ed + ctx->trx_rssi_base);
+=======
+	net_pkt_set_ieee802154_rssi_dbm(pkt, ctx->pkt_ed + ctx->trx_rssi_base);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	LOG_DBG("Caught a packet (%02X) (LQI: %02X, RSSI: %d, ED: %02X)",
 		pkt_len, ctx->pkt_lqi, ctx->trx_rssi_base + ctx->pkt_ed,
 		ctx->pkt_ed);
 
 	if (net_recv_data(ctx->iface, pkt) < 0) {
+<<<<<<< HEAD
 		LOG_DBG("Packet dropped by NET stack");
+=======
+		LOG_DBG("RX Packet dropped by NET stack");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		net_pkt_unref(pkt);
 		return;
 	}
@@ -357,18 +412,27 @@ static inline uint8_t *get_mac(const struct device *dev)
 
 static enum ieee802154_hw_caps rf2xx_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	struct rf2xx_context *ctx = dev->data;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("HW Caps");
 
 	return IEEE802154_HW_FCS |
 	       IEEE802154_HW_PROMISC |
 	       IEEE802154_HW_FILTER |
 	       IEEE802154_HW_CSMA |
+<<<<<<< HEAD
 	       IEEE802154_HW_TX_RX_ACK |
 	       (ctx->trx_model == RF2XX_TRX_MODEL_212
 				? IEEE802154_HW_SUB_GHZ
 				: IEEE802154_HW_2_4_GHZ);
+=======
+	       IEEE802154_HW_RETRANSMISSION |
+	       IEEE802154_HW_TX_RX_ACK |
+	       IEEE802154_HW_RX_TX_ACK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int rf2xx_configure_sub_channel(const struct device *dev, uint16_t channel)
@@ -377,11 +441,19 @@ static int rf2xx_configure_sub_channel(const struct device *dev, uint16_t channe
 	uint8_t reg;
 	uint8_t cc_mask;
 
+<<<<<<< HEAD
 	if (ctx->cc_page == RF2XX_TRX_CC_PAGE_0) {
 		cc_mask = channel == 0
 				   ? RF2XX_CC_BPSK_20
 				   : RF2XX_CC_BPSK_40;
 	} else if (ctx->cc_page == RF2XX_TRX_CC_PAGE_2) {
+=======
+	if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915) {
+		cc_mask = channel == 0
+				   ? RF2XX_CC_BPSK_20
+				   : RF2XX_CC_BPSK_40;
+	} else if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_TWO_OQPSK_868_915) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		cc_mask = channel == 0
 				   ? RF2XX_CC_OQPSK_SIN_RC_100
 				   : RF2XX_CC_OQPSK_SIN_250;
@@ -395,13 +467,21 @@ static int rf2xx_configure_sub_channel(const struct device *dev, uint16_t channe
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int rf2xx_configure_trx_path(const struct device *dev)
 {
 	struct rf2xx_context *ctx = dev->data;
 	uint8_t reg;
 	uint8_t gc_tx_offset;
 
+<<<<<<< HEAD
 	if (ctx->cc_page == RF2XX_TRX_CC_PAGE_0) {
+=======
+	if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		gc_tx_offset = 0x03;
 	} else {
 		gc_tx_offset = 0x02;
@@ -431,6 +511,7 @@ static int rf2xx_set_channel(const struct device *dev, uint16_t channel)
 	LOG_DBG("Set Channel %d", channel);
 
 	if (ctx->trx_model == RF2XX_TRX_MODEL_212) {
+<<<<<<< HEAD
 		if ((ctx->cc_page == RF2XX_TRX_CC_PAGE_0
 		     || ctx->cc_page == RF2XX_TRX_CC_PAGE_2)
 		    && channel > 10) {
@@ -440,15 +521,34 @@ static int rf2xx_set_channel(const struct device *dev, uint16_t channel)
 		if (ctx->cc_page == RF2XX_TRX_CC_PAGE_5 && channel > 3) {
 			LOG_ERR("Unsupported channel %u", channel);
 			return -EINVAL;
+=======
+		if ((ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915
+		     || ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_TWO_OQPSK_868_915)
+		    && channel > 10) {
+			LOG_ERR("Unsupported channel %u", channel);
+			return channel > 26 ? -EINVAL : -ENOTSUP;
+		}
+		if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_FIVE_OQPSK_780 &&
+		    channel > 3) {
+			LOG_ERR("Unsupported channel %u", channel);
+			return channel > 7 ? -EINVAL : -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		rf2xx_configure_sub_channel(dev, channel);
 		rf2xx_configure_trx_path(dev);
 		rf2xx_set_rssi_base(dev, channel);
 	} else {
+<<<<<<< HEAD
 		if (channel < 11 || channel > 26) {
 			LOG_ERR("Unsupported channel %u", channel);
 			return -EINVAL;
+=======
+		/* 2.4G O-QPSK, channel page zero */
+		if (channel < 11 || channel > 26) {
+			LOG_ERR("Unsupported channel %u", channel);
+			return channel < 11 ? -ENOTSUP : -EINVAL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 
@@ -629,7 +729,11 @@ static void rf2xx_handle_ack(struct rf2xx_context *ctx, struct net_buf *frag)
 
 	net_pkt_cursor_init(&rf2xx_ack_pkt);
 
+<<<<<<< HEAD
 	if (ieee802154_radio_handle_ack(ctx->iface, &rf2xx_ack_pkt) != NET_OK) {
+=======
+	if (ieee802154_handle_ack(ctx->iface, &rf2xx_ack_pkt) != NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("ACK packet not handled.");
 	}
 }
@@ -766,8 +870,16 @@ static int rf2xx_pan_coord_set(const struct device *dev, bool pan_coordinator)
 
 static int rf2xx_promiscuous_set(const struct device *dev, bool promiscuous)
 {
+<<<<<<< HEAD
 	uint8_t reg;
 
+=======
+	struct rf2xx_context *ctx = dev->data;
+	uint8_t reg;
+
+	ctx->promiscuous = promiscuous;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (promiscuous) {
 		reg = rf2xx_iface_reg_read(dev, RF2XX_XAH_CTRL_1_REG);
 		reg |= (1 << RF2XX_AACK_PROM_MODE);
@@ -818,11 +930,31 @@ int rf2xx_configure(const struct device *dev,
 	return ret;
 }
 
+<<<<<<< HEAD
 uint16_t rf2xx_get_subgiga_channel_count(const struct device *dev)
 {
 	struct rf2xx_context *ctx = dev->data;
 
 	return ctx->cc_page == RF2XX_TRX_CC_PAGE_5 ? 4 : 11;
+=======
+static int rf2xx_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			   struct ieee802154_attr_value *value)
+{
+	struct rf2xx_context *ctx = dev->data;
+
+	switch (attr) {
+	case IEEE802154_ATTR_PHY_SUPPORTED_CHANNEL_PAGES:
+		value->phy_supported_channel_pages = ctx->cc_page;
+		return 0;
+
+	case IEEE802154_ATTR_PHY_SUPPORTED_CHANNEL_RANGES:
+		value->phy_supported_channels = &ctx->cc_channels;
+		return 0;
+
+	default:
+		return -ENOENT;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int power_on_and_setup(const struct device *dev)
@@ -894,6 +1026,10 @@ static int power_on_and_setup(const struct device *dev)
 	}
 
 	ctx->tx_mode = IEEE802154_TX_MODE_CSMA_CA;
+<<<<<<< HEAD
+=======
+	ctx->promiscuous = false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Configure INT behaviour */
 	config = (1 << RF2XX_RX_START) |
@@ -916,7 +1052,11 @@ static inline int configure_gpios(const struct device *dev)
 	const struct rf2xx_config *conf = dev->config;
 
 	/* Chip IRQ line */
+<<<<<<< HEAD
 	if (!device_is_ready(conf->irq_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&conf->irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("IRQ GPIO device not ready");
 		return -ENODEV;
 	}
@@ -925,14 +1065,22 @@ static inline int configure_gpios(const struct device *dev)
 					GPIO_INT_EDGE_TO_ACTIVE);
 
 	/* Chip RESET line */
+<<<<<<< HEAD
 	if (!device_is_ready(conf->reset_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&conf->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("RESET GPIO device not ready");
 		return -ENODEV;
 	}
 	gpio_pin_configure_dt(&conf->reset_gpio, GPIO_OUTPUT_INACTIVE);
 
 	/* Chip SLPTR line */
+<<<<<<< HEAD
 	if (!device_is_ready(conf->slptr_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&conf->slptr_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SLPTR GPIO device not ready");
 		return -ENODEV;
 	}
@@ -940,7 +1088,11 @@ static inline int configure_gpios(const struct device *dev)
 
 	/* Chip DIG2 line (Optional feature) */
 	if (conf->dig2_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(conf->dig2_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&conf->dig2_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("DIG2 GPIO device not ready");
 			return -ENODEV;
 		}
@@ -953,7 +1105,11 @@ static inline int configure_gpios(const struct device *dev)
 
 	/* Chip CLKM line (Optional feature) */
 	if (conf->clkm_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(conf->clkm_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&conf->clkm_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("CLKM GPIO device not ready");
 			return -ENODEV;
 		}
@@ -1036,6 +1192,28 @@ static void rf2xx_iface_init(struct net_if *iface)
 
 	ctx->iface = iface;
 
+<<<<<<< HEAD
+=======
+	if (ctx->trx_model == RF2XX_TRX_MODEL_212) {
+		if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915 ||
+		    ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_TWO_OQPSK_868_915) {
+			ctx->cc_range.from_channel = 0U;
+			ctx->cc_range.to_channel = 10U;
+		} else if (ctx->cc_page == IEEE802154_ATTR_PHY_CHANNEL_PAGE_FIVE_OQPSK_780) {
+			ctx->cc_range.from_channel = 0U;
+			ctx->cc_range.to_channel = 3U;
+		} else {
+			__ASSERT(false, "Unsupported channel page %u.", ctx->cc_page);
+		}
+	} else {
+		__ASSERT(ctx->cc_page ==
+				 IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+			 "Unsupported channel page %u.", ctx->cc_page);
+		ctx->cc_range.from_channel = 11U;
+		ctx->cc_range.to_channel = 26U;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ieee802154_init(iface);
 }
 
@@ -1051,7 +1229,11 @@ static struct ieee802154_radio_api rf2xx_radio_api = {
 	.start			= rf2xx_start,
 	.stop			= rf2xx_stop,
 	.configure		= rf2xx_configure,
+<<<<<<< HEAD
 	.get_subg_channel_count	= rf2xx_get_subgiga_channel_count,
+=======
+	.attr_get		= rf2xx_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #if !defined(CONFIG_IEEE802154_RAW_MODE)
@@ -1100,7 +1282,15 @@ static struct ieee802154_radio_api rf2xx_radio_api = {
 #define IEEE802154_RF2XX_DEVICE_DATA(n)                                 \
 	static struct rf2xx_context rf2xx_ctx_data_##n = {              \
 		.mac_addr = { DRV_INST_LOCAL_MAC_ADDRESS(n) },          \
+<<<<<<< HEAD
 		.cc_page = DT_INST_ENUM_IDX_OR(n, channel_page, 0),	\
+=======
+		.cc_page = BIT(DT_INST_ENUM_IDX_OR(n, channel_page, 0)),\
+		.cc_channels = {                                        \
+			.ranges = &rf2xx_ctx_data_##n.cc_range,         \
+			.num_ranges = 1U,                               \
+		}                                                       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 #define IEEE802154_RF2XX_RAW_DEVICE_INIT(n)	   \

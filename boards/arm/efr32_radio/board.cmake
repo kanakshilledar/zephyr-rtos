@@ -6,6 +6,11 @@ if(CONFIG_BOARD_EFR32_RADIO_BRD4104A)
 board_runner_args(jlink "--device=EFR32BG13PxxxF512")
 elseif(CONFIG_BOARD_EFR32_RADIO_BRD4250B)
 board_runner_args(jlink "--device=EFR32FG1PxxxF256")
+<<<<<<< HEAD
+=======
+elseif(CONFIG_BOARD_EFR32_RADIO_BRD4170A)
+board_runner_args(jlink "--device=EFR32MG12PxxxF1024")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 elseif(CONFIG_BOARD_EFR32_RADIO_BRD4180A)
 board_runner_args(jlink "--device=EFR32MG21AxxxF1024")
 elseif(CONFIG_BOARD_EFR32_RADIO_BRD4187C)

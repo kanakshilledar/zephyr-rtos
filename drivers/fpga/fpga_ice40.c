@@ -18,7 +18,10 @@
 #include <zephyr/drivers/spi.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+<<<<<<< HEAD
 #include <zephyr/posix/time.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/crc.h>
 
 /*
@@ -597,6 +600,11 @@ static int fpga_ice40_init(const struct device *dev)
 		FPGA_ICE40_PINCTRL_CONFIG(inst)};                                                  \
                                                                                                    \
 	DEVICE_DT_INST_DEFINE(inst, fpga_ice40_init, NULL, &fpga_ice40_data_##inst,                \
+<<<<<<< HEAD
 			      &fpga_ice40_config_##inst, POST_KERNEL, 0, &fpga_ice40_api);
+=======
+			      &fpga_ice40_config_##inst, POST_KERNEL, CONFIG_FPGA_INIT_PRIORITY,   \
+			      &fpga_ice40_api);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 DT_INST_FOREACH_STATUS_OKAY(FPGA_ICE40_DEFINE)

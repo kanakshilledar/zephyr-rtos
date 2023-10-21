@@ -1080,6 +1080,7 @@
 #define Z_BYPASS(x) x
 
 /* Set of UTIL_LISTIFY particles */
+<<<<<<< HEAD
 #define Z_UTIL_LISTIFY_0(F, sep, ...)
 
 #define Z_UTIL_LISTIFY_1(F, sep, ...) \
@@ -2104,5 +2105,8 @@
 #define Z_UTIL_LISTIFY_256(F, sep, ...) \
 	Z_UTIL_LISTIFY_255(F, sep, __VA_ARGS__) __DEBRACKET sep \
 	F(255, __VA_ARGS__)
+=======
+#include "util_listify.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* ZEPHYR_INCLUDE_SYS_UTIL_LOOPS_H_ */

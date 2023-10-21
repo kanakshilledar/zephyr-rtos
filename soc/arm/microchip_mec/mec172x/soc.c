@@ -10,7 +10,11 @@
 #include <soc.h>
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Enable SWD and ETM debug interface and pins.
  * NOTE: ETM TRACE pins exposed on MEC172x EVB J30 12,14,16,18,20.

@@ -390,6 +390,36 @@ static int arr_next(struct json_obj *json, struct json_token *value)
 	return element_token(value->type);
 }
 
+<<<<<<< HEAD
+=======
+static int skip_field(struct json_obj *obj, struct json_obj_key_value *kv)
+{
+	int field_count = 1;
+
+	if (kv->value.type == JSON_TOK_OBJECT_START ||
+	    kv->value.type == JSON_TOK_ARRAY_START) {
+		while (field_count > 0 && lexer_next(&obj->lex, &kv->value)) {
+			switch (kv->value.type) {
+			case JSON_TOK_OBJECT_START:
+			case JSON_TOK_ARRAY_START:
+				field_count++;
+				break;
+			case JSON_TOK_OBJECT_END:
+			case JSON_TOK_ARRAY_END:
+				field_count--;
+				break;
+			case JSON_TOK_ERROR:
+				return -EINVAL;
+			default:
+				break;
+			}
+		}
+	}
+
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int decode_num(const struct json_token *token, int32_t *num)
 {
 	/* FIXME: strtod() is not available in newlib/minimal libc,
@@ -519,19 +549,40 @@ static ptrdiff_t get_elem_size(const struct json_obj_descr *descr)
 	case JSON_TOK_TRUE:
 	case JSON_TOK_FALSE:
 		return sizeof(bool);
+<<<<<<< HEAD
 	case JSON_TOK_ARRAY_START:
 		return descr->array.n_elements * get_elem_size(descr->array.element_descr);
+=======
+	case JSON_TOK_ARRAY_START: {
+		ptrdiff_t size;
+
+		size = descr->array.n_elements * get_elem_size(descr->array.element_descr);
+		/* Consider additional item count field for array objects */
+		if (descr->field_name_len > 0) {
+			size = size + sizeof(size_t);
+		}
+
+		return size;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case JSON_TOK_OBJECT_START: {
 		ptrdiff_t total = 0;
 		size_t i;
 
 		for (i = 0; i < descr->object.sub_descr_len; i++) {
+<<<<<<< HEAD
 			ptrdiff_t s = get_elem_size(&descr->object.sub_descr[i]);
 
 			total += ROUND_UP(s, 1 << descr->align_shift);
 		}
 
 		return total;
+=======
+			total += get_elem_size(&descr->object.sub_descr[i]);
+		}
+
+		return ROUND_UP(total, 1 << descr->align_shift);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	default:
 		return -EINVAL;
@@ -542,6 +593,7 @@ static int arr_parse(struct json_obj *obj,
 		     const struct json_obj_descr *elem_descr,
 		     size_t max_elements, void *field, void *val)
 {
+<<<<<<< HEAD
 	ptrdiff_t elem_size = get_elem_size(elem_descr);
 	void *last_elem = (char *)field + elem_size * max_elements;
 	size_t *elements = NULL;
@@ -559,6 +611,27 @@ static int arr_parse(struct json_obj *obj,
 
 	while (!arr_next(obj, &value)) {
 		if (value.type == JSON_TOK_ARRAY_END) {
+=======
+	void *value = val;
+	size_t *elements = (size_t *)((char *)value + elem_descr->offset);
+	ptrdiff_t elem_size;
+	void *last_elem;
+	struct json_token tok;
+
+	/* For nested arrays, skip parent descriptor to get elements */
+	if (elem_descr->type == JSON_TOK_ARRAY_START) {
+		elem_descr = elem_descr->array.element_descr;
+	}
+
+	*elements = 0;
+	elem_size = get_elem_size(elem_descr);
+	last_elem = (char *)field + elem_size * max_elements;
+
+	__ASSERT_NO_MSG(elem_size > 0);
+
+	while (!arr_next(obj, &tok)) {
+		if (tok.type == JSON_TOK_ARRAY_END) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return 0;
 		}
 
@@ -566,6 +639,7 @@ static int arr_parse(struct json_obj *obj,
 			return -ENOSPC;
 		}
 
+<<<<<<< HEAD
 		if (decode_value(obj, elem_descr, &value, field, NULL) < 0) {
 			return -EINVAL;
 		}
@@ -573,6 +647,20 @@ static int arr_parse(struct json_obj *obj,
 		if (elements) {
 			(*elements)++;
 		}
+=======
+		/* For nested arrays, update value to current field,
+		 * so it matches descriptor's offset to length field
+		 */
+		if (elem_descr->type == JSON_TOK_ARRAY_START) {
+			value = field;
+		}
+
+		if (decode_value(obj, elem_descr, &tok, field, value) < 0) {
+			return -EINVAL;
+		}
+
+		(*elements)++;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		field = (char *)field + elem_size;
 	}
 
@@ -661,6 +749,17 @@ static int64_t obj_parse(struct json_obj *obj, const struct json_obj_descr *desc
 			decoded_fields |= (int64_t)1<<i;
 			break;
 		}
+<<<<<<< HEAD
+=======
+
+		/* Skip field, if no descriptor was found */
+		if (i >= descr_len) {
+			ret = skip_field(obj, &kv);
+			if (ret < 0) {
+				return ret;
+			}
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return -EINVAL;
@@ -835,7 +934,11 @@ static int arr_encode(const struct json_obj_descr *elem_descr,
 		      const void *field, const void *val,
 		      json_append_bytes_t append_bytes, void *data)
 {
+<<<<<<< HEAD
 	ptrdiff_t elem_size = get_elem_size(elem_descr);
+=======
+	ptrdiff_t elem_size;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * NOTE: Since an element descriptor's offset isn't meaningful
 	 * (array elements occur at multiple offsets in `val'), we use
@@ -851,6 +954,16 @@ static int arr_encode(const struct json_obj_descr *elem_descr,
 		return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	/* For nested arrays, skip parent descriptor to get elements */
+	if (elem_descr->type == JSON_TOK_ARRAY_START) {
+		elem_descr = elem_descr->array.element_descr;
+	}
+
+	elem_size = get_elem_size(elem_descr);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	for (i = 0; i < n_elem; i++) {
 		/*
 		 * Though "field" points at the next element in the

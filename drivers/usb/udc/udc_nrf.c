@@ -29,7 +29,11 @@
 LOG_MODULE_REGISTER(udc_nrf, CONFIG_UDC_DRIVER_LOG_LEVEL);
 
 /*
+<<<<<<< HEAD
  * There is no real advantage to change control enpoint size
+=======
+ * There is no real advantage to change control endpoint size
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * but we can use it for testing UDC driver API and higher layers.
  */
 #define UDC_NRF_MPS0		UDC_MPS0_64

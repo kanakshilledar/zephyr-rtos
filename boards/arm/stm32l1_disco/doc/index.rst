@@ -143,7 +143,11 @@ This interface is supported by the openocd version included in the Zephyr SDK.
 Flashing an application
 -----------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -156,7 +160,11 @@ Debugging
 =========
 
 You can debug an application in the usual way.  Here is an example for the
+<<<<<<< HEAD
 :ref:`blinky-sample` application.
+=======
+:zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky

@@ -8,6 +8,11 @@ This provides parsing of domains yaml file and creation of objects of the
 Domain class.
 '''
 
+<<<<<<< HEAD
+=======
+from dataclasses import dataclass
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 import yaml
 import pykwalify.core
 import logging
@@ -27,7 +32,11 @@ mapping:
     required: true
     type: str
   domains:
+<<<<<<< HEAD
     required: false
+=======
+    required: true
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     type: seq
     sequence:
       - type: map
@@ -38,6 +47,14 @@ mapping:
           build_dir:
             required: true
             type: str
+<<<<<<< HEAD
+=======
+  flash_order:
+    required: false
+    type: seq
+    sequence:
+      - type: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 '''
 
 schema = yaml.safe_load(DOMAINS_SCHEMA)
@@ -51,6 +68,7 @@ logger.addHandler(handler)
 
 class Domains:
 
+<<<<<<< HEAD
     def __init__(self, data):
         self._domains = []
         self._domain_names = []
@@ -78,10 +96,42 @@ class Domains:
         try:
             with open(domains_file, 'r') as f:
                 domains = yaml.safe_load(f.read())
+=======
+    def __init__(self, domains_yaml):
+        try:
+            data = yaml.safe_load(domains_yaml)
+            pykwalify.core.Core(source_data=data,
+                                schema_data=schema).validate()
+        except (yaml.YAMLError, pykwalify.errors.SchemaError):
+            logger.critical(f'malformed domains.yaml')
+            exit(1)
+
+        self._build_dir = data['build_dir']
+        self._domains = {
+            d['name']: Domain(d['name'], d['build_dir'])
+            for d in data['domains']
+        }
+
+        # In the YAML data, the values for "default" and "flash_order"
+        # must not name any domains that aren't listed under "domains".
+        # Now that self._domains has been initialized, we can leverage
+        # the common checks in self.get_domain to verify this.
+        self._default_domain = self.get_domain(data['default'])
+        self._flash_order = self.get_domains(data.get('flash_order', []))
+
+    @staticmethod
+    def from_file(domains_file):
+        '''Load domains from a domains.yaml file.
+        '''
+        try:
+            with open(domains_file, 'r') as f:
+                domains_yaml = f.read()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         except FileNotFoundError:
             logger.critical(f'domains.yaml file not found: {domains_file}')
             exit(1)
 
+<<<<<<< HEAD
         try:
             pykwalify.core.Core(source_data=domains, schema_data=schema)\
                 .validate()
@@ -117,6 +167,30 @@ class Domains:
                         f'valid domains are:', *self._domain_names)
                 exit(1)
         return ret
+=======
+        return Domains(domains_yaml)
+
+    @staticmethod
+    def from_yaml(domains_yaml):
+        '''Load domains from a string with YAML contents.
+        '''
+        return Domains(domains_yaml)
+
+    def get_domains(self, names=None, default_flash_order=False):
+        if names is None:
+            if default_flash_order:
+                return self._flash_order
+            return list(self._domains.values())
+        return list(map(self.get_domain, names))
+
+    def get_domain(self, name):
+        found = self._domains.get(name)
+        if not found:
+            logger.critical(f'domain "{name}" not found, '
+                    f'valid domains are: {", ".join(self._domains)}')
+            exit(1)
+        return found
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def get_default_domain(self):
         return self._default_domain
@@ -125,6 +199,7 @@ class Domains:
         return self._build_dir
 
 
+<<<<<<< HEAD
 class Domain:
 
     def __init__(self, name, build_dir):
@@ -146,3 +221,10 @@ class Domain:
     @build_dir.setter
     def build_dir(self, value):
         self._build_dir = value
+=======
+@dataclass
+class Domain:
+
+    name: str
+    build_dir: str
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

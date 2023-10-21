@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _display-ft800-sample:
 
 FT800
 #####
+=======
+.. zephyr:code-sample:: ft800
+   :name: FT800
+   :relevant-api: ft8xx_interface
+
+   Display various shapes and text using FT800 Embedded Video Engine.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -18,7 +18,11 @@ using ``net-shell`` or automatically by using the ``net_capture`` API.
 Sample usage
 ************
 
+<<<<<<< HEAD
 See :ref:`Network capture sample application <net-capture-sample>` and
+=======
+See :zephyr:code-sample:`net-capture` sample application and
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 :ref:`network_monitoring` for details.
 
 

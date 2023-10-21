@@ -7,7 +7,11 @@ config SOC
 	default "ae350"
 
 config SYS_CLOCK_TICKS_PER_SEC
+<<<<<<< HEAD
 	default 100 if (!CACHE_ENABLE || XIP)
+=======
+	default 100 if (!ICACHE || XIP)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config MAIN_STACK_SIZE
 	default 2048
@@ -15,8 +19,16 @@ config MAIN_STACK_SIZE
 config IDLE_STACK_SIZE
 	default 1536
 
+<<<<<<< HEAD
 config TEST_EXTRA_STACK_SIZE
 	default 1024
+=======
+config PRIVILEGED_STACK_SIZE
+	default 2048 if 64BIT
+
+config TEST_EXTRA_STACK_SIZE
+	default 2048 if 64BIT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config MP_MAX_NUM_CPUS
 	default 1

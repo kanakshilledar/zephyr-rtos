@@ -6,26 +6,53 @@ common:
     - backend
     - filesystem
     - fs
+<<<<<<< HEAD
 tests:
   logging.log_backend_fs.automounted:
+=======
+    - littlefs
+tests:
+  logging.backend.fs.automounted:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow:
       - native_posix
       - native_posix_64
       - nrf52840dk_nrf52840
+<<<<<<< HEAD
     integration_platforms:
       - native_posix
   logging.log_backend_fs.manualmounted.native_posix:
+=======
+      - mr_canhubk3
+    integration_platforms:
+      - native_posix
+  logging.backend.fs.manualmounted.native_posix:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: native_posix
     extra_args: DTC_OVERLAY_FILE="./boards/native_posix.overlay;./boards/automount.overlay"
     integration_platforms:
       - native_posix
+<<<<<<< HEAD
   logging.log_backend_fs.manualmounted.native_posix_64:
+=======
+  logging.backend.fs.manualmounted.native_posix_64:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: native_posix_64
     extra_args: DTC_OVERLAY_FILE="./boards/native_posix_64.overlay;./boards/automount.overlay"
     integration_platforms:
       - native_posix_64
+<<<<<<< HEAD
   logging.log_backend_fs.manualmounted.nrf5840dk:
+=======
+  logging.backend.fs.manualmounted.nrf5840dk:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: nrf52840dk_nrf52840
     extra_args: DTC_OVERLAY_FILE="./boards/nrf52840dk_nrf52840.overlay;./boards/automount.overlay"
     integration_platforms:
       - nrf52840dk_nrf52840
+<<<<<<< HEAD
+=======
+  logging.backend.fs.manualmounted.mr_canhubk3:
+    platform_allow: mr_canhubk3
+    extra_args: DTC_OVERLAY_FILE="./boards/mr_canhubk3.overlay;./boards/automount.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

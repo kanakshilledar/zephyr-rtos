@@ -29,9 +29,15 @@ enum bt_mesh_key_evt;
 
 /** Network message encryption credentials */
 struct bt_mesh_net_cred {
+<<<<<<< HEAD
 	uint8_t nid;         /* NID */
 	uint8_t enc[16];     /* EncKey */
 	uint8_t privacy[16]; /* PrivacyKey */
+=======
+	uint8_t nid;                /* NID */
+	struct bt_mesh_key enc;     /* EncKey */
+	struct bt_mesh_key privacy; /* PrivacyKey */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct bt_mesh_beacon {
@@ -69,6 +75,7 @@ struct bt_mesh_subnet {
 
 	struct bt_mesh_subnet_keys {
 		bool valid;
+<<<<<<< HEAD
 		uint8_t net[16];       /* NetKey */
 		struct bt_mesh_net_cred msg;
 		uint8_t net_id[8];     /* Network ID */
@@ -78,6 +85,17 @@ struct bt_mesh_subnet {
 		uint8_t beacon[16];      /* BeaconKey */
 #if defined(CONFIG_BT_MESH_V1d1)
 		uint8_t priv_beacon[16]; /* PrivateBeaconKey */
+=======
+		struct bt_mesh_key net;         /* NetKey */
+		struct bt_mesh_net_cred msg;
+		uint8_t net_id[8];              /* Network ID */
+	#if defined(CONFIG_BT_MESH_GATT_PROXY)
+		struct bt_mesh_key identity;    /* IdentityKey */
+	#endif
+		struct bt_mesh_key beacon;      /* BeaconKey */
+#if defined(CONFIG_BT_MESH_V1d1)
+		struct bt_mesh_key priv_beacon; /* PrivateBeaconKey */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	} keys[2];
 #if defined(CONFIG_BT_MESH_PROXY_SOLICITATION)
@@ -157,7 +175,11 @@ struct bt_mesh_subnet *bt_mesh_subnet_get(uint16_t net_idx);
  *  @returns 0 on success, or (negative) error code on failure.
  */
 int bt_mesh_subnet_set(uint16_t net_idx, uint8_t kr_phase,
+<<<<<<< HEAD
 		       const uint8_t key[16], const uint8_t new_key[16]);
+=======
+		       const struct bt_mesh_key *key, const struct bt_mesh_key *new_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Create Friendship credentials.
  *
@@ -173,7 +195,17 @@ int bt_mesh_subnet_set(uint16_t net_idx, uint8_t kr_phase,
 int bt_mesh_friend_cred_create(struct bt_mesh_net_cred *cred,
 			       uint16_t lpn_addr, uint16_t frnd_addr,
 			       uint16_t lpn_counter, uint16_t frnd_counter,
+<<<<<<< HEAD
 			       const uint8_t key[16]);
+=======
+			       const struct bt_mesh_key *key);
+
+/** @brief Destroy Friendship credentials.
+ *
+ *  @param cred Credential object to destroy.
+ */
+void bt_mesh_friend_cred_destroy(struct bt_mesh_net_cred *cred);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Iterate through all valid network credentials to decrypt a message.
  *
@@ -224,6 +256,27 @@ bt_mesh_subnet_has_new_key(const struct bt_mesh_subnet *sub)
 	return sub->kr_phase != BT_MESH_KR_NORMAL;
 }
 
+<<<<<<< HEAD
+=======
+/** Kind of currently enabled Node Identity state on one or more subnets. */
+enum bt_mesh_subnets_node_id_state {
+	/* None node identity states are enabled on any subnets. */
+	BT_MESH_SUBNETS_NODE_ID_STATE_NONE,
+	/* Node Identity state is enabled on one or more subnets. */
+	BT_MESH_SUBNETS_NODE_ID_STATE_ENABLED,
+	/* Private Node Identity state is enabled on one or more subnets. */
+	BT_MESH_SUBNETS_NODE_ID_STATE_ENABLED_PRIVATE,
+};
+
+/** @brief Returns what kind of node identity state is currently enabled on one or more subnets.
+ *
+ * Only one kind (either non-private or private) can be enabled at the same time on all subnets.
+ *
+ * @returns Kind of node identity state that is currently enabled.
+ */
+enum bt_mesh_subnets_node_id_state bt_mesh_subnets_node_id_state_get(void);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Store the Subnet information in persistent storage.
  *
  * @param net_idx Network index to store.

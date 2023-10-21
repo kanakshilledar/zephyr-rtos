@@ -6,6 +6,10 @@
 
 #define DT_DRV_COMPAT nxp_imx_wdog
 
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/pinctrl.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/watchdog.h>
 #include <zephyr/sys_clock.h>
 #include <fsl_wdog.h>
@@ -20,6 +24,10 @@ LOG_MODULE_REGISTER(wdt_mcux_wdog);
 struct mcux_wdog_config {
 	WDOG_Type *base;
 	void (*irq_config_func)(const struct device *dev);
+<<<<<<< HEAD
+=======
+	const struct pinctrl_dev_config *pcfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct mcux_wdog_data {
@@ -135,9 +143,21 @@ static void mcux_wdog_isr(const struct device *dev)
 static int mcux_wdog_init(const struct device *dev)
 {
 	const struct mcux_wdog_config *config = dev->config;
+<<<<<<< HEAD
 
 	config->irq_config_func(dev);
 
+=======
+	int ret;
+
+	config->irq_config_func(dev);
+
+	ret = pinctrl_apply_state(config->pcfg, PINCTRL_STATE_DEFAULT);
+	if (ret < 0 && ret != -ENOENT) {
+		return ret;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -150,9 +170,18 @@ static const struct wdt_driver_api mcux_wdog_api = {
 
 static void mcux_wdog_config_func(const struct device *dev);
 
+<<<<<<< HEAD
 static const struct mcux_wdog_config mcux_wdog_config = {
 	.base = (WDOG_Type *) DT_INST_REG_ADDR(0),
 	.irq_config_func = mcux_wdog_config_func,
+=======
+PINCTRL_DT_INST_DEFINE(0);
+
+static const struct mcux_wdog_config mcux_wdog_config = {
+	.base = (WDOG_Type *) DT_INST_REG_ADDR(0),
+	.irq_config_func = mcux_wdog_config_func,
+	.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(0),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static struct mcux_wdog_data mcux_wdog_data;

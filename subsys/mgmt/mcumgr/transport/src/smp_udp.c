@@ -26,7 +26,11 @@
 #include <zephyr/mgmt/mcumgr/mgmt/handlers.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <errno.h>
 
 #include <mgmt/mcumgr/transport/smp_internal.h>
@@ -66,9 +70,21 @@ struct config {
 struct configs {
 #ifdef CONFIG_MCUMGR_TRANSPORT_UDP_IPV4
 	struct config ipv4;
+<<<<<<< HEAD
 #endif
 #ifdef CONFIG_MCUMGR_TRANSPORT_UDP_IPV6
 	struct config ipv6;
+=======
+#ifdef CONFIG_SMP_CLIENT
+	struct smp_client_transport_entry ipv4_transport;
+#endif
+#endif
+#ifdef CONFIG_MCUMGR_TRANSPORT_UDP_IPV6
+	struct config ipv6;
+#ifdef CONFIG_SMP_CLIENT
+	struct smp_client_transport_entry ipv6_transport;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 };
 
@@ -87,9 +103,13 @@ static struct configs configs = {
 #endif
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_TRANSPORT_UDP_AUTOMATIC_INIT
 static struct net_mgmt_event_callback smp_udp_mgmt_cb;
 #endif
+=======
+static struct net_mgmt_event_callback smp_udp_mgmt_cb;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static const char *smp_udp_proto_to_name(enum proto_type proto)
 {
@@ -333,7 +353,11 @@ int smp_udp_open(void)
 
 	if (started) {
 		/* One or more threads were started, send interface notifications */
+<<<<<<< HEAD
 		conn_mgr_resend_status();
+=======
+		conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -381,7 +405,17 @@ static void smp_udp_start(void)
 	configs.ipv4.smp_transport.functions.ud_copy = smp_udp_ud_copy;
 
 	rc = smp_transport_init(&configs.ipv4.smp_transport);
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_SMP_CLIENT
+	if (rc == 0) {
+		configs.ipv4_transport.smpt = &configs.ipv4.smp_transport;
+		configs.ipv4_transport.smpt_type = SMP_UDP_IPV4_TRANSPORT;
+		smp_client_transport_register(&configs.ipv4_transport);
+	}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (rc) {
 		LOG_ERR("Failed to register IPv4 UDP MCUmgr SMP transport: %d", rc);
 	}
@@ -394,6 +428,16 @@ static void smp_udp_start(void)
 	configs.ipv6.smp_transport.functions.ud_copy = smp_udp_ud_copy;
 
 	rc = smp_transport_init(&configs.ipv6.smp_transport);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP_CLIENT
+	if (rc == 0) {
+		configs.ipv6_transport.smpt = &configs.ipv6.smp_transport;
+		configs.ipv6_transport.smpt_type = SMP_UDP_IPV6_TRANSPORT;
+		smp_client_transport_register(&configs.ipv6_transport);
+	}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (rc) {
 		LOG_ERR("Failed to register IPv6 UDP MCUmgr SMP transport: %d", rc);

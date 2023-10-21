@@ -1,15 +1,27 @@
 tests:
+<<<<<<< HEAD
   logging.add.async:
+=======
+  logging.async:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags: logging
     extra_args: CONF_FILE=prj.conf
     integration_platforms:
       - native_posix
+<<<<<<< HEAD
   logging.add.sync:
+=======
+  logging.sync:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags: logging
     extra_args: CONF_FILE=log_sync.conf
     integration_platforms:
       - native_posix
+<<<<<<< HEAD
   logging.add.log_user:
+=======
+  logging.log_user:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags: logging
     filter: CONFIG_USERSPACE
     extra_args:

@@ -180,6 +180,7 @@ You can debug an application in the usual way.  Here is an example for the
 
 
 .. _32F723E-DISCO website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32f723ediscovery.html
 
 .. _32F723E-DISCO board User Manual:
@@ -190,3 +191,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F72xxx reference manual:
    http://www.st.com/resource/en/reference_manual/dm00305990.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32f723ediscovery.html
+
+.. _32F723E-DISCO board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00342318.pdf
+
+.. _STM32F723IEK6 on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f723ie.html
+
+.. _STM32F72xxx reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00305990.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

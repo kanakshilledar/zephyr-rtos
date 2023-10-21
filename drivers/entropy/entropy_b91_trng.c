@@ -55,7 +55,11 @@ static int entropy_b91_trng_get_entropy_isr(const struct device *dev,
 	/* No specific handling in case of running from ISR, just call standard API */
 	entropy_b91_trng_get_entropy(dev, buffer, length);
 
+<<<<<<< HEAD
 	return 0;
+=======
+	return length;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Entropy driver APIs structure */

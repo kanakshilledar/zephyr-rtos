@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # ST Microelectronics STM32L4R5xx MCU
+=======
+# ST Microelectronics STM32L4P5xx MCU
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # Copyright (c) 2018 Pushpal Sidhu
 # SPDX-License-Identifier: Apache-2.0

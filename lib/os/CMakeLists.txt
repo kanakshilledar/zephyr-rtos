@@ -1,11 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(
+  ${ZEPHYR_BASE}/include/zephyr/sys/mutex.h
+)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_sources_ifdef(CONFIG_BASE64 base64.c)
 
 zephyr_sources(
   cbprintf_packaged.c
   dec.c
+<<<<<<< HEAD
   fdtable.c
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   hex.c
   printk.c
   rb.c
@@ -18,6 +28,7 @@ zephyr_sources(
   multi_heap.c
   )
 
+<<<<<<< HEAD
 zephyr_sources_ifdef(CONFIG_ONOFF onoff.c)
 zephyr_sources_ifdef(CONFIG_NOTIFY notify.c)
 zephyr_sources_ifdef(CONFIG_CRC
@@ -28,6 +39,11 @@ zephyr_sources_ifdef(CONFIG_CRC
   crc7_sw.c
   )
 zephyr_sources_ifdef(CONFIG_CRC_SHELL crc_shell.c)
+=======
+zephyr_sources_ifdef(CONFIG_FDTABLE fdtable.c)
+zephyr_sources_ifdef(CONFIG_ONOFF onoff.c)
+zephyr_sources_ifdef(CONFIG_NOTIFY notify.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 zephyr_sources_ifdef(CONFIG_CBPRINTF_COMPLETE cbprintf_complete.c)
 zephyr_sources_ifdef(CONFIG_CBPRINTF_NANO cbprintf_nano.c)
@@ -64,6 +80,11 @@ zephyr_sources_ifdef(CONFIG_SYS_MEM_BLOCKS mem_blocks.c)
 
 zephyr_sources_ifdef(CONFIG_WINSTREAM winstream.c)
 
+<<<<<<< HEAD
+=======
+zephyr_sources_ifdef(CONFIG_POWEROFF poweroff.c)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_include_directories(
   ${ZEPHYR_BASE}/kernel/include
   ${ZEPHYR_BASE}/arch/${ARCH}/include

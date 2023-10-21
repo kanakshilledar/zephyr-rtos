@@ -5,8 +5,13 @@ choice
 	prompt "NEORV32 Version"
 	depends on SOC_SERIES_NEORV32
 
+<<<<<<< HEAD
 config SOC_NEORV32_V1_6_1
 	bool "v1.6.1"
+=======
+config SOC_NEORV32_V1_8_6
+	bool "v1.8.6"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	# NEORV32 RISC-V ISA A extension implements only LR/SC, not AMO
 	select ATOMIC_OPERATIONS_C
 
@@ -16,7 +21,11 @@ if SOC_SERIES_NEORV32
 
 config SOC_NEORV32_VERSION
 	hex
+<<<<<<< HEAD
 	default 0x01060100 if SOC_NEORV32_V1_6_1
+=======
+	default 0x01080600 if SOC_NEORV32_V1_8_6
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  The targeted NEORV32 version as BCD-coded number. The format is
 	  identical to that of the NEORV32 Machine implementation ID (mimpid)

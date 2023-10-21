@@ -788,6 +788,7 @@ SECTIONS
 	__kernel_ram_end = KERNEL_BASE_ADDR + KERNEL_RAM_SIZE;
 	__kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
 
+<<<<<<< HEAD
 	_image_ram_end = .;
 	_image_ram_all = (KERNEL_BASE_ADDR + KERNEL_RAM_SIZE) - _image_ram_start;
 
@@ -796,6 +797,11 @@ SECTIONS
 	_end = .; /* end of image */
 
 	GROUP_END(RAMABLE_REGION)
+=======
+	_image_ram_all = (KERNEL_BASE_ADDR + KERNEL_RAM_SIZE) - _image_ram_start;
+
+	z_mapped_size = z_mapped_end - z_mapped_start;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef LINKER_ZEPHYR_FINAL
 	/* static interrupts */
@@ -823,6 +829,15 @@ SECTIONS
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
+=======
+#define LAST_RAM_ALIGN MMU_PAGE_ALIGN
+
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/linker/debug-sections.ld>
 
 	/DISCARD/ : { *(.note.GNU-stack) }

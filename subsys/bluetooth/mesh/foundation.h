@@ -154,15 +154,23 @@ void bt_mesh_attention(struct bt_mesh_model *model, uint8_t time);
 
 #include <zephyr/sys/byteorder.h>
 
+<<<<<<< HEAD
 static inline void key_idx_pack(struct net_buf_simple *buf,
 				uint16_t idx1, uint16_t idx2)
+=======
+static inline void key_idx_pack_pair(struct net_buf_simple *buf, uint16_t idx1, uint16_t idx2)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	net_buf_simple_add_le16(buf, idx1 | ((idx2 & 0x00f) << 12));
 	net_buf_simple_add_u8(buf, idx2 >> 4);
 }
 
+<<<<<<< HEAD
 static inline void key_idx_unpack(struct net_buf_simple *buf,
 				  uint16_t *idx1, uint16_t *idx2)
+=======
+static inline void key_idx_unpack_pair(struct net_buf_simple *buf, uint16_t *idx1, uint16_t *idx2)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	*idx1 = sys_get_le16(&buf->data[0]) & 0xfff;
 	*idx2 = sys_get_le16(&buf->data[1]) >> 4;

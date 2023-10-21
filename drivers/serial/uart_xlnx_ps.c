@@ -163,8 +163,11 @@ struct uart_xlnx_ps_dev_data_t {
 #endif
 };
 
+<<<<<<< HEAD
 static const struct uart_driver_api uart_xlnx_ps_driver_api;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Disables the UART's RX and TX function.
  *

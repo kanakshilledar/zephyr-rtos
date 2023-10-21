@@ -4,10 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/pm/pm.h>
 #include <zephyr/pm/device.h>
 #include <zephyr/pm/policy.h>
 #include <zephyr/drivers/gpio.h>
+=======
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/sys/poweroff.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "esp_sleep.h"
 
 #define WAKEUP_TIME_SEC		(20)
@@ -85,7 +90,11 @@ int main(void)
 			ESP_EXT1_WAKEUP_ANY_HIGH);
 #endif /* CONFIG_EXAMPLE_EXT1_WAKEUP */
 #ifdef CONFIG_EXAMPLE_GPIO_WAKEUP
+<<<<<<< HEAD
 	if (!device_is_ready(wakeup_button.port)) {
+=======
+	if (!gpio_is_ready_dt(&wakeup_button)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Error: wakeup button device %s is not ready\n", wakeup_button.port->name);
 		return 0;
 	}
@@ -101,6 +110,7 @@ int main(void)
 	esp_deep_sleep_enable_gpio_wakeup(BIT(wakeup_button.pin), ESP_GPIO_WAKEUP_GPIO_HIGH);
 	printk("Enabling GPIO wakeup on pins GPIO%d\n", wakeup_button.pin);
 #endif /* CONFIG_EXAMPLE_GPIO_WAKEUP */
+<<<<<<< HEAD
 	printk("Entering deep sleep\n");
 
 	/* Sleep triggers the idle thread, which makes the pm subsystem apply the selected
@@ -115,4 +125,11 @@ int main(void)
 	while (true) {
 		/* Never reaches here. Spins to avoid fall-off behavior */
 	}
+=======
+
+	printk("Powering off\n");
+	sys_poweroff();
+
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

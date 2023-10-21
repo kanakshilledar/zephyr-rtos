@@ -97,8 +97,13 @@ static void line_follow(void)
 
 int main(void)
 {
+<<<<<<< HEAD
 	if (!device_is_ready(left_gpio.port) ||
 	    !device_is_ready(right_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&left_gpio) ||
+	    !gpio_is_ready_dt(&right_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Left/Right GPIO controllers not ready.\n");
 		return 0;
 	}

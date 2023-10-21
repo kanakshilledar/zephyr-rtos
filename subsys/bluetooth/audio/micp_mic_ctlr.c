@@ -19,9 +19,16 @@
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/bluetooth/audio/micp.h>
+<<<<<<< HEAD
 
 #include <zephyr/logging/log.h>
 
+=======
+#include <zephyr/logging/log.h>
+
+#include "micp_internal.h"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 LOG_MODULE_REGISTER(bt_micp_mic_ctlr, CONFIG_BT_MICP_MIC_CTLR_LOG_LEVEL);
 
 #include "common/bt_str.h"
@@ -29,6 +36,7 @@ LOG_MODULE_REGISTER(bt_micp_mic_ctlr, CONFIG_BT_MICP_MIC_CTLR_LOG_LEVEL);
 /* Callback functions */
 static struct bt_micp_mic_ctlr_cb *micp_mic_ctlr_cb;
 
+<<<<<<< HEAD
 struct bt_micp_mic_ctlr {
 	uint16_t start_handle;
 	uint16_t end_handle;
@@ -47,6 +55,8 @@ struct bt_micp_mic_ctlr {
 	struct bt_aics *aics[CONFIG_BT_MICP_MIC_CTLR_MAX_AICS_INST];
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct bt_micp_mic_ctlr mic_ctlrs[CONFIG_BT_MAX_CONN];
 static struct bt_uuid *mics_uuid = BT_UUID_MICS;
 

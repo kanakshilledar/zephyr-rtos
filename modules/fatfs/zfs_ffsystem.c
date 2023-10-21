@@ -10,6 +10,11 @@
  * https://github.com/zephyrproject-rtos/fatfs/blob/master/option/ffsystem.c
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/kernel.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <ff.h>
 
 #if FF_USE_LFN == 3	/* Dynamic memory allocation */

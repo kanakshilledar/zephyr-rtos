@@ -193,9 +193,24 @@ static int flash_mcux_read(const struct device *dev, off_t offset,
 
 #ifdef CONFIG_CHECK_BEFORE_READING
   #ifdef CONFIG_SOC_LPC55S36
+<<<<<<< HEAD
 	rc = FLASH_IsFlashAreaReadable(&priv->config, addr, len);
 	if (rc != kStatus_FLASH_Success) {
 		rc = -EIO;
+=======
+	/* Validates the given address range is loaded in the flash hiding region. */
+	rc = FLASH_IsFlashAreaReadable(&priv->config, addr, len);
+	if (rc != kStatus_FLASH_Success) {
+		rc = -EIO;
+	} else {
+		/* Check whether the flash is erased ("len" and "addr" must be word-aligned). */
+		rc = FLASH_VerifyErase(&priv->config, ((addr + 0x3) & ~0x3),  ((len + 0x3) & ~0x3));
+		if (rc == kStatus_FLASH_Success) {
+			rc = -ENODATA;
+		} else {
+			rc = 0;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
   #else
 	rc = is_area_readable(addr, len);

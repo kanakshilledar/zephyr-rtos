@@ -90,7 +90,11 @@ struct spsc_pbuf_ext_nocache {
  *
  * The SPSC packet buffer implements lightweight unidirectional packet buffer
  * with read/write semantics on top of a memory region shared
+<<<<<<< HEAD
  * by the reader and writer. It optionally embeds cache and memory barier
+=======
+ * by the reader and writer. It optionally embeds cache and memory barrier
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * management to ensure correct data access.
  *
  * This structure supports single writer and reader. Data stored in the buffer
@@ -190,7 +194,11 @@ int spsc_pbuf_alloc(struct spsc_pbuf *pb, uint16_t len, char **buf);
  * @brief Commit packet to the buffer.
  *
  * Commit a packet which was previously allocated (@ref spsc_pbuf_alloc).
+<<<<<<< HEAD
  * If cache is used, cache writeback is perfromed on the written data.
+=======
+ * If cache is used, cache writeback is performed on the written data.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param pb	A buffer to which to write.
  * @param len	Packet length. Must be equal or less than the length used for allocation.
@@ -219,12 +227,23 @@ int spsc_pbuf_read(struct spsc_pbuf *pb, char *buf, uint16_t len);
 /**
  * @brief Claim packet from the buffer.
  *
+<<<<<<< HEAD
  * Claimed packet must be freed using @ref spsc_pbuf_free.
+=======
+ * It claims a single packet from the buffer in the order of the commitment
+ * by the @ref spsc_pbuf_commit function. The first committed packet will be claimed first.
+ * The returned buffer is 32 bit word aligned and points to the continuous memory.
+ * Claimed packet must be freed using the @ref spsc_pbuf_free function.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @note If data cache is used, cache is invalidate on the packet.
  *
  * @param[in] pb	A buffer from which packet will be claimed.
  * @param[in,out] buf	A location where claimed packet address is written.
+<<<<<<< HEAD
+=======
+ *                      It is 32 bit word aligned and points to the continuous memory.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval 0 No packets in the buffer.
  * @retval positive packet length.

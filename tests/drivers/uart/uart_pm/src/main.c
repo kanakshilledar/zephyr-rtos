@@ -112,8 +112,13 @@ static void communication_verify(const struct device *dev, bool active)
 
 #define state_verify(dev, exp_state) do {\
 	enum pm_device_state power_state; \
+<<<<<<< HEAD
 	int err = pm_device_state_get(dev, &power_state); \
 	zassert_equal(err, 0, "Unexpected err: %d", err); \
+=======
+	int error = pm_device_state_get(dev, &power_state); \
+	zassert_equal(error, 0, "Unexpected err: %d", error); \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(power_state, exp_state); \
 } while (0)
 

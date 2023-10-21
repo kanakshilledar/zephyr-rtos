@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 /* Director littlefs operations:
+=======
+/* Directory littlefs operations:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * * mkdir
  * * opendir
  * * readdir
@@ -20,6 +24,7 @@
 
 #include <zephyr/fs/littlefs.h>
 
+<<<<<<< HEAD
 static struct testfs_bcmd test_hierarchy[] = {
 	TESTFS_BCMD_FILE("f1", 1, 1),
 	TESTFS_BCMD_FILE("f2", 2, 100),
@@ -308,11 +313,18 @@ static int check_rename(struct fs_mount_t *mp)
 
 	return TC_PASS;
 }
+=======
+void test_fs_dirops(void);
+
+/* Mount structure needed by test_fs_basic tests. */
+struct fs_mount_t *fs_dirops_test_mp = &testfs_small_mnt;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ZTEST(littlefs, test_lfs_dirops)
 {
 	struct fs_mount_t *mp = &testfs_small_mnt;
 
+<<<<<<< HEAD
 	zassert_equal(clean_mount(mp), TC_PASS,
 		      "clean mount failed");
 
@@ -334,4 +346,14 @@ ZTEST(littlefs, test_lfs_dirops)
 	k_sleep(K_MSEC(100));   /* flush log messages */
 	zassert_equal(fs_unmount(mp), 0,
 		      "unmount small failed");
+=======
+	zassert_equal(testfs_lfs_wipe_partition(mp),
+		      TC_PASS,
+		      "failed to wipe partition");
+
+	/* Common dirops tests.
+	 * (File system is mounted and unmounted during that test.)
+	 */
+	test_fs_dirops();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

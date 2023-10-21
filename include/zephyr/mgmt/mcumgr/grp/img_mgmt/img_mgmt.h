@@ -11,7 +11,11 @@
 #include <inttypes.h>
 #include <zephyr/mgmt/mcumgr/mgmt/mgmt.h>
 #include <zephyr/mgmt/mcumgr/smp/smp.h>
+<<<<<<< HEAD
 #include <zephyr/mgmt/mcumgr/grp/img_mgmt/image.h>
+=======
+#include <bootutil/image.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zcbor_common.h>
 
 /**
@@ -25,8 +29,11 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #define IMG_MGMT_HASH_STR	48
 #define IMG_MGMT_HASH_LEN	32
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define IMG_MGMT_DATA_SHA_LEN	32 /* SHA256 */
 
 /**
@@ -62,6 +69,7 @@ extern "C" {
 /**
  * Command result codes for image management group.
  */
+<<<<<<< HEAD
 enum img_mgmt_ret_code_t {
 	/** No error, this is implied if there is no ret value in the response */
 	IMG_MGMT_RET_RC_OK = 0,
@@ -152,6 +160,110 @@ enum img_mgmt_ret_code_t {
 
 	/** The image vector table is invalid. */
 	IMG_MGMT_RET_RC_INVALID_IMAGE_VECTOR_TABLE,
+=======
+enum img_mgmt_err_code_t {
+	/** No error, this is implied if there is no ret value in the response */
+	IMG_MGMT_ERR_OK = 0,
+
+	/** Unknown error occurred. */
+	IMG_MGMT_ERR_UNKNOWN,
+
+	/** Failed to query flash area configuration. */
+	IMG_MGMT_ERR_FLASH_CONFIG_QUERY_FAIL,
+
+	/** There is no image in the slot. */
+	IMG_MGMT_ERR_NO_IMAGE,
+
+	/** The image in the slot has no TLVs (tag, length, value). */
+	IMG_MGMT_ERR_NO_TLVS,
+
+	/** The image in the slot has an invalid TLV type and/or length. */
+	IMG_MGMT_ERR_INVALID_TLV,
+
+	/** The image in the slot has multiple hash TLVs, which is invalid. */
+	IMG_MGMT_ERR_TLV_MULTIPLE_HASHES_FOUND,
+
+	/** The image in the slot has an invalid TLV size. */
+	IMG_MGMT_ERR_TLV_INVALID_SIZE,
+
+	/** The image in the slot does not have a hash TLV, which is required.  */
+	IMG_MGMT_ERR_HASH_NOT_FOUND,
+
+	/** There is no free slot to place the image. */
+	IMG_MGMT_ERR_NO_FREE_SLOT,
+
+	/** Flash area opening failed. */
+	IMG_MGMT_ERR_FLASH_OPEN_FAILED,
+
+	/** Flash area reading failed. */
+	IMG_MGMT_ERR_FLASH_READ_FAILED,
+
+	/** Flash area writing failed. */
+	IMG_MGMT_ERR_FLASH_WRITE_FAILED,
+
+	/** Flash area erase failed. */
+	IMG_MGMT_ERR_FLASH_ERASE_FAILED,
+
+	/** The provided slot is not valid. */
+	IMG_MGMT_ERR_INVALID_SLOT,
+
+	/** Insufficient heap memory (malloc failed). */
+	IMG_MGMT_ERR_NO_FREE_MEMORY,
+
+	/** The flash context is already set. */
+	IMG_MGMT_ERR_FLASH_CONTEXT_ALREADY_SET,
+
+	/** The flash context is not set. */
+	IMG_MGMT_ERR_FLASH_CONTEXT_NOT_SET,
+
+	/** The device for the flash area is NULL. */
+	IMG_MGMT_ERR_FLASH_AREA_DEVICE_NULL,
+
+	/** The offset for a page number is invalid. */
+	IMG_MGMT_ERR_INVALID_PAGE_OFFSET,
+
+	/** The offset parameter was not provided and is required. */
+	IMG_MGMT_ERR_INVALID_OFFSET,
+
+	/** The length parameter was not provided and is required. */
+	IMG_MGMT_ERR_INVALID_LENGTH,
+
+	/** The image length is smaller than the size of an image header. */
+	IMG_MGMT_ERR_INVALID_IMAGE_HEADER,
+
+	/** The image header magic value does not match the expected value. */
+	IMG_MGMT_ERR_INVALID_IMAGE_HEADER_MAGIC,
+
+	/** The hash parameter provided is not valid. */
+	IMG_MGMT_ERR_INVALID_HASH,
+
+	/** The image load address does not match the address of the flash area. */
+	IMG_MGMT_ERR_INVALID_FLASH_ADDRESS,
+
+	/** Failed to get version of currently running application. */
+	IMG_MGMT_ERR_VERSION_GET_FAILED,
+
+	/** The currently running application is newer than the version being uploaded. */
+	IMG_MGMT_ERR_CURRENT_VERSION_IS_NEWER,
+
+	/** There is already an image operating pending. */
+	IMG_MGMT_ERR_IMAGE_ALREADY_PENDING,
+
+	/** The image vector table is invalid. */
+	IMG_MGMT_ERR_INVALID_IMAGE_VECTOR_TABLE,
+
+	/** The image it too large to fit. */
+	IMG_MGMT_ERR_INVALID_IMAGE_TOO_LARGE,
+
+	/** The amount of data sent is larger than the provided image size. */
+	IMG_MGMT_ERR_INVALID_IMAGE_DATA_OVERRUN,
+
+	/** Confirmation of image has been denied */
+	IMG_MGMT_ERR_IMAGE_CONFIRMATION_DENIED,
+
+	/** Setting test to active slot is not allowed */
+	IMG_MGMT_ERR_IMAGE_SETTING_TEST_TO_ACTIVE_DENIED,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -332,6 +444,7 @@ int img_mgmt_state_confirm(void);
  */
 int img_mgmt_vercmp(const struct image_version *a, const struct image_version *b);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 /*
  * @brief	Translate IMG mgmt group error code into MCUmgr error code
@@ -341,6 +454,15 @@ int img_mgmt_vercmp(const struct image_version *a, const struct image_version *b
  * @return	#mcumgr_err_t error code
  */
 int img_mgmt_translate_error_code(uint16_t ret);
+=======
+#if IS_ENABLED(CONFIG_MCUMGR_GRP_IMG_MUTEX)
+/*
+ * @brief	Will reset the image management state back to default (no ongoing upload),
+ *		requires that CONFIG_MCUMGR_GRP_IMG_MUTEX be enabled to allow for mutex
+ *		locking of the image management state object.
+ */
+void img_mgmt_reset_upload(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifdef CONFIG_MCUMGR_GRP_IMG_VERBOSE_ERR
@@ -356,6 +478,11 @@ extern const char *img_mgmt_err_str_flash_erase_failed;
 extern const char *img_mgmt_err_str_flash_write_failed;
 extern const char *img_mgmt_err_str_downgrade;
 extern const char *img_mgmt_err_str_image_bad_flash_addr;
+<<<<<<< HEAD
+=======
+extern const char *img_mgmt_err_str_image_too_large;
+extern const char *img_mgmt_err_str_data_overrun;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #define IMG_MGMT_UPLOAD_ACTION_SET_RC_RSN(action, rsn)
 #define IMG_MGMT_UPLOAD_ACTION_RC_RSN(action) NULL

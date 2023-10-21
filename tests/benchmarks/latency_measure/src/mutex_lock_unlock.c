@@ -30,8 +30,16 @@ int mutex_lock_unlock(void)
 	uint32_t diff;
 	timing_t timestamp_start;
 	timing_t timestamp_end;
+<<<<<<< HEAD
 
 	timing_start();
+=======
+	const char *notes = "";
+	int  end;
+
+	timing_start();
+	bench_test_start();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	timestamp_start = timing_counter_get();
 
@@ -40,10 +48,26 @@ int mutex_lock_unlock(void)
 	}
 
 	timestamp_end = timing_counter_get();
+<<<<<<< HEAD
 
 	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
 	PRINT_STATS_AVG("Average time to lock a mutex", diff, N_TEST_MUTEX);
 
+=======
+	end = bench_test_end();
+
+	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
+
+	if (end != 0) {
+		notes = TICK_OCCURRENCE_ERROR;
+		error_count++;
+	}
+
+	PRINT_STATS_AVG("Average time to lock a mutex", diff, N_TEST_MUTEX,
+			false, notes);
+
+	bench_test_start();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timestamp_start = timing_counter_get();
 
 	for (i = 0; i < N_TEST_MUTEX; i++) {
@@ -51,9 +75,23 @@ int mutex_lock_unlock(void)
 	}
 
 	timestamp_end = timing_counter_get();
+<<<<<<< HEAD
 	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
 
 	PRINT_STATS_AVG("Average time to unlock a mutex", diff, N_TEST_MUTEX);
+=======
+	end = bench_test_end();
+	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
+
+	if (end != 0) {
+		notes = TICK_OCCURRENCE_ERROR;
+		error_count++;
+	}
+
+	PRINT_STATS_AVG("Average time to unlock a mutex", diff, N_TEST_MUTEX,
+			false, notes);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timing_stop();
 	return 0;
 }

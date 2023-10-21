@@ -75,6 +75,14 @@ elseif("${ARCH}" STREQUAL "arm64")
     set(GCC_M_CPU cortex-a53)
   elseif(CONFIG_CPU_CORTEX_A55)
     set(GCC_M_CPU cortex-a55)
+<<<<<<< HEAD
+=======
+  elseif(CONFIG_CPU_CORTEX_A76)
+    set(GCC_M_CPU cortex-a76)
+  elseif(CONFIG_CPU_CORTEX_A76_A55)
+    set(GCC_M_CPU cortex-a76)
+    set(GCC_M_TUNE cortex-a76.cortex-a55)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   elseif(CONFIG_CPU_CORTEX_A72)
     set(GCC_M_CPU cortex-a72)
   elseif(CONFIG_CPU_CORTEX_R82)

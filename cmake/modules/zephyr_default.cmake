@@ -24,6 +24,10 @@ message(STATUS "Application: ${APPLICATION_SOURCE_DIR}")
 # to CMake 3.20; this produces different binaries.
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
+<<<<<<< HEAD
+=======
+# Find and execute workspace build configuration
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 find_package(ZephyrBuildConfiguration
   QUIET NO_POLICY_SCOPE
   NAMES ZephyrBuild
@@ -36,6 +40,22 @@ find_package(ZephyrBuildConfiguration
   NO_CMAKE_SYSTEM_PACKAGE_REGISTRY
 )
 
+<<<<<<< HEAD
+=======
+# Find and execute application-specific build configuration
+find_package(ZephyrAppConfiguration
+  QUIET NO_POLICY_SCOPE
+  NAMES ZephyrApp
+  PATHS ${APPLICATION_SOURCE_DIR}
+  NO_CMAKE_PATH
+  NO_CMAKE_ENVIRONMENT_PATH
+  NO_SYSTEM_ENVIRONMENT_PATH
+  NO_CMAKE_PACKAGE_REGISTRY
+  NO_CMAKE_SYSTEM_PATH
+  NO_CMAKE_SYSTEM_PACKAGE_REGISTRY
+)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Test and error-out if we are affected by the PyPI CMake 3.22.1 / 3.22.2 bug
 if(${CMAKE_VERSION} VERSION_EQUAL 3.22.1 OR ${CMAKE_VERSION} VERSION_EQUAL 3.22.2)
   # It seems only pip-installed builds are affected so we test to see if we are affected

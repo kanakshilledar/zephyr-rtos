@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include "zephyr/sys/util.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -38,6 +42,7 @@ int main(void)
 
 	while (1) {
 
+<<<<<<< HEAD
 		struct fuel_gauge_get_property props[] = {
 			{
 				.property_type = FUEL_GAUGE_RUNTIME_TO_EMPTY,
@@ -99,6 +104,30 @@ int main(void)
 		}
 
 
+=======
+		fuel_gauge_prop_t props[] = {
+			FUEL_GAUGE_RUNTIME_TO_EMPTY,
+			FUEL_GAUGE_RUNTIME_TO_FULL,
+			FUEL_GAUGE_RELATIVE_STATE_OF_CHARGE,
+			FUEL_GAUGE_VOLTAGE,
+		};
+
+		union fuel_gauge_prop_val vals[ARRAY_SIZE(props)];
+
+		ret = fuel_gauge_get_props(dev, props, vals, ARRAY_SIZE(props));
+		if (ret < 0) {
+			printk("Error: cannot get properties\n");
+		} else {
+			printk("Time to empty %d\n", vals[0].runtime_to_empty);
+
+			printk("Time to full %d\n", vals[1].runtime_to_full);
+
+			printk("Charge %d%%\n", vals[2].relative_state_of_charge);
+
+			printk("Voltage %d\n", vals[3].voltage);
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_sleep(K_MSEC(5000));
 	}
 	return 0;

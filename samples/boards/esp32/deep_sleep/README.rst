@@ -30,9 +30,15 @@ as wake-up source, deep sleep for 20 seconds, wake up.
 Requirements
 ************
 
+<<<<<<< HEAD
 This example should be able to run on any commonly available :ref:`esp32`
 development board without any extra hardware if only ``Timer`` is used as
 wakeup source.
+=======
+This example should be able to run on any commonly available
+:ref:`esp32_devkitc_wroom` development board without any extra hardware if
+only ``Timer`` is used as wakeup source.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 However, when ``EXT1`` is also enabled, GPIO2 and GPIO4 should be pulled-down
 by external resistors to avoid floating pins. When triggering a wake up, one
@@ -51,7 +57,11 @@ Building, Flashing and Running
 
 .. zephyr-app-commands::
    :zephyr-app: samples/boards/esp32/deep_sleep
+<<<<<<< HEAD
    :board: esp32
+=======
+   :board: esp32_devkitc_wroom
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :goals: build flash
    :compact:
 
@@ -71,4 +81,8 @@ sample below is for GPIO2.
    Wake up from GPIO 2
    Enabling timer wakeup, 20s
    Enabling EXT1 wakeup on pins GPIO2, GPIO4
+<<<<<<< HEAD
    Entering deep sleep
+=======
+   Powering off
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

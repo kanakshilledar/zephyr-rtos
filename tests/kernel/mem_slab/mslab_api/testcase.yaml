@@ -3,7 +3,11 @@ tests:
     tags:
       - kernel
       - memory_slabs
+<<<<<<< HEAD
   kernel.memory_slabs.api_no_multithreading:
+=======
+  kernel.memory_slabs.api.no-mt:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - kernel
       - memory_slabs
@@ -22,6 +26,10 @@ tests:
       - qemu_riscv32
       - qemu_riscv32e
       - qemu_riscv64
+<<<<<<< HEAD
+=======
+      - qemu_leon3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - qemu_cortex_m3
       - qemu_arc_hs

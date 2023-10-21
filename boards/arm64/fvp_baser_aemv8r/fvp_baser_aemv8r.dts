@@ -6,6 +6,10 @@
 /dts-v1/;
 
 #include <arm64/fvp/fvp-aemv8r.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "FVP BaseR AEMv8R";
@@ -37,11 +41,19 @@
 			reg = <0x0 DT_SIZE_M(128)>;
 		};
 
+<<<<<<< HEAD
 		device_region: memory@80000000 {
 			compatible = "zephyr,memory-region", "mmio-dram";
 			reg = <0x80000000 DT_SIZE_M(2048)>;
 			zephyr,memory-region = "DEVICE_REGION";
 			zephyr,memory-region-mpu = "IO";
+=======
+		device_region: memory@9a000000 {
+			compatible = "zephyr,memory-region", "mmio-dram";
+			reg = <0x9a000000 0x66000000>;
+			zephyr,memory-region = "DEVICE_REGION";
+			zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_IO) )>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

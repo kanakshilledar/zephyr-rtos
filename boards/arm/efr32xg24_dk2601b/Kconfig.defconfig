@@ -18,6 +18,16 @@ config FLASH_BASE_ADDRESS
 	hex
 	default 0x08000000
 
+<<<<<<< HEAD
+=======
+if SOC_GECKO_USE_RAIL
+
+config FPU
+	default y
+
+endif # SOC_GECKO_USE_RAIL
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if BT
 
 config FPU

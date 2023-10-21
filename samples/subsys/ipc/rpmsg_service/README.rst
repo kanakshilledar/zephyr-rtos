@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _RPMsg_Service_sample:
 
 RPMsg Service sample Application
 ################################
+=======
+.. zephyr:code-sample:: rpmsg-service
+   :name: RPMsg service
+   :relevant-api: rpmsg_service_api
+
+   Send messages between cores using RPMsg service.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

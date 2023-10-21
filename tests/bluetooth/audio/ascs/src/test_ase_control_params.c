@@ -319,6 +319,7 @@ ZTEST_F(test_ase_control_params, test_codec_configure_invalid_ase_id_0x00)
 }
 
 static struct bt_bap_stream test_stream;
+<<<<<<< HEAD
 static const struct bt_codec_qos_pref qos_pref = BT_CODEC_QOS_PREF(true, BT_GAP_LE_PHY_2M,
 								   0x02, 10, 40000, 40000,
 								   40000, 40000);
@@ -327,6 +328,16 @@ static int unicast_server_cb_config_custom_fake(struct bt_conn *conn, const stru
 						enum bt_audio_dir dir, const struct bt_codec *codec,
 						struct bt_bap_stream **stream,
 						struct bt_codec_qos_pref *const pref,
+=======
+static const struct bt_audio_codec_qos_pref qos_pref =
+	BT_AUDIO_CODEC_QOS_PREF(true, BT_GAP_LE_PHY_2M, 0x02, 10, 40000, 40000, 40000, 40000);
+
+static int unicast_server_cb_config_custom_fake(struct bt_conn *conn, const struct bt_bap_ep *ep,
+						enum bt_audio_dir dir,
+						const struct bt_audio_codec_cfg *codec_cfg,
+						struct bt_bap_stream **stream,
+						struct bt_audio_codec_qos_pref *const pref,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						struct bt_bap_ascs_rsp *rsp)
 {
 	*stream = &test_stream;
@@ -645,11 +656,19 @@ ZTEST_F(test_ase_control_params, test_enable_invalid_ase_id)
 		0x03,                   /* Opcode = Enable */
 		0x02,                   /* Number_of_ASEs */
 		ase_id_invalid,         /* ASE_ID[0] */
+<<<<<<< HEAD
 		0x03,                   /* Metadata_Length[0] */
 		0x02, 0x02, 0x04,       /* Metadata[0] = Streaming Context (Media) */
 		ase_id_valid,           /* ASE_ID[1] */
 		0x03,                   /* Metadata_Length[0] */
 		0x02, 0x02, 0x04,       /* Metadata[0] = Streaming Context (Media) */
+=======
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x04, 0x00, /* Metadata[0] = Streaming Context (Media) */
+		ase_id_valid,           /* ASE_ID[1] */
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x04, 0x00, /* Metadata[0] = Streaming Context (Media) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	const uint8_t data_expected[] = {
 		0x03,                   /* Opcode = Enable */
@@ -670,6 +689,35 @@ ZTEST_F(test_ase_control_params, test_enable_invalid_ase_id)
 					     fixture->ase_cp, data_expected, sizeof(data_expected));
 }
 
+<<<<<<< HEAD
+=======
+ZTEST_F(test_ase_control_params, test_enable_metadata_prohibited_context)
+{
+	const uint8_t ase_id_valid = 0x01;
+	const uint8_t buf[] = {
+		0x03,                   /* Opcode = Enable */
+		0x01,                   /* Number_of_ASEs */
+		ase_id_valid,           /* ASE_ID[0] */
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x00, 0x00, /* Metadata[0] = Streaming Context (Prohibited) */
+	};
+	const uint8_t data_expected[] = {
+		0x03,                   /* Opcode = Enable */
+		0x01,                   /* Number_of_ASEs */
+		ase_id_valid,           /* ASE_ID[0] */
+		0x0C,                   /* Response_Code[0] = Invalid Metadata */
+		0x02,                   /* Reason[0] = Streaming Context */
+	};
+
+	test_preamble_state_qos_configured(&fixture->conn, ase_id_valid, &fixture->stream);
+
+	fixture->ase_cp->write(&fixture->conn, fixture->ase_cp, buf, sizeof(buf), 0, 0);
+
+	expect_bt_gatt_notify_cb_called_once(&fixture->conn, BT_UUID_ASCS_ASE_CP,
+					     fixture->ase_cp, data_expected, sizeof(data_expected));
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void test_receiver_start_ready_expect_invalid_length(struct bt_conn *conn, uint8_t ase_id,
 							    const struct bt_gatt_attr *ase_cp,
 							    struct bt_bap_stream *stream,
@@ -830,8 +878,14 @@ static void test_receiver_stop_ready_expect_invalid_length(struct bt_conn *conn,
 		0x02,           /* Response_Code[0] = Invalid Length */
 		0x00,           /* Reason[0] */
 	};
+<<<<<<< HEAD
 
 	test_preamble_state_disabling(conn, ase_id, stream);
+=======
+	struct bt_iso_chan *chan;
+
+	test_preamble_state_disabling(conn, ase_id, stream, &chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ase_cp->write(conn, ase_cp, buf, len, 0, 0);
 
@@ -988,11 +1042,19 @@ ZTEST_F(test_ase_control_params, test_update_metadata_invalid_ase_id)
 		0x07,                   /* Opcode = Update Metadata */
 		0x02,                   /* Number_of_ASEs */
 		ase_id_invalid,         /* ASE_ID[0] */
+<<<<<<< HEAD
 		0x03,                   /* Metadata_Length[0] */
 		0x02, 0x02, 0x04,       /* Metadata[0] = Streaming Context (Media) */
 		ase_id_valid,           /* ASE_ID[1] */
 		0x03,                   /* Metadata_Length[0] */
 		0x02, 0x02, 0x04,       /* Metadata[0] = Streaming Context (Media) */
+=======
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x04, 0x00, /* Metadata[0] = Streaming Context (Media) */
+		ase_id_valid,           /* ASE_ID[1] */
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x04, 0x00, /* Metadata[0] = Streaming Context (Media) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	const uint8_t data_expected[] = {
 		0x07,                   /* Opcode = Update Metadata */

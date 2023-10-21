@@ -7,6 +7,10 @@ EFR32 Radio Boards
    :maxdepth: 1
 
    brd4104a.rst
+<<<<<<< HEAD
+=======
+   brd4170a.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    brd4250b.rst
    brd4180a.rst
    brd4255a.rst

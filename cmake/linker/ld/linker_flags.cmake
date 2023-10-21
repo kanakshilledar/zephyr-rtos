@@ -10,6 +10,11 @@ else()
   set_property(TARGET linker PROPERTY no_position_independent)
 endif()
 
+<<<<<<< HEAD
+=======
+set_property(TARGET linker PROPERTY partial_linking "-r")
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Some linker flags might not be purely ld specific, but a combination of
 # linker and compiler, such as:
 # --coverage for clang

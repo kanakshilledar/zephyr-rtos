@@ -2,6 +2,10 @@
  * Copyright (c) 2019-2020 Peter Bigot Consulting, LLC
  * Copyright (c) 2021 NXP
  * Copyright (c) 2022 Nordic Semiconductor ASA
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 EPAM Systems
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -58,9 +62,18 @@ typedef uint8_t regulator_error_flags_t;
 typedef int (*regulator_dvs_state_set_t)(const struct device *dev,
 					 regulator_dvs_state_t state);
 
+<<<<<<< HEAD
 /** @brief Driver-specific API functions to support parent regulator control. */
 __subsystem struct regulator_parent_driver_api {
 	regulator_dvs_state_set_t dvs_state_set;
+=======
+typedef int (*regulator_ship_mode_t)(const struct device *dev);
+
+/** @brief Driver-specific API functions to support parent regulator control. */
+__subsystem struct regulator_parent_driver_api {
+	regulator_dvs_state_set_t dvs_state_set;
+	regulator_ship_mode_t ship_mode;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 typedef int (*regulator_enable_t)(const struct device *dev);
@@ -239,6 +252,31 @@ static inline bool regulator_common_is_init_enabled(const struct device *dev)
 	return (config->flags & REGULATOR_INIT_ENABLED) != 0U;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Get minimum supported voltage.
+ *
+ * @param dev Regulator device instance.
+ * @param min_uv Where minimum voltage will be stored, in microvolts.
+ *
+ * @retval 0 If successful
+ * @retval -ENOENT If minimum voltage is not specified.
+ */
+static inline int regulator_common_get_min_voltage(const struct device *dev, int32_t *min_uv)
+{
+	const struct regulator_common_config *config =
+		(const struct regulator_common_config *)dev->config;
+
+	if (config->min_uv == INT32_MIN) {
+		return -ENOENT;
+	}
+
+	*min_uv = config->min_uv;
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @endcond */
 
 /**
@@ -279,6 +317,35 @@ static inline int regulator_parent_dvs_state_set(const struct device *dev,
 	return api->dvs_state_set(dev, state);
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Enter ship mode.
+ *
+ * Some PMICs feature a ship mode, which allows the system to save power.
+ * Exit from low power is normally by pin transition.
+ *
+ * This API can be used when ship mode needs to be entered.
+ *
+ * @param dev Parent regulator device instance.
+ *
+ * @retval 0 If successful.
+ * @retval -ENOSYS If function is not implemented.
+ * @retval -errno In case of any other error.
+ */
+static inline int regulator_parent_ship_mode(const struct device *dev)
+{
+	const struct regulator_parent_driver_api *api =
+		(const struct regulator_parent_driver_api *)dev->api;
+
+	if (api->ship_mode == NULL) {
+		return -ENOSYS;
+	}
+
+	return api->ship_mode(dev);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @} */
 
 /**
@@ -293,6 +360,10 @@ static inline int regulator_parent_dvs_state_set(const struct device *dev,
  *
  * @retval 0 If regulator has been successfully enabled.
  * @retval -errno Negative errno in case of failure.
+<<<<<<< HEAD
+=======
+ * @retval -ENOTSUP If regulator enablement can not be controlled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 int regulator_enable(const struct device *dev);
 
@@ -320,6 +391,10 @@ bool regulator_is_enabled(const struct device *dev);
  *
  * @retval 0 If regulator has been successfully disabled.
  * @retval -errno Negative errno in case of failure.
+<<<<<<< HEAD
+=======
+ * @retval -ENOTSUP If regulator disablement can not be controlled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 int regulator_disable(const struct device *dev);
 

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _nvs-sample:
 
 NVS: Non-Volatile Storage
 #########################
+=======
+.. zephyr:code-sample:: nvs
+   :name: Non-Volatile Storage (NVS)
+   :relevant-api: nvs_high_level_api
+
+   Store and retrieve data from flash using the NVS API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

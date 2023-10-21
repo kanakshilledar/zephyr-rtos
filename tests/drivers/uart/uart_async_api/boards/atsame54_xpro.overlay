@@ -1,5 +1,12 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
+<<<<<<< HEAD
+=======
+&dmac {
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 dut: &sercom1 {
 	status = "okay";
 	compatible = "atmel,sam0-uart";
@@ -15,3 +22,12 @@ dut: &sercom1 {
 	dmas = <&dmac 0 6>, <&dmac 1 7>;
 	dma-names = "rx", "tx";
 };
+<<<<<<< HEAD
+=======
+
+&sercom2 {
+	/* configure DMA channels for async operation */
+	dmas = <&dmac 30 8>, <&dmac 31 9>;
+	dma-names = "rx", "tx";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

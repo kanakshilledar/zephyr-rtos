@@ -140,8 +140,12 @@ int lis3mdl_init(const struct device *dev)
 	chip_cfg[0] = LIS3MDL_REG_CTRL1;
 	chip_cfg[1] = LIS3MDL_TEMP_EN_MASK | lis3mdl_odr_bits[idx];
 	chip_cfg[2] = LIS3MDL_FS_IDX << LIS3MDL_FS_SHIFT;
+<<<<<<< HEAD
 	chip_cfg[3] = lis3mdl_odr_bits[idx] & LIS3MDL_FAST_ODR_MASK ?
 		      LIS3MDL_MD_SINGLE : LIS3MDL_MD_CONTINUOUS;
+=======
+	chip_cfg[3] = LIS3MDL_MD_CONTINUOUS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	chip_cfg[4] = ((lis3mdl_odr_bits[idx] & LIS3MDL_OM_MASK) >>
 		       LIS3MDL_OM_SHIFT) << LIS3MDL_OMZ_SHIFT;
 	chip_cfg[5] = LIS3MDL_BDU_EN;

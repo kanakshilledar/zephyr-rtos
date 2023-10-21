@@ -13,7 +13,10 @@
 #include <zephyr/dt-bindings/gpio/gpio.h>
 #include <zephyr/dt-bindings/pinctrl/mchp-xec-pinctrl.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/irq.h>
 
 #include <zephyr/drivers/gpio/gpio_utils.h>
@@ -94,6 +97,14 @@ static int gpio_xec_validate_flags(gpio_flags_t flags)
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
+=======
+	if ((flags & (GPIO_INPUT | GPIO_OUTPUT))
+	    == (GPIO_INPUT | GPIO_OUTPUT)) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if ((flags & GPIO_OUTPUT_INIT_LOW) && (flags & GPIO_OUTPUT_INIT_HIGH)) {
 		return -EINVAL;
 	}

@@ -504,7 +504,11 @@ static int configure_button(void)
 {
 	static struct gpio_callback button_cb;
 
+<<<<<<< HEAD
 	if (!device_is_ready(sw0_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&sw0_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", sw0_gpio.port->name);
 		return -ENODEV;
 	}
@@ -553,7 +557,11 @@ static int configure_leds(void)
 	int i;
 
 	for (i = 0; i < ARRAY_SIZE(leds); i++) {
+<<<<<<< HEAD
 		if (!device_is_ready(leds[i].port)) {
+=======
+		if (!gpio_is_ready_dt(&leds[i])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			printk("%s: device not ready.\n", leds[i].port->name);
 			return -ENODEV;
 		}

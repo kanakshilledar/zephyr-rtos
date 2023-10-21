@@ -454,10 +454,16 @@ void ull_sync_iso_setup(struct ll_sync_iso_set *sync_iso,
 
 	/* Initialize payload pointers */
 	lll->payload_count_max = PDU_BIG_PAYLOAD_COUNT_MAX;
+<<<<<<< HEAD
 	lll->payload_head = 0U;
 	lll->payload_tail = 0U;
 	for (int i = 0; i < CONFIG_BT_CTLR_SYNC_ISO_STREAM_MAX; i++) {
 		for (int j = 0; j < PDU_BIG_PAYLOAD_COUNT_MAX; j++) {
+=======
+	lll->payload_tail = 0U;
+	for (int i = 0; i < CONFIG_BT_CTLR_SYNC_ISO_STREAM_MAX; i++) {
+		for (int j = 0; j < lll->payload_count_max; j++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			lll->payload[i][j] = NULL;
 		}
 	}
@@ -509,11 +515,19 @@ void ull_sync_iso_setup(struct ll_sync_iso_set *sync_iso,
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_XTAL_US);
 	sync_iso->ull.ticks_preempt_to_start =
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_PREEMPT_MIN_US);
+<<<<<<< HEAD
 	sync_iso->ull.ticks_slot = HAL_TICKER_US_TO_TICKS(
 			EVENT_OVERHEAD_START_US + ready_delay_us +
 			PDU_BIS_MAX_US(PDU_AC_EXT_PAYLOAD_SIZE_MAX, lll->enc,
 				       lll->phy) +
 			EVENT_OVERHEAD_END_US);
+=======
+	sync_iso->ull.ticks_slot = HAL_TICKER_US_TO_TICKS_CEIL(
+		EVENT_OVERHEAD_START_US + ready_delay_us +
+		PDU_BIS_MAX_US(PDU_AC_EXT_PAYLOAD_SIZE_MAX, lll->enc,
+			       lll->phy) +
+		EVENT_OVERHEAD_END_US);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ticks_slot_offset = MAX(sync_iso->ull.ticks_active_to_start,
 				sync_iso->ull.ticks_prepare_to_start);

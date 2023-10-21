@@ -16,7 +16,11 @@ endif # SERIAL
 config ZTEST_STACK_SIZE
 	default 4096 if ZTEST
 
+<<<<<<< HEAD
 if COVERAGE
+=======
+if COVERAGE_GCOV
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config MAIN_STACK_SIZE
 	default 4096
@@ -33,6 +37,10 @@ config ISR_STACK_SIZE
 config TEST_EXTRA_STACK_SIZE
 	default 4096
 
+<<<<<<< HEAD
 endif # COVERAGE
+=======
+endif # COVERAGE_GCOV
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endif

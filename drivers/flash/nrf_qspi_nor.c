@@ -179,6 +179,11 @@ static bool qspi_initialized;
 
 static int qspi_device_init(const struct device *dev);
 static void qspi_device_uninit(const struct device *dev);
+<<<<<<< HEAD
+=======
+void z_impl_nrf_qspi_nor_xip_enable(const struct device *dev, bool enable);
+void z_vrfy_nrf_qspi_nor_xip_enable(const struct device *dev, bool enable);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define WORD_SIZE 4
 
@@ -1060,8 +1065,13 @@ BUILD_ASSERT((CONFIG_NORDIC_QSPI_NOR_STACK_WRITE_BUFFER_SIZE % 4) == 0,
  *
  * If not enabled return the error the peripheral would have produced.
  */
+<<<<<<< HEAD
 static inline nrfx_err_t write_from_nvmc(const struct device *dev, off_t addr,
 					 const void *sptr, size_t slen)
+=======
+static nrfx_err_t write_through_buffer(const struct device *dev, off_t addr,
+				       const void *sptr, size_t slen)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	nrfx_err_t res = NRFX_SUCCESS;
 
@@ -1073,7 +1083,11 @@ static inline nrfx_err_t write_from_nvmc(const struct device *dev, off_t addr,
 			size_t len = MIN(slen, sizeof(buf));
 
 			memcpy(buf, sp, len);
+<<<<<<< HEAD
 			res = nrfx_qspi_write(buf, sizeof(buf), addr);
+=======
+			res = nrfx_qspi_write(buf, len, addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			qspi_wait_for_completion(dev, res);
 
 			if (res == NRFX_SUCCESS) {
@@ -1131,8 +1145,14 @@ static int qspi_nor_write(const struct device *dev, off_t addr,
 	if (!res) {
 		if (size < 4U) {
 			res = write_sub_word(dev, addr, src, size);
+<<<<<<< HEAD
 		} else if (!nrfx_is_in_ram(src)) {
 			res = write_from_nvmc(dev, addr, src, size);
+=======
+		} else if (!nrfx_is_in_ram(src) ||
+			   !nrfx_is_word_aligned(src)) {
+			res = write_through_buffer(dev, addr, src, size);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			res = nrfx_qspi_write(src, size, addr);
 			qspi_wait_for_completion(dev, res);
@@ -1228,6 +1248,10 @@ static int qspi_nor_configure(const struct device *dev)
  */
 static int qspi_nor_init(const struct device *dev)
 {
+<<<<<<< HEAD
+=======
+	int rc;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct qspi_nor_config *dev_config = dev->config;
 	int ret = pinctrl_apply_state(dev_config->pcfg, PINCTRL_STATE_DEFAULT);
 
@@ -1237,7 +1261,23 @@ static int qspi_nor_init(const struct device *dev)
 
 	IRQ_CONNECT(DT_IRQN(QSPI_NODE), DT_IRQ(QSPI_NODE, priority),
 		    nrfx_isr, nrfx_qspi_irq_handler, 0);
+<<<<<<< HEAD
 	return qspi_nor_configure(dev);
+=======
+
+	rc = qspi_nor_configure(dev);
+
+#ifdef CONFIG_NORDIC_QSPI_NOR_XIP
+	if (!rc) {
+		/* Enable XIP mode for QSPI NOR flash, this will prevent the
+		 * flash from being powered down
+		 */
+		z_impl_nrf_qspi_nor_xip_enable(dev, true);
+	}
+#endif
+
+	return rc;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_FLASH_PAGE_LAYOUT)
@@ -1368,6 +1408,13 @@ static int qspi_nor_pm_action(const struct device *dev,
 		}
 #endif
 
+<<<<<<< HEAD
+=======
+		if (dev_data->xip_enabled) {
+			return -EBUSY;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (nrfx_qspi_mem_busy_check() != NRFX_SUCCESS) {
 			return -EBUSY;
 		}
@@ -1420,8 +1467,23 @@ static int qspi_nor_pm_action(const struct device *dev,
 void z_impl_nrf_qspi_nor_xip_enable(const struct device *dev, bool enable)
 {
 	struct qspi_nor_data *dev_data = dev->data;
+<<<<<<< HEAD
 
 	qspi_device_init(dev);
+=======
+	int ret;
+
+	if (dev_data->xip_enabled == enable) {
+		return;
+	}
+
+	ret = qspi_device_init(dev);
+
+	if (ret != 0) {
+		LOG_ERR("NRF QSPI NOR XIP %s failed with %d\n", enable ? "enable" : "disable", ret);
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if NRF_QSPI_HAS_XIPEN
 	nrf_qspi_xip_set(NRF_QSPI, enable);

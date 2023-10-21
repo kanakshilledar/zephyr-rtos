@@ -6,6 +6,10 @@
 
 /dts-v1/;
 #include <seeed/lora-e5.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Seeed Studio LoRa-E5 Dev Board";
@@ -33,12 +37,20 @@
 		boot_button: button_0 {
 			label = "SW1";
 			gpios = <&gpiob 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		user_button: button_1 {
 			label = "SW2";
 			gpios = <&gpioa 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			/* user_button can be disconnected, using J14 (D0) */
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -74,6 +86,7 @@
 		regulator-boot-on;
 		status = "okay";
 	};
+<<<<<<< HEAD
 
 	power-states {
 		stop0: state0 {
@@ -99,6 +112,8 @@
 
 &cpu0 {
 	cpu-power-states = <&stop0 &stop1 &stop2>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &lptim1 {
@@ -179,6 +194,11 @@
 &adc1 {
 	pinctrl-0 = <&adc_in2_pb3>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 

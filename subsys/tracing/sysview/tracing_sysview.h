@@ -530,8 +530,11 @@ void sys_trace_thread_info(struct k_thread *thread);
 #define sys_port_trace_k_pipe_get_enter(pipe, timeout)
 #define sys_port_trace_k_pipe_get_blocking(pipe, timeout)
 #define sys_port_trace_k_pipe_get_exit(pipe, timeout, ret)
+<<<<<<< HEAD
 #define sys_port_trace_k_pipe_block_put_enter(pipe, sem)
 #define sys_port_trace_k_pipe_block_put_exit(pipe, sem)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define sys_port_trace_k_event_init(event)
 #define sys_port_trace_k_event_post_enter(event, events, events_mask)
@@ -606,10 +609,17 @@ void sys_trace_thread_info(struct k_thread *thread);
 	SEGGER_SYSVIEW_RecordEndCallU32(TID_TIMER_STATUS_SYNC, (uint32_t)result)
 
 #define sys_port_trace_syscall_enter(id, name, ...)	\
+<<<<<<< HEAD
 	SEGGER_SYSVIEW_RecordU32(TID_SYSCALL, (uint32_t)id)
 
 #define sys_port_trace_syscall_exit(id, name, ...)	\
 	SEGGER_SYSVIEW_RecordEndCallU32(TID_SYSCALL, (uint32_t)id)
+=======
+	SEGGER_SYSVIEW_RecordString(TID_SYSCALL, (const char *)#name)
+
+#define sys_port_trace_syscall_exit(id, name, ...)	\
+	SEGGER_SYSVIEW_RecordEndCall(TID_SYSCALL)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void sys_trace_idle(void);
 

@@ -865,7 +865,13 @@ class Node:
     unit_addr:
       An integer with the ...@<unit-address> portion of the node name,
       translated through any 'ranges' properties on parent nodes, or None if
+<<<<<<< HEAD
       the node name has no unit-address portion
+=======
+      the node name has no unit-address portion. PCI devices use a different
+      node name format ...@<dev>,<func> or ...@<dev> (e.g. "pcie@1,0"), in
+      this case None is returned.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     description:
       The description string from the binding for the node, or None if the node
@@ -982,6 +988,12 @@ class Node:
       A list of ControllerAndData objects for the GPIOs hogged by the node. The
       list is empty if the node does not hog any GPIOs. Only relevant for GPIO hog
       nodes.
+<<<<<<< HEAD
+=======
+
+    is_pci_device:
+      True if the node is a PCI device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     """
 
     def __init__(self,
@@ -1019,7 +1031,12 @@ class Node:
 
         # TODO: Return a plain string here later, like dtlib.Node.unit_addr?
 
+<<<<<<< HEAD
         if "@" not in self.name:
+=======
+        # PCI devices use a different node name format (e.g. "pcie@1,0")
+        if "@" not in self.name or self.is_pci_device:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return None
 
         try:
@@ -1211,6 +1228,14 @@ class Node:
 
         return res
 
+<<<<<<< HEAD
+=======
+    @property
+    def is_pci_device(self) -> bool:
+        "See the class docstring"
+        return 'pcie' in self.on_buses
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     def __repr__(self) -> str:
         if self.binding_path:
             binding = "binding " + self.binding_path
@@ -1540,7 +1565,10 @@ class Node:
             # Allow a few special properties to not be declared in the binding
             if prop_name.endswith("-controller") or \
                prop_name.startswith("#") or \
+<<<<<<< HEAD
                prop_name.startswith("pinctrl-") or \
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                prop_name in {
                    "compatible", "status", "ranges", "phandle",
                    "interrupt-parent", "interrupts-extended", "device_type"}:
@@ -1640,7 +1668,12 @@ class Node:
                 size = None
             else:
                 size = to_num(raw_reg[4*address_cells:])
+<<<<<<< HEAD
             if size_cells != 0 and size == 0:
+=======
+            # Size zero is ok for PCI devices
+            if size_cells != 0 and size == 0 and not self.is_pci_device:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 _err(f"zero-sized 'reg' in {self._node!r} seems meaningless "
                      "(maybe you want a size of one or #size-cells = 0 "
                      "instead)")
@@ -2050,6 +2083,13 @@ class EDT:
         # first time the scc_order property is read.
 
         for node in self.nodes:
+<<<<<<< HEAD
+=======
+            # Always insert root node
+            if not node.parent:
+                self._graph.add_node(node)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             # A Node always depends on its parent.
             for child in node.children.values():
                 self._graph.add_edge(child, node)
@@ -2211,7 +2251,13 @@ class EDT:
         if self._warn_reg_unit_address_mismatch:
             # This warning matches the simple_bus_reg warning in dtc
             for node in self.nodes:
+<<<<<<< HEAD
                 if node.regs and node.regs[0].addr != node.unit_addr:
+=======
+                # Address mismatch is ok for PCI devices
+                if (node.regs and node.regs[0].addr != node.unit_addr and
+                        not node.is_pci_device):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     _LOG.warning("unit address and first address in 'reg' "
                                  f"(0x{node.regs[0].addr:x}) don't match for "
                                  f"{node.path}")
@@ -2247,8 +2293,12 @@ class EDT:
 
                     # As an exception, the root node can have whatever
                     # compatibles it wants. Other nodes get checked.
+<<<<<<< HEAD
                     elif node.path != '/' and \
                        vendor not in _VENDOR_PREFIX_ALLOWED:
+=======
+                    elif node.path != '/':
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                         if self._werror:
                             handler_fn: Any = _err
                         else:
@@ -3176,6 +3226,10 @@ _BindingLoader.add_constructor("!include", _binding_include)
 _DEFAULT_PROP_TYPES: Dict[str, str] = {
     "compatible": "string-array",
     "status": "string",
+<<<<<<< HEAD
+=======
+    "ranges": "compound",  # NUMS or EMPTY
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     "reg": "array",
     "reg-names": "string-array",
     "label": "string",
@@ -3213,6 +3267,7 @@ _DEFAULT_PROP_SPECS: Dict[str, PropertySpec] = {
     name: PropertySpec(name, _DEFAULT_PROP_BINDING)
     for name in _DEFAULT_PROP_TYPES
 }
+<<<<<<< HEAD
 
 # A set of vendor prefixes which are grandfathered in by Linux,
 # and therefore by us as well.
@@ -3224,3 +3279,5 @@ _VENDOR_PREFIX_ALLOWED: Set[str] = set([
     "pl022", "pxa-mmc", "rcar_sound", "rotary-encoder", "s5m8767",
     "sdhci", "simple-audio-card", "st-plgpio", "st-spics", "ts",
 ])
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

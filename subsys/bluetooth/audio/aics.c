@@ -164,6 +164,77 @@ static ssize_t read_input_status(struct bt_conn *conn,
 				 sizeof(inst->srv.status));
 }
 
+<<<<<<< HEAD
+=======
+static const char *aics_notify_str(enum bt_aics_notify notify)
+{
+	switch (notify) {
+	case AICS_NOTIFY_STATE:
+		return "state";
+	case AICS_NOTIFY_DESCRIPTION:
+		return "description";
+	case AICS_NOTIFY_STATUS:
+		return "status";
+	default:
+		return "unknown";
+	}
+}
+
+static void notify_work_reschedule(struct bt_aics *inst, enum bt_aics_notify notify,
+				   k_timeout_t delay)
+{
+	int err;
+
+	atomic_set_bit(inst->srv.notify, notify);
+
+	err = k_work_reschedule(&inst->srv.notify_work, K_NO_WAIT);
+	if (err < 0) {
+		LOG_ERR("Failed to reschedule %s notification err %d",
+			aics_notify_str(notify), err);
+	}
+}
+
+static void notify(struct bt_aics *inst, enum bt_aics_notify notify, const struct bt_uuid *uuid,
+		   const void *data, uint16_t len)
+{
+	int err;
+
+	err = bt_gatt_notify_uuid(NULL, uuid, inst->srv.service_p->attrs, data, len);
+	if (err == -ENOMEM) {
+		notify_work_reschedule(inst, notify, K_USEC(BT_AUDIO_NOTIFY_RETRY_DELAY_US));
+	} else if (err < 0 && err != -ENOTCONN) {
+		LOG_ERR("Notify %s err %d", aics_notify_str(notify), err);
+	}
+}
+
+static void notify_work_handler(struct k_work *work)
+{
+	struct k_work_delayable *d_work = k_work_delayable_from_work(work);
+	struct bt_aics *inst = CONTAINER_OF(d_work, struct bt_aics, srv.notify_work);
+
+	if (atomic_test_and_clear_bit(inst->srv.notify, AICS_NOTIFY_STATE)) {
+		notify(inst, AICS_NOTIFY_STATE, BT_UUID_AICS_STATE, &inst->srv.state,
+		       sizeof(inst->srv.state));
+	}
+
+	if (atomic_test_and_clear_bit(inst->srv.notify, AICS_NOTIFY_DESCRIPTION)) {
+		notify(inst, AICS_NOTIFY_DESCRIPTION, BT_UUID_AICS_DESCRIPTION,
+		       &inst->srv.description, strlen(inst->srv.description));
+	}
+
+	if (atomic_test_and_clear_bit(inst->srv.notify, AICS_NOTIFY_STATUS)) {
+		notify(inst, AICS_NOTIFY_STATUS, BT_UUID_AICS_INPUT_STATUS, &inst->srv.status,
+		       sizeof(inst->srv.status));
+	}
+}
+
+static void value_changed(struct bt_aics *inst, enum bt_aics_notify notify)
+{
+	notify_work_reschedule(inst, notify, K_NO_WAIT);
+}
+#else
+#define value_changed(...)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_BT_AICS */
 
 static ssize_t write_aics_control(struct bt_conn *conn,
@@ -264,9 +335,13 @@ static ssize_t write_aics_control(struct bt_conn *conn,
 			inst->srv.state.gain, inst->srv.state.mute, inst->srv.state.gain_mode,
 			inst->srv.state.change_counter);
 
+<<<<<<< HEAD
 		bt_gatt_notify_uuid(NULL, BT_UUID_AICS_STATE,
 				    inst->srv.service_p->attrs, &inst->srv.state,
 				    sizeof(inst->srv.state));
+=======
+		value_changed(inst, AICS_NOTIFY_STATE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (inst->srv.cb && inst->srv.cb->state) {
 			inst->srv.cb->state(inst, 0, inst->srv.state.gain,
@@ -306,9 +381,13 @@ static ssize_t write_description(struct bt_conn *conn,
 		memcpy(inst->srv.description, buf, len);
 		inst->srv.description[len] = '\0';
 
+<<<<<<< HEAD
 		bt_gatt_notify_uuid(NULL, BT_UUID_AICS_DESCRIPTION,
 				    inst->srv.service_p->attrs, &inst->srv.description,
 				    strlen(inst->srv.description));
+=======
+		value_changed(inst, AICS_NOTIFY_DESCRIPTION);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (inst->srv.cb && inst->srv.cb->description) {
 			inst->srv.cb->description(inst, 0,
@@ -444,6 +523,12 @@ int bt_aics_register(struct bt_aics *aics, struct bt_aics_register_param *param)
 	aics->srv.status = param->status ? BT_AICS_STATUS_ACTIVE : BT_AICS_STATUS_INACTIVE;
 	aics->srv.cb = param->cb;
 
+<<<<<<< HEAD
+=======
+	atomic_clear(aics->srv.notify);
+	k_work_init_delayable(&aics->srv.notify_work, notify_work_handler);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (param->description) {
 		strncpy(aics->srv.description, param->description,
 			sizeof(aics->srv.description) - 1);
@@ -517,10 +602,14 @@ int bt_aics_deactivate(struct bt_aics *inst)
 		inst->srv.status = BT_AICS_STATUS_INACTIVE;
 		LOG_DBG("Instance %p: Status was set to inactive", inst);
 
+<<<<<<< HEAD
 		bt_gatt_notify_uuid(NULL, BT_UUID_AICS_INPUT_STATUS,
 				    inst->srv.service_p->attrs,
 				    &inst->srv.status,
 				    sizeof(inst->srv.status));
+=======
+		value_changed(inst, AICS_NOTIFY_STATUS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (inst->srv.cb && inst->srv.cb->status) {
 			inst->srv.cb->status(inst, 0, inst->srv.status);
@@ -547,10 +636,14 @@ int bt_aics_activate(struct bt_aics *inst)
 		inst->srv.status = BT_AICS_STATUS_ACTIVE;
 		LOG_DBG("Instance %p: Status was set to active", inst);
 
+<<<<<<< HEAD
 		bt_gatt_notify_uuid(NULL, BT_UUID_AICS_INPUT_STATUS,
 				    inst->srv.service_p->attrs,
 				    &inst->srv.status,
 				    sizeof(inst->srv.status));
+=======
+		value_changed(inst, AICS_NOTIFY_STATUS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (inst->srv.cb && inst->srv.cb->status) {
 			inst->srv.cb->status(inst, 0, inst->srv.status);
@@ -572,8 +665,12 @@ int bt_aics_gain_set_manual_only(struct bt_aics *inst)
 
 	inst->srv.state.gain_mode = BT_AICS_MODE_MANUAL_ONLY;
 
+<<<<<<< HEAD
 	bt_gatt_notify_uuid(NULL, BT_UUID_AICS_STATE, inst->srv.service_p->attrs,
 			    &inst->srv.state, sizeof(inst->srv.state));
+=======
+	value_changed(inst, AICS_NOTIFY_STATE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -587,8 +684,12 @@ int bt_aics_gain_set_auto_only(struct bt_aics *inst)
 
 	inst->srv.state.gain_mode = BT_AICS_MODE_AUTO_ONLY;
 
+<<<<<<< HEAD
 	bt_gatt_notify_uuid(NULL, BT_UUID_AICS_STATE, inst->srv.service_p->attrs,
 			    &inst->srv.state, sizeof(inst->srv.state));
+=======
+	value_changed(inst, AICS_NOTIFY_STATE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -691,8 +792,12 @@ int bt_aics_disable_mute(struct bt_aics *inst)
 
 	inst->srv.state.mute = BT_AICS_STATE_MUTE_DISABLED;
 
+<<<<<<< HEAD
 	bt_gatt_notify_uuid(NULL, BT_UUID_AICS_STATE, inst->srv.service_p->attrs,
 			    &inst->srv.state, sizeof(inst->srv.state));
+=======
+	value_changed(inst, AICS_NOTIFY_STATE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

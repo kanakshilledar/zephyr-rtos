@@ -21,8 +21,13 @@ struct dspcs {
 	struct {
 		uint32_t cap;
 		uint32_t ctl;
+<<<<<<< HEAD
 	} capctl[3];
 	uint32_t unused0[10];
+=======
+	} capctl[5];
+	uint32_t unused0[6];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/*
 	 * DSPBRx
@@ -40,7 +45,11 @@ struct dspcs {
 		uint32_t baddr;
 		uint32_t battr;
 		uint32_t unused2;
+<<<<<<< HEAD
 	} bootctl[3];
+=======
+	} bootctl[5];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define DSPCS_CTL_SPA					BIT(0)

@@ -17,7 +17,11 @@
 #define DT_DRV_COMPAT gaisler_irqmp
 
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
+=======
+#include <zephyr/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * Register description for IRQMP and IRQAMP interrupt controllers
@@ -108,7 +112,11 @@ int z_sparc_int_get_source(int irl)
 	return source;
 }
 
+<<<<<<< HEAD
 static int irqmp_init(void)
+=======
+static int irqmp_init(const struct device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	volatile struct irqmp_regs *regs = get_irqmp_regs();
 
@@ -121,4 +129,9 @@ static int irqmp_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(irqmp_init, PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, irqmp_init, NULL, NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

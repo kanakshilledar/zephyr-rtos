@@ -41,6 +41,13 @@ class QuarantineElement:
     architectures: list[str] = field(default_factory=list)
     simulations: list[str] = field(default_factory=list)
     comment: str = 'NA'
+<<<<<<< HEAD
+=======
+    re_scenarios: list = field(default_factory=list)
+    re_platforms: list = field(default_factory=list)
+    re_architectures: list = field(default_factory=list)
+    re_simulations: list = field(default_factory=list)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def __post_init__(self):
         # If there is no entry in filters then take all possible values.
@@ -53,6 +60,15 @@ class QuarantineElement:
             self.architectures = []
         if 'all' in self.simulations:
             self.simulations = []
+<<<<<<< HEAD
+=======
+        # keep precompiled regexp entiries to speed-up matching
+        self.re_scenarios = [re.compile(pat) for pat in self.scenarios]
+        self.re_platforms = [re.compile(pat) for pat in self.platforms]
+        self.re_architectures = [re.compile(pat) for pat in self.architectures]
+        self.re_simulations = [re.compile(pat) for pat in self.simulations]
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         # However, at least one of the filters ('scenarios', platforms' ...)
         # must be given (there is no sense to put all possible configuration
         # into quarantine)
@@ -101,6 +117,7 @@ class QuarantineData:
         for qelem in self.qlist:
             matched: bool = False
             if (qelem.scenarios
+<<<<<<< HEAD
                     and (matched := _is_element_matched(scenario, qelem.scenarios)) is False):
                 continue
             if (qelem.platforms
@@ -111,6 +128,18 @@ class QuarantineData:
                 continue
             if (qelem.simulations
                     and (matched := _is_element_matched(simulation, qelem.simulations)) is False):
+=======
+                    and (matched := _is_element_matched(scenario, qelem.re_scenarios)) is False):
+                continue
+            if (qelem.platforms
+                    and (matched := _is_element_matched(platform, qelem.re_platforms)) is False):
+                continue
+            if (qelem.architectures
+                    and (matched := _is_element_matched(architecture, qelem.re_architectures)) is False):
+                continue
+            if (qelem.simulations
+                    and (matched := _is_element_matched(simulation, qelem.re_simulations)) is False):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 continue
 
             if matched:
@@ -118,9 +147,16 @@ class QuarantineData:
         return None
 
 
+<<<<<<< HEAD
 def _is_element_matched(element: str, list_of_elements: list) -> bool:
     """Return True if given element is matching to any of elements from the list"""
     for pattern in list_of_elements:
         if re.fullmatch(pattern, element):
+=======
+def _is_element_matched(element: str, list_of_elements: list[re.Pattern]) -> bool:
+    """Return True if given element is matching to any of elements from the list"""
+    for pattern in list_of_elements:
+        if pattern.fullmatch(element):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return True
     return False

@@ -137,7 +137,11 @@ int sema_test(void)
 			"Semaphore #2");
 	fprintf(output_file, sz_description,
 			"\n\tk_sem_init"
+<<<<<<< HEAD
 			"\n\tk_sem_take(TICKS_NONE)"
+=======
+			"\n\tk_sem_take(K_NO_WAIT)"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			"\n\tk_yield"
 			"\n\tk_sem_give");
 	printf(sz_test_start_fmt);

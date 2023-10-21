@@ -54,6 +54,7 @@ struct usbh_contex {
 	}
 
 /**
+<<<<<<< HEAD
  * @brief USB host peripheral structure
  */
 struct usbh_peripheral {
@@ -69,14 +70,22 @@ struct usbh_peripheral {
  * @brief Class Code
  */
 struct usbh_class_code {
+=======
+ * @brief USB Class Code triple
+ */
+struct usbh_code_triple {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** Device Class Code */
 	uint8_t dclass;
 	/** Class Subclass Code */
 	uint8_t sub;
 	/** Class Protocol Code */
 	uint8_t proto;
+<<<<<<< HEAD
 	/** Reserved */
 	uint8_t reserved;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -84,7 +93,11 @@ struct usbh_class_code {
  */
 struct usbh_class_data {
 	/** Class code supported by this instance */
+<<<<<<< HEAD
 	struct usbh_class_code code;
+=======
+	struct usbh_code_triple code;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** Initialization of the class implementation */
 	/* int (*init)(struct usbh_contex *const uhs_ctx); */

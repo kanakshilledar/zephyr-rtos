@@ -54,7 +54,11 @@ ZTEST_SUITE(bt_setup_random_id_addr_bt_settings_enabled, NULL, NULL, tc_setup, N
  *
  *  Expected behaviour:
  *   - ID count is set to 0 and bt_setup_random_id_addr() returns a negative error code
+<<<<<<< HEAD
  *   - No expected calls to bt_settings_save_id()
+=======
+ *   - No expected calls to bt_settings_store_id()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 ZTEST(bt_setup_random_id_addr_bt_settings_enabled, test_bt_read_static_addr_returns_zero)
 {
@@ -65,7 +69,11 @@ ZTEST(bt_setup_random_id_addr_bt_settings_enabled, test_bt_read_static_addr_retu
 
 	err = bt_setup_random_id_addr();
 
+<<<<<<< HEAD
 	expect_not_called_bt_settings_save_id();
+=======
+	expect_not_called_bt_settings_store_id();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_true(bt_dev.id_count == 0, "Incorrect value '%d' was set to bt_dev.id_count",
 		     bt_dev.id_count);
@@ -90,7 +98,11 @@ static int bt_hci_cmd_send_sync_custom_fake(uint16_t opcode, struct net_buf *buf
 
 /*
  *  Test reading controller static random address through bt_hci_cmd_send_sync().
+<<<<<<< HEAD
  *  Even if the operation succeeded, bt_settings_save_id() shouldn't be called to
+=======
+ *  Even if the operation succeeded, bt_settings_store_id() shouldn't be called to
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  store settings as the 'BT_DEV_READY' bit isn't set.
  *
  *  Constraints:
@@ -101,7 +113,11 @@ static int bt_hci_cmd_send_sync_custom_fake(uint16_t opcode, struct net_buf *buf
  *  Expected behaviour:
  *   - Return value is 0
  *   - Static random address is loaded to bt_dev.id_addr[]
+<<<<<<< HEAD
  *   - No expected calls to bt_settings_save_id()
+=======
+ *   - No expected calls to bt_settings_store_id()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
 	  test_bt_read_static_addr_succeeds_bt_dev_ready_cleared)
@@ -126,7 +142,11 @@ ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
 
 	err = bt_setup_random_id_addr();
 
+<<<<<<< HEAD
 	expect_not_called_bt_settings_save_id();
+=======
+	expect_not_called_bt_settings_store_id();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_true(err == 0, "Unexpected error code '%d' was returned", err);
 	zassert_mem_equal(&bt_dev.id_addr[0], BT_STATIC_RANDOM_LE_ADDR_1, sizeof(bt_addr_le_t),
@@ -136,8 +156,14 @@ ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
 }
 
 /*
+<<<<<<< HEAD
  *  Test reading controller static random address through bt_hci_cmd_send_sync().
  *  With the 'BT_DEV_READY' bit set, bt_settings_save_id() should be called to store
+=======
+ *  Test reading controller static random address through
+ *  bt_hci_cmd_send_sync(). With the 'BT_DEV_READY' bit set,
+ *  bt_settings_store_id() and bt_settings_store_irk() should be called to store
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  settings to persistent memory.
  *
  *  Constraints:
@@ -148,7 +174,11 @@ ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
  *  Expected behaviour:
  *   - Return value is 0
  *   - Static random address is loaded to bt_dev.id_addr[]
+<<<<<<< HEAD
  *   - No expected calls to bt_settings_save_id()
+=======
+ *   - No expected calls to bt_settings_store_id()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
 	  test_bt_read_static_addr_succeeds_bt_dev_ready_set)
@@ -173,7 +203,12 @@ ZTEST(bt_setup_random_id_addr_bt_settings_enabled,
 
 	err = bt_setup_random_id_addr();
 
+<<<<<<< HEAD
 	expect_single_call_bt_settings_save_id();
+=======
+	expect_single_call_bt_settings_store_id();
+	expect_single_call_bt_settings_store_irk();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_true(err == 0, "Unexpected error code '%d' was returned", err);
 	zassert_mem_equal(&bt_dev.id_addr[0], BT_STATIC_RANDOM_LE_ADDR_1, sizeof(bt_addr_le_t),

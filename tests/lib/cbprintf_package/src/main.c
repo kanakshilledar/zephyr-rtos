@@ -148,7 +148,11 @@ ZTEST(cbprintf_package, test_cbprintf_package)
 		TEST_PACKAGING(0, "test %f %a", (double)f, d);
 #if CONFIG_CBPRINTF_PACKAGE_LONGDOUBLE && !(defined(CONFIG_RISCV) && !defined(CONFIG_64BIT))
 		/* Excluding riscv32 which does not handle long double correctly. */
+<<<<<<< HEAD
 		long double ld = 1.2333;
+=======
+		long double ld = 1.2333L;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		TEST_PACKAGING(0, "test %Lf", ld);
 #endif

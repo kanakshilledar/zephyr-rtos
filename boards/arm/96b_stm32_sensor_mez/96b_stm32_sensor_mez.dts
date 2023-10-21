@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <st/f4/stm32f446Xe.dtsi>
 #include <st/f4/stm32f446v(c-e)tx-pinctrl.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics 96Boards STM32 Sensor Mezzanine board";
@@ -40,6 +44,10 @@
 		user_button: button {
 			label = "Key";
 			gpios = <&gpiod 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

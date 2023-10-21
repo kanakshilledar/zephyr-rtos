@@ -1,3 +1,10 @@
 tests:
+<<<<<<< HEAD
   kernel.memory_slab.stats:
     tags: kernel
+=======
+  kernel.memory_slabs.stats:
+    tags:
+      - kernel
+      - memory slabs
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

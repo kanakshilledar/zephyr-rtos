@@ -27,9 +27,16 @@ static int st_stm32_common_config(void)
 {
 #ifdef CONFIG_LOG_BACKEND_SWO
 	/* Enable SWO trace asynchronous mode */
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_SERIES_STM32WBX)
 	LL_DBGMCU_EnableTraceClock();
 #else
+=======
+#if defined(CONFIG_SOC_SERIES_STM32WBX) || defined(CONFIG_SOC_SERIES_STM32H5X)
+	LL_DBGMCU_EnableTraceClock();
+#endif
+#if !defined(CONFIG_SOC_SERIES_STM32WBX)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LL_DBGMCU_SetTracePinAssignment(LL_DBGMCU_TRACE_ASYNCH);
 #endif
 #endif /* CONFIG_LOG_BACKEND_SWO */
@@ -59,6 +66,7 @@ static int st_stm32_common_config(void)
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
 #endif /* LL_APB1_GRP1_PERIPH_DBGMCU */
 
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_SERIES_STM32H7X) || defined(CONFIG_SOC_SERIES_STM32MP1X)
 	HAL_EnableDBGSleepMode();
 #else
@@ -66,6 +74,57 @@ static int st_stm32_common_config(void)
 #endif /* CONFIG_SOC_SERIES_STM32H7X || CONFIG_SOC_SERIES_STM32MP1X */
 
 #endif /* CONFIG_USE_SEGGER_RTT */
+=======
+#endif /* CONFIG_USE_SEGGER_RTT */
+
+
+#if defined(CONFIG_STM32_ENABLE_DEBUG_SLEEP_STOP)
+
+#if defined(CONFIG_SOC_SERIES_STM32H7X) || defined(CONFIG_SOC_SERIES_STM32MP1X)
+	HAL_EnableDBGStopMode();
+#else /* CONFIG_SOC_SERIES_STM32H7X || CONFIG_SOC_SERIES_STM32MP1X */
+#if defined(SOC_SERIES_STM32G0X) || defined(SOC_SERIES_STM32C0X)
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_DBGMCU);
+	LL_DBGMCU_EnableDBGStopMode();
+	LL_APB1_GRP1_DisableClock(LL_APB1_GRP1_PERIPH_DBGMCU);
+#elif defined(SOC_SERIES_STM32F0X)
+	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_DBGMCU);
+	LL_DBGMCU_EnableDBGStopMode();
+	LL_APB1_GRP2_DisableClock(LL_APB1_GRP2_PERIPH_DBGMCU);
+#elif defined(SOC_SERIES_STM32L0X)
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
+	LL_DBGMCU_EnableDBGStopMode();
+	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
+#else /* all other parts */
+	LL_DBGMCU_EnableDBGStopMode();
+#endif
+#endif /* CONFIG_SOC_SERIES_STM32H7X || CONFIG_SOC_SERIES_STM32MP1X */
+
+#else
+
+/* keeping in mind that debugging draws a lot of power we explcitly disable when not needed */
+#if defined(CONFIG_SOC_SERIES_STM32H7X) || defined(CONFIG_SOC_SERIES_STM32MP1X)
+	HAL_DisableDBGStopMode();
+#else /* CONFIG_SOC_SERIES_STM32H7X || CONFIG_SOC_SERIES_STM32MP1X */
+#if defined(SOC_SERIES_STM32G0X) || defined(SOC_SERIES_STM32C0X)
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_DBGMCU);
+	LL_DBGMCU_DisableDBGStopMode();
+	LL_APB1_GRP1_DisableClock(LL_APB1_GRP1_PERIPH_DBGMCU);
+#elif defined(SOC_SERIES_STM32F0X)
+	LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_DBGMCU);
+	LL_DBGMCU_DisableDBGStopMode();
+	LL_APB1_GRP2_DisableClock(LL_APB1_GRP2_PERIPH_DBGMCU);
+#elif defined(SOC_SERIES_STM32L0X)
+	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
+	LL_DBGMCU_DisableDBGStopMode();
+	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
+#else /* all other parts */
+	LL_DBGMCU_DisableDBGStopMode();
+#endif
+#endif /* CONFIG_SOC_SERIES_STM32H7X || CONFIG_SOC_SERIES_STM32MP1X */
+
+#endif /* CONFIG_STM32_ENABLE_DEBUG_SLEEP_STOP */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

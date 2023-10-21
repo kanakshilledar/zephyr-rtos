@@ -22,16 +22,44 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #define I3C_BROADCAST_ADDR			0x7E
+=======
+/** Broadcast Address on I3C bus. */
+#define I3C_BROADCAST_ADDR			0x7E
+
+/** Maximum value of device addresses. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define I3C_MAX_ADDR				0x7F
 
 struct i3c_dev_list;
 
+<<<<<<< HEAD
 enum i3c_addr_slot_status {
 	I3C_ADDR_SLOT_STATUS_FREE = 0U,
 	I3C_ADDR_SLOT_STATUS_RSVD,
 	I3C_ADDR_SLOT_STATUS_I3C_DEV,
 	I3C_ADDR_SLOT_STATUS_I2C_DEV,
+=======
+/**
+ * Enum to indicate whether an address is reserved, has I2C/I3C device attached,
+ * or no device attached.
+ */
+enum i3c_addr_slot_status {
+	/** Address has not device attached. */
+	I3C_ADDR_SLOT_STATUS_FREE = 0U,
+
+	/** Address is reserved. */
+	I3C_ADDR_SLOT_STATUS_RSVD,
+
+	/** Address is associated with an I3C device. */
+	I3C_ADDR_SLOT_STATUS_I3C_DEV,
+
+	/** Address is associated with an I2C device. */
+	I3C_ADDR_SLOT_STATUS_I2C_DEV,
+
+	/** Bit masks used to filter status bits. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	I3C_ADDR_SLOT_STATUS_MASK = 0x03U,
 };
 

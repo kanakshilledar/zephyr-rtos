@@ -2,14 +2,24 @@
 # SPDX-License-Identifier: Apache-2.0
 
 config MODEM_GSM_PPP
+<<<<<<< HEAD
 	bool "Support GSM modems"
+=======
+	bool "[DEPRECATED] Support GSM modems"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select MODEM_CONTEXT
 	select MODEM_CMD_HANDLER
 	select MODEM_IFACE_UART
 	select NET_MGMT
 	select NET_MGMT_EVENT
+<<<<<<< HEAD
 	help
 	  Enable GSM modems that support standard AT commands and PPP.
+=======
+	select DEPRECATED
+	help
+	  This driver is deprecated, use the MODEM_CELLULAR driver instead.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if MODEM_GSM_PPP
 
@@ -51,7 +61,11 @@ config MODEM_GSM_WORKQ_STACK_SIZE
 
 config MODEM_GSM_INIT_PRIORITY
 	int "Init priority for the GSM modem driver"
+<<<<<<< HEAD
 	default 42
+=======
+	default 60
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	range 0 99
 	help
 	  The GSM modem is initialized in POST_KERNEL using priority in

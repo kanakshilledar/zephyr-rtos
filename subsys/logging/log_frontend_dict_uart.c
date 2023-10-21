@@ -9,6 +9,10 @@
 #include <zephyr/sys/mpsc_pbuf.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static uint32_t dbuf[CONFIG_LOG_FRONTEND_DICT_UART_BUFFER_SIZE / sizeof(uint32_t)];
 
@@ -64,7 +68,11 @@ static const struct mpsc_pbuf_buffer_config config = {
 	.get_wlen = get_wlen,
 	.flags = 0
 };
+<<<<<<< HEAD
 static const struct device *const dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
+=======
+static const struct device *const uart_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static struct mpsc_pbuf_buffer buf;
 static atomic_t active_cnt; /* Counts number of buffered messages. */
@@ -97,7 +105,11 @@ static void tx(void)
 	struct log_frontend_uart_generic_pkt *pkt;
 
 	if (!IS_ENABLED(CONFIG_UART_ASYNC_API) && !in_panic) {
+<<<<<<< HEAD
 		uart_irq_tx_enable(dev);
+=======
+		uart_irq_tx_enable(uart_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -110,11 +122,19 @@ static void tx(void)
 
 	if (in_panic) {
 		for (int i = 0; i < len; i++) {
+<<<<<<< HEAD
 			uart_poll_out(dev, pkt->data[i]);
 		}
 		atomic_dec(&active_cnt);
 	} else {
 		int err = uart_tx(dev, pkt->data, len, SYS_FOREVER_US);
+=======
+			uart_poll_out(uart_dev, pkt->data[i]);
+		}
+		atomic_dec(&active_cnt);
+	} else {
+		int err = uart_tx(uart_dev, pkt->data, len, SYS_FOREVER_US);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		(void)err;
 		__ASSERT_NO_MSG(err == 0);
@@ -157,9 +177,16 @@ static void uart_callback(const struct device *dev,
 	case UART_TX_DONE:
 	{
 		union log_frontend_pkt generic_pkt;
+<<<<<<< HEAD
 
 		generic_pkt.generic = CONTAINER_OF(evt->data.tx.buf,
 						   struct log_frontend_uart_generic_pkt, hdr);
+=======
+		struct log_frontend_uart_pkt_hdr *hdr;
+
+		hdr = (struct log_frontend_uart_pkt_hdr *)evt->data.tx.buf;
+		generic_pkt.generic = CONTAINER_OF(hdr, struct log_frontend_uart_generic_pkt, hdr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		mpsc_pbuf_free(&buf, generic_pkt.ro_pkt);
 		atomic_val_t rem_pkts = atomic_dec(&active_cnt);
@@ -251,7 +278,11 @@ static void sync_msg(const void *source,
 
 	for (int i = 0; i < ARRAY_SIZE(datas); i++) {
 		for (int j = 0; j < len[i]; j++) {
+<<<<<<< HEAD
 			uart_poll_out(dev, datas[i][j]);
+=======
+			uart_poll_out(uart_dev, datas[i][j]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
@@ -266,7 +297,11 @@ void log_frontend_msg(const void *source,
 					 CBPRINTF_PACKAGE_CONVERT_RW_STR,
 					 strl, ARRAY_SIZE(strl));
 	size_t dlen = desc.data_len;
+<<<<<<< HEAD
 	bool dev_ready = device_is_ready(dev);
+=======
+	bool dev_ready = device_is_ready(uart_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t total_len = plen + dlen + sizeof(struct log_frontend_uart_pkt);
 	size_t total_wlen = DIV_ROUND_UP(total_len, sizeof(uint32_t));
 
@@ -326,9 +361,15 @@ void log_frontend_init(void)
 	int err;
 
 	if (IS_ENABLED(CONFIG_UART_ASYNC_API)) {
+<<<<<<< HEAD
 		err = uart_callback_set(dev, uart_callback, NULL);
 	} else if (IS_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN)) {
 		uart_irq_callback_user_data_set(dev, uart_isr_callback, NULL);
+=======
+		err = uart_callback_set(uart_dev, uart_callback, NULL);
+	} else if (IS_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN)) {
+		uart_irq_callback_user_data_set(uart_dev, uart_isr_callback, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = 0;
 	}
 

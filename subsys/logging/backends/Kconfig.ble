@@ -16,6 +16,7 @@ config LOG_BACKEND_BLE
 
 if LOG_BACKEND_BLE
 
+<<<<<<< HEAD
 config LOG_BACKEND_BLE_BUF_SIZE
 	int "BLE Logger Backend Buffer size"
 	range 20 512
@@ -27,6 +28,8 @@ config LOG_BACKEND_BLE_BUF_SIZE
 	  bigger values.
 	  Both BT_L2CAP_TX_MTU and BT_BUF_ACL_RX_SIZE will need to be increased.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 backend = BLE
 backend-str = ble
 source "subsys/logging/Kconfig.template.log_format_config"

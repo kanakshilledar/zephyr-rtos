@@ -6,6 +6,10 @@
 
 /dts-v1/;
 #include <atmel/samd21.dtsi>
+<<<<<<< HEAD
+=======
+#include <atmel/samx2xx18.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "adafruit_feather_m0_basic_proto-pinctrl.dtsi"
 #include "feather_connector.dtsi"
 
@@ -104,7 +108,11 @@
 	};
 };
 
+<<<<<<< HEAD
 &usb0 {
+=======
+zephyr_udc0: &usb0 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 
 	pinctrl-0 = <&usb_dc_default>;

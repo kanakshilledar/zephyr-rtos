@@ -17,6 +17,11 @@
 
 / {
 	soc {
+<<<<<<< HEAD
 		compatible = "nordic,nRF52832-QFAA", "nordic,nRF52832", "nordic,nRF52", "simple-bus";
+=======
+		compatible = "nordic,nrf52832-qfaa", "nordic,nrf52832",
+			     "nordic,nrf52", "simple-bus";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

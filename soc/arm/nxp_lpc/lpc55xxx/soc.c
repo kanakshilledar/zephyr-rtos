@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /*
  * Copyright 2017, 2019-2023 NXP
+=======
+/* Copyright 2017, 2019-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,7 +23,11 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/linker/sections.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <aarch32/cortex_m/exc.h>
+=======
+#include <cortex_m/exc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <fsl_power.h>
 #include <fsl_clock.h>
 #include <fsl_common.h>
@@ -31,10 +39,25 @@
 #include "usb_phy.h"
 #include "usb.h"
 #endif
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_LPC55S36) && defined(CONFIG_ADC_MCUX_LPADC)
 #include <fsl_vref.h>
 #endif
 
+=======
+#if defined(CONFIG_SOC_LPC55S36) && (defined(CONFIG_ADC_MCUX_LPADC) \
+	|| defined(CONFIG_DAC_MCUX_LPDAC))
+#include <fsl_vref.h>
+#endif
+
+/* System clock frequency */
+extern uint32_t SystemCoreClock;
+
+/*Should be in the range of 12MHz to 32MHz */
+static uint32_t ExternalClockFrequency;
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CTIMER_CLOCK_SOURCE(node_id) \
 	TO_CTIMER_CLOCK_SOURCE(DT_CLOCKS_CELL(node_id, name), DT_PROP(node_id, clk_source))
 #define TO_CTIMER_CLOCK_SOURCE(inst, val) TO_CLOCK_ATTACH_ID(inst, val)
@@ -44,13 +67,34 @@
 #ifdef CONFIG_INIT_PLL0
 const pll_setup_t pll0Setup = {
 	.pllctrl = SYSCON_PLL0CTRL_CLKEN_MASK | SYSCON_PLL0CTRL_SELI(2U) |
+<<<<<<< HEAD
 		   SYSCON_PLL0CTRL_SELP(31U),
+=======
+		SYSCON_PLL0CTRL_SELP(31U),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.pllndec = SYSCON_PLL0NDEC_NDIV(125U),
 	.pllpdec = SYSCON_PLL0PDEC_PDIV(8U),
 	.pllsscg = {0x0U, (SYSCON_PLL0SSCG1_MDIV_EXT(3072U) | SYSCON_PLL0SSCG1_SEL_EXT_MASK)},
 	.pllRate = 24576000U,
+<<<<<<< HEAD
 	.flags = PLL_SETUPFLAG_WAITLOCK}
 ;
+=======
+	.flags = PLL_SETUPFLAG_WAITLOCK
+};
+#endif
+
+#ifdef CONFIG_INIT_PLL1
+const pll_setup_t pll1Setup = {
+	.pllctrl = SYSCON_PLL1CTRL_CLKEN_MASK | SYSCON_PLL1CTRL_SELI(53U) |
+		SYSCON_PLL1CTRL_SELP(31U),
+	.pllndec = SYSCON_PLL1NDEC_NDIV(8U),
+	.pllpdec = SYSCON_PLL1PDEC_PDIV(1U),
+	.pllmdec = SYSCON_PLL1MDEC_MDIV(144U),
+	.pllRate = 144000000U,
+	.flags = PLL_SETUPFLAG_WAITLOCK
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 /**
@@ -61,6 +105,10 @@ const pll_setup_t pll0Setup = {
 
 static ALWAYS_INLINE void clock_init(void)
 {
+<<<<<<< HEAD
+=======
+	ExternalClockFrequency = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_SOC_LPC55S36)
 	/* Power Management Controller initialization */
@@ -70,6 +118,7 @@ static ALWAYS_INLINE void clock_init(void)
 #if defined(CONFIG_SOC_LPC55S06) || defined(CONFIG_SOC_LPC55S16) || \
 	defined(CONFIG_SOC_LPC55S28) || defined(CONFIG_SOC_LPC55S36) || \
 	defined(CONFIG_SOC_LPC55S69_CPU0)
+<<<<<<< HEAD
     /*!< Set up the clock sources */
     /*!< Configure FRO192M */
 	/*!< Ensure FRO is on  */
@@ -114,6 +163,93 @@ static ALWAYS_INLINE void clock_init(void)
 
 	/* Enables the clock for the I/O controller.: Enable Clock. */
     CLOCK_EnableClock(kCLOCK_Iocon);
+=======
+	/* Set up the clock sources */
+	/* Configure FRO192M */
+	/* Ensure FRO is on  */
+	POWER_DisablePD(kPDRUNCFG_PD_FRO192M);
+	/* Set up FRO to the 12 MHz, to ensure we can change the clock freq */
+	CLOCK_SetupFROClocking(12000000U);
+	/* Switch to FRO 12MHz first to ensure we can change the clock */
+	CLOCK_AttachClk(kFRO12M_to_MAIN_CLK);
+
+	/* Ensure CLK_IN is on  */
+	SYSCON->CLOCK_CTRL |= SYSCON_CLOCK_CTRL_CLKIN_ENA_MASK;
+	ANACTRL->XO32M_CTRL |= ANACTRL_XO32M_CTRL_ENABLE_SYSTEM_CLK_OUT_MASK;
+
+	/* Setting the Core Clock to either 96MHz or in the case of using PLL, 144MHz */
+#if defined(CONFIG_SOC_LPC55S06) || !defined(CONFIG_INIT_PLL1)
+	SystemCoreClock = 96000000U;
+#else
+	SystemCoreClock = 144000000U;
+#endif
+
+
+	/* These functions must be called before increasing to a higher frequency
+	 * Additionally, CONFIG_TRUSTED_EXECUTION_NONSECURE is being used
+	 * since the non-secure SOCs should not have access to the flash
+	 * as this will cause a secure fault to occur
+	 */
+#if !defined(CONFIG_TRUSTED_EXECUTION_NONSECURE)
+	/* Set Voltage for one of the fastest clock outputs: System clock output */
+	POWER_SetVoltageForFreq(SystemCoreClock);
+	/*!< Set FLASH wait states for core */
+	CLOCK_SetFLASHAccessCyclesForFreq(SystemCoreClock);
+#endif /* !CONFIG_TRUSTED_EXECUTION_NONSECURE */
+
+
+#if defined(CONFIG_INIT_PLL0) || defined(CONFIG_INIT_PLL1)
+	/* Configure XTAL32M */
+	ExternalClockFrequency = 16000000U;
+	CLOCK_SetupExtClocking(ExternalClockFrequency);
+#endif
+
+#if defined(CONFIG_SOC_LPC55S06) || !defined(CONFIG_INIT_PLL1)
+	/* Enable FRO HF(SystemCoreClock) output (Default expected value 96MHz) */
+	CLOCK_SetupFROClocking(SystemCoreClock);
+
+	/* Switch MAIN_CLK to FRO_HF */
+	CLOCK_AttachClk(kFRO_HF_to_MAIN_CLK);
+
+#else
+	/* Switch PLL1 clock source selector to XTAL32M */
+	CLOCK_AttachClk(kEXT_CLK_to_PLL1);
+
+	/* Ensure PLL1 is on */
+	POWER_DisablePD(kPDRUNCFG_PD_PLL1);
+
+	/* Configure PLL to the desired values */
+	CLOCK_SetPLL1Freq(&pll1Setup);
+
+	/* Switch MAIN_CLK to FRO_HF */
+	CLOCK_AttachClk(kPLL1_to_MAIN_CLK);
+
+#endif /* CONFIG_SOC_LPC55S06 || !CONFIG_INIT_PLL1 */
+
+
+#ifdef CONFIG_INIT_PLL0
+	/* Switch PLL0 clock source selector to XTAL32M */
+	CLOCK_AttachClk(kEXT_CLK_to_PLL0);
+
+	/* Configure PLL to the desired values */
+	CLOCK_SetPLL0Freq(&pll0Setup);
+
+#if defined(CONFIG_SOC_LPC55S36)
+	CLOCK_SetClkDiv(kCLOCK_DivPllClk, 0U, true);
+	CLOCK_SetClkDiv(kCLOCK_DivPllClk, 1U, false);
+#else
+	CLOCK_SetClkDiv(kCLOCK_DivPll0Clk, 0U, true);
+	CLOCK_SetClkDiv(kCLOCK_DivPll0Clk, 1U, false);
+#endif /* CONFIG_SOC_LPC55S36 */
+#endif /* CONFIG_INIT_PLL0 */
+
+
+	/* Set up dividers */
+	CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U, false);
+
+	/* Enables the clock for the I/O controller.: Enable Clock. */
+	CLOCK_EnableClock(kCLOCK_Iocon);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(flexcomm2), nxp_lpc_usart, okay)
 #if defined(CONFIG_SOC_LPC55S36)
@@ -250,17 +386,26 @@ DT_FOREACH_STATUS_OKAY(nxp_lpc_ctimer, CTIMER_CLOCK_SETUP)
 #if defined(CONFIG_SOC_LPC55S36) && defined(CONFIG_PWM)
 	/* Set the Submodule Clocks for FlexPWM */
 	SYSCON->PWM0SUBCTL |=
+<<<<<<< HEAD
 	  (SYSCON_PWM0SUBCTL_CLK0_EN_MASK | SYSCON_PWM0SUBCTL_CLK1_EN_MASK |
 	   SYSCON_PWM0SUBCTL_CLK2_EN_MASK);
 	SYSCON->PWM1SUBCTL |=
 	  (SYSCON_PWM1SUBCTL_CLK0_EN_MASK | SYSCON_PWM1SUBCTL_CLK1_EN_MASK |
 	   SYSCON_PWM1SUBCTL_CLK2_EN_MASK);
+=======
+		(SYSCON_PWM0SUBCTL_CLK0_EN_MASK | SYSCON_PWM0SUBCTL_CLK1_EN_MASK |
+		SYSCON_PWM0SUBCTL_CLK2_EN_MASK);
+	SYSCON->PWM1SUBCTL |=
+		(SYSCON_PWM1SUBCTL_CLK0_EN_MASK | SYSCON_PWM1SUBCTL_CLK1_EN_MASK |
+		SYSCON_PWM1SUBCTL_CLK2_EN_MASK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(adc0), nxp_lpc_lpadc, okay)
 #if defined(CONFIG_SOC_LPC55S36)
 	CLOCK_SetClkDiv(kCLOCK_DivAdc0Clk, 2U, true);
 	CLOCK_AttachClk(kFRO_HF_to_ADC0);
+<<<<<<< HEAD
 
 #if defined(CONFIG_ADC_MCUX_LPADC)
 	/* Vref is required for LPADC reference */
@@ -275,14 +420,38 @@ DT_FOREACH_STATUS_OKAY(nxp_lpc_ctimer, CTIMER_CLOCK_SETUP)
 	VREF_Init((VREF_Type *)VREF_BASE, &vrefConfig);
 #endif
 #else
+=======
+#else /* not LPC55s36 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	CLOCK_SetClkDiv(kCLOCK_DivAdcAsyncClk,
 			DT_PROP(DT_NODELABEL(adc0), clk_divider), true);
 	CLOCK_AttachClk(MUX_A(CM_ADCASYNCCLKSEL, DT_PROP(DT_NODELABEL(adc0), clk_source)));
 
 	/* Power up the ADC */
 	POWER_DisablePD(kPDRUNCFG_PD_LDOGPADC);
+<<<<<<< HEAD
 #endif
 #endif
+=======
+#endif /* SOC platform */
+#endif /* ADC */
+
+#if (DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(vref0), nxp_vref, okay))
+	CLOCK_EnableClock(kCLOCK_Vref);
+	POWER_DisablePD(kPDRUNCFG_PD_VREF);
+#endif /* vref0 */
+
+#if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(dac0), nxp_lpdac, okay)
+#if defined(CONFIG_SOC_LPC55S36)
+	CLOCK_SetClkDiv(kCLOCK_DivDac0Clk, 1U, true);
+	CLOCK_AttachClk(kMAIN_CLK_to_DAC0);
+
+	/* Disable DAC0 power down */
+	POWER_DisablePD(kPDRUNCFG_PD_DAC0);
+#endif /* SOC platform */
+#endif /* DAC */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -297,6 +466,7 @@ DT_FOREACH_STATUS_OKAY(nxp_lpc_ctimer, CTIMER_CLOCK_SETUP)
 
 static int nxp_lpc55xxx_init(void)
 {
+<<<<<<< HEAD
 
 	/* old interrupt lock level */
 	unsigned int oldLevel;
@@ -304,6 +474,8 @@ static int nxp_lpc55xxx_init(void)
 	/* disable interrupts */
 	oldLevel = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	z_arm_clear_faults();
 
 	/* Initialize FRO/system clock to 96 MHz */
@@ -314,6 +486,7 @@ static int nxp_lpc55xxx_init(void)
 	PINT_Init(PINT);
 #endif
 
+<<<<<<< HEAD
 	/*
 	 * install default handler that simply resets the CPU if configured in
 	 * the kernel, NOP otherwise
@@ -323,6 +496,8 @@ static int nxp_lpc55xxx_init(void)
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -338,7 +513,11 @@ void z_arm_platform_init(void)
 	 * SystemInit unconditionally enables the trace clock.
 	 * Disable the trace clock unless SWO is used
 	 */
+<<<<<<< HEAD
 	 SYSCON->TRACECLKDIV = 0x4000000;
+=======
+	SYSCON->TRACECLKDIV = 0x4000000;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 }
 

@@ -8,3 +8,8 @@ common:
 tests:
   arch.arm.irq_vector_table:
     filter: not CONFIG_TRUSTED_EXECUTION_NONSECURE
+<<<<<<< HEAD
+=======
+    platform_exclude:
+      - mr_canhubk3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

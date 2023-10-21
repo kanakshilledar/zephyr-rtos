@@ -5,6 +5,10 @@
  */
 
 #include <stdint.h>
+<<<<<<< HEAD
+=======
+#include <stdbool.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "hal/ccm.h"
 #include "hal/radio.h"

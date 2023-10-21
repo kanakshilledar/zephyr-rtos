@@ -4,11 +4,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_SERIES_NRF51X) || defined(CONFIG_SOC_COMPATIBLE_NRF52X)
 
 #include <hal/nrf_ppi.h>
 
 #include "radio_nrf5_ppi_resources.h"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static inline void hal_radio_nrf_ppi_channels_enable(uint32_t mask)
 {
@@ -210,6 +213,19 @@ static inline void hal_trigger_crypt_ppi_config(void)
 	/* No need to configure anything for the pre-programmed channel. */
 }
 
+<<<<<<< HEAD
+=======
+/*******************************************************************************
+ * Disable trigger encryption task
+ */
+static inline void hal_trigger_crypt_ppi_disable(void)
+{
+	/* No need to disable anything as ppi channel will be disabled in a
+	 * separate disable ppi call by the caller of this function.
+	 */
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CTLR_DF_CONN_CTE_RX)
 /*******************************************************************************
  * Trigger encryption task on Bit counter match:
@@ -415,10 +431,14 @@ static inline void hal_sw_switch_timer_clear_ppi_config(void)
 #define HAL_SW_SWITCH_RADIO_ENABLE_PPI_TASK_RX \
 	((uint32_t)&(NRF_RADIO->TASKS_RXEN))
 
+<<<<<<< HEAD
 static inline void hal_radio_sw_switch_setup(
 		uint8_t compare_reg,
 		uint8_t radio_enable_ppi,
 		uint8_t ppi_group_index)
+=======
+static inline void hal_radio_sw_switch_setup(uint8_t ppi_group_index)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* Set up software switch mechanism for next Radio switch. */
 
@@ -430,13 +450,21 @@ static inline void hal_radio_sw_switch_setup(
 		HAL_SW_SWITCH_GROUP_TASK_ENABLE_PPI,
 		HAL_SW_SWITCH_GROUP_TASK_ENABLE_PPI_EVT,
 		HAL_SW_SWITCH_GROUP_TASK_ENABLE_PPI_TASK(ppi_group_index));
+<<<<<<< HEAD
 
+=======
+}
+
+static inline void hal_radio_txen_on_sw_switch(uint8_t compare_reg_index, uint8_t radio_enable_ppi)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Wire SW Switch timer event <compare_reg> to the
 	 * PPI[<radio_enable_ppi>] for enabling Radio. Do
 	 * not wire the task; it is done by the caller of
 	 * the function depending on the desired direction
 	 * (TX/RX).
 	 */
+<<<<<<< HEAD
 	nrf_ppi_event_endpoint_setup(
 		NRF_PPI,
 		radio_enable_ppi,
@@ -452,12 +480,24 @@ static inline void hal_radio_txen_on_sw_switch(uint8_t ppi)
 }
 
 static inline void hal_radio_b2b_txen_on_sw_switch(uint8_t ppi)
+=======
+	nrf_ppi_event_endpoint_setup(NRF_PPI, radio_enable_ppi,
+				     HAL_SW_SWITCH_RADIO_ENABLE_PPI_EVT(compare_reg_index));
+
+	nrf_ppi_task_endpoint_setup(NRF_PPI, radio_enable_ppi,
+				    HAL_SW_SWITCH_RADIO_ENABLE_PPI_TASK_TX);
+}
+
+static inline void hal_radio_b2b_txen_on_sw_switch(uint8_t compare_reg_index,
+						   uint8_t radio_enable_ppi)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* NOTE: As independent PPI are used to trigger the Radio Tx task,
 	 *       double buffers implementation works for sw_switch using PPIs,
 	 *       simply reuse the hal_radio_txen_on_sw_switch() functon to set
 	 *	 the next PPIs task to be Radio Tx enable.
 	 */
+<<<<<<< HEAD
 	hal_radio_txen_on_sw_switch(ppi);
 }
 
@@ -477,6 +517,35 @@ static inline void hal_radio_b2b_rxen_on_sw_switch(uint8_t ppi)
 	 *	 the next PPIs task to be Radio Rx enable.
 	 */
 	hal_radio_rxen_on_sw_switch(ppi);
+=======
+	hal_radio_txen_on_sw_switch(compare_reg_index, radio_enable_ppi);
+}
+
+static inline void hal_radio_rxen_on_sw_switch(uint8_t compare_reg_index, uint8_t radio_enable_ppi)
+{
+	/* Wire SW Switch timer event <compare_reg> to the
+	 * PPI[<radio_enable_ppi>] for enabling Radio. Do
+	 * not wire the task; it is done by the caller of
+	 * the function depending on the desired direction
+	 * (TX/RX).
+	 */
+	nrf_ppi_event_endpoint_setup(NRF_PPI, radio_enable_ppi,
+				     HAL_SW_SWITCH_RADIO_ENABLE_PPI_EVT(compare_reg_index));
+
+	nrf_ppi_task_endpoint_setup(NRF_PPI, radio_enable_ppi,
+				    HAL_SW_SWITCH_RADIO_ENABLE_PPI_TASK_RX);
+}
+
+static inline void hal_radio_b2b_rxen_on_sw_switch(uint8_t compare_reg_index,
+						   uint8_t radio_enable_ppi)
+{
+	/* NOTE: As independent PPI are used to trigger the Radio Tx task,
+	 *       double buffers implementation works for sw_switch using PPIs,
+	 *       simply reuse the hal_radio_txen_on_sw_switch() functon to set
+	 *	 the next PPIs task to be Radio Tx enable.
+	 */
+	hal_radio_rxen_on_sw_switch(compare_reg_index, radio_enable_ppi);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void hal_radio_sw_switch_disable(void)
@@ -491,6 +560,19 @@ static inline void hal_radio_sw_switch_disable(void)
 		BIT(HAL_SW_SWITCH_GROUP_TASK_ENABLE_PPI));
 }
 
+<<<<<<< HEAD
+=======
+static inline void hal_radio_sw_switch_b2b_tx_disable(uint8_t compare_reg_index)
+{
+	hal_radio_sw_switch_disable();
+}
+
+static inline void hal_radio_sw_switch_b2b_rx_disable(uint8_t compare_reg_index)
+{
+	hal_radio_sw_switch_disable();
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline void hal_radio_sw_switch_cleanup(void)
 {
 	hal_radio_sw_switch_disable();
@@ -726,4 +808,7 @@ static inline void hal_radio_sw_switch_ppi_group_setup(void)
 }
 
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
+<<<<<<< HEAD
 #endif /* CONFIG_SOC_SERIES_NRF51X || CONFIG_SOC_COMPATIBLE_NRF52X */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

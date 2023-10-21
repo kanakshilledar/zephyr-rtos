@@ -147,6 +147,7 @@ static int gpio_mmio32_port_toggle_bits(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int gpio_mmio32_pin_interrupt_configure(const struct device *dev,
 					       gpio_pin_t pin,
 					       enum gpio_int_mode mode,
@@ -159,6 +160,8 @@ static int gpio_mmio32_pin_interrupt_configure(const struct device *dev,
 	return 0;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 const struct gpio_driver_api gpio_mmio32_api = {
 	.pin_configure = gpio_mmio32_config,
 	.port_get_raw = gpio_mmio32_port_get_raw,
@@ -166,7 +169,10 @@ const struct gpio_driver_api gpio_mmio32_api = {
 	.port_set_bits_raw = gpio_mmio32_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_mmio32_port_clear_bits_raw,
 	.port_toggle_bits = gpio_mmio32_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_mmio32_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 int gpio_mmio32_init(const struct device *dev)

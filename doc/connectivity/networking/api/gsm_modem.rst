@@ -12,7 +12,11 @@ The Zephyr uses :ref:`PPP (Point-to-Point Protocol) <ppp>` to connect
 to the GSM modem using UART. Note that some cellular modems have proprietary
 offloading support using AT commands, but usually those modems also support
 3GPP standards and provide PPP connection to them.
+<<<<<<< HEAD
 See :ref:`GSM modem sample application <gsm-modem-sample>` how to setup Zephyr
+=======
+See :zephyr:code-sample:`GSM modem sample application <gsm-modem>` how to setup Zephyr
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 to use the GSM modem.
 
 The GSM muxing, that is defined in

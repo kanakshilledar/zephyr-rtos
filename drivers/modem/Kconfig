@@ -176,7 +176,10 @@ config MODEM_SHELL
 
 config MODEM_SIM_NUMBERS
 	bool "Query the SIM for IMSI and ICCID"
+<<<<<<< HEAD
 	depends on MODEM_SHELL
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	help
 	  Query the SIM card for the IMSI and ICCID identifiers. This
@@ -184,7 +187,10 @@ config MODEM_SIM_NUMBERS
 
 config MODEM_CELL_INFO
 	bool "Query for operator and cell info"
+<<<<<<< HEAD
 	depends on MODEM_SHELL
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Query for numerical operator id, location area code and cell id.
 
@@ -192,6 +198,10 @@ source "drivers/modem/Kconfig.ublox-sara-r4"
 source "drivers/modem/Kconfig.quectel-bg9x"
 source "drivers/modem/Kconfig.wncm14a2a"
 source "drivers/modem/Kconfig.gsm"
+<<<<<<< HEAD
+=======
+source "drivers/modem/Kconfig.cellular"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 source "drivers/modem/Kconfig.hl7800"
 source "drivers/modem/Kconfig.simcom-sim7080"

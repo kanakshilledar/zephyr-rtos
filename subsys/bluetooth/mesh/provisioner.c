@@ -254,8 +254,12 @@ static void prov_capabilities(const uint8_t *data)
 		return;
 	}
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BT_MESH_OOB_AUTH_REQUIRED) &&
 		(caps.oob_type & BT_MESH_OOB_AUTH_REQUIRED)) {
+=======
+	if (caps.oob_type & BT_MESH_OOB_AUTH_REQUIRED) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		bool oob_availability = caps.output_size > 0 || caps.input_size > 0 ||
 			(caps.oob_type & BT_MESH_STATIC_OOB_AVAILABLE);
@@ -488,26 +492,42 @@ static void send_prov_data(void)
 {
 	PROV_BUF(pdu, PDU_LEN_DATA);
 	struct bt_mesh_cdb_subnet *sub;
+<<<<<<< HEAD
 	uint8_t session_key[16];
+=======
+	uint8_t net_key[16];
+	struct bt_mesh_key session_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t nonce[13];
 	int err;
 
 	err = bt_mesh_session_key(bt_mesh_prov_link.dhkey,
+<<<<<<< HEAD
 				  bt_mesh_prov_link.prov_salt, session_key);
+=======
+				  bt_mesh_prov_link.prov_salt, &session_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		LOG_ERR("Unable to generate session key");
 		prov_fail(PROV_ERR_UNEXP_ERR);
 		return;
 	}
 
+<<<<<<< HEAD
 	LOG_DBG("SessionKey: %s", bt_hex(session_key, 16));
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_mesh_prov_nonce(bt_mesh_prov_link.dhkey,
 				 bt_mesh_prov_link.prov_salt, nonce);
 	if (err) {
 		LOG_ERR("Unable to generate session nonce");
 		prov_fail(PROV_ERR_UNEXP_ERR);
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_DBG("Nonce: %s", bt_hex(nonce, 13));
@@ -517,20 +537,41 @@ static void send_prov_data(void)
 	if (err) {
 		LOG_ERR("Unable to generate device key");
 		prov_fail(PROV_ERR_UNEXP_ERR);
+<<<<<<< HEAD
 		return;
 	}
 
 	LOG_DBG("DevKey: %s", bt_hex(prov_device.new_dev_key, 16));
 
+=======
+		goto session_key_destructor;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sub = bt_mesh_cdb_subnet_get(prov_device.node->net_idx);
 	if (sub == NULL) {
 		LOG_ERR("No subnet with net_idx %u", prov_device.node->net_idx);
 		prov_fail(PROV_ERR_UNEXP_ERR);
+<<<<<<< HEAD
 		return;
 	}
 
 	bt_mesh_prov_buf_init(&pdu, PROV_DATA);
 	net_buf_simple_add_mem(&pdu, sub->keys[SUBNET_KEY_TX_IDX(sub)].net_key, 16);
+=======
+		goto session_key_destructor;
+	}
+
+	err = bt_mesh_key_export(net_key, &sub->keys[SUBNET_KEY_TX_IDX(sub)].net_key);
+	if (err) {
+		LOG_ERR("Unable to export network key");
+		prov_fail(PROV_ERR_UNEXP_ERR);
+		goto session_key_destructor;
+	}
+
+	bt_mesh_prov_buf_init(&pdu, PROV_DATA);
+	net_buf_simple_add_mem(&pdu, net_key, sizeof(net_key));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	net_buf_simple_add_be16(&pdu, prov_device.node->net_idx);
 	net_buf_simple_add_u8(&pdu, bt_mesh_cdb_subnet_flags(sub));
 	net_buf_simple_add_be32(&pdu, bt_mesh_cdb.iv_index);
@@ -541,20 +582,38 @@ static void send_prov_data(void)
 		prov_device.node->net_idx, bt_mesh.iv_index,
 		bt_mesh_prov_link.addr);
 
+<<<<<<< HEAD
 	err = bt_mesh_prov_encrypt(session_key, nonce, &pdu.data[1],
+=======
+	err = bt_mesh_prov_encrypt(&session_key, nonce, &pdu.data[1],
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				   &pdu.data[1]);
 	if (err) {
 		LOG_ERR("Unable to encrypt provisioning data");
 		prov_fail(PROV_ERR_DECRYPT);
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (bt_mesh_prov_send(&pdu, NULL)) {
 		LOG_ERR("Failed to send Provisioning Data");
+<<<<<<< HEAD
 		return;
 	}
 
 	bt_mesh_prov_link.expect = PROV_COMPLETE;
+=======
+		goto session_key_destructor;
+	}
+
+	bt_mesh_prov_link.expect = PROV_COMPLETE;
+
+session_key_destructor:
+	bt_mesh_key_destroy(&session_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void prov_complete(const uint8_t *data)
@@ -562,8 +621,13 @@ static void prov_complete(const uint8_t *data)
 	struct bt_mesh_cdb_node *node = prov_device.node;
 
 	LOG_DBG("key %s, net_idx %u, num_elem %u, addr 0x%04x",
+<<<<<<< HEAD
 		bt_hex(prov_device.new_dev_key, 16), node->net_idx, node->num_elem,
 		node->addr);
+=======
+		bt_hex(&prov_device.new_dev_key, 16), node->net_idx,
+		node->num_elem, node->addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bt_mesh_prov_link.expect = PROV_NO_PDU;
 	atomic_set_bit(bt_mesh_prov_link.flags, COMPLETE);
@@ -575,13 +639,25 @@ static void prov_node_add(void)
 {
 	LOG_DBG("");
 	struct bt_mesh_cdb_node *node = prov_device.node;
+<<<<<<< HEAD
+=======
+	int err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (atomic_test_bit(bt_mesh_prov_link.flags, REPROVISION)) {
 		bt_mesh_cdb_node_update(node, bt_mesh_prov_link.addr,
 					prov_device.elem_count);
 	}
 
+<<<<<<< HEAD
 	memcpy(node->dev_key, prov_device.new_dev_key, 16);
+=======
+	err = bt_mesh_cdb_node_key_import(node, prov_device.new_dev_key);
+	if (err) {
+		LOG_ERR("Failed to import node device key");
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		bt_mesh_cdb_node_store(node);
@@ -740,18 +816,34 @@ int bt_mesh_auth_method_set_output(bt_mesh_output_action_t action, uint8_t size)
 
 int bt_mesh_auth_method_set_static(const uint8_t *static_val, uint8_t size)
 {
+<<<<<<< HEAD
 	uint8_t auth_size = bt_mesh_prov_auth_size_get();
 
 	if (!size || !static_val || size > auth_size) {
+=======
+	if (!size || !static_val) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -EINVAL;
 	}
 
 	prov_set_method(AUTH_METHOD_STATIC, 0, 0);
 
+<<<<<<< HEAD
 	memcpy(bt_mesh_prov_link.auth + auth_size - size, static_val, size);
 	if (size < auth_size) {
 		(void)memset(bt_mesh_prov_link.auth, 0, auth_size - size);
 	}
+=======
+	/* Trim the Auth if it is longer than required length */
+	memcpy(bt_mesh_prov_link.auth, static_val,
+	       size > PROV_AUTH_MAX_LEN ? PROV_AUTH_MAX_LEN : size);
+
+	/* Padd with zeros if the Auth is shorter the required length*/
+	if (size < PROV_AUTH_MAX_LEN) {
+		memset(bt_mesh_prov_link.auth + size, 0, PROV_AUTH_MAX_LEN - size);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -843,6 +935,75 @@ int bt_mesh_pb_remote_open(struct bt_mesh_rpr_cli *cli,
 	return link_open(uuid, &pb_remote_cli, net_idx, addr, 0, &ctx, 0);
 }
 
+<<<<<<< HEAD
+=======
+/* Remote Provision done where client and server is on same node, skip open link
+ * and sending of reprovision message, just execute reprovisioning on it self.
+ */
+static int reprovision_local_client_server(uint16_t addr)
+{
+	int err;
+	const uint8_t *pub_key;
+	const uint8_t *priv_key = NULL;
+
+	if (atomic_test_and_set_bit(bt_mesh_prov_link.flags, LINK_ACTIVE)) {
+		return -EBUSY;
+	}
+
+	LOG_DBG("net_idx %u iv_index 0x%08x, addr 0x%04x",
+		prov_device.node->net_idx, bt_mesh_cdb.iv_index, addr);
+
+	atomic_set_bit(bt_mesh_prov_link.flags, REPROVISION);
+	atomic_set_bit(bt_mesh_prov_link.flags, PROVISIONER);
+	bt_mesh_prov_link.addr = addr;
+	bt_mesh_prov_link.bearer = &pb_remote_cli;
+	bt_mesh_prov_link.role = &role_provisioner;
+	prov_device.net_idx = prov_device.node->net_idx;
+	prov_device.attention_duration = 0;
+
+	if (IS_ENABLED(CONFIG_BT_MESH_PROV_OOB_PUBLIC_KEY) &&
+		       bt_mesh_prov->public_key_be && bt_mesh_prov->private_key_be) {
+		LOG_DBG("Use OOB Public and Private key");
+		pub_key = bt_mesh_prov->public_key_be;
+		priv_key = bt_mesh_prov->private_key_be;
+	} else {
+		pub_key = bt_mesh_pub_key_get();
+	}
+
+	if (!pub_key) {
+		LOG_ERR("No public key available");
+		return -ENOEXEC;
+	}
+
+	if (bt_mesh_dhkey_gen(pub_key, priv_key, bt_mesh_prov_link.dhkey)) {
+		LOG_ERR("Failed to generate DHKey");
+		return -ENOEXEC;
+	}
+	LOG_DBG("DHkey: %s", bt_hex(bt_mesh_prov_link.dhkey, DH_KEY_SIZE));
+
+	err = bt_mesh_dev_key(bt_mesh_prov_link.dhkey,
+			      bt_mesh_prov_link.prov_salt, prov_device.new_dev_key);
+	if (err) {
+		LOG_ERR("Unable to generate device key");
+		return err;
+	}
+
+	bt_mesh_dev_key_cand(prov_device.new_dev_key);
+	/* Mark the link that was never opened as closed. */
+	atomic_set_bit(bt_mesh_prov_link.flags, COMPLETE);
+	bt_mesh_reprovision(addr);
+	bt_mesh_dev_key_cand_activate();
+
+	if (bt_mesh_prov->reprovisioned) {
+		LOG_DBG("Application reprovisioned callback 0x%04x", bt_mesh_primary_addr());
+		bt_mesh_prov->reprovisioned(bt_mesh_primary_addr());
+	}
+
+	prov_link_closed(PROV_BEARER_LINK_STATUS_SUCCESS);
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int bt_mesh_pb_remote_open_node(struct bt_mesh_rpr_cli *cli,
 				struct bt_mesh_rpr_node *srv, uint16_t addr,
 				bool composition_change)
@@ -863,6 +1024,14 @@ int bt_mesh_pb_remote_open_node(struct bt_mesh_rpr_cli *cli,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
+=======
+	/* Check if server is on same device as client */
+	if (IS_ENABLED(CONFIG_BT_MESH_RPR_SRV) && bt_mesh_has_addr(srv->addr)) {
+		return reprovision_local_client_server(addr);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return link_open(NULL, &pb_remote_cli, prov_device.node->net_idx, addr,
 			 0, &ctx, 0);
 }

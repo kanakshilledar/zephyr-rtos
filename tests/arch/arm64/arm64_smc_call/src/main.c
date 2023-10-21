@@ -5,7 +5,11 @@
 
 #include <zephyr/ztest.h>
 
+<<<<<<< HEAD
 #include "zephyr/arch/arm64/arm-smccc.h"
+=======
+#include <zephyr/arch/arm64/arm-smccc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* SMC function IDs for Standard Service queries */
 #define ARM_STD_SMC_CALL_COUNT		0x8400ff00UL

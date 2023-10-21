@@ -10,7 +10,13 @@
 #include <zephyr/drivers/regulator.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/drivers/sensor/npm1300_charger.h>
+<<<<<<< HEAD
 #include <zephyr/dt-bindings/regulator/npm1300.h>
+=======
+#include <zephyr/drivers/led.h>
+#include <zephyr/dt-bindings/regulator/npm1300.h>
+#include <zephyr/drivers/mfd/npm1300.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/printk.h>
 #include <getopt.h>
 
@@ -23,6 +29,13 @@ static const struct device *regulators = DEVICE_DT_GET(DT_NODELABEL(npm1300_ek_r
 
 static const struct device *charger = DEVICE_DT_GET(DT_NODELABEL(npm1300_ek_charger));
 
+<<<<<<< HEAD
+=======
+static const struct device *leds = DEVICE_DT_GET(DT_NODELABEL(npm1300_ek_leds));
+
+static const struct device *pmic = DEVICE_DT_GET(DT_NODELABEL(npm1300_ek_pmic));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void configure_ui(void)
 {
 	int ret;
@@ -40,6 +53,34 @@ void configure_ui(void)
 	}
 
 	printk("Set up button at %s pin %d\n", button1.port->name, button1.pin);
+<<<<<<< HEAD
+=======
+
+	if (!device_is_ready(leds)) {
+		printk("Error: led device is not ready\n");
+		return;
+	}
+}
+
+static void event_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
+{
+	printk("Event detected\n");
+}
+
+void configure_events(void)
+{
+	if (!device_is_ready(pmic)) {
+		printk("Pmic device not ready.\n");
+		return;
+	}
+
+	/* Setup callback for shiphold button press */
+	static struct gpio_callback event_cb;
+
+	gpio_init_callback(&event_cb, event_callback, BIT(NPM1300_EVENT_SHIPHOLD_PRESS));
+
+	mfd_npm1300_add_callback(pmic, &event_cb);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void read_sensors(void)
@@ -71,6 +112,11 @@ int main(void)
 {
 	configure_ui();
 
+<<<<<<< HEAD
+=======
+	configure_events();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!device_is_ready(regulators)) {
 		printk("Error: Regulator device is not ready\n");
 		return 0;
@@ -92,6 +138,18 @@ int main(void)
 			regulator_parent_dvs_state_set(regulators, dvs_state);
 		}
 
+<<<<<<< HEAD
+=======
+		/* Update PMIC LED if button state has changed */
+		if (button_state != last_button) {
+			if (button_state) {
+				led_on(leds, 2U);
+			} else {
+				led_off(leds, 2U);
+			}
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Read and display charger status */
 		static int count;
 

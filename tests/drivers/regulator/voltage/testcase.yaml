@@ -15,8 +15,17 @@ tests:
       - SHIELD=npm6001_ek
     harness_config:
       fixture: npm6001_ek_to_adc
+<<<<<<< HEAD
   drivers.regulator.voltage.mimxrt685_evk_cm33:
     platform_allow: mimxrt685_evk_cm33
+=======
+  drivers.regulator.voltage.nxp:
+    platform_allow:
+      - mimxrt685_evk_cm33
+      - lpcxpresso55s36
+    harness_config:
+      fixture: gpio_loopback
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   drivers.regulator.voltage.rpi_pico_vreg:
     platform_allow: rpi_pico
     harness_config:

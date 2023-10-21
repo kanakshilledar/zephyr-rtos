@@ -97,7 +97,11 @@ Or use the following command to kick zephyr.bin to Cortex-A55 Core0:
 
 
 Use this configuration to run basic Zephyr applications and kernel tests,
+<<<<<<< HEAD
 for example, with the :ref:`synchronization_sample`:
+=======
+for example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/synchronization

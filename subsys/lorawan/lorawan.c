@@ -369,7 +369,11 @@ int lorawan_join(const struct lorawan_join_config *join_cfg)
 
 	/* MIB_PUBLIC_NETWORK powers on the radio and does not turn it off */
 	mib_req.Type = MIB_PUBLIC_NETWORK;
+<<<<<<< HEAD
 	mib_req.Param.EnablePublicNetwork = true;
+=======
+	mib_req.Param.EnablePublicNetwork = IS_ENABLED(CONFIG_LORAWAN_PUBLIC_NETWORK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LoRaMacMibSetRequestConfirm(&mib_req);
 
 	if (join_cfg->mode == LORAWAN_ACT_OTAA) {
@@ -418,11 +422,19 @@ out:
 		 * responsibility to increase datarates when ADR is enabled.
 		 */
 		if (!lorawan_adr_enable) {
+<<<<<<< HEAD
 			MibRequestConfirm_t mib_req;
 
 			mib_req.Type = MIB_CHANNELS_DATARATE;
 			mib_req.Param.ChannelsDatarate = default_datarate;
 			LoRaMacMibSetRequestConfirm(&mib_req);
+=======
+			MibRequestConfirm_t mib_req2;
+
+			mib_req2.Type = MIB_CHANNELS_DATARATE;
+			mib_req2.Param.ChannelsDatarate = default_datarate;
+			LoRaMacMibSetRequestConfirm(&mib_req2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/*

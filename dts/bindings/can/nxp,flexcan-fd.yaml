@@ -15,8 +15,11 @@ description: |
       interrupt-names = "common";
       clocks = <&ccm IMX_CCM_CAN_CLK 0x84 6>;
       clk-source = <2>;
+<<<<<<< HEAD
       sjw = <1>;
       sjw-data = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       sample-point = <875>;
       sample-point-data = <875>;
       bus-speed = <125000>;

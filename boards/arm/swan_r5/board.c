@@ -13,7 +13,11 @@ static int board_swan_init(void)
 		GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), dischrg_gpios);
 
 
+<<<<<<< HEAD
 	if (!device_is_ready(dischrg.port)) {
+=======
+	if (!gpio_is_ready_dt(&dischrg)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 

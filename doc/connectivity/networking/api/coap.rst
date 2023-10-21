@@ -142,7 +142,11 @@ in Zephyr.
 
 See the `net-tools <https://github.com/zephyrproject-rtos/net-tools>`_ project for more details
 
+<<<<<<< HEAD
 The :ref:`coap-server-sample` sample can be built and executed on QEMU as described
+=======
+The :zephyr:code-sample:`coap-server` sample can be built and executed on QEMU as described
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 in :ref:`networking_with_qemu`.
 
 Use this command on the host to run the libcoap implementation of
@@ -172,16 +176,27 @@ Install eclipse-titan and set symbolic links for titan tools
 
     export TTCN3_DIR=/usr/share/titan
 
+<<<<<<< HEAD
     git clone https://github.com/eclipse/titan.misc.git
+=======
+    git clone https://gitlab.eclipse.org/eclipse/titan/titan.misc.git
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     cd titan.misc
 
 Follow the instruction to setup CoAP test suite from here:
 
+<<<<<<< HEAD
 - https://github.com/eclipse/titan.misc
 - https://github.com/eclipse/titan.misc/tree/master/CoAP_Conf
 
 After the build is complete, the :ref:`coap-server-sample` sample can be built
+=======
+- https://gitlab.eclipse.org/eclipse/titan/titan.misc
+- https://gitlab.eclipse.org/eclipse/titan/titan.misc/-/tree/master/CoAP_Conf
+
+After the build is complete, the :zephyr:code-sample:`coap-server` sample can be built
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 and executed on QEMU as described in :ref:`networking_with_qemu`.
 
 Change the client (test suite) and server (Zephyr coap-server sample) addresses

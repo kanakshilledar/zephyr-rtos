@@ -21,6 +21,21 @@ LOG_MODULE_REGISTER(retention, CONFIG_RETENTION_LOG_LEVEL);
 
 #define DATA_VALID_VALUE 1
 
+<<<<<<< HEAD
+=======
+#define INST_HAS_CHECKSUM(n) DT_INST_PROP(n, checksum) ||
+
+#define INST_HAS_PREFIX(n) COND_CODE_1(DT_INST_NODE_HAS_PROP(n, prefix), (1), (0)) ||
+
+#if (DT_INST_FOREACH_STATUS_OKAY(INST_HAS_CHECKSUM) 0)
+#define ANY_HAS_CHECKSUM
+#endif
+
+#if (DT_INST_FOREACH_STATUS_OKAY(INST_HAS_PREFIX) 0)
+#define ANY_HAS_PREFIX
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum {
 	CHECKSUM_NONE = 0,
 	CHECKSUM_CRC8,
@@ -68,6 +83,10 @@ static inline void retention_lock_release(const struct device *dev)
 #endif
 }
 
+<<<<<<< HEAD
+=======
+#ifdef ANY_HAS_CHECKSUM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int retention_checksum(const struct device *dev, uint32_t *output)
 {
 	const struct retention_config *config = dev->config;
@@ -108,6 +127,10 @@ static int retention_checksum(const struct device *dev, uint32_t *output)
 finish:
 	return rc;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int retention_init(const struct device *dev)
 {
@@ -156,10 +179,14 @@ ssize_t retention_size(const struct device *dev)
 int retention_is_valid(const struct device *dev)
 {
 	const struct retention_config *config = dev->config;
+<<<<<<< HEAD
 	struct retention_data *data = dev->data;
 	int rc = 0;
 	uint8_t buffer[CONFIG_RETENTION_BUFFER_SIZE];
 	off_t pos;
+=======
+	int rc = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	retention_lock_take(dev);
 
@@ -169,9 +196,18 @@ int retention_is_valid(const struct device *dev)
 		goto finish;
 	}
 
+<<<<<<< HEAD
 	if (config->prefix_len != 0) {
 		/* Check magic header is present at the start of the section */
 		pos = 0;
+=======
+#ifdef ANY_HAS_PREFIX
+	if (config->prefix_len != 0) {
+		/* Check magic header is present at the start of the section */
+		struct retention_data *data = dev->data;
+		uint8_t buffer[CONFIG_RETENTION_BUFFER_SIZE];
+		off_t pos = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		while (pos < config->prefix_len) {
 			uint8_t read_size = MIN((config->prefix_len - pos), sizeof(buffer));
@@ -198,7 +234,13 @@ int retention_is_valid(const struct device *dev)
 		/* Header already exists so no need to re-write it again */
 		data->header_written = true;
 	}
+<<<<<<< HEAD
 
+=======
+#endif
+
+#ifdef ANY_HAS_CHECKSUM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (config->checksum_size != 0) {
 		/* Check the checksum validity, for this all the data must be read out */
 		uint32_t checksum = 0;
@@ -237,6 +279,10 @@ int retention_is_valid(const struct device *dev)
 			goto finish;
 		}
 	}
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* At this point, checks have passed (if enabled), mark data as being valid */
 	rc = DATA_VALID_VALUE;
@@ -270,9 +316,18 @@ int retention_read(const struct device *dev, off_t offset, uint8_t *buffer, size
 int retention_write(const struct device *dev, off_t offset, const uint8_t *buffer, size_t size)
 {
 	const struct retention_config *config = dev->config;
+<<<<<<< HEAD
 	struct retention_data *data = dev->data;
 	int rc;
 
+=======
+	int rc;
+
+#ifdef ANY_HAS_PREFIX
+	struct retention_data *data = dev->data;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	retention_lock_take(dev);
 
 	if (offset < 0 || ((size_t)offset + size) > (config->size - config->reserved_size)) {
@@ -288,6 +343,10 @@ int retention_write(const struct device *dev, off_t offset, const uint8_t *buffe
 		goto finish;
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef ANY_HAS_PREFIX
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Write optional header and footer information, these are done last to ensure data
 	 * validity before marking it as being valid
 	 */
@@ -301,7 +360,13 @@ int retention_write(const struct device *dev, off_t offset, const uint8_t *buffe
 
 		data->header_written = true;
 	}
+<<<<<<< HEAD
 
+=======
+#endif
+
+#ifdef ANY_HAS_CHECKSUM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (config->checksum_size != 0) {
 		/* Generating a checksum requires reading out all the data in the region */
 		uint32_t checksum = 0;
@@ -330,6 +395,10 @@ int retention_write(const struct device *dev, off_t offset, const uint8_t *buffe
 					(void *)&checksum, sizeof(checksum));
 		}
 	}
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 finish:
 	retention_lock_release(dev);

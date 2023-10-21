@@ -5,7 +5,11 @@
  */
 
 #include <mem.h>
+<<<<<<< HEAD
 #include <ti/cc13x2_cc26x2.dtsi>
+=======
+#include <ti/cc13xx_cc26xx.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	sram0: memory@20000000 {

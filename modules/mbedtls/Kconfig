@@ -182,8 +182,13 @@ config MBEDTLS_ENABLE_HEAP
 	  This option enables the mbedtls to use the heap. This setting must
 	  be global so that various applications and libraries in Zephyr do not
 	  try to do this themselves as there can be only one heap defined
+<<<<<<< HEAD
 	  in mbedtls. If this is enabled, then the Zephyr will, during the device
 	  startup, initialize the heap automatically.
+=======
+	  in mbedtls. If this is enabled, and MBEDTLS_INIT is enabled then the
+	  Zephyr will, during the device startup, initialize the heap automatically.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config MBEDTLS_HEAP_SIZE
 	int "Heap size for mbed TLS"
@@ -201,6 +206,16 @@ config MBEDTLS_HEAP_SIZE
 	  be needed. For some dedicated and specific usage of mbedtls API, the
 	  1000 bytes might be ok.
 
+<<<<<<< HEAD
+=======
+config MBEDTLS_INIT
+	bool "Initialize mbed TLS at boot"
+	default y
+	help
+	  By default mbed TLS will be initialized at Zephyr init. Disabling this option
+	  will defer the initialization until explicitly called.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config MBEDTLS_SHELL
 	bool "mbed TLS shell"
 	depends on MBEDTLS

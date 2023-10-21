@@ -7,3 +7,18 @@ description: |
 compatible: "zephyr,mmc-disk"
 
 include: [sd-device.yaml]
+<<<<<<< HEAD
+=======
+
+properties:
+  bus-width:
+    type: int
+    default: 8
+    description: |
+      Indicates the way the MMC device is connected to the bus.
+      Defaults to the maximum possible number of bus lines.
+    enum:
+      - 1
+      - 4
+      - 8
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

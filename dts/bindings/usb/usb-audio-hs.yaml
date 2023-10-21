@@ -7,7 +7,11 @@ description: USB Audio headset specific fields.
 
 compatible: "usb-audio-hs"
 
+<<<<<<< HEAD
 include: usb-audio.yaml
+=======
+include: [usb-audio.yaml, usb-audio-feature-volume.yaml]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   mic-resolution:
@@ -167,7 +171,10 @@ properties:
     type: boolean
     description: |
       Enable Volume feature.
+<<<<<<< HEAD
       Currently not supported.
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   hp-feature-tone-control:
     type: boolean
     description: |

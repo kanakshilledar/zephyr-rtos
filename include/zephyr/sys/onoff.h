@@ -29,10 +29,17 @@ extern "C" {
  */
 #define ONOFF_FLAG_ERROR BIT(0)
 
+<<<<<<< HEAD
 /** @internal */
 #define ONOFF_FLAG_ONOFF BIT(1)
 /** @internal */
 #define ONOFF_FLAG_TRANSITION BIT(2)
+=======
+/** @cond INTERNAL_HIDDEN */
+#define ONOFF_FLAG_ONOFF BIT(1)
+#define ONOFF_FLAG_TRANSITION BIT(2)
+/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Mask used to isolate bits defining the service state.
@@ -131,6 +138,7 @@ typedef void (*onoff_transition_fn)(struct onoff_manager *mgr,
 
 /** @brief On-off service transition functions. */
 struct onoff_transitions {
+<<<<<<< HEAD
 	/* Function to invoke to transition the service to on. */
 	onoff_transition_fn start;
 
@@ -138,6 +146,15 @@ struct onoff_transitions {
 	onoff_transition_fn stop;
 
 	/* Function to force the service state to reset, where
+=======
+	/** Function to invoke to transition the service to on. */
+	onoff_transition_fn start;
+
+	/** Function to invoke to transition the service to off. */
+	onoff_transition_fn stop;
+
+	/** Function to force the service state to reset, where
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * supported.
 	 */
 	onoff_transition_fn reset;
@@ -152,16 +169,25 @@ struct onoff_transitions {
  * case of error it may be reset through the onoff_reset() API.
  */
 struct onoff_manager {
+<<<<<<< HEAD
 	/* List of clients waiting for request or reset completion
+=======
+	/** List of clients waiting for request or reset completion
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * notifications.
 	 */
 	sys_slist_t clients;
 
+<<<<<<< HEAD
 	/* List of monitors to be notified of state changes including
+=======
+	/** List of monitors to be notified of state changes including
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * errors and transition completion.
 	 */
 	sys_slist_t monitors;
 
+<<<<<<< HEAD
 	/* Transition functions. */
 	const struct onoff_transitions *transitions;
 
@@ -175,6 +201,21 @@ struct onoff_manager {
 	uint16_t flags;
 
 	/* Number of active clients for the service. */
+=======
+	/** Transition functions. */
+	const struct onoff_transitions *transitions;
+
+	/** Mutex protection for other fields. */
+	struct k_spinlock lock;
+
+	/** The result of the last transition. */
+	int last_res;
+
+	/** Flags identifying the service state. */
+	uint16_t flags;
+
+	/** Number of active clients for the service. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t refs;
 };
 
@@ -193,10 +234,18 @@ struct onoff_manager {
 		.reset = _reset,			       \
 }
 
+<<<<<<< HEAD
 /** @internal */
 #define ONOFF_MANAGER_INITIALIZER(_transitions) { \
 		.transitions = _transitions,	  \
 }
+=======
+/** @cond INTERNAL_HIDDEN */
+#define ONOFF_MANAGER_INITIALIZER(_transitions) { \
+		.transitions = _transitions,	  \
+}
+/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Initialize an on-off service to off state.
@@ -271,13 +320,21 @@ typedef void (*onoff_client_callback)(struct onoff_manager *mgr,
  * reinitialized for the next operation.
  */
 struct onoff_client {
+<<<<<<< HEAD
 	/** @internal
+=======
+	/** @cond INTERNAL_HIDDEN
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 *
 	 * Links the client into the set of waiting service users.
 	 * Applications must ensure this field is zero-initialized
 	 * before use.
 	 */
 	sys_snode_t node;
+<<<<<<< HEAD
+=======
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** @brief Notification configuration. */
 	struct sys_notify notify;
@@ -520,13 +577,21 @@ typedef void (*onoff_monitor_callback)(struct onoff_manager *mgr,
  * one onoff_manager instance.
  */
 struct onoff_monitor {
+<<<<<<< HEAD
 	/* Links the client into the set of waiting service users.
+=======
+	/** Links the client into the set of waiting service users.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 *
 	 * This must be zero-initialized.
 	 */
 	sys_snode_t node;
 
+<<<<<<< HEAD
 	/** @brief Callback to be invoked on state change.
+=======
+	/** Callback to be invoked on state change.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 *
 	 * This must not be null.
 	 */
@@ -572,10 +637,17 @@ int onoff_monitor_unregister(struct onoff_manager *mgr,
  * updates supported by onoff_sync_lock() and onoff_sync_finalize().
  */
 struct onoff_sync_service {
+<<<<<<< HEAD
 	/* Mutex protection for other fields. */
 	struct k_spinlock lock;
 
 	/* Negative is error, non-negative is reference count. */
+=======
+	/** Mutex protection for other fields. */
+	struct k_spinlock lock;
+
+	/** Negative is error, non-negative is reference count. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int32_t count;
 };
 

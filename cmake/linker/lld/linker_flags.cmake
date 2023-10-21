@@ -5,3 +5,8 @@
 include(${ZEPHYR_BASE}/cmake/linker/ld/${COMPILER}/linker_flags.cmake OPTIONAL)
 
 set_property(TARGET linker PROPERTY no_position_independent "${LINKERFLAGPREFIX},--no-pie")
+<<<<<<< HEAD
+=======
+
+set_property(TARGET linker PROPERTY partial_linking "-r")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

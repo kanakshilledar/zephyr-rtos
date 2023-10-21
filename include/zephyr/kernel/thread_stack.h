@@ -154,6 +154,7 @@ static inline char *z_stack_ptr_align(char *ptr)
 		sym[nmemb][Z_KERNEL_STACK_LEN(size)]
 
 /**
+<<<<<<< HEAD
  * @brief Obtain an extern reference to a stack
  *
  * This macro properly brings the symbol of a thread stack defined
@@ -199,6 +200,8 @@ static inline char *z_stack_ptr_align(char *ptr)
 		sym[nmemb][Z_KERNEL_STACK_LEN(size)]
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Define a toplevel kernel stack memory region in specified section
  *
  * This defines a region of memory for use as a thread stack in
@@ -342,8 +345,11 @@ static inline char *Z_KERNEL_STACK_BUFFER(k_thread_stack_t *sym)
 #define Z_THREAD_STACK_BUFFER		Z_KERNEL_STACK_BUFFER
 #define K_THREAD_STACK_DECLARE		K_KERNEL_STACK_DECLARE
 #define K_THREAD_STACK_ARRAY_DECLARE	K_KERNEL_STACK_ARRAY_DECLARE
+<<<<<<< HEAD
 #define K_THREAD_STACK_EXTERN		K_KERNEL_STACK_EXTERN
 #define K_THREAD_STACK_ARRAY_EXTERN	K_KERNEL_STACK_ARRAY_EXTERN
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define K_THREAD_PINNED_STACK_DEFINE	K_KERNEL_PINNED_STACK_DEFINE
 #define K_THREAD_PINNED_STACK_ARRAY_DEFINE \
 					K_KERNEL_PINNED_STACK_ARRAY_DEFINE
@@ -468,6 +474,7 @@ static inline char *Z_KERNEL_STACK_BUFFER(k_thread_stack_t *sym)
 		sym[nmemb][K_THREAD_STACK_LEN(size)]
 
 /**
+<<<<<<< HEAD
  * @brief Obtain an extern reference to a stack
  *
  * This macro properly brings the symbol of a thread stack defined
@@ -497,6 +504,8 @@ static inline char *Z_KERNEL_STACK_BUFFER(k_thread_stack_t *sym)
 		sym[nmemb][K_THREAD_STACK_LEN(size)]
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Return the size in bytes of a stack memory region
  *
  * Convenience macro for passing the desired stack size to k_thread_create()
@@ -701,13 +710,22 @@ static inline char *Z_KERNEL_STACK_BUFFER(k_thread_stack_t *sym)
  * A user thread can only be started with a stack defined in this way if
  * the thread starting it is in supervisor mode.
  *
+<<<<<<< HEAD
  * This is now deprecated, as stacks defined in this way are not usable from
  * user mode. Use K_KERNEL_STACK_MEMBER.
+=======
+ * @deprecated This is now deprecated, as stacks defined in this way are not
+ *             usable from user mode. Use K_KERNEL_STACK_MEMBER.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param sym Thread stack symbol name
  * @param size Size of the stack memory region
  */
+<<<<<<< HEAD
 #define K_THREAD_STACK_MEMBER(sym, size) \
+=======
+#define K_THREAD_STACK_MEMBER(sym, size) __DEPRECATED_MACRO \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	Z_THREAD_STACK_DEFINE_IN(sym, size,)
 
 /** @} */

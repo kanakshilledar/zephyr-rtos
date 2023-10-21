@@ -16,13 +16,24 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
     '''Runner front-end for espidf.'''
 
     def __init__(self, cfg, device, boot_address, part_table_address,
+<<<<<<< HEAD
                  app_address, erase=False, baud=921600, flash_size='detect',
                  flash_freq='40m', flash_mode='dio', espidf='espidf',
                  bootloader_bin=None, partition_table_bin=None):
+=======
+                 app_address, erase=False, reset=False, baud=921600,
+                 flash_size='detect', flash_freq='40m', flash_mode='dio',
+                 espidf='espidf', bootloader_bin=None, partition_table_bin=None,
+                 no_stub=False):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         super().__init__(cfg)
         self.elf = cfg.elf_file
         self.app_bin = cfg.bin_file
         self.erase = bool(erase)
+<<<<<<< HEAD
+=======
+        self.reset = bool(reset)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.device = device
         self.boot_address = boot_address
         self.part_table_address = part_table_address
@@ -34,6 +45,10 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
         self.espidf = espidf
         self.bootloader_bin = bootloader_bin
         self.partition_table_bin = partition_table_bin
+<<<<<<< HEAD
+=======
+        self.no_stub = no_stub
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def name(cls):
@@ -41,7 +56,11 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
 
     @classmethod
     def capabilities(cls):
+<<<<<<< HEAD
         return RunnerCaps(commands={'flash'}, erase=True)
+=======
+        return RunnerCaps(commands={'flash'}, erase=True, reset=True)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def do_add_parser(cls, parser):
@@ -73,6 +92,13 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
                             help='Bootloader image to flash')
         parser.add_argument('--esp-flash-partition_table',
                             help='Partition table to flash')
+<<<<<<< HEAD
+=======
+        parser.add_argument('--esp-no-stub', default=False, action='store_true',
+                            help='Disable launching the flasher stub, only talk to ROM bootloader')
+
+        parser.set_defaults(reset=True)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def do_create(cls, cfg, args):
@@ -85,11 +111,20 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
         return Esp32BinaryRunner(
             cfg, args.esp_device, boot_address=args.esp_boot_address,
             part_table_address=args.esp_partition_table_address,
+<<<<<<< HEAD
             app_address=args.esp_app_address, erase=args.erase,
             baud=args.esp_baud_rate, flash_size=args.esp_flash_size,
             flash_freq=args.esp_flash_freq, flash_mode=args.esp_flash_mode,
             espidf=espidf, bootloader_bin=args.esp_flash_bootloader,
             partition_table_bin=args.esp_flash_partition_table)
+=======
+            app_address=args.esp_app_address, erase=args.erase, reset=args.reset,
+            baud=args.esp_baud_rate, flash_size=args.esp_flash_size,
+            flash_freq=args.esp_flash_freq, flash_mode=args.esp_flash_mode,
+            espidf=espidf, bootloader_bin=args.esp_flash_bootloader,
+            partition_table_bin=args.esp_flash_partition_table,
+            no_stub=args.esp_no_stub)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def do_run(self, command, **kwargs):
         self.require(self.espidf)
@@ -101,11 +136,21 @@ class Esp32BinaryRunner(ZephyrBinaryRunner):
             cmd_erase = cmd_flash + ['erase_flash']
             self.check_call(cmd_erase)
 
+<<<<<<< HEAD
+=======
+        if self.no_stub is True:
+            cmd_flash.extend(['--no-stub'])
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if self.device is not None:
             cmd_flash.extend(['--port', self.device])
         cmd_flash.extend(['--baud', self.baud])
         cmd_flash.extend(['--before', 'default_reset'])
+<<<<<<< HEAD
         cmd_flash.extend(['--after', 'hard_reset', 'write_flash', '-u'])
+=======
+        if self.reset:
+            cmd_flash.extend(['--after', 'hard_reset', 'write_flash', '-u'])
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         cmd_flash.extend(['--flash_mode', self.flash_mode])
         cmd_flash.extend(['--flash_freq', self.flash_freq])
         cmd_flash.extend(['--flash_size', self.flash_size])

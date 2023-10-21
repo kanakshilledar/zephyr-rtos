@@ -151,6 +151,14 @@ ZTEST(util_cxx, test_DIV_ROUND_UP)
 	run_DIV_ROUND_UP();
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(util_cxx, test_DIV_ROUND_CLOSEST)
+{
+	run_DIV_ROUND_CLOSEST();
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST_SUITE(util_cxx, NULL, NULL, NULL, NULL, NULL);
 
 #if __cplusplus
@@ -294,4 +302,12 @@ ZTEST(util_cc, test_DIV_ROUND_UP)
 	run_DIV_ROUND_UP();
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(util_cc, test_DIV_ROUND_CLOSEST)
+{
+	run_DIV_ROUND_CLOSEST();
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST_SUITE(util_cc, NULL, NULL, NULL, NULL, NULL);

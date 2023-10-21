@@ -65,6 +65,7 @@ static VL53L1_Error vl53l1x_read_sensor(struct vl53l1x_data *drv_data)
 	return VL53L1_ERROR_NONE;
 }
 
+<<<<<<< HEAD
 static void vl53l1x_worker(struct k_work *work)
 {
 	if (IS_ENABLED(CONFIG_VL53L1X_INTERRUPT_MODE)) {
@@ -72,20 +73,35 @@ static void vl53l1x_worker(struct k_work *work)
 
 		vl53l1x_read_sensor(drv_data);
 	}
+=======
+#ifdef CONFIG_VL53L1X_INTERRUPT_MODE
+static void vl53l1x_worker(struct k_work *work)
+{
+	struct vl53l1x_data *drv_data = CONTAINER_OF(work, struct vl53l1x_data, work);
+
+	vl53l1x_read_sensor(drv_data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void vl53l1x_gpio_callback(const struct device *dev,
 		struct gpio_callback *cb, uint32_t pins)
 {
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_VL53L1X_INTERRUPT_MODE)) {
 		struct vl53l1x_data *drv_data = CONTAINER_OF(cb, struct vl53l1x_data, gpio_cb);
 
 		k_work_submit(&drv_data->work);
 	}
+=======
+	struct vl53l1x_data *drv_data = CONTAINER_OF(cb, struct vl53l1x_data, gpio_cb);
+
+	k_work_submit(&drv_data->work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int vl53l1x_init_interrupt(const struct device *dev)
 {
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_VL53L1X_INTERRUPT_MODE)) {
 		struct vl53l1x_data *drv_data = dev->data;
 		const struct vl53l1x_config *config = dev->config;
@@ -118,6 +134,40 @@ static int vl53l1x_init_interrupt(const struct device *dev)
 	}
 	return 0;
 }
+=======
+	struct vl53l1x_data *drv_data = dev->data;
+	const struct vl53l1x_config *config = dev->config;
+	int ret;
+
+	drv_data->dev = dev;
+
+	if (!gpio_is_ready_dt(&config->gpio1)) {
+		LOG_ERR("%s: device %s is not ready", dev->name, config->gpio1.port->name);
+		return -ENODEV;
+	}
+
+	ret = gpio_pin_configure_dt(&config->gpio1, GPIO_INPUT | GPIO_PULL_UP);
+	if (ret < 0) {
+		LOG_ERR("[%s] Unable to configure GPIO interrupt", dev->name);
+		return -EIO;
+	}
+
+	gpio_init_callback(&drv_data->gpio_cb,
+					vl53l1x_gpio_callback,
+					BIT(config->gpio1.pin));
+
+	ret = gpio_add_callback(config->gpio1.port, &drv_data->gpio_cb);
+	if (ret < 0) {
+		LOG_ERR("Failed to set gpio callback!");
+		return -EIO;
+	}
+
+	drv_data->work.handler = vl53l1x_worker;
+
+	return 0;
+}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int vl53l1x_initialize(const struct device *dev)
 {
@@ -304,10 +354,17 @@ static int vl53l1x_sample_fetch(const struct device *dev,
 		enum sensor_channel chan)
 {
 	struct vl53l1x_data *drv_data = dev->data;
+<<<<<<< HEAD
 	const struct vl53l1x_config *config = dev->config;
 	VL53L1_Error ret;
 
 	__ASSERT_NO_MSG(chan == SENSOR_CHAN_DISTANCE);
+=======
+	VL53L1_Error ret;
+
+	__ASSERT_NO_MSG((chan == SENSOR_CHAN_ALL)
+			|| (chan == SENSOR_CHAN_DISTANCE));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Will immediately stop current measurement */
 	ret = VL53L1_StopMeasurement(&drv_data->vl53l1x);
@@ -316,6 +373,7 @@ static int vl53l1x_sample_fetch(const struct device *dev,
 		return -EBUSY;
 	}
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_VL53L1X_INTERRUPT_MODE)) {
 		ret = gpio_pin_interrupt_configure_dt(&config->gpio1, GPIO_INT_EDGE_TO_INACTIVE);
 		if (ret < 0) {
@@ -323,6 +381,17 @@ static int vl53l1x_sample_fetch(const struct device *dev,
 			return -EIO;
 		}
 	}
+=======
+#ifdef CONFIG_VL53L1X_INTERRUPT_MODE
+	const struct vl53l1x_config *config = dev->config;
+
+	ret = gpio_pin_interrupt_configure_dt(&config->gpio1, GPIO_INT_EDGE_TO_INACTIVE);
+	if (ret < 0) {
+		LOG_ERR("[%s] Unable to config interrupt", dev->name);
+		return -EIO;
+	}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = VL53L1_StartMeasurement(&drv_data->vl53l1x);
 	if (ret != VL53L1_ERROR_NONE) {
@@ -340,7 +409,13 @@ static int vl53l1x_channel_get(const struct device *dev,
 	struct vl53l1x_data *drv_data = dev->data;
 	VL53L1_Error ret;
 
+<<<<<<< HEAD
 	__ASSERT_NO_MSG(chan == SENSOR_CHAN_DISTANCE);
+=======
+	if (chan != SENSOR_CHAN_DISTANCE) {
+		return -ENOTSUP;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Calling VL53L1_WaitMeasurementDataReady regardless of using interrupt or
 	 * polling method ensures user does not have to consider the time between

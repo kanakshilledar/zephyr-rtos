@@ -1,7 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 tests:
+<<<<<<< HEAD
   misc.check_init_priorities:
+=======
+  init.check_init_priorities:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     build_only: true
     platform_allow: native_posix native_posix_64
     integration_platforms:

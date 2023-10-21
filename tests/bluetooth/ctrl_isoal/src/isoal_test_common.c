@@ -23,6 +23,10 @@
 #include <zephyr/kernel.h>
 
 #include <zephyr/bluetooth/bluetooth.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/sys/byteorder.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "util/memq.h"
 
@@ -109,7 +113,11 @@ void isoal_test_create_unframed_pdu(uint8_t llid,
 uint16_t isoal_test_insert_segment(bool sc, bool cmplt, uint32_t time_offset, uint8_t *dataptr,
 				uint8_t length, struct isoal_pdu_rx *pdu_meta)
 {
+<<<<<<< HEAD
 	struct pdu_iso_sdu_sh seg_hdr;
+=======
+	uint8_t seg_hdr[PDU_ISO_SEG_HDR_SIZE + PDU_ISO_SEG_TIMEOFFSET_SIZE];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t pdu_payload_size;
 	uint8_t hdr_write_size;
 	uint16_t pdu_data_loc;
@@ -122,12 +130,22 @@ uint16_t isoal_test_insert_segment(bool sc, bool cmplt, uint32_t time_offset, ui
 	zassert_true(pdu_payload_size <= TEST_RX_PDU_PAYLOAD_MAX,
 		"pdu_payload_size (%d)", pdu_payload_size);
 
+<<<<<<< HEAD
 	seg_hdr.sc = sc;
 	seg_hdr.cmplt = cmplt;
 	seg_hdr.len = length + (sc ? 0 : PDU_ISO_SEG_TIMEOFFSET_SIZE);
 
 	if (!sc) {
 		seg_hdr.timeoffset = time_offset;
+=======
+	/* Write header independent of endian dependent structures */
+	WRITE_BIT(seg_hdr[0], 0, sc); /* sc */
+	WRITE_BIT(seg_hdr[0], 1, cmplt); /* cmplt */
+	seg_hdr[1] = length + (sc ? 0 : PDU_ISO_SEG_TIMEOFFSET_SIZE);
+
+	if (!sc) {
+		sys_put_le24(time_offset, &seg_hdr[PDU_ISO_SEG_HDR_SIZE]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	memcpy(&pdu_meta->pdu->payload[pdu_meta->pdu->len], &seg_hdr, hdr_write_size);

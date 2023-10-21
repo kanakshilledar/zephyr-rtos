@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 /**
  * @file
  *
@@ -13,6 +14,20 @@
  * This API is not thread safe, and thus if a list is used across threads,
  * calls to functions must be protected with synchronization primitives.
  */
+=======
+ /**
+  * @file
+  * @defgroup single-linked-list_apis Single-linked list
+  * @ingroup datastructure_apis
+  *
+  * @brief Single-linked list implementation.
+  *
+  * Single-linked list implementation using inline macros/functions.
+  * This API is not thread safe, and thus if a list is used across threads,
+  * calls to functions must be protected with synchronization primitives.
+  * @{
+  */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef ZEPHYR_INCLUDE_SYS_SLIST_H_
 #define ZEPHYR_INCLUDE_SYS_SLIST_H_
@@ -26,16 +41,30 @@ extern "C" {
 #endif
 
 
+<<<<<<< HEAD
 struct _snode {
 	struct _snode *next;
 };
 
 typedef struct _snode sys_snode_t;
 
+=======
+/** @cond INTERNAL_HIDDEN */
+struct _snode {
+	struct _snode *next;
+};
+/** @endcond */
+
+/** Single-linked list node structure. */
+typedef struct _snode sys_snode_t;
+
+/** @cond INTERNAL_HIDDEN */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct _slist {
 	sys_snode_t *head;
 	sys_snode_t *tail;
 };
+<<<<<<< HEAD
 
 typedef struct _slist sys_slist_t;
 
@@ -45,6 +74,13 @@ typedef struct _slist sys_slist_t;
   * @{
   */
 
+=======
+/** @endcond */
+
+/** Single-linked list structure. */
+typedef struct _slist sys_slist_t;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Provide the primitive to iterate on a list
  * Note: the loop is unsafe and thus __sn should not be removed
@@ -105,7 +141,11 @@ typedef struct _slist sys_slist_t;
 #define SYS_SLIST_FOR_EACH_NODE_SAFE(__sl, __sn, __sns)			\
 	Z_GENLIST_FOR_EACH_NODE_SAFE(slist, __sl, __sn, __sns)
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to resolve the container of a list node
  * Note: it is safe to use with NULL pointer nodes
  *
@@ -116,7 +156,11 @@ typedef struct _slist sys_slist_t;
 #define SYS_SLIST_CONTAINER(__ln, __cn, __n) \
 	Z_GENLIST_CONTAINER(__ln, __cn, __n)
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to peek container of the list head
  *
  * @param __sl A pointer on a sys_slist_t to peek
@@ -126,7 +170,11 @@ typedef struct _slist sys_slist_t;
 #define SYS_SLIST_PEEK_HEAD_CONTAINER(__sl, __cn, __n) \
 	Z_GENLIST_PEEK_HEAD_CONTAINER(slist, __sl, __cn, __n)
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to peek container of the list tail
  *
  * @param __sl A pointer on a sys_slist_t to peek
@@ -136,7 +184,11 @@ typedef struct _slist sys_slist_t;
 #define SYS_SLIST_PEEK_TAIL_CONTAINER(__sl, __cn, __n) \
 	Z_GENLIST_PEEK_TAIL_CONTAINER(slist, __sl, __cn, __n)
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Provide the primitive to peek the next container
  *
  * @param __cn Container struct type pointer
@@ -199,6 +251,13 @@ static inline void sys_slist_init(sys_slist_t *list)
 	list->tail = NULL;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Statically initialize a single-linked list
+ * @param ptr_to_list A pointer on the list to initialize
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define SYS_SLIST_STATIC_INIT(ptr_to_list) {NULL, NULL}
 
 static inline sys_snode_t *z_snode_next_peek(sys_snode_t *node)
@@ -413,6 +472,20 @@ Z_GENLIST_REMOVE(slist, snode)
 static inline bool sys_slist_find_and_remove(sys_slist_t *list,
 					     sys_snode_t *node);
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Compute the size of the given list in O(n) time
+ *
+ * @param list A pointer on the list
+ *
+ * @return an integer equal to the size of the list, or 0 if empty
+ */
+static inline size_t sys_slist_len(sys_slist_t *list);
+
+Z_GENLIST_LEN(slist, snode)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @} */
 Z_GENLIST_FIND_AND_REMOVE(slist, snode)
 

@@ -572,8 +572,13 @@ static void create_ext_adv_info(struct bt_hci_evt_le_ext_advertising_info const 
 	scan_info->rssi = evt->rssi;
 	scan_info->sid = evt->sid;
 	scan_info->interval = sys_le16_to_cpu(evt->interval);
+<<<<<<< HEAD
 	scan_info->adv_type = get_adv_type(evt->evt_type);
 	scan_info->adv_props = get_adv_props_extended(evt->evt_type);
+=======
+	scan_info->adv_type = get_adv_type(sys_le16_to_cpu(evt->evt_type));
+	scan_info->adv_props = get_adv_props_extended(sys_le16_to_cpu(evt->evt_type));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void bt_hci_le_adv_ext_report(struct net_buf *buf)
@@ -586,6 +591,10 @@ void bt_hci_le_adv_ext_report(struct net_buf *buf)
 		struct bt_hci_evt_le_ext_advertising_info *evt;
 		struct bt_le_scan_recv_info scan_info;
 		uint16_t data_status;
+<<<<<<< HEAD
+=======
+		uint16_t evt_type;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bool is_report_complete;
 		bool more_to_come;
 		bool is_new_advertiser;
@@ -596,11 +605,20 @@ void bt_hci_le_adv_ext_report(struct net_buf *buf)
 		}
 
 		evt = net_buf_pull_mem(buf, sizeof(*evt));
+<<<<<<< HEAD
 		data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS(evt->evt_type);
 		is_report_complete = data_status == BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_COMPLETE;
 		more_to_come = data_status == BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_PARTIAL;
 
 		if (evt->evt_type & BT_HCI_LE_ADV_EVT_TYPE_LEGACY) {
+=======
+		evt_type = sys_le16_to_cpu(evt->evt_type);
+		data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS(evt_type);
+		is_report_complete = data_status == BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_COMPLETE;
+		more_to_come = data_status == BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_PARTIAL;
+
+		if (evt_type & BT_HCI_LE_ADV_EVT_TYPE_LEGACY) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Legacy advertising reports are complete.
 			 * Create event immediately.
 			 */
@@ -1199,7 +1217,12 @@ static void bt_hci_le_past_received_common(struct net_buf *buf)
 	}
 
 	sync_info.conn = bt_conn_lookup_handle(
+<<<<<<< HEAD
 				sys_le16_to_cpu(evt->conn_handle));
+=======
+				sys_le16_to_cpu(evt->conn_handle),
+				BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!sync_info.conn) {
 		LOG_ERR("Could not lookup connection handle from PAST");

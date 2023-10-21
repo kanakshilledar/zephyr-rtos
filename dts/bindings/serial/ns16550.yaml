@@ -2,7 +2,11 @@ description: ns16550 UART
 
 compatible: "ns16550"
 
+<<<<<<< HEAD
 include: [uart-controller.yaml, pcie-device.yaml, pinctrl-device.yaml]
+=======
+include: [uart-controller.yaml, pcie-device.yaml, pinctrl-device.yaml, reset-device.yaml]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   reg-shift:

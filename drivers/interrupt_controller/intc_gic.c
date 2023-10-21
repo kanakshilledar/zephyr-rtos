@@ -10,6 +10,10 @@
  * NOTE: This driver implements the GICv1 and GICv2 interfaces.
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/arch/cpu.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/sw_isr_table.h>
@@ -17,6 +21,17 @@
 #include <zephyr/drivers/interrupt_controller/gic.h>
 #include <zephyr/sys/barrier.h>
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_GIC_V1)
+#define DT_DRV_COMPAT arm_gic_v1
+#elif defined(CONFIG_GIC_V2)
+#define DT_DRV_COMPAT arm_gic_v2
+#else
+#error "Unknown GIC controller compatible for this configuration"
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const uint64_t cpu_mpid_list[] = {
 	DT_FOREACH_CHILD_STATUS_OKAY_SEP(DT_PATH(cpus), DT_REG_ADDR, (,))
 };
@@ -252,9 +267,14 @@ static void gic_cpu_init(void)
 /**
  * @brief Initialize the GIC device driver
  */
+<<<<<<< HEAD
 int arm_gic_init(void)
 {
 
+=======
+int arm_gic_init(const struct device *dev)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Init of Distributor interface registers */
 	gic_dist_init();
 
@@ -264,7 +284,12 @@ int arm_gic_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(arm_gic_init, PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, arm_gic_init, NULL, NULL, NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_SMP
 void arm_gic_secondary_init(void)

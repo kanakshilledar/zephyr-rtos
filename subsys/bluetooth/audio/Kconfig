@@ -31,6 +31,18 @@ config BT_AUDIO_TX
 	  This hidden option is enabled when any of the profiles/services
 	  enables support for transmitting of audio data.
 
+<<<<<<< HEAD
+=======
+config BT_AUDIO_NOTIFY_RETRY_DELAY
+	int "Delay for notification sending retried attempt in 1.25 ms units"
+	range 6 3200
+	default 20
+	help
+	  This option sets the time in 1.25 ms units before the stack will
+	  retry to send notification that failed due to lack of TX buffers
+	  available.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config BT_CCID
 	bool
 	help

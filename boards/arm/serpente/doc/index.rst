@@ -75,7 +75,11 @@ USB Device Port
 
 The SAMD21 MCU has a USB device port that can be used to communicate
 with a host PC.  See the :ref:`usb-samples` sample applications for
+<<<<<<< HEAD
 more, such as the :ref:`usb_cdc-acm` sample which prints "Hello World!"
+=======
+more, such as the :zephyr:code-sample:`usb-cdc-acm` sample which prints "Hello World!"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 to the host PC.
 
 Programming and Debugging
@@ -87,7 +91,11 @@ can be entered by quickly tapping the reset button twice.
 Flashing
 ========
 
+<<<<<<< HEAD
 #. Build the Zephyr kernel and the :ref:`blinky-sample` sample application:
+=======
+#. Build the Zephyr kernel and the :zephyr:code-sample:`blinky` sample application:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    .. zephyr-app-commands::
       :zephyr-app: samples/basic/blinky

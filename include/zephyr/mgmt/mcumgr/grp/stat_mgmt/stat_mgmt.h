@@ -21,6 +21,7 @@ extern "C" {
 /**
  * Command result codes for statistics management group.
  */
+<<<<<<< HEAD
 enum stat_mgmt_ret_code_t {
 	/** No error, this is implied if there is no ret value in the response */
 	STAT_MGMT_RET_RC_OK = 0,
@@ -39,6 +40,26 @@ enum stat_mgmt_ret_code_t {
 
 	/** Walk through of statistics was aborted. */
 	STAT_MGMT_RET_RC_WALK_ABORTED,
+=======
+enum stat_mgmt_err_code_t {
+	/** No error, this is implied if there is no ret value in the response */
+	STAT_MGMT_ERR_OK = 0,
+
+	/** Unknown error occurred. */
+	STAT_MGMT_ERR_UNKNOWN,
+
+	/** The provided statistic group name was not found. */
+	STAT_MGMT_ERR_INVALID_GROUP,
+
+	/** The provided statistic name was not found. */
+	STAT_MGMT_ERR_INVALID_STAT_NAME,
+
+	/** The size of the statistic cannot be handled. */
+	STAT_MGMT_ERR_INVALID_STAT_SIZE,
+
+	/** Walk through of statistics was aborted. */
+	STAT_MGMT_ERR_WALK_ABORTED,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -49,6 +70,7 @@ struct stat_mgmt_entry {
 	uint64_t value;
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 /*
  * @brief	Translate stat mgmt group error code into MCUmgr error code
@@ -60,6 +82,8 @@ struct stat_mgmt_entry {
 int stat_mgmt_translate_error_code(uint16_t ret);
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

@@ -11,6 +11,10 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/gpio/gpio_utils.h>
 #include <zephyr/dt-bindings/gpio/ite-it8xxx2-gpio.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/irq.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 #include <zephyr/types.h>
 
@@ -68,6 +72,11 @@ static int gpio_kscan_it8xxx2_configure(const struct device *dev,
 			*reg_ksi_kso_gpod &= ~mask;
 		}
 
+<<<<<<< HEAD
+=======
+		unsigned int key = irq_lock();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Set level before change to output */
 		if (flags & GPIO_OUTPUT_INIT_HIGH) {
 			*reg_ksi_kso_gdat |= mask;
@@ -75,6 +84,11 @@ static int gpio_kscan_it8xxx2_configure(const struct device *dev,
 			*reg_ksi_kso_gdat &= ~mask;
 		}
 
+<<<<<<< HEAD
+=======
+		irq_unlock(key);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Set output mode */
 		*reg_ksi_kso_goen |= mask;
 	} else {
@@ -156,11 +170,20 @@ static int gpio_kscan_it8xxx2_port_set_masked_raw(const struct device *dev,
 {
 	const struct gpio_kscan_cfg *const config = dev->config;
 	volatile uint8_t *reg_ksi_kso_gdat = config->reg_ksi_kso_gdat;
+<<<<<<< HEAD
+=======
+	unsigned int key = irq_lock();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t out = *reg_ksi_kso_gdat;
 
 	/* Set high/low level to mask pins of the port */
 	*reg_ksi_kso_gdat = ((out & ~mask) | (value & mask));
 
+<<<<<<< HEAD
+=======
+	irq_unlock(key);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -169,10 +192,19 @@ static int gpio_kscan_it8xxx2_port_set_bits_raw(const struct device *dev,
 {
 	const struct gpio_kscan_cfg *const config = dev->config;
 	volatile uint8_t *reg_ksi_kso_gdat = config->reg_ksi_kso_gdat;
+<<<<<<< HEAD
+=======
+	unsigned int key = irq_lock();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Set high level to pins of the port */
 	*reg_ksi_kso_gdat |= pins;
 
+<<<<<<< HEAD
+=======
+	irq_unlock(key);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -181,10 +213,19 @@ static int gpio_kscan_it8xxx2_port_clear_bits_raw(const struct device *dev,
 {
 	const struct gpio_kscan_cfg *const config = dev->config;
 	volatile uint8_t *reg_ksi_kso_gdat = config->reg_ksi_kso_gdat;
+<<<<<<< HEAD
+=======
+	unsigned int key = irq_lock();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Set low level to pins of the port */
 	*reg_ksi_kso_gdat &= ~pins;
 
+<<<<<<< HEAD
+=======
+	irq_unlock(key);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -193,10 +234,19 @@ static int gpio_kscan_it8xxx2_port_toggle_bits(const struct device *dev,
 {
 	const struct gpio_kscan_cfg *const config = dev->config;
 	volatile uint8_t *reg_ksi_kso_gdat = config->reg_ksi_kso_gdat;
+<<<<<<< HEAD
+=======
+	unsigned int key = irq_lock();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Toggle output level to pins of the port */
 	*reg_ksi_kso_gdat ^= pins;
 
+<<<<<<< HEAD
+=======
+	irq_unlock(key);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

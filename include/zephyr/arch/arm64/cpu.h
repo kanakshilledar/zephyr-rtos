@@ -52,6 +52,10 @@
 #define SCTLR_C_BIT		BIT(2)
 #define SCTLR_SA_BIT		BIT(3)
 #define SCTLR_I_BIT		BIT(12)
+<<<<<<< HEAD
+=======
+#define SCTLR_BR_BIT		BIT(17)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define CPACR_EL1_FPEN_NOTRAP	(0x3 << 20)
 

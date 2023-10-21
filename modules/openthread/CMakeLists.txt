@@ -82,6 +82,15 @@ else()
   set(OT_BORDER_ROUTING_COUNTERS OFF CACHE BOOL "Enable Border routing counters" FORCE)
 endif()
 
+<<<<<<< HEAD
+=======
+if(CONFIG_OPENTHREAD_BORDER_ROUTING_DHCP6_PD)
+  set(OT_BORDER_ROUTING_DHCP6_PD ON CACHE BOOL "DHCPv6-PD support in border routing" FORCE)
+else()
+  set(OT_BORDER_ROUTING_DHCP6_PD OFF CACHE BOOL "DHCPv6-PD support in border routing" FORCE)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_OPENTHREAD_CHANNEL_MANAGER)
   set(OT_CHANNEL_MANAGER ON CACHE BOOL "Enable channel manager support" FORCE)
 else()
@@ -148,6 +157,15 @@ else()
   set(OT_DATASET_UPDATER OFF CACHE BOOL "Enable Dataset updater" FORCE)
 endif()
 
+<<<<<<< HEAD
+=======
+if(CONFIG_OPENTHREAD_DEVICE_PROP_LEADER_WEIGHT)
+  set(OT_DEVICE_PROP_LEADER_WEIGHT ON CACHE BOOL "Enable device props for leader weight" FORCE)
+else()
+  set(OT_DEVICE_PROP_LEADER_WEIGHT OFF CACHE BOOL "Enable device props for leader weight" FORCE)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_OPENTHREAD_DHCP6_CLIENT)
   set(OT_DHCP6_CLIENT ON CACHE BOOL "Enable DHCPv6 Client" FORCE)
 else()
@@ -268,6 +286,15 @@ else()
   set(OT_LINK_METRICS_INITIATOR OFF CACHE BOOL "Enable Link Metrics initiator for Thread 1.2" FORCE)
 endif()
 
+<<<<<<< HEAD
+=======
+if(CONFIG_OPENTHREAD_LINK_METRICS_MANAGER)
+  set(OT_LINK_METRICS_MANAGER ON CACHE BOOL "Enable Link Metrics manager for Thread 1.2" FORCE)
+else()
+  set(OT_LINK_METRICS_MANAGER OFF CACHE BOOL "Enable Link Metrics manager for Thread 1.2" FORCE)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_OPENTHREAD_LINK_METRICS_SUBJECT)
   set(OT_LINK_METRICS_SUBJECT ON CACHE BOOL "Enable Link Metrics subject for Thread 1.2" FORCE)
 else()
@@ -346,6 +373,15 @@ else()
   set(OT_NETDATA_PUBLISHER OFF CACHE BOOL "Enable Thread Network Data publisher" FORCE)
 endif()
 
+<<<<<<< HEAD
+=======
+if(CONFIG_OPENTHREAD_OPERATIONAL_DATASET_AUTO_INIT)
+  set(OT_OPERATIONAL_DATASET_AUTO_INIT ON CACHE BOOL "Enable operational dataset auto init" FORCE)
+else()
+  set(OT_OPERATIONAL_DATASET_AUTO_INIT OFF CACHE BOOL "Enable operational dataset auto init" FORCE)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_OPENTHREAD_OTNS)
   set(OT_OTNS ON CACHE BOOL "Enable OTNS support" FORCE)
 else()
@@ -446,6 +482,15 @@ else()
   set(OT_TX_BEACON_PAYLOAD OFF CACHE BOOL "Enable tx beacon payload support" FORCE)
 endif()
 
+<<<<<<< HEAD
+=======
+if(CONFIG_OPENTHREAD_TX_QUEUE_STATISTICS)
+  set(OT_TX_QUEUE_STATS ON CACHE BOOL "Enable tx queue statistics" FORCE)
+else()
+  set(OT_TX_QUEUE_STATS OFF CACHE BOOL "Enable tx queue statistics" FORCE)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_OPENTHREAD_UDP_FORWARD)
   set(OT_UDP_FORWARD ON CACHE BOOL "Enable UDP forward feature" FORCE)
 else()

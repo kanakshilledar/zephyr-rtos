@@ -11,5 +11,13 @@ properties:
   "#dma-cells":
     const: 1
 
+<<<<<<< HEAD
+=======
+  dma-parent:
+    type: phandle
+    description: |
+      Parent device for LPSS DMA to get its base address.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 dma-cells:
   - channel

@@ -474,12 +474,20 @@ void sys_trace_k_mem_slab_alloc_exit(struct k_mem_slab *slab, void **mem, k_time
 	TRACING_STRING("%s: %p\n", __func__, slab);
 }
 
+<<<<<<< HEAD
 void sys_trace_k_mem_slab_free_enter(struct k_mem_slab *slab, void **mem)
+=======
+void sys_trace_k_mem_slab_free_enter(struct k_mem_slab *slab, void *mem)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	TRACING_STRING("%s: %p\n", __func__, slab);
 }
 
+<<<<<<< HEAD
 void sys_trace_k_mem_slab_free_exit(struct k_mem_slab *slab, void **mem)
+=======
+void sys_trace_k_mem_slab_free_exit(struct k_mem_slab *slab, void *mem)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	TRACING_STRING("%s: %p\n", __func__, slab);
 }

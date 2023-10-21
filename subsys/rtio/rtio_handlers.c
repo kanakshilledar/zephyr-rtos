@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "zephyr/kernel.h"
+=======
+#include <zephyr/kernel.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdbool.h>
 #include <zephyr/rtio/rtio.h>
 #include <zephyr/syscall_handler.h>

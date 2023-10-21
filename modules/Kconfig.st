@@ -55,6 +55,12 @@ config USE_STDC_IIS3DHHC
 config USE_STDC_IIS3DWB
 	bool
 
+<<<<<<< HEAD
+=======
+config USE_STDC_ILPS22QS
+	bool
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STDC_ISM303DAC
 	bool
 

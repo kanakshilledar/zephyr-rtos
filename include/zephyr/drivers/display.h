@@ -20,6 +20,10 @@
  */
 
 #include <zephyr/device.h>
+<<<<<<< HEAD
+=======
+#include <errno.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stddef.h>
 #include <zephyr/types.h>
 #include <zephyr/dt-bindings/display/panel.h>
@@ -420,6 +424,13 @@ static inline int display_set_orientation(const struct device *dev,
 	struct display_driver_api *api =
 		(struct display_driver_api *)dev->api;
 
+<<<<<<< HEAD
+=======
+	if (api->set_orientation == NULL) {
+		return -ENOSYS;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return api->set_orientation(dev, orientation);
 }
 

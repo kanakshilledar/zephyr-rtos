@@ -952,7 +952,15 @@ static bool process_nl(const struct shell *sh, uint8_t data)
 #define SHELL_ASCII_MAX_CHAR (127u)
 static inline int ascii_filter(const char data)
 {
+<<<<<<< HEAD
 	return (uint8_t) data > SHELL_ASCII_MAX_CHAR ? -EINVAL : 0;
+=======
+	if (IS_ENABLED(CONFIG_SHELL_ASCII_FILTER)) {
+		return (uint8_t) data > SHELL_ASCII_MAX_CHAR ? -EINVAL : 0;
+	} else {
+		return 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void state_collect(const struct shell *sh)

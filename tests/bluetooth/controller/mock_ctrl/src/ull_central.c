@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "zephyr/types.h"
+=======
+#include <zephyr/types.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/ztest.h>
 #include "util/util.h"
 #include "util/mem.h"
@@ -42,7 +46,11 @@ int ull_central_reset(void)
 }
 
 uint16_t ull_central_iso_cis_offset_get(uint16_t cis_handle, uint32_t *cis_offset_min,
+<<<<<<< HEAD
 					uint32_t *cis_offset_max)
+=======
+					uint32_t *cis_offset_max, uint16_t *conn_event_count)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return 0;
 }

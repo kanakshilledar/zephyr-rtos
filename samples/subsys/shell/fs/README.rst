@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _shell-fs-sample:
 
 File system shell example
 #########################
+=======
+.. zephyr:code-sample:: shell-fs
+   :name: File system shell
+   :relevant-api: file_system_api
+
+   Access a LittleFS file system partition in flash using the file system shell.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -48,7 +56,11 @@ Particle Xenon
 ==============
 
 This target is customized to support the same SPI NOR partition table as
+<<<<<<< HEAD
 the :ref:`littlefs-sample`.
+=======
+the :zephyr:code-sample:`littlefs` sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/subsys/shell/fs

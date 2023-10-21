@@ -231,6 +231,11 @@ IF_ENABLED(CONFIG_ADC_CONFIGURABLE_INPUTS, \
 	(.differential    = DT_NODE_HAS_PROP(node_id, zephyr_input_negative), \
 	 .input_positive  = DT_PROP_OR(node_id, zephyr_input_positive, 0), \
 	 .input_negative  = DT_PROP_OR(node_id, zephyr_input_negative, 0),)) \
+<<<<<<< HEAD
+=======
+IF_ENABLED(DT_PROP(node_id, zephyr_differential), \
+	(.differential    = true,)) \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 IF_ENABLED(CONFIG_ADC_CONFIGURABLE_EXCITATION_CURRENT_SOURCE_PIN, \
 	(.current_source_pin_set = DT_NODE_HAS_PROP(node_id, zephyr_current_source_pin), \
 	 .current_source_pin = DT_PROP_OR(node_id, zephyr_current_source_pin, {0}),)) \
@@ -680,6 +685,24 @@ static inline int z_impl_adc_read(const struct device *dev,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Set a read request from a struct adc_dt_spec.
+ *
+ * @param spec ADC specification from Devicetree.
+ * @param sequence  Structure specifying requested sequence of samplings.
+ *
+ * @return A value from adc_read().
+ * @see adc_read()
+ */
+static inline int adc_read_dt(const struct adc_dt_spec *spec,
+			      const struct adc_sequence *sequence)
+{
+	return adc_read(spec->dev, sequence);
+}
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Set an asynchronous read request.
  *
  * @note This function is available only if @kconfig{CONFIG_ADC_ASYNC}
@@ -847,6 +870,21 @@ static inline int adc_sequence_init_dt(const struct adc_dt_spec *spec,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Validate that the ADC device is ready.
+ *
+ * @param spec ADC specification from devicetree
+ *
+ * @retval true if the ADC device is ready for use and false otherwise.
+ */
+static inline bool adc_is_ready_dt(const struct adc_dt_spec *spec)
+{
+	return device_is_ready(spec->dev);
+}
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @}
  */
 

@@ -18,6 +18,11 @@ struct k_thread cpu1_thread;
 static struct k_spinlock bounce_lock;
 
 volatile int bounce_owner, bounce_done;
+<<<<<<< HEAD
+=======
+volatile int trylock_failures;
+volatile int trylock_successes;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Tests for spinlock
@@ -42,6 +47,7 @@ ZTEST(spinlock, test_spinlock_basic)
 	k_spinlock_key_t key;
 	static struct k_spinlock l;
 
+<<<<<<< HEAD
 	zassert_true(!l.locked, "Spinlock initialized to locked");
 
 	key = k_spin_lock(&l);
@@ -55,6 +61,22 @@ ZTEST(spinlock, test_spinlock_basic)
 
 void bounce_once(int id)
 {
+=======
+	zassert_true(!z_spin_is_locked(&l), "Spinlock initialized to locked");
+
+	key = k_spin_lock(&l);
+
+	zassert_true(z_spin_is_locked(&l), "Spinlock failed to lock");
+
+	k_spin_unlock(&l, key);
+
+	zassert_true(!z_spin_is_locked(&l), "Spinlock failed to unlock");
+}
+
+static void bounce_once(int id, bool trylock)
+{
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int i, locked;
 	k_spinlock_key_t key;
 
@@ -63,7 +85,20 @@ void bounce_once(int id)
 	 */
 	locked = 0;
 	for (i = 0; i < 10000; i++) {
+<<<<<<< HEAD
 		key = k_spin_lock(&bounce_lock);
+=======
+		if (trylock) {
+			ret = k_spin_trylock(&bounce_lock, &key);
+			if (ret == -EBUSY) {
+				trylock_failures++;
+				continue;
+			}
+			trylock_successes++;
+		} else {
+			key = k_spin_lock(&bounce_lock);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (bounce_owner != id) {
 			locked = 1;
@@ -85,22 +120,37 @@ void bounce_once(int id)
 	 */
 	bounce_owner = id;
 
+<<<<<<< HEAD
 	for (i = 0; i < 100; i++) {
 		zassert_true(bounce_owner == id, "Locked data changed");
+=======
+	for (i = 0; i < 5; i++) {
+		zassert_true(bounce_owner == id, "Locked data changed");
+		k_busy_wait(1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Release the lock */
 	k_spin_unlock(&bounce_lock, key);
 }
 
+<<<<<<< HEAD
 void cpu1_fn(void *p1, void *p2, void *p3)
+=======
+static void cpu1_fn(void *p1, void *p2, void *p3)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(p1);
 	ARG_UNUSED(p2);
 	ARG_UNUSED(p3);
 
+<<<<<<< HEAD
 	while (1) {
 		bounce_once(4321);
+=======
+	while (!bounce_done) {
+		bounce_once(4321, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -122,10 +172,19 @@ ZTEST(spinlock, test_spinlock_bounce)
 	k_busy_wait(10);
 
 	for (i = 0; i < 10000; i++) {
+<<<<<<< HEAD
 		bounce_once(1234);
 	}
 
 	bounce_done = 1;
+=======
+		bounce_once(1234, false);
+	}
+
+	bounce_done = 1;
+
+	k_thread_join(&cpu1_thread, K_FOREVER);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -150,7 +209,11 @@ ZTEST(spinlock, test_spinlock_mutual_exclusion)
 
 	key = k_spin_lock(&lock_runtime);
 
+<<<<<<< HEAD
 	zassert_true(lock_runtime.locked, "Spinlock failed to lock");
+=======
+	zassert_true(z_spin_is_locked(&lock_runtime), "Spinlock failed to lock");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* check irq has not locked */
 	zassert_true(arch_irq_unlocked(key.key),
@@ -170,7 +233,61 @@ ZTEST(spinlock, test_spinlock_mutual_exclusion)
 
 	k_spin_unlock(&lock_runtime, key);
 
+<<<<<<< HEAD
 	zassert_true(!lock_runtime.locked, "Spinlock failed to unlock");
 }
 
 ZTEST_SUITE(spinlock, NULL, NULL, NULL, NULL, NULL);
+=======
+	zassert_true(!z_spin_is_locked(&lock_runtime), "Spinlock failed to unlock");
+}
+
+static void trylock_fn(void *p1, void *p2, void *p3)
+{
+	ARG_UNUSED(p1);
+	ARG_UNUSED(p2);
+	ARG_UNUSED(p3);
+
+	while (!bounce_done) {
+		bounce_once(4321, true);
+	}
+}
+
+/**
+ * @brief Test k_spin_trylock()
+ *
+ * @ingroup kernel_spinlock_tests
+ *
+ * @see k_spin_trylock()
+ */
+ZTEST(spinlock, test_trylock)
+{
+	int i;
+
+	k_thread_create(&cpu1_thread, cpu1_stack, CPU1_STACK_SIZE,
+			trylock_fn, NULL, NULL, NULL,
+			0, 0, K_NO_WAIT);
+
+	k_busy_wait(10);
+
+	for (i = 0; i < 10000; i++) {
+		bounce_once(1234, true);
+	}
+
+	bounce_done = 1;
+
+	k_thread_join(&cpu1_thread, K_FOREVER);
+
+	zassert_true(trylock_failures > 0);
+	zassert_true(trylock_successes > 0);
+}
+
+static void before(void *ctx)
+{
+	ARG_UNUSED(ctx);
+
+	bounce_done = 0;
+}
+
+ZTEST_SUITE(spinlock, NULL, NULL, before, NULL, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

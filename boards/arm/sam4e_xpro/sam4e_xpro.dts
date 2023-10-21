@@ -8,6 +8,10 @@
 
 #include <atmel/sam4e16e.dtsi>
 #include "sam4e_xpro-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Atmel SAM4E Xplained Pro Board with an Atmel SAM4E16E SoC";
@@ -20,6 +24,10 @@
 		sw0 = &user_button;
 		wdog = &wdt;
 		watchdog0 = &wdt;
+<<<<<<< HEAD
+=======
+		sdhc0 = &hsmci;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	chosen {
@@ -41,8 +49,13 @@
 		compatible = "gpio-keys";
 		user_button: button_1 {
 			label = "User Button";
+<<<<<<< HEAD
 			gpios = <&pioa 2 (GPIO_PULL_UP |
 					   GPIO_ACTIVE_LOW)>;
+=======
+			gpios = <&pioa 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -187,12 +200,16 @@
 
 	zephyr,random-mac-address;
 
+<<<<<<< HEAD
 	phy: phy {
 		compatible = "ethernet-phy";
 		status = "okay";
 		address = <0>;
 		mdio = <&mdio>;
 	};
+=======
+	phy-handle = <&phy>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &mdio {
@@ -200,6 +217,15 @@
 
 	pinctrl-0 = <&mdio_default>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+
+	phy: ethernet-phy@0 {
+		compatible = "ethernet-phy";
+		status = "okay";
+		reg = <0>;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &pwm0 {
@@ -209,6 +235,20 @@
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
+=======
+&hsmci {
+	status = "okay";
+
+	pinctrl-0 = <&hsmci_default>;
+	pinctrl-names = "default";
+	mmc {
+		compatible = "zephyr,sdmmc-disk";
+		status = "okay";
+	};
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &wdt {
 	status = "okay";
 };

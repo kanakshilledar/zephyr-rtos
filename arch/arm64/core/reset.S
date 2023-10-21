@@ -7,6 +7,10 @@
 #include <zephyr/toolchain.h>
 #include <zephyr/linker/sections.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
+=======
+#include <offsets.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "boot.h"
 #include "macro_priv.inc"
 
@@ -90,6 +94,12 @@ out:
 	/* Initialize stack */
 	mov	sp, x24
 
+<<<<<<< HEAD
+=======
+	/* fp = NULL */
+	mov	fp, xzr
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret	x23
 
 /*
@@ -146,7 +156,11 @@ resetwait:
 primary_core:
 #endif
 	/* load primary stack and entry point */
+<<<<<<< HEAD
 	ldr	x24, =(z_interrupt_stacks + CONFIG_ISR_STACK_SIZE)
+=======
+	ldr	x24, =(z_interrupt_stacks + __z_interrupt_stack_SIZEOF)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ldr	x25, =z_arm64_prep_c
 2:
 	/* Prepare for calling C code */

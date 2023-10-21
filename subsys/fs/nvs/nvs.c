@@ -23,6 +23,7 @@ static int nvs_ate_valid(struct nvs_fs *fs, const struct nvs_ate *entry);
 
 static inline size_t nvs_lookup_cache_pos(uint16_t id)
 {
+<<<<<<< HEAD
 	size_t pos;
 
 #if CONFIG_NVS_LOOKUP_CACHE_SIZE <= (UINT8_MAX + 1)
@@ -38,6 +39,19 @@ static inline size_t nvs_lookup_cache_pos(uint16_t id)
 #endif
 
 	return pos % CONFIG_NVS_LOOKUP_CACHE_SIZE;
+=======
+	uint16_t hash;
+
+	/* 16-bit integer hash function found by https://github.com/skeeto/hash-prospector. */
+	hash = id;
+	hash ^= hash >> 8;
+	hash *= 0x88b5U;
+	hash ^= hash >> 7;
+	hash *= 0xdb2dU;
+	hash ^= hash >> 9;
+
+	return hash % CONFIG_NVS_LOOKUP_CACHE_SIZE;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int nvs_lookup_cache_rebuild(struct nvs_fs *fs)
@@ -539,7 +553,10 @@ static void nvs_sector_advance(struct nvs_fs *fs, uint32_t *addr)
  */
 static int nvs_sector_close(struct nvs_fs *fs)
 {
+<<<<<<< HEAD
 	int rc;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct nvs_ate close_ate;
 	size_t ate_size;
 
@@ -555,7 +572,11 @@ static int nvs_sector_close(struct nvs_fs *fs)
 
 	nvs_ate_crc8_update(&close_ate);
 
+<<<<<<< HEAD
 	rc = nvs_flash_ate_wrt(fs, &close_ate);
+=======
+	(void)nvs_flash_ate_wrt(fs, &close_ate);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	nvs_sector_advance(fs, &fs->ate_wra);
 
@@ -870,7 +891,11 @@ static int nvs_startup(struct nvs_fs *fs)
 		 * So, temporarily, we set the lookup cache to the end of the fs.
 		 * The cache will be rebuilt afterwards
 		 **/
+<<<<<<< HEAD
 		for (int i = 0; i < CONFIG_NVS_LOOKUP_CACHE_SIZE; i++) {
+=======
+		for (i = 0; i < CONFIG_NVS_LOOKUP_CACHE_SIZE; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs->lookup_cache[i] = fs->ate_wra;
 		}
 #endif

@@ -122,6 +122,7 @@ static int gpio_lmp90xxx_port_toggle_bits(const struct device *dev,
 	return lmp90xxx_gpio_port_toggle_bits(config->parent, pins);
 }
 
+<<<<<<< HEAD
 static int gpio_lmp90xxx_pin_interrupt_configure(const struct device *dev,
 						 gpio_pin_t pin,
 						 enum gpio_int_mode mode,
@@ -135,6 +136,8 @@ static int gpio_lmp90xxx_pin_interrupt_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int gpio_lmp90xxx_init(const struct device *dev)
 {
 	const struct gpio_lmp90xxx_config *config = dev->config;
@@ -154,7 +157,10 @@ static const struct gpio_driver_api gpio_lmp90xxx_api = {
 	.port_set_bits_raw = gpio_lmp90xxx_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_lmp90xxx_port_clear_bits_raw,
 	.port_toggle_bits = gpio_lmp90xxx_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_lmp90xxx_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.port_get_raw = gpio_lmp90xxx_port_get_raw,
 };
 

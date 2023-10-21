@@ -6,12 +6,21 @@
 #include "mesh_test.h"
 #include "argparse.h"
 #include <bs_pc_backchannel.h>
+<<<<<<< HEAD
+=======
+#include "mesh/crypto.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LOG_MODULE_NAME mesh_test
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
+<<<<<<< HEAD
+=======
+#include "common/bt_str.h"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Max number of messages that can be pending on RX at the same time */
 #define RECV_QUEUE_SIZE 32
 
@@ -163,6 +172,17 @@ static struct bt_mesh_model_pub health_pub = {
 static struct bt_mesh_sar_cfg_cli sar_cfg_cli;
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_PRIV_BEACONS)
+static struct bt_mesh_priv_beacon_cli priv_beacon_cli;
+#endif
+
+#if defined(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI)
+static struct bt_mesh_od_priv_proxy_cli priv_proxy_cli;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct bt_mesh_model models[] = {
 	BT_MESH_MODEL_CFG_SRV,
 	BT_MESH_MODEL_CFG_CLI(&cfg_cli),
@@ -172,6 +192,19 @@ static struct bt_mesh_model models[] = {
 	BT_MESH_MODEL_SAR_CFG_SRV,
 	BT_MESH_MODEL_SAR_CFG_CLI(&sar_cfg_cli),
 #endif
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_PRIV_BEACONS)
+	BT_MESH_MODEL_PRIV_BEACON_SRV,
+	BT_MESH_MODEL_PRIV_BEACON_CLI(&priv_beacon_cli),
+#endif
+#if defined(CONFIG_BT_MESH_OD_PRIV_PROXY_SRV)
+	BT_MESH_MODEL_OD_PRIV_PROXY_SRV,
+#endif
+#if defined(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI)
+	BT_MESH_MODEL_OD_PRIV_PROXY_CLI(&priv_proxy_cli),
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct bt_mesh_model *test_model = &models[2];
@@ -252,7 +285,14 @@ void bt_mesh_device_setup(const struct bt_mesh_prov *prov, const struct bt_mesh_
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		LOG_INF("Loading stored settings");
+<<<<<<< HEAD
 		settings_load();
+=======
+		if (IS_ENABLED(CONFIG_BT_MESH_USES_MBEDTLS_PSA)) {
+			settings_load_subtree("itsemul");
+		}
+		settings_load_subtree("bt");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_INF("Mesh initialized");
@@ -300,7 +340,11 @@ static struct bt_mesh_test_msg *blocking_recv(k_timeout_t timeout)
 	return k_queue_get(&recv, timeout);
 }
 
+<<<<<<< HEAD
 int bt_mesh_test_recv(uint16_t len, uint16_t dst, k_timeout_t timeout)
+=======
+int bt_mesh_test_recv(uint16_t len, uint16_t dst, const uint8_t *uuid, k_timeout_t timeout)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct bt_mesh_test_msg *msg = blocking_recv(timeout);
 
@@ -318,7 +362,24 @@ int bt_mesh_test_recv(uint16_t len, uint16_t dst, k_timeout_t timeout)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	k_mem_slab_free(&msg_pool, (void **)&msg);
+=======
+	if (BT_MESH_ADDR_IS_VIRTUAL(msg->ctx.recv_dst) &&
+	    ((uuid != NULL && msg->ctx.uuid == NULL) ||
+	     (uuid == NULL && msg->ctx.uuid != NULL) ||
+	     memcmp(uuid, msg->ctx.uuid, 16))) {
+		LOG_ERR("Recv: Label UUID mismatch for virtual address 0x%04x");
+		if (uuid && msg->ctx.uuid) {
+			LOG_ERR("Got: %s", bt_hex(msg->ctx.uuid, 16));
+			LOG_ERR("Expected: %s", bt_hex(uuid, 16));
+		}
+
+		return -EINVAL;
+	}
+
+	k_mem_slab_free(&msg_pool, (void *)msg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -333,7 +394,11 @@ int bt_mesh_test_recv_msg(struct bt_mesh_test_msg *msg, k_timeout_t timeout)
 
 	*msg = *queued;
 
+<<<<<<< HEAD
 	k_mem_slab_free(&msg_pool, (void **)&queued);
+=======
+	k_mem_slab_free(&msg_pool, (void *)queued);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -344,7 +409,11 @@ int bt_mesh_test_recv_clear(void)
 	int count = 0;
 
 	while ((queued = k_queue_get(&recv, K_NO_WAIT))) {
+<<<<<<< HEAD
 		k_mem_slab_free(&msg_pool, (void **)&queued);
+=======
+		k_mem_slab_free(&msg_pool, (void *)queued);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		count++;
 	}
 
@@ -387,7 +456,11 @@ static void tx_ended(int err, void *data)
 	k_sem_give(&send_ctx->sem);
 }
 
+<<<<<<< HEAD
 int bt_mesh_test_send_async(uint16_t addr, size_t len,
+=======
+int bt_mesh_test_send_async(uint16_t addr, const uint8_t *uuid, size_t len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    enum bt_mesh_test_send_flags flags,
 			    const struct bt_mesh_send_cb *send_cb,
 			    void *cb_data)
@@ -400,6 +473,10 @@ int bt_mesh_test_send_async(uint16_t addr, size_t len,
 	test_send_ctx.addr = addr;
 	test_send_ctx.send_rel = (flags & FORCE_SEGMENTATION);
 	test_send_ctx.send_ttl = BT_MESH_TTL_DEFAULT;
+<<<<<<< HEAD
+=======
+	test_send_ctx.uuid = uuid;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	BT_MESH_MODEL_BUF_DEFINE(buf, TEST_MSG_OP_1, BT_MESH_TX_SDU_MAX);
 	bt_mesh_model_msg_init(&buf, TEST_MSG_OP_1);
@@ -438,11 +515,19 @@ int bt_mesh_test_send_async(uint16_t addr, size_t len,
 	return 0;
 }
 
+<<<<<<< HEAD
 int bt_mesh_test_send(uint16_t addr, size_t len,
 		      enum bt_mesh_test_send_flags flags, k_timeout_t timeout)
 {
 	if (K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
 		return bt_mesh_test_send_async(addr, len, flags, NULL, NULL);
+=======
+int bt_mesh_test_send(uint16_t addr, const uint8_t *uuid, size_t len,
+		      enum bt_mesh_test_send_flags flags, k_timeout_t timeout)
+{
+	if (K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
+		return bt_mesh_test_send_async(addr, uuid, len, flags, NULL, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	static const struct bt_mesh_send_cb send_cb = {
@@ -454,7 +539,11 @@ int bt_mesh_test_send(uint16_t addr, size_t len,
 	int err;
 
 	k_sem_init(&send_ctx.sem, 0, 1);
+<<<<<<< HEAD
 	err = bt_mesh_test_send_async(addr, len, flags, &send_cb, &send_ctx);
+=======
+	err = bt_mesh_test_send_async(addr, uuid, len, flags, &send_cb, &send_ctx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		return err;
 	}

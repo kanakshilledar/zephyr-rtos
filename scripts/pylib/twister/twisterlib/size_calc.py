@@ -257,9 +257,15 @@ class SizeCalculator:
             # If build.log file exists, check errors (unrecognized sections
             # in ELF file).
             if self.buildlog_filename:
+<<<<<<< HEAD
                 if name in SizeCalculator.alloc_sections or\
                     SizeCalculator.rw_sections or\
                     SizeCalculator.ro_sections:
+=======
+                if name in SizeCalculator.alloc_sections or \
+                   name in SizeCalculator.rw_sections or \
+                   name in SizeCalculator.ro_sections:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     continue
                 else:
                     stype = "unknown"

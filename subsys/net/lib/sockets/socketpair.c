@@ -56,6 +56,14 @@ __net_socket struct spair {
 	uint8_t buf[CONFIG_NET_SOCKETPAIR_BUFFER_SIZE];
 };
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NET_SOCKETPAIR_STATIC
+K_MEM_SLAB_DEFINE_STATIC(spair_slab, sizeof(struct spair), CONFIG_NET_SOCKETPAIR_MAX * 2,
+			 __alignof__(struct spair));
+#endif /* CONFIG_NET_SOCKETPAIR_STATIC */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* forward declaration */
 static const struct socket_op_vtable spair_fd_op_vtable;
 
@@ -186,17 +194,32 @@ static void spair_delete(struct spair *spair)
 	res = k_poll_signal_raise(&spair->writeable, SPAIR_SIG_CANCEL);
 	__ASSERT(res == 0, "k_poll_signal_raise() failed: %d", res);
 
+<<<<<<< HEAD
 	/* ensure no private information is released to the memory pool */
 	memset(spair, 0, sizeof(*spair));
 #ifdef CONFIG_USERSPACE
+=======
+	if (remote != NULL && have_remote_sem) {
+		k_sem_give(&remote->sem);
+	}
+
+	/* ensure no private information is released to the memory pool */
+	memset(spair, 0, sizeof(*spair));
+#ifdef CONFIG_NET_SOCKETPAIR_STATIC
+	k_mem_slab_free(&spair_slab, (void *)spair);
+#elif CONFIG_USERSPACE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_object_free(spair);
 #else
 	k_free(spair);
 #endif
+<<<<<<< HEAD
 
 	if (remote != NULL && have_remote_sem) {
 		k_sem_give(&remote->sem);
 	}
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -213,7 +236,18 @@ static struct spair *spair_new(void)
 	struct spair *spair;
 	int res;
 
+<<<<<<< HEAD
 #ifdef CONFIG_USERSPACE
+=======
+#ifdef CONFIG_NET_SOCKETPAIR_STATIC
+
+	res = k_mem_slab_alloc(&spair_slab, (void **) &spair, K_NO_WAIT);
+	if (res != 0) {
+		spair = NULL;
+	}
+
+#elif CONFIG_USERSPACE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct z_object *zo = z_dynamic_object_create(sizeof(*spair));
 
 	if (zo == NULL) {
@@ -937,6 +971,25 @@ static int spair_ioctl(void *obj, unsigned int request, va_list args)
 			goto out;
 		}
 
+<<<<<<< HEAD
+=======
+		case ZFD_IOCTL_FIONBIO: {
+			spair->flags |= SPAIR_FLAG_NONBLOCK;
+			res = 0;
+			goto out;
+		}
+
+		case ZFD_IOCTL_FIONREAD: {
+			int *nbytes;
+
+			nbytes = va_arg(args, int *);
+			*nbytes = spair_read_avail(spair);
+
+			res = 0;
+			goto out;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		case ZFD_IOCTL_POLL_PREPARE: {
 			pfd = va_arg(args, struct zsock_pollfd *);
 			pev = va_arg(args, struct k_poll_event **);

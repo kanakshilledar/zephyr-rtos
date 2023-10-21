@@ -105,6 +105,14 @@ if(CONFIG_HAS_RPI_PICO)
   zephyr_include_directories_ifdef(CONFIG_PICOSDK_USE_DMA
           ${rp2_common_dir}/hardware_dma/include)
 
+<<<<<<< HEAD
+=======
+  zephyr_library_sources_ifdef(CONFIG_PICOSDK_USE_TIMER
+          ${rp2_common_dir}/hardware_timer/timer.c)
+  zephyr_include_directories_ifdef(CONFIG_PICOSDK_USE_TIMER
+          ${rp2_common_dir}/hardware_timer/include)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   zephyr_library_sources_ifdef(CONFIG_PICOSDK_USE_CLAIM
           ${rp2_common_dir}/hardware_claim/claim.c)
   zephyr_include_directories_ifdef(CONFIG_PICOSDK_USE_CLAIM

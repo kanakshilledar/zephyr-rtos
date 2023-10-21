@@ -562,7 +562,12 @@ static uint8_t notify_func(struct bt_conn *conn,
 		return BT_GATT_ITER_STOP;
 	}
 
+<<<<<<< HEAD
 	shell_print(ctx_shell, "Notification: length %u", length);
+=======
+	shell_print(ctx_shell, "Notification: value_handle %u, length %u",
+		    params->value_handle, length);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	shell_hexdump(ctx_shell, data, length);
 
 	return BT_GATT_ITER_CONTINUE;
@@ -717,7 +722,11 @@ static uint8_t print_attr(const struct bt_gatt_attr *attr, uint16_t handle,
 
 static int cmd_show_db(const struct shell *sh, size_t argc, char *argv[])
 {
+<<<<<<< HEAD
 	struct bt_uuid_16 uuid;
+=======
+	struct bt_uuid_16 uuid16;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t total_len;
 
 	memset(&stats, 0, sizeof(stats));
@@ -725,14 +734,23 @@ static int cmd_show_db(const struct shell *sh, size_t argc, char *argv[])
 	if (argc > 1) {
 		uint16_t num_matches = 0;
 
+<<<<<<< HEAD
 		uuid.uuid.type = BT_UUID_TYPE_16;
 		uuid.val = strtoul(argv[1], NULL, 16);
+=======
+		uuid16.uuid.type = BT_UUID_TYPE_16;
+		uuid16.val = strtoul(argv[1], NULL, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (argc > 2) {
 			num_matches = strtoul(argv[2], NULL, 10);
 		}
 
+<<<<<<< HEAD
 		bt_gatt_foreach_attr_type(0x0001, 0xffff, &uuid.uuid, NULL,
+=======
+		bt_gatt_foreach_attr_type(0x0001, 0xffff, &uuid16.uuid, NULL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					  num_matches, print_attr,
 					  (void *)sh);
 		return 0;

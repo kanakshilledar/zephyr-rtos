@@ -8,3 +8,7 @@ zephyr_library_sources_ifdef(CONFIG_UDC_NRF udc_nrf.c)
 zephyr_library_sources_ifdef(CONFIG_UDC_KINETIS udc_kinetis.c)
 zephyr_library_sources_ifdef(CONFIG_UDC_SKELETON udc_skeleton.c)
 zephyr_library_sources_ifdef(CONFIG_UDC_VIRTUAL udc_virtual.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_UDC_STM32 udc_stm32.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

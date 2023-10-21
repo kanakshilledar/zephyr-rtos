@@ -23,12 +23,20 @@
 #if !defined(_ASMLANGUAGE)
 #include <zephyr/sys/atomic.h>
 #include <zephyr/types.h>
+<<<<<<< HEAD
 #include <zephyr/kernel/sched_priq.h>
+=======
+#include <zephyr/kernel/internal/sched_priq.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/dlist.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/sys/sys_heap.h>
 #include <zephyr/arch/structs.h>
 #include <zephyr/kernel/stats.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/kernel/obj_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifdef __cplusplus
@@ -114,7 +122,12 @@ struct _cpu {
 	struct _ready_q ready_q;
 #endif
 
+<<<<<<< HEAD
 #if (CONFIG_NUM_METAIRQ_PRIORITIES > 0) && (CONFIG_NUM_COOP_PRIORITIES > 0)
+=======
+#if (CONFIG_NUM_METAIRQ_PRIORITIES > 0) &&                                                         \
+	(CONFIG_NUM_COOP_PRIORITIES > CONFIG_NUM_METAIRQ_PRIORITIES)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Coop thread preempted by current metairq, or NULL */
 	struct k_thread *metairq_preempted;
 #endif
@@ -140,10 +153,21 @@ struct _cpu {
 	uint32_t usage0;
 
 #ifdef CONFIG_SCHED_THREAD_USAGE_ALL
+<<<<<<< HEAD
 	struct k_cycle_stats usage;
 #endif
 #endif
 
+=======
+	struct k_cycle_stats *usage;
+#endif
+#endif
+
+#ifdef CONFIG_OBJ_CORE_SYSTEM
+	struct k_obj_core  obj_core;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Per CPU architecture specifics */
 	struct _cpu_arch arch;
 };
@@ -182,6 +206,16 @@ struct z_kernel {
 #if defined(CONFIG_THREAD_MONITOR)
 	struct k_thread *threads; /* singly linked list of ALL threads */
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SCHED_THREAD_USAGE_ALL
+	struct k_cycle_stats usage[CONFIG_MP_MAX_NUM_CPUS];
+#endif
+
+#ifdef CONFIG_OBJ_CORE_SYSTEM
+	struct k_obj_core  obj_core;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_SMP) && defined(CONFIG_SCHED_IPI_SUPPORTED)
 	/* Need to signal an IPI at the next scheduling point */
@@ -204,7 +238,11 @@ bool z_smp_cpu_mobile(void);
 
 #define _current_cpu ({ __ASSERT_NO_MSG(!z_smp_cpu_mobile()); \
 			arch_curr_cpu(); })
+<<<<<<< HEAD
 #define _current z_current_get()
+=======
+#define _current k_sched_current_thread_query()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #else
 #define _current_cpu (&_kernel.cpus[0])

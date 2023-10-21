@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/uart.h)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library()
 zephyr_library_sources_ifdef(CONFIG_UART_ALTERA_JTAG uart_altera_jtag.c)
 zephyr_library_sources_ifdef(CONFIG_UART_ALTERA uart_altera.c)
@@ -23,8 +28,13 @@ zephyr_library_sources_ifdef(CONFIG_UART_MCUX_LPSCI uart_mcux_lpsci.c)
 zephyr_library_sources_ifdef(CONFIG_UART_MIV uart_miv.c)
 zephyr_library_sources_ifdef(CONFIG_UART_MSP432P4XX uart_msp432p4xx.c)
 zephyr_library_sources_ifdef(CONFIG_UART_NS16550 uart_ns16550.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_NRF_UART_PERIPHERAL uart_nrfx_uart.c)
 zephyr_library_sources_ifdef(CONFIG_NRF_UARTE_PERIPHERAL uart_nrfx_uarte.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_UART_NRFX_UART uart_nrfx_uart.c)
+zephyr_library_sources_ifdef(CONFIG_UART_NRFX_UARTE uart_nrfx_uarte.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_UART_NUMICRO uart_numicro.c)
 zephyr_library_sources_ifdef(CONFIG_UART_SAM uart_sam.c)
 zephyr_library_sources_ifdef(CONFIG_USART_SAM usart_sam.c)
@@ -59,14 +69,40 @@ zephyr_library_sources_ifdef(CONFIG_UART_CDNS uart_cdns.c)
 zephyr_library_sources_ifdef(CONFIG_UART_OPENTITAN uart_opentitan.c)
 zephyr_library_sources_ifdef(CONFIG_UART_HOSTLINK uart_hostlink.c)
 zephyr_library_sources_ifdef(CONFIG_UART_EMUL uart_emul.c)
+<<<<<<< HEAD
 
 zephyr_library_sources_ifdef(CONFIG_UART_SHAKTI uart_shakti.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_UART_NUMAKER uart_numaker.c)
+zephyr_library_sources_ifdef(CONFIG_UART_EFINIX_SAPPIHIRE uart_efinix_sapphire.c)
+zephyr_library_sources_ifdef(CONFIG_UART_SEDI uart_sedi.c)
+zephyr_library_sources_ifdef(CONFIG_UART_BCM2711_MU uart_bcm2711.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 zephyr_library_sources_ifdef(CONFIG_USERSPACE   uart_handlers.c)
 
 if(CONFIG_UART_NATIVE_POSIX)
   zephyr_library_compile_definitions(NO_POSIX_CHEATS)
+<<<<<<< HEAD
   zephyr_library_sources(uart_native_posix.c)
+=======
+  zephyr_library_sources(uart_native_ptty.c)
+  if (CONFIG_NATIVE_APPLICATION)
+    zephyr_library_sources(uart_native_ptty_bottom.c)
+  else()
+    target_sources(native_simulator INTERFACE uart_native_ptty_bottom.c)
+  endif()
+endif()
+
+if(CONFIG_UART_NATIVE_TTY)
+  zephyr_library_compile_definitions(NO_POSIX_CHEATS)
+  zephyr_library_sources(uart_native_tty.c)
+  if (CONFIG_NATIVE_APPLICATION)
+    zephyr_library_sources(uart_native_tty_bottom.c)
+  else()
+    target_sources(native_simulator INTERFACE uart_native_tty_bottom.c)
+  endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif()
 
 zephyr_library_sources_ifdef(CONFIG_SERIAL_TEST		serial_test.c)

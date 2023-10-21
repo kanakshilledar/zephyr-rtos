@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 /* ring_buffer.h: Simple ring buffer API */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Copyright (c) 2015 Intel Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 /** @file */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef ZEPHYR_INCLUDE_SYS_RING_BUFFER_H_
 #define ZEPHYR_INCLUDE_SYS_RING_BUFFER_H_
@@ -18,6 +24,10 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
+=======
+/** @cond INTERNAL_HIDDEN */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* The limit is used by algorithm for distinguishing between empty and full
  * state.
  */
@@ -25,11 +35,29 @@ extern "C" {
 
 #define RING_BUFFER_SIZE_ASSERT_MSG \
 	"Size too big"
+<<<<<<< HEAD
+=======
+/** @endcond */
+
+/**
+ * @file
+ * @defgroup ring_buffer_apis Ring Buffer APIs
+ * @ingroup datastructure_apis
+ *
+ * @brief Simple ring buffer implementation.
+ *
+ * @{
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief A structure to represent a ring buffer
  */
 struct ring_buf {
+<<<<<<< HEAD
+=======
+	/** @cond INTERNAL_HIDDEN */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t *buffer;
 	int32_t put_head;
 	int32_t put_tail;
@@ -38,6 +66,10 @@ struct ring_buf {
 	int32_t get_tail;
 	int32_t get_base;
 	uint32_t size;
+<<<<<<< HEAD
+=======
+	/** @endcond */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -52,12 +84,15 @@ static inline void ring_buf_internal_reset(struct ring_buf *buf, int32_t value)
 }
 
 /**
+<<<<<<< HEAD
  * @defgroup ring_buffer_apis Ring Buffer APIs
  * @ingroup datastructure_apis
  * @{
  */
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Define and initialize a ring buffer for byte data.
  *
  * This macro establishes a ring buffer of an arbitrary size.

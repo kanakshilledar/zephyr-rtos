@@ -17,6 +17,10 @@
 #include "util/util.h"
 #include "util/mem.h"
 #include "util/memq.h"
+<<<<<<< HEAD
+=======
+#include "util/mayfly.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "util/dbuf.h"
 
 #include "pdu_df.h"
@@ -306,7 +310,11 @@ void llcp_pdu_decode_version_ind(struct ll_conn *conn, struct pdu_data *pdu)
 
 static int csrand_get(void *buf, size_t len)
 {
+<<<<<<< HEAD
 	if (k_is_in_isr()) {
+=======
+	if (mayfly_is_running()) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return lll_csrand_isr_get(buf, len);
 	} else {
 		return lll_csrand_get(buf, len);

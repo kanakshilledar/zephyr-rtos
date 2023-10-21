@@ -8,7 +8,10 @@
 #include <string.h>
 
 #include <zephyr/mgmt/mcumgr/grp/img_mgmt/img_mgmt.h>
+<<<<<<< HEAD
 #include <zephyr/mgmt/mcumgr/grp/img_mgmt/image.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int
 img_mgmt_ver_str(const struct image_version *ver, char *dst)

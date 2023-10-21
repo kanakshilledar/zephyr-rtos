@@ -1389,7 +1389,12 @@ static int bt_sdp_recv(struct bt_l2cap_chan *chan, struct net_buf *buf)
  *
  *  @return 0 for success, or relevant error code
  */
+<<<<<<< HEAD
 static int bt_sdp_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+=======
+static int bt_sdp_accept(struct bt_conn *conn, struct bt_l2cap_server *server,
+			 struct bt_l2cap_chan **chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	static const struct bt_l2cap_chan_ops ops = {
 		.connected = bt_sdp_connected,

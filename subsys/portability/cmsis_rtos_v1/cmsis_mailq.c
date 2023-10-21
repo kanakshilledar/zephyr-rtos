@@ -170,7 +170,11 @@ osStatus osMailFree(osMailQId queue_id, void *mail)
 {
 	osMailQDef_t *queue_def = (osMailQDef_t *)queue_id;
 
+<<<<<<< HEAD
 	k_mem_slab_free((struct k_mem_slab *)(queue_def->pool), (void *) &mail);
+=======
+	k_mem_slab_free((struct k_mem_slab *)(queue_def->pool), (void *)mail);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return osOK;
 }

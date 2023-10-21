@@ -4,12 +4,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <st/l4/stm32l4.dtsi>
+=======
+#include <st/l4/stm32l451.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	soc {
 		compatible = "st,stm32l452", "st,stm32l4", "simple-bus";
 
+<<<<<<< HEAD
 		clocks {
 			clk_hsi48: clk-hsi48 {
 				#clock-cells = <0>;
@@ -42,6 +47,8 @@
 				 <&rcc STM32_SRC_HSI48 CLK48_SEL(0)>;
 		};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		usb: usb@40006800 {
 			compatible = "st,stm32-usb";
 			reg = <0x40006800 0x40000>;
@@ -55,6 +62,7 @@
 				 <&rcc STM32_SRC_HSI48 CLK48_SEL(0)>;
 			status = "disabled";
 		};
+<<<<<<< HEAD
 
 		i2c2: i2c@40005800 {
 			compatible = "st,stm32-i2c-v2";
@@ -176,6 +184,8 @@
 				status = "disabled";
 			};
 		};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	usb_fs_phy: usbphy {

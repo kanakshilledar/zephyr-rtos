@@ -45,7 +45,11 @@ Programming
 ***********
 
 An example on how to use the ``x-nucleo-iks01a1`` shield is available
+<<<<<<< HEAD
 in the :ref:`x-nucleo-iks01a1-sample` application documentation
+=======
+in the :zephyr:code-sample:`x-nucleo-iks01a1` sample application documentation
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 (see :ref:`shields` for more details).
 
 References
@@ -54,7 +58,14 @@ References
 .. target-notes::
 
 .. _X-NUCLEO-IKS01A1 website:
+<<<<<<< HEAD
    http://www.st.com/en/ecosystems/x-nucleo-iks01a1.html
 
 .. _X-NUCLEO-IKS01A1 data sheet:
    http://www.st.com/resource/en/datasheet/x-nucleo-iks01a1.pdf
+=======
+   https://www.st.com/en/ecosystems/x-nucleo-iks01a1.html
+
+.. _X-NUCLEO-IKS01A1 data sheet:
+   https://www.st.com/resource/en/datasheet/x-nucleo-iks01a1.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

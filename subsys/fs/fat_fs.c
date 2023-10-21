@@ -111,7 +111,11 @@ static int fatfs_open(struct fs_file_t *zfp, const char *file_name,
 	res = f_open(zfp->filep, translate_path(file_name), fs_mode);
 
 	if (res != FR_OK) {
+<<<<<<< HEAD
 		k_mem_slab_free(&fatfs_filep_pool, &ptr);
+=======
+		k_mem_slab_free(&fatfs_filep_pool, ptr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zfp->filep = NULL;
 	}
 
@@ -125,7 +129,11 @@ static int fatfs_close(struct fs_file_t *zfp)
 	res = f_close(zfp->filep);
 
 	/* Free file ptr memory */
+<<<<<<< HEAD
 	k_mem_slab_free(&fatfs_filep_pool, &zfp->filep);
+=======
+	k_mem_slab_free(&fatfs_filep_pool, zfp->filep);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zfp->filep = NULL;
 
 	return translate_error(res);
@@ -334,7 +342,11 @@ static int fatfs_opendir(struct fs_dir_t *zdp, const char *path)
 	res = f_opendir(zdp->dirp, translate_path(path));
 
 	if (res != FR_OK) {
+<<<<<<< HEAD
 		k_mem_slab_free(&fatfs_dirp_pool, &ptr);
+=======
+		k_mem_slab_free(&fatfs_dirp_pool, ptr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zdp->dirp = NULL;
 	}
 
@@ -366,7 +378,11 @@ static int fatfs_closedir(struct fs_dir_t *zdp)
 	res = f_closedir(zdp->dirp);
 
 	/* Free file ptr memory */
+<<<<<<< HEAD
 	k_mem_slab_free(&fatfs_dirp_pool, &zdp->dirp);
+=======
+	k_mem_slab_free(&fatfs_dirp_pool, zdp->dirp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return translate_error(res);
 }

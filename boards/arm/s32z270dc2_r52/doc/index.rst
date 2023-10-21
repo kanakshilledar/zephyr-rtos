@@ -99,7 +99,11 @@ using GPIO driver or configuring the pinmuxing for the device drivers.
 +-------------------+-------------+
 
 This board does not include user LED's or switches, which are needed for some
+<<<<<<< HEAD
 of the samples such as :ref:`blinky-sample` or :ref:`button-sample`.
+=======
+of the samples such as :zephyr:code-sample:`blinky` or :zephyr:code-sample:`button`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Follow the steps described in the sample description to enable support for this
 board.
 
@@ -111,9 +115,14 @@ The Cortex-R52 cores are configured to run at 800 MHz.
 Serial Port
 ===========
 
+<<<<<<< HEAD
 The SoC has 12 LINFlexD instances that can be used in UART mode. Instance 0
 (defined as ``uart0`` in devicetree) is configured for the console and the
 remaining are disabled and not configured.
+=======
+The SoC has 12 LINFlexD instances that can be used in UART mode. The console can
+be accessed by default on the USB micro-B connector `J119`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Watchdog
 ========
@@ -190,6 +199,17 @@ For example, you can build and run the :ref:`hello_world` sample for the board
    :board: s32z270dc2_rtu0_r52
    :goals: build flash
 
+<<<<<<< HEAD
+=======
+In case you are using a newer PCB revision, you have to use an adapted board
+definition as the default PCB revision is B. For example, if using revision D:
+
+.. zephyr-app-commands::
+   :zephyr-app: samples/hello_world
+   :board: s32z270dc2_rtu0_r52@D
+   :goals: build flash
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 You should see the following message in the terminal:
 
 .. code-block:: console

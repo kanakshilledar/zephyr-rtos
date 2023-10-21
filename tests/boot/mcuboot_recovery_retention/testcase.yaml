@@ -21,17 +21,31 @@ common:
       - "Secondary image: magic"
       - "Boot source: none"
 tests:
+<<<<<<< HEAD
   mcuboot.recovery.retention:
+=======
+  bootloader.mcuboot.recovery.retention:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: nrf52840dk_nrf52840
     tags:
       - mcuboot
       - sysbuild
       - recovery
+<<<<<<< HEAD
   mcuboot.recovery.retention.mem:
     platform_allow: nrf52840dk_nrf52840
     extra_args:
       - "'OVERLAY_CONFIG=\"nrf52840dk_nrf52840_mem.conf\"'"
       - "'DTC_OVERLAY_FILE=\"boards/nrf52840dk_nrf52840_mem.overlay\"'"
+=======
+  bootloader.mcuboot.recovery.retention.mem:
+    platform_allow: nrf52840dk_nrf52840
+    extra_args:
+      - OVERLAY_CONFIG="boards/nrf52840dk_nrf52840_mem.conf"
+      - DTC_OVERLAY_FILE="boards/nrf52840dk_nrf52840_mem.overlay"
+      - mcuboot_TARGET_OVERLAY_CONFIG="boards/nrf52840dk_nrf52840_mem.conf"
+      - mcuboot_TARGET_DTC_OVERLAY_FILE="boards/nrf52840dk_nrf52840_mem.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - mcuboot
       - sysbuild

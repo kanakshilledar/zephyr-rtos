@@ -1,5 +1,9 @@
 /*
  * Copyright (c) 2017 Oticon A/S
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Nordic Semiconductor ASA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -35,8 +39,11 @@
  *
  */
 
+<<<<<<< HEAD
 #define POSIX_ARCH_DEBUG_PRINTS 0
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -44,22 +51,29 @@
 
 #include "posix_core.h"
 #include "posix_arch_internal.h"
+<<<<<<< HEAD
 #include <zephyr/arch/posix/posix_soc_if.h>
 #include "kernel_internal.h"
 #include <zephyr/kernel_structs.h>
 #include "ksched.h"
 #include "kswap.h"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define PREFIX     "POSIX arch core: "
 #define ERPREFIX   PREFIX"error on "
 #define NO_MEM_ERR PREFIX"Can't allocate memory\n"
 
+<<<<<<< HEAD
 #if POSIX_ARCH_DEBUG_PRINTS
 #define PC_DEBUG(fmt, ...) posix_print_trace(PREFIX fmt, __VA_ARGS__)
 #else
 #define PC_DEBUG(...)
 #endif
 
+=======
+#define PC_ENABLE_CANCEL 0 /* See Note.c1 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define PC_ALLOC_CHUNK_SIZE 64
 #define PC_REUSE_ABORTED_ENTRIES 0
 /* tests/kernel/threads/scheduling/schedule_api fails when setting
@@ -95,6 +109,10 @@ static bool terminate; /* Are we terminating the program == cleaning up */
 static void posix_wait_until_allowed(int this_th_nbr);
 static void *posix_thread_starter(void *arg);
 static void posix_preexit_cleanup(void);
+<<<<<<< HEAD
+=======
+extern void posix_arch_thread_entry(void *pa_thread_status);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * Helper function, run by a thread is being aborted
@@ -298,11 +316,17 @@ static void *posix_thread_starter(void *arg)
 	 */
 	posix_wait_until_allowed(thread_idx);
 
+<<<<<<< HEAD
 	posix_new_thread_pre_start();
 
 	posix_thread_status_t *ptr = threads_table[thread_idx].t_status;
 
 	z_thread_entry(ptr->entry_point, ptr->arg1, ptr->arg2, ptr->arg3);
+=======
+	posix_thread_status_t *ptr = threads_table[thread_idx].t_status;
+
+	posix_arch_thread_entry(ptr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/*
 	 * We only reach this point if the thread actually returns which should
@@ -366,7 +390,11 @@ static int ttable_get_empty_slot(void)
  * arch_new_thread() picks from the kernel structures what it is that we need
  * to call with what parameters
  */
+<<<<<<< HEAD
 void posix_new_thread(posix_thread_status_t *ptr)
+=======
+int posix_new_thread(void *ptr)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int t_slot;
 
@@ -375,8 +403,16 @@ void posix_new_thread(posix_thread_status_t *ptr)
 	threads_table[t_slot].running = false;
 	threads_table[t_slot].thead_cnt = thread_create_count++;
 	threads_table[t_slot].t_status = ptr;
+<<<<<<< HEAD
 	ptr->thread_idx = t_slot;
 
+=======
+
+	/*
+	 * Note: If you are here due to a valgrind reported memory leak in
+	 * pthread_create() please use the provided valgrind.supp suppression file.
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PC_SAFE_CALL(pthread_create(&threads_table[t_slot].thread,
 				  NULL,
 				  posix_thread_starter,
@@ -388,6 +424,7 @@ void posix_new_thread(posix_thread_status_t *ptr)
 		t_slot,
 		threads_table[t_slot].thread);
 
+<<<<<<< HEAD
 }
 
 /**
@@ -395,6 +432,17 @@ void posix_new_thread(posix_thread_status_t *ptr)
  * prepare whatever needs to be prepared to be able to start threads
  */
 void posix_init_multithreading(void)
+=======
+	return t_slot;
+}
+
+/*
+ * Initialize the posix architecture
+ *
+ * Prepare whatever needs to be prepared to be able to start threads
+ */
+void posix_arch_init(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	thread_create_count = 0;
 
@@ -412,7 +460,11 @@ void posix_init_multithreading(void)
 	PC_SAFE_CALL(pthread_mutex_lock(&mtx_threads));
 }
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * Free any allocated memory by the posix core and clean up.
  * Note that this function cannot be called from a SW thread
  * (the CPU is assumed halted. Otherwise we will cancel ourselves)
@@ -424,9 +476,14 @@ void posix_init_multithreading(void)
  * error termination, we better do not assume things are working fine.
  * => we prefer the supposed memory leak report from valgrind, and ensure we
  * will not hang
+<<<<<<< HEAD
  *
  */
 void posix_core_clean_up(void)
+=======
+ */
+void posix_arch_clean_up(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 
 	if (!threads_table) { /* LCOV_EXCL_BR_LINE */
@@ -435,6 +492,10 @@ void posix_core_clean_up(void)
 
 	terminate = true;
 
+<<<<<<< HEAD
+=======
+#if (PC_ENABLE_CANCEL)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	for (int i = 0; i < threads_table_size; i++) {
 		if (threads_table[i].state != USED) {
 			continue;
@@ -448,11 +509,16 @@ void posix_core_clean_up(void)
 		}
 		/* LCOV_EXCL_STOP */
 	}
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	free(threads_table);
 	threads_table = NULL;
 }
 
+<<<<<<< HEAD
 
 void posix_abort_thread(int thread_idx)
 {
@@ -464,6 +530,26 @@ void posix_abort_thread(int thread_idx)
 	PC_DEBUG("Aborting not scheduled thread [%i] %i\n",
 		threads_table[thread_idx].thead_cnt,
 		thread_idx);
+=======
+void posix_abort_thread(int thread_idx)
+{
+	if (thread_idx == currently_allowed_thread) {
+		PC_DEBUG("Thread [%i] %i: %s Marked myself "
+			"as aborting\n",
+			threads_table[thread_idx].thead_cnt,
+			thread_idx,
+			__func__);
+	} else {
+		if (threads_table[thread_idx].state != USED) { /* LCOV_EXCL_BR_LINE */
+			/* The thread may have been already aborted before */
+			return; /* LCOV_EXCL_LINE */
+		}
+
+		PC_DEBUG("Aborting not scheduled thread [%i] %i\n",
+			threads_table[thread_idx].thead_cnt,
+			thread_idx);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	threads_table[thread_idx].state = ABORTING;
 	/*
@@ -473,6 +559,7 @@ void posix_abort_thread(int thread_idx)
 	 * would be the case, but with a pthread_cancel() the mutex state would
 	 * be uncontrolled
 	 */
+<<<<<<< HEAD
 }
 
 
@@ -531,6 +618,15 @@ void z_impl_k_thread_abort(k_tid_t thread)
 }
 #endif
 
+=======
+
+}
+
+int posix_arch_get_unique_thread_id(int thread_idx)
+{
+	return threads_table[thread_idx].thead_cnt;
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * Notes about coverage:
@@ -573,4 +669,20 @@ void z_impl_k_thread_abort(k_tid_t thread)
  * Some other code will never or only very rarely trigger and is therefore
  * excluded with LCOV_EXCL_LINE
  *
+<<<<<<< HEAD
+=======
+ *
+ * Notes about (memory) cleanup:
+ *
+ * Note.c1:
+ *
+ * In some very rare cases in very loaded machines, a race in the glibc pthread_cancel()
+ * seems to be triggered.
+ * In this, the cancelled thread cleanup overtakes the pthread_cancel() code, and frees the
+ * pthread structure before pthread_cancel() has finished, resulting in a dereference into already
+ * free'd memory, and therefore a segfault.
+ * Calling pthread_cancel() during cleanup is not required beyond preventing a valgrind
+ * memory leak report (all threads will be canceled immediately on exit).
+ * Therefore we do not do this, to avoid this very rare crashes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */

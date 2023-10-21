@@ -5,11 +5,20 @@
  */
 
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <ksched.h>
 #include <zephyr/wait_q.h>
 #include <zephyr/init.h>
 #include <zephyr/linker/linker-defs.h>
 #include <zephyr/sys/iterable_sections.h>
+=======
+#include <zephyr/init.h>
+#include <zephyr/linker/linker-defs.h>
+#include <zephyr/sys/iterable_sections.h>
+/* private kernel APIs */
+#include <ksched.h>
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void k_heap_init(struct k_heap *h, void *mem, size_t bytes)
 {
@@ -64,11 +73,17 @@ SYS_INIT_NAMED(statics_init_post, statics_init, POST_KERNEL, 0);
 void *k_heap_aligned_alloc(struct k_heap *h, size_t align, size_t bytes,
 			k_timeout_t timeout)
 {
+<<<<<<< HEAD
 	int64_t now, end = sys_clock_timeout_end_calc(timeout);
 	void *ret = NULL;
 
 	end = K_TIMEOUT_EQ(timeout, K_FOREVER) ? INT64_MAX : end;
 
+=======
+	k_timepoint_t end = sys_timepoint_calc(timeout);
+	void *ret = NULL;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_spinlock_key_t key = k_spin_lock(&h->lock);
 
 	SYS_PORT_TRACING_OBJ_FUNC_ENTER(k_heap, aligned_alloc, h, timeout);
@@ -80,9 +95,14 @@ void *k_heap_aligned_alloc(struct k_heap *h, size_t align, size_t bytes,
 	while (ret == NULL) {
 		ret = sys_heap_aligned_alloc(&h->heap, align, bytes);
 
+<<<<<<< HEAD
 		now = sys_clock_tick_get();
 		if (!IS_ENABLED(CONFIG_MULTITHREADING) ||
 		    (ret != NULL) || ((end - now) <= 0)) {
+=======
+		if (!IS_ENABLED(CONFIG_MULTITHREADING) ||
+		    (ret != NULL) || K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 		}
 
@@ -96,8 +116,13 @@ void *k_heap_aligned_alloc(struct k_heap *h, size_t align, size_t bytes,
 			 */
 		}
 
+<<<<<<< HEAD
 		(void) z_pend_curr(&h->lock, key, &h->wait_q,
 				   K_TICKS(end - now));
+=======
+		timeout = sys_timepoint_timeout(end);
+		(void) z_pend_curr(&h->lock, key, &h->wait_q, timeout);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		key = k_spin_lock(&h->lock);
 	}
 

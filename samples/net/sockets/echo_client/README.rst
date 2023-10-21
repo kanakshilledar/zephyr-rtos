@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sockets-echo-client-sample:
 
 Socket Echo Client
 ##################
+=======
+.. zephyr:code-sample:: sockets-echo-client
+   :name: Echo client (advanced)
+   :relevant-api: bsd_sockets tls_credentials
+
+   Implement a client that sends IP packets, waits for data to be sent back, and verifies it.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -105,7 +113,11 @@ running ``west build`` or ``cmake``.
 
 The certificate and private key used by the sample can be found in the sample's
 ``src`` directory. The default certificates used by Socket Echo Client and
+<<<<<<< HEAD
 :ref:`sockets-echo-server-sample` enable establishing a secure connection
+=======
+:zephyr:code-sample:`sockets-echo-server` enable establishing a secure connection
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 between the samples.
 
 SOCKS5 proxy support
@@ -178,6 +190,10 @@ You can verify TLS communication with a Linux host as well. See
 https://github.com/zephyrproject-rtos/net-tools documentation for information
 on how to test TLS with Linux host samples.
 
+<<<<<<< HEAD
 See the :ref:`sockets-echo-server-sample` documentation for an alternate
+=======
+See the :zephyr:code-sample:`sockets-echo-server` documentation for an alternate
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 way of running, with the echo-client on the Linux host and the echo-server
 in QEMU.

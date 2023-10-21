@@ -31,10 +31,17 @@ LOG_MODULE_REGISTER(openamp_rsc_table, LOG_LEVEL_DBG);
 #define SHM_START_ADDR	DT_REG_ADDR(SHM_NODE)
 #define SHM_SIZE		DT_REG_SIZE(SHM_NODE)
 
+<<<<<<< HEAD
 #define APP_TASK_STACK_SIZE (512)
 
 /* Add 512 extra bytes for the TTY task stack for the "tx_buff" buffer. */
 #define APP_TTY_TASK_STACK_SIZE (1024)
+=======
+#define APP_TASK_STACK_SIZE (1024)
+
+/* Add 1024 extra bytes for the TTY task stack for the "tx_buff" buffer. */
+#define APP_TTY_TASK_STACK_SIZE (1536)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 K_THREAD_STACK_DEFINE(thread_mng_stack, APP_TASK_STACK_SIZE);
 K_THREAD_STACK_DEFINE(thread_rp__client_stack, APP_TASK_STACK_SIZE);
@@ -106,11 +113,19 @@ static int rpmsg_recv_cs_callback(struct rpmsg_endpoint *ept, void *data,
 static int rpmsg_recv_tty_callback(struct rpmsg_endpoint *ept, void *data,
 				   size_t len, uint32_t src, void *priv)
 {
+<<<<<<< HEAD
 	struct rpmsg_rcv_msg *tty_msg = priv;
 
 	rpmsg_hold_rx_buffer(ept, data);
 	tty_msg->data = data;
 	tty_msg->len = len;
+=======
+	struct rpmsg_rcv_msg *msg = priv;
+
+	rpmsg_hold_rx_buffer(ept, data);
+	msg->data = data;
+	msg->len = len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&data_tty_sem);
 
 	return RPMSG_SUCCESS;

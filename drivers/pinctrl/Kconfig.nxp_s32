@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 # Copyright 2022 NXP
+=======
+# Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 config PINCTRL_NXP_S32
 	bool "Pin controller driver for NXP S32 processors"
 	default y
+<<<<<<< HEAD
 	depends on DT_HAS_NXP_S32ZE_PINCTRL_ENABLED
+=======
+	depends on DT_HAS_NXP_S32ZE_PINCTRL_ENABLED || DT_HAS_NXP_S32K3_PINCTRL_ENABLED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable pin controller driver for NXP S32 processors.

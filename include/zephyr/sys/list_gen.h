@@ -234,4 +234,18 @@
 		return false;						 \
 	}
 
+<<<<<<< HEAD
+=======
+#define Z_GENLIST_LEN(__lname, __nname)                                                            \
+	static inline size_t sys_##__lname##_len(sys_##__lname##_t * list)                         \
+	{                                                                                          \
+		size_t len = 0;                                                                    \
+		static sys_##__nname##_t * node;                                                   \
+		Z_GENLIST_FOR_EACH_NODE(__lname, list, node) {                                     \
+			len++;                                                                     \
+		}                                                                                  \
+		return len;                                                                        \
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_SYS_LIST_GEN_H_ */

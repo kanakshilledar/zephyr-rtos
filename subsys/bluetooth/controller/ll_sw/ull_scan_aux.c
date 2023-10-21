@@ -50,8 +50,15 @@ static inline struct ll_scan_aux_set *aux_acquire(void);
 static inline void aux_release(struct ll_scan_aux_set *aux);
 static inline uint8_t aux_handle_get(struct ll_scan_aux_set *aux);
 static inline struct ll_sync_set *sync_create_get(struct ll_scan_set *scan);
+<<<<<<< HEAD
 static inline struct ll_sync_iso_set *
 	sync_iso_create_get(struct ll_sync_set *sync);
+=======
+#if defined(CONFIG_BT_CTLR_SYNC_PERIODIC)
+static inline struct ll_sync_iso_set *
+	sync_iso_create_get(struct ll_sync_set *sync);
+#endif /* CONFIG_BT_CTLR_SYNC_PERIODIC */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void done_disabled_cb(void *param);
 static void flush_safe(void *param);
 static void flush(void *param);
@@ -149,6 +156,10 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 				      ull_scan_handle_get(scan);
 		break;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_CTLR_PHY_CODED)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case NODE_RX_TYPE_EXT_CODED_REPORT:
 		lll_aux = NULL;
 		aux = NULL;
@@ -166,6 +177,10 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		ticker_yield_handle = TICKER_ID_SCAN_BASE +
 				      ull_scan_handle_get(scan);
 		break;
+<<<<<<< HEAD
+=======
+#endif /* CONFIG_BT_CTLR_PHY_CODED */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	case NODE_RX_TYPE_EXT_AUX_REPORT:
 		sync_iso = NULL;
@@ -246,9 +261,17 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 			case PHY_2M:
 				rx->type = NODE_RX_TYPE_EXT_2M_REPORT;
 				break;
+<<<<<<< HEAD
 			case PHY_CODED:
 				rx->type = NODE_RX_TYPE_EXT_CODED_REPORT;
 				break;
+=======
+#if defined(CONFIG_BT_CTLR_PHY_CODED)
+			case PHY_CODED:
+				rx->type = NODE_RX_TYPE_EXT_CODED_REPORT;
+				break;
+#endif /* CONFIG_BT_CTLR_PHY_CODED */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			default:
 				LL_ASSERT(0);
 				return;
@@ -335,11 +358,19 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		}
 
 		if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) && sync_lll) {
+<<<<<<< HEAD
 			struct ll_sync_set *sync;
 
 			sync = HDR_LLL2ULL(sync_lll);
 			ftr->aux_data_len = sync->data_len + data_len;
 			sync->data_len = 0U;
+=======
+			struct ll_sync_set *sync_set;
+
+			sync_set = HDR_LLL2ULL(sync_lll);
+			ftr->aux_data_len = sync_set->data_len + data_len;
+			sync_set->data_len = 0U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else if (aux) {
 			aux->data_len += data_len;
 			ftr->aux_data_len = aux->data_len;
@@ -411,7 +442,11 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		 * Setup synchronization if address and SID match in the
 		 * Periodic Advertiser List or with the explicitly supplied.
 		 */
+<<<<<<< HEAD
 		if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) && sync && adi &&
+=======
+		if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) && aux && sync && adi &&
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		    ull_sync_setup_sid_match(scan, PDU_ADV_ADI_SID_GET(adi))) {
 			ull_sync_setup(scan, aux, rx, si);
 		}
@@ -456,6 +491,7 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 
 	/* Do not ULL schedule auxiliary PDU reception if no aux pointer
 	 * or aux pointer is zero or scannable advertising has erroneous aux
+<<<<<<< HEAD
 	 * pointer being present or PHY in the aux pointer is invalid.
 	 */
 	if (!aux_ptr || !PDU_ADV_AUX_PTR_OFFSET_GET(aux_ptr) || is_scan_req ||
@@ -466,6 +502,20 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 			sync = HDR_LLL2ULL(sync_lll);
 			ftr->aux_data_len = sync->data_len + data_len;
 			sync->data_len = 0U;
+=======
+	 * pointer being present or PHY in the aux pointer is invalid or unsupported.
+	 */
+	if (!aux_ptr || !PDU_ADV_AUX_PTR_OFFSET_GET(aux_ptr) || is_scan_req ||
+	    (PDU_ADV_AUX_PTR_PHY_GET(aux_ptr) > EXT_ADV_AUX_PHY_LE_CODED) ||
+		(!IS_ENABLED(CONFIG_BT_CTLR_PHY_CODED) &&
+		  PDU_ADV_AUX_PTR_PHY_GET(aux_ptr) == EXT_ADV_AUX_PHY_LE_CODED)) {
+		if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) && sync_lll) {
+			struct ll_sync_set *sync_set;
+
+			sync_set = HDR_LLL2ULL(sync_lll);
+			ftr->aux_data_len = sync_set->data_len + data_len;
+			sync_set->data_len = 0U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else if (aux) {
 			aux->data_len += data_len;
 			ftr->aux_data_len = aux->data_len;
@@ -501,11 +551,19 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 
 			if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) &&
 			    sync_lll) {
+<<<<<<< HEAD
 				struct ll_sync_set *sync;
 
 				sync = HDR_LLL2ULL(sync_lll);
 				ftr->aux_data_len = sync->data_len + data_len;
 				sync->data_len = 0U;
+=======
+				struct ll_sync_set *sync_set;
+
+				sync_set = HDR_LLL2ULL(sync_lll);
+				ftr->aux_data_len = sync_set->data_len + data_len;
+				sync_set->data_len = 0U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			}
 
@@ -529,17 +587,32 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 
 	} else {
 		aux->data_len += data_len;
+<<<<<<< HEAD
+=======
+
+		if (aux->data_len >= CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX) {
+			goto ull_scan_aux_rx_flush;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* In sync context we can dispatch rx immediately, in scan context we
 	 * enqueue rx in aux context and will flush them after scan is complete.
 	 */
 	if (IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) && sync_lll) {
+<<<<<<< HEAD
 		struct ll_sync_set *sync;
 
 		sync = HDR_LLL2ULL(sync_lll);
 		sync->data_len += data_len;
 		ftr->aux_data_len = sync->data_len;
+=======
+		struct ll_sync_set *sync_set;
+
+		sync_set = HDR_LLL2ULL(sync_lll);
+		sync_set->data_len += data_len;
+		ftr->aux_data_len = sync_set->data_len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		if (aux->rx_last) {
 			aux->rx_last->rx_ftr.extra = rx;
@@ -583,6 +656,11 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 
 	/* Switching to ULL scheduling to receive auxiliary PDUs */
 	if (!IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) || lll) {
+<<<<<<< HEAD
+=======
+		LL_ASSERT(scan);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Do not ULL schedule if scan disable requested */
 		if (unlikely(scan->is_stop)) {
 			goto ull_scan_aux_rx_flush;
@@ -593,14 +671,23 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		 */
 		lll->lll_aux = NULL;
 	} else {
+<<<<<<< HEAD
 		struct ll_sync_set *sync;
+=======
+		struct ll_sync_set *sync_set;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LL_ASSERT(sync_lll &&
 			  (!sync_lll->lll_aux || sync_lll->lll_aux == lll_aux));
 
 		/* Do not ULL schedule if sync terminate requested */
+<<<<<<< HEAD
 		sync = HDR_LLL2ULL(sync_lll);
 		if (unlikely(sync->is_stop)) {
+=======
+		sync_set = HDR_LLL2ULL(sync_lll);
+		if (unlikely(sync_set->is_stop)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto ull_scan_aux_rx_flush;
 		}
 
@@ -652,12 +739,19 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_XTAL_US);
 	aux->ull.ticks_preempt_to_start =
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_PREEMPT_MIN_US);
+<<<<<<< HEAD
 	aux->ull.ticks_slot =
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_START_US +
 				       ready_delay_us +
 				       PDU_AC_MAX_US(PDU_AC_EXT_PAYLOAD_RX_SIZE,
 						     lll_aux->phy) +
 				       EVENT_OVERHEAD_END_US);
+=======
+	aux->ull.ticks_slot = HAL_TICKER_US_TO_TICKS_CEIL(
+		EVENT_OVERHEAD_START_US + ready_delay_us +
+		PDU_AC_MAX_US(PDU_AC_EXT_PAYLOAD_RX_SIZE, lll_aux->phy) +
+		EVENT_OVERHEAD_END_US);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ticks_slot_offset = MAX(aux->ull.ticks_active_to_start,
 				aux->ull.ticks_prepare_to_start);
@@ -670,6 +764,16 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 
 	ticks_aux_offset = HAL_TICKER_US_TO_TICKS(aux_offset_us);
 
+<<<<<<< HEAD
+=======
+#if (CONFIG_BT_CTLR_ULL_HIGH_PRIO == CONFIG_BT_CTLR_ULL_LOW_PRIO)
+	/* disable ticker job, in order to chain yield and start to reduce
+	 * CPU use by reducing successive calls to ticker_job().
+	 */
+	mayfly_enable(TICKER_USER_ID_ULL_HIGH, TICKER_USER_ID_ULL_LOW, 0);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Yield the primary scan window or auxiliary or periodic sync event
 	 * in ticker.
 	 */
@@ -702,6 +806,16 @@ void ull_scan_aux_setup(memq_link_t *link, struct node_rx_hdr *rx)
 		  ((ticker_status == TICKER_STATUS_FAILURE) &&
 		   IS_ENABLED(CONFIG_BT_TICKER_LOW_LAT)));
 
+<<<<<<< HEAD
+=======
+#if (CONFIG_BT_CTLR_ULL_HIGH_PRIO == CONFIG_BT_CTLR_ULL_LOW_PRIO)
+	/* enable ticker job, queued ticker operation will be handled
+	 * thereafter.
+	 */
+	mayfly_enable(TICKER_USER_ID_ULL_HIGH, TICKER_USER_ID_ULL_LOW, 1);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return;
 
 ull_scan_aux_rx_flush:
@@ -716,6 +830,11 @@ ull_scan_aux_rx_flush:
 		 * immediately since we are in sync context.
 		 */
 		if (!IS_ENABLED(CONFIG_BT_CTLR_SYNC_PERIODIC) || aux->rx_last) {
+<<<<<<< HEAD
+=======
+			LL_ASSERT(scan);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* If scan is being disabled, rx could already be
 			 * enqueued before coming here to ull_scan_aux_rx_flush.
 			 * Check if rx not the last in the list of received PDUs
@@ -742,14 +861,23 @@ ull_scan_aux_rx_flush:
 			aux->rx_last->rx_ftr.extra = rx;
 			aux->rx_last = rx;
 		} else {
+<<<<<<< HEAD
 			const struct ll_sync_set *sync;
+=======
+			const struct ll_sync_set *sync_set;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			LL_ASSERT(sync_lll);
 
 			ll_rx_put_sched(link, rx);
 
+<<<<<<< HEAD
 			sync = HDR_LLL2ULL(sync_lll);
 			if (unlikely(sync->is_stop && sync_lll->lll_aux)) {
+=======
+			sync_set = HDR_LLL2ULL(sync_lll);
+			if (unlikely(sync_set->is_stop && sync_lll->lll_aux)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				return;
 			}
 		}
@@ -837,12 +965,21 @@ void *ull_scan_aux_lll_parent_get(struct lll_scan_aux *lll,
 
 	if (is_lll_scan) {
 		struct ll_scan_set *scan;
+<<<<<<< HEAD
 		struct lll_scan *lll;
 
 		lll = aux->parent;
 		LL_ASSERT(lll);
 
 		scan = HDR_LLL2ULL(lll);
+=======
+		struct lll_scan *lllscan;
+
+		lllscan = aux->parent;
+		LL_ASSERT(lllscan);
+
+		scan = HDR_LLL2ULL(lllscan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		*is_lll_scan = !!ull_scan_is_valid_get(scan);
 	}
 
@@ -1076,6 +1213,10 @@ static inline struct ll_sync_set *sync_create_get(struct ll_scan_set *scan)
 #endif /* !CONFIG_BT_CTLR_SYNC_PERIODIC */
 }
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_CTLR_SYNC_PERIODIC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline struct ll_sync_iso_set *
 	sync_iso_create_get(struct ll_sync_set *sync)
 {
@@ -1085,6 +1226,10 @@ static inline struct ll_sync_iso_set *
 	return NULL;
 #endif /* !CONFIG_BT_CTLR_SYNC_ISO */
 }
+<<<<<<< HEAD
+=======
+#endif /* CONFIG_BT_CTLR_SYNC_PERIODIC */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void done_disabled_cb(void *param)
 {

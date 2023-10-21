@@ -18,8 +18,14 @@
 #define TENSORFLOW_LITE_MICRO_EXAMPLES_MAGIC_WAND_OUTPUT_HANDLER_H_
 
 #include <tensorflow/lite/c/common.h>
+<<<<<<< HEAD
 #include <tensorflow/lite/micro/micro_error_reporter.h>
 
 void HandleOutput(tflite::ErrorReporter *error_reporter, int kind);
+=======
+#include <tensorflow/lite/micro/micro_log.h>
+
+void HandleOutput(int kind);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* TENSORFLOW_LITE_MICRO_EXAMPLES_MAGIC_WAND_OUTPUT_HANDLER_H_ */

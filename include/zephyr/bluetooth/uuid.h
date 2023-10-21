@@ -587,7 +587,11 @@ struct bt_uuid_128 {
 /**
  *  @brief Proxy Solicitation UUID value
  */
+<<<<<<< HEAD
 #define BT_UUID_MESH_PROXY_SOLICITATION_VAL 0x7fcb
+=======
+#define BT_UUID_MESH_PROXY_SOLICITATION_VAL 0x1859
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  *  @brief Reconnection Configuration Service UUID value
  */

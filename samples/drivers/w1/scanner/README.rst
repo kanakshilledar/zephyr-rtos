@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _w1_scanner_sample:
 
 1-Wire Scanner Sample
 #####################
+=======
+.. zephyr:code-sample:: w1-scanner
+   :name: 1-Wire scanner
+   :relevant-api: w1_interface
+
+   Scan for 1-Wire devices and print their family ID and serial number.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

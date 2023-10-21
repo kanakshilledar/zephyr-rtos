@@ -11,9 +11,12 @@
  * @{
  * @brief MQTT Client Implementation
  *
+<<<<<<< HEAD
  * @details
  * MQTT Client's Application interface is defined in this header.
  *
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @note The implementation assumes TCP module is enabled.
  *
  * @note By default the implementation uses MQTT version 3.1.1.
@@ -207,36 +210,68 @@ struct mqtt_connack_param {
 
 /** @brief Parameters for MQTT publish acknowledgment (PUBACK). */
 struct mqtt_puback_param {
+<<<<<<< HEAD
+=======
+	/** Message id of the PUBLISH message being acknowledged */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t message_id;
 };
 
 /** @brief Parameters for MQTT publish receive (PUBREC). */
 struct mqtt_pubrec_param {
+<<<<<<< HEAD
+=======
+	/** Message id of the PUBLISH message being acknowledged */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t message_id;
 };
 
 /** @brief Parameters for MQTT publish release (PUBREL). */
 struct mqtt_pubrel_param {
+<<<<<<< HEAD
+=======
+	/** Message id of the PUBREC message being acknowledged */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t message_id;
 };
 
 /** @brief Parameters for MQTT publish complete (PUBCOMP). */
 struct mqtt_pubcomp_param {
+<<<<<<< HEAD
+=======
+	/** Message id of the PUBREL message being acknowledged */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t message_id;
 };
 
 /** @brief Parameters for MQTT subscription acknowledgment (SUBACK). */
 struct mqtt_suback_param {
+<<<<<<< HEAD
 	uint16_t message_id;
+=======
+	/** Message id of the SUBSCRIBE message being acknowledged */
+	uint16_t message_id;
+	/** Return codes indicating maximum QoS level granted for each topic
+	 *  in the subscription list.
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct mqtt_binstr return_codes;
 };
 
 /** @brief Parameters for MQTT unsubscribe acknowledgment (UNSUBACK). */
 struct mqtt_unsuback_param {
+<<<<<<< HEAD
 	uint16_t message_id;
 };
 
 /** @brief Parameters for a publish message. */
+=======
+	/** Message id of the UNSUBSCRIBE message being acknowledged */
+	uint16_t message_id;
+};
+
+/** @brief Parameters for a publish message (PUBLISH). */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct mqtt_publish_param {
 	/** Messages including topic, QoS and its payload (if any)
 	 *  to be published.
@@ -342,13 +377,21 @@ struct mqtt_sec_config {
 	/** Indicates the list of ciphers to be used for the session.
 	 *  May be NULL to use the default ciphers.
 	 */
+<<<<<<< HEAD
 	int *cipher_list;
+=======
+	const int *cipher_list;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** Indicates the number of entries in the sec tag list. */
 	uint32_t sec_tag_count;
 
 	/** Indicates the list of security tags to be used for the session. */
+<<<<<<< HEAD
 	sec_tag_t *sec_tag_list;
+=======
+	const sec_tag_t *sec_tag_list;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/** Peer hostname for ceritificate verification.
 	 *  May be NULL to skip hostname verification.

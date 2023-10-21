@@ -184,7 +184,11 @@ static int dht_channel_get(const struct device *dev,
 				+ drv_data->sample[1];
 			val->val1 = raw_val / 10;
 			val->val2 = (raw_val % 10) * 100000;
+<<<<<<< HEAD
 		} else { /* chan == SENSOR_CHAN_AMBIENT_TEMP */
+=======
+		} else if (chan == SENSOR_CHAN_AMBIENT_TEMP) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			raw_val = (drv_data->sample[2] << 8)
 				+ drv_data->sample[3];
 
@@ -199,15 +203,28 @@ static int dht_channel_get(const struct device *dev,
 				val->val1 = -val->val1;
 				val->val2 = -val->val2;
 			}
+<<<<<<< HEAD
+=======
+		} else {
+			return -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	} else {
 		/* use only integral data byte */
 		if (chan == SENSOR_CHAN_HUMIDITY) {
 			val->val1 = drv_data->sample[0];
 			val->val2 = 0;
+<<<<<<< HEAD
 		} else { /* chan == SENSOR_CHAN_AMBIENT_TEMP */
 			val->val1 = drv_data->sample[2];
 			val->val2 = 0;
+=======
+		} else if (chan == SENSOR_CHAN_AMBIENT_TEMP) {
+			val->val1 = drv_data->sample[2];
+			val->val2 = 0;
+		} else {
+			return -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 
@@ -224,7 +241,11 @@ static int dht_init(const struct device *dev)
 	int rc = 0;
 	const struct dht_config *cfg = dev->config;
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->dio_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->dio_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device not ready");
 		return -ENODEV;
 	}

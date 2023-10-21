@@ -70,7 +70,11 @@ Sample usage
 
 You can try use FT800 with the Zephyr FT800 sample, which provides
 out-of-the-box configuration for FT800 Embedded Video engine.
+<<<<<<< HEAD
 See :ref:`display-ft800-sample` for details.
+=======
+See :zephyr:code-sample:`ft800` sample for details.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Build and Programming
 *********************

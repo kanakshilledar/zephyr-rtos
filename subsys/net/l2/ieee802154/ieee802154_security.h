@@ -25,7 +25,11 @@ void ieee802154_security_teardown_session(struct ieee802154_security_ctx *sec_ct
  *
  * @param sec_ctx Pointer to an IEEE 802.15.4 security context.
  * @param frame Pointer to the frame data in original (little endian) byte order.
+<<<<<<< HEAD
  * @param hdr_len Length of the MHR.
+=======
+ * @param ll_hdr_len Length of the MHR.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param payload_len Length of the MAC payload.
  * @param authtag_len Length of the authentication tag.
  * @param src_ext_addr Pointer to the extended source address of the frame (in little endian byte
@@ -33,7 +37,11 @@ void ieee802154_security_teardown_session(struct ieee802154_security_ctx *sec_ct
  * @param frame_counter Frame counter in CPU byte order.
  */
 bool ieee802154_decrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *frame,
+<<<<<<< HEAD
 			     uint8_t hdr_len, uint8_t payload_len, uint8_t authtag_len,
+=======
+			     uint8_t ll_hdr_len, uint8_t payload_len, uint8_t authtag_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     uint8_t *src_ext_addr, uint32_t frame_counter);
 
 /**
@@ -41,14 +49,22 @@ bool ieee802154_decrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *f
  *
  * @param sec_ctx Pointer to an IEEE 802.15.4 security context.
  * @param frame Pointer to the frame data in original (little endian) byte order.
+<<<<<<< HEAD
  * @param hdr_len Length of the MHR.
+=======
+ * @param ll_hdr_len Length of the MHR.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param payload_len Length of the MAC payload.
  * @param authtag_len Length of the authentication tag.
  * @param src_ext_addr Pointer to the extended source address of the frame (in little endian byte
  *                     order).
  */
 bool ieee802154_encrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *frame,
+<<<<<<< HEAD
 			     uint8_t hdr_len, uint8_t payload_len,
+=======
+			     uint8_t ll_hdr_len, uint8_t payload_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     uint8_t authtag_len, uint8_t *src_ext_addr);
 
 int ieee802154_security_init(struct ieee802154_security_ctx *sec_ctx);

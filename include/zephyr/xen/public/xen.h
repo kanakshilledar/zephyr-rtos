@@ -47,6 +47,10 @@ __DEFINE_XEN_GUEST_HANDLE(ulong, unsigned long);
 #endif
 DEFINE_XEN_GUEST_HANDLE(void);
 
+<<<<<<< HEAD
+=======
+DEFINE_XEN_GUEST_HANDLE(uint8_t);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 DEFINE_XEN_GUEST_HANDLE(uint64_t);
 DEFINE_XEN_GUEST_HANDLE(xen_pfn_t);
 DEFINE_XEN_GUEST_HANDLE(xen_ulong_t);
@@ -371,6 +375,29 @@ struct shared_info {
 typedef struct shared_info shared_info_t;
 #endif
 
+<<<<<<< HEAD
+=======
+typedef uint8_t xen_domain_handle_t[16];
+
+#ifndef int64_aligned_t
+#define int64_aligned_t int64_t
+#endif
+#ifndef uint64_aligned_t
+#define uint64_aligned_t uint64_t
+#endif
+#ifndef XEN_GUEST_HANDLE_64
+#define XEN_GUEST_HANDLE_64(name) XEN_GUEST_HANDLE(name)
+#endif
+
+#ifndef __ASSEMBLY__
+struct xenctl_bitmap {
+	XEN_GUEST_HANDLE_64(uint8_t) bitmap;
+	uint32_t nr_bits;
+};
+typedef struct xenctl_bitmap xenctl_bitmap_t;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* !__ASSEMBLY__ */
 
 #endif /* __XEN_PUBLIC_XEN_H__ */

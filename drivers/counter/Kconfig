@@ -16,10 +16,24 @@ config COUNTER_INIT_PRIORITY
 	help
 	  Counter driver device initialization priority.
 
+<<<<<<< HEAD
+=======
+config COUNTER_SHELL
+	bool "Counter shell"
+	depends on SHELL
+	help
+	  Enable Shell Commands for Counter and Timer
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 module = COUNTER
 module-str = counter
 source "subsys/logging/Kconfig.template.log_config"
 
+<<<<<<< HEAD
+=======
+source "drivers/counter/Kconfig.ambiq"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/counter/Kconfig.gecko"
 
 source "drivers/counter/Kconfig.tmr_cmsdk_apb"
@@ -68,14 +82,31 @@ source "drivers/counter/Kconfig.esp32_tmr"
 
 source "drivers/counter/Kconfig.esp32_rtc"
 
+<<<<<<< HEAD
+=======
+source "drivers/counter/Kconfig.smartbond_timer"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/counter/Kconfig.mcp7940n"
 
 source "drivers/counter/Kconfig.mcux_ctimer"
 
+<<<<<<< HEAD
+=======
+source "drivers/counter/Kconfig.ifx_cat1"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/counter/Kconfig.andes_atcpit100"
 
 source "drivers/counter/Kconfig.nxp_s32"
 
 source "drivers/counter/Kconfig.gd32"
 
+<<<<<<< HEAD
+=======
+source "drivers/counter/Kconfig.dw"
+
+source "drivers/counter/Kconfig.rpi_pico"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # COUNTER

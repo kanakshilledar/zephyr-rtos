@@ -40,7 +40,11 @@
 		};
 
 		gic: interrupt-controller@f8f01000 {
+<<<<<<< HEAD
 			compatible = "arm,gic";
+=======
+			compatible = "arm,gic-v1", "arm,gic";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "okay";
 			reg = <0xf8f01000 0x1000>,
 				<0xf8f00100 0x100>;

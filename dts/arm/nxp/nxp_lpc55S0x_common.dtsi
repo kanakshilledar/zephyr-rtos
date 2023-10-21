@@ -223,9 +223,13 @@
 		interrupts = <43 0>, <44 0>;
 		clocks = <&syscon MCUX_MCAN_CLK>;
 		bosch,mram-cfg = <0x0 15 15 8 8 0 15 15>;
+<<<<<<< HEAD
 		sjw = <1>;
 		sample-point = <875>;
 		sjw-data = <1>;
+=======
+		sample-point = <875>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		sample-point-data = <875>;
 		status = "disabled";
 	};

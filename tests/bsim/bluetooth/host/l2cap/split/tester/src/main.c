@@ -41,6 +41,10 @@ static K_SEM_DEFINE(cmd_sem, 1, 1);
 static struct k_sem acl_pkts;
 static struct k_sem tx_credits;
 static uint16_t peer_mps;
+<<<<<<< HEAD
+=======
+static uint16_t conn_handle;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static uint16_t active_opcode = 0xFFFF;
 static struct net_buf *cmd_rsp;
@@ -123,6 +127,12 @@ static void handle_meta_event(struct net_buf *buf)
 
 	switch (code) {
 	case BT_HCI_EVT_LE_ENH_CONN_COMPLETE:
+<<<<<<< HEAD
+=======
+	case BT_HCI_EVT_LE_ENH_CONN_COMPLETE_V2:
+		conn_handle = sys_get_le16(&buf->data[4]);
+		LOG_DBG("connected: handle: %d", conn_handle);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		SET_FLAG(is_connected);
 		break;
 	case BT_HCI_EVT_LE_DATA_LEN_CHANGE:
@@ -488,7 +498,11 @@ static int send_acl(struct net_buf *buf)
 	uint8_t flags = BT_ACL_START_NO_FLUSH;
 
 	hdr = net_buf_push(buf, sizeof(*hdr));
+<<<<<<< HEAD
 	hdr->handle = sys_cpu_to_le16(bt_acl_handle_pack(0, flags));
+=======
+	hdr->handle = sys_cpu_to_le16(bt_acl_handle_pack(conn_handle, flags));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	hdr->len = sys_cpu_to_le16(buf->len - sizeof(*hdr));
 
 	bt_buf_set_type(buf, BT_BUF_ACL_OUT);

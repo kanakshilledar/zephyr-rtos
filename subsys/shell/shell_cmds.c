@@ -12,6 +12,10 @@
 #include "shell_vt100.h"
 
 #define SHELL_MSG_CMD_NOT_SUPPORTED	"Command not supported.\n"
+<<<<<<< HEAD
+=======
+#define SHELL_HELP_COMMENT		"Ignore lines beginning with 'rem '"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define SHELL_HELP_RETVAL		"Print return value of most recent command"
 #define SHELL_HELP_CLEAR		"Clear screen."
 #define SHELL_HELP_BACKENDS		"List active shell backends.\n"
@@ -202,6 +206,18 @@ static int terminal_size_get(const struct shell *sh)
 	return ret_val;
 }
 
+<<<<<<< HEAD
+=======
+static int cmd_comment(const struct shell *sh, size_t argc, char **argv)
+{
+	ARG_UNUSED(sh);
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int cmd_clear(const struct shell *sh, size_t argc, char **argv)
 {
 	ARG_UNUSED(argv);
@@ -530,6 +546,11 @@ SHELL_STATIC_SUBCMD_SET_CREATE(m_sub_resize,
 	SHELL_SUBCMD_SET_END
 );
 
+<<<<<<< HEAD
+=======
+SHELL_COND_CMD_REGISTER(CONFIG_SHELL_VT100_COMMANDS, rem, NULL,
+				SHELL_HELP_COMMENT, cmd_comment);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 SHELL_COND_CMD_ARG_REGISTER(CONFIG_SHELL_VT100_COMMANDS, clear, NULL,
 			    SHELL_HELP_CLEAR, cmd_clear, 1, 0);
 SHELL_CMD_REGISTER(shell, &m_sub_shell, SHELL_HELP_SHELL, NULL);

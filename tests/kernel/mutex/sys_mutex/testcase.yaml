@@ -1,11 +1,24 @@
 tests:
+<<<<<<< HEAD
   system.mutex:
+=======
+  kernel.mutex.system:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: CONFIG_ARCH_HAS_USERSPACE
     tags:
       - kernel
       - userspace
+<<<<<<< HEAD
 
   system.mutex.nouser:
     tags: kernel
+=======
+      - mutex
+
+  kernel.mutex.system.nouser:
+    tags:
+      - kernel
+      - mutex
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_TEST_USERSPACE=n

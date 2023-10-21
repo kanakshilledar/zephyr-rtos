@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2018-2021 mcumgr authors
  * Copyright (c) 2022 Laird Connectivity
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Nordic Semiconductor ASA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -23,10 +27,15 @@ extern "C" {
 #define OS_MGMT_ID_RESET		5
 #define OS_MGMT_ID_MCUMGR_PARAMS	6
 #define OS_MGMT_ID_INFO			7
+<<<<<<< HEAD
+=======
+#define OS_MGMT_ID_BOOTLOADER_INFO	8
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * Command result codes for OS management group.
  */
+<<<<<<< HEAD
 enum os_mgmt_ret_code_t {
 	/** No error, this is implied if there is no ret value in the response */
 	OS_MGMT_RET_RC_OK = 0,
@@ -36,6 +45,20 @@ enum os_mgmt_ret_code_t {
 
 	/** The provided format value is not valid. */
 	OS_MGMT_RET_RC_INVALID_FORMAT,
+=======
+enum os_mgmt_err_code_t {
+	/** No error, this is implied if there is no ret value in the response */
+	OS_MGMT_ERR_OK = 0,
+
+	/** Unknown error occurred. */
+	OS_MGMT_ERR_UNKNOWN,
+
+	/** The provided format value is not valid. */
+	OS_MGMT_ERR_INVALID_FORMAT,
+
+	/** Query was not recognized. */
+	OS_MGMT_ERR_QUERY_YIELDS_NO_ANSWER,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Bitmask values used by the os info command handler. Note that the width of this variable is
@@ -97,6 +120,7 @@ struct os_mgmt_info_append {
 	bool *prior_output;
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 /*
  * @brief	Translate OS mgmt group error code into MCUmgr error code
@@ -108,6 +132,8 @@ struct os_mgmt_info_append {
 int os_mgmt_translate_error_code(uint16_t ret);
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

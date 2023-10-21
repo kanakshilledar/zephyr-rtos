@@ -24,7 +24,11 @@ static int actinius_board_set_sim_select(void)
 	const struct gpio_dt_spec sim =
 		GPIO_DT_SPEC_GET(SIM_SELECT_NODE, sim_gpios);
 
+<<<<<<< HEAD
 	if (!device_is_ready(sim.port)) {
+=======
+	if (!gpio_is_ready_dt(&sim)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("The SIM Select Pin port is not ready");
 
 		return -ENODEV;
@@ -48,7 +52,11 @@ static int actinius_board_set_charger_enable(void)
 	const struct gpio_dt_spec charger_en =
 		GPIO_DT_SPEC_GET(CHARGER_ENABLE_NODE, gpios);
 
+<<<<<<< HEAD
 	if (!device_is_ready(charger_en.port)) {
+=======
+	if (!gpio_is_ready_dt(&charger_en)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("The Charger Enable Pin port is not ready");
 		return -ENODEV;
 	}

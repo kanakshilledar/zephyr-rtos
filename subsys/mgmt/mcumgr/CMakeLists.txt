@@ -13,5 +13,9 @@ add_subdirectory(smp)
 add_subdirectory(util)
 add_subdirectory(grp)
 add_subdirectory(transport)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_SMP_CLIENT    smp_client)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 zephyr_library_link_libraries(mgmt_mcumgr)

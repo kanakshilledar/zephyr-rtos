@@ -204,10 +204,17 @@ static const struct ec2i_t pmc2_settings[] = {
  * This feature allows host access EC's memory directly by eSPI I/O cycles.
  * Mapping range is 4K bytes and base address is adjustable.
  * Eg. the I/O cycle 800h~8ffh from host can be mapped to x800h~x8ffh.
+<<<<<<< HEAD
  * Linker script of h2ram.ld will make the pool 4K aligned.
  */
 #define IT8XXX2_ESPI_H2RAM_POOL_SIZE_MAX 0x1000
 #define IT8XXX2_ESPI_H2RAM_OFFSET_MASK   GENMASK(3, 0)
+=======
+ * Linker script will make the pool 4K aligned.
+ */
+#define IT8XXX2_ESPI_H2RAM_POOL_SIZE_MAX 0x1000
+#define IT8XXX2_ESPI_H2RAM_OFFSET_MASK   GENMASK(5, 0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_ESPI_PERIPHERAL_ACPI_SHM_REGION)
 #define H2RAM_ACPI_SHM_MAX ((CONFIG_ESPI_IT8XXX2_ACPI_SHM_H2RAM_SIZE) + \

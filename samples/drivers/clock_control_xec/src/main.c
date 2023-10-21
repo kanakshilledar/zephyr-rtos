@@ -5,9 +5,17 @@
  */
 #include <errno.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/mchp_xec_clock_control.h>
 #include <zephyr/dt-bindings/clock/mchp_xec_pcr.h>
+=======
+#include <soc.h>
+#include <zephyr/drivers/clock_control.h>
+#include <zephyr/drivers/clock_control/mchp_xec_clock_control.h>
+#include <zephyr/dt-bindings/clock/mchp_xec_pcr.h>
+#include <zephyr/dt-bindings/pinctrl/mchp-xec-pinctrl.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/printk.h>
@@ -179,8 +187,13 @@ static void vbat_power_fail(void)
 }
 #endif
 
+<<<<<<< HEAD
 static const struct gpio_ctrl_regs * const gpc =
 	(struct gpio_ctrl_regs *)(DT_REG_ADDR(DT_NODELABEL(gpio_000_036)));
+=======
+static const struct gpio_regs * const gpio =
+	(struct gpio_regs *)(DT_REG_ADDR(DT_NODELABEL(gpio_000_036)));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct device *clkdev = DEVICE_DT_GET(DT_NODELABEL(pcr));
 
 struct sys_clk {
@@ -214,8 +227,13 @@ int main(void)
 	vbat_power_fail();
 
 	LOG_INF("32KHZ_IN is function 1 of GPIO 0165");
+<<<<<<< HEAD
 	r = gpc->CTRL_0165;
 	LOG_INF("XEC GPIO 0165 Control = 0x%x", gpc->CTRL_0165);
+=======
+	r = gpio->CTRL[MCHP_XEC_PINCTRL_REG_IDX(0165)];
+	LOG_INF("XEC GPIO 0165 Control = 0x%x", r);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	r = (r & MCHP_GPIO_CTRL_MUX_MASK) >> MCHP_GPIO_CTRL_MUX_POS;
 	LOG_INF("Pin function = %u", r);
 	vbat_clock_regs();

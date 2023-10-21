@@ -87,8 +87,13 @@ ZTEST(lib_mem_slab_stats_test, test_mem_slab_runtime_stats)
 
 	/* Free blocks 1 and 2, and then verify the stats. */
 
+<<<<<<< HEAD
 	k_mem_slab_free(&kmslab, &memory[2]);
 	k_mem_slab_free(&kmslab, &memory[1]);
+=======
+	k_mem_slab_free(&kmslab, memory[2]);
+	k_mem_slab_free(&kmslab, memory[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	status = k_mem_slab_runtime_stats_get(&kmslab, &stats);
 	zassert_equal(status, 0, "Routine failed with status %d\n", status);
@@ -142,8 +147,13 @@ ZTEST(lib_mem_slab_stats_test, test_mem_slab_runtime_stats)
 
 	/* Free the last two blocks; verify stats results */
 
+<<<<<<< HEAD
 	k_mem_slab_free(&kmslab, &memory[0]);
 	k_mem_slab_free(&kmslab, &memory[1]);
+=======
+	k_mem_slab_free(&kmslab, memory[0]);
+	k_mem_slab_free(&kmslab, memory[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	status = k_mem_slab_runtime_stats_get(&kmslab, &stats);
 	zassert_equal(status, 0, "Routine failed with status %d\n", status);

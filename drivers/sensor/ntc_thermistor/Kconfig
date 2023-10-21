@@ -6,7 +6,12 @@ config NTC_THERMISTOR
 	bool "NTC Thermistor"
 	default y
 	depends on DT_HAS_NTC_THERMISTOR_GENERIC_ENABLED || \
+<<<<<<< HEAD
 		   DT_HAS_EPCOS_B57861S0103A039_ENABLED
+=======
+		   DT_HAS_EPCOS_B57861S0103A039_ENABLED  || \
+		   DT_HAS_MURATA_NCP15WB473_ENABLED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select ADC
 	help
 	  Enable driver for Zephyr NTC Thermistor.

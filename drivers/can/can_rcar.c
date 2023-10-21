@@ -399,10 +399,13 @@ static void can_rcar_rx_isr(const struct device *dev)
 		frame.id = (val & RCAR_CAN_MB_SID_MASK) >> RCAR_CAN_MB_SID_SHIFT;
 	}
 
+<<<<<<< HEAD
 	if (val & RCAR_CAN_MB_RTR) {
 		frame.flags |= CAN_FRAME_RTR;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	frame.dlc = sys_read16(config->reg_addr +
 			       RCAR_CAN_MB_60 + RCAR_CAN_MB_DLC_OFFSET) & 0xF;
 
@@ -413,9 +416,19 @@ static void can_rcar_rx_isr(const struct device *dev)
 		frame.dlc = CAN_MAX_DLC;
 	}
 
+<<<<<<< HEAD
 	for (i = 0; i < frame.dlc; i++) {
 		frame.data[i] = sys_read8(config->reg_addr +
 					  RCAR_CAN_MB_60 + RCAR_CAN_MB_DATA_OFFSET + i);
+=======
+	if (val & RCAR_CAN_MB_RTR) {
+		frame.flags |= CAN_FRAME_RTR;
+	} else {
+		for (i = 0; i < frame.dlc; i++) {
+			frame.data[i] = sys_read8(config->reg_addr +
+						  RCAR_CAN_MB_60 + RCAR_CAN_MB_DATA_OFFSET + i);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 #if defined(CONFIG_CAN_RX_TIMESTAMP)
 	/* read upper byte */
@@ -914,9 +927,17 @@ static int can_rcar_send(const struct device *dev, const struct can_frame *frame
 	sys_write16(frame->dlc, config->reg_addr
 		    + RCAR_CAN_MB_56 + RCAR_CAN_MB_DLC_OFFSET);
 
+<<<<<<< HEAD
 	for (i = 0; i < frame->dlc; i++) {
 		sys_write8(frame->data[i], config->reg_addr
 			   + RCAR_CAN_MB_56 + RCAR_CAN_MB_DATA_OFFSET + i);
+=======
+	if ((frame->flags & CAN_FRAME_RTR) == 0) {
+		for (i = 0; i < frame->dlc; i++) {
+			sys_write8(frame->data[i], config->reg_addr
+				   + RCAR_CAN_MB_56 + RCAR_CAN_MB_DATA_OFFSET + i);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	compiler_barrier();
@@ -987,7 +1008,11 @@ static int can_rcar_init(const struct device *dev)
 {
 	const struct can_rcar_cfg *config = dev->config;
 	struct can_rcar_data *data = dev->data;
+<<<<<<< HEAD
 	struct can_timing timing;
+=======
+	struct can_timing timing = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret;
 	uint16_t ctlr;
 
@@ -1053,7 +1078,10 @@ static int can_rcar_init(const struct device *dev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	timing.sjw = config->sjw;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (config->sample_point) {
 		ret = can_calc_timing(dev, &timing, config->bus_speed,
 				      config->sample_point);
@@ -1065,6 +1093,10 @@ static int can_rcar_init(const struct device *dev)
 			timing.prescaler, timing.phase_seg1, timing.phase_seg2);
 		LOG_DBG("Sample-point err : %d", ret);
 	} else {
+<<<<<<< HEAD
+=======
+		timing.sjw = config->sjw;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		timing.prop_seg = config->prop_seg;
 		timing.phase_seg1 = config->phase_seg1;
 		timing.phase_seg2 = config->phase_seg2;
@@ -1074,7 +1106,11 @@ static int can_rcar_init(const struct device *dev)
 		}
 	}
 
+<<<<<<< HEAD
 	ret = can_rcar_set_timing(dev, &timing);
+=======
+	ret = can_set_timing(dev, &timing);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret) {
 		return ret;
 	}

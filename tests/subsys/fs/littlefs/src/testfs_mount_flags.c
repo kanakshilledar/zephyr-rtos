@@ -1,5 +1,9 @@
 /*
  * Copyright (c) 2020 Nordic Semiconductor ASA
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2022 Antmicro
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,6 +13,15 @@
 #include "testfs_tests.h"
 #include "testfs_lfs.h"
 
+<<<<<<< HEAD
+=======
+void test_fs_mount_flags(void);
+/* Using smallest partition for this tests as they do not write
+ * a lot of data, basically they just check flags.
+ */
+struct fs_mount_t *mount_flags_mp = &testfs_small_mnt;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void cleanup(struct fs_mount_t *mp)
 {
 	TC_PRINT("Clean %s\n", mp->mnt_point);
@@ -17,6 +30,7 @@ static void cleanup(struct fs_mount_t *mp)
 		      "Failed to clean partition");
 }
 
+<<<<<<< HEAD
 ZTEST(littlefs, test_fs_mount_flags)
 {
 	/* Using smallest partition for this tests as they do not write
@@ -81,4 +95,11 @@ ZTEST(littlefs, test_fs_mount_flags)
 	fs_close(&fs);
 	ret = fs_unmount(mp);
 	zassert_equal(ret, 0, "Expected success", ret);
+=======
+ZTEST(littlefs, test_fs_mount_flags_lfs)
+{
+	cleanup(mount_flags_mp);
+
+	test_fs_mount_flags();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

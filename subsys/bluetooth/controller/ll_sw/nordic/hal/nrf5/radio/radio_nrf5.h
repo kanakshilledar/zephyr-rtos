@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #define HAL_RADIO_NS2US_CEIL(ns)  ((ns + 999)/1000)
 #define HAL_RADIO_NS2US_ROUND(ns) ((ns + 500)/1000)
 
@@ -39,6 +40,22 @@
 
 #if defined(CONFIG_SOC_SERIES_BSIM_NRFXX)
 #include "radio_sim_nrfxx.h"
+=======
+#include <hal/nrf_radio.h>
+
+/* Common radio resources */
+#include "radio_nrf5_resources.h"
+
+/* Helpers for radio timing conversions */
+#define HAL_RADIO_NS2US_CEIL(ns)  ((ns + 999)/1000)
+#define HAL_RADIO_NS2US_ROUND(ns) ((ns + 500)/1000)
+
+/* SoC specific defines */
+#if defined(CONFIG_BOARD_NRF52_BSIM)
+#include "radio_sim_nrf52.h"
+#elif defined(CONFIG_BOARD_NRF5340BSIM_NRF5340_CPUNET)
+#include "radio_sim_nrf5340.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_SOC_SERIES_NRF51X)
 #include "radio_nrf51.h"
 #elif defined(CONFIG_SOC_NRF52805)
@@ -54,7 +71,10 @@
 #elif defined(CONFIG_SOC_NRF52833)
 #include "radio_nrf52833.h"
 #elif defined(CONFIG_SOC_NRF52840)
+<<<<<<< HEAD
 #include <nrf52_erratas.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "radio_nrf52840.h"
 #elif defined(CONFIG_SOC_NRF5340_CPUNET)
 #include <hal/nrf_vreqctrl.h>
@@ -63,6 +83,7 @@
 #error "Unsupported SoC."
 #endif
 
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_SERIES_NRF51X)
 #define HAL_RADIO_PDU_LEN_MAX (BIT(5) - 1)
 #else
@@ -70,13 +91,30 @@
 #endif
 
 #include <nrf_peripherals.h>
+=======
+/* Define to reset PPI registration */
+#define NRF_PPI_NONE 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* This has to come before the ppi/dppi includes below. */
 #include "radio_nrf5_fem.h"
 
 #if defined(PPI_PRESENT)
+<<<<<<< HEAD
 #include "radio_nrf5_ppi.h"
 #elif defined(DPPI_PRESENT)
+=======
+#include <hal/nrf_ppi.h>
+#include "radio_nrf5_ppi_resources.h"
+#include "radio_nrf5_ppi.h"
+#elif defined(DPPI_PRESENT)
+#include <hal/nrf_timer.h>
+#include <hal/nrf_rtc.h>
+#include <hal/nrf_aar.h>
+#include <hal/nrf_ccm.h>
+#include <hal/nrf_dppi.h>
+#include "radio_nrf5_dppi_resources.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "radio_nrf5_dppi.h"
 #else
 #error "PPI or DPPI abstractions missing."
@@ -84,6 +122,16 @@
 
 #include "radio_nrf5_txp.h"
 
+<<<<<<< HEAD
+=======
+/* SoC specific Radio PDU length field maximum value */
+#if defined(CONFIG_SOC_SERIES_NRF51X)
+#define HAL_RADIO_PDU_LEN_MAX (BIT(5) - 1)
+#else
+#define HAL_RADIO_PDU_LEN_MAX (BIT(8) - 1)
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Common NRF_RADIO power-on reset value. Refer to Product Specification,
  * RADIO Registers section for the documented reset values.
  *

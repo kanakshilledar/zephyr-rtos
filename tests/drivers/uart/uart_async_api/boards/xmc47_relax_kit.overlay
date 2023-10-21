@@ -4,6 +4,14 @@
 
 dut: &usic1ch1 {
 	compatible = "infineon,xmc4xxx-uart";
+<<<<<<< HEAD
+=======
+	status = "okay";
+
+	/delete-property/ scl-src;
+	/delete-property/ sda-src;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	current-speed = <921600>;
 	interrupts = <90 1 91 1>;
 	interrupt-names = "tx", "rx";
@@ -15,7 +23,10 @@ dut: &usic1ch1 {
 	fifo-start-offset = <0>;
 	fifo-tx-size = <0>;
 	fifo-rx-size = <0>;
+<<<<<<< HEAD
 	status = "okay";
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &uart_tx_p3_15_u1c1 {

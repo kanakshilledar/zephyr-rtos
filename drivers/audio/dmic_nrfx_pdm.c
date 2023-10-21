@@ -39,7 +39,11 @@ struct dmic_nrfx_pdm_drv_cfg {
 
 static void free_buffer(struct dmic_nrfx_pdm_drv_data *drv_data, void *buffer)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(drv_data->mem_slab, &buffer);
+=======
+	k_mem_slab_free(drv_data->mem_slab, buffer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("Freed buffer %p", buffer);
 }
 

@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,10 @@
 #include <zephyr/sys/atomic.h>
 #include <zephyr/drivers/can.h>
 #include <zephyr/drivers/can/transceiver.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/clock_control.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/device.h>
 #include <zephyr/drivers/pinctrl.h>
 #include <zephyr/logging/log.h>
@@ -66,7 +74,12 @@ struct can_nxp_s32_config {
 	CANXL_GRP_CONTROL_Type *base_grp_ctrl;
 	CANXL_DSC_CONTROL_Type *base_dsc_ctrl;
 	uint8 instance;
+<<<<<<< HEAD
 	uint32_t clock_can;
+=======
+	const struct device *clock_dev;
+	clock_control_subsys_t clock_subsys;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t bitrate;
 	uint32_t sample_point;
 	uint32_t sjw;
@@ -286,9 +299,13 @@ static int can_nxp_s32_get_core_clock(const struct device *dev, uint32_t *rate)
 
 	__ASSERT_NO_MSG(rate != NULL);
 
+<<<<<<< HEAD
 	*rate = config->clock_can;
 
 	return 0;
+=======
+	return clock_control_get_rate(config->clock_dev, config->clock_subsys, rate);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int can_nxp_s32_get_max_filters(const struct device *dev, bool ide)
@@ -728,14 +745,22 @@ static void can_nxp_s32_err_callback(const struct device *dev,
 static void nxp_s32_msg_data_to_zcan_frame(Canexcel_RxFdMsg msg_data,
 							struct can_frame *frame)
 {
+<<<<<<< HEAD
+=======
+	memset(frame, 0, sizeof(*frame));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!!(msg_data.Header.Id & CANXL_TX_HEADER_IDE_MASK)) {
 		frame->flags |= CAN_FRAME_IDE;
 	}
 
+<<<<<<< HEAD
 	if (!!(msg_data.Header.Id & CANXL_TX_HEADER_RTR_MASK)) {
 		frame->flags |= CAN_FRAME_RTR;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!!(frame->flags & CAN_FRAME_IDE)) {
 		frame->id = (msg_data.Header.Id & CANXL_IP_ID_EXT_MASK);
 	} else {
@@ -754,7 +779,15 @@ static void nxp_s32_msg_data_to_zcan_frame(Canexcel_RxFdMsg msg_data,
 		frame->flags |= CAN_FRAME_BRS;
 	}
 
+<<<<<<< HEAD
 	memcpy(frame->data, msg_data.data, can_dlc_to_bytes(frame->dlc));
+=======
+	if (!!(msg_data.Header.Id & CANXL_TX_HEADER_RTR_MASK)) {
+		frame->flags |= CAN_FRAME_RTR;
+	} else {
+		memcpy(frame->data, msg_data.data, can_dlc_to_bytes(frame->dlc));
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_CAN_RX_TIMESTAMP
 	frame->timestamp = msg_data.timeStampL;
@@ -829,6 +862,20 @@ static int can_nxp_s32_init(const struct device *dev)
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	if (!device_is_ready(config->clock_dev)) {
+		LOG_ERR("Clock control device not ready");
+		return -ENODEV;
+	}
+
+	err = clock_control_on(config->clock_dev, config->clock_subsys);
+	if (err) {
+		LOG_ERR("Failed to enable clock");
+		return err;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_init(&data->rx_mutex);
 	k_mutex_init(&data->tx_mutex);
 	k_sem_init(&data->tx_allocs_sem, CONFIG_CAN_NXP_S32_MAX_TX, CONFIG_CAN_NXP_S32_MAX_TX);
@@ -1060,7 +1107,13 @@ static const struct can_driver_api can_nxp_s32_driver_api = {
 		.base_dsc_ctrl = (CANXL_DSC_CONTROL_Type *)				\
 				DT_REG_ADDR_BY_NAME(CAN_NXP_S32_NODE(n), dsc_ctrl),	\
 		.instance = n,								\
+<<<<<<< HEAD
 		.clock_can = DT_PROP(CAN_NXP_S32_NODE(n), clock_frequency),		\
+=======
+		.clock_dev = DEVICE_DT_GET(DT_CLOCKS_CTLR(CAN_NXP_S32_NODE(n))),	\
+		.clock_subsys = (clock_control_subsys_t)				\
+				DT_CLOCKS_CELL(CAN_NXP_S32_NODE(n), name),		\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.bitrate = DT_PROP(CAN_NXP_S32_NODE(n), bus_speed),			\
 		.sjw = DT_PROP(CAN_NXP_S32_NODE(n), sjw),				\
 		.prop_seg = DT_PROP_OR(CAN_NXP_S32_NODE(n), prop_seg, 0),		\
@@ -1079,6 +1132,7 @@ static const struct can_driver_api can_nxp_s32_driver_api = {
 	{										\
 		return can_nxp_s32_init(dev);						\
 	}										\
+<<<<<<< HEAD
 	DEVICE_DT_DEFINE(CAN_NXP_S32_NODE(n),						\
 			&can_nxp_s32_##n##_init,					\
 			NULL,								\
@@ -1087,6 +1141,16 @@ static const struct can_driver_api can_nxp_s32_driver_api = {
 			POST_KERNEL,							\
 			CONFIG_CAN_INIT_PRIORITY,					\
 			&can_nxp_s32_driver_api);
+=======
+	CAN_DEVICE_DT_DEFINE(CAN_NXP_S32_NODE(n),					\
+			     can_nxp_s32_##n##_init,					\
+			     NULL,							\
+			     &can_nxp_s32_data_##n,					\
+			     &can_nxp_s32_config_##n,					\
+			     POST_KERNEL,						\
+			     CONFIG_CAN_INIT_PRIORITY,					\
+			     &can_nxp_s32_driver_api);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if DT_NODE_HAS_STATUS(CAN_NXP_S32_NODE(0), okay)
 CAN_NXP_S32_INIT_DEVICE(0)

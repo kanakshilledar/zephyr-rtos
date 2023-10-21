@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+# FIXME: SHADOW_VARS: Remove this once we have enabled -Wshadow globally.
+add_compile_options($<TARGET_PROPERTY:compiler,warning_shadow_variables>)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_definitions(-D__ZEPHYR_SUPERVISOR__)
 
 include_directories(

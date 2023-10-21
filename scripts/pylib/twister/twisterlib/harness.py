@@ -1,4 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
+<<<<<<< HEAD
+=======
+from __future__ import annotations
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 from asyncio.log import logger
 import platform
 import re
@@ -13,7 +17,12 @@ import threading
 import time
 
 from twisterlib.environment import ZEPHYR_BASE, PYTEST_PLUGIN_INSTALLED
+<<<<<<< HEAD
 from twisterlib.handlers import terminate_process
+=======
+from twisterlib.handlers import Handler, terminate_process, SUPPORTED_SIMS_IN_PYTEST
+from twisterlib.testinstance import TestInstance
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 logger = logging.getLogger('twister')
@@ -21,11 +30,16 @@ logger.setLevel(logging.DEBUG)
 
 _WINDOWS = platform.system() == 'Windows'
 
+<<<<<<< HEAD
 SUPPORTED_SIMS_IN_PYTEST = ['native', 'qemu']
 
 
 # pylint: disable=anomalous-backslash-in-string
 result_re = re.compile(".*(PASS|FAIL|SKIP) - (test_)?(.*) in (\\d*[.,]?\\d*) seconds")
+=======
+
+result_re = re.compile(r".*(PASS|FAIL|SKIP) - (test_)?(\S*) in (\d*[.,]?\d*) seconds")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 class Harness:
     GCOV_START = "GCOV_COVERAGE_DUMP_START"
     GCOV_END = "GCOV_COVERAGE_DUMP_END"
@@ -49,7 +63,10 @@ class Harness:
         self.matches = OrderedDict()
         self.ordered = True
         self.repeat = 1
+<<<<<<< HEAD
         self.testcases = []
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.id = None
         self.fail_on_fault = True
         self.fault = False
@@ -63,7 +80,11 @@ class Harness:
         self.run_id = None
         self.matched_run_id = False
         self.run_id_exists = False
+<<<<<<< HEAD
         self.instance = None
+=======
+        self.instance: TestInstance | None = None
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.testcase_output = ""
         self._match = False
 
@@ -145,10 +166,21 @@ class Robot(Harness):
 
             if cmake_proc.returncode == 0:
                 self.instance.status = "passed"
+<<<<<<< HEAD
+=======
+                # all tests in one Robot file are treated as a single test case,
+                # so its status should be set accordingly to the instance status
+                # please note that there should be only one testcase in testcases list
+                self.instance.testcases[0].status = "passed"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             else:
                 logger.error("Robot test failure: %s for %s" %
                              (handler.sourcedir, self.instance.platform.name))
                 self.instance.status = "failed"
+<<<<<<< HEAD
+=======
+                self.instance.testcases[0].status = "failed"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
             if out:
                 with open(os.path.join(self.instance.build_dir, handler.log), "wt") as log:
@@ -161,18 +193,35 @@ class Console(Harness):
         super(Console, self).configure(instance)
         if self.type == "one_line":
             self.pattern = re.compile(self.regex[0])
+<<<<<<< HEAD
+=======
+            self.patterns_expected = 1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         elif self.type == "multi_line":
             self.patterns = []
             for r in self.regex:
                 self.patterns.append(re.compile(r))
+<<<<<<< HEAD
+=======
+            self.patterns_expected = len(self.patterns)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def handle(self, line):
         if self.type == "one_line":
             if self.pattern.search(line):
+<<<<<<< HEAD
+=======
+                logger.debug(f"HARNESS:{self.__class__.__name__}:EXPECTED({self.next_pattern}):'{self.pattern.pattern}'")
+                self.next_pattern += 1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 self.state = "passed"
         elif self.type == "multi_line" and self.ordered:
             if (self.next_pattern < len(self.patterns) and
                 self.patterns[self.next_pattern].search(line)):
+<<<<<<< HEAD
+=======
+                logger.debug(f"HARNESS:{self.__class__.__name__}:EXPECTED({self.next_pattern}):'{self.patterns[self.next_pattern].pattern}'")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 self.next_pattern += 1
                 if self.next_pattern >= len(self.patterns):
                     self.state = "passed"
@@ -210,6 +259,20 @@ class Console(Harness):
                 self.recording.append(csv)
 
         self.process_test(line)
+<<<<<<< HEAD
+=======
+        # Reset the resulting test state to 'failed' for 'one_line' and
+        # ordered 'multi_line' patterns when not all of these patterns were
+        # found in the output, but just ztest's 'PROJECT EXECUTION SUCCESSFUL'.
+        # It might happen because of the pattern sequence diverged from the
+        # test code, the test platform has console issues, or even some other
+        # test image was executed.
+        # TODO: Introduce explicit match policy type either to reject
+        # unexpected console output, or to allow missing patterns.
+        if self.state == "passed" and self.ordered and self.next_pattern < self.patterns_expected:
+            logger.error(f"HARNESS:{self.__class__.__name__}: failed with only {self.next_pattern} matched patterns from expected {self.patterns_expected}")
+            self.state = "failed"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         tc = self.instance.get_case_or_create(self.id)
         if self.state == "passed":
@@ -224,16 +287,25 @@ class PytestHarnessException(Exception):
 
 class Pytest(Harness):
 
+<<<<<<< HEAD
     def configure(self, instance):
+=======
+    def configure(self, instance: TestInstance):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         super(Pytest, self).configure(instance)
         self.running_dir = instance.build_dir
         self.source_dir = instance.testsuite.source_dir
         self.report_file = os.path.join(self.running_dir, 'report.xml')
+<<<<<<< HEAD
+=======
+        self.pytest_log_file_path = os.path.join(self.running_dir, 'twister_harness.log')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.reserved_serial = None
 
     def pytest_run(self, timeout):
         try:
             cmd = self.generate_command()
+<<<<<<< HEAD
             if not cmd:
                 logger.error('Pytest command not generated, check logs')
                 return
@@ -248,10 +320,26 @@ class Pytest(Harness):
     def generate_command(self):
         config = self.instance.testsuite.harness_config
         pytest_root = config.get('pytest_root', 'pytest') if config else 'pytest'
+=======
+            self.run_command(cmd, timeout)
+        except PytestHarnessException as pytest_exception:
+            logger.error(str(pytest_exception))
+            self.state = 'failed'
+            self.instance.reason = str(pytest_exception)
+        finally:
+            if self.reserved_serial:
+                self.instance.handler.make_device_available(self.reserved_serial)
+        self._update_test_status()
+
+    def generate_command(self):
+        config = self.instance.testsuite.harness_config
+        pytest_root = config.get('pytest_root', ['pytest']) if config else ['pytest']
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         pytest_args = config.get('pytest_args', []) if config else []
         command = [
             'pytest',
             '--twister-harness',
+<<<<<<< HEAD
             '-s',
             '-q',
             os.path.join(self.source_dir, pytest_root),
@@ -264,6 +352,26 @@ class Pytest(Harness):
 
         if handler.options.verbose > 1:
             command.append('--log-level=DEBUG')
+=======
+            '-s', '-v',
+            f'--build-dir={self.running_dir}',
+            f'--junit-xml={self.report_file}',
+            '--log-file-level=DEBUG',
+            '--log-file-format=%(asctime)s.%(msecs)d:%(levelname)s:%(name)s: %(message)s',
+            f'--log-file={self.pytest_log_file_path}'
+        ]
+        command.extend([os.path.normpath(os.path.join(
+            self.source_dir, os.path.expanduser(os.path.expandvars(src)))) for src in pytest_root])
+        command.extend(pytest_args)
+
+        handler: Handler = self.instance.handler
+
+        if handler.options.verbose > 1:
+            command.extend([
+                '--log-cli-level=DEBUG',
+                '--log-cli-format=%(levelname)s: %(message)s'
+            ])
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         if handler.type_str == 'device':
             command.extend(
@@ -277,7 +385,11 @@ class Pytest(Harness):
             raise PytestHarnessException(f'Handling of handler {handler.type_str} not implemented yet')
         return command
 
+<<<<<<< HEAD
     def _generate_parameters_for_hardware(self, handler):
+=======
+    def _generate_parameters_for_hardware(self, handler: Handler):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         command = ['--device-type=hardware']
         hardware = handler.get_hardware()
         if not hardware:
@@ -318,16 +430,26 @@ class Pytest(Harness):
 
     def run_command(self, cmd, timeout):
         cmd, env = self._update_command_with_env_dependencies(cmd)
+<<<<<<< HEAD
         with subprocess.Popen(cmd,
                               stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT,
                               env=env) as proc:
+=======
+        with subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            env=env
+        ) as proc:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             try:
                 reader_t = threading.Thread(target=self._output_reader, args=(proc,), daemon=True)
                 reader_t.start()
                 reader_t.join(timeout)
                 if reader_t.is_alive():
                     terminate_process(proc)
+<<<<<<< HEAD
                     logger.warning('Timeout has occurred.')
                     self.state = 'failed'
                 proc.wait(timeout)
@@ -365,6 +487,16 @@ class Pytest(Harness):
         else:
             tc.status = "failed"
             logger.info("Pytest cases failed.")
+=======
+                    logger.warning('Timeout has occurred. Can be extended in testspec file. '
+                                   f'Currently set to {timeout} seconds.')
+                    self.instance.reason = 'Pytest timeout'
+                    self.state = 'failed'
+                proc.wait(timeout)
+            except subprocess.TimeoutExpired:
+                self.state = 'failed'
+                proc.kill()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @staticmethod
     def _update_command_with_env_dependencies(cmd):
@@ -397,6 +529,7 @@ class Pytest(Harness):
             logger.debug('PYTEST: %s', line)
         proc.communicate()
 
+<<<<<<< HEAD
     def _apply_instance_status(self):
         if self.state:
             self.instance.status = self.state
@@ -407,6 +540,54 @@ class Pytest(Harness):
             self.instance.reason = "Pytest timeout"
         if self.instance.status in ["error", "failed"]:
             self.instance.add_missing_case_status("blocked", self.instance.reason)
+=======
+    def _update_test_status(self):
+        if not self.state:
+            self.instance.testcases = []
+            try:
+                self._parse_report_file(self.report_file)
+            except Exception as e:
+                logger.error(f'Error when parsing file {self.report_file}: {e}')
+                self.state = 'failed'
+            finally:
+                if not self.instance.testcases:
+                    self.instance.init_cases()
+
+        self.instance.status = self.state or 'failed'
+        if self.instance.status in ['error', 'failed']:
+            self.instance.reason = self.instance.reason or 'Pytest failed'
+            self.instance.add_missing_case_status('blocked', self.instance.reason)
+
+    def _parse_report_file(self, report):
+        tree = ET.parse(report)
+        root = tree.getroot()
+        if elem_ts := root.find('testsuite'):
+            if elem_ts.get('failures') != '0':
+                self.state = 'failed'
+            elif elem_ts.get('errors') != '0':
+                self.state = 'error'
+            elif elem_ts.get('skipped') == elem_ts.get('tests'):
+                self.state = 'skipped'
+            else:
+                self.state = 'passed'
+            self.instance.execution_time = float(elem_ts.get('time'))
+
+            for elem_tc in elem_ts.findall('testcase'):
+                tc = self.instance.get_case_or_create(f"{self.id}.{elem_tc.get('name')}")
+                tc.duration = float(elem_tc.get('time'))
+                elem = elem_tc.find('*')
+                if elem is None:
+                    tc.status = 'passed'
+                else:
+                    if elem.tag == 'skipped':
+                        tc.status = 'skipped'
+                    elif elem.tag == 'failure':
+                        tc.status = 'failed'
+                    else:
+                        tc.status = 'error'
+                    tc.reason = elem.get('message')
+                    tc.output = elem.text
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 class Gtest(Harness):
@@ -521,7 +702,11 @@ class Test(Harness):
 
         result_match = result_re.match(line)
 
+<<<<<<< HEAD
         if result_match and result_match.group(2):
+=======
+        if result_match:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             matched_status = result_match.group(1)
             name = "{}.{}".format(self.id, result_match.group(3))
             tc = self.instance.get_case_or_create(name)

@@ -126,6 +126,10 @@
 			reg = <0x40003000 0x1000>;
 			clock-frequency = <I2C_BITRATE_STANDARD>;
 			interrupts = <3 NRF_DEFAULT_IRQ_PRIORITY>;
+<<<<<<< HEAD
+=======
+			easydma-maxcnt-bits = <14>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -373,6 +377,7 @@
 			port = <0>;
 		};
 	};
+<<<<<<< HEAD
 
 	sw_pwm: sw-pwm {
 		compatible = "nordic,nrf-sw-pwm";
@@ -381,6 +386,8 @@
 		clock-prescaler = <0>;
 		#pwm-cells = <3>;
 	};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &nvic {

@@ -1,7 +1,11 @@
 # Copyright (c) 2023 SILA Embedded Solutions GmbH
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 description: Texas Instrument 12 channels 16 bit I2C ADC
+=======
+description: Texas Instrument 12 channels 16 bit SPI ADC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 compatible: "ti,ads114s08"
 

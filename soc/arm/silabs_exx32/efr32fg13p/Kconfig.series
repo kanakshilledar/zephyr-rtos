@@ -13,10 +13,19 @@ config SOC_SERIES_EFR32FG13P
 	select CPU_HAS_FPU
 	select CPU_HAS_ARM_MPU
 	select SOC_FAMILY_EXX32
+<<<<<<< HEAD
+=======
+	select SOC_GECKO_HAS_RADIO
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select SOC_GECKO_HAS_INDIVIDUAL_PIN_LOCATION
 	select SOC_GECKO_HAS_HFRCO_FREQRANGE
 	select SOC_GECKO_CMU
 	select SOC_GECKO_GPIO
 	select SOC_GECKO_HAS_ERRATA_RTCC_E201
+<<<<<<< HEAD
+=======
+	select HAS_PM
+	select SOC_GECKO_SERIES1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for EFR32 FlexGecko MCU series

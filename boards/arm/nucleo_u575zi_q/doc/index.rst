@@ -289,7 +289,11 @@ Debugging
 =========
 
 Default flasher for this board is openocd. It could be used in the usual way.
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -328,10 +332,17 @@ Note: Check the ``build/tfm`` directory to ensure that the commands required by 
 (which is used for initialization) is available in the PATH.
 
 .. _STM32 Nucleo-144 board User Manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/user_manual/dm00615305.pdf
 
 .. _STM32U575ZI on www.st.com:
    http://www.st.com/en/microcontrollers/stm32u575zi.html
+=======
+   https://www.st.com/resource/en/user_manual/dm00615305.pdf
+
+.. _STM32U575ZI on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32u575zi.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32U575 reference manual:
    https://www.st.com/resource/en/reference_manual/rm0456-stm32u575585-armbased-32bit-mcus-stmicroelectronics.pdf

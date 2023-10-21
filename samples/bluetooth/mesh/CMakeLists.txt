@@ -13,3 +13,12 @@ if (BOARD STREQUAL bbc_microbit)
 else()
   target_sources(app PRIVATE src/board.c)
 endif()
+<<<<<<< HEAD
+=======
+
+if (CONFIG_BUILD_WITH_TFM)
+  target_include_directories(app PRIVATE
+    $<TARGET_PROPERTY:tfm,TFM_BINARY_DIR>/install/interface/include
+  )
+endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

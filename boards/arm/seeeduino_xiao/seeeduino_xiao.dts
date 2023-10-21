@@ -6,6 +6,10 @@
 
 /dts-v1/;
 #include <atmel/samd21.dtsi>
+<<<<<<< HEAD
+=======
+#include <atmel/samx2xx18.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "seeeduino_xiao-pinctrl.dtsi"
 #include "seeed_xiao_connector.dtsi"
 
@@ -90,6 +94,16 @@ zephyr_udc0: &usb0 {
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
+=======
+&dac0 {
+	status = "okay";
+
+	pinctrl-0 = <&dac_default>;
+	pinctrl-names = "default";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &flash0 {
 	partitions {
 		compatible = "fixed-partitions";

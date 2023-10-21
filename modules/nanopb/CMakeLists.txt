@@ -6,6 +6,7 @@ if(CONFIG_NANOPB)
 
   set(NANOPB_DIR ${ZEPHYR_CURRENT_MODULE_DIR})
 
+<<<<<<< HEAD
   find_program(PROTOC protoc)
   if(NOT PROTOC)
     message(FATAL_ERROR "'protoc' not found, please ensure protoc is installed\
@@ -19,12 +20,20 @@ if(CONFIG_NANOPB)
 
   zephyr_include_directories(${NANOPB_DIR})
 
+=======
+  zephyr_library()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   zephyr_library_sources(
     ${NANOPB_DIR}/pb_common.c
     ${NANOPB_DIR}/pb_encode.c
     ${NANOPB_DIR}/pb_decode.c
   )
 
+<<<<<<< HEAD
+=======
+  zephyr_include_directories(${NANOPB_DIR})
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   zephyr_compile_definitions(
     PB_MAX_REQUIRED_FIELDS=${CONFIG_NANOPB_MAX_REQUIRED_FIELDS})
 

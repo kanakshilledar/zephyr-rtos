@@ -18,6 +18,10 @@ config COUNTER_GECKO_STIMER
 	default y
 	depends on DT_HAS_SILABS_GECKO_STIMER_ENABLED
 	select SOC_GECKO_RTCC
+<<<<<<< HEAD
+=======
+	select SOC_GECKO_PRS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the counter driver for Sleep Timer module for Silicon Labs
 	  Gecko chips.

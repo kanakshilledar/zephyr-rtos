@@ -97,6 +97,11 @@ The Zephyr stm32f469i_disco board configuration supports the following hardware 
 +-----------+------------+-------------------------------------+
 | SPI       | on-chip    | spi                                 |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| SDIO      | on-chip    | SD-card controller                  |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Other hardware features are not yet supported on Zephyr porting.
 
@@ -119,6 +124,10 @@ Default Zephyr Peripheral Mapping:
 - UART_6 TX/RX : PG14/PG9 (Arduino Serial)
 - I2C1 SCL/SDA : PB8/PB9 (Arduino I2C)
 - SPI2 NSS/SCK/MISO/MOSI : PH6/PD3/PB14/PB15 (Arduino SPI)
+<<<<<<< HEAD
+=======
+- SDIO D0/D1/D2/D3/CLK/Detect : PC8/PC9/PC10/PC11/PC12/PG2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - USB DM : PA11
 - USB DP : PA12
 - USER_PB : PA0
@@ -193,6 +202,7 @@ You can debug an application in the usual way.  Here is an example for the
 
 
 .. _32F469IDISCOVERY website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32f469idiscovery.html
 
 .. _32F469IDISCOVERY board User Manual:
@@ -203,3 +213,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F469 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00127514.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32f469idiscovery.html
+
+.. _32F469IDISCOVERY board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00218846.pdf
+
+.. _STM32F469NI on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f469ni.html
+
+.. _STM32F469 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00127514.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

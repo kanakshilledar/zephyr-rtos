@@ -179,6 +179,13 @@ static void lcp_down(struct ppp_fsm *fsm)
 
 	ppp_link_down(ctx);
 
+<<<<<<< HEAD
+=======
+	if (!net_if_is_carrier_ok(ctx->iface)) {
+		return;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ppp_change_phase(ctx, PPP_ESTABLISH);
 }
 
@@ -206,11 +213,14 @@ static void lcp_finished(struct ppp_fsm *fsm)
 					       lcp.fsm);
 
 	ppp_link_terminated(ctx);
+<<<<<<< HEAD
 
 	/* take the remainder down */
 	ppp_mgmt_raise_carrier_off_event(ctx->iface);
 
 	ppp_if_carrier_down(ctx->iface);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_NET_L2_PPP_OPTION_MRU)

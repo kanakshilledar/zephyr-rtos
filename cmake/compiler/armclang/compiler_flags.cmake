@@ -7,3 +7,9 @@ set_property(TARGET asm APPEND PROPERTY required "--target=${triple}")
 
 # Only the ARM Compiler C library is currently supported.
 set_compiler_property(PROPERTY nostdinc)
+<<<<<<< HEAD
+=======
+
+# Remove after testing that -Wshadow works
+set_compiler_property(PROPERTY warning_shadow_variables)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

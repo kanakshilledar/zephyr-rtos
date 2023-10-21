@@ -11,6 +11,7 @@
 
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
@@ -18,6 +19,13 @@
 #include <zephyr/linker/linker-defs.h>
 #include <string.h>
 
+=======
+#include <zephyr/linker/linker-defs.h>
+#include <string.h>
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -28,6 +36,7 @@
  */
 static int stm32c0_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
@@ -40,6 +49,8 @@ static int stm32c0_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Update CMSIS SystemCoreClock variable (HCLK) */
 	/* At reset, system core clock is set to 48 MHz from HSI */
 	SystemCoreClock = 48000000;

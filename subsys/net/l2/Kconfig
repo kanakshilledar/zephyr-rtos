@@ -96,13 +96,27 @@ config NET_L2_CUSTOM_IEEE802154_MTU
 
 source "subsys/net/l2/canbus/Kconfig"
 
+<<<<<<< HEAD
+=======
+config NET_L2_WIFI_UTILS
+	bool
+	help
+	  This provides utility functions for Wi-Fi subsystem.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config NET_L2_WIFI_MGMT
 	bool "Wi-Fi Management support"
 	select NET_MGMT
 	select NET_MGMT_EVENT
 	select NET_MGMT_EVENT_INFO
+<<<<<<< HEAD
 	help
 	  Add support for Wi-Fi Management interface.
+=======
+	select NET_L2_WIFI_UTILS
+	help
+	  Enable support for Wi-Fi Management interface.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if NET_L2_WIFI_MGMT
 module = NET_L2_WIFI_MGMT
@@ -116,6 +130,12 @@ endif # NET_L2_WIFI_MGMT
 config NET_L2_WIFI_SHELL
 	bool "Wi-Fi shell module"
 	select NET_L2_WIFI_MGMT
+<<<<<<< HEAD
+=======
+	select NET_L2_WIFI_UTILS
+	select SHELL_GETOPT
+	select GETOPT_LONG
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  This can be used for controlling Wi-Fi through the console via
 	  exposing a shell module named "wifi".

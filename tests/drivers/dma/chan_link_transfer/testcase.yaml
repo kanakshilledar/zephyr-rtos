@@ -7,11 +7,20 @@ tests:
       - dma
     platform_allow:
       - frdm_k64f
+<<<<<<< HEAD
+=======
+      - mimxrt595_evk_cm33
+      - mimxrt1050_evk
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - mimxrt1060_evk
       - mimxrt1064_evk
       - mimxrt1160_evk_cm7
       - mimxrt1170_evk_cm7
       - mimxrt1024_evk
       - lpcxpresso55s69_cpu0
+<<<<<<< HEAD
+=======
+      - lpcxpresso55s36
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - frdm_k64f

@@ -13,6 +13,7 @@
 #include <cpu_init.h>
 #include "manifest.h"
 
+<<<<<<< HEAD
 
 #define DELAY_COUNT			256
 #define LPSRAM_MASK(x)		0x00000003
@@ -22,6 +23,13 @@
 #define PLATFORM_INIT_LPSRAM
 
 #define PLATFORM_HPSRAM_EBB_COUNT (DT_REG_SIZE(DT_NODELABEL(sram0)) / SRAM_BANK_SIZE)
+=======
+#define DELAY_COUNT			256
+#define LPSRAM_MASK(x)		0x00000003
+#define PLATFORM_INIT_HPSRAM
+#define PLATFORM_INIT_LPSRAM
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 BUILD_ASSERT((DT_REG_SIZE(DT_NODELABEL(sram0)) % SRAM_BANK_SIZE) == 0,
 		"sram0 must be divisible by 64*1024 bank size.");
 
@@ -33,7 +41,11 @@ static __imr void hp_sram_pm_banks(uint32_t banks)
 {
 #ifdef CONFIG_ADSP_INIT_HPSRAM
 	uint32_t status, ebb_mask0, ebb_mask1, ebb_avail_mask0, ebb_avail_mask1,
+<<<<<<< HEAD
 		total_banks_count = PLATFORM_HPSRAM_EBB_COUNT;
+=======
+		total_banks_count = HPSRAM_EBB_COUNT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	CAVS_SHIM.ldoctl = SHIM_LDOCTL_HPSRAM_LDO_ON;
 
@@ -44,19 +56,32 @@ static __imr void hp_sram_pm_banks(uint32_t banks)
 	 * bit masks reflect total number of available EBB (banks) in each
 	 * segment; current implementation supports 2 segments 0,1
 	 */
+<<<<<<< HEAD
 	if (total_banks_count > EBB_SEGMENT_SIZE) {
 		ebb_avail_mask0 = (uint32_t)GENMASK(EBB_SEGMENT_SIZE - 1, 0);
 		ebb_avail_mask1 = (uint32_t)GENMASK(total_banks_count -
 						    EBB_SEGMENT_SIZE - 1, 0);
+=======
+	if (total_banks_count > EBB_SEG_SIZE) {
+		ebb_avail_mask0 = (uint32_t)GENMASK(EBB_SEG_SIZE - 1, 0);
+		ebb_avail_mask1 = (uint32_t)GENMASK(total_banks_count -
+						    EBB_SEG_SIZE - 1, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		ebb_avail_mask0 = (uint32_t)GENMASK(total_banks_count - 1, 0);
 		ebb_avail_mask1 = 0;
 	}
 
 	/* bit masks of banks that have to be powered up in each segment */
+<<<<<<< HEAD
 	if (banks > EBB_SEGMENT_SIZE) {
 		ebb_mask0 = (uint32_t)GENMASK(EBB_SEGMENT_SIZE - 1, 0);
 		ebb_mask1 = (uint32_t)GENMASK(banks - EBB_SEGMENT_SIZE - 1,
+=======
+	if (banks > EBB_SEG_SIZE) {
+		ebb_mask0 = (uint32_t)GENMASK(EBB_SEG_SIZE - 1, 0);
+		ebb_mask1 = (uint32_t)GENMASK(banks - EBB_SEG_SIZE - 1,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		0);
 	} else {
 		/* assumption that ebb_in_use is > 0 */

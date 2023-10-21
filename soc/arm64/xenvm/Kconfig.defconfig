@@ -14,4 +14,12 @@ config SYS_CLOCK_HW_CYCLES_PER_SEC
 	int
 	default 8320000
 
+<<<<<<< HEAD
+=======
+# We need at least 16M of virtual address space to map memory of Xen node
+# 32M should be enough for basic use-cases
+config KERNEL_VM_SIZE
+	default 0x2000000
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif

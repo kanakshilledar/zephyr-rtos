@@ -1,8 +1,20 @@
+<<<<<<< HEAD
 # ESP32S2 saola board configuration
 
 # Copyright (c) 2021 Espressif Systems (Shanghai) Co., Ltd.
+=======
+# Copyright (c) 2023 Espressif Systems (Shanghai) Co., Ltd.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 config BOARD_ESP32S2_SAOLA
 	bool "ESP32S2 Saola Board"
+<<<<<<< HEAD
 	depends on SOC_ESP32S2
+=======
+	depends on SOC_SERIES_ESP32S2
+
+choice SOC_PART_NUMBER
+	default SOC_ESP32S2_WROVER_N4R2
+endchoice
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

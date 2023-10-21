@@ -10,14 +10,21 @@
 #include <zephyr/storage/disk_access.h>
 #include <zephyr/device.h>
 #include <zephyr/timing/timing.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_DISK_DRIVER_SDMMC)
 #define DISK_NAME CONFIG_SDMMC_VOLUME_NAME
 #elif IS_ENABLED(CONFIG_DISK_DRIVER_MMC)
 #define DISK_NAME CONFIG_MMC_VOLUME_NAME
+<<<<<<< HEAD
 #elif IS_ENABLED(CONFIG_DISK_DRIVER_RAM)
 #define DISK_NAME CONFIG_DISK_RAM_VOLUME_NAME
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif IS_ENABLED(CONFIG_NVME)
 #define DISK_NAME "nvme0n0"
 #else

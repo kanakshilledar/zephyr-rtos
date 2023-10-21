@@ -184,16 +184,27 @@ ZTEST(test_log_api, test_log_various_messages)
 	LOG_DBG(TEST_MSG_0, ll, ull, i);
 
 #ifdef CONFIG_FPU
+<<<<<<< HEAD
 	float f = -1.2356;
 	double d = -1.2356;
 
 	snprintk(str, sizeof(str), TEST_MSG_1, f, 100,  d);
+=======
+	float f = -1.2356f;
+	double d = -1.2356;
+
+	snprintk(str, sizeof(str), TEST_MSG_1, (double)f, 100,  d);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	mock_log_frontend_record(LOG_CURRENT_MODULE_ID(), LOG_LEVEL_INF, str);
 	mock_log_backend_record(&backend1, LOG_CURRENT_MODULE_ID(),
 				Z_LOG_LOCAL_DOMAIN_ID, LOG_LEVEL_INF,
 				exp_timestamp++, str);
 
+<<<<<<< HEAD
 	LOG_INF(TEST_MSG_1, f, 100, d);
+=======
+	LOG_INF(TEST_MSG_1, (double)f, 100, d);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_FPU */
 
 	snprintk(str, sizeof(str), "wrn %s", dstr);
@@ -362,7 +373,11 @@ static size_t get_long_hexdump(void)
  * there is no room. However, if after discarding all messages there is still no
  * room then current log is discarded.
  */
+<<<<<<< HEAD
 static uint8_t data[CONFIG_LOG_BUFFER_SIZE];
+=======
+static uint8_t log_buf[CONFIG_LOG_BUFFER_SIZE];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ZTEST(test_log_api, test_log_overflow)
 {
@@ -379,7 +394,11 @@ ZTEST(test_log_api, test_log_overflow)
 	}
 
 	for (int i = 0; i < CONFIG_LOG_BUFFER_SIZE; i++) {
+<<<<<<< HEAD
 		data[i] = i;
+=======
+		log_buf[i] = i;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	uint32_t hexdump_len = get_long_hexdump();
@@ -388,19 +407,31 @@ ZTEST(test_log_api, test_log_overflow)
 	exp_timestamp++;
 	mock_log_frontend_record(LOG_CURRENT_MODULE_ID(), LOG_LEVEL_INF, "test 100 100");
 	mock_log_frontend_generic_record(LOG_CURRENT_MODULE_ID(), Z_LOG_LOCAL_DOMAIN_ID,
+<<<<<<< HEAD
 					 LOG_LEVEL_INF, "hexdump", data, hexdump_len);
+=======
+					 LOG_LEVEL_INF, "hexdump", log_buf, hexdump_len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	mock_log_frontend_record(LOG_CURRENT_MODULE_ID(), LOG_LEVEL_INF, "test2");
 	mock_log_backend_generic_record(&backend1, LOG_CURRENT_MODULE_ID(),
 					Z_LOG_LOCAL_DOMAIN_ID, LOG_LEVEL_INF,
 					exp_timestamp++, "hexdump",
+<<<<<<< HEAD
 					data, hexdump_len);
+=======
+					log_buf, hexdump_len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	mock_log_backend_record(&backend1, LOG_CURRENT_MODULE_ID(),
 				Z_LOG_LOCAL_DOMAIN_ID, LOG_LEVEL_INF,
 				exp_timestamp++, "test2");
 	mock_log_backend_drop_record(&backend1, 1);
 
 	LOG_INF("test %d %d", 100, 100);
+<<<<<<< HEAD
 	LOG_HEXDUMP_INF(data, hexdump_len, "hexdump");
+=======
+	LOG_HEXDUMP_INF(log_buf, hexdump_len, "hexdump");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_INF("test2");
 
 	process_and_validate(false, false);
@@ -414,7 +445,11 @@ ZTEST(test_log_api, test_log_overflow)
 
 	mock_log_frontend_record(LOG_CURRENT_MODULE_ID(), LOG_LEVEL_INF, "test");
 	mock_log_frontend_generic_record(LOG_CURRENT_MODULE_ID(), Z_LOG_LOCAL_DOMAIN_ID,
+<<<<<<< HEAD
 					 LOG_LEVEL_INF, "test", data, hexdump_len + 1);
+=======
+					 LOG_LEVEL_INF, "test", log_buf, hexdump_len + 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Log2 allocation is not destructive if request exceeds the
 	 * capacity.
 	 */
@@ -424,7 +459,11 @@ ZTEST(test_log_api, test_log_overflow)
 	mock_log_backend_drop_record(&backend1, 1);
 
 	LOG_INF("test");
+<<<<<<< HEAD
 	LOG_HEXDUMP_INF(data, hexdump_len + 1, "test");
+=======
+	LOG_HEXDUMP_INF(log_buf, hexdump_len + 1, "test");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	process_and_validate(false, false);
 

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _spi_flash_at45_sample:
 
 AT45 DataFlash driver sample
 #############################
+=======
+.. zephyr:code-sample:: spi-flash-at45
+   :name: AT45 DataFlash driver
+   :relevant-api: flash_interface
+
+   Use the AT45 family DataFlash driver to interact with the flash memory over SPI.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -23,7 +31,11 @@ enables the flash page layout API which allow show the flash information.
 In the default configuration, the AT45 flash driver is configured to use
 the Read-Modify-Write functionality of DataFlash chips and does not perform
 page erasing, as it is not needed in this case. This can be modified by
+<<<<<<< HEAD
 simply disabling the SPI_FLASH_AT45_USE_READ_MODIFY_WRITE option.
+=======
+simply disabling the :kconfig:option:`CONFIG_SPI_FLASH_AT45_USE_READ_MODIFY_WRITE` option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Requirements
 ************

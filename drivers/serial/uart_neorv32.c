@@ -21,6 +21,7 @@ LOG_MODULE_REGISTER(uart_neorv32, CONFIG_UART_LOG_LEVEL);
 #define NEORV32_UART_DATA_OFFSET 0x04
 
 /* UART_CTRL register bits */
+<<<<<<< HEAD
 #define NEORV32_UART_CTRL_BAUD_MASK   BIT_MASK(12)
 #define NEORV32_UART_CTRL_BAUD_POS    0U
 #define NEORV32_UART_CTRL_PRSC_MASK   BIT_MASK(3)
@@ -38,6 +39,28 @@ LOG_MODULE_REGISTER(uart_neorv32, CONFIG_UART_LOG_LEVEL);
 #define NEORV32_UART_DATA_FERR  BIT(29)
 #define NEORV32_UART_DATA_OVERR BIT(30)
 #define NEORV32_UART_DATA_AVAIL BIT(31)
+=======
+#define NEORV32_UART_CTRL_EN              BIT(0)
+#define NEORV32_UART_CTRL_SIM_MODE        BIT(1)
+#define NEORV32_UART_CTRL_HWFC_EN         BIT(2)
+#define NEORV32_UART_CTRL_PRSC_POS        3U
+#define NEORV32_UART_CTRL_PRSC_MASK       BIT_MASK(3)
+#define NEORV32_UART_CTRL_BAUD_POS        6U
+#define NEORV32_UART_CTRL_BAUD_MASK       BIT_MASK(10)
+#define NEORV32_UART_CTRL_RX_NEMPTY       BIT(16)
+#define NEORV32_UART_CTRL_RX_HALF         BIT(17)
+#define NEORV32_UART_CTRL_RX_FULL         BIT(18)
+#define NEORV32_UART_CTRL_TX_NEMPTY       BIT(19)
+#define NEORV32_UART_CTRL_TX_HALF         BIT(20)
+#define NEORV32_UART_CTRL_TX_FULL         BIT(21)
+#define NEORV32_UART_CTRL_IRQ_RX_NEMPTY   BIT(22)
+#define NEORV32_UART_CTRL_IRQ_RX_HALF     BIT(23)
+#define NEORV32_UART_CTRL_IRQ_RX_FULL     BIT(24)
+#define NEORV32_UART_CTRL_IRQ_TX_EMPTY    BIT(25)
+#define NEORV32_UART_CTRL_IRQ_TX_NHALF    BIT(26)
+#define NEORV32_UART_CTRL_RX_OVER         BIT(30)
+#define NEORV32_UART_CTRL_TX_BUSY         BIT(31)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct neorv32_uart_config {
 	const struct device *syscon;
@@ -100,7 +123,11 @@ static int neorv32_uart_poll_in(const struct device *dev, unsigned char *c)
 
 	data = neorv32_uart_read_data(dev);
 
+<<<<<<< HEAD
 	if ((data & NEORV32_UART_DATA_AVAIL) != 0) {
+=======
+	if ((data & NEORV32_UART_CTRL_RX_NEMPTY) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		*c = data & BIT_MASK(8);
 		return 0;
 	}
@@ -116,6 +143,7 @@ static void neorv32_uart_poll_out(const struct device *dev, unsigned char c)
 	neorv32_uart_write_data(dev, c);
 }
 
+<<<<<<< HEAD
 static int neorv32_uart_err_check(const struct device *dev)
 {
 	struct neorv32_uart_data *data = dev->data;
@@ -139,6 +167,8 @@ static int neorv32_uart_err_check(const struct device *dev)
 	return err;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int neorv32_uart_configure(const struct device *dev, const struct uart_config *cfg)
 {
 	const struct neorv32_uart_config *config = dev->config;
@@ -163,6 +193,7 @@ static int neorv32_uart_configure(const struct device *dev, const struct uart_co
 
 	switch (cfg->parity) {
 	case UART_CFG_PARITY_NONE:
+<<<<<<< HEAD
 		ctrl |= NEORV32_UART_CTRL_PMODE_NONE;
 		break;
 	case UART_CFG_PARITY_ODD:
@@ -170,6 +201,8 @@ static int neorv32_uart_configure(const struct device *dev, const struct uart_co
 		break;
 	case UART_CFG_PARITY_EVEN:
 		ctrl |= NEORV32_UART_CTRL_PMODE_EVEN;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		LOG_ERR("unsupported parity mode %d", cfg->parity);
@@ -181,7 +214,11 @@ static int neorv32_uart_configure(const struct device *dev, const struct uart_co
 		ctrl |= 0;
 		break;
 	case UART_CFG_FLOW_CTRL_RTS_CTS:
+<<<<<<< HEAD
 		ctrl |= NEORV32_UART_CTRL_RTS_EN | NEORV32_UART_CTRL_CTS_EN;
+=======
+		ctrl |= NEORV32_UART_CTRL_HWFC_EN;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		LOG_ERR("unsupported flow control mode %d", cfg->flow_ctrl);
@@ -270,9 +307,15 @@ static int neorv32_uart_fifo_read(const struct device *dev, uint8_t *rx_data, co
 
 	__ASSERT_NO_MSG(rx_data != NULL);
 
+<<<<<<< HEAD
 	while ((data->last_data & NEORV32_UART_DATA_AVAIL) != 0) {
 		rx_data[count++] = data->last_data & BIT_MASK(8);
 		data->last_data &= ~(NEORV32_UART_DATA_AVAIL);
+=======
+	while ((data->last_data & NEORV32_UART_CTRL_RX_NEMPTY) != 0) {
+		rx_data[count++] = data->last_data & BIT_MASK(8);
+		data->last_data &= ~(NEORV32_UART_CTRL_RX_NEMPTY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (count >= size) {
 			break;
@@ -367,7 +410,11 @@ static int neorv32_uart_irq_rx_ready(const struct device *dev)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	return (data->last_data & NEORV32_UART_DATA_AVAIL) != 0;
+=======
+	return (data->last_data & NEORV32_UART_CTRL_RX_NEMPTY) != 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int neorv32_uart_irq_is_pending(const struct device *dev)
@@ -467,9 +514,16 @@ static int neorv32_uart_pm_action(const struct device *dev,
 static const struct uart_driver_api neorv32_uart_driver_api = {
 	.poll_in = neorv32_uart_poll_in,
 	.poll_out = neorv32_uart_poll_out,
+<<<<<<< HEAD
 	.err_check = neorv32_uart_err_check,
 	.configure = neorv32_uart_configure,
 	.config_get = neorv32_uart_config_get,
+=======
+#ifdef CONFIG_UART_USE_RUNTIME_CONFIGURE
+	.configure = neorv32_uart_configure,
+	.config_get = neorv32_uart_config_get,
+#endif /* CONFIG_UART_USE_RUNTIME_CONFIGURE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 	.fifo_fill = neorv32_uart_fifo_fill,
 	.fifo_read = neorv32_uart_fifo_read,

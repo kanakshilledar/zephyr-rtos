@@ -6,7 +6,10 @@
 
 #include <zephyr/kernel.h>
 #include <kernel_internal.h>
+<<<<<<< HEAD
 #include <zephyr/arch/x86/acpi.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/arch/x86/multiboot.h>
 #include <zephyr/arch/x86/efi.h>
 #include <x86_mmu.h>

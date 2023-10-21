@@ -7,6 +7,16 @@
 #ifndef ZEPHYR_INCLUDE_DRIVERS_PCIE_PCIE_H_
 #define ZEPHYR_INCLUDE_DRIVERS_PCIE_PCIE_H_
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief PCIe Host Interface
+ * @defgroup pcie_host_interface PCIe Host Interface
+ * @ingroup io_interfaces
+ * @{
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stddef.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/dt-bindings/pcie/pcie.h>
@@ -596,4 +606,11 @@ extern bool pcie_connect_dynamic_irq(pcie_bdf_t bdf,
 }
 #endif
 
+<<<<<<< HEAD
+=======
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_DRIVERS_PCIE_PCIE_H_ */

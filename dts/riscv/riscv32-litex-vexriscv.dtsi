@@ -23,7 +23,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = <0>;
+<<<<<<< HEAD
 			riscv,isa = "rv32imac";
+=======
+			riscv,isa = "rv32ima_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "okay";
 			timebase-frequency = <32768>;
 		};

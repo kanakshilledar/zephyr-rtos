@@ -311,6 +311,7 @@ void bt_keys_clear(struct bt_keys *keys)
 	}
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
+<<<<<<< HEAD
 		char key[BT_SETTINGS_KEY_MAX];
 
 		/* Delete stored keys from flash */
@@ -327,6 +328,10 @@ void bt_keys_clear(struct bt_keys *keys)
 
 		LOG_DBG("Deleting key %s", key);
 		settings_delete(key);
+=======
+		/* Delete stored keys from flash */
+		bt_settings_delete_keys(keys->id, &keys->addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	(void)memset(keys, 0, sizeof(*keys));
@@ -335,11 +340,15 @@ void bt_keys_clear(struct bt_keys *keys)
 #if defined(CONFIG_BT_SETTINGS)
 int bt_keys_store(struct bt_keys *keys)
 {
+<<<<<<< HEAD
 	char key[BT_SETTINGS_KEY_MAX];
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	__ASSERT_NO_MSG(keys != NULL);
 
+<<<<<<< HEAD
 	if (keys->id) {
 		char id[4];
 
@@ -352,12 +361,20 @@ int bt_keys_store(struct bt_keys *keys)
 	}
 
 	err = settings_save_one(key, keys->storage_start, BT_KEYS_STORAGE_LEN);
+=======
+	err = bt_settings_store_keys(keys->id, &keys->addr, keys->storage_start,
+				     BT_KEYS_STORAGE_LEN);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		LOG_ERR("Failed to save keys (err %d)", err);
 		return err;
 	}
 
+<<<<<<< HEAD
 	LOG_DBG("Stored keys for %s (%s)", bt_addr_le_str(&keys->addr), key);
+=======
+	LOG_DBG("Stored keys for %s", bt_addr_le_str(&keys->addr));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -473,8 +490,12 @@ static int keys_commit(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SETTINGS_STATIC_HANDLER_DEFINE(bt_keys, "bt/keys", NULL, keys_set, keys_commit,
 			       NULL);
+=======
+BT_SETTINGS_DEFINE(keys, "keys", keys_set, keys_commit);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* CONFIG_BT_SETTINGS */
 

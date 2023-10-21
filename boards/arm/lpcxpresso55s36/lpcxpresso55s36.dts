@@ -8,6 +8,10 @@
 
 #include <nxp/nxp_lpc55S36_ns.dtsi>
 #include "lpcxpresso55s36-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP LPCXpresso55S36 board";
@@ -54,10 +58,18 @@
 		btn_wk: button_0 {
 			label = "Wakeup button";
 			gpios = <&gpio1 18 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_WAKEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		btn_usr: button_1 {
 			label = "USR button";
 			gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -168,3 +180,20 @@ zephyr_udc0: &usbfs {
 	pinctrl-0 = <&pinmux_usbfs>;
 	pinctrl-names = "default";
 };
+<<<<<<< HEAD
+=======
+
+&dma0 {
+	status = "okay";
+};
+
+&vref0 {
+	status = "okay";
+};
+
+&dac0 {
+	status = "okay";
+	pinctrl-0 = <&pinmux_dac0>;
+	pinctrl-names = "default";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

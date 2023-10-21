@@ -4,3 +4,15 @@ tests:
       - kernel
       - userspace
     ignore_faults: true
+<<<<<<< HEAD
+=======
+  kernel.queue.minimallibc:
+    filter: CONFIG_MINIMAL_LIBC_SUPPORTED
+    tags:
+      - kernel
+      - userspace
+      - libc
+    ignore_faults: true
+    extra_configs:
+      - CONFIG_MINIMAL_LIBC=y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

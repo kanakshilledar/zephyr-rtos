@@ -219,7 +219,11 @@ static void mcp2515_convert_canframe_to_mcp2515frame(const struct can_frame
 {
 	uint8_t rtr;
 	uint8_t dlc;
+<<<<<<< HEAD
 	uint8_t data_idx = 0U;
+=======
+	uint8_t data_idx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if ((source->flags & CAN_FRAME_IDE) != 0) {
 		target[MCP2515_FRAME_OFFSET_SIDH] = source->id >> 21;
@@ -239,16 +243,28 @@ static void mcp2515_convert_canframe_to_mcp2515frame(const struct can_frame
 
 	target[MCP2515_FRAME_OFFSET_DLC] = rtr | dlc;
 
+<<<<<<< HEAD
 	for (; data_idx < CAN_MAX_DLC; data_idx++) {
 		target[MCP2515_FRAME_OFFSET_D0 + data_idx] =
 			source->data[data_idx];
+=======
+	if (rtr == 0U) {
+		for (data_idx = 0U; data_idx < dlc; data_idx++) {
+			target[MCP2515_FRAME_OFFSET_D0 + data_idx] =
+				source->data[data_idx];
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 static void mcp2515_convert_mcp2515frame_to_canframe(const uint8_t *source,
 						     struct can_frame *target)
 {
+<<<<<<< HEAD
 	uint8_t data_idx = 0U;
+=======
+	uint8_t data_idx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	memset(target, 0, sizeof(*target));
 
@@ -269,11 +285,19 @@ static void mcp2515_convert_mcp2515frame_to_canframe(const uint8_t *source,
 
 	if ((source[MCP2515_FRAME_OFFSET_DLC] & BIT(6)) != 0) {
 		target->flags |= CAN_FRAME_RTR;
+<<<<<<< HEAD
 	}
 
 	for (; data_idx < CAN_MAX_DLC; data_idx++) {
 		target->data[data_idx] = source[MCP2515_FRAME_OFFSET_D0 +
 						data_idx];
+=======
+	} else {
+		for (data_idx = 0U; data_idx < target->dlc; data_idx++) {
+			target->data[data_idx] = source[MCP2515_FRAME_OFFSET_D0 +
+							data_idx];
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -361,11 +385,16 @@ static int mcp2515_set_timing(const struct device *dev,
 	/* CNF1; SJW<7:6> | BRP<5:0> */
 	__ASSERT(timing->prescaler > 0, "Prescaler should be bigger than zero");
 	uint8_t brp = timing->prescaler - 1;
+<<<<<<< HEAD
 	if (timing->sjw != CAN_SJW_NO_CHANGE) {
 		dev_data->sjw = (timing->sjw - 1) << 6;
 	}
 
 	uint8_t cnf1 = dev_data->sjw | brp;
+=======
+	uint8_t sjw = (timing->sjw - 1) << 6;
+	uint8_t cnf1 = sjw | brp;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* CNF2; BTLMODE<7>|SAM<6>|PHSEG1<5:3>|PRSEG<2:0> */
 	const uint8_t btlmode = 1 << 7;
@@ -392,6 +421,7 @@ static int mcp2515_set_timing(const struct device *dev,
 	const uint8_t rx0_ctrl = BIT(6) | BIT(5) | BIT(2);
 	const uint8_t rx1_ctrl = BIT(6) | BIT(5);
 
+<<<<<<< HEAD
 	__ASSERT(timing->sjw <= 4, "1 <= SJW <= 4");
 	__ASSERT((timing->prop_seg >= 1) && (timing->prop_seg <= 8),
 		 "1 <= PROP <= 8");
@@ -403,6 +433,8 @@ static int mcp2515_set_timing(const struct device *dev,
 		 "PROP + BS1 >= BS2");
 	__ASSERT(timing->phase_seg2 > timing->sjw, "BS2 > SJW");
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	config_buf[0] = cnf3;
 	config_buf[1] = cnf2;
 	config_buf[2] = cnf1;
@@ -937,7 +969,11 @@ static int mcp2515_init(const struct device *dev)
 {
 	const struct mcp2515_config *dev_cfg = dev->config;
 	struct mcp2515_data *dev_data = dev->data;
+<<<<<<< HEAD
 	struct can_timing timing;
+=======
+	struct can_timing timing = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_tid_t tid;
 	int ret;
 
@@ -964,7 +1000,11 @@ static int mcp2515_init(const struct device *dev)
 	}
 
 	/* Initialize interrupt handling  */
+<<<<<<< HEAD
 	if (!device_is_ready(dev_cfg->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&dev_cfg->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Interrupt GPIO port not ready");
 		return -ENODEV;
 	}
@@ -998,7 +1038,10 @@ static int mcp2515_init(const struct device *dev)
 	(void)memset(dev_data->filter, 0, sizeof(dev_data->filter));
 	dev_data->old_state = CAN_STATE_ERROR_ACTIVE;
 
+<<<<<<< HEAD
 	timing.sjw = dev_cfg->tq_sjw;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (dev_cfg->sample_point && USE_SP_ALGO) {
 		ret = can_calc_timing(dev, &timing, dev_cfg->bus_speed,
 				      dev_cfg->sample_point);
@@ -1010,6 +1053,10 @@ static int mcp2515_init(const struct device *dev)
 			timing.prescaler, timing.phase_seg1, timing.phase_seg2);
 		LOG_DBG("Sample-point err : %d", ret);
 	} else {
+<<<<<<< HEAD
+=======
+		timing.sjw = dev_cfg->tq_sjw;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		timing.prop_seg = dev_cfg->tq_prop;
 		timing.phase_seg1 = dev_cfg->tq_bs1;
 		timing.phase_seg2 = dev_cfg->tq_bs2;
@@ -1057,8 +1104,14 @@ static int mcp2515_init(const struct device *dev)
 		.max_bitrate = DT_INST_CAN_TRANSCEIVER_MAX_BITRATE(inst, 1000000),                 \
 	};                                                                                         \
                                                                                                    \
+<<<<<<< HEAD
 	DEVICE_DT_INST_DEFINE(inst, &mcp2515_init, NULL, &mcp2515_data_##inst,                     \
 			      &mcp2515_config_##inst, POST_KERNEL, CONFIG_CAN_INIT_PRIORITY,       \
 			      &can_api_funcs);
+=======
+	CAN_DEVICE_DT_INST_DEFINE(inst, mcp2515_init, NULL, &mcp2515_data_##inst,                 \
+				  &mcp2515_config_##inst, POST_KERNEL, CONFIG_CAN_INIT_PRIORITY,   \
+				  &can_api_funcs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 DT_INST_FOREACH_STATUS_OKAY(MCP2515_INIT)

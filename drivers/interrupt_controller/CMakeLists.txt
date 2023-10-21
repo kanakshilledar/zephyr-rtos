@@ -30,8 +30,15 @@ zephyr_library_sources_ifdef(CONFIG_INTC_ESP32              intc_esp32.c)
 zephyr_library_sources_ifdef(CONFIG_INTC_ESP32C3            intc_esp32c3.c)
 zephyr_library_sources_ifdef(CONFIG_SWERV_PIC               intc_swerv_pic.c)
 zephyr_library_sources_ifdef(CONFIG_VEXRISCV_LITEX_IRQ      intc_vexriscv_litex.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_NUCLEI_ECLIC            intc_nuclei_eclic.c)
 zephyr_library_sources_ifdef(CONFIG_NXP_S32_EIRQ            intc_eirq_nxp_s32.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_VIM                     intc_vim.c)
+zephyr_library_sources_ifdef(CONFIG_NUCLEI_ECLIC            intc_nuclei_eclic.c)
+zephyr_library_sources_ifdef(CONFIG_NXP_S32_EIRQ            intc_eirq_nxp_s32.c)
+zephyr_library_sources_ifdef(CONFIG_NXP_S32_WKPU            intc_wkpu_nxp_s32.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_XMC4XXX_INTC            intc_xmc4xxx.c)
 zephyr_library_sources_ifdef(CONFIG_NXP_PINT                intc_nxp_pint.c)
 

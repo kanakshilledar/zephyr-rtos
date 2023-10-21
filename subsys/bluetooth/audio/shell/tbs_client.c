@@ -27,6 +27,7 @@
 static int cmd_tbs_client_discover(const struct shell *sh, size_t argc,
 				   char *argv[])
 {
+<<<<<<< HEAD
 	bool subscribe = true;
 	int result = 0;
 
@@ -41,6 +42,11 @@ static int cmd_tbs_client_discover(const struct shell *sh, size_t argc,
 	}
 
 	result = bt_tbs_client_discover(default_conn, (bool)subscribe);
+=======
+	int result = 0;
+
+	result = bt_tbs_client_discover(default_conn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (result != 0) {
 		shell_print(sh, "Fail: %d", result);
 	}
@@ -1001,8 +1007,13 @@ static int cmd_tbs_client(const struct shell *sh, size_t argc, char **argv)
 
 SHELL_STATIC_SUBCMD_SET_CREATE(tbs_client_cmds,
 	SHELL_CMD_ARG(discover, NULL,
+<<<<<<< HEAD
 		      "Discover TBS [subscribe]",
 		      cmd_tbs_client_discover, 1, 1),
+=======
+		      "Discover TBS",
+		      cmd_tbs_client_discover, 1, 0),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_BT_TBS_CLIENT_SET_BEARER_SIGNAL_INTERVAL)
 	SHELL_CMD_ARG(set_signal_reporting_interval, NULL,

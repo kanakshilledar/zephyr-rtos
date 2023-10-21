@@ -7,8 +7,11 @@
 
 #include <string.h>
 
+<<<<<<< HEAD
 #include <zephyr/sys/dlist.h>
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <hal/nrf_ecb.h>
 
 #include "util/mem.h"

@@ -70,7 +70,11 @@ Finally the promiscuous mode can be turned OFF by the application like this:
 	}
 
 
+<<<<<<< HEAD
 See :ref:`net-promiscuous-mode-sample` for a more comprehensive example.
+=======
+See :zephyr:code-sample:`net-promiscuous-mode` for a more comprehensive example.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 API Reference

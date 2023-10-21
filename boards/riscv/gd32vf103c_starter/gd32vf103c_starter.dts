@@ -7,6 +7,10 @@
 
 #include <gigadevice/gd32vf103Xb.dtsi>
 #include "gd32vf103c_starter-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "GigaDevice GD32VF103C-STARTER";
@@ -33,6 +37,10 @@
 		key_a: key_a {
 			label = "KEY_A";
 			gpios = <&gpioa 0 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_A>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

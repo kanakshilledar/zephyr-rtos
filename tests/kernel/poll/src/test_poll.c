@@ -787,6 +787,7 @@ ZTEST(poll_api_1cpu, test_poll_zero_events)
 
 	zassert_equal(k_poll(&event, 0, K_MSEC(50)), -EAGAIN);
 }
+<<<<<<< HEAD
 
 /* subthread entry */
 void polling_event(void *p1, void *p2, void *p3)
@@ -836,3 +837,5 @@ ZTEST(poll_api_1cpu, test_detect_is_polling)
 
 	k_thread_abort(tid);
 }
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

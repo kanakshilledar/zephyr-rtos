@@ -9,6 +9,11 @@
 
 / {
 	soc {
+<<<<<<< HEAD
+=======
+		compatible = "st,stm32u595", "st,stm32u5", "simple-bus";
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pinctrl: pin-controller@42020000 {
 			compatible = "st,stm32-pinctrl";
 			#address-cells = <1>;

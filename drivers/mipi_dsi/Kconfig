@@ -17,7 +17,11 @@ source "subsys/logging/Kconfig.template.log_config"
 
 config MIPI_DSI_INIT_PRIORITY
 	int "Initialization priority"
+<<<<<<< HEAD
 	default 40
+=======
+	default 86
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  MIPI-DSI Host Controllers initialization priority.
 

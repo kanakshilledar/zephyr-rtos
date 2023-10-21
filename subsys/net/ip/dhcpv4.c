@@ -16,7 +16,11 @@ LOG_MODULE_REGISTER(net_dhcpv4, CONFIG_NET_DHCPV4_LOG_LEVEL);
 #include <errno.h>
 #include <inttypes.h>
 #include <stdbool.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_core.h>
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/net/net_if.h>
@@ -211,7 +215,12 @@ static struct net_pkt *dhcpv4_create_message(struct net_if *iface, uint8_t type,
 	msg->htype = HARDWARE_ETHERNET_TYPE;
 	msg->hlen  = net_if_get_link_addr(iface)->len;
 	msg->xid   = htonl(iface->config.dhcpv4.xid);
+<<<<<<< HEAD
 	msg->flags = htons(DHCPV4_MSG_BROADCAST);
+=======
+	msg->flags = IS_ENABLED(CONFIG_NET_DHCPV4_ACCEPT_UNICAST) ?
+		     htons(DHCPV4_MSG_UNICAST) : htons(DHCPV4_MSG_BROADCAST);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (ciaddr) {
 		/* The ciaddr field was zero'd out above, if we are
@@ -1397,3 +1406,50 @@ int net_dhcpv4_init(void)
 #endif
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_NET_DHCPV4_ACCEPT_UNICAST)
+bool net_dhcpv4_accept_unicast(struct net_pkt *pkt)
+{
+	NET_PKT_DATA_ACCESS_DEFINE(udp_access, struct net_udp_hdr);
+	struct net_pkt_cursor backup;
+	struct net_udp_hdr *udp_hdr;
+	struct net_if *iface;
+	bool accept = false;
+
+	iface = net_pkt_iface(pkt);
+	if (iface == NULL) {
+		return false;
+	}
+
+	/* Only accept DHCPv4 packets during active query. */
+	if (iface->config.dhcpv4.state != NET_DHCPV4_SELECTING &&
+	    iface->config.dhcpv4.state != NET_DHCPV4_REQUESTING &&
+	    iface->config.dhcpv4.state != NET_DHCPV4_RENEWING &&
+	    iface->config.dhcpv4.state != NET_DHCPV4_REBINDING) {
+		return false;
+	}
+
+	net_pkt_cursor_backup(pkt, &backup);
+	net_pkt_skip(pkt, net_pkt_ip_hdr_len(pkt));
+
+	/* Verify destination UDP port. */
+	udp_hdr = (struct net_udp_hdr *)net_pkt_get_data(pkt, &udp_access);
+	if (udp_hdr == NULL) {
+		goto out;
+	}
+
+	if (udp_hdr->dst_port != htons(DHCPV4_CLIENT_PORT)) {
+		goto out;
+	}
+
+	accept = true;
+
+out:
+	net_pkt_cursor_restore(pkt, &backup);
+
+	return accept;
+}
+#endif /* CONFIG_NET_DHCPV4_ACCEPT_UNICAST */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

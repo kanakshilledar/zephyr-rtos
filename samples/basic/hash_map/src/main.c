@@ -7,14 +7,21 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/hash_map.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(hashmap_sample);
 
 SYS_HASHMAP_DEFINE_STATIC(map);
 
+<<<<<<< HEAD
 void print_sys_memory_stats(void);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct _stats {
 	uint64_t n_insert;
 	uint64_t n_remove;

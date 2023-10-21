@@ -7,6 +7,16 @@
 #ifndef ZEPHYR_INCLUDE_DRIVERS_PCIE_MSI_H_
 #define ZEPHYR_INCLUDE_DRIVERS_PCIE_MSI_H_
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief PCIe Host MSI Interface
+ * @defgroup pcie_host_msi_interface PCIe Host MSI Interface
+ * @ingroup pcie_host_interface
+ * @{
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
 #include <stdbool.h>
@@ -190,4 +200,11 @@ extern bool pcie_is_msi(pcie_bdf_t bdf);
 }
 #endif
 
+<<<<<<< HEAD
+=======
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_DRIVERS_PCIE_MSI_H_ */

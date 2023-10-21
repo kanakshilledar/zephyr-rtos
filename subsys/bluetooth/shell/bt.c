@@ -67,6 +67,11 @@ static struct bt_conn_auth_info_cb auth_info_cb;
 
 #define ADV_DATA_DELIMITER ", "
 
+<<<<<<< HEAD
+=======
+#define AD_SIZE 9
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Based on the maximum number of parameters for HCI_LE_Generate_DHKey
  * See BT Core Spec V5.2 Vol. 4, Part E, section 7.8.37
@@ -188,6 +193,10 @@ static bool data_cb(struct bt_data *data, void *user_data)
 	switch (data->type) {
 	case BT_DATA_NAME_SHORTENED:
 	case BT_DATA_NAME_COMPLETE:
+<<<<<<< HEAD
+=======
+	case BT_DATA_BROADCAST_NAME:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		memcpy(name, data->data, MIN(data->data_len, NAME_LEN - 1));
 		return false;
 	default:
@@ -346,13 +355,56 @@ static const char *scan_response_type_txt(uint8_t type)
 	}
 }
 
+<<<<<<< HEAD
 static void scan_recv(const struct bt_le_scan_recv_info *info,
 		      struct net_buf_simple *buf)
+=======
+bool passes_scan_filter(const struct bt_le_scan_recv_info *info, const struct net_buf_simple *buf)
+{
+
+	if (scan_filter.rssi_set && (scan_filter.rssi > info->rssi)) {
+		return false;
+	}
+
+	if (scan_filter.pa_interval_set &&
+	    (scan_filter.pa_interval > BT_CONN_INTERVAL_TO_MS(info->interval))) {
+		return false;
+	}
+
+	if (scan_filter.addr_set) {
+		char le_addr[BT_ADDR_LE_STR_LEN] = {0};
+
+		bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
+
+		if (!is_substring(scan_filter.addr, le_addr)) {
+			return false;
+		}
+	}
+
+	if (scan_filter.name_set) {
+		struct net_buf_simple buf_copy;
+		char name[NAME_LEN] = {0};
+
+		/* call to bt_data_parse consumes netbufs so shallow clone for verbose output */
+		net_buf_simple_clone(buf, &buf_copy);
+		bt_data_parse(&buf_copy, data_cb, name);
+
+		if (!is_substring(scan_filter.name, name)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+static void scan_recv(const struct bt_le_scan_recv_info *info, struct net_buf_simple *buf)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	char le_addr[BT_ADDR_LE_STR_LEN];
 	char name[NAME_LEN];
 	struct net_buf_simple buf_copy;
 
+<<<<<<< HEAD
 	if (scan_filter.rssi_set && (scan_filter.rssi > info->rssi)) {
 		return;
 	}
@@ -360,6 +412,9 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
 
 	if (scan_filter.addr_set && !is_substring(scan_filter.addr, le_addr)) {
+=======
+	if (!passes_scan_filter(info, buf)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -371,6 +426,7 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	(void)memset(name, 0, sizeof(name));
 
 	bt_data_parse(buf, data_cb, name);
+<<<<<<< HEAD
 
 	if (scan_filter.name_set && !is_substring(scan_filter.name, name)) {
 		return;
@@ -380,6 +436,9 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	    (scan_filter.pa_interval > BT_CONN_INTERVAL_TO_MS(info->interval))) {
 		return;
 	}
+=======
+	bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	shell_print(ctx_shell, "%s%s, AD evt type %u, RSSI %i %s "
 		    "C:%u S:%u D:%d SR:%u E:%u Prim: %s, Secn: %s, "
@@ -410,7 +469,11 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	bt_addr_le_copy(&auto_connect.addr, info->addr);
 
 	/* Use the above auto_connect.addr address to automatically connect */
+<<<<<<< HEAD
 	if (auto_connect.connect_name) {
+=======
+	if ((info->adv_props & BT_GAP_ADV_PROP_CONNECTABLE) != 0U && auto_connect.connect_name) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		auto_connect.connect_name = false;
 
 		cmd_scan_off(ctx_shell);
@@ -541,6 +604,11 @@ void conn_addr_str(struct bt_conn *conn, char *addr, size_t len)
 	case BT_CONN_TYPE_LE:
 		bt_addr_le_to_str(info.le.dst, addr, len);
 		break;
+<<<<<<< HEAD
+=======
+	default:
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -563,6 +631,11 @@ static void print_le_oob(const struct shell *sh, struct bt_le_oob *oob)
 static void connected(struct bt_conn *conn, uint8_t err)
 {
 	char addr[BT_ADDR_LE_STR_LEN];
+<<<<<<< HEAD
+=======
+	struct bt_conn_info info;
+	int info_err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	conn_addr_str(conn, addr, sizeof(addr));
 
@@ -574,8 +647,27 @@ static void connected(struct bt_conn *conn, uint8_t err)
 
 	shell_print(ctx_shell, "Connected: %s", addr);
 
+<<<<<<< HEAD
 	if (!default_conn) {
 		default_conn = bt_conn_ref(conn);
+=======
+	info_err = bt_conn_get_info(conn, &info);
+	if (info_err != 0) {
+		shell_error(ctx_shell, "Failed to connection information: %d", info_err);
+		goto done;
+	}
+
+	if (info.role == BT_CONN_ROLE_CENTRAL) {
+		if (default_conn != NULL) {
+			bt_conn_unref(default_conn);
+		}
+
+		default_conn = bt_conn_ref(conn);
+	} else if (info.role == BT_CONN_ROLE_PERIPHERAL) {
+		if (default_conn == NULL) {
+			default_conn = bt_conn_ref(conn);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 done:
@@ -586,7 +678,11 @@ done:
 	}
 }
 
+<<<<<<< HEAD
 static void disconencted_set_new_default_conn_cb(struct bt_conn *conn, void *user_data)
+=======
+static void disconnected_set_new_default_conn_cb(struct bt_conn *conn, void *user_data)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct bt_conn_info info;
 
@@ -622,7 +718,11 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 		default_conn = NULL;
 
 		/* If we are connected to other devices, set one of them as default */
+<<<<<<< HEAD
 		bt_conn_foreach(BT_CONN_TYPE_LE, disconencted_set_new_default_conn_cb, NULL);
+=======
+		bt_conn_foreach(BT_CONN_TYPE_LE, disconnected_set_new_default_conn_cb, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -814,26 +914,44 @@ static struct bt_le_ext_adv_cb adv_callbacks = {
 
 #if defined(CONFIG_BT_PER_ADV_SYNC)
 struct bt_le_per_adv_sync *per_adv_syncs[CONFIG_BT_PER_ADV_SYNC_MAX];
+<<<<<<< HEAD
+=======
+size_t selected_per_adv_sync;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void per_adv_sync_sync_cb(struct bt_le_per_adv_sync *sync,
 				 struct bt_le_per_adv_sync_synced_info *info)
 {
+<<<<<<< HEAD
+=======
+	const bool is_past_peer = info->conn != NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	char le_addr[BT_ADDR_LE_STR_LEN];
 	char past_peer[BT_ADDR_LE_STR_LEN];
 
 	bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
 
+<<<<<<< HEAD
 	if (info->conn) {
 		conn_addr_str(info->conn, past_peer, sizeof(past_peer));
 	} else {
 		memset(past_peer, 0, sizeof(past_peer));
+=======
+	if (is_past_peer) {
+		conn_addr_str(info->conn, past_peer, sizeof(past_peer));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	shell_print(ctx_shell, "PER_ADV_SYNC[%u]: [DEVICE]: %s synced, "
 		    "Interval 0x%04x (%u us), PHY %s, SD 0x%04X, PAST peer %s",
 		    bt_le_per_adv_sync_get_index(sync), le_addr,
 		    info->interval, BT_CONN_INTERVAL_TO_US(info->interval),
+<<<<<<< HEAD
 		    phy2str(info->phy), info->service_data, past_peer);
+=======
+		    phy2str(info->phy), info->service_data,
+		    is_past_peer ? past_peer : "not present");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (info->conn) { /* if from PAST */
 		for (int i = 0; i < ARRAY_SIZE(per_adv_syncs); i++) {
@@ -1488,11 +1606,19 @@ static int cmd_scan_filter_clear_addr(const struct shell *sh, size_t argc,
 
 #if defined(CONFIG_BT_BROADCASTER)
 static ssize_t ad_init(struct bt_data *data_array, const size_t data_array_size,
+<<<<<<< HEAD
 		       const atomic_t *adv_opt)
 {
 	const bool discoverable = atomic_test_bit(adv_opt, SHELL_ADV_OPT_DISCOVERABLE);
 	const bool appearance = atomic_test_bit(adv_opt, SHELL_ADV_OPT_APPEARANCE);
 	const bool adv_ext = atomic_test_bit(adv_opt, SHELL_ADV_OPT_EXT_ADV);
+=======
+		       const atomic_t *adv_options)
+{
+	const bool discoverable = atomic_test_bit(adv_options, SHELL_ADV_OPT_DISCOVERABLE);
+	const bool appearance = atomic_test_bit(adv_options, SHELL_ADV_OPT_APPEARANCE);
+	const bool adv_ext = atomic_test_bit(adv_options, SHELL_ADV_OPT_EXT_ADV);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static uint8_t ad_flags;
 	size_t ad_len = 0;
 
@@ -1521,11 +1647,19 @@ static ssize_t ad_init(struct bt_data *data_array, const size_t data_array_size,
 	}
 
 	if (appearance) {
+<<<<<<< HEAD
 		const uint16_t appearance = bt_get_appearance();
 		static uint8_t appearance_data[sizeof(appearance)];
 
 		__ASSERT(data_array_size > ad_len, "No space for appearance");
 		sys_put_le16(appearance, appearance_data);
+=======
+		const uint16_t appearance2 = bt_get_appearance();
+		static uint8_t appearance_data[sizeof(appearance2)];
+
+		__ASSERT(data_array_size > ad_len, "No space for appearance");
+		sys_put_le16(appearance2, appearance_data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		data_array[ad_len].type = BT_DATA_GAP_APPEARANCE;
 		data_array[ad_len].data_len = sizeof(appearance_data);
 		data_array[ad_len].data = appearance_data;
@@ -1546,7 +1680,11 @@ static ssize_t ad_init(struct bt_data *data_array, const size_t data_array_size,
 	}
 
 	if (IS_ENABLED(CONFIG_BT_AUDIO) && IS_ENABLED(CONFIG_BT_EXT_ADV) && adv_ext) {
+<<<<<<< HEAD
 		const bool connectable = atomic_test_bit(adv_opt, SHELL_ADV_OPT_CONNECTABLE);
+=======
+		const bool connectable = atomic_test_bit(adv_options, SHELL_ADV_OPT_CONNECTABLE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ssize_t audio_ad_len;
 
 		audio_ad_len = audio_ad_data_add(&data_array[ad_len], data_array_size - ad_len,
@@ -1859,11 +1997,20 @@ static int cmd_adv_data(const struct shell *sh, size_t argc, char *argv[])
 	static uint8_t hex_data[1650];
 	bool appearance = false;
 	struct bt_data *data;
+<<<<<<< HEAD
 	struct bt_data ad[9];
 	struct bt_data sd[9];
 	size_t hex_data_len;
 	size_t ad_len = 0;
 	size_t sd_len = 0;
+=======
+	struct bt_data ad[AD_SIZE];
+	struct bt_data sd[AD_SIZE];
+	size_t hex_data_len;
+	size_t ad_len = 0;
+	size_t sd_len = 0;
+	size_t len = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bool discoverable = false;
 	size_t *data_len;
 	int err;
@@ -1904,8 +2051,11 @@ static int cmd_adv_data(const struct shell *sh, size_t argc, char *argv[])
 			data = sd;
 			data_len = &sd_len;
 		} else {
+<<<<<<< HEAD
 			size_t len;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			len = hex2bin(arg, strlen(arg), &hex_data[hex_data_len],
 				      sizeof(hex_data) - hex_data_len);
 
@@ -1927,14 +2077,28 @@ static int cmd_adv_data(const struct shell *sh, size_t argc, char *argv[])
 	atomic_set_bit_to(adv_set_opt[selected_adv], SHELL_ADV_OPT_APPEARANCE,
 			  appearance);
 
+<<<<<<< HEAD
 	ad_len = ad_init(&ad[*data_len], ARRAY_SIZE(ad) - *data_len,
 			 adv_set_opt[selected_adv]);
 	if (ad_len < 0) {
+=======
+	len = ad_init(&data[*data_len], AD_SIZE - *data_len, adv_set_opt[selected_adv]);
+	if (len < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		shell_error(sh, "Failed to initialize stack advertising data");
 
 		return -ENOEXEC;
 	}
 
+<<<<<<< HEAD
+=======
+	if (data == ad) {
+		ad_len += len;
+	} else {
+		sd_len += len;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_le_ext_adv_set_data(adv, ad_len > 0 ? ad : NULL, ad_len,
 					  sd_len > 0 ? sd : NULL, sd_len);
 	if (err) {
@@ -2281,6 +2445,7 @@ static int cmd_per_adv_data(const struct shell *sh, size_t argc,
 static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 				   char *argv[])
 {
+<<<<<<< HEAD
 	int err;
 	struct bt_le_per_adv_sync_param create_params = { 0 };
 	uint32_t options = 0;
@@ -2296,6 +2461,15 @@ static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 
 	if (i == ARRAY_SIZE(per_adv_syncs)) {
 		shell_error(sh, "Cannot create more per adv syncs");
+=======
+	struct bt_le_per_adv_sync *per_adv_sync = per_adv_syncs[selected_per_adv_sync];
+	int err;
+	struct bt_le_per_adv_sync_param create_params = { 0 };
+	uint32_t options = 0;
+
+	if (per_adv_sync != NULL) {
+		shell_error(sh, "Selected per-adv-sync is not NULL");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENOEXEC;
 	}
 
@@ -2311,6 +2485,7 @@ static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 
 	create_params.sid = strtol(argv[3], NULL, 16);
 
+<<<<<<< HEAD
 	for (int i = 4; i < argc; i++) {
 		if (!strcmp(argv[i], "aoa")) {
 			options |= BT_LE_PER_ADV_SYNC_OPT_DONT_SYNC_AOA;
@@ -2323,18 +2498,42 @@ static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 				BT_LE_PER_ADV_SYNC_OPT_SYNC_ONLY_CONST_TONE_EXT;
 		} else if (!strcmp(argv[i], "timeout")) {
 			if (++i == argc) {
+=======
+	for (int j = 4; j < argc; j++) {
+		if (!strcmp(argv[j], "aoa")) {
+			options |= BT_LE_PER_ADV_SYNC_OPT_DONT_SYNC_AOA;
+		} else if (!strcmp(argv[j], "aod_1us")) {
+			options |= BT_LE_PER_ADV_SYNC_OPT_DONT_SYNC_AOD_1US;
+		} else if (!strcmp(argv[j], "aod_2us")) {
+			options |= BT_LE_PER_ADV_SYNC_OPT_DONT_SYNC_AOD_2US;
+		} else if (!strcmp(argv[j], "only_cte")) {
+			options |=
+				BT_LE_PER_ADV_SYNC_OPT_SYNC_ONLY_CONST_TONE_EXT;
+		} else if (!strcmp(argv[j], "timeout")) {
+			if (++j == argc) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				shell_help(sh);
 				return SHELL_CMD_HELP_PRINTED;
 			}
 
+<<<<<<< HEAD
 			create_params.timeout = strtoul(argv[i], NULL, 16);
 		} else if (!strcmp(argv[i], "skip")) {
 			if (++i == argc) {
+=======
+			create_params.timeout = strtoul(argv[j], NULL, 16);
+		} else if (!strcmp(argv[j], "skip")) {
+			if (++j == argc) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				shell_help(sh);
 				return SHELL_CMD_HELP_PRINTED;
 			}
 
+<<<<<<< HEAD
 			create_params.skip = strtoul(argv[i], NULL, 16);
+=======
+			create_params.skip = strtoul(argv[j], NULL, 16);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			shell_help(sh);
 			return SHELL_CMD_HELP_PRINTED;
@@ -2345,7 +2544,11 @@ static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 
 	create_params.options = options;
 
+<<<<<<< HEAD
 	err = bt_le_per_adv_sync_create(&create_params, free_per_adv_sync);
+=======
+	err = bt_le_per_adv_sync_create(&create_params, &per_adv_syncs[selected_per_adv_sync]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		shell_error(sh, "Per adv sync failed (%d)", err);
 	} else {
@@ -2358,6 +2561,7 @@ static int cmd_per_adv_sync_create(const struct shell *sh, size_t argc,
 static int cmd_per_adv_sync_delete(const struct shell *sh, size_t argc,
 				   char *argv[])
 {
+<<<<<<< HEAD
 	struct bt_le_per_adv_sync *per_adv_sync = NULL;
 	int index;
 	int err;
@@ -2376,6 +2580,13 @@ static int cmd_per_adv_sync_delete(const struct shell *sh, size_t argc,
 	per_adv_sync = per_adv_syncs[index];
 
 	if (!per_adv_sync) {
+=======
+	struct bt_le_per_adv_sync *per_adv_sync = per_adv_syncs[selected_per_adv_sync];
+	int err;
+
+	if (!per_adv_sync) {
+		shell_error(sh, "Selected per-adv-sync is NULL");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -EINVAL;
 	}
 
@@ -2385,12 +2596,49 @@ static int cmd_per_adv_sync_delete(const struct shell *sh, size_t argc,
 		shell_error(sh, "Per adv sync delete failed (%d)", err);
 	} else {
 		shell_print(sh, "Per adv sync deleted");
+<<<<<<< HEAD
 		per_adv_syncs[index] = NULL;
+=======
+		per_adv_syncs[selected_per_adv_sync] = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int cmd_per_adv_sync_select(const struct shell *sh, size_t argc, char *argv[])
+{
+	if (argc == 2) {
+		unsigned long id;
+		int err = 0;
+
+		id = shell_strtoul(argv[1], 0, &err);
+		if (err != 0) {
+			shell_error(sh, "Could not parse id: %d", err);
+			return -ENOEXEC;
+		}
+
+		if (id > ARRAY_SIZE(adv_sets)) {
+			shell_error(sh, "Invalid id: %lu", id);
+			return -EINVAL;
+		}
+
+		selected_per_adv_sync = id;
+		return 0;
+	}
+
+	for (size_t i = 0U; i < ARRAY_SIZE(adv_sets); i++) {
+		if (adv_sets[i]) {
+			shell_print(sh, "PER_ADV_SYNC[%zu] %p", i, adv_sets[i]);
+		}
+	}
+
+	return -ENOEXEC;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_PER_ADV_SYNC_TRANSFER_RECEIVER)
 static int cmd_past_subscribe(const struct shell *sh, size_t argc,
 			      char *argv[])
@@ -2410,6 +2658,7 @@ static int cmd_past_subscribe(const struct shell *sh, size_t argc,
 	param.timeout = 1000; /* 10 seconds */
 	param.skip = 10;
 
+<<<<<<< HEAD
 	for (int i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "aoa")) {
 			param.options |=
@@ -2425,19 +2674,47 @@ static int cmd_past_subscribe(const struct shell *sh, size_t argc,
 				BT_LE_PER_ADV_SYNC_TRANSFER_OPT_SYNC_ONLY_CTE;
 		} else if (!strcmp(argv[i], "timeout")) {
 			if (++i == argc) {
+=======
+	for (int j = 1; j < argc; j++) {
+		if (!strcmp(argv[j], "aoa")) {
+			param.options |=
+				BT_LE_PER_ADV_SYNC_TRANSFER_OPT_SYNC_NO_AOA;
+		} else if (!strcmp(argv[j], "aod_1us")) {
+			param.options |=
+				BT_LE_PER_ADV_SYNC_TRANSFER_OPT_SYNC_NO_AOD_1US;
+		} else if (!strcmp(argv[j], "aod_2us")) {
+			param.options |=
+				BT_LE_PER_ADV_SYNC_TRANSFER_OPT_SYNC_NO_AOD_2US;
+		} else if (!strcmp(argv[j], "only_cte")) {
+			param.options |=
+				BT_LE_PER_ADV_SYNC_TRANSFER_OPT_SYNC_ONLY_CTE;
+		} else if (!strcmp(argv[j], "timeout")) {
+			if (++j == argc) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				shell_help(sh);
 				return SHELL_CMD_HELP_PRINTED;
 			}
 
+<<<<<<< HEAD
 			param.timeout = strtoul(argv[i], NULL, 16);
 		} else if (!strcmp(argv[i], "skip")) {
 			if (++i == argc) {
+=======
+			param.timeout = strtoul(argv[j], NULL, 16);
+		} else if (!strcmp(argv[j], "skip")) {
+			if (++j == argc) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				shell_help(sh);
 				return SHELL_CMD_HELP_PRINTED;
 			}
 
+<<<<<<< HEAD
 			param.skip = strtoul(argv[i], NULL, 16);
 		} else if (!strcmp(argv[i], "conn")) {
+=======
+			param.skip = strtoul(argv[j], NULL, 16);
+		} else if (!strcmp(argv[j], "conn")) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (!default_conn) {
 				shell_print(sh, "Not connected");
 				return -EINVAL;
@@ -3248,6 +3525,11 @@ static void connection_info(struct bt_conn *conn, void *user_data)
 		shell_print(ctx_shell, " #%u [ISO][%s] %s", info.id, role_str(info.role), addr);
 		break;
 #endif
+<<<<<<< HEAD
+=======
+	default:
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	(*conn_count)++;
@@ -4002,6 +4284,10 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 		      cmd_per_adv_sync_create, 4, 6),
 	SHELL_CMD_ARG(per-adv-sync-delete, NULL, "[<index>]",
 		      cmd_per_adv_sync_delete, 1, 1),
+<<<<<<< HEAD
+=======
+	SHELL_CMD_ARG(per-adv-sync-select, NULL, "[adv]", cmd_per_adv_sync_select, 1, 1),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* defined(CONFIG_BT_PER_ADV_SYNC) */
 #if defined(CONFIG_BT_CONN)
 #if defined(CONFIG_BT_PER_ADV_SYNC_TRANSFER_RECEIVER)

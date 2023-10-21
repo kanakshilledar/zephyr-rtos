@@ -130,6 +130,14 @@
 			interrupts = <EXP_WDT 0>;
 			status = "disabled";
 		};
+<<<<<<< HEAD
+=======
+
+		pinctrl: pin-controller@4402e0a0 {
+			compatible = "ti,cc32xx-pinctrl";
+			reg = <0x4402e0a0 0x80>;
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 

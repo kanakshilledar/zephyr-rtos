@@ -7,6 +7,7 @@ lifo, fifo, stack and memslab objects.
 
 --------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 Building and Running Project:
 
 This project outputs to the console. It can be built and executed
@@ -35,6 +36,14 @@ MODULE: kernel API test
 KERNEL VERSION: 0x1066300
 
 Each test below is repeated 5000 times;
+=======
+Sample Output:
+
+MODULE: kernel API test
+KERNEL VERSION: 0xXXYYZZZZ
+
+Each test below is repeated 10 times;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 average time for one iteration is displayed.
 
 TEST CASE: Semaphore #1
@@ -50,7 +59,11 @@ END TEST CASE
 TEST CASE: Semaphore #2
 TEST COVERAGE:
         k_sem_init
+<<<<<<< HEAD
         k_sem_take(TICKS_NONE)
+=======
+        k_sem_take(K_NO_WAIT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         k_yield
         k_sem_give
 Starting test. Please wait...
@@ -84,7 +97,11 @@ TEST CASE: LIFO #2
 TEST COVERAGE:
         k_lifo_init
         k_lifo_get(K_FOREVER)
+<<<<<<< HEAD
         k_lifo_get(TICKS_NONE)
+=======
+        k_lifo_get(K_NO_WAIT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         k_lifo_put
         k_yield
 Starting test. Please wait...
@@ -118,7 +135,11 @@ TEST CASE: FIFO #2
 TEST COVERAGE:
         k_fifo_init
         k_fifo_get(K_FOREVER)
+<<<<<<< HEAD
         k_fifo_get(TICKS_NONE)
+=======
+        k_fifo_get(K_NO_WAIT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         k_fifo_put
         k_yield
 Starting test. Please wait...
@@ -189,4 +210,7 @@ DETAILS: Average time for 1 iteration: NNNN nSec
 END TEST CASE
 
 PROJECT EXECUTION SUCCESSFUL
+<<<<<<< HEAD
 QEMU: Terminated
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

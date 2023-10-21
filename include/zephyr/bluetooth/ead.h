@@ -5,9 +5,29 @@
 #include <stddef.h>
 #include <stdint.h>
 
+<<<<<<< HEAD
 #include <zephyr/kernel.h>
 #include <zephyr/bluetooth/bluetooth.h>
 
+=======
+#ifndef ZEPHYR_INCLUDE_BLUETOOTH_EAD_H_
+#define ZEPHYR_INCLUDE_BLUETOOTH_EAD_H_
+
+#include <zephyr/kernel.h>
+#include <zephyr/bluetooth/bluetooth.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @brief Encrypted Advertising Data (EAD)
+ * @defgroup bt_ead Encrypted Advertising Data (EAD)
+ * @ingroup bluetooth
+ * @{
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** Randomizer size in bytes */
 #define BT_EAD_RANDOMIZER_SIZE 5
 /** Key size in bytes */
@@ -89,3 +109,16 @@ int bt_ead_encrypt(const uint8_t session_key[BT_EAD_KEY_SIZE], const uint8_t iv[
 int bt_ead_decrypt(const uint8_t session_key[BT_EAD_KEY_SIZE], const uint8_t iv[BT_EAD_IV_SIZE],
 		   const uint8_t *encrypted_payload, size_t encrypted_payload_size,
 		   uint8_t *payload);
+<<<<<<< HEAD
+=======
+
+/**
+ * @}
+ */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* ZEPHYR_INCLUDE_BLUETOOTH_EAD_H_ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

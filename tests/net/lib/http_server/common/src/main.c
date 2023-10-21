@@ -240,8 +240,13 @@ ZTEST(http_service, test_HTTP_RESOURCE_DEFINE)
 			zassert_equal(res->detail, RES(3));
 		} else {
 			zassert_unreachable(
+<<<<<<< HEAD
 				"res (%p) not equal to &resource_0 (%p) or &resource_1 (%p)", res,
 				&resource_0, &resource_1);
+=======
+				"res (%p) not equal to &resource_2 (%p) or &resource_3 (%p)", res,
+				&resource_2, &resource_3);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }

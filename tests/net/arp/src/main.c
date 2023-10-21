@@ -25,7 +25,11 @@ LOG_MODULE_REGISTER(net_test, CONFIG_NET_ARP_LOG_LEVEL);
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/dummy.h>
 #include <zephyr/ztest.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "arp.h"
 
@@ -41,7 +45,11 @@ static struct net_eth_addr *expected_hwaddr;
 
 static struct net_pkt *pending_pkt;
 
+<<<<<<< HEAD
 static struct net_eth_addr hwaddr = { { 0x42, 0x11, 0x69, 0xde, 0xfa, 0xec } };
+=======
+static struct net_eth_addr eth_hwaddr = { { 0x42, 0x11, 0x69, 0xde, 0xfa, 0xec } };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int send_status = -EINVAL;
 
@@ -107,7 +115,11 @@ static int tester_send(const struct device *dev, struct net_pkt *pkt)
 				return -EINVAL;
 			}
 
+<<<<<<< HEAD
 			if (!req_test && memcmp(&hdr->dst, &hwaddr,
+=======
+			if (!req_test && memcmp(&hdr->dst, &eth_hwaddr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						sizeof(struct net_eth_addr))) {
 				char out[sizeof("xx:xx:xx:xx:xx:xx")];
 
@@ -118,14 +130,22 @@ static int tester_send(const struct device *dev, struct net_pkt *pkt)
 				printk("Invalid dst hwaddr %s, should be %s\n",
 				       out,
 				       net_sprint_ll_addr(
+<<<<<<< HEAD
 					       (uint8_t *)&hwaddr,
+=======
+					       (uint8_t *)&eth_hwaddr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					       sizeof(struct net_eth_addr)));
 				send_status = -EINVAL;
 				return send_status;
 			}
 
 		} else if (ntohs(arp_hdr->opcode) == NET_ARP_REQUEST) {
+<<<<<<< HEAD
 			if (memcmp(&hdr->src, &hwaddr,
+=======
+			if (memcmp(&hdr->src, &eth_hwaddr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				   sizeof(struct net_eth_addr))) {
 				char out[sizeof("xx:xx:xx:xx:xx:xx")];
 
@@ -136,7 +156,11 @@ static int tester_send(const struct device *dev, struct net_pkt *pkt)
 				printk("Invalid src hwaddr %s, should be %s\n",
 				       out,
 				       net_sprint_ll_addr(
+<<<<<<< HEAD
 					       (uint8_t *)&hwaddr,
+=======
+					       (uint8_t *)&eth_hwaddr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					       sizeof(struct net_eth_addr)));
 				send_status = -EINVAL;
 				return send_status;
@@ -529,7 +553,11 @@ ZTEST(arp_fn_tests, test_arp)
 	net_ipv4_addr_copy_raw(arp_hdr->dst_ipaddr, (uint8_t *)&dst);
 	net_ipv4_addr_copy_raw(arp_hdr->src_ipaddr, (uint8_t *)&src);
 
+<<<<<<< HEAD
 	pkt2 = prepare_arp_reply(iface, pkt, &hwaddr, &eth_hdr);
+=======
+	pkt2 = prepare_arp_reply(iface, pkt, &eth_hwaddr, &eth_hdr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_not_null(pkt2, "ARP reply generation failed.");
 
@@ -561,7 +589,11 @@ ZTEST(arp_fn_tests, test_arp)
 
 	send_status = -EINVAL;
 
+<<<<<<< HEAD
 	setup_eth_header(iface, pkt, &hwaddr, NET_ETH_PTYPE_ARP);
+=======
+	setup_eth_header(iface, pkt, &eth_hwaddr, NET_ETH_PTYPE_ARP);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	arp_hdr = (struct net_arp_hdr *)(pkt->buffer->data +
 					 (sizeof(struct net_eth_hdr)));
@@ -570,7 +602,11 @@ ZTEST(arp_fn_tests, test_arp)
 	net_ipv4_addr_copy_raw(arp_hdr->dst_ipaddr, (uint8_t *)&src);
 	net_ipv4_addr_copy_raw(arp_hdr->src_ipaddr, (uint8_t *)&dst);
 
+<<<<<<< HEAD
 	pkt2 = prepare_arp_request(iface, pkt, &hwaddr, &eth_hdr);
+=======
+	pkt2 = prepare_arp_request(iface, pkt, &eth_hwaddr, &eth_hdr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/**TESTPOINT: Check if ARP request generation failed*/
 	zassert_not_null(pkt2, "ARP request generation failed.");
@@ -602,7 +638,11 @@ ZTEST(arp_fn_tests, test_arp)
 
 		/* First make sure that we have an entry in cache */
 		entry_found = false;
+<<<<<<< HEAD
 		expected_hwaddr = &hwaddr;
+=======
+		expected_hwaddr = &eth_hwaddr;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		net_arp_foreach(arp_cb, &dst);
 		zassert_true(entry_found, "Entry not found");
 

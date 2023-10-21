@@ -1,7 +1,11 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
 dut: &usart3 {
+<<<<<<< HEAD
 	pinctrl-0 = <&usart3_tx_pb10 &usart3_rx_pb11>;
+=======
+	pinctrl-0 = <&usart3_tx_pc10 &usart3_rx_pc11>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	pinctrl-names = "default";
 	current-speed = <115200>;
 	dmas = <&dma1 2 (STM32_DMA_PERIPH_TX | STM32_DMA_PRIORITY_HIGH)>,

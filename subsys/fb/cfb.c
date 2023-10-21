@@ -407,16 +407,22 @@ static int cfb_invert(const struct char_framebuffer *fb)
 int cfb_framebuffer_clear(const struct device *dev, bool clear_display)
 {
 	const struct char_framebuffer *fb = &char_fb;
+<<<<<<< HEAD
 	struct display_buffer_descriptor desc;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!fb || !fb->buf) {
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	desc.buf_size = fb->size;
 	desc.width = fb->x_res;
 	desc.height = fb->y_res;
 	desc.pitch = fb->x_res;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memset(fb->buf, 0, fb->size);
 
 	if (clear_display) {
@@ -426,12 +432,19 @@ int cfb_framebuffer_clear(const struct device *dev, bool clear_display)
 	return 0;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int cfb_framebuffer_invert(const struct device *dev)
 {
 	struct char_framebuffer *fb = &char_fb;
 
+<<<<<<< HEAD
 	if (!fb || !fb->buf) {
+=======
+	if (!fb) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 
@@ -550,9 +563,12 @@ int cfb_framebuffer_init(const struct device *dev)
 	STRUCT_SECTION_COUNT(cfb_font, &fb->numof_fonts);
 
 	LOG_DBG("number of fonts %d", fb->numof_fonts);
+<<<<<<< HEAD
 	if (!fb->numof_fonts) {
 		return -ENODEV;
 	}
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	fb->x_res = cfg.x_resolution;
 	fb->y_res = cfg.y_resolution;

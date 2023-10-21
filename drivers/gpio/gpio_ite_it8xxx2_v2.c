@@ -16,6 +16,10 @@
 #include <zephyr/drivers/gpio/gpio_utils.h>
 #include <zephyr/dt-bindings/gpio/ite-it8xxx2-gpio.h>
 #include <zephyr/dt-bindings/interrupt-controller/ite-intc.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/irq.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/types.h>

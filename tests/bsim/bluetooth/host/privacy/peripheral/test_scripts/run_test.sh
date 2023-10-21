@@ -8,6 +8,11 @@ bash_source_dir="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 source "${bash_source_dir}/_env.sh"
 source ${ZEPHYR_BASE}/tests/bsim/sh_common.source
 
+<<<<<<< HEAD
+=======
+verbosity_level=2
+simulation_id="$(basename "$(realpath "$bash_source_dir/..")")"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 EXECUTE_TIMEOUT=30
 
 cd ${BSIM_OUT_PATH}/bin

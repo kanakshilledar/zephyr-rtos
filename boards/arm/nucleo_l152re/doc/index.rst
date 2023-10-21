@@ -148,7 +148,11 @@ This interface is supported by the openocd version included in the Zephyr SDK.
 Flashing an application to Nucleo L152RE
 ----------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky

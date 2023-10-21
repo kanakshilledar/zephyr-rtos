@@ -32,6 +32,25 @@
 			device_type = "cpu";
 			compatible = "arm,cortex-m4f";
 			reg = <0>;
+<<<<<<< HEAD
+=======
+			cpu-power-states = <&stop0 &stop1>;
+		};
+
+		power-states {
+			stop0: state0 {
+					compatible = "zephyr,power-state";
+					power-state-name = "suspend-to-idle";
+					substate-id = <1>;
+					min-residency-us = <20>;
+				};
+			stop1: state1 {
+					compatible = "zephyr,power-state";
+					power-state-name = "suspend-to-idle";
+					substate-id = <2>;
+					min-residency-us = <100>;
+				};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -62,8 +81,14 @@
 
 		clk_lse: clk-lse {
 			#clock-cells = <0>;
+<<<<<<< HEAD
 			compatible = "fixed-clock";
 			clock-frequency = <32768>;
+=======
+			compatible = "st,stm32-lse-clock";
+			clock-frequency = <32768>;
+			driving-capability = <0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 
@@ -81,6 +106,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	power-states {
 		stop0: state0 {
 				compatible = "zephyr,power-state";
@@ -96,6 +122,8 @@
 			};
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	soc {
 		/*
 		 * Both adc instances cannot be used in parallel right now.
@@ -107,14 +135,21 @@
 			interrupts = <18 0>;
 			status = "disabled";
 			#io-channel-cells = <1>;
+<<<<<<< HEAD
 			temp-channel = <16>;
 			vbat-channel = <17>;
 			vref-channel = <18>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			resolutions = <STM32_ADC_RES(12, 0x00)
 				       STM32_ADC_RES(10, 0x01)
 				       STM32_ADC_RES(8, 0x02)
 				       STM32_ADC_RES(6, 0x03)>;
 			sampling-times = <3 7 13 25 48 93 248 641>;
+<<<<<<< HEAD
+=======
+			st,adc-sequencer = <FULLY_CONFIGURABLE>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		adc2: adc@50000100 {
@@ -129,6 +164,10 @@
 				       STM32_ADC_RES(8, 0x02)
 				       STM32_ADC_RES(6, 0x03)>;
 			sampling-times = <3 7 13 25 48 93 248 641>;
+<<<<<<< HEAD
+=======
+			st,adc-sequencer = <FULLY_CONFIGURABLE>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		dac1: dac@50000800 {
@@ -381,7 +420,11 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		can1: can@40006400 {
+=======
+		fdcan1: can@40006400 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			compatible = "st,stm32-fdcan";
 			reg = <0x40006400 0x400>, <0x4000a400 0x350>;
 			reg-names = "m_can", "message_ram";
@@ -389,9 +432,13 @@
 			interrupt-names = "LINE_0", "LINE_1";
 			clocks = <&rcc STM32_CLOCK_BUS_APB1 0x02000000>;
 			bosch,mram-cfg = <0x0 28 8 3 3 0 3 3>;
+<<<<<<< HEAD
 			sjw = <1>;
 			sample-point = <875>;
 			sjw-data = <1>;
+=======
+			sample-point = <875>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point-data = <875>;
 			status = "disabled";
 		};

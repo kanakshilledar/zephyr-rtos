@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+<<<<<<< HEAD
 #include <zephyr/input/input.h>
 
 static void input_cb(struct input_event *evt)
@@ -17,6 +18,8 @@ static void input_cb(struct input_event *evt)
 	       evt->value);
 }
 INPUT_LISTENER_CB_DEFINE(NULL, input_cb);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int main(void)
 {

@@ -45,6 +45,7 @@ BT_MESH_MODEL_PUB_DEFINE(gen_level_cli_pub_s0, NULL, 2 + 7);
 /* Definitions of models publication context (End) */
 
 struct lightness light;
+<<<<<<< HEAD
 struct temperature temp;
 struct delta_uv duv;
 
@@ -56,6 +57,19 @@ struct light_ctl_state state = {
 };
 
 struct light_ctl_state *const ctl = &state;
+=======
+struct temperature light_temp;
+struct delta_uv duv;
+
+struct light_ctl_state light_state = {
+	.light = &light,
+	.temp = &light_temp,
+	.duv = &duv,
+	.transition = &onoff_transition,
+};
+
+struct light_ctl_state *const ctl = &light_state;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Definitions of models user data (Start) */
 

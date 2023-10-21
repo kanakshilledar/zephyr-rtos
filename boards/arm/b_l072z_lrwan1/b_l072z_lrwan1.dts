@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <st/l0/stm32l072Xz.dtsi>
 #include <st/l0/stm32l072c(b-z)tx-pinctrl.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics B-L072Z-LRWAN1 Discovery kit";
@@ -44,6 +48,10 @@
 		user_button: button_0 {
 			label = "Push button switch";
 			gpios = <&gpiob 2 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -58,6 +66,7 @@
 		lora0 = &lora;
 	};
 
+<<<<<<< HEAD
 	power-states {
 		stop: stop {
 			compatible = "zephyr,power-state";
@@ -69,6 +78,8 @@
 
 &cpu0 {
 	cpu-power-states = <&stop>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &clk_lse {

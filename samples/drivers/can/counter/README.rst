@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _can-counter-sample:
 
 Controller Area Network (CAN) Counter
 #####################################
+=======
+.. zephyr:code-sample:: can-counter
+   :name: Controller Area Network (CAN) counter
+   :relevant-api: can_interface
+
+   Send and receive CAN messages.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

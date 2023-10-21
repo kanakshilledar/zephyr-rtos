@@ -236,6 +236,7 @@ static int mgmt_event_wait_call(struct net_if *iface,
 	net_mgmt_add_event_callback(&sync);
 
 	ret = k_sem_take(sync.sync_call, timeout);
+<<<<<<< HEAD
 	if (ret == -EAGAIN) {
 		ret = -ETIMEDOUT;
 	} else {
@@ -259,6 +260,34 @@ static int mgmt_event_wait_call(struct net_if *iface,
 #endif /* CONFIG_NET_MGMT_EVENT_INFO */
 		}
 	}
+=======
+	if (ret < 0) {
+		if (ret == -EAGAIN) {
+			ret = -ETIMEDOUT;
+		}
+
+		net_mgmt_del_event_callback(&sync);
+		return ret;
+	}
+
+	if (raised_event) {
+		*raised_event = sync.raised_event;
+	}
+
+	if (event_iface) {
+		*event_iface = sync_data.iface;
+	}
+
+#ifdef CONFIG_NET_MGMT_EVENT_INFO
+	if (info) {
+		*info = sync.info;
+
+		if (info_length) {
+			*info_length = sync.info_length;
+		}
+	}
+#endif /* CONFIG_NET_MGMT_EVENT_INFO */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return ret;
 }

@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 IVSHMEM Doorbell Sample Application
 ###################################
+=======
+.. zephyr:code-sample:: ivshmem-doorbell
+   :name: IVSHMEM doorbell
+   :relevant-api: ivshmem
+
+   Use Inter-VM Shared Memory to exchange messages between two processes running on different
+   operating systems.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -62,7 +71,11 @@ How to
 .. note::
 
    The ivshmem shared memory can be manipulated to crash QEMU and bring down
+<<<<<<< HEAD
    Zephyr. Check `ivshmem_doorbell_sample_security`_ for details.
+=======
+   Zephyr. Check :ref:`ivshmem_doorbell_sample_security` section for more details.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. note::
 

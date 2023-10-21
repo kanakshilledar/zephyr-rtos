@@ -20,7 +20,13 @@ LOG_MODULE_REGISTER(LOG_DOMAIN);
 
 #include "flash_stm32.h"
 
+<<<<<<< HEAD
 #if !defined (STM32L4R5xx) && !defined (STM32L4R7xx) && !defined (STM32L4R9xx) && !defined (STM32L4S5xx) && !defined (STM32L4S7xx) && !defined (STM32L4S9xx)
+=======
+#if !defined(STM32L4R5xx) && !defined(STM32L4R7xx) && !defined(STM32L4R9xx) && \
+	!defined(STM32L4S5xx) && !defined(STM32L4S7xx) && !defined(STM32L4S9xx) && \
+	!defined(STM32L4Q5xx)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STM32L4X_PAGE_SHIFT	11
 #else
 #define STM32L4X_PAGE_SHIFT	12
@@ -30,6 +36,7 @@ LOG_MODULE_REGISTER(LOG_DOMAIN);
 #define CONTROL_DCACHE
 #endif
 
+<<<<<<< HEAD
 /* offset and len must be aligned on 8 for write
  * , positive and not beyond end of flash */
 bool flash_stm32_valid_range(const struct device *dev, off_t offset,
@@ -40,6 +47,8 @@ bool flash_stm32_valid_range(const struct device *dev, off_t offset,
 		flash_stm32_range_exists(dev, offset, len);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline void flush_cache(FLASH_TypeDef *regs)
 {
 	if (regs->ACR & FLASH_ACR_DCEN) {

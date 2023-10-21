@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+<<<<<<< HEAD
+=======
+# Copyright (c) 2018-2023 Nordic Semiconductor ASA and Ulf Magnusson
+# Originally modified from:
+# https://github.com/ulfalizer/Kconfiglib/blob/master/examples/merge_config.py
+
+# SPDX-License-Identifier: ISC
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Writes/updates the zephyr/.config configuration file by merging configuration
 # files passed as arguments, e.g. board *_defconfig and application prj.conf
 # files.
@@ -72,10 +81,17 @@ def main():
         check_assigned_sym_values(kconf)
         check_assigned_choice_values(kconf)
 
+<<<<<<< HEAD
     if kconf.syms['WARN_DEPRECATED'].tri_value == 2:
         check_deprecated(kconf)
 
     if kconf.syms['WARN_EXPERIMENTAL'].tri_value == 2:
+=======
+    if kconf.syms.get('WARN_DEPRECATED', kconf.y).tri_value == 2:
+        check_deprecated(kconf)
+
+    if kconf.syms.get('WARN_EXPERIMENTAL', kconf.y).tri_value == 2:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         check_experimental(kconf)
 
     # Hack: Force all symbols to be evaluated, to catch warnings generated
@@ -231,8 +247,13 @@ Practices sections of the manual might be helpful too.\
 
 
 def check_deprecated(kconf):
+<<<<<<< HEAD
     deprecated = kconf.syms['DEPRECATED']
     dep_expr = deprecated.rev_dep
+=======
+    deprecated = kconf.syms.get('DEPRECATED')
+    dep_expr = kconf.n if deprecated is None else deprecated.rev_dep
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     if dep_expr is not kconf.n:
         selectors = [s for s in split_expr(dep_expr, OR) if expr_value(s) == 2]
@@ -242,8 +263,13 @@ def check_deprecated(kconf):
 
 
 def check_experimental(kconf):
+<<<<<<< HEAD
     experimental = kconf.syms['EXPERIMENTAL']
     dep_expr = experimental.rev_dep
+=======
+    experimental = kconf.syms.get('EXPERIMENTAL')
+    dep_expr = kconf.n if experimental is None else experimental.rev_dep
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     if dep_expr is not kconf.n:
         selectors = [s for s in split_expr(dep_expr, OR) if expr_value(s) == 2]

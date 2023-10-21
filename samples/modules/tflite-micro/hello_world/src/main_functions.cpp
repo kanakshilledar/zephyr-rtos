@@ -16,18 +16,29 @@
 
 #include "main_functions.h"
 
+<<<<<<< HEAD
 #include <tensorflow/lite/micro/all_ops_resolver.h>
 #include "constants.h"
 #include "model.hpp"
 #include "output_handler.hpp"
 #include <tensorflow/lite/micro/micro_error_reporter.h>
+=======
+#include <tensorflow/lite/micro/micro_mutable_op_resolver.h>
+#include "constants.h"
+#include "model.hpp"
+#include "output_handler.hpp"
+#include <tensorflow/lite/micro/micro_log.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <tensorflow/lite/micro/micro_interpreter.h>
 #include <tensorflow/lite/micro/system_setup.h>
 #include <tensorflow/lite/schema/schema_generated.h>
 
 /* Globals, used for compatibility with Arduino-style sketches. */
 namespace {
+<<<<<<< HEAD
 	tflite::ErrorReporter *error_reporter = nullptr;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const tflite::Model *model = nullptr;
 	tflite::MicroInterpreter *interpreter = nullptr;
 	TfLiteTensor *input = nullptr;
@@ -41,6 +52,7 @@ namespace {
 /* The name of this function is important for Arduino compatibility. */
 void setup(void)
 {
+<<<<<<< HEAD
 	/* Set up logging. Google style is to avoid globals or statics because of
 	 * lifetime uncertainty, but since this has a trivial destructor it's okay.
 	 * NOLINTNEXTLINE(runtime-global-variables)
@@ -49,11 +61,14 @@ void setup(void)
 
 	error_reporter = &micro_error_reporter;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Map the model into a usable data structure. This doesn't involve any
 	 * copying or parsing, it's a very lightweight operation.
 	 */
 	model = tflite::GetModel(g_model);
 	if (model->version() != TFLITE_SCHEMA_VERSION) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter,
 						"Model provided is schema version %d not equal "
 						"to supported version %d.",
@@ -69,12 +84,33 @@ void setup(void)
 	/* Build an interpreter to run the model with. */
 	static tflite::MicroInterpreter static_interpreter(
 		model, resolver, tensor_arena, kTensorArenaSize, error_reporter);
+=======
+		MicroPrintf("Model provided is schema version %d not equal "
+					"to supported version %d.",
+					model->version(), TFLITE_SCHEMA_VERSION);
+		return;
+	}
+
+	/* This pulls in the operation implementations we need.
+	 * NOLINTNEXTLINE(runtime-global-variables)
+	 */
+	static tflite::MicroMutableOpResolver <1> resolver;
+	resolver.AddFullyConnected();
+
+	/* Build an interpreter to run the model with. */
+	static tflite::MicroInterpreter static_interpreter(
+		model, resolver, tensor_arena, kTensorArenaSize);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	interpreter = &static_interpreter;
 
 	/* Allocate memory from the tensor_arena for the model's tensors. */
 	TfLiteStatus allocate_status = interpreter->AllocateTensors();
 	if (allocate_status != kTfLiteOk) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter, "AllocateTensors() failed");
+=======
+		MicroPrintf("AllocateTensors() failed");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -106,8 +142,12 @@ void loop(void)
 	/* Run inference, and report any error */
 	TfLiteStatus invoke_status = interpreter->Invoke();
 	if (invoke_status != kTfLiteOk) {
+<<<<<<< HEAD
 		TF_LITE_REPORT_ERROR(error_reporter, "Invoke failed on x: %f\n",
 				     static_cast < double > (x));
+=======
+		MicroPrintf("Invoke failed on x: %f\n", static_cast < double > (x));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -119,7 +159,11 @@ void loop(void)
 	/* Output the results. A custom HandleOutput function can be implemented
 	 * for each supported hardware target.
 	 */
+<<<<<<< HEAD
 	HandleOutput(error_reporter, x, y);
+=======
+	HandleOutput(x, y);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Increment the inference_counter, and reset it if we have reached
 	 * the total number per cycle

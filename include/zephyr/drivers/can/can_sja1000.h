@@ -176,7 +176,10 @@ struct can_sja1000_data {
 	struct k_sem tx_idle;
 	can_tx_callback_t tx_callback;
 	void *tx_user_data;
+<<<<<<< HEAD
 	uint32_t sjw;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	void *custom;
 };
 

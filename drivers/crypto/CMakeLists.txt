@@ -9,4 +9,9 @@ zephyr_library_sources_ifdef(CONFIG_CRYPTO_NRF_ECB		crypto_nrf_ecb.c)
 zephyr_library_sources_ifdef(CONFIG_CRYPTO_INTEL_SHA		crypto_intel_sha.c)
 zephyr_library_sources_ifdef(CONFIG_CRYPTO_NPCX_SHA		crypto_npcx_sha.c)
 zephyr_library_sources_ifdef(CONFIG_CRYPTO_MCHP_XEC_SYMCR	crypto_mchp_xec_symcr.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_CRYPTO_IT8XXX2_SHA		crypto_it8xxx2_sha.c)
+zephyr_library_sources_ifdef(CONFIG_CRYPTO_MCUX_DCP		crypto_mcux_dcp.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_link_libraries_ifdef(CONFIG_MBEDTLS mbedTLS)

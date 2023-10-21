@@ -15,3 +15,13 @@ RunTest mesh_friendship_msg_mesh_1d1 \
 	friendship_lpn_msg_mesh \
 	friendship_other_msg \
 	friendship_friend_est
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_friendship_msg_mesh_psa \
+	friendship_lpn_msg_mesh \
+	friendship_other_msg \
+	friendship_friend_est
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

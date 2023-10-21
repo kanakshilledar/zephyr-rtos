@@ -25,9 +25,51 @@ extern "C" {
 #endif
 
 struct bt_mesh_cfg_cli;
+<<<<<<< HEAD
 
 /** Mesh Configuration Client Status messages callback */
 struct bt_mesh_cfg_cli_cb {
+=======
+struct bt_mesh_cfg_cli_hb_pub;
+struct bt_mesh_cfg_cli_hb_sub;
+struct bt_mesh_cfg_cli_mod_pub;
+
+/** Mesh Configuration Client Status messages callback */
+struct bt_mesh_cfg_cli_cb {
+
+	/** @brief Optional callback for Composition data messages.
+	 *
+	 *  Handles received Composition data messages from a server.
+	 *
+	 *  @note For decoding @c buf, please refer to
+	 *        @ref bt_mesh_comp_p0_get and
+	 *        @ref bt_mesh_comp_p1_elem_pull.
+	 *
+	 *  @param cli       Client that received the status message.
+	 *  @param addr      Address of the sender.
+	 *  @param page      Composition data page.
+	 *  @param buf       Composition data buffer.
+	 */
+	void (*comp_data)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t page,
+			  struct net_buf_simple *buf);
+
+	/** @brief Optional callback for Model Pub status messages.
+	 *
+	 *  Handles received Model Pub status messages from a server.
+	 *
+	 *  @param cli       Client that received the status message.
+	 *  @param addr      Address of the sender.
+	 *  @param status    Status code for the message.
+	 *  @param elem_addr Address of the element.
+	 *  @param mod_id    Model ID.
+	 *  @param cid       Company ID.
+	 *  @param pub       Publication configuration parameters.
+	 */
+	void (*mod_pub_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			       uint16_t elem_addr, uint16_t mod_id, uint16_t cid,
+			       struct bt_mesh_cfg_cli_mod_pub *pub);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** @brief Optional callback for Model Sub Status messages.
 	 *
 	 *  Handles received Model Sub Status messages from a server.
@@ -43,6 +85,29 @@ struct bt_mesh_cfg_cli_cb {
 			     uint8_t status, uint16_t elem_addr,
 			     uint16_t sub_addr, uint32_t mod_id);
 
+<<<<<<< HEAD
+=======
+	/** @brief Optional callback for Model Sub list messages.
+	 *
+	 *  Handles received Model Sub list messages from a server.
+	 *
+	 *  @note The @c buf parameter should be decoded using
+	 *        @ref net_buf_simple_pull_le16 in iteration, as long
+	 *        as @c buf->len is greater than or equal to  2.
+	 *
+	 *  @param cli       Client that received the status message.
+	 *  @param addr      Address of the sender.
+	 *  @param status    Status code for the message.
+	 *  @param elem_addr Address of the element.
+	 *  @param mod_id    Model ID.
+	 *  @param cid       Company ID.
+	 *  @param buf       Message buffer containing subscription addresses.
+	 */
+	void (*mod_sub_list)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			       uint16_t elem_addr, uint16_t mod_id, uint16_t cid,
+			       struct net_buf_simple *buf);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** @brief Optional callback for Node Reset Status messages.
 	 *
 	 *  Handles received Node Reset Status messages from a server.
@@ -131,6 +196,23 @@ struct bt_mesh_cfg_cli_cb {
 	void (*net_key_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr,
 			       uint8_t status, uint16_t net_idx);
 
+<<<<<<< HEAD
+=======
+	/** @brief Optional callback for Netkey list messages.
+	 *
+	 *  Handles received Netkey list messages from a server.
+	 *
+	 *  @note The @c buf parameter should be decoded using the
+	 *        @ref bt_mesh_key_idx_unpack_list helper function.
+	 *
+	 *  @param cli	Client that received the status message.
+	 *  @param addr	Address of the sender.
+	 *  @param buf	Message buffer containing key indexes.
+	 */
+	void (*net_key_list)(struct bt_mesh_cfg_cli *cli, uint16_t addr,
+			    struct net_buf_simple *buf);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** @brief Optional callback for AppKey Status messages.
 	 *
 	 *  Handles received AppKey Status messages from a server.
@@ -145,6 +227,25 @@ struct bt_mesh_cfg_cli_cb {
 			       uint8_t status, uint16_t net_idx,
 			       uint16_t app_idx);
 
+<<<<<<< HEAD
+=======
+	/** @brief Optional callback for Appkey list messages.
+	 *
+	 *  Handles received Appkey list messages from a server.
+	 *
+	 *  @note The @c buf parameter should be decoded using the
+	 *        @ref bt_mesh_key_idx_unpack_list helper function.
+	 *
+	 *  @param cli     Client that received the status message.
+	 *  @param addr    Address of the sender.
+	 *  @param status  Status code for the message.
+	 *  @param net_idx The index of the NetKey.
+	 *  @param buf     Message buffer containing key indexes.
+	 */
+	void (*app_key_list)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			    uint16_t net_idx, struct net_buf_simple *buf);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** @brief Optional callback for Model App Status messages.
 	 *
 	 *  Handles received Model App Status messages from a server.
@@ -160,6 +261,28 @@ struct bt_mesh_cfg_cli_cb {
 			       uint8_t status, uint16_t elem_addr,
 			       uint16_t app_idx, uint32_t mod_id);
 
+<<<<<<< HEAD
+=======
+	/** @brief Optional callback for Model App list messages.
+	 *
+	 *  Handles received Model App list messages from a server.
+	 *
+	 *  @note The @c buf parameter should be decoded using the
+	 *        @ref bt_mesh_key_idx_unpack_list helper function.
+	 *
+	 *  @param cli       Client that received the status message.
+	 *  @param addr      Address of the sender.
+	 *  @param status    Status code for the message.
+	 *  @param elem_addr Address of the element.
+	 *  @param mod_id    Model ID.
+	 *  @param cid       Company ID.
+	 *  @param buf       Message buffer containing key indexes.
+	 */
+	void (*mod_app_list)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			       uint16_t elem_addr, uint16_t mod_id, uint16_t cid,
+			       struct net_buf_simple *buf);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** @brief Optional callback for Node Identity Status messages.
 	 *
 	 *  Handles received Node Identity Status messages from a server.
@@ -185,6 +308,46 @@ struct bt_mesh_cfg_cli_cb {
 	 */
 	void (*lpn_timeout_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr,
 				   uint16_t elem_addr, uint32_t timeout);
+<<<<<<< HEAD
+=======
+
+	/** @brief Optional callback for Key Refresh Phase status messages.
+	 *
+	 *  Handles received Key Refresh Phase status messages from a server.
+	 *
+	 *  @param cli     Client that received the status message.
+	 *  @param addr    Address of the sender.
+	 *  @param status  Status code for the message.
+	 *  @param net_idx The index of the NetKey.
+	 *  @param phase   Phase of the KRP.
+	 */
+	void (*krp_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			   uint16_t net_idx, uint8_t phase);
+
+	/** @brief Optional callback for Heartbeat pub status messages.
+	 *
+	 *  Handles received Heartbeat pub status messages from a server.
+	 *
+	 *  @param cli    Client that received the status message.
+	 *  @param addr   Address of the sender.
+	 *  @param status Status code for the message.
+	 *  @param pub    HB publication configuration parameters.
+	 */
+	void (*hb_pub_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+			      struct bt_mesh_cfg_cli_hb_pub *pub);
+
+	/** @brief Optional callback for Heartbeat Sub status messages.
+	 *
+	 *  Handles received Heartbeat Sub status messages from a server.
+	 *
+	 *  @param cli    Client that received the status message.
+	 *  @param addr   Address of the sender.
+	 *  @param status Status code for the message.
+	 *  @param sub    HB subscription configuration parameters.
+	 */
+	void (*hb_sub_status)(struct bt_mesh_cfg_cli *cli, uint16_t addr, uint8_t status,
+				 struct bt_mesh_cfg_cli_hb_sub *sub);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /** Mesh Configuration Client Model Context */
@@ -1548,6 +1711,10 @@ uint16_t bt_mesh_comp_p0_elem_mod(struct bt_mesh_comp_p0_elem *elem, int idx);
  */
 struct bt_mesh_mod_id_vnd bt_mesh_comp_p0_elem_mod_vnd(struct bt_mesh_comp_p0_elem *elem, int idx);
 
+<<<<<<< HEAD
+=======
+/** Composition data page 1 element representation */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct bt_mesh_comp_p1_elem {
 	/** The number of SIG models in this element */
 	size_t nsig;
@@ -1644,6 +1811,56 @@ struct bt_mesh_comp_p1_model_item *bt_mesh_comp_p1_item_pull(
 struct bt_mesh_comp_p1_ext_item *bt_mesh_comp_p1_pull_ext_item(
 	struct bt_mesh_comp_p1_model_item *item, struct bt_mesh_comp_p1_ext_item *ext_item);
 
+<<<<<<< HEAD
+=======
+/** Composition data page 2 record parsing structure. */
+struct bt_mesh_comp_p2_record {
+	/** Mesh profile ID. */
+	uint16_t id;
+	/** Mesh Profile Version. */
+	struct {
+		/** Major version. */
+		uint8_t x;
+		/** Minor version. */
+		uint8_t y;
+		/** Z version. */
+		uint8_t z;
+	} version;
+	/** Element offset buffer. */
+	struct net_buf_simple *elem_buf;
+	/** Additional data buffer. */
+	struct net_buf_simple *data_buf;
+};
+
+/** @brief Pull a Composition Data Page 2 Record from a composition data page 2
+ *         instance.
+ *
+ *  Each call to this function will pull out a new element from the composition
+ *  data page, until all elements have been pulled.
+ *
+ *  @param buf Composition data page 2 buffer
+ *  @param record Record to fill.
+ *
+ *  @return A pointer to @c record on success, or NULL if no more elements could
+ *          be pulled.
+ */
+struct bt_mesh_comp_p2_record *bt_mesh_comp_p2_record_pull(struct net_buf_simple *buf,
+							   struct bt_mesh_comp_p2_record *record);
+
+/** @brief Unpack a list of key index entries from a buffer.
+ *
+ * On success, @c dst_cnt is set to the amount of unpacked key index entries.
+ *
+ * @param buf Message buffer containing encoded AppKey or NetKey Indexes.
+ * @param dst_arr Destination array for the unpacked list.
+ * @param dst_cnt Size of the destination array.
+ *
+ * @return 0 on success.
+ * @return -EMSGSIZE if dst_arr size is to small to parse full message.
+ */
+int bt_mesh_key_idx_unpack_list(struct net_buf_simple *buf, uint16_t *dst_arr, size_t *dst_cnt);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @cond INTERNAL_HIDDEN */
 extern const struct bt_mesh_model_op bt_mesh_cfg_cli_op[];
 extern const struct bt_mesh_model_cb bt_mesh_cfg_cli_cb;

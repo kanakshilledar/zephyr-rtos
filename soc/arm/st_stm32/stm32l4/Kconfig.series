@@ -14,5 +14,10 @@ config SOC_SERIES_STM32L4X
 	select HAS_STM32CUBE
 	select CPU_HAS_ARM_MPU
 	select HAS_SWO
+<<<<<<< HEAD
+=======
+	select HAS_PM
+	select HAS_POWEROFF
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for STM32L4 MCU series

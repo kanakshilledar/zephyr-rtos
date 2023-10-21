@@ -90,7 +90,12 @@ int int_to_thread_evt(void)
 
 	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
 
+<<<<<<< HEAD
 	PRINT_STATS("Time from ISR to executing a different thread", diff)
+=======
+	PRINT_STATS("Time from ISR to executing a different thread",
+		    diff, false, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

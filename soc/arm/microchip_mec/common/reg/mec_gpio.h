@@ -10,6 +10,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
+<<<<<<< HEAD
+=======
+#define MCHP_XEC_PINCTRL_REG_IDX(pin) ((pin >> 5) * 32 + (pin & 0x1f))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief All GPIO register as arrays of registers */
 struct gpio_regs {
 	volatile uint32_t  CTRL[174];

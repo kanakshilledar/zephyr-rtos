@@ -7,7 +7,11 @@
 #include <zephyr/kernel.h>
 #include <stdio.h>
 #include <zephyr/sys/crc.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct phdr_desc {
 	struct phdr_desc  *next;    /* Next pkt descriptor in respective queue */

@@ -66,7 +66,12 @@
 			dma-buf-addr-alignment = <128>;
 			dma-buf-size-alignment = <32>;
 			dma-copy-alignment = <32>;
+<<<<<<< HEAD
 
+=======
+			interrupts = <0x10 0 0>;
+			interrupt-parent = <&cavs_intc1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "okay";
 		};
 
@@ -78,7 +83,12 @@
 			dma-buf-addr-alignment = <128>;
 			dma-buf-size-alignment = <32>;
 			dma-copy-alignment = <32>;
+<<<<<<< HEAD
 
+=======
+			interrupts = <0x0 0 0>;
+			interrupt-parent = <&cavs_intc1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "okay";
 		};
 	};

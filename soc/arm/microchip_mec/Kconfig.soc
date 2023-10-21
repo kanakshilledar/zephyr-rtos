@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Microchip MEC1701 MCU line
+=======
+# Microchip MEC172x, MEC1501 MCU line
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # Copyright (c) 2018 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0

@@ -30,6 +30,14 @@ typedef union {
 } z_max_align_t;
 
 #ifdef __cplusplus
+<<<<<<< HEAD
+=======
+/* Zephyr requires an int main(void) signature with C linkage for the application main if present */
+extern int main(void);
+#endif
+
+#ifdef __cplusplus
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif
 

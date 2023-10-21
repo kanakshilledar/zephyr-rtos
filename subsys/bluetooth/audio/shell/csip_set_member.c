@@ -24,7 +24,11 @@ struct bt_csip_set_member_svc_inst *svc_inst;
 static uint8_t sirk_read_rsp = BT_CSIP_READ_SIRK_REQ_RSP_ACCEPT;
 
 static void locked_cb(struct bt_conn *conn,
+<<<<<<< HEAD
 		      struct bt_csip_set_member_svc_inst *svc_inst,
+=======
+		      struct bt_csip_set_member_svc_inst *inst,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      bool locked)
 {
 	if (conn == NULL) {
@@ -41,7 +45,11 @@ static void locked_cb(struct bt_conn *conn,
 }
 
 static uint8_t sirk_read_req_cb(struct bt_conn *conn,
+<<<<<<< HEAD
 				struct bt_csip_set_member_svc_inst *svc_inst)
+=======
+				struct bt_csip_set_member_svc_inst *inst)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	char addr[BT_ADDR_LE_STR_LEN];
 	static const char *const rsp_strings[] = {

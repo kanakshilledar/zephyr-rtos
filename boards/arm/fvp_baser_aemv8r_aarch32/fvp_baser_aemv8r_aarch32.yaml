@@ -12,4 +12,8 @@ toolchain:
 ram: 2048
 flash: 64
 testing:
+<<<<<<< HEAD
   timeout_multiplier: 2
+=======
+  timeout_multiplier: 15
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

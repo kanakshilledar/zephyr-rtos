@@ -27,7 +27,11 @@
 #define ETH_ALEN 6
 #define PACKET_LEN 128
 
+<<<<<<< HEAD
 extern struct ud ifaces;
+=======
+extern struct ud user_data_ifaces;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct eth_addr {
 	uint8_t addr[ETH_ALEN]; /* origin hardware address */
@@ -86,7 +90,11 @@ enum net_verdict dsa_ll_addr_switch_cb(struct net_if *iface,
 		struct instance_data data;                                     \
 		struct net_if *iface;                                          \
 									       \
+<<<<<<< HEAD
 		iface = ifaces.lan[ID-1];                                      \
+=======
+		iface = user_data_ifaces.lan[ID-1];                            \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 									       \
 		data.if_name = "lan"#ID;                                       \
 		ret = start_slave_port_packet_socket(iface, &data);            \

@@ -5,7 +5,11 @@ description: Nuclei Bumblebee RISC-V Core
 
 compatible: "nuclei,bumblebee"
 
+<<<<<<< HEAD
 include: cpu.yaml
+=======
+include: riscv,cpus.yaml
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   mcause-exception-mask:

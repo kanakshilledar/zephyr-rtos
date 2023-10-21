@@ -53,7 +53,11 @@ Programming
 Set ``-DSHIELD=st7735r_ada_160x128`` when you invoke ``west build``. For example:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/gui/lvgl
+=======
+   :zephyr-app: samples/subsys/display/lvgl
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: nrf52840dk_nrf52840
    :shield: st7735r_ada_160x128
    :goals: build

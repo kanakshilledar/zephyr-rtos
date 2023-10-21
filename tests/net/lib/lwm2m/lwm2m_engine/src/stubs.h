@@ -39,7 +39,11 @@ DECLARE_FAKE_VALUE_FUNC(int64_t, engine_observe_shedule_next_event, struct obser
 			const int64_t);
 DECLARE_FAKE_VALUE_FUNC(int, handle_request, struct coap_packet *, struct lwm2m_message *);
 DECLARE_FAKE_VOID_FUNC(lwm2m_udp_receive, struct lwm2m_ctx *, uint8_t *, uint16_t,
+<<<<<<< HEAD
 		       struct sockaddr *, udp_request_handler_cb_t);
+=======
+		       struct sockaddr *);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 DECLARE_FAKE_VALUE_FUNC(bool, lwm2m_rd_client_is_registred, struct lwm2m_ctx *);
 DECLARE_FAKE_VOID_FUNC(lwm2m_engine_context_close, struct lwm2m_ctx *);
 DECLARE_FAKE_VALUE_FUNC(int, lwm2m_get_res_buf, const struct lwm2m_obj_path *, void **, uint16_t *,
@@ -54,6 +58,11 @@ DECLARE_FAKE_VALUE_FUNC(int, lwm2m_get_bool, const struct lwm2m_obj_path *, bool
 DECLARE_FAKE_VALUE_FUNC(int, lwm2m_delete_obj_inst, uint16_t, uint16_t);
 DECLARE_FAKE_VOID_FUNC(lwm2m_clear_block_contexts);
 DECLARE_FAKE_VALUE_FUNC(int, z_impl_zsock_connect, int, const struct sockaddr *, socklen_t);
+<<<<<<< HEAD
+=======
+DECLARE_FAKE_VALUE_FUNC(int, lwm2m_security_mode, struct lwm2m_ctx *);
+DECLARE_FAKE_VALUE_FUNC(int, z_impl_zsock_setsockopt, int, int, int, const void *, socklen_t);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define DO_FOREACH_FAKE(FUNC)                                                                      \
 	do {                                                                                       \
@@ -81,6 +90,11 @@ DECLARE_FAKE_VALUE_FUNC(int, z_impl_zsock_connect, int, const struct sockaddr *,
 		FUNC(lwm2m_delete_obj_inst)                                                        \
 		FUNC(lwm2m_clear_block_contexts)                                                   \
 		FUNC(z_impl_zsock_connect)                                                         \
+<<<<<<< HEAD
+=======
+		FUNC(lwm2m_security_mode)                                                          \
+		FUNC(z_impl_zsock_setsockopt)                                                      \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} while (0)
 
 #endif /* STUBS_H */

@@ -152,6 +152,7 @@ static int fs_mgmt_filelen(const char *path, size_t *out_len)
 	rc = fs_stat(path, &dirent);
 
 	if (rc == -EINVAL) {
+<<<<<<< HEAD
 		return FS_MGMT_RET_RC_FILE_INVALID_NAME;
 	} else if (rc == -ENOENT) {
 		return FS_MGMT_RET_RC_FILE_NOT_FOUND;
@@ -161,11 +162,26 @@ static int fs_mgmt_filelen(const char *path, size_t *out_len)
 
 	if (dirent.type != FS_DIR_ENTRY_FILE) {
 		return FS_MGMT_RET_RC_FILE_IS_DIRECTORY;
+=======
+		return FS_MGMT_ERR_FILE_INVALID_NAME;
+	} else if (rc == -ENOENT) {
+		return FS_MGMT_ERR_FILE_NOT_FOUND;
+	} else if (rc != 0) {
+		return FS_MGMT_ERR_UNKNOWN;
+	}
+
+	if (dirent.type != FS_DIR_ENTRY_FILE) {
+		return FS_MGMT_ERR_FILE_IS_DIRECTORY;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	*out_len = dirent.size;
 
+<<<<<<< HEAD
 	return FS_MGMT_RET_RC_OK;
+=======
+	return FS_MGMT_ERR_OK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -226,8 +242,13 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 	};
 
 	enum mgmt_cb_return status;
+<<<<<<< HEAD
 	int32_t ret_rc;
 	uint16_t ret_group;
+=======
+	int32_t err_rc;
+	uint16_t err_group;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 	ok = zcbor_map_decode_bulk(zsd, fs_download_decode, ARRAY_SIZE(fs_download_decode),
@@ -251,6 +272,7 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 #if defined(CONFIG_MCUMGR_GRP_FS_FILE_ACCESS_HOOK)
 		/* Send request to application to check if access should be allowed or not */
 		status = mgmt_callback_notify(MGMT_EVT_OP_FS_MGMT_FILE_ACCESS, &file_access_data,
+<<<<<<< HEAD
 					      sizeof(file_access_data), &ret_rc, &ret_group);
 
 		if (status != MGMT_CB_OK) {
@@ -259,6 +281,16 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 			}
 
 			ok = smp_add_cmd_ret(zse, ret_group, (uint16_t)ret_rc);
+=======
+					      sizeof(file_access_data), &err_rc, &err_group);
+
+		if (status != MGMT_CB_OK) {
+			if (status == MGMT_CB_ERROR_RC) {
+				return err_rc;
+			}
+
+			ok = smp_add_cmd_err(zse, err_group, (uint16_t)err_rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto end;
 		}
 #endif
@@ -270,8 +302,13 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 	if (fs_mgmt_ctxt.state == STATE_NO_UPLOAD_OR_DOWNLOAD) {
 		rc = fs_mgmt_filelen(path, &fs_mgmt_ctxt.len);
 
+<<<<<<< HEAD
 		if (rc != FS_MGMT_RET_RC_OK) {
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+		if (rc != FS_MGMT_ERR_OK) {
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto end;
 		}
 
@@ -280,6 +317,7 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 		rc = fs_open(&fs_mgmt_ctxt.file, path, FS_O_READ);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			if (rc == EINVAL) {
 				rc = FS_MGMT_RET_RC_FILE_INVALID_NAME;
 			} else if (ENOENT) {
@@ -289,6 +327,17 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 			}
 
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+			if (rc == -EINVAL) {
+				rc = FS_MGMT_ERR_FILE_INVALID_NAME;
+			} else if (rc == -ENOENT) {
+				rc = FS_MGMT_ERR_FILE_NOT_FOUND;
+			} else {
+				rc = FS_MGMT_ERR_UNKNOWN;
+			}
+
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto end;
 		}
 
@@ -302,8 +351,13 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 		rc = fs_seek(&fs_mgmt_ctxt.file, off, FS_SEEK_SET);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 					     FS_MGMT_RET_RC_FILE_SEEK_FAILED);
+=======
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+					     FS_MGMT_ERR_FILE_SEEK_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs_mgmt_cleanup();
 			goto end;
 		}
@@ -319,7 +373,11 @@ static int fs_mgmt_file_download(struct smp_streamer *ctxt)
 	bytes_read = fs_read(&fs_mgmt_ctxt.file, file_data, MCUMGR_GRP_FS_DL_CHUNK_SIZE);
 
 	if (bytes_read < 0) {
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, FS_MGMT_RET_RC_FILE_READ_FAILED);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, FS_MGMT_ERR_FILE_READ_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		fs_mgmt_cleanup();
 		goto end;
 	}
@@ -374,8 +432,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 	};
 
 	enum mgmt_cb_return status;
+<<<<<<< HEAD
 	int32_t ret_rc;
 	uint16_t ret_group;
+=======
+	int32_t err_rc;
+	uint16_t err_group;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 	ok = zcbor_map_decode_bulk(zsd, fs_upload_decode, ARRAY_SIZE(fs_upload_decode),
@@ -400,6 +463,7 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 #if defined(CONFIG_MCUMGR_GRP_FS_FILE_ACCESS_HOOK)
 		/* Send request to application to check if access should be allowed or not */
 		status = mgmt_callback_notify(MGMT_EVT_OP_FS_MGMT_FILE_ACCESS, &file_access_data,
+<<<<<<< HEAD
 					      sizeof(file_access_data), &ret_rc, &ret_group);
 
 		if (status != MGMT_CB_OK) {
@@ -408,6 +472,16 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 			}
 
 			ok = smp_add_cmd_ret(zse, ret_group, (uint16_t)ret_rc);
+=======
+					      sizeof(file_access_data), &err_rc, &err_group);
+
+		if (status != MGMT_CB_OK) {
+			if (status == MGMT_CB_ERROR_RC) {
+				return err_rc;
+			}
+
+			ok = smp_add_cmd_err(zse, err_group, (uint16_t)err_rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto end;
 		}
 #endif
@@ -422,6 +496,7 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 		rc = fs_open(&fs_mgmt_ctxt.file, file_name, FS_O_CREATE | FS_O_WRITE);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			if (rc == EINVAL) {
 				rc = FS_MGMT_RET_RC_FILE_INVALID_NAME;
 			} else if (ENOENT) {
@@ -431,6 +506,19 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 			}
 
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+			if (rc == -EINVAL) {
+				rc = FS_MGMT_ERR_FILE_INVALID_NAME;
+			} else if (rc == -ENOENT) {
+				rc = FS_MGMT_ERR_MOUNT_POINT_NOT_FOUND;
+			} else if (rc == -EROFS) {
+				rc = FS_MGMT_ERR_READ_ONLY_FILESYSTEM;
+			} else {
+				rc = FS_MGMT_ERR_UNKNOWN;
+			}
+
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			goto end;
 		}
 
@@ -449,7 +537,11 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 		rc = fs_mgmt_filelen(file_name, &existing_file_size);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs_mgmt_cleanup();
 			goto end;
 		}
@@ -457,7 +549,11 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 		rc = fs_mgmt_filelen(file_name, &fs_mgmt_ctxt.off);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs_mgmt_cleanup();
 			goto end;
 		}
@@ -466,7 +562,11 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 	/* Verify that the data offset matches the expected offset (i.e. current size of file) */
 	if (off > 0 && off != fs_mgmt_ctxt.off) {
 		/* Offset mismatch, send file length, client needs to handle this */
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, FS_MGMT_RET_RC_FILE_OFFSET_NOT_VALID);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, FS_MGMT_ERR_FILE_OFFSET_NOT_VALID);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ok = zcbor_tstr_put_lit(zse, "len")		&&
 		     zcbor_uint64_put(zse, fs_mgmt_ctxt.off);
 
@@ -487,8 +587,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 			rc = fs_seek(&fs_mgmt_ctxt.file, 0, FS_SEEK_SET);
 
 			if (rc != 0) {
+<<<<<<< HEAD
 				ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 						     FS_MGMT_RET_RC_FILE_SEEK_FAILED);
+=======
+				ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+						     FS_MGMT_ERR_FILE_SEEK_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				fs_mgmt_cleanup();
 				goto end;
 			}
@@ -503,8 +608,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 
 				rc = fs_unlink(file_name);
 				if (rc < 0 && rc != -ENOENT) {
+<<<<<<< HEAD
 					ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 							     FS_MGMT_RET_RC_FILE_DELETE_FAILED);
+=======
+					ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+							     FS_MGMT_ERR_FILE_DELETE_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					fs_mgmt_cleanup();
 					goto end;
 				}
@@ -515,8 +625,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 
 			if (rc < 0) {
 				/* Failed to truncate file */
+<<<<<<< HEAD
 				ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 						     FS_MGMT_RET_RC_FILE_TRUNCATE_FAILED);
+=======
+				ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+						     FS_MGMT_ERR_FILE_TRUNCATE_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				fs_mgmt_cleanup();
 				goto end;
 			}
@@ -528,8 +643,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 
 			if (rc < 0) {
 				/* Failed to seek in file */
+<<<<<<< HEAD
 				ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 						     FS_MGMT_RET_RC_FILE_SEEK_FAILED);
+=======
+				ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+						     FS_MGMT_ERR_FILE_SEEK_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				fs_mgmt_cleanup();
 				goto end;
 			}
@@ -538,8 +658,13 @@ static int fs_mgmt_file_upload(struct smp_streamer *ctxt)
 		rc = fs_write(&fs_mgmt_ctxt.file, file_data.value, file_data.len);
 
 		if (rc < 0) {
+<<<<<<< HEAD
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 					     FS_MGMT_RET_RC_FILE_WRITE_FAILED);
+=======
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+					     FS_MGMT_ERR_FILE_WRITE_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs_mgmt_cleanup();
 			goto end;
 		}
@@ -584,8 +709,13 @@ static int fs_mgmt_file_status(struct smp_streamer *ctxt)
 	};
 
 	enum mgmt_cb_return status;
+<<<<<<< HEAD
 	int32_t ret_rc;
 	uint16_t ret_group;
+=======
+	int32_t err_rc;
+	uint16_t err_group;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 	ok = zcbor_map_decode_bulk(zsd, fs_status_decode,
@@ -602,6 +732,7 @@ static int fs_mgmt_file_status(struct smp_streamer *ctxt)
 #if defined(CONFIG_MCUMGR_GRP_FS_FILE_ACCESS_HOOK)
 	/* Send request to application to check if access should be allowed or not */
 	status = mgmt_callback_notify(MGMT_EVT_OP_FS_MGMT_FILE_ACCESS, &file_access_data,
+<<<<<<< HEAD
 				      sizeof(file_access_data), &ret_rc, &ret_group);
 
 	if (status != MGMT_CB_OK) {
@@ -610,6 +741,16 @@ static int fs_mgmt_file_status(struct smp_streamer *ctxt)
 		}
 
 		ok = smp_add_cmd_ret(zse, ret_group, (uint16_t)ret_rc);
+=======
+				      sizeof(file_access_data), &err_rc, &err_group);
+
+	if (status != MGMT_CB_OK) {
+		if (status == MGMT_CB_ERROR_RC) {
+			return err_rc;
+		}
+
+		ok = smp_add_cmd_err(zse, err_group, (uint16_t)err_rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return ok ? MGMT_ERR_EOK : MGMT_ERR_EMSGSIZE;
 	}
 #endif
@@ -618,7 +759,11 @@ static int fs_mgmt_file_status(struct smp_streamer *ctxt)
 	rc = fs_mgmt_filelen(path, &file_len);
 
 	if (rc != 0) {
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
@@ -676,8 +821,13 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 	};
 
 	enum mgmt_cb_return status;
+<<<<<<< HEAD
 	int32_t ret_rc;
 	uint16_t ret_group;
+=======
+	int32_t err_rc;
+	uint16_t err_group;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 	ok = zcbor_map_decode_bulk(zsd, fs_hash_checksum_decode,
@@ -701,14 +851,20 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 	group = fs_mgmt_hash_checksum_find_handler(type_arr);
 
 	if (group == NULL) {
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 				     FS_MGMT_RET_RC_CHECKSUM_HASH_NOT_FOUND);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+				     FS_MGMT_ERR_CHECKSUM_HASH_NOT_FOUND);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
 #if defined(CONFIG_MCUMGR_GRP_FS_FILE_ACCESS_HOOK)
 	/* Send request to application to check if access should be allowed or not */
 	status = mgmt_callback_notify(MGMT_EVT_OP_FS_MGMT_FILE_ACCESS, &file_access_data,
+<<<<<<< HEAD
 				      sizeof(file_access_data), &ret_rc, &ret_group);
 
 	if (status != MGMT_CB_OK) {
@@ -717,6 +873,16 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 		}
 
 		ok = smp_add_cmd_ret(zse, ret_group, (uint16_t)ret_rc);
+=======
+				      sizeof(file_access_data), &err_rc, &err_group);
+
+	if (status != MGMT_CB_OK) {
+		if (status == MGMT_CB_ERROR_RC) {
+			return err_rc;
+		}
+
+		ok = smp_add_cmd_err(zse, err_group, (uint16_t)err_rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return ok ? MGMT_ERR_EOK : MGMT_ERR_EMSGSIZE;
 	}
 #endif
@@ -725,14 +891,27 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 	rc = fs_mgmt_filelen(path, &file_len);
 
 	if (rc != 0) {
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
 	if (file_len <= off) {
+<<<<<<< HEAD
 		/* Requested offset is larger than target file size */
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 				     FS_MGMT_RET_RC_FILE_OFFSET_LARGER_THAN_FILE);
+=======
+		/* Requested offset is larger than target file size or file length is 0, which
+		 * means no hash/checksum can be performed
+		 */
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+				     (file_len == 0 ? FS_MGMT_ERR_FILE_EMPTY :
+						      FS_MGMT_ERR_FILE_OFFSET_LARGER_THAN_FILE));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
@@ -741,6 +920,7 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 	rc = fs_open(&file, path, FS_O_READ);
 
 	if (rc != 0) {
+<<<<<<< HEAD
 		if (rc == EINVAL) {
 			rc = FS_MGMT_RET_RC_FILE_INVALID_NAME;
 		} else if (ENOENT) {
@@ -750,6 +930,17 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 		}
 
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+		if (rc == -EINVAL) {
+			rc = FS_MGMT_ERR_FILE_INVALID_NAME;
+		} else if (rc == -ENOENT) {
+			rc = FS_MGMT_ERR_FILE_NOT_FOUND;
+		} else {
+			rc = FS_MGMT_ERR_UNKNOWN;
+		}
+
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
@@ -758,8 +949,13 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 		rc = fs_seek(&file, off, FS_SEEK_SET);
 
 		if (rc != 0) {
+<<<<<<< HEAD
 			ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS,
 					     FS_MGMT_RET_RC_FILE_SEEK_FAILED);
+=======
+			ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS,
+					     FS_MGMT_ERR_FILE_SEEK_FAILED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fs_close(&file);
 			goto end;
 		}
@@ -773,7 +969,11 @@ static int fs_mgmt_file_hash_checksum(struct smp_streamer *ctxt)
 
 	/* Encode the response */
 	if (rc != 0) {
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_FS, rc);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_FS, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
@@ -896,6 +1096,51 @@ static int fs_mgmt_close_opened_file(struct smp_streamer *ctxt)
 	return MGMT_ERR_EOK;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+/*
+ * @brief	Translate FS mgmt group error code into MCUmgr error code
+ *
+ * @param ret	#fs_mgmt_err_code_t error code
+ *
+ * @return	#mcumgr_err_t error code
+ */
+static int fs_mgmt_translate_error_code(uint16_t err)
+{
+	int rc;
+
+	switch (err) {
+	case FS_MGMT_ERR_FILE_INVALID_NAME:
+	case FS_MGMT_ERR_CHECKSUM_HASH_NOT_FOUND:
+		rc = MGMT_ERR_EINVAL;
+		break;
+
+	case FS_MGMT_ERR_FILE_NOT_FOUND:
+	case FS_MGMT_ERR_MOUNT_POINT_NOT_FOUND:
+		rc = MGMT_ERR_ENOENT;
+		break;
+
+	case FS_MGMT_ERR_UNKNOWN:
+	case FS_MGMT_ERR_FILE_IS_DIRECTORY:
+	case FS_MGMT_ERR_FILE_OPEN_FAILED:
+	case FS_MGMT_ERR_FILE_SEEK_FAILED:
+	case FS_MGMT_ERR_FILE_READ_FAILED:
+	case FS_MGMT_ERR_FILE_TRUNCATE_FAILED:
+	case FS_MGMT_ERR_FILE_DELETE_FAILED:
+	case FS_MGMT_ERR_FILE_WRITE_FAILED:
+	case FS_MGMT_ERR_FILE_OFFSET_NOT_VALID:
+	case FS_MGMT_ERR_FILE_OFFSET_LARGER_THAN_FILE:
+	case FS_MGMT_ERR_READ_ONLY_FILESYSTEM:
+	default:
+		rc = MGMT_ERR_EUNKNOWN;
+	}
+
+	return rc;
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct mgmt_handler fs_mgmt_handlers[] = {
 	[FS_MGMT_ID_FILE] = {
 		.mh_read = fs_mgmt_file_download,
@@ -931,6 +1176,12 @@ static struct mgmt_group fs_mgmt_group = {
 	.mg_handlers = fs_mgmt_handlers,
 	.mg_handlers_count = FS_MGMT_HANDLER_CNT,
 	.mg_group_id = MGMT_GROUP_ID_FS,
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+	.mg_translate_error = fs_mgmt_translate_error_code,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static void fs_mgmt_register_group(void)
@@ -954,6 +1205,7 @@ static void fs_mgmt_register_group(void)
 #endif
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 int fs_mgmt_translate_error_code(uint16_t ret)
 {
@@ -987,4 +1239,6 @@ int fs_mgmt_translate_error_code(uint16_t ret)
 }
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 MCUMGR_HANDLER_DEFINE(fs_mgmt, fs_mgmt_register_group);

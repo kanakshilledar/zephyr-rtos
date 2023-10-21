@@ -155,4 +155,8 @@ You can debug an application in the usual way. Here is an example for the
    https://www.st.com/en/microcontrollers-microprocessors/stm32f401cc.html
 
 .. _STM32F401 reference manual:
+<<<<<<< HEAD
     http://www.st.com/resource/en/reference_manual/dm00096844.pdf
+=======
+    https://www.st.com/resource/en/reference_manual/dm00096844.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

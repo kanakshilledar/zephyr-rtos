@@ -200,6 +200,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo F410RB website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-F410RB.html
 
 .. _STM32 Nucleo-64 board User Manual:
@@ -207,6 +208,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32F410RB on www.st.com:
    http://www.st.com/en/microcontrollers/stm32f410rb.html
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-F410RB.html
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+
+.. _STM32F410RB on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f410rb.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32F410 reference manual:
    https://www.st.com/resource/en/reference_manual/dm00180366.pdf

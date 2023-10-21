@@ -83,6 +83,20 @@ static void destroy_callbacks(void *p)
 	mgmt_callback_unregister(&mgmt_event_callback);
 }
 
+<<<<<<< HEAD
+=======
+static inline void wait_for_sync(void)
+{
+#ifdef CONFIG_SMP
+	/* For SMP systems, it is possible that a dummy response is fully received and processed
+	 * prior to the callback code being executed, therefore implement a dummy wait to wait
+	 * for callback synchronisation to take place.
+	 */
+	k_sleep(K_MSEC(1));
+#endif
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(callback_disabled, test_notifications_disabled)
 {
 	uint8_t buffer[ZCBOR_BUFFER_SIZE];
@@ -122,6 +136,10 @@ ZTEST(callback_disabled, test_notifications_disabled)
 	smp_dummy_disable();
 
 	/* Check events */
+<<<<<<< HEAD
+=======
+	wait_for_sync();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_false(cmd_recv_got, "Did not expect received command callback\n");
 	zassert_false(cmd_status_got, "Did not expect IMG status callback\n");
 	zassert_false(cmd_done_got, "Did not expect done command callback\n");
@@ -167,6 +185,10 @@ ZTEST(callback_enabled, test_notifications_enabled)
 	smp_dummy_disable();
 
 	/* Check events */
+<<<<<<< HEAD
+=======
+	wait_for_sync();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_true(cmd_recv_got, "Expected received command callback\n");
 	zassert_false(cmd_status_got, "Did not expect IMG status callback\n");
 	zassert_true(cmd_done_got, "Expected done command callback\n");
@@ -212,6 +234,10 @@ ZTEST(callback_disabled_verify, test_notifications_disabled_verify)
 	smp_dummy_disable();
 
 	/* Check events */
+<<<<<<< HEAD
+=======
+	wait_for_sync();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_false(cmd_recv_got, "Did not expect received command callback\n");
 	zassert_false(cmd_status_got, "Did not expect IMG status callback\n");
 	zassert_false(cmd_done_got, "Did not expect done command callback\n");

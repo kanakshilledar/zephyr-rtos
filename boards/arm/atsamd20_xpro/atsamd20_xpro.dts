@@ -5,19 +5,30 @@
  */
 
 /dts-v1/;
+<<<<<<< HEAD
 #include <atmel/samd20.dtsi>
 #include "atsamd20_xpro-pinctrl.dtsi"
+=======
+#include <freq.h>
+#include <atmel/samd20.dtsi>
+#include <atmel/samx2xx18.dtsi>
+#include "atsamd20_xpro-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "SAM D20 Xplained Pro";
 	compatible = "atsamd20,xpro", "atmel,samd20j18", "atmel,samd20";
 
+<<<<<<< HEAD
 	aliases {
 		led0 = &yellow_led;
 		sw0 = &user_button;
 		i2c-0 = &sercom2;
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	chosen {
 		zephyr,console = &sercom3;
 		zephyr,shell-uart = &sercom3;
@@ -25,6 +36,16 @@
 		zephyr,flash = &flash0;
 	};
 
+<<<<<<< HEAD
+=======
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		led0 = &yellow_led;
+		sw0 = &user_button;
+		i2c-0 = &sercom2;
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	leds {
 		compatible = "gpio-leds";
 		yellow_led: led_0 {
@@ -38,12 +59,20 @@
 		user_button: button_0 {
 			gpios = <&porta 15 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "SW0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
 
 &cpu0 {
+<<<<<<< HEAD
 	clock-frequency = <48000000>;
+=======
+	clock-frequency = <DT_FREQ_M(48)>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &sercom0 {

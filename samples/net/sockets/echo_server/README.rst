@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sockets-echo-server-sample:
 
 Socket Echo Server
 ##################
+=======
+.. zephyr:code-sample:: sockets-echo-server
+   :name: Echo server (advanced)
+   :relevant-api: bsd_sockets tls_credentials
+
+   Implement a UDP/TCP server that sends received packets back to the sender.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -48,9 +56,12 @@ echo-server directory:
   This overlay config enables support for two QEMU's when simulating
   IEEE 802.15.4 network that are connected together.
 
+<<<<<<< HEAD
 - :file:`overlay-ppp.conf`
   This overlay config enables support for PPP (Point-to-Point Protocol).
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - :file:`overlay-tls.conf`
   This overlay config enables support for TLS.
 
@@ -110,7 +121,11 @@ running ``west build`` or ``cmake``.
 
 The certificate used by the sample can be found in the sample's ``src``
 directory. The default certificates used by Socket Echo Server and
+<<<<<<< HEAD
 :ref:`sockets-echo-client-sample` enable establishing a secure connection
+=======
+:zephyr:code-sample:`sockets-echo-client` enable establishing a secure connection
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 between the samples.
 
 Running echo-client in Linux Host
@@ -143,6 +158,10 @@ You can verify TLS communication with a Linux host as well. See
 https://github.com/zephyrproject-rtos/net-tools documentation for information
 on how to test TLS with Linux host samples.
 
+<<<<<<< HEAD
 See the :ref:`sockets-echo-client-sample` documentation for an alternate
+=======
+See the :zephyr:code-sample:`sockets-echo-client` sample documentation for an alternate
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 way of running, with the echo-server on the Linux host and the echo-client
 in QEMU.

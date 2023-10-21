@@ -48,7 +48,11 @@ struct itimerspec {
 
 #else /* CONFIG_NEWLIB_LIBC */
 /* Not Newlib */
+<<<<<<< HEAD
 # ifdef CONFIG_ARCH_POSIX
+=======
+# if defined(CONFIG_ARCH_POSIX) && defined(CONFIG_EXTERNAL_LIBC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #  include <bits/types/struct_timespec.h>
 #  include <bits/types/struct_itimerspec.h>
 # else
@@ -82,7 +86,11 @@ static inline int32_t _ts_to_ms(const struct timespec *to)
 	return (to->tv_sec * MSEC_PER_SEC) + (to->tv_nsec / NSEC_PER_MSEC);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_POSIX
+=======
+#if defined(CONFIG_ARCH_POSIX) && defined(CONFIG_EXTERNAL_LIBC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int clock_gettime(clockid_t clock_id, struct timespec *ts);
 #else
 __syscall int clock_gettime(clockid_t clock_id, struct timespec *ts);
@@ -94,13 +102,24 @@ int timer_delete(timer_t timerid);
 int timer_gettime(timer_t timerid, struct itimerspec *its);
 int timer_settime(timer_t timerid, int flags, const struct itimerspec *value,
 		  struct itimerspec *ovalue);
+<<<<<<< HEAD
 int nanosleep(const struct timespec *rqtp, struct timespec *rmtp);
+=======
+int timer_getoverrun(timer_t timerid);
+int nanosleep(const struct timespec *rqtp, struct timespec *rmtp);
+int clock_nanosleep(clockid_t clock_id, int flags,
+		    const struct timespec *rqtp, struct timespec *rmtp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 }
 #endif
 
+<<<<<<< HEAD
 #ifndef CONFIG_ARCH_POSIX
+=======
+#if !(defined(CONFIG_ARCH_POSIX) && defined(CONFIG_EXTERNAL_LIBC))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <syscalls/time.h>
 #endif /* CONFIG_ARCH_POSIX */
 

@@ -52,10 +52,17 @@ struct mdm_receiver_context *mdm_receiver_context_from_id(int id);
 /**
  * @brief  Get received data.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context.
  * @param  *buf: buffer to copy the received data to.
  * @param  size: buffer size.
  * @param  *bytes_read: amount of received bytes
+=======
+ * @param  ctx: receiver context.
+ * @param  buf: buffer to copy the received data to.
+ * @param  size: buffer size.
+ * @param  bytes_read: amount of received bytes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval 0 if ok, < 0 if error.
  */
@@ -65,8 +72,13 @@ int mdm_receiver_recv(struct mdm_receiver_context *ctx,
 /**
  * @brief  Sends the data over specified receiver context.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context.
  * @param  *buf: buffer with the data to send.
+=======
+ * @param  ctx: receiver context.
+ * @param  buf: buffer with the data to send.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param  size: the amount of data to send.
  *
  * @retval 0 if ok, < 0 if error.
@@ -79,9 +91,15 @@ int mdm_receiver_send(struct mdm_receiver_context *ctx,
  *
  * @note   Acquires receivers device, and prepares the context to be used.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context to register.
  * @param  *uart_dev: communication device for the receiver context.
  * @param  *buf: rx buffer to use for received data.
+=======
+ * @param  ctx: receiver context to register.
+ * @param  uart_dev: communication device for the receiver context.
+ * @param  buf: rx buffer to use for received data.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param  size: rx buffer size.
  *
  * @retval 0 if ok, < 0 if error.

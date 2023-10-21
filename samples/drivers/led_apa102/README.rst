@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _led_apa102_sample:
 
 APA102 Sample Application
 #########################
+=======
+.. zephyr:code-sample:: led-apa102
+   :name: APA102 LED strip
+   :relevant-api: led_strip_interface
+
+   Control an LED strip using an APA102, Adafruit DotStar, or compatible driver chip.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

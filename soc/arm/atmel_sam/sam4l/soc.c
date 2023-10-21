@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2020 Gerson Fernando Budke <nandojve@gmail.com>
+=======
+ * Copyright (c) 2020-2023 Gerson Fernando Budke <nandojve@gmail.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,8 +18,11 @@
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/irq.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 
 /** Watchdog control register first write keys */
@@ -255,6 +262,7 @@ static ALWAYS_INLINE void clock_init(void)
 	PM->MCCTRL = OSC_SRC_PLL0;
 }
 
+<<<<<<< HEAD
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -270,6 +278,10 @@ static int atmel_sam4l_init(void)
 
 	key = irq_lock();
 
+=======
+void z_arm_platform_init(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_WDT_DISABLE_AT_BOOT)
 	wdt_set_ctrl(WDT->CTRL & ~WDT_CTRL_EN);
 	while (WDT->CTRL & WDT_CTRL_EN) {
@@ -279,6 +291,7 @@ static int atmel_sam4l_init(void)
 
 	/* Setup system clocks. */
 	clock_init();
+<<<<<<< HEAD
 
 	/*
 	 * Install default handler that simply resets the CPU
@@ -292,3 +305,6 @@ static int atmel_sam4l_init(void)
 }
 
 SYS_INIT(atmel_sam4l_init, PRE_KERNEL_1, 0);
+=======
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

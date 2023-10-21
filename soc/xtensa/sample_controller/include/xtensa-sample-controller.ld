@@ -177,6 +177,13 @@ SECTIONS
 
 #include <zephyr/linker/rel-sections.ld>
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_GEN_ISR_TABLES
+#include <zephyr/linker/intlist.ld>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   .dram1.rodata : ALIGN(4)
   {
     _dram1_rodata_start = ABSOLUTE(.);
@@ -635,7 +642,10 @@ SECTIONS
   {
     KEEP (*(.debug.xt.callgraph .debug.xt.callgraph.* .gnu.linkonce.xt.callgraph.*))
   }
+<<<<<<< HEAD
 #ifdef CONFIG_GEN_ISR_TABLES
 #include <zephyr/linker/intlist.ld>
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

@@ -170,7 +170,11 @@ static int can_calc_timing_int(uint32_t core_clock, struct can_timing *res,
 		   CAN_SYNC_SEG;
 	uint16_t sp_err_min = UINT16_MAX;
 	int sp_err;
+<<<<<<< HEAD
 	struct can_timing tmp_res;
+=======
+	struct can_timing tmp_res = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (bitrate == 0 || sp >= 1000) {
 		return -EINVAL;
@@ -209,6 +213,13 @@ static int can_calc_timing_int(uint32_t core_clock, struct can_timing *res,
 		LOG_DBG("SP error: %d 1/1000", sp_err_min);
 	}
 
+<<<<<<< HEAD
+=======
+	/* Calculate default sjw as phase_seg2 / 2 and clamp the result */
+	res->sjw = MIN(res->phase_seg1, res->phase_seg2 / 2);
+	res->sjw = CLAMP(res->sjw, min->sjw, max->sjw);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return sp_err_min == UINT16_MAX ? -ENOTSUP : (int)sp_err_min;
 }
 
@@ -300,18 +311,30 @@ static int check_timing_in_range(const struct can_timing *timing,
 				 const struct can_timing *min,
 				 const struct can_timing *max)
 {
+<<<<<<< HEAD
 	if (timing->sjw != CAN_SJW_NO_CHANGE &&
 	    !IN_RANGE(timing->sjw, min->sjw, max->sjw)) {
 		return -ENOTSUP;
 	}
 
 	if (!IN_RANGE(timing->prop_seg, min->prop_seg, max->prop_seg) ||
+=======
+	if (!IN_RANGE(timing->sjw, min->sjw, max->sjw) ||
+	    !IN_RANGE(timing->prop_seg, min->prop_seg, max->prop_seg) ||
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	    !IN_RANGE(timing->phase_seg1, min->phase_seg1, max->phase_seg1) ||
 	    !IN_RANGE(timing->phase_seg2, min->phase_seg2, max->phase_seg2) ||
 	    !IN_RANGE(timing->prescaler, min->prescaler, max->prescaler)) {
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
+=======
+	if ((timing->sjw > timing->phase_seg1) || (timing->sjw > timing->phase_seg2)) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -333,7 +356,11 @@ int z_impl_can_set_timing(const struct device *dev,
 
 int z_impl_can_set_bitrate(const struct device *dev, uint32_t bitrate)
 {
+<<<<<<< HEAD
 	struct can_timing timing;
+=======
+	struct can_timing timing = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t max_bitrate;
 	uint16_t sample_pnt;
 	int ret;
@@ -360,8 +387,11 @@ int z_impl_can_set_bitrate(const struct device *dev, uint32_t bitrate)
 		return -ERANGE;
 	}
 
+<<<<<<< HEAD
 	timing.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return can_set_timing(dev, &timing);
 }
 
@@ -388,7 +418,11 @@ int z_impl_can_set_timing_data(const struct device *dev,
 
 int z_impl_can_set_bitrate_data(const struct device *dev, uint32_t bitrate_data)
 {
+<<<<<<< HEAD
 	struct can_timing timing_data;
+=======
+	struct can_timing timing_data = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t max_bitrate;
 	uint16_t sample_pnt;
 	int ret;
@@ -415,8 +449,11 @@ int z_impl_can_set_bitrate_data(const struct device *dev, uint32_t bitrate_data)
 		return -ERANGE;
 	}
 
+<<<<<<< HEAD
 	timing_data.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return can_set_timing_data(dev, &timing_data);
 }
 #endif /* CONFIG_CAN_FD_MODE */

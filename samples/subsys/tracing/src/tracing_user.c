@@ -6,6 +6,7 @@
 
 #include <tracing_user.h>
 
+<<<<<<< HEAD
 void sys_trace_thread_switched_in_user(struct k_thread *thread)
 {
 	printk("%s: %p\n", __func__, thread);
@@ -24,6 +25,52 @@ void sys_trace_isr_enter_user(int nested_interrupts)
 void sys_trace_isr_exit_user(int nested_interrupts)
 {
 	printk("%s: %d\n", __func__, nested_interrupts);
+=======
+static int nested_interrupts[CONFIG_MP_MAX_NUM_CPUS];
+
+void sys_trace_thread_switched_in_user(void)
+{
+	unsigned int key = irq_lock();
+
+	__ASSERT_NO_MSG(nested_interrupts[_current_cpu->id] == 0);
+	/* Can't use k_current_get as thread base and z_tls_current might be incorrect */
+	printk("%s: %p\n", __func__, k_sched_current_thread_query());
+
+	irq_unlock(key);
+}
+
+void sys_trace_thread_switched_out_user(void)
+{
+	unsigned int key = irq_lock();
+
+	__ASSERT_NO_MSG(nested_interrupts[_current_cpu->id] == 0);
+	/* Can't use k_current_get as thread base and z_tls_current might be incorrect */
+	printk("%s: %p\n", __func__, k_sched_current_thread_query());
+
+	irq_unlock(key);
+}
+
+void sys_trace_isr_enter_user(void)
+{
+	unsigned int key = irq_lock();
+	_cpu_t *curr_cpu = _current_cpu;
+
+	printk("%s: %d\n", __func__, nested_interrupts[curr_cpu->id]);
+	nested_interrupts[curr_cpu->id]++;
+
+	irq_unlock(key);
+}
+
+void sys_trace_isr_exit_user(void)
+{
+	unsigned int key = irq_lock();
+	_cpu_t *curr_cpu = _current_cpu;
+
+	nested_interrupts[curr_cpu->id]--;
+	printk("%s: %d\n", __func__, nested_interrupts[curr_cpu->id]);
+
+	irq_unlock(key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void sys_trace_idle_user(void)

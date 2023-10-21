@@ -10,7 +10,11 @@
 #include "access.h"
 #include "dfu.h"
 #include "blob.h"
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <common/bt_str.h>
 
 #define LOG_LEVEL CONFIG_BT_MESH_DFU_LOG_LEVEL
@@ -66,7 +70,11 @@ enum {
 	STATE_SUSPENDED,
 };
 
+<<<<<<< HEAD
 static int32_t timeout = (10 * MSEC_PER_SEC);
+=======
+static int32_t dfu_cli_timeout = (10 * MSEC_PER_SEC);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static struct bt_mesh_dfu_target *target_get(struct bt_mesh_dfu_cli *cli,
 					     uint16_t addr)
@@ -1079,7 +1087,11 @@ int bt_mesh_dfu_cli_cancel(struct bt_mesh_dfu_cli *cli,
 			return err;
 		}
 
+<<<<<<< HEAD
 		return req_wait(cli, K_MSEC(timeout));
+=======
+		return req_wait(cli, K_MSEC(dfu_cli_timeout));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (cli->xfer.state == STATE_IDLE) {
@@ -1168,7 +1180,11 @@ int bt_mesh_dfu_cli_imgs_get(struct bt_mesh_dfu_cli *cli,
 		return err;
 	}
 
+<<<<<<< HEAD
 	err = req_wait(cli, K_MSEC(timeout));
+=======
+	err = req_wait(cli, K_MSEC(dfu_cli_timeout));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	cli->req.img_cb = NULL;
 
@@ -1206,7 +1222,11 @@ int bt_mesh_dfu_cli_metadata_check(struct bt_mesh_dfu_cli *cli,
 		return err;
 	}
 
+<<<<<<< HEAD
 	return req_wait(cli, K_MSEC(timeout));
+=======
+	return req_wait(cli, K_MSEC(dfu_cli_timeout));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int bt_mesh_dfu_cli_status_get(struct bt_mesh_dfu_cli *cli,
@@ -1229,15 +1249,27 @@ int bt_mesh_dfu_cli_status_get(struct bt_mesh_dfu_cli *cli,
 		return err;
 	}
 
+<<<<<<< HEAD
 	return req_wait(cli, K_MSEC(timeout));
+=======
+	return req_wait(cli, K_MSEC(dfu_cli_timeout));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int32_t bt_mesh_dfu_cli_timeout_get(void)
 {
+<<<<<<< HEAD
 	return timeout;
+=======
+	return dfu_cli_timeout;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void bt_mesh_dfu_cli_timeout_set(int32_t t)
 {
+<<<<<<< HEAD
 	timeout = t;
+=======
+	dfu_cli_timeout = t;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

@@ -151,6 +151,7 @@ static int neorv32_gpio_port_toggle_bits(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int neorv32_gpio_pin_interrupt_configure(const struct device *dev,
 						 gpio_pin_t pin,
 						 enum gpio_int_mode mode,
@@ -164,6 +165,8 @@ static int neorv32_gpio_pin_interrupt_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int neorv32_gpio_manage_callback(const struct device *dev,
 					struct gpio_callback *cb,
 					bool set)
@@ -215,7 +218,10 @@ static const struct gpio_driver_api neorv32_gpio_driver_api = {
 	.port_set_bits_raw = neorv32_gpio_port_set_bits_raw,
 	.port_clear_bits_raw = neorv32_gpio_port_clear_bits_raw,
 	.port_toggle_bits = neorv32_gpio_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = neorv32_gpio_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.manage_callback = neorv32_gpio_manage_callback,
 	.get_pending_int = neorv32_gpio_get_pending_int,
 };

@@ -117,7 +117,11 @@ static void fill_audio_buf_sin(int16_t *buf, int length_us, int frequency_hz, in
 {
 	const int sine_period_samples = sample_rate_hz / frequency_hz;
 	const unsigned int num_samples = (length_us * sample_rate_hz) / USEC_PER_SEC;
+<<<<<<< HEAD
 	const float step = 2 * 3.1415 / sine_period_samples;
+=======
+	const float step = 2 * 3.1415f / sine_period_samples;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (unsigned int i = 0; i < num_samples; i++) {
 		const float sample = sin(i * step);
@@ -221,6 +225,7 @@ static void lc3_audio_timer_timeout(struct k_work *work)
 	}
 }
 
+<<<<<<< HEAD
 static void init_lc3(void)
 {
 	unsigned int num_samples;
@@ -230,6 +235,25 @@ static void init_lc3(void)
 	octets_per_frame = bt_codec_cfg_get_octets_per_frame(&codec_configuration.codec);
 	frames_per_sdu = bt_codec_cfg_get_frame_blocks_per_sdu(&codec_configuration.codec, true);
 	octets_per_frame = bt_codec_cfg_get_octets_per_frame(&codec_configuration.codec);
+=======
+static int init_lc3(void)
+{
+	const struct bt_audio_codec_cfg *codec_cfg = &codec_configuration.codec_cfg;
+	unsigned int num_samples;
+	int ret;
+
+	ret = bt_audio_codec_cfg_get_freq(codec_cfg);
+	if (ret > 0) {
+		freq_hz = bt_audio_codec_cfg_freq_to_freq_hz(ret);
+	} else {
+		return ret;
+	}
+
+	frame_duration_us = bt_audio_codec_cfg_get_frame_duration_us(codec_cfg);
+	octets_per_frame = bt_audio_codec_cfg_get_octets_per_frame(codec_cfg);
+	frames_per_sdu = bt_audio_codec_cfg_get_frame_blocks_per_sdu(codec_cfg, true);
+	octets_per_frame = bt_audio_codec_cfg_get_octets_per_frame(codec_cfg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (freq_hz < 0) {
 		printk("Error: Codec frequency not set, cannot start codec.");
@@ -270,7 +294,11 @@ static void init_lc3(void)
 
 #else
 
+<<<<<<< HEAD
 #define init_lc3(...)
+=======
+#define init_lc3(...) 0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Send audio data on timeout
@@ -352,6 +380,7 @@ static void print_hex(const uint8_t *ptr, size_t len)
 	}
 }
 
+<<<<<<< HEAD
 static void print_codec_capabilities(const struct bt_codec *codec)
 {
 	printk("codec 0x%02x cid 0x%04x vid 0x%04x count %u\n",
@@ -376,6 +405,33 @@ static void print_codec_capabilities(const struct bt_codec *codec)
 			  sizeof(codec->meta[i].data.type));
 		printk("\n");
 	}
+=======
+static bool print_cb(struct bt_data *data, void *user_data)
+{
+	const char *str = (const char *)user_data;
+
+	printk("%s: type 0x%02x value_len %u\n", str, data->type, data->data_len);
+	print_hex(data->data, data->data_len);
+	printk("\n");
+
+	return true;
+}
+
+static void print_codec_cap(const struct bt_audio_codec_cap *codec_cap)
+{
+	printk("codec id 0x%02x cid 0x%04x vid 0x%04x count %u\n", codec_cap->id, codec_cap->cid,
+	       codec_cap->vid, codec_cap->data_len);
+
+	if (codec_cap->id == BT_HCI_CODING_FORMAT_LC3) {
+		bt_audio_data_parse(codec_cap->data, codec_cap->data_len, print_cb, "data");
+	} else { /* If not LC3, we cannot assume it's LTV */
+		printk("data: ");
+		print_hex(codec_cap->data, codec_cap->data_len);
+		printk("\n");
+	}
+
+	bt_audio_data_parse(codec_cap->meta, codec_cap->meta_len, print_cb, "meta");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static bool check_audio_support_and_connect(struct bt_data *data,
@@ -485,7 +541,11 @@ static void start_scan(void)
 }
 
 static void stream_configured(struct bt_bap_stream *stream,
+<<<<<<< HEAD
 			      const struct bt_codec_qos_pref *pref)
+=======
+			      const struct bt_audio_codec_qos_pref *pref)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	printk("Audio Stream %p configured\n", stream);
 
@@ -591,11 +651,20 @@ static void add_remote_sink(struct bt_bap_ep *ep)
 	printk("Could not add sink ep\n");
 }
 
+<<<<<<< HEAD
 static void print_remote_codec(const struct bt_codec *codec_capabilities, enum bt_audio_dir dir)
 {
 	printk("codec_capabilities %p dir 0x%02x\n", codec_capabilities, dir);
 
 	print_codec_capabilities(codec_capabilities);
+=======
+static void print_remote_codec_cap(const struct bt_audio_codec_cap *codec_cap,
+				   enum bt_audio_dir dir)
+{
+	printk("codec_cap %p dir 0x%02x\n", codec_cap, dir);
+
+	print_codec_cap(codec_cap);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void discover_sinks_cb(struct bt_conn *conn, int err, enum bt_audio_dir dir)
@@ -712,9 +781,16 @@ static void available_contexts_cb(struct bt_conn *conn,
 	printk("snk ctx %u src ctx %u\n", snk_ctx, src_ctx);
 }
 
+<<<<<<< HEAD
 static void pac_record_cb(struct bt_conn *conn, enum bt_audio_dir dir, const struct bt_codec *codec)
 {
 	print_remote_codec(codec, dir);
+=======
+static void pac_record_cb(struct bt_conn *conn, enum bt_audio_dir dir,
+			  const struct bt_audio_codec_cap *codec_cap)
+{
+	print_remote_codec_cap(codec_cap, dir);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void endpoint_cb(struct bt_conn *conn, enum bt_audio_dir dir, struct bt_bap_ep *ep)
@@ -837,8 +913,12 @@ static int configure_stream(struct bt_bap_stream *stream, struct bt_bap_ep *ep)
 {
 	int err;
 
+<<<<<<< HEAD
 	err = bt_bap_stream_config(default_conn, stream, ep,
 				     &codec_configuration.codec);
+=======
+	err = bt_bap_stream_config(default_conn, stream, ep, &codec_configuration.codec_cfg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err != 0) {
 		return err;
 	}
@@ -963,7 +1043,15 @@ static int set_stream_qos(void)
 
 	for (size_t i = 0U; i < configured_stream_count; i++) {
 		printk("QoS: waiting for %zu streams\n", configured_stream_count);
+<<<<<<< HEAD
 		k_sem_take(&sem_stream_qos, K_FOREVER);
+=======
+		err = k_sem_take(&sem_stream_qos, K_FOREVER);
+		if (err != 0) {
+			printk("failed to take sem_stream_qos (err %d)\n", err);
+			return err;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -972,15 +1060,28 @@ static int set_stream_qos(void)
 static int enable_streams(void)
 {
 	if (IS_ENABLED(CONFIG_LIBLC3)) {
+<<<<<<< HEAD
 		init_lc3();
+=======
+		int err = init_lc3();
+
+		if (err != 0) {
+			return err;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	for (size_t i = 0U; i < configured_stream_count; i++) {
 		int err;
 
+<<<<<<< HEAD
 		err = bt_bap_stream_enable(&streams[i],
 					     codec_configuration.codec.meta,
 					     codec_configuration.codec.meta_count);
+=======
+		err = bt_bap_stream_enable(&streams[i], codec_configuration.codec_cfg.meta,
+					   codec_configuration.codec_cfg.meta_len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err != 0) {
 			printk("Unable to enable stream: %d\n", err);
 			return err;

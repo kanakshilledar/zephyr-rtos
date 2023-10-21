@@ -42,7 +42,11 @@ int main(void)
 
 	/* Configure channels individually prior to sampling. */
 	for (size_t i = 0U; i < ARRAY_SIZE(adc_channels); i++) {
+<<<<<<< HEAD
 		if (!device_is_ready(adc_channels[i].dev)) {
+=======
+		if (!adc_is_ready_dt(&adc_channels[i])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			printk("ADC controller device %s not ready\n", adc_channels[i].dev->name);
 			return 0;
 		}
@@ -65,7 +69,11 @@ int main(void)
 
 			(void)adc_sequence_init_dt(&adc_channels[i], &sequence);
 
+<<<<<<< HEAD
 			err = adc_read(adc_channels[i].dev, &sequence);
+=======
+			err = adc_read_dt(&adc_channels[i], &sequence);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (err < 0) {
 				printk("Could not read (%d)\n", err);
 				continue;

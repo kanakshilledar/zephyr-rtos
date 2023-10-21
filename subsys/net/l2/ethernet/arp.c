@@ -478,16 +478,25 @@ static void arp_update(struct net_if *iface,
 
 		if (force) {
 			sys_snode_t *prev = NULL;
+<<<<<<< HEAD
 			struct arp_entry *entry;
 
 			entry = arp_entry_find(&arp_table, iface, src, &prev);
 			if (entry) {
 				memcpy(&entry->eth, hwaddr,
+=======
+			struct arp_entry *arp_ent;
+
+			arp_ent = arp_entry_find(&arp_table, iface, src, &prev);
+			if (arp_ent) {
+				memcpy(&arp_ent->eth, hwaddr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				       sizeof(struct net_eth_addr));
 			} else {
 				/* Add new entry as it was not found and force
 				 * was set.
 				 */
+<<<<<<< HEAD
 				entry = arp_entry_get_free();
 				if (!entry) {
 					/* Then let's take one from table? */
@@ -500,6 +509,20 @@ static void arp_update(struct net_if *iface,
 					net_ipaddr_copy(&entry->ip, src);
 					memcpy(&entry->eth, hwaddr, sizeof(entry->eth));
 					sys_slist_prepend(&arp_table, &entry->node);
+=======
+				arp_ent = arp_entry_get_free();
+				if (!arp_ent) {
+					/* Then let's take one from table? */
+					arp_ent = arp_entry_get_last_from_table();
+				}
+
+				if (arp_ent) {
+					arp_ent->req_start = k_uptime_get_32();
+					arp_ent->iface = iface;
+					net_ipaddr_copy(&arp_ent->ip, src);
+					memcpy(&arp_ent->eth, hwaddr, sizeof(arp_ent->eth));
+					sys_slist_prepend(&arp_table, &arp_ent->node);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				}
 			}
 		}
@@ -514,6 +537,11 @@ static void arp_update(struct net_if *iface,
 	sys_slist_prepend(&arp_table, &entry->node);
 
 	while (!k_fifo_is_empty(&entry->pending_queue)) {
+<<<<<<< HEAD
+=======
+		int ret;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		pkt = k_fifo_get(&entry->pending_queue, K_FOREVER);
 
 		/* Set the dst in the pending packet */
@@ -525,7 +553,21 @@ static void arp_update(struct net_if *iface,
 			net_sprint_ipv4_addr(&entry->ip),
 			pkt, pkt->frags);
 
+<<<<<<< HEAD
 		net_if_queue_tx(iface, pkt);
+=======
+		/* We directly send the packet without first queueing it.
+		 * The pkt has already been queued for sending, once by
+		 * net_if and second time in the ARP queue. We must not
+		 * queue it twice in net_if so that the statistics of
+		 * the pkt are not counted twice and the packet filter
+		 * callbacks are only called once.
+		 */
+		ret = net_if_l2(iface)->send(iface, pkt);
+		if (ret < 0) {
+			net_pkt_unref(pkt);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_mutex_unlock(&arp_mutex);

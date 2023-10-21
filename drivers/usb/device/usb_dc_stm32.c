@@ -475,7 +475,11 @@ int usb_dc_attach(void)
 
 #if USB_OTG_HS_ULPI_PHY
 	if (ulpi_reset.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(ulpi_reset.port)) {
+=======
+		if (!gpio_is_ready_dt(&ulpi_reset)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Reset GPIO device not ready");
 			return -EINVAL;
 		}

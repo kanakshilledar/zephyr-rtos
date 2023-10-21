@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _ipc_icmsg_sample:
 
 IPC Service - icmsg - Sample Application
 ########################################
+=======
+.. zephyr:code-sample:: ipc-icmsg
+   :name: IPC service: icmsg backend
+   :relevant-api: ipc
+
+   Send messages between two cores using the IPC service and icmsg backend.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

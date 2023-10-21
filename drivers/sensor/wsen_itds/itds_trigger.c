@@ -107,7 +107,11 @@ int itds_trigger_mode_init(const struct device *dev)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: device %s is not ready", dev->name,
 				cfg->int_gpio.port->name);
 		return -ENODEV;

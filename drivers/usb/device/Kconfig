@@ -160,7 +160,11 @@ choice USB_MCUX_CONTROLLER_TYPE
 
 config USB_DC_NXP_EHCI
 	bool "MXRT EHCI USB Device Controller"
+<<<<<<< HEAD
 	select NOCACHE_MEMORY if HAS_MCUX_CACHE
+=======
+	select NOCACHE_MEMORY if ARCH_HAS_NOCACHE_MEMORY_SUPPORT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select USB_DC_HAS_HS_SUPPORT
 	help
 	  Kinetis and RT EHCI USB Device Controller Driver.
@@ -199,6 +203,10 @@ config USB_DC_IT82XX2
 
 config USB_NATIVE_POSIX
 	bool "Native Posix USB Device Controller Driver"
+<<<<<<< HEAD
+=======
+	depends on ARCH_POSIX && EXTERNAL_LIBC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Native Posix USB Device Controller Driver.
 

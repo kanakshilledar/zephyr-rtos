@@ -92,6 +92,12 @@ hardware features:
    * - UART (PIO)
      - :kconfig:option:`CONFIG_SERIAL`
      - :dtcompatible:`raspberrypi,pico-uart-pio`
+<<<<<<< HEAD
+=======
+   * - SPI (PIO)
+     - :kconfig:option:`CONFIG_SPI`
+     - :dtcompatible:`raspberrypi,pico-spi-pio`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Pin Mapping
 ===========
@@ -137,6 +143,19 @@ Zephyr does not (currently) assemble PIO programs. Rather, they should be
 manually assembled and embedded in source code. An example of how this is done
 can be found at `drivers/serial/uart_rpi_pico_pio.c`.
 
+<<<<<<< HEAD
+=======
+Sample:  SPI vio PIO
+====================
+
+The :zephyr_file:`samples/sensor/bme280/README.rst` sample includes a
+demonstration of using the PIO SPI driver to communicate with an
+environmental sensor.  The PIO SPI driver supports using any
+combination of GPIO pins for an SPI bus, as well as allowing up to
+four independent SPI buses on a single board (using the two SPI
+devices as well as both PIO devices).
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Programming and Debugging
 *************************
 
@@ -149,7 +168,11 @@ Using SEGGER JLink
 You can Flash the rpi_pico with a SEGGER JLink debug probe as described in
 :ref:`Building, Flashing and Debugging <west-flashing>`.
 
+<<<<<<< HEAD
 Here is an example of building and flashing the :ref:`blinky-sample` application.
+=======
+Here is an example of building and flashing the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -169,13 +192,21 @@ Create a file in /etc/udev.rules.d with any name, and write the line below.
 
 .. code-block:: bash
 
+<<<<<<< HEAD
    ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0004", MODE="660", GROUP="plugdev", TAG+="uaccess"
+=======
+   ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000c", MODE="660", GROUP="plugdev", TAG+="uaccess"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 This example is valid for the case that the user joins to `plugdev` groups.
 
 The Raspberry Pi Pico has an SWD interface that can be used to program
 and debug the on board RP2040. This interface can be utilized by OpenOCD.
+<<<<<<< HEAD
 However, to use it with the RP2040, a `fork of OpenOCD supporting RP2040`_ is needed.
+=======
+To use it with the RP2040, OpenOCD version 0.12.0 or later is needed.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 If you are using a Debian based system (including RaspberryPi OS, Ubuntu. and more),
 using the `pico_setup.sh`_ script is a convenient way to set up the forked version of OpenOCD.
@@ -184,7 +215,11 @@ Depending on the interface used (such as JLink), you might need to
 checkout to a branch that supports this interface, before proceeding.
 Build and install OpenOCD as described in the README.
 
+<<<<<<< HEAD
 Here is an example of building and flashing the :ref:`blinky-sample` application.
+=======
+Here is an example of building and flashing the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -244,11 +279,15 @@ Using OpenOCD
 
 Install OpenOCD as described for flashing the board.
 
+<<<<<<< HEAD
 .. note::
   `fork of OpenOCD supporting RP2040`_ does not provide ZephyrRTOS enhancement.
   (No RTOS awareness. Thus, can't recognize threads.)
 
 Here is an example for debugging the :ref:`blinky-sample` application.
+=======
+Here is an example for debugging the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -284,9 +323,12 @@ You can then start debugging the board.
 
 .. target-notes::
 
+<<<<<<< HEAD
 .. _fork of OpenOCD supporting RP2040:
    https://github.com/raspberrypi/openocd
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _pico_setup.sh:
    https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh
 

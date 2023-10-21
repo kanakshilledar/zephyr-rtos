@@ -28,5 +28,9 @@ tests:
       - nucleo_f746zg
       - nucleo_g071rb
       - nucleo_wl55jc
+<<<<<<< HEAD
+=======
+      - lpcxpresso55s36
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - nucleo_f207zg

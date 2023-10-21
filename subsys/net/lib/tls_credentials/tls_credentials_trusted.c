@@ -164,7 +164,11 @@ static int credentials_init(void)
 
 	return 0;
 }
+<<<<<<< HEAD
 SYS_INIT(credentials_init, APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+SYS_INIT(credentials_init, POST_KERNEL, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static struct tls_credential *unused_credential_get(void)
 {

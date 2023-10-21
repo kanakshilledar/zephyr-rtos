@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb_hid:
 
 USB HID Sample Application
 ##########################
+=======
+.. zephyr:code-sample:: usb-hid
+   :name: USB HID (Human Interface Device)
+   :relevant-api: usbd_api usb_hid_device_api
+
+   Use USB HID driver to enumerate as a raw HID device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

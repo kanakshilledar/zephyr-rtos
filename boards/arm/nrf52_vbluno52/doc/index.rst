@@ -101,7 +101,12 @@ Here are some sample applications that you can use to test different
 components on the VBLUno52 board:
 
 * :ref:`hello_world`
+<<<<<<< HEAD
 * :ref:`blinky-sample`
 * :ref:`button-sample`
+=======
+* :zephyr:code-sample:`blinky`
+* :zephyr:code-sample:`button`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * :ref:`bluetooth-beacon-sample`
 * :ref:`peripheral_hr`

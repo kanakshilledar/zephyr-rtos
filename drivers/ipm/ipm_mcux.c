@@ -81,9 +81,14 @@ static int mcux_mailbox_ipm_send(const struct device *d, int wait,
 {
 	const struct mcux_mailbox_config *config = d->config;
 	MAILBOX_Type *base = config->base;
+<<<<<<< HEAD
 	uint32_t data32[MCUX_IPM_DATA_REGS]; /* Until we change API
 					   * to uint32_t array
 					   */
+=======
+	/* Until we change API to uint32_t array */
+	uint32_t data32[MCUX_IPM_DATA_REGS] = {0};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	unsigned int flags;
 	int i;
 
@@ -93,7 +98,11 @@ static int mcux_mailbox_ipm_send(const struct device *d, int wait,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (size > MCUX_IPM_DATA_REGS * sizeof(uint32_t)) {
+=======
+	if ((size < 0) || (size > MCUX_IPM_DATA_REGS * sizeof(uint32_t))) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -EMSGSIZE;
 	}
 

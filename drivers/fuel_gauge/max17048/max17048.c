@@ -90,7 +90,11 @@ int max17048_voltage(const struct device *i2c_dev, uint16_t *response)
 	 * milli volts instead of volts.
 	 */
 
+<<<<<<< HEAD
 	*response = *response * 78125 / 1000000;
+=======
+	*response = (uint16_t)((uint32_t)*response * 78125L / 1000000L);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -175,11 +179,17 @@ static int max17048_init(const struct device *dev)
 /**
  * Get a single property from the fuel gauge
  */
+<<<<<<< HEAD
 static int max17048_get_prop(const struct device *dev, struct fuel_gauge_get_property *prop)
+=======
+static int max17048_get_single_prop_impl(const struct device *dev, fuel_gauge_prop_t prop,
+					 union fuel_gauge_prop_val *val)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct max17048_data *data = dev->data;
 	int rc = 0;
 
+<<<<<<< HEAD
 	switch (prop->property_type) {
 	case FUEL_GAUGE_RUNTIME_TO_EMPTY:
 		prop->value.runtime_to_empty = data->time_to_empty;
@@ -192,17 +202,35 @@ static int max17048_get_prop(const struct device *dev, struct fuel_gauge_get_pro
 		break;
 	case FUEL_GAUGE_VOLTAGE:
 		prop->value.voltage = data->voltage;
+=======
+	switch (prop) {
+	case FUEL_GAUGE_RUNTIME_TO_EMPTY:
+		val->runtime_to_empty = data->time_to_empty;
+		break;
+	case FUEL_GAUGE_RUNTIME_TO_FULL:
+		val->runtime_to_full = data->time_to_full;
+		break;
+	case FUEL_GAUGE_RELATIVE_STATE_OF_CHARGE:
+		val->relative_state_of_charge = data->charge;
+		break;
+	case FUEL_GAUGE_VOLTAGE:
+		val->voltage = data->voltage;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		rc = -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	prop->status = rc;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return rc;
 }
 
 /**
+<<<<<<< HEAD
  * Get all possible properties from the fuel gague
  */
 static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_property *props,
@@ -212,6 +240,17 @@ static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_pr
 	struct max17048_data *data = dev->data;
 	int rc = max17048_percent(dev, &data->charge);
 	int16_t crate;
+=======
+ * Get properties from the fuel gauge
+ */
+static int max17048_get_prop(const struct device *dev, fuel_gauge_prop_t prop,
+			     union fuel_gauge_prop_val *val)
+{
+	struct max17048_data *data = dev->data;
+	int rc = max17048_percent(dev, &data->charge);
+	int16_t crate;
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (rc < 0) {
 		LOG_ERR("Error while reading battery percentage");
@@ -242,7 +281,10 @@ static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_pr
 		 */
 		data->charging = crate > 0;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/**
 		 * In the following code, we multiply by 1000 the charge to increase the
 		 * precision. If we just truncate the division without this multiplier,
@@ -266,12 +308,15 @@ static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_pr
 			data->time_to_empty = hours_pending * 60 / 1000;
 			data->time_to_full = 0;
 		}
+<<<<<<< HEAD
 
 		for (int i = 0; i < len; i++) {
 			int ret = max17048_get_prop(dev, props + i);
 
 			err_count += ret ? 1 : 0;
 		}
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		/**
 		 * This case is to avoid a division by 0 when the charge rate is the same
@@ -283,6 +328,7 @@ static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_pr
 		data->time_to_empty = 0;
 	}
 
+<<<<<<< HEAD
 	err_count = (err_count == len) ? -1 : err_count;
 
 	return err_count;
@@ -290,6 +336,15 @@ static int max17048_get_props(const struct device *dev, struct fuel_gauge_get_pr
 
 static const struct fuel_gauge_driver_api max17048_driver_api = {
 	.get_property = &max17048_get_props,
+=======
+	ret = max17048_get_single_prop_impl(dev, prop, val);
+
+	return ret;
+}
+
+static const struct fuel_gauge_driver_api max17048_driver_api = {
+	.get_property = &max17048_get_prop,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define MAX17048_DEFINE(inst)                                                                      \

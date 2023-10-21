@@ -6,6 +6,10 @@
 
 /dts-v1/;
 #include <silabs/efr32mg24b220f1536im48.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Silicon Labs BRD4187C (Mighty Gecko Radio Board)";
@@ -45,10 +49,18 @@
 		button0: button_0 {
 			gpios = <&gpiob GECKO_PIN(1) GPIO_ACTIVE_LOW>;
 			label = "User Push Button 0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button1: button_1 {
 			gpios = <&gpiob GECKO_PIN(3) GPIO_ACTIVE_LOW>;
 			label = "User Push Button 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -58,6 +70,13 @@
 	clock-frequency = <39000000>;
 };
 
+<<<<<<< HEAD
+=======
+&pstate_em3 {
+	status = "disabled";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &usart0 {
 	current-speed = <115200>;
 	location-rx = <GECKO_LOCATION(0) GECKO_PORT_A GECKO_PIN(9)>;
@@ -76,6 +95,15 @@
 
 &gpiob {
 	status = "okay";
+<<<<<<< HEAD
+=======
+
+	board-controller-enable {
+		gpio-hog;
+		gpios = <0 GPIO_ACTIVE_HIGH>;
+		output-high;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &gpioc {
@@ -90,6 +118,17 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&burtc0 {
+	status = "okay";
+};
+
+&stimer0 {
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &se {
 	status = "okay";
 };

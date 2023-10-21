@@ -41,6 +41,10 @@ enum {
 	SOFT_WAKEUP_CLEAR       = 0x0000,
 	SOFT_WAKEUP_WAKEUP      = 0x0090,
 	STATUS_POR              = 0x0002,
+<<<<<<< HEAD
+=======
+	VEMPTY_VE               = 0xff80,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct max17055_data {

@@ -10,5 +10,9 @@ config UART_GECKO
 	select SERIAL_HAS_DRIVER
 	select SERIAL_SUPPORT_INTERRUPT
 	select SOC_GECKO_USART
+<<<<<<< HEAD
+=======
+	select PINCTRL if SOC_GECKO_SERIES1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the Gecko uart driver.

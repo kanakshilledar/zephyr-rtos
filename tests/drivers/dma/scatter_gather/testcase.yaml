@@ -8,6 +8,10 @@ tests:
       - intel_adsp_cavs25
       - frdm_k64f
       - mimxrt1060_evk
+<<<<<<< HEAD
+=======
+      - lpcxpresso55s36
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     filter: dt_alias_exists("dma0")
     integration_platforms:
       - intel_adsp_cavs25

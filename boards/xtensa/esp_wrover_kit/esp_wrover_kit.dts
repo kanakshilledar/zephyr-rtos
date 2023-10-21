@@ -5,7 +5,11 @@
  */
 /dts-v1/;
 
+<<<<<<< HEAD
 #include <espressif/esp32.dtsi>
+=======
+#include <espressif/esp32/esp32_wrover_e_n4r8.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "esp_wrover_kit-pinctrl.dtsi"
 
 / {
@@ -88,6 +92,16 @@
 
 &gpio0 {
 	status = "okay";
+<<<<<<< HEAD
+=======
+
+	/* FIXME: should be part of the display node */
+	lcd-backlight {
+		gpio-hog;
+		gpios = <5 GPIO_ACTIVE_HIGH>;
+		output-low;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &gpio1 {

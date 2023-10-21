@@ -79,6 +79,16 @@ int cache_data_flush_and_invd_all(void);
  *
  * Flush the specified address range of the data cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being flushed, all the portions of the
+ *       data structures sharing the same line will be flushed. This is usually
+ *       not a problem because writing back is a non-destructive process that
+ *       could be triggered by hardware at any time, so having an aligned
+ *       @p addr or a padded @p size is not strictly necessary.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to flush.
  * @param size Range size.
  *
@@ -93,6 +103,17 @@ int cache_data_flush_range(void *addr, size_t size);
  *
  * Invalidate the specified address range of the data cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being invalidated, all the portions of the
+ *       non-read-only data structures sharing the same line will be
+ *       invalidated as well. This is a destructive process that could lead to
+ *       data loss and/or corruption. When @p addr is not aligned to the cache
+ *       line and/or @p size is not a multiple of the cache line size the
+ *       behaviour is undefined.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to invalidate.
  * @param size Range size.
  *
@@ -107,6 +128,17 @@ int cache_data_invd_range(void *addr, size_t size);
  *
  * Flush and Invalidate the specified address range of the data cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being flushed, all the portions of the
+ *       data structures sharing the same line will be flushed before being
+ *       invalidated. This is usually not a problem because writing back is a
+ *       non-destructive process that could be triggered by hardware at any
+ *       time, so having an aligned @p addr or a padded @p size is not strictly
+ *       necessary.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to flush and invalidate.
  * @param size Range size.
  *
@@ -190,6 +222,16 @@ int cache_instr_flush_and_invd_all(void);
  *
  * Flush the specified address range of the instruction cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being flushed, all the portions of the
+ *       data structures sharing the same line will be flushed. This is usually
+ *       not a problem because writing back is a non-destructive process that
+ *       could be triggered by hardware at any time, so having an aligned
+ *       @p addr or a padded @p size is not strictly necessary.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to flush.
  * @param size Range size.
  *
@@ -204,6 +246,17 @@ int cache_instr_flush_range(void *addr, size_t size);
  *
  * Invalidate the specified address range of the instruction cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being invalidated, all the portions of the
+ *       non-read-only data structures sharing the same line will be
+ *       invalidated as well. This is a destructive process that could lead to
+ *       data loss and/or corruption. When @p addr is not aligned to the cache
+ *       line and/or @p size is not a multiple of the cache line size the
+ *       behaviour is undefined.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to invalidate.
  * @param size Range size.
  *
@@ -218,6 +271,17 @@ int cache_instr_invd_range(void *addr, size_t size);
  *
  * Flush and Invalidate the specified address range of the instruction cache.
  *
+<<<<<<< HEAD
+=======
+ * @note the cache operations act on cache line. When multiple data structures
+ *       share the same cache line being flushed, all the portions of the
+ *       data structures sharing the same line will be flushed before being
+ *       invalidated. This is usually not a problem because writing back is a
+ *       non-destructive process that could be triggered by hardware at any
+ *       time, so having an aligned @p addr or a padded @p size is not strictly
+ *       necessary.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param addr Starting address to flush and invalidate.
  * @param size Range size.
  *

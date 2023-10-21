@@ -38,7 +38,11 @@ static const char *now_str(void)
 
 #ifdef CONFIG_MCP9808_TRIGGER
 
+<<<<<<< HEAD
 static struct sensor_trigger trig;
+=======
+static struct sensor_trigger sensor_trig;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int set_window(const struct device *dev,
 		      const struct sensor_value *temp)
@@ -121,9 +125,15 @@ int main(void)
 #ifdef CONFIG_MCP9808_TRIGGER
 	rc = set_window_ucel(dev, TEMP_INITIAL_CEL * UCEL_PER_CEL);
 	if (rc == 0) {
+<<<<<<< HEAD
 		trig.type = SENSOR_TRIG_THRESHOLD;
 		trig.chan = SENSOR_CHAN_AMBIENT_TEMP;
 		rc = sensor_trigger_set(dev, &trig, trigger_handler);
+=======
+		sensor_trig.type = SENSOR_TRIG_THRESHOLD;
+		sensor_trig.chan = SENSOR_CHAN_AMBIENT_TEMP;
+		rc = sensor_trigger_set(dev, &sensor_trig, trigger_handler);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (rc != 0) {

@@ -27,7 +27,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 #include <zephyr/sys/byteorder.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/drivers/gpio.h>
 
@@ -536,11 +540,19 @@ static inline bool read_rxfifo_content(const struct device *dev,
 	return true;
 }
 
+<<<<<<< HEAD
 static inline void insert_radio_noise_details(struct net_pkt *pkt, uint8_t *buf)
 {
 	uint8_t lqi;
 
 	net_pkt_set_ieee802154_rssi(pkt, buf[0]);
+=======
+static inline void insert_radio_noise_details(struct net_pkt *pkt, uint8_t *status)
+{
+	uint8_t lqi;
+
+	net_pkt_set_ieee802154_rssi_dbm(pkt, (int8_t) status[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/**
 	 * CC2520 does not provide an LQI but a correlation factor.
@@ -552,7 +564,11 @@ static inline void insert_radio_noise_details(struct net_pkt *pkt, uint8_t *buf)
 	 * else:
 	 * lqi = (lqi - 50) * 4
 	 */
+<<<<<<< HEAD
 	lqi = buf[1] & CC2520_FCS_CORRELATION;
+=======
+	lqi = status[1] & CC2520_FCS_CORRELATION;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (lqi <= 50U) {
 		lqi = 0U;
 	} else if (lqi >= 110U) {
@@ -566,6 +582,7 @@ static inline void insert_radio_noise_details(struct net_pkt *pkt, uint8_t *buf)
 
 static inline bool verify_crc(const struct device *dev, struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	uint8_t fcs[2];
 
 	if (!z_cc2520_access(dev, true, CC2520_INS_RXBUF, 0, &fcs, 2)) {
@@ -577,6 +594,19 @@ static inline bool verify_crc(const struct device *dev, struct net_pkt *pkt)
 	}
 
 	insert_radio_noise_details(pkt, fcs);
+=======
+	uint8_t status[2];
+
+	if (!z_cc2520_access(dev, true, CC2520_INS_RXBUF, 0, &status, 2)) {
+		return false;
+	}
+
+	if (!(status[1] & CC2520_FCS_CRC_OK)) {
+		return false;
+	}
+
+	insert_radio_noise_details(pkt, status);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return true;
 }
@@ -637,7 +667,11 @@ static void cc2520_rx(void *arg)
 			goto out;
 		}
 
+<<<<<<< HEAD
 		if (ieee802154_radio_handle_ack(cc2520->iface, pkt) == NET_OK) {
+=======
+		if (ieee802154_handle_ack(cc2520->iface, pkt) == NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_DBG("ACK packet handled");
 			goto out;
 		}
@@ -667,10 +701,16 @@ out:
  *******************/
 static enum ieee802154_hw_caps cc2520_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	/* ToDo: Add support for IEEE802154_HW_PROMISC */
 	return IEEE802154_HW_FCS |
 		IEEE802154_HW_2_4_GHZ |
 		IEEE802154_HW_FILTER;
+=======
+	/* TODO: Add support for IEEE802154_HW_PROMISC */
+	return IEEE802154_HW_FCS | IEEE802154_HW_FILTER |
+	       IEEE802154_HW_RX_TX_ACK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int cc2520_cca(const struct device *dev)
@@ -687,10 +727,21 @@ static int cc2520_set_channel(const struct device *dev, uint16_t channel)
 {
 	LOG_DBG("%u", channel);
 
+<<<<<<< HEAD
 	if (channel < 11 || channel > 26) {
 		return -EINVAL;
 	}
 
+=======
+	if (channel > 26) {
+		return -EINVAL;
+	}
+
+	if (channel < 11) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* See chapter 16 */
 	channel = 11 + (channel - 11) * 5U;
 
@@ -817,6 +868,10 @@ static int cc2520_tx(const struct device *dev,
 			goto error;
 		}
 
+<<<<<<< HEAD
+=======
+		/* TODO: Implement standard conforming CSMA/CA or use the soft MAC's default. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_sem_take(&cc2520->tx_sync, K_MSEC(10));
 
 		retry--;
@@ -878,6 +933,22 @@ static int cc2520_stop(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 11, 26);
+
+static int cc2520_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			   struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+		&drv_attr.phy_supported_channels, value);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /******************
  * Initialization *
  *****************/
@@ -951,12 +1022,21 @@ static int configure_gpios(const struct device *dev)
 {
 	const struct cc2520_config *cfg = dev->config;
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->vreg_en.port) ||
 	    !device_is_ready(cfg->reset.port) ||
 	    !device_is_ready(cfg->fifo.port) ||
 	    !device_is_ready(cfg->cca.port) ||
 	    !device_is_ready(cfg->sfd.port) ||
 	    !device_is_ready(cfg->fifop.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->vreg_en) ||
+	    !gpio_is_ready_dt(&cfg->reset) ||
+	    !gpio_is_ready_dt(&cfg->fifo) ||
+	    !gpio_is_ready_dt(&cfg->cca) ||
+	    !gpio_is_ready_dt(&cfg->sfd) ||
+	    !gpio_is_ready_dt(&cfg->fifop)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 
@@ -1048,6 +1128,10 @@ static struct ieee802154_radio_api cc2520_radio_api = {
 	.start			= cc2520_start,
 	.stop			= cc2520_stop,
 	.tx			= cc2520_tx,
+<<<<<<< HEAD
+=======
+	.attr_get		= cc2520_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #if defined(CONFIG_IEEE802154_RAW_MODE)

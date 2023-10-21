@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2022 Nordic Semiconductor ASA
+=======
+ * Copyright (c) 2022-2023 Nordic Semiconductor ASA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,6 +23,17 @@
 #include <zephyr/mgmt/mcumgr/grp/img_mgmt/img_mgmt_callbacks.h>
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_GRP_OS
+#include <zephyr/mgmt/mcumgr/grp/os_mgmt/os_mgmt_callbacks.h>
+#endif
+
+#ifdef CONFIG_MCUMGR_GRP_SETTINGS
+#include <zephyr/mgmt/mcumgr/grp/settings_mgmt/settings_mgmt_callbacks.h>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,6 +69,7 @@ enum mgmt_cb_return {
 	/** No error. */
 	MGMT_CB_OK,
 
+<<<<<<< HEAD
 	/** SMP protocol error and ``ret_rc`` contains the #mcumgr_err_t error code. */
 	MGMT_CB_ERROR_RC,
 
@@ -64,6 +80,21 @@ enum mgmt_cb_return {
 	MGMT_CB_ERROR_RET,
 };
 
+=======
+	/** SMP protocol error and ``err_rc`` contains the #mcumgr_err_t error code. */
+	MGMT_CB_ERROR_RC,
+
+	/**
+	 * Group (application-level) error and ``err_group`` contains the group ID that caused
+	 * the error and ``err_rc`` contians the error code of that group to return.
+	 */
+	MGMT_CB_ERROR_ERR,
+};
+
+/* Deprecated after Zephyr 3.4, use MGMT_CB_ERROR_ERR instead */
+#define MGMT_CB_ERROR_RET __DEPRECATED_MACRO MGMT_CB_ERROR_ERR
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @typedef mgmt_cb
  * @brief Function to be called on MGMT notification/event.
@@ -76,6 +107,7 @@ enum mgmt_cb_return {
  *			is being called for a notification only, the return code will be ignored).
  * @param rc		If ``prev_status`` is #MGMT_CB_ERROR_RC then this is the SMP error that
  *			was returned by the first handler that failed. If ``prev_status`` is
+<<<<<<< HEAD
  *			#MGMT_CB_ERROR_RET then this will be the group error rc code returned by
  *			the first handler that failed. If the handler wishes to raise an SMP
  *			error, this must be set to the #mcumgr_err_t status and #MGMT_CB_ERROR_RC
@@ -86,6 +118,18 @@ enum mgmt_cb_return {
  *			ret error that was returned by the first handler that failed. If the
  *			handler wishes to raise a ret error, this must be set to the group ret
  *			status and #MGMT_CB_ERROR_RET must be returned by the function.
+=======
+ *			#MGMT_CB_ERROR_ERR then this will be the group error rc code returned by
+ *			the first handler that failed. If the handler wishes to raise an SMP
+ *			error, this must be set to the #mcumgr_err_t status and #MGMT_CB_ERROR_RC
+ *			must be returned by the function, if the handler wishes to raise a ret
+ *			error, this must be set to the group ret status and #MGMT_CB_ERROR_ERR
+ *			must be returned by the function.
+ * @param group		If ``prev_status`` is #MGMT_CB_ERROR_ERR then this is the group of the
+ *			ret error that was returned by the first handler that failed. If the
+ *			handler wishes to raise a ret error, this must be set to the group ret
+ *			status and #MGMT_CB_ERROR_ERR must be returned by the function.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param abort_more	Set to true to abort further processing by additional handlers.
  * @param data		Optional event argument.
  * @param data_size	Size of optional event argument (0 if no data is provided).
@@ -106,6 +150,10 @@ enum mgmt_cb_groups {
 	MGMT_EVT_GRP_OS,
 	MGMT_EVT_GRP_IMG,
 	MGMT_EVT_GRP_FS,
+<<<<<<< HEAD
+=======
+	MGMT_EVT_GRP_SETTINGS,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	MGMT_EVT_GRP_USER_CUSTOM_START		= MGMT_GROUP_ID_PERUSER,
 };
@@ -151,6 +199,7 @@ enum fs_mgmt_group_events {
  */
 enum img_mgmt_group_events {
 	/** Callback when a client sends a file upload chunk, data is img_mgmt_upload_check(). */
+<<<<<<< HEAD
 	MGMT_EVT_OP_IMG_MGMT_DFU_CHUNK		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 0),
 
 	/** Callback when a DFU operation is stopped. */
@@ -167,13 +216,38 @@ enum img_mgmt_group_events {
 
 	/** Used to enable all img_mgmt_group events. */
 	MGMT_EVT_OP_IMG_MGMT_ALL		= MGMT_DEF_EVT_OP_ALL(MGMT_EVT_GRP_IMG),
+=======
+	MGMT_EVT_OP_IMG_MGMT_DFU_CHUNK			= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 0),
+
+	/** Callback when a DFU operation is stopped. */
+	MGMT_EVT_OP_IMG_MGMT_DFU_STOPPED		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 1),
+
+	/** Callback when a DFU operation is started. */
+	MGMT_EVT_OP_IMG_MGMT_DFU_STARTED		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 2),
+
+	/** Callback when a DFU operation has finished being transferred. */
+	MGMT_EVT_OP_IMG_MGMT_DFU_PENDING		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 3),
+
+	/** Callback when an image has been confirmed. */
+	MGMT_EVT_OP_IMG_MGMT_DFU_CONFIRMED		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 4),
+
+	/** Callback when an image write command has finished writing to flash. */
+	MGMT_EVT_OP_IMG_MGMT_DFU_CHUNK_WRITE_COMPLETE	= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_IMG, 5),
+
+	/** Used to enable all img_mgmt_group events. */
+	MGMT_EVT_OP_IMG_MGMT_ALL			= MGMT_DEF_EVT_OP_ALL(MGMT_EVT_GRP_IMG),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
  * MGMT event opcodes for operating system management group.
  */
 enum os_mgmt_group_events {
+<<<<<<< HEAD
 	/** Callback when a reset command has been received. */
+=======
+	/** Callback when a reset command has been received, data is os_mgmt_reset_data. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	MGMT_EVT_OP_OS_MGMT_RESET		= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_OS, 0),
 
 	/** Callback when an info command is processed, data is os_mgmt_info_check. */
@@ -187,6 +261,20 @@ enum os_mgmt_group_events {
 };
 
 /**
+<<<<<<< HEAD
+=======
+ * MGMT event opcodes for settings management group.
+ */
+enum settings_mgmt_group_events {
+	/** Callback when a setting is read/written/deleted. */
+	MGMT_EVT_OP_SETTINGS_MGMT_ACCESS	= MGMT_DEF_EVT_OP_ID(MGMT_EVT_GRP_SETTINGS, 0),
+
+	/** Used to enable all settings_mgmt_group events. */
+	MGMT_EVT_OP_SETTINGS_MGMT_ALL		= MGMT_DEF_EVT_OP_ALL(MGMT_EVT_GRP_SETTINGS),
+};
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * MGMT callback struct
  */
 struct mgmt_callback {
@@ -228,11 +316,24 @@ struct mgmt_evt_op_cmd_arg {
 };
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Get event ID index from event.
+ *
+ * @param event		Event to get ID index from.
+ *
+ * @return		Event index.
+ */
+uint8_t mgmt_evt_get_index(uint32_t event);
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief This function is called to notify registered callbacks about mcumgr notifications/events.
  *
  * @param event		#mcumgr_op_t.
  * @param data		Optional event argument.
  * @param data_size	Size of optional event argument (0 if none).
+<<<<<<< HEAD
  * @param ret_rc	Pointer to rc value.
  * @param ret_group	Pointer to group value.
  *
@@ -245,6 +346,20 @@ struct mgmt_evt_op_cmd_arg {
  */
 enum mgmt_cb_return mgmt_callback_notify(uint32_t event, void *data, size_t data_size,
 					 int32_t *ret_rc, uint16_t *ret_group);
+=======
+ * @param err_rc	Pointer to rc value.
+ * @param err_group	Pointer to group value.
+ *
+ * @return		#mgmt_cb_return either #MGMT_CB_OK if all handlers returned it, or
+ *			#MGMT_CB_ERROR_RC if the first failed handler returned an SMP error (in
+ *			which case ``err_rc`` will be updated with the SMP error) or
+ *			#MGMT_CB_ERROR_ERR if the first failed handler returned a ret group and
+ *			error (in which case ``err_group`` will be updated with the failed group
+ *			ID and ``err_rc`` will be updated with the group-specific error code).
+ */
+enum mgmt_cb_return mgmt_callback_notify(uint32_t event, void *data, size_t data_size,
+					 int32_t *err_rc, uint16_t *err_group);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Register event callback function.

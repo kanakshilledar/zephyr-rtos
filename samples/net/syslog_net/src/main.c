@@ -10,6 +10,10 @@ LOG_MODULE_REGISTER(net_syslog, LOG_LEVEL_DBG);
 #include <zephyr/kernel.h>
 
 #include <zephyr/logging/log_backend.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/logging/log_backend_net.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log_ctrl.h>
 
 #include <stdlib.h>
@@ -36,6 +40,19 @@ int main(void)
 		const struct log_backend *backend = log_backend_net_get();
 
 		if (!log_backend_is_active(backend)) {
+<<<<<<< HEAD
+=======
+
+			/* Specifying an address by calling this function will
+			 * override the value given to LOG_BACKEND_NET_SERVER.
+			   It can also be called at any other time after the backend
+			   is started. The net context will be released and
+			   restarted with the newly specified address.
+			 */
+			if (strlen(CONFIG_LOG_BACKEND_NET_SERVER) == 0) {
+				log_backend_net_set_addr(CONFIG_NET_SAMPLE_SERVER_RUNTIME);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			log_backend_init(backend);
 			log_backend_enable(backend, backend->cb->ctx, CONFIG_LOG_MAX_LEVEL);
 		}

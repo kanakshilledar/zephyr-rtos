@@ -183,8 +183,13 @@ static void get_free_packet_count(void)
 	struct k_mem_slab *rx, *tx;
 
 	net_pkt_get_info(&rx, &tx, NULL, NULL);
+<<<<<<< HEAD
 	orig_rx_num_blocks = rx->num_blocks;
 	orig_tx_num_blocks = tx->num_blocks;
+=======
+	orig_rx_num_blocks = rx->info.num_blocks;
+	orig_tx_num_blocks = tx->info.num_blocks;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void check_free_packet_count(void)
@@ -192,8 +197,13 @@ static void check_free_packet_count(void)
 	struct k_mem_slab *rx, *tx;
 
 	net_pkt_get_info(&rx, &tx, NULL, NULL);
+<<<<<<< HEAD
 	zassert_equal(rx->num_blocks, orig_rx_num_blocks, "");
 	zassert_equal(tx->num_blocks, orig_tx_num_blocks, "");
+=======
+	zassert_equal(rx->info.num_blocks, orig_rx_num_blocks, "");
+	zassert_equal(tx->info.num_blocks, orig_tx_num_blocks, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void test_iface_setup(void)

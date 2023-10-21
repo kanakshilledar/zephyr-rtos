@@ -2,7 +2,11 @@ sample:
   name: ESP32 IPM Sample
 tests:
   sample.ipm.ipm_esp32:
+<<<<<<< HEAD
     platform_allow: esp32
+=======
+    platform_allow: esp32_devkitc_wroom esp32_devkitc_wrover
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - samples
       - ipm

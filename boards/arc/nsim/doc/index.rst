@@ -30,8 +30,16 @@ available configurations are listed below:
 * ``nsim_sem`` - ARC EM core v4.0 with secure features (thus "SEM", i.e. Secure EM) and MPUv4
 * ``nsim_hs`` - ARCv2 HS core v2.1 with two register banks, FastIRQ's and MPUv3
 * ``nsim_hs_smp`` - Dual-core ARCv2 HS core v2.1 with two register banks, FastIRQ's and MPUv3
+<<<<<<< HEAD
 * ``nsim_hs5x`` - 32-bit ARCv3 HS core with rich set of options
 * ``nsim_hs6x`` - 64-bit ARCv3 HS core with rich set of options
+=======
+* ``nsim_vpx5`` - ARCv2 VPX5 core, close to vpx5_integer_full template
+* ``nsim_hs5x`` - 32-bit ARCv3 HS core with rich set of options
+* ``nsim_hs6x`` - 64-bit ARCv3 HS core with rich set of options
+* ``nsim_hs5x_smp_12cores`` - SMP 12 cores 32-bit ARCv3 HS platform
+* ``nsim_hs6x_smp_12cores`` - SMP 12 cores 64-bit ARCv3 HS platform
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _board_arc_nsim_prop_args_files:
 
@@ -106,7 +114,11 @@ The supported toolchains are listed in ``toolchain:`` array in ``.yaml`` file, w
    particular toolchain.
 
 Use this configuration to run basic Zephyr applications and kernel tests in
+<<<<<<< HEAD
 nSIM, for example, with the :ref:`synchronization_sample`:
+=======
+nSIM, for example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/synchronization

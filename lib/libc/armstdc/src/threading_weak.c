@@ -49,7 +49,11 @@ int __weak z_impl_k_sem_take(struct k_sem *sem, k_timeout_t timeout)
 	return 0;
 }
 
+<<<<<<< HEAD
 k_tid_t __weak z_impl_z_current_get(void)
+=======
+k_tid_t __weak z_impl_k_sched_current_thread_query(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return 0;
 }

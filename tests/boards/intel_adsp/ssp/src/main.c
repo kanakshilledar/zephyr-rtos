@@ -407,4 +407,18 @@ static void *adsp_ssp_setup(void)
 	return NULL;
 }
 
+<<<<<<< HEAD
+=======
+
+bool adsp_clock_source_is_supported(int source)
+{
+	return true;
+}
+
+uint32_t adsp_clock_source_frequency(int source)
+{
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST_SUITE(adsp_ssp, NULL, adsp_ssp_setup, NULL, NULL, NULL);
