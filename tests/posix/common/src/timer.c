@@ -4,10 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/ztest.h>
 #include <time.h>
 #include <unistd.h>
 
+=======
+#include <time.h>
+#include <unistd.h>
+
+#include <zephyr/ztest.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define SECS_TO_SLEEP 2
 #define DURATION_SECS 1
 #define DURATION_NSECS 0
@@ -22,7 +30,11 @@ void handler(union sigval val)
 	       ++exp_count);
 }
 
+<<<<<<< HEAD
 ZTEST(posix_apis, test_posix_timer)
+=======
+ZTEST(posix_apis, test_timer)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int ret;
 	struct sigevent sig = { 0 };
@@ -67,6 +79,10 @@ ZTEST(posix_apis, test_posix_timer)
 	sleep(SECS_TO_SLEEP);
 
 	clock_gettime(CLOCK_MONOTONIC, &te);
+<<<<<<< HEAD
+=======
+	zassert_equal(ret, 0, "Number of timer overruns is incorrect");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timer_delete(timerid);
 
 	if (te.tv_nsec >= ts.tv_nsec) {
@@ -82,7 +98,38 @@ ZTEST(posix_apis, test_posix_timer)
 			    (value.it_interval.tv_sec * NSEC_PER_SEC +
 			     value.it_interval.tv_nsec)) / NSEC_PER_SEC;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*TESTPOINT: Check if POSIX timer test passed*/
 	zassert_equal(total_secs_timer, secs_elapsed,
 		      "POSIX timer test has failed");
 }
+<<<<<<< HEAD
+=======
+
+ZTEST(posix_apis, test_timer_overrun)
+{
+	timer_t timerid;
+	struct sigevent sig = { 0 };
+	struct itimerspec value;
+
+	sig.sigev_notify = SIGEV_NONE;
+
+	timer_create(CLOCK_MONOTONIC, &sig, &timerid);
+
+	/*Set the timer to expire every 500 milliseconds*/
+	value.it_interval.tv_sec = 0;
+	value.it_interval.tv_nsec = 500000000;
+	value.it_value.tv_sec = 0;
+	value.it_value.tv_nsec = 500000000;
+	timer_settime(timerid, 0, &value, NULL);
+	k_sleep(K_MSEC(2500));
+
+	int overruns = timer_getoverrun(timerid);
+
+	timer_delete(timerid);
+	zassert_equal(overruns, 4, "Number of overruns is incorrect");
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

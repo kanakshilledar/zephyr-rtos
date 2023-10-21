@@ -3,8 +3,12 @@
 Testing Error Detection and Correction
 ######################################
 
+<<<<<<< HEAD
 Tests verify API and use error injection method to inject
 errors.
+=======
+Tests verify API and use error injection method to inject errors.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Prerequisites
 *************
@@ -12,11 +16,19 @@ Prerequisites
 IBECC should be enabled in BIOS. This is usually enabled in the default
 BIOS configuration. Verify following is enabled::
 
+<<<<<<< HEAD
    Intel Advanced Menu -> Memory Configuration -> In-Band ECC ->  <Enabled>
 
 Verify also operational mode with::
 
    Intel Advanced Menu -> Memory Configuration -> In-Band ECC Operation Mode -> 2
+=======
+:menuselection:`Intel Advanced Menu --> Memory Configuration --> In-Band ECC -->  Enabled`
+
+Verify also operational mode with::
+
+:menuselection:`Intel Advanced Menu --> Memory Configuration --> In-Band ECC Operation Mode --> 2`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 For injection test Error Injection should be enabled.
 
@@ -31,7 +43,11 @@ In order to use Error Injection user need to use BIOS Boot Guard 0 profile.
 
 Additionally Error Injection need to be enabled in the following BIOS menu::
 
+<<<<<<< HEAD
    Intel Advanced Menu -> Memory Configuration -> In-Band ECC Error -> <Enabled>
+=======
+:menuselection:`Intel Advanced Menu --> Memory Configuration --> In-Band ECC Error --> Enabled`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. note::
 
@@ -43,11 +59,19 @@ Additionally Error Injection need to be enabled in the following BIOS menu::
 Building and Running
 ********************
 
+<<<<<<< HEAD
 This project can be built as follows:
 
 .. zephyr-app-commands::
    :zephyr-app: tests/subsys/edac/ibecc
    :board: ehl_crb
+=======
+This project can be built as follows for the :ref:`intel_ehl_crb` board:
+
+.. zephyr-app-commands::
+   :zephyr-app: tests/subsys/edac/ibecc
+   :board: intel_ehl_crb
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :goals: build
    :compact:
 

@@ -7,6 +7,10 @@ pyocd>=0.35.0
 
 # used by twister for board/hardware map
 tabulate
+<<<<<<< HEAD
+=======
+natsort
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # used by mcuboot
 cbor>=1.0.0

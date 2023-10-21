@@ -21,7 +21,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(uart_hvc_xen, CONFIG_UART_LOG_LEVEL);
 
+<<<<<<< HEAD
 static struct hvc_xen_data hvc_data = {0};
+=======
+static struct hvc_xen_data xen_hvc_data = {0};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
 static void hvc_uart_evtchn_cb(void *priv);
@@ -233,14 +237,22 @@ int xen_console_init(const struct device *dev)
 
 	data->dev = dev;
 
+<<<<<<< HEAD
 	ret = hvm_get_parameter(HVM_PARAM_CONSOLE_EVTCHN, &data->evtchn);
+=======
+	ret = hvm_get_parameter(HVM_PARAM_CONSOLE_EVTCHN, DOMID_SELF, &data->evtchn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret) {
 		LOG_ERR("%s: failed to get Xen console evtchn, ret = %d\n",
 				__func__, ret);
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ret = hvm_get_parameter(HVM_PARAM_CONSOLE_PFN, &console_pfn);
+=======
+	ret = hvm_get_parameter(HVM_PARAM_CONSOLE_PFN, DOMID_SELF, &console_pfn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret) {
 		LOG_ERR("%s: failed to get Xen console PFN, ret = %d\n",
 				__func__, ret);
@@ -262,7 +274,11 @@ int xen_console_init(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 DEVICE_DT_DEFINE(DT_NODELABEL(xen_hvc), xen_console_init, NULL, &hvc_data,
+=======
+DEVICE_DT_DEFINE(DT_NODELABEL(xen_hvc), xen_console_init, NULL, &xen_hvc_data,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		NULL, PRE_KERNEL_1, CONFIG_XEN_HVC_INIT_PRIORITY,
 		&xen_hvc_api);
 

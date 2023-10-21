@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2018-2021 mcumgr authors
+<<<<<<< HEAD
  * Copyright (c) 2022 Nordic Semiconductor ASA
+=======
+ * Copyright (c) 2022-2023 Nordic Semiconductor ASA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -11,6 +15,10 @@
 #include <inttypes.h>
 #include <zephyr/sys/slist.h>
 #include <zephyr/mgmt/mcumgr/smp/smp.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/mgmt/mcumgr/mgmt/mgmt_defines.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,6 +31,7 @@ extern "C" {
  * @{
  */
 
+<<<<<<< HEAD
 /** Opcodes; encoded in first byte of header. */
 enum mcumgr_op_t {
 	/** Read op-code */
@@ -135,6 +144,8 @@ enum mcumgr_err_t {
 
 #define MGMT_HDR_SIZE		8
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @typedef mgmt_alloc_rsp_fn
  * @brief Allocates a buffer suitable for holding a response.
  *
@@ -182,6 +193,12 @@ typedef int (*mgmt_handler_fn)(struct smp_streamer *ctxt);
 struct mgmt_handler {
 	mgmt_handler_fn mh_read;
 	mgmt_handler_fn mh_write;
+<<<<<<< HEAD
+=======
+#if IS_ENABLED(CONFIG_MCUMGR_MGMT_HANDLER_USER_DATA)
+	void *user_data;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -195,8 +212,20 @@ struct mgmt_group {
 	const struct mgmt_handler *mg_handlers;
 	uint16_t mg_handlers_count;
 
+<<<<<<< HEAD
 	/* The numeric ID of this group. */
 	uint16_t mg_group_id;
+=======
+	/** The numeric ID of this group. */
+	uint16_t mg_group_id;
+
+#if IS_ENABLED(CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL)
+	/** A function handler for translating version 2 SMP error codes to version 1 SMP error
+	 * codes (optional)
+	 */
+	smp_translate_error_fn mg_translate_error;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -225,6 +254,32 @@ void mgmt_unregister_group(struct mgmt_group *group);
 const struct mgmt_handler *mgmt_find_handler(uint16_t group_id, uint16_t command_id);
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Finds a registered command group.
+ *
+ * @param group_id	The command group id to find.
+ *
+ * @return	The requested command group on success;
+ *		NULL on failure.
+ */
+const struct mgmt_group *mgmt_find_group(uint16_t group_id);
+
+#if IS_ENABLED(CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL)
+/**
+ * @brief		Finds a registered error translation function for converting from SMP
+ *			version 2 error codes to legacy SMP version 1 error codes.
+ *
+ * @param group_id	The group of the translation function to find.
+ *
+ * @return		Requested lookup function on success.
+ * @return		NULL on failure.
+ */
+smp_translate_error_fn mgmt_find_error_translation_function(uint16_t group_id);
+#endif
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @}
  */
 

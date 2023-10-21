@@ -61,7 +61,11 @@ void app_gpio_init(void)
 	/* LEDs configuration & setting */
 
 	for (i = 0; i < ARRAY_SIZE(led_device); i++) {
+<<<<<<< HEAD
 		if (!device_is_ready(led_device[i].port)) {
+=======
+		if (!gpio_is_ready_dt(&led_device[i])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 		gpio_pin_configure_dt(&led_device[i], GPIO_OUTPUT_INACTIVE);
@@ -72,7 +76,11 @@ void app_gpio_init(void)
 	k_work_init(&button_work, publish);
 
 	for (i = 0; i < ARRAY_SIZE(button_device); i++) {
+<<<<<<< HEAD
 		if (!device_is_ready(button_device[i].port)) {
+=======
+		if (!gpio_is_ready_dt(&button_device[i])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 		gpio_pin_configure_dt(&button_device[i], GPIO_INPUT);

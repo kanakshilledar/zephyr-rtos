@@ -13,7 +13,11 @@
 #include <zephyr/init.h>
 #include <fsl_clock.h>
 #include <fsl_cache.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define ASSERT_WITHIN_RANGE(val, min, max, str) \
 	BUILD_ASSERT(val >= min && val <= max, str)
@@ -240,15 +244,21 @@ static ALWAYS_INLINE void clk_init(void)
 static int ke1xf_init(void)
 
 {
+<<<<<<< HEAD
 
 	unsigned int old_level; /* old interrupt lock level */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_ARM_MPU)
 	uint32_t temp_reg;
 #endif /* !CONFIG_ARM_MPU */
 
+<<<<<<< HEAD
 	/* Disable interrupts */
 	old_level = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_ARM_MPU)
 	/*
 	 * Disable memory protection and clear slave port errors.
@@ -265,18 +275,24 @@ static int ke1xf_init(void)
 	/* Initialize system clocks and PLL */
 	clk_init();
 
+<<<<<<< HEAD
 	/*
 	 * Install default handler that simply resets the CPU if
 	 * configured in the kernel, NOP otherwise
 	 */
 	NMI_INIT();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifndef CONFIG_KINETIS_KE1XF_ENABLE_CODE_CACHE
 	/* SystemInit will have enabled the code cache. Disable it here */
 	L1CACHE_DisableCodeCache();
 #endif
+<<<<<<< HEAD
 	/* Restore interrupt state */
 	irq_unlock(old_level);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

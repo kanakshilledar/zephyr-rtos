@@ -16,6 +16,11 @@ For more information about the NEORV32, see the following websites:
 - `The NEORV32 RISC-V Processor Datasheet`_
 - `The NEORV32 RISC-V Processor User Guide`_
 
+<<<<<<< HEAD
+=======
+The currently supported version is 1.8.6.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Supported Features
 ==================
 

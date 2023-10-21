@@ -16,5 +16,16 @@ source $(dirname "${BASH_SOURCE[0]}")/../../_mesh_test.sh
 # 4. Remove status field data and compare received metadata with
 #    local metadata data.
 conf=prj_mesh1d1_conf
+<<<<<<< HEAD
 RunTest mesh_lcd_test_max_metadata_access_payload \
 	lcd_cli_max_sdu_metadata_request lcd_srv_metadata_status_respond
+=======
+overlay=overlay_pst_conf
+RunTest mesh_lcd_test_max_metadata_access_payload \
+	lcd_cli_max_sdu_metadata_request lcd_srv_metadata_status_respond
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest mesh_lcd_test_max_metadata_access_payload_psa \
+	lcd_cli_max_sdu_metadata_request lcd_srv_metadata_status_respond
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

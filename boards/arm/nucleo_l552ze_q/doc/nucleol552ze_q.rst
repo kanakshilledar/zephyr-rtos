@@ -261,7 +261,11 @@ Default Zephyr Peripheral Mapping:
 - SPI_3_MOSI : PC12
 - PWM_2_CH1 : PA0
 - USER_PB : PC13
+<<<<<<< HEAD
 - LD2 : PA5
+=======
+- LD2 : PB7
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - DAC1 : PA4
 - ADC1 : PC0
 
@@ -370,6 +374,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo L552ZE Q website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-l552ze-q.html
 
 .. _STM32 Nucleo-144 board User Manual:
@@ -380,6 +385,18 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32L552 reference manual:
    http://www.st.com/resource/en/reference_manual/DM00346336.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-l552ze-q.html
+
+.. _STM32 Nucleo-144 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00615305.pdf
+
+.. _STM32L552ZE on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32l552ze.html
+
+.. _STM32L552 reference manual:
+   https://www.st.com/resource/en/reference_manual/DM00346336.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32CubeProgrammer:
    https://www.st.com/en/development-tools/stm32cubeprog.html

@@ -48,7 +48,11 @@ static void iface_uart_async_callback(const struct device *dev,
 		break;
 	case UART_RX_BUF_RELEASED:
 		/* UART driver is done with memory, free it */
+<<<<<<< HEAD
 		k_mem_slab_free(&uart_modem_async_rx_slab, (void **)&evt->data.rx_buf.buf);
+=======
+		k_mem_slab_free(&uart_modem_async_rx_slab, (void *)evt->data.rx_buf.buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	case UART_RX_RDY:
 		/* Place received data on the ring buffer */

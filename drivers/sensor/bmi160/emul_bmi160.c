@@ -241,7 +241,11 @@ static int bmi160_emul_transfer_i2c(const struct emul *target, struct i2c_msg *m
 
 	__ASSERT_NO_MSG(msgs && num_msgs);
 
+<<<<<<< HEAD
 	i2c_dump_msgs_rw("emul", msgs, num_msgs, addr, false);
+=======
+	i2c_dump_msgs_rw(target->dev, msgs, num_msgs, addr, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	switch (num_msgs) {
 	case 2:
 		if (msgs->flags & I2C_MSG_READ) {

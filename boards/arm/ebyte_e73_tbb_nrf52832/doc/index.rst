@@ -187,7 +187,11 @@ To flash the board connect pins: SWDIO, SWDCLK, RST, GND from E73-TBB
 to corresponding pins on your J-Link device, then build and flash the application in the usual way.
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/blinky
+=======
+   :zephyr-app: samples/basic/blinky
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: ebyte_e73_tbb_nrf52832
    :goals: build flash
 
@@ -206,8 +210,13 @@ the board are working properly with Zephyr:
 
 .. code-block:: console
 
+<<<<<<< HEAD
    :ref:`blinky-sample`
    :ref:`button-sample`
+=======
+   :zephyr:code-sample:`blinky`
+   :zephyr:code-sample:`button`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 You can build and flash the examples to make sure Zephyr is running correctly on
 your board. The button and LED definitions can be found in

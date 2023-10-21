@@ -498,7 +498,11 @@ static int stm32_sdmmc_card_detect_init(struct stm32_sdmmc_priv *priv)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(priv->cd.port)) {
+=======
+	if (!gpio_is_ready_dt(&priv->cd)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 
@@ -548,7 +552,11 @@ static int stm32_sdmmc_pwr_init(struct stm32_sdmmc_priv *priv)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(priv->pe.port)) {
+=======
+	if (!gpio_is_ready_dt(&priv->pe)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 

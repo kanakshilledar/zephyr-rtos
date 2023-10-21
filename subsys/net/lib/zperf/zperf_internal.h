@@ -99,7 +99,11 @@ const struct in_addr *zperf_get_default_if_in4_addr(void);
 const struct in6_addr *zperf_get_default_if_in6_addr(void);
 
 int zperf_prepare_upload_sock(const struct sockaddr *peer_addr, int tos,
+<<<<<<< HEAD
 			      int proto);
+=======
+			      int priority, int proto);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 uint32_t zperf_packet_duration(uint32_t packet_size, uint32_t rate_in_kbps);
 

@@ -97,6 +97,10 @@ uint8_t ll_create_connection(uint16_t scan_interval, uint16_t scan_window,
 	uint16_t max_tx_time;
 	uint16_t max_rx_time;
 	memq_link_t *link;
+<<<<<<< HEAD
+=======
+	uint32_t slot_us;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t hop;
 	int err;
 
@@ -290,8 +294,11 @@ uint8_t ll_create_connection(uint16_t scan_interval, uint16_t scan_window,
 	/* Setup the PRT reload */
 	ull_cp_prt_reload_set(conn, conn_interval_us);
 
+<<<<<<< HEAD
 	conn->central.terminate_ack = 0U;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	conn->llcp_terminate.reason_final = 0U;
 	/* NOTE: use allocated link for generating dedicated
 	 * terminate ind rx node
@@ -360,6 +367,7 @@ conn_is_valid:
 #endif /* CONFIG_BT_CTLR_ADV_EXT */
 #endif /* CONFIG_BT_CTLR_DATA_LENGTH */
 
+<<<<<<< HEAD
 	conn->ull.ticks_slot =
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_START_US +
 				       EVENT_OVERHEAD_END_US +
@@ -367,6 +375,15 @@ conn_is_valid:
 				       max_tx_time +
 				       EVENT_IFS_US +
 				       max_rx_time);
+=======
+	/* Calculate event time reservation */
+	slot_us = max_tx_time + max_rx_time;
+	slot_us += EVENT_IFS_US + (EVENT_CLOCK_JITTER_US << 1);
+	slot_us += ready_delay_us;
+	slot_us += EVENT_OVERHEAD_START_US + EVENT_OVERHEAD_END_US;
+
+	conn->ull.ticks_slot = HAL_TICKER_US_TO_TICKS_CEIL(slot_us);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_BT_CTLR_PRIVACY)
 	ull_filter_scan_update(filter_policy);
@@ -859,8 +876,13 @@ void ull_central_setup(struct node_rx_hdr *rx, struct node_rx_ftr *ftr,
 	 * Deferred attempt to stop can fail as it would have
 	 * expired, hence ignore failure.
 	 */
+<<<<<<< HEAD
 	ticker_stop(TICKER_INSTANCE_ID_CTLR, TICKER_USER_ID_ULL_HIGH,
 		    TICKER_ID_SCAN_STOP, NULL, NULL);
+=======
+	(void)ticker_stop(TICKER_INSTANCE_ID_CTLR, TICKER_USER_ID_ULL_HIGH,
+			  TICKER_ID_SCAN_STOP, NULL, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Start central */
 	ticker_id_conn = TICKER_ID_CONN_BASE + ll_conn_handle_get(conn);

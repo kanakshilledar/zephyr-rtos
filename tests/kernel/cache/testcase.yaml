@@ -8,3 +8,18 @@ tests:
       - qemu_xtensa
       - qemu_cortex_a53
       - nsim_em
+<<<<<<< HEAD
+=======
+  kernel.cache.api.minimallibc:
+    tags:
+      - kernel
+      - cache
+      - libc
+    filter: CONFIG_CACHE_MANAGEMENT and CONFIG_MINIMAL_LIBC_SUPPORTED
+    integration_platforms:
+      - qemu_xtensa
+      - qemu_cortex_a53
+      - nsim_em
+    extra_configs:
+      - CONFIG_MINIMAL_LIBC=y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

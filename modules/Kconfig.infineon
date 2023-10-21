@@ -40,4 +40,17 @@ config HAS_XMCLIB_SPI
 	help
 	  Enable XMCLIB SPI
 
+<<<<<<< HEAD
+=======
+config HAS_XMCLIB_I2C
+	bool
+	help
+	  Enable XMCLIB I2C
+
+config HAS_XMCLIB_CCU
+	bool
+	help
+	  Enable XMCLIB CCU4/CCU8
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # HAS_XMCLIB

@@ -8,6 +8,10 @@
 
 #include <nxp/nxp_lpc11u67.dtsi>
 #include <zephyr/dt-bindings/led/led.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "faze-pinctrl.dtsi"
 
@@ -35,8 +39,14 @@
 
 		/* Handle the USB_SLEEP GPIO as a button. */
 		usb_sleep_button: button_0 {
+<<<<<<< HEAD
 		gpios = <&gpio0 20 GPIO_ACTIVE_HIGH>;
 			label = "USB sleep button";
+=======
+			gpios = <&gpio0 20 GPIO_ACTIVE_HIGH>;
+			label = "USB sleep button";
+			zephyr,code = <INPUT_KEY_SLEEP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -78,7 +88,11 @@
 
 	/* TI LP5030 LED controller connected to I2C1. */
 	led_controller_0: lp5030@30 {
+<<<<<<< HEAD
 		compatible = "ti,lp5030", "ti,lp503x";
+=======
+		compatible = "ti,lp5030";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		reg = <0x30>;
 
 		led0: led_0 {

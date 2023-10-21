@@ -10,6 +10,10 @@
 #include <ti/cc1352r.dtsi>
 #include "../cc1352r1_launchxl/boosterpack_connector.dtsi"
 #include "cc1352r_sensortag-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BTN_GPIO_FLAGS (GPIO_ACTIVE_LOW | GPIO_PULL_UP)
 
@@ -28,6 +32,11 @@
 		sensor2 = &sensor2;
 		accel0 = &sensor1;
 		watchdog0 = &wdt0;
+<<<<<<< HEAD
+=======
+		mcuboot-led0 = &led1;
+		mcuboot-button0 = &btn1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	chosen {
@@ -36,6 +45,10 @@
 		zephyr,console = &uart0;
 		zephyr,shell-uart = &uart0;
 		zephyr,ieee802154 = &ieee802154;
+<<<<<<< HEAD
+=======
+		zephyr,code-partition = &slot0_partition;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	leds {
@@ -59,10 +72,15 @@
 		btn0: btn_0 {
 			gpios = <&gpio0 15 BTN_GPIO_FLAGS>;
 			label = "Push button 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		btn1: btn_1 {
 			gpios = <&gpio0 14 BTN_GPIO_FLAGS>;
 			label = "Push button 2";
+<<<<<<< HEAD
 		};
 	};
 
@@ -79,12 +97,50 @@
 			min-residency-us = <5000>;
 			exit-latency-us = <240>;
 		};
+=======
+			zephyr,code = <INPUT_KEY_1>;
+		};
+	};
+};
+
+&flash0 {
+	partitions {
+		/* 40 KiB (0xa000) for MCUboot */
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x0000a000>;
+		};
+
+		/* 136 KiB (0x22000) per slot for application */
+		slot0_partition: partition@a000 {
+			label = "image-0";
+			reg = <0x0000a000 0x00022000>;
+		};
+
+		slot1_partition: partition@2c000 {
+			label = "image-1";
+			reg = <0x0002c000 0x00022000>;
+		};
+
+		/* 32 KiB (0x8000) for storage */
+		storage_partition: partition@4e000 {
+			label = "storage";
+			reg = <0x0004e000 0x00008000>;
+		};
+
+		/* CCFG (customer configuration area) is located in uppermost
+		 * flash sector (0x2000/8 KiB @ 0x56000), keep it unused.
+		 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 
 &cpu0 {
 	clock-frequency = <48000000>;
+<<<<<<< HEAD
 	cpu-power-states = <&idle &standby>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &trng {
@@ -141,10 +197,13 @@
 	/* TODO: "jedec,spi-nor" for the mx25r8035 */
 };
 
+<<<<<<< HEAD
 &rtc {
 	status = "okay";
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &radio {
 	status = "okay";
 };

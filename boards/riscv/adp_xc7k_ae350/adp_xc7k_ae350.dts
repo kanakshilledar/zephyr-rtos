@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2021 Andes Technology Corporation
+=======
+ * Copyright (c) 2023 Andes Technology Corporation
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,6 +11,10 @@
 /dts-v1/;
 
 #include <andes/andes_v5_ae350.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Andes ADP-XC7K AE350";
@@ -26,7 +34,12 @@
 		zephyr,console = &uart1;
 		zephyr,shell-uart = &uart1;
 		zephyr,sram = &dram;
+<<<<<<< HEAD
 		zephyr,flash = &flash0;
+=======
+		zephyr,flash = &mx25u16;
+		zephyr,flash-controller = &mx25u16;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	leds {
@@ -105,34 +118,69 @@
 		user_button1: button_1 {
 			label = "User SW1";
 			gpios = <&gpio0 0 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button2: button_2 {
 			label = "User SW2";
 			gpios = <&gpio0 1 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button3: button_3 {
 			label = "User SW3";
 			gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button4: button_4 {
 			label = "User SW4";
 			gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button5: button_5 {
 			label = "User SW5";
 			gpios = <&gpio0 4 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button6: button_6 {
 			label = "User SW6";
 			gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_5>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button7: button_7 {
 			label = "User SW7";
 			gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_6>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
 
+<<<<<<< HEAD
+=======
+&l2_cache {
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &syscon {
 	status = "okay";
 };
@@ -153,6 +201,7 @@
 
 &spi0 {
 	status = "okay";
+<<<<<<< HEAD
 	flash0: flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
@@ -160,6 +209,29 @@
 		spi-max-frequency = <1000000>;
 		jedec-id = [c2 25 35];
 		status = "disabled";
+=======
+	mx25u16: qspi-nor-flash@0 {
+		compatible = "jedec,spi-nor", "andestech,qspi-nor";
+		size = <16777216>;
+		spi-max-frequency = <10000000>;
+		jedec-id = [c2 25 35];
+		status = "okay";
+		reg = <0>;
+		sfdp-bfp = [
+			e5 20 f1 ff  ff ff ff 00  44 eb 08 6b  08 3b 04 bb
+			fe ff ff ff  ff ff 00 ff  ff ff 44 eb  0c 20 0f 52
+			10 d8 00 ff
+		];
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			storage_partition: partition@0 {
+				label = "storage";
+				reg = <0x0 DT_SIZE_K(1024)>;
+			};
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 
@@ -180,3 +252,10 @@
 	status = "okay";
 	cs-gpios = <&gpio0 7 GPIO_ACTIVE_LOW>;
 };
+<<<<<<< HEAD
+=======
+
+&wdt {
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -56,6 +56,22 @@ LOG_MODULE_REGISTER(bt_driver);
  */
 #define SPI_MAX_MSG_LEN		255 /* As defined by X-NUCLEO-IDB04A1 BSP */
 
+<<<<<<< HEAD
+=======
+#define DATA_DELAY_US DT_INST_PROP(0, controller_data_delay_us)
+
+/* Single byte header denoting the buffer type */
+#define H4_HDR_SIZE 1
+
+/* Maximum L2CAP MTU that can fit in a single packet */
+#define MAX_MTU (SPI_MAX_MSG_LEN - H4_HDR_SIZE - BT_L2CAP_HDR_SIZE - BT_HCI_ACL_HDR_SIZE)
+
+#if CONFIG_BT_L2CAP_TX_MTU > MAX_MTU
+#warning CONFIG_BT_L2CAP_TX_MTU is too large and can result in packets that cannot \
+	be transmitted across this HCI link
+#endif /* CONFIG_BT_L2CAP_TX_MTU > MAX_MTU */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static uint8_t rxmsg[SPI_MAX_MSG_LEN];
 static uint8_t txmsg[SPI_MAX_MSG_LEN];
 
@@ -66,7 +82,10 @@ static struct gpio_callback	gpio_cb;
 
 static K_SEM_DEFINE(sem_initialised, 0, 1);
 static K_SEM_DEFINE(sem_request, 0, 1);
+<<<<<<< HEAD
 static K_SEM_DEFINE(sem_done, 0, 1);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static K_SEM_DEFINE(sem_busy, 1, 1);
 
 static K_KERNEL_STACK_DEFINE(spi_rx_stack, CONFIG_BT_DRV_RX_STACK_SIZE);
@@ -150,6 +169,7 @@ static inline int bt_spi_transceive(void *tx, uint32_t tx_len,
 	return spi_transceive_dt(&bus, &spi_tx, &spi_rx);
 }
 
+<<<<<<< HEAD
 static inline uint16_t bt_spi_get_cmd(uint8_t *txmsg)
 {
 	return (txmsg[CMD_OCF] << 8) | txmsg[CMD_OGF];
@@ -161,11 +181,25 @@ static inline uint16_t bt_spi_get_evt(uint8_t *rxmsg)
 }
 
 static void bt_to_inactive_isr(const struct device *unused1,
+=======
+static inline uint16_t bt_spi_get_cmd(uint8_t *msg)
+{
+	return (msg[CMD_OCF] << 8) | msg[CMD_OGF];
+}
+
+static inline uint16_t bt_spi_get_evt(uint8_t *msg)
+{
+	return (msg[EVT_VENDOR_CODE_MSB] << 8) | msg[EVT_VENDOR_CODE_LSB];
+}
+
+static void bt_spi_isr(const struct device *unused1,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		       struct gpio_callback *unused2,
 		       uint32_t unused3)
 {
 	LOG_DBG("");
 
+<<<<<<< HEAD
 	/* Disable until RX thread re-enables */
 	gpio_pin_interrupt_configure_dt(&irq_gpio, GPIO_INT_DISABLE);
 
@@ -190,6 +224,16 @@ static bool bt_spi_handle_vendor_evt(uint8_t *rxmsg)
 	bool handled = false;
 
 	switch (bt_spi_get_evt(rxmsg)) {
+=======
+	k_sem_give(&sem_request);
+}
+
+static bool bt_spi_handle_vendor_evt(uint8_t *msg)
+{
+	bool handled = false;
+
+	switch (bt_spi_get_evt(msg)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case EVT_BLUE_INITIALIZED:
 		k_sem_give(&sem_initialised);
 #if defined(CONFIG_BT_BLUENRG_ACI)
@@ -214,8 +258,13 @@ static bool bt_spi_handle_vendor_evt(uint8_t *rxmsg)
  */
 static int configure_cs(void)
 {
+<<<<<<< HEAD
 	/* Configure pin as output and set to active */
 	return gpio_pin_configure_dt(&bus.config.cs.gpio, GPIO_OUTPUT_ACTIVE);
+=======
+	/* Configure pin as output and set to inactive */
+	return gpio_pin_configure_dt(&bus.config.cs.gpio, GPIO_OUTPUT_INACTIVE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void kick_cs(void)
@@ -302,21 +351,33 @@ static void bt_spi_rx_thread(void)
 	int len;
 
 	(void)memset(&txmsg, 0xFF, SPI_MAX_MSG_LEN);
+<<<<<<< HEAD
 
 	while (true) {
 		/* Enable the interrupt line */
 		gpio_init_callback(&gpio_cb, bt_to_active_isr, BIT(irq_gpio.pin));
 		gpio_pin_interrupt_configure_dt(&irq_gpio, GPIO_INT_LEVEL_ACTIVE);
+=======
+	while (true) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Wait for interrupt pin to be active */
 		k_sem_take(&sem_request, K_FOREVER);
 
+<<<<<<< HEAD
 		/* Wait for SPI bus to be available */
 		k_sem_take(&sem_busy, K_FOREVER);
 
 		LOG_DBG("");
 
 		do {
+=======
+		LOG_DBG("");
+
+		do {
+			/* Wait for SPI bus to be available */
+			k_sem_take(&sem_busy, K_FOREVER);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			init_irq_high_loop();
 			do {
 				kick_cs();
@@ -326,11 +387,26 @@ static void bt_spi_rx_thread(void)
 				    header_slave[STATUS_HEADER_TOREAD] == 0xFF) &&
 				   !ret)) && exit_irq_high_loop());
 
+<<<<<<< HEAD
+=======
+			/* Delay here is rounded up to next tick */
+			k_sleep(K_USEC(DATA_DELAY_US));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			size = header_slave[STATUS_HEADER_TOREAD];
 			if (ret == 0 && size != 0) {
 				do {
 					ret = bt_spi_transceive(&txmsg, size,
 								&rxmsg, size);
+<<<<<<< HEAD
+=======
+					if (rxmsg[0] == 0U) {
+						/* Consider increasing controller-data-delay-us
+						 * if this message is extremely common.
+						 */
+						LOG_DBG("Controller not ready for SPI transaction "
+							"of %d bytes", size);
+					}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				} while (rxmsg[0] == 0U && ret == 0);
 			}
 
@@ -402,22 +478,29 @@ static void bt_spi_rx_thread(void)
 		/* On BlueNRG-MS, host is expected to read */
 		/* as long as IRQ pin is high */
 		} while (irq_pin_high());
+<<<<<<< HEAD
 
 		/* Wait for IRQ to have de-asserted */
 		k_sem_take(&sem_done, K_FOREVER);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 static int bt_spi_send(struct net_buf *buf)
 {
 	uint8_t header[5] = { SPI_WRITE, 0x00,  0x00,  0x00,  0x00 };
+<<<<<<< HEAD
 	int pending;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret;
 
 	LOG_DBG("");
 
 	/* Buffer needs an additional byte for type */
 	if (buf->len >= SPI_MAX_MSG_LEN) {
+<<<<<<< HEAD
 		LOG_ERR("Message too long");
 		return -EINVAL;
 	}
@@ -431,6 +514,13 @@ static int bt_spi_send(struct net_buf *buf)
 		k_sleep(K_MSEC(1));
 	}
 
+=======
+		LOG_ERR("Message too long (%d)", buf->len);
+		return -EINVAL;
+	}
+
+	/* Wait for SPI bus to be available */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_take(&sem_busy, K_FOREVER);
 
 	switch (bt_buf_get_type(buf)) {
@@ -498,6 +588,7 @@ out:
 
 static int bt_spi_open(void)
 {
+<<<<<<< HEAD
 	/* Configure RST pin and hold BLE in Reset */
 	gpio_pin_configure_dt(&rst_gpio, GPIO_OUTPUT_ACTIVE);
 
@@ -508,13 +599,41 @@ static int bt_spi_open(void)
 		return -EINVAL;
 	}
 
+=======
+	int err;
+
+	/* Configure RST pin and hold BLE in Reset */
+	err = gpio_pin_configure_dt(&rst_gpio, GPIO_OUTPUT_ACTIVE);
+	if (err) {
+		return err;
+	}
+
+	/* Configure IRQ pin and the IRQ call-back/handler */
+	err = gpio_pin_configure_dt(&irq_gpio, GPIO_INPUT);
+	if (err) {
+		return err;
+	}
+
+	gpio_init_callback(&gpio_cb, bt_spi_isr, BIT(irq_gpio.pin));
+	err = gpio_add_callback(irq_gpio.port, &gpio_cb);
+	if (err) {
+		return err;
+	}
+
+	/* Enable the interrupt line */
+	gpio_pin_interrupt_configure_dt(&irq_gpio, GPIO_INT_EDGE_TO_ACTIVE);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Take BLE out of reset */
 	k_sleep(K_MSEC(DT_INST_PROP_OR(0, reset_assert_duration_ms, 0)));
 	gpio_pin_set_dt(&rst_gpio, 0);
 
+<<<<<<< HEAD
 	/* Give the controller some time to boot */
 	k_sleep(K_MSEC(1));
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Start RX thread */
 	k_thread_create(&spi_rx_thread_data, spi_rx_stack,
 			K_KERNEL_STACK_SIZEOF(spi_rx_stack),
@@ -550,12 +669,20 @@ static int bt_spi_init(void)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(irq_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("IRQ GPIO device not ready");
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(rst_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&rst_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Reset GPIO device not ready");
 		return -ENODEV;
 	}

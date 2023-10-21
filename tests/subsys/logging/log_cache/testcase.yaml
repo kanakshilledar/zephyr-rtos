@@ -3,7 +3,11 @@ common:
     - native_posix
 
 tests:
+<<<<<<< HEAD
   logging.log_cache:
+=======
+  logging.cache:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_cache
       - logging

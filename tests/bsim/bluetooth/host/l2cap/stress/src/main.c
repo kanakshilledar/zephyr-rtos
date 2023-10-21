@@ -178,7 +178,12 @@ static struct bt_l2cap_chan_ops ops = {
 
 void deferred_send(struct k_work *item)
 {
+<<<<<<< HEAD
 	struct test_ctx *ctx = CONTAINER_OF(item, struct test_ctx, work_item);
+=======
+	struct test_ctx *ctx = CONTAINER_OF(k_work_delayable_from_work(item),
+					    struct test_ctx, work_item);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct bt_l2cap_chan *chan = &ctx->le_chan.chan;
 
@@ -205,7 +210,12 @@ struct test_ctx *alloc_test_context(void)
 	return NULL;
 }
 
+<<<<<<< HEAD
 int server_accept_cb(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+=======
+int server_accept_cb(struct bt_conn *conn, struct bt_l2cap_server *server,
+		     struct bt_l2cap_chan **chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct test_ctx *ctx = NULL;
 

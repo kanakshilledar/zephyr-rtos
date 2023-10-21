@@ -3,6 +3,30 @@
 # kernel is a normal CMake library and not a zephyr_library because it
 # should not be --whole-archive'd
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(
+  ${ZEPHYR_BASE}/include/zephyr/device.h
+  ${ZEPHYR_BASE}/include/zephyr/kernel.h
+  ${ZEPHYR_BASE}/include/zephyr/sys/kobject.h
+  ${ZEPHYR_BASE}/include/zephyr/sys/time_units.h
+)
+
+if(NOT CONFIG_ERRNO_IN_TLS AND NOT CONFIG_LIBC_ERRNO)
+  zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/sys/errno_private.h)
+endif()
+
+zephyr_syscall_header_ifdef(
+  CONFIG_ATOMIC_OPERATIONS_C
+  ${ZEPHYR_BASE}/include/zephyr/sys/atomic_c.h
+)
+
+zephyr_syscall_header_ifdef(
+  CONFIG_MMU
+  ${ZEPHYR_BASE}/include/zephyr/sys/mem_manage.h
+)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # If a pre-built static library containing kernel code exists in
 # this directory, libkernel.a, link it with the application code
 # instead of building from source.
@@ -17,9 +41,19 @@ target_link_libraries(kernel INTERFACE ${libkernel})
 
 else()
 
+<<<<<<< HEAD
 list(APPEND kernel_files
   main_weak.c
   banner.c
+=======
+# FIXME: SHADOW_VARS: Remove this once we have enabled -Wshadow globally.
+add_compile_options($<TARGET_PROPERTY:compiler,warning_shadow_variables>)
+
+list(APPEND kernel_files
+  main_weak.c
+  banner.c
+  busy_wait.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   device.c
   errno.c
   fatal.c
@@ -82,6 +116,10 @@ target_sources_ifdef(CONFIG_POLL                  kernel PRIVATE poll.c)
 target_sources_ifdef(CONFIG_EVENTS                kernel PRIVATE events.c)
 target_sources_ifdef(CONFIG_PIPES                 kernel PRIVATE pipes.c)
 target_sources_ifdef(CONFIG_SCHED_THREAD_USAGE    kernel PRIVATE usage.c)
+<<<<<<< HEAD
+=======
+target_sources_ifdef(CONFIG_OBJ_CORE              kernel PRIVATE obj_core.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if(${CONFIG_KERNEL_MEM_POOL})
   target_sources(kernel PRIVATE mempool.c)
@@ -101,6 +139,15 @@ target_sources_ifdef(
   userspace.c
   )
 
+<<<<<<< HEAD
+=======
+if(${CONFIG_DYNAMIC_THREAD})
+  target_sources(kernel PRIVATE dynamic.c)
+else()
+  target_sources(kernel PRIVATE dynamic_disabled.c)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 target_include_directories(kernel PRIVATE
   ${ZEPHYR_BASE}/kernel/include
   ${ARCH_DIR}/${ARCH}/include

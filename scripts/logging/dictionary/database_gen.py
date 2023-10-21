@@ -378,11 +378,15 @@ def extract_string_variables(elf):
 
     return strings
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 def try_decode_string(str_maybe):
     """Check if it is a printable string"""
     for encoding in STR_ENCODINGS:
         try:
+<<<<<<< HEAD
             decoded_str = str_maybe.decode(encoding)
 
             # Check if string is printable according to Python
@@ -400,11 +404,15 @@ def try_decode_string(str_maybe):
 
             if printable:
                 return decoded_str
+=======
+            return str_maybe.decode(encoding)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         except UnicodeDecodeError:
             pass
 
     return None
 
+<<<<<<< HEAD
 
 def extract_strings_in_one_section(section, str_mappings):
     """Extract NULL-terminated strings in one ELF section"""
@@ -469,6 +477,62 @@ def extract_strings_in_one_section(section, str_mappings):
 
                 start = None
                 idx += 1
+=======
+def is_printable(b):
+    # Check if string is printable according to Python
+    # since the parser (written in Python) will need to
+    # print the string.
+    #
+    # Note that '\r' and '\n' are not included in
+    # string.printable so they need to be checked separately.
+    return (b in string.printable) or (b in ACCEPTABLE_ESCAPE_CHARS)
+
+def extract_strings_in_one_section(section, str_mappings):
+    """Extract NULL-terminated strings in one ELF section"""
+    data = section['data']
+    idx = 0
+    start = None
+    for x in data:
+        if is_printable(chr(x)):
+            # Printable character, potential part of string
+            if start is None:
+                # Beginning of potential string
+                start = idx
+        elif x == 0:
+            # End of possible string
+            if start is not None:
+                # Found potential string
+                str_maybe = data[start : idx]
+                decoded_str = try_decode_string(str_maybe)
+
+                if decoded_str is not None:
+                    addr = section['start'] + start
+
+                    if addr not in str_mappings:
+                        str_mappings[addr] = decoded_str
+
+                        # Decoded string may contain un-printable characters
+                        # (e.g. extended ASC-II characters) or control
+                        # characters (e.g. '\r' or '\n'), so simply print
+                        # the byte string instead.
+                        logger.debug('Found string via extraction at ' + PTR_FMT + ': %s',
+                                     addr, str_maybe)
+
+                        # GCC-based toolchain will reuse the NULL character
+                        # for empty strings. There is no way to know which
+                        # one is being reused, so just treat all NULL character
+                        # at the end of legitimate strings as empty strings.
+                        null_addr = section['start'] + idx
+                        str_mappings[null_addr] = ''
+
+                        logger.debug('Found null string via extraction at ' + PTR_FMT,
+                                     null_addr)
+                start = None
+        else:
+            # Non-printable byte, remove start location
+            start = None
+        idx += 1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     return str_mappings
 

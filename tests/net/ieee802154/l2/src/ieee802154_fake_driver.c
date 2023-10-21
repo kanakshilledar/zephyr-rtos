@@ -10,19 +10,37 @@ LOG_MODULE_REGISTER(net_ieee802154_fake_driver, LOG_LEVEL_DBG);
 #include <zephyr/kernel.h>
 
 #include <zephyr/net/net_core.h>
+<<<<<<< HEAD
 #include "net_private.h"
 
+=======
+#include <zephyr/net/net_if.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_pkt.h>
 
 /** FAKE ieee802.15.4 driver **/
 #include <zephyr/net/ieee802154_radio.h>
 
+<<<<<<< HEAD
 struct net_pkt *current_pkt;
 K_SEM_DEFINE(driver_lock, 0, UINT_MAX);
 
 static enum ieee802154_hw_caps fake_get_capabilities(const struct device *dev)
 {
 	return IEEE802154_HW_FCS | IEEE802154_HW_2_4_GHZ;
+=======
+#include "net_private.h"
+#include <ieee802154_frame.h>
+
+struct net_pkt *current_pkt;
+K_SEM_DEFINE(driver_lock, 0, UINT_MAX);
+
+uint8_t mock_ext_addr_be[8] = {0x00, 0x12, 0x4b, 0x00, 0x00, 0x9e, 0xa3, 0xc2};
+
+static enum ieee802154_hw_caps fake_get_capabilities(const struct device *dev)
+{
+	return IEEE802154_HW_FCS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int fake_cca(const struct device *dev)
@@ -73,6 +91,32 @@ static int fake_tx(const struct device *dev,
 
 	insert_frag(pkt, frag);
 
+<<<<<<< HEAD
+=======
+	if (ieee802154_is_ar_flag_set(frag)) {
+		struct net_if *iface = net_if_lookup_by_dev(dev);
+		struct ieee802154_context *ctx = net_if_l2_data(iface);
+
+		struct net_pkt *ack_pkt;
+
+		ack_pkt = net_pkt_rx_alloc_with_buffer(iface, IEEE802154_ACK_PKT_LENGTH, AF_UNSPEC,
+						       0, K_FOREVER);
+		if (!ack_pkt) {
+			NET_ERR("*** Could not allocate ack pkt.\n");
+			return -ENOMEM;
+		}
+
+		if (!ieee802154_create_ack_frame(iface, ack_pkt, ctx->ack_seq)) {
+			NET_ERR("*** Could not create ack frame.\n");
+			net_pkt_unref(ack_pkt);
+			return -EFAULT;
+		}
+
+		ieee802154_handle_ack(iface, ack_pkt);
+		net_pkt_unref(ack_pkt);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&driver_lock);
 
 	return 0;
@@ -92,6 +136,7 @@ static int fake_stop(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void fake_iface_init(struct net_if *iface)
 {
 	struct ieee802154_context *ctx = net_if_l2_data(iface);
@@ -103,6 +148,32 @@ static void fake_iface_init(struct net_if *iface)
 	ieee802154_init(iface);
 
 	ctx->pan_id = 0xabcd;
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 11, 26);
+
+/* API implementation: attr_get */
+static int fake_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			 struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+		&drv_attr.phy_supported_channels, value);
+}
+
+static void fake_iface_init(struct net_if *iface)
+{
+	struct ieee802154_context *ctx = net_if_l2_data(iface);
+
+	net_if_set_link_addr(iface, mock_ext_addr_be, 8, NET_LINK_IEEE802154);
+
+	ieee802154_init(iface);
+
+	ctx->pan_id = IEEE802154_PAN_ID_NOT_ASSOCIATED;
+	ctx->short_addr = IEEE802154_SHORT_ADDRESS_NOT_ASSOCIATED;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ctx->channel = 26U;
 	ctx->sequence = 62U;
 
@@ -126,6 +197,10 @@ static struct ieee802154_radio_api fake_radio_api = {
 	.start			= fake_start,
 	.stop			= fake_stop,
 	.tx			= fake_tx,
+<<<<<<< HEAD
+=======
+	.attr_get		= fake_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 NET_DEVICE_INIT(fake, "fake_ieee802154",

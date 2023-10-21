@@ -8,8 +8,13 @@
 #include <zephyr/sys/printk.h>
 #include <zephyr/sys/reboot.h>
 #include <zephyr/sys/barrier.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
+=======
+#include <cmsis_core.h>
+#include <zephyr/arch/arm/nmi.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/ztest.h>
 #include <zephyr/tc_util.h>
 

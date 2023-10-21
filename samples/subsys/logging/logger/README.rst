@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _logger_sample:
 
 Logging
 ###########
+=======
+.. zephyr:code-sample:: logging
+   :name: Logging
+   :relevant-api: log_api log_ctrl
+
+   Output log messages to the console using the logging subsystem.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

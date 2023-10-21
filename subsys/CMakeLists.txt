@@ -1,11 +1,29 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+# FIXME: SHADOW_VARS: move this before adding shadow variable warning below.
+# This is because, in some build configurations, the external lorawan module
+# is pulled in as though the source files are in main repo. This results in
+# shadow variable warnings being active on these files. Until the module has
+# fixed those shadow variables, keep this here before add_compile_options()
+# below.
+add_subdirectory_ifdef(CONFIG_LORAWAN lorawan)
+
+# FIXME: SHADOW_VARS: Remove this once we have enabled -Wshadow globally.
+add_compile_options($<TARGET_PROPERTY:compiler,warning_shadow_variables>)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory(canbus)
 add_subdirectory(debug)
 add_subdirectory(fb)
 add_subdirectory(fs)
 add_subdirectory(ipc)
 add_subdirectory(logging)
+<<<<<<< HEAD
+=======
+add_subdirectory(mem_mgmt)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory(mgmt)
 add_subdirectory(modbus)
 add_subdirectory(pm)
@@ -20,6 +38,10 @@ add_subdirectory(testsuite)
 add_subdirectory(tracing)
 add_subdirectory(usb)
 
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_BINDESC bindesc)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_BT bluetooth)
 add_subdirectory_ifdef(CONFIG_CONSOLE_SUBSYS console)
 add_subdirectory_ifdef(CONFIG_DEMAND_PAGING demand_paging)
@@ -29,9 +51,17 @@ add_subdirectory_ifdef(CONFIG_EMUL emul)
 add_subdirectory_ifdef(CONFIG_IMG_MANAGER dfu)
 add_subdirectory_ifdef(CONFIG_INPUT input)
 add_subdirectory_ifdef(CONFIG_JWT jwt)
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_LORAWAN lorawan)
 add_subdirectory_ifdef(CONFIG_NET_BUF net)
 add_subdirectory_ifdef(CONFIG_RETENTION retention)
+=======
+add_subdirectory_ifdef(CONFIG_MODEM_MODULES modem)
+add_subdirectory_ifdef(CONFIG_LLEXT llext)
+add_subdirectory_ifdef(CONFIG_NET_BUF net)
+add_subdirectory_ifdef(CONFIG_RETENTION retention)
+add_subdirectory_ifdef(CONFIG_SENSING sensing)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_SETTINGS settings)
 add_subdirectory_ifdef(CONFIG_SHELL shell)
 add_subdirectory_ifdef(CONFIG_TIMING_FUNCTIONS timing)

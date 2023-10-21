@@ -779,7 +779,11 @@ void bt_hci_auth_complete(struct net_buf *buf)
 
 	LOG_DBG("status 0x%02x, handle %u", evt->status, handle);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_BR);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Can't find conn for handle %u", handle);
 		return;

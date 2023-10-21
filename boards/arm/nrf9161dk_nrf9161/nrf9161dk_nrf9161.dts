@@ -5,7 +5,11 @@
  */
 
 /dts-v1/;
+<<<<<<< HEAD
 #include <nordic/nrf9161_sica.dtsi>
+=======
+#include <nordic/nrf9161_laca.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "nrf9161dk_nrf9161_common.dtsi"
 
 / {

@@ -12,17 +12,27 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/irq.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <stm32_ll_bus.h>
 #include <stm32_ll_pwr.h>
 #include <stm32_ll_rcc.h>
 #include <stm32_ll_system.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include "stm32_hsem.h"
 
+=======
+#include "stm32_hsem.h"
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_STM32H7_DUAL_CORE)
 static int stm32h7_m4_wakeup(void)
 {
@@ -56,11 +66,14 @@ static int stm32h7_m4_wakeup(void)
  */
 static int stm32h7_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
 	key = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SCB_EnableICache();
 
 	if (IS_ENABLED(CONFIG_DCACHE)) {
@@ -69,6 +82,7 @@ static int stm32h7_init(void)
 		}
 	}
 
+<<<<<<< HEAD
 	/* Install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
 	 */
@@ -76,6 +90,8 @@ static int stm32h7_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Update CMSIS SystemCoreClock variable (HCLK) */
 	/* At reset, system core clock is set to 64 MHz from HSI */
 	SystemCoreClock = 64000000;

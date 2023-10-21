@@ -290,9 +290,15 @@ static int handle_scan_report(struct bt_mesh_model *mod, struct bt_mesh_msg_ctx 
 
 	dev.rssi = net_buf_simple_pull_u8(buf);
 	memcpy(dev.uuid, net_buf_simple_pull_mem(buf, 16), 16);
+<<<<<<< HEAD
 	dev.oob = net_buf_simple_pull_be16(buf);
 	if (buf->len == 4) {
 		dev.hash = net_buf_simple_pull_be32(buf);
+=======
+	dev.oob = net_buf_simple_pull_le16(buf);
+	if (buf->len == 4) {
+		memcpy(&dev.hash, net_buf_simple_pull_mem(buf, 4), 4);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		dev.flags = BT_MESH_RPR_UNPROV_HASH;
 	} else if (buf->len) {
 		return -EINVAL;

@@ -129,7 +129,11 @@ static void gpio_xlnx_ps##idx##_irq_config(const struct device *dev)\
 #define GPIO_XLNX_PS_DEV_DEFINE(idx)\
 DEVICE_DT_INST_DEFINE(idx, gpio_xlnx_ps_init, NULL,\
 	&gpio_xlnx_ps##idx##_data, &gpio_xlnx_ps##idx##_cfg,\
+<<<<<<< HEAD
 	PRE_KERNEL_2, CONFIG_GPIO_INIT_PRIORITY, &gpio_xlnx_ps_default_apis);
+=======
+	PRE_KERNEL_1, CONFIG_GPIO_INIT_PRIORITY, &gpio_xlnx_ps_default_apis);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * Top-level device initialization macro, executed for each PS GPIO

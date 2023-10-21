@@ -12,11 +12,16 @@
 
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include <zephyr/irq.h>
 
+=======
+
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stm32_ll_system.h>
 
 /**
@@ -29,13 +34,17 @@
  */
 static int st_stm32f4_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Enable ART Flash cache accelerator for both instruction and data */
 	LL_FLASH_EnableInstCache();
 	LL_FLASH_EnableDataCache();
 
+<<<<<<< HEAD
 	key = irq_lock();
 
 	/* Install default handler that simply resets the CPU
@@ -45,6 +54,8 @@ static int st_stm32f4_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Update CMSIS SystemCoreClock variable (HCLK) */
 	/* At reset, system core clock is set to 16 MHz from HSI */
 	SystemCoreClock = 16000000;

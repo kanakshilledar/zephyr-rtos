@@ -368,7 +368,11 @@ static int ili9xxx_init(const struct device *dev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->cmd_data.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->cmd_data)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Command/Data GPIO device not ready");
 		return -ENODEV;
 	}
@@ -380,7 +384,11 @@ static int ili9xxx_init(const struct device *dev)
 	}
 
 	if (config->reset.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->reset.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->reset)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Reset GPIO device not ready");
 			return -ENODEV;
 		}

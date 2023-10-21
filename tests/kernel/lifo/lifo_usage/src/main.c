@@ -12,7 +12,11 @@
 #define LIST_LEN 2
 
 struct k_lifo lifo, plifo;
+<<<<<<< HEAD
 static ldata_t data[LIST_LEN];
+=======
+static ldata_t lifo_data[LIST_LEN];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct k_lifo timeout_order_lifo;
 
 static struct k_thread tdata, tdata1;
@@ -71,7 +75,11 @@ struct scratch_lifo_packet scratch_lifo_packets[NUM_SCRATCH_LIFO_PACKETS];
 
 struct k_lifo scratch_lifo_packets_lifo;
 
+<<<<<<< HEAD
 static k_tid_t tid[TIMEOUT_ORDER_NUM_THREADS];
+=======
+static k_tid_t to_ord_tid[TIMEOUT_ORDER_NUM_THREADS];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static K_THREAD_STACK_ARRAY_DEFINE(ttstack,
 		TIMEOUT_ORDER_NUM_THREADS, TSTACK_SIZE);
 static struct k_thread ttdata[TIMEOUT_ORDER_NUM_THREADS];
@@ -96,11 +104,19 @@ static void thread_entry_nowait(void *p1, void *p2, void *p3)
 	ret = k_lifo_get((struct k_lifo *)p1, K_FOREVER);
 
 	/* data pushed at last should be read first */
+<<<<<<< HEAD
 	zassert_equal(ret, (void *)&data[1]);
 
 	ret = k_lifo_get((struct k_lifo *)p1, K_FOREVER);
 
 	zassert_equal(ret, (void *)&data[0]);
+=======
+	zassert_equal(ret, (void *)&lifo_data[1]);
+
+	ret = k_lifo_get((struct k_lifo *)p1, K_FOREVER);
+
+	zassert_equal(ret, (void *)&lifo_data[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_sem_give(&start_sema);
 }
@@ -120,10 +136,17 @@ static int test_multiple_threads_pending(struct timeout_order_data *test_data,
 	int ii;
 
 	for (ii = 0; ii < test_data_size; ii++) {
+<<<<<<< HEAD
 		tid[ii] = k_thread_create(&ttdata[ii], ttstack[ii], TSTACK_SIZE,
 				test_thread_pend_and_timeout,
 				&test_data[ii], NULL, NULL,
 				LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+=======
+		to_ord_tid[ii] = k_thread_create(&ttdata[ii], ttstack[ii], TSTACK_SIZE,
+						 test_thread_pend_and_timeout,
+						 &test_data[ii], NULL, NULL,
+						 LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	for (ii = 0; ii < test_data_size; ii++) {
@@ -147,9 +170,15 @@ static int test_multiple_threads_pending(struct timeout_order_data *test_data,
 
 static void thread_entry_wait(void *p1, void *p2, void *p3)
 {
+<<<<<<< HEAD
 	k_lifo_put((struct k_lifo *)p1, (void *)&data[0]);
 
 	k_lifo_put((struct k_lifo *)p1, (void *)&data[1]);
+=======
+	k_lifo_put((struct k_lifo *)p1, (void *)&lifo_data[0]);
+
+	k_lifo_put((struct k_lifo *)p1, (void *)&lifo_data[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&wait_sema);
 }
 
@@ -220,13 +249,21 @@ ZTEST(lifo_usage, test_lifo_nowait)
 	k_sem_init(&start_sema, 0, 1);
 
 	/* put some data on lifo */
+<<<<<<< HEAD
 	k_lifo_put(&lifo, (void *)&data[0]);
+=======
+	k_lifo_put(&lifo, (void *)&lifo_data[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_tid_t tid = k_thread_create(&tdata, tstack, STACK_SIZE,
 				      thread_entry_nowait, &lifo, NULL, NULL,
 				      K_PRIO_PREEMPT(0), 0, K_NO_WAIT);
 
+<<<<<<< HEAD
 	k_lifo_put(&lifo, (void *)&data[1]);
+=======
+	k_lifo_put(&lifo, (void *)&lifo_data[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Allow another thread to read lifo */
 	k_sem_take(&start_sema, K_FOREVER);
@@ -250,13 +287,21 @@ ZTEST(lifo_usage_1cpu, test_lifo_wait)
 
 	ret = k_lifo_get(&plifo, K_FOREVER);
 
+<<<<<<< HEAD
 	zassert_equal(ret, (void *)&data[0]);
+=======
+	zassert_equal(ret, (void *)&lifo_data[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_sem_take(&wait_sema, K_FOREVER);
 
 	ret = k_lifo_get(&plifo, K_FOREVER);
 
+<<<<<<< HEAD
 	zassert_equal(ret, (void *)&data[1]);
+=======
+	zassert_equal(ret, (void *)&lifo_data[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_thread_abort(tid);
 }
@@ -325,10 +370,17 @@ ZTEST(lifo_usage_1cpu, test_timeout_lifo_thread)
 	timeout = 10U;
 	start_time = k_cycle_get_32();
 
+<<<<<<< HEAD
 	tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
 				test_thread_put_timeout, &lifo_timeout[0],
 				&timeout, NULL,
 				LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+=======
+	to_ord_tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
+					test_thread_put_timeout, &lifo_timeout[0],
+					&timeout, NULL,
+					LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	packet = k_lifo_get(&lifo_timeout[0], K_MSEC(timeout + 10));
 	zassert_true(packet != NULL);
@@ -341,10 +393,17 @@ ZTEST(lifo_usage_1cpu, test_timeout_lifo_thread)
 	 * the data availability on another lifo. In this test child
 	 * thread does not find data on lifo.
 	 */
+<<<<<<< HEAD
 	tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
 				test_thread_timeout_reply_values,
 				 (void *)&reply_packet, NULL, NULL,
 				LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+=======
+	to_ord_tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
+					test_thread_timeout_reply_values,
+					(void *)&reply_packet, NULL, NULL,
+					LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_yield();
 	packet = k_lifo_get(&timeout_order_lifo, K_NO_WAIT);
@@ -360,10 +419,17 @@ ZTEST(lifo_usage_1cpu, test_timeout_lifo_thread)
 	scratch_packet = get_scratch_packet();
 	k_lifo_put(&lifo_timeout[0], scratch_packet);
 
+<<<<<<< HEAD
 	tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
 				test_thread_timeout_reply_values,
 				(void *)&reply_packet, NULL, NULL,
 				LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+=======
+	to_ord_tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
+					test_thread_timeout_reply_values,
+					(void *)&reply_packet, NULL, NULL,
+					LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_yield();
 	packet = k_lifo_get(&timeout_order_lifo, K_NO_WAIT);
@@ -380,10 +446,17 @@ ZTEST(lifo_usage_1cpu, test_timeout_lifo_thread)
 	scratch_packet = get_scratch_packet();
 	k_lifo_put(&lifo_timeout[0], scratch_packet);
 
+<<<<<<< HEAD
 	tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
 				test_thread_timeout_reply_values_wfe,
 				(void *)&reply_packet, NULL, NULL,
 				LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+=======
+	to_ord_tid[0] = k_thread_create(&ttdata[0], ttstack[0], TSTACK_SIZE,
+					test_thread_timeout_reply_values_wfe,
+					(void *)&reply_packet, NULL, NULL,
+					LIFO_THREAD_PRIO, K_INHERIT_PERMS, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	packet = k_lifo_get(&timeout_order_lifo, K_FOREVER);
 	zassert_true(packet != NULL);
@@ -455,7 +528,11 @@ static void test_para_init(void)
 	}
 
 	for (int i = 0; i < LIST_LEN; i++) {
+<<<<<<< HEAD
 		data[i].data = i + 1;
+=======
+		lifo_data[i].data = i + 1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

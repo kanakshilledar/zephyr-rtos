@@ -1,4 +1,8 @@
 # All these sections are optional, edit this file as you like.
+<<<<<<< HEAD
+=======
+# Zephyr-specific defaults are located in scripts/gitlint/zephyr_commit_rules.py
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 [general]
 ignore=title-trailing-punctuation, T3, title-max-length, T1, body-hard-tab, B3, B1
 # verbosity should be a value between 1 and 3, the commandline -v flags take precedence over this
@@ -16,6 +20,7 @@ debug = false
 extra-path=scripts/gitlint
 
 [title-max-length-no-revert]
+<<<<<<< HEAD
 line-length=75
 
 [body-min-line-count]
@@ -23,6 +28,15 @@ min-line-count=1
 
 [body-max-line-count]
 max-line-count=200
+=======
+# line-length=75
+
+[body-min-line-count]
+# min-line-count=1
+
+[body-max-line-count]
+# max-line-count=200
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 [title-starts-with-subsystem]
 regex = ^(?!subsys:)(([^:]+):)(\s([^:]+):)*\s(.+)$
@@ -42,7 +56,11 @@ words=wip
 
 [max-line-length-with-exceptions]
 # B1 = body-max-line-length
+<<<<<<< HEAD
 line-length=75
+=======
+# line-length=75
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 [body-min-length]
 min-length=3

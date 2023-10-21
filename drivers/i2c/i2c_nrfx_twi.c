@@ -321,10 +321,18 @@ static int twi_nrfx_pm_action(const struct device *dev,
 		      CONFIG_I2C_INIT_PRIORITY,				       \
 		      &i2c_nrfx_twi_driver_api)
 
+<<<<<<< HEAD
 #ifdef CONFIG_I2C_0_NRF_TWI
 I2C_NRFX_TWI_DEVICE(0);
 #endif
 
 #ifdef CONFIG_I2C_1_NRF_TWI
+=======
+#ifdef CONFIG_HAS_HW_NRF_TWI0
+I2C_NRFX_TWI_DEVICE(0);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_TWI1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 I2C_NRFX_TWI_DEVICE(1);
 #endif

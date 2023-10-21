@@ -1,6 +1,21 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_SBS_GAUGE_NEW_API		sbs_gauge)
 add_subdirectory_ifdef(CONFIG_MAX17048		max17048)
 
 zephyr_library_sources_ifdef(CONFIG_USERSPACE fuel_gauge_syscall_handlers.c)
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/fuel_gauge.h)
+
+add_subdirectory_ifdef(CONFIG_SBS_GAUGE_NEW_API		sbs_gauge)
+add_subdirectory_ifdef(CONFIG_MAX17048		max17048)
+add_subdirectory_ifdef(CONFIG_BQ27Z746		bq27z746)
+
+zephyr_library_sources_ifdef(CONFIG_USERSPACE fuel_gauge_syscall_handlers.c)
+
+if (CONFIG_EMUL AND CONFIG_USERSPACE)
+  zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/emul_fuel_gauge.h)
+  zephyr_library_sources(emul_fuel_gauge_syscall_handlers.c)
+endif()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

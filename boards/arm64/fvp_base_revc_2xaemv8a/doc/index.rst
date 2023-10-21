@@ -72,7 +72,11 @@ Programming
 ===========
 
 Use this configuration to build basic Zephyr applications and kernel tests in the
+<<<<<<< HEAD
 ARM FVP emulated environment, for example, with the :ref:`synchronization_sample`:
+=======
+ARM FVP emulated environment, for example, with the :zephyr:code-sample:`synchronization` sample:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/synchronization

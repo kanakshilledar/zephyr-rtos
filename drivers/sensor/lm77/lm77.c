@@ -335,7 +335,11 @@ static int lm77_init(const struct device *dev)
 	k_work_init(&data->work, lm77_trigger_work_handler);
 
 	if (config->int_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->int_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("INT GPIO not ready");
 			return -EINVAL;
 		}

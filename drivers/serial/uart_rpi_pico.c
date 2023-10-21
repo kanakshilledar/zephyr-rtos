@@ -290,7 +290,11 @@ static int uart_rpi_irq_tx_complete(const struct device *dev)
 	const struct uart_rpi_config * const config = dev->config;
 	uart_hw_t * const uart_hw = config->uart_regs;
 
+<<<<<<< HEAD
 	return !!(uart_hw->fr & UART_UARTFR_TXFE_BITS);
+=======
+	return !!(uart_hw->fr & UART_UARTFR_TXFE_BITS) && !(uart_hw->fr & UART_UARTFR_BUSY_BITS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int uart_rpi_irq_rx_ready(const struct device *dev)

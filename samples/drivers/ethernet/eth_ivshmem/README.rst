@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _eth_ivshmem_sample:
 
 Inter-VM Shared Memory (ivshmem) Ethernet Sample Application
 ############################################################
+=======
+.. zephyr:code-sample:: eth-ivshmem
+   :name: Inter-VM Shared Memory (ivshmem) Ethernet
+   :relevant-api: ivshmem ethernet
+
+   Communicate with another "cell" in the Jailhouse hypervisor using IVSHMEM Ethernet.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

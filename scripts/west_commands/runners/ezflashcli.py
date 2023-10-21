@@ -10,13 +10,21 @@ DEFAULT_EZFLASHCLI = "ezFlashCLI"
 class EzFlashCliBinaryRunner(ZephyrBinaryRunner):
     '''Runner front-end for ezFlashCLI'''
 
+<<<<<<< HEAD
     def __init__(self, cfg, tool, sn, erase=False):
+=======
+    def __init__(self, cfg, tool, sn, erase=False, reset=True):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         super().__init__(cfg)
         self.bin_ = cfg.bin_file
 
         self.tool = tool
         self.sn_arg = ['-j', f'{sn}'] if sn is not None else []
         self.erase = bool(erase)
+<<<<<<< HEAD
+=======
+        self.reset = bool(reset)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def name(cls):
@@ -24,7 +32,11 @@ class EzFlashCliBinaryRunner(ZephyrBinaryRunner):
 
     @classmethod
     def capabilities(cls):
+<<<<<<< HEAD
         return RunnerCaps(commands={'flash'}, erase=True)
+=======
+        return RunnerCaps(commands={'flash'}, erase=True, reset=True)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     @classmethod
     def do_add_parser(cls, parser):
@@ -34,6 +46,11 @@ class EzFlashCliBinaryRunner(ZephyrBinaryRunner):
         parser.add_argument('--sn', default=None, required=False,
                             help='J-Link probe serial number')
 
+<<<<<<< HEAD
+=======
+        parser.set_defaults(reset=True)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     @classmethod
     def do_create(cls, cfg, args):
         return EzFlashCliBinaryRunner(cfg, tool=args.tool, sn=args.sn,
@@ -64,7 +81,11 @@ class EzFlashCliBinaryRunner(ZephyrBinaryRunner):
             load_offset = self.build_conf['CONFIG_FLASH_LOAD_OFFSET']
             self.check_call([self.tool] + self.sn_arg + ["write_flash", f'0x{load_offset:x}', self.bin_])
 
+<<<<<<< HEAD
     def reset(self):
+=======
+    def reset_device(self):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.logger.info("Resetting...")
         self.check_call([self.tool] + self.sn_arg + ["go"])
 
@@ -72,4 +93,9 @@ class EzFlashCliBinaryRunner(ZephyrBinaryRunner):
         self.require(self.tool)
         self.ensure_output('bin')
         self.program_bin()
+<<<<<<< HEAD
         self.reset()
+=======
+        if self.reset:
+            self.reset_device()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

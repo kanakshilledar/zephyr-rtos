@@ -8,12 +8,22 @@
 #ifndef H_MCUMGR_IMG_MGMT_CALLBACKS_
 #define H_MCUMGR_IMG_MGMT_CALLBACKS_
 
+<<<<<<< HEAD
 #include <zephyr/mgmt/mcumgr/grp/img_mgmt/img_mgmt.h>
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+<<<<<<< HEAD
+=======
+/* Dummy definitions, include zephyr/mgmt/mcumgr/grp/img_mgmt/img_mgmt.h for actual definitions */
+struct img_mgmt_upload_action;
+struct img_mgmt_upload_req;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief MCUmgr img_mgmt callback API
  * @defgroup mcumgr_callback_api_img_mgmt MCUmgr img_mgmt callback API

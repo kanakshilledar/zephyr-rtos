@@ -1,10 +1,18 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2021, NXP
+=======
+ * Copyright 2021,2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #include "mimxrt1170_evk-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	aliases {
@@ -14,6 +22,10 @@
 		magn0 = &fxos8700;
 		accel0 = &fxos8700;
 		sdhc0 = &usdhc1;
+<<<<<<< HEAD
+=======
+		pwm-led0 = &green_pwm_led;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	leds {
@@ -34,6 +46,10 @@
 		user_button: button-1 {
 			label = "User SW7";
 			gpios = <&gpio13 0 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -201,3 +217,10 @@
 		};
 	};
 };
+<<<<<<< HEAD
+=======
+
+&pxp {
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

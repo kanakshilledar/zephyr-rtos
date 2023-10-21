@@ -216,7 +216,11 @@ static const uint8_t ws2812_gpio_##idx##_color_mapping[] =		\
 		const struct ws2812_gpio_cfg *cfg = dev->config;	\
 		uint8_t i;						\
 									\
+<<<<<<< HEAD
 		if (!device_is_ready(cfg->in_gpio.port)) {		\
+=======
+		if (!gpio_is_ready_dt(&cfg->in_gpio)) {		\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("GPIO device not ready");		\
 			return -ENODEV;					\
 		}							\

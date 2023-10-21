@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _modbus-rtu-server-sample:
 
 Modbus RTU Server Sample
 ########################
+=======
+.. zephyr:code-sample:: modbus-rtu-server
+   :name: Modbus RTU server
+   :relevant-api: modbus
+
+   Implement a Modbus RTU server exposing Modbus commands to control LEDs.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

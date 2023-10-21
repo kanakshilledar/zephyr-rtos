@@ -12,7 +12,11 @@
 #define RPMSG_VQ_0		(0) /* TX virtqueue queue index */
 #define RPMSG_VQ_1		(1) /* RX virtqueue queue index */
 
+<<<<<<< HEAD
 static void virtio_notify(struct virtqueue *vq)
+=======
+static void ipc_virtio_notify(struct virtqueue *vq)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct ipc_static_vrings *vr;
 
@@ -23,12 +27,20 @@ static void virtio_notify(struct virtqueue *vq)
 	}
 }
 
+<<<<<<< HEAD
 static void virtio_set_features(struct virtio_device *vdev, uint32_t features)
+=======
+static void ipc_virtio_set_features(struct virtio_device *vdev, uint32_t features)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* No need for implementation */
 }
 
+<<<<<<< HEAD
 static void virtio_set_status(struct virtio_device *p_vdev, unsigned char status)
+=======
+static void ipc_virtio_set_status(struct virtio_device *p_vdev, unsigned char status)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct ipc_static_vrings *vr;
 
@@ -42,12 +54,20 @@ static void virtio_set_status(struct virtio_device *p_vdev, unsigned char status
 	sys_cache_data_flush_range((void *) vr->status_reg_addr, sizeof(status));
 }
 
+<<<<<<< HEAD
 static uint32_t virtio_get_features(struct virtio_device *vdev)
+=======
+static uint32_t ipc_virtio_get_features(struct virtio_device *vdev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	return BIT(VIRTIO_RPMSG_F_NS);
 }
 
+<<<<<<< HEAD
 static unsigned char virtio_get_status(struct virtio_device *p_vdev)
+=======
+static unsigned char ipc_virtio_get_status(struct virtio_device *p_vdev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct ipc_static_vrings *vr;
 	uint8_t ret;
@@ -65,11 +85,19 @@ static unsigned char virtio_get_status(struct virtio_device *p_vdev)
 }
 
 const static struct virtio_dispatch dispatch = {
+<<<<<<< HEAD
 	.get_status = virtio_get_status,
 	.get_features = virtio_get_features,
 	.set_status = virtio_set_status,
 	.set_features = virtio_set_features,
 	.notify = virtio_notify,
+=======
+	.get_status = ipc_virtio_get_status,
+	.get_features = ipc_virtio_get_features,
+	.set_status = ipc_virtio_set_status,
+	.set_features = ipc_virtio_set_features,
+	.notify = ipc_virtio_notify,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static int libmetal_setup(struct ipc_static_vrings *vr)
@@ -127,13 +155,21 @@ static int vq_setup(struct ipc_static_vrings *vr, unsigned int role)
 	vr->rvrings[RPMSG_VQ_0].io = vr->shm_io;
 	vr->rvrings[RPMSG_VQ_0].info.vaddr = (void *) vr->tx_addr;
 	vr->rvrings[RPMSG_VQ_0].info.num_descs = vr->vring_size;
+<<<<<<< HEAD
 	vr->rvrings[RPMSG_VQ_0].info.align = VRING_ALIGNMENT;
+=======
+	vr->rvrings[RPMSG_VQ_0].info.align = MEM_ALIGNMENT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	vr->rvrings[RPMSG_VQ_0].vq = vr->vq[RPMSG_VQ_0];
 
 	vr->rvrings[RPMSG_VQ_1].io = vr->shm_io;
 	vr->rvrings[RPMSG_VQ_1].info.vaddr = (void *) vr->rx_addr;
 	vr->rvrings[RPMSG_VQ_1].info.num_descs = vr->vring_size;
+<<<<<<< HEAD
 	vr->rvrings[RPMSG_VQ_1].info.align = VRING_ALIGNMENT;
+=======
+	vr->rvrings[RPMSG_VQ_1].info.align = MEM_ALIGNMENT;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	vr->rvrings[RPMSG_VQ_1].vq = vr->vq[RPMSG_VQ_1];
 
 	vr->vdev.role = role;

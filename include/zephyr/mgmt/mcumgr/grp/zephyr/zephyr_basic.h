@@ -18,6 +18,7 @@ extern "C" {
 /**
  * Command result codes for statistics management group.
  */
+<<<<<<< HEAD
 enum zephyr_basic_group_ret_code_t {
 	/** No error, this is implied if there is no ret value in the response */
 	ZEPHYR_MGMT_GRP_CMD_RC_OK = 0,
@@ -46,6 +47,25 @@ enum zephyr_basic_group_ret_code_t {
 int zephyr_basic_group_translate_error_code(uint16_t ret);
 #endif
 
+=======
+enum zephyr_basic_group_err_code_t {
+	/** No error, this is implied if there is no ret value in the response */
+	ZEPHYRBASIC_MGMT_ERR_OK = 0,
+
+	/** Unknown error occurred. */
+	ZEPHYRBASIC_MGMT_ERR_UNKNOWN,
+
+	/** Opening of the flash area has failed. */
+	ZEPHYRBASIC_MGMT_ERR_FLASH_OPEN_FAILED,
+
+	/** Querying the flash area parameters has failed. */
+	ZEPHYRBASIC_MGMT_ERR_FLASH_CONFIG_QUERY_FAIL,
+
+	/** Erasing the flash area has failed. */
+	ZEPHYRBASIC_MGMT_ERR_FLASH_ERASE_FAILED,
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

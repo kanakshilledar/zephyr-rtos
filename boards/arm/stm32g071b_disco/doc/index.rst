@@ -130,7 +130,11 @@ The STM32G071B Discovery board includes an ST-LINK/V2-1 embedded debug tool inte
 Flashing an application to the STM32G071B_DISCO
 -----------------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -160,10 +164,18 @@ References
    https://www.st.com/en/evaluation-tools/stm32g071b-disco.html
 
 .. _STM32G071 reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00371828.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00371828.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32G0 Discovery board User Manual:
    https://www.st.com/resource/en/user_manual/dm00496511.pdf
 
 .. _G071RB on www.st.com:
+<<<<<<< HEAD
    http://www.st.com/en/microcontrollers/stm32g071rb.html
+=======
+   https://www.st.com/en/microcontrollers/stm32g071rb.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

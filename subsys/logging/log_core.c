@@ -237,8 +237,14 @@ void log_core_init(void)
 	if (sys_clock_hw_cycles_per_sec() > 1000000) {
 		log_set_timestamp_func(default_lf_get_timestamp, 1000U);
 	} else {
+<<<<<<< HEAD
 		log_set_timestamp_func(default_get_timestamp,
 				       sys_clock_hw_cycles_per_sec());
+=======
+		uint32_t freq = IS_ENABLED(CONFIG_LOG_TIMESTAMP_64BIT) ?
+			CONFIG_SYS_CLOCK_TICKS_PER_SEC : sys_clock_hw_cycles_per_sec();
+		log_set_timestamp_func(default_get_timestamp, freq);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (IS_ENABLED(CONFIG_LOG_MODE_DEFERRED)) {
@@ -596,8 +602,16 @@ static struct log_msg *msg_alloc(struct mpsc_pbuf_buffer *buffer, uint32_t wlen)
 		return NULL;
 	}
 
+<<<<<<< HEAD
 	return (struct log_msg *)mpsc_pbuf_alloc(buffer, wlen,
 				K_MSEC(CONFIG_LOG_BLOCK_IN_THREAD_TIMEOUT_MS));
+=======
+	return (struct log_msg *)mpsc_pbuf_alloc(
+		buffer, wlen,
+		(CONFIG_LOG_BLOCK_IN_THREAD_TIMEOUT_MS == -1)
+			? K_FOREVER
+			: K_MSEC(CONFIG_LOG_BLOCK_IN_THREAD_TIMEOUT_MS));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 struct log_msg *z_log_msg_alloc(uint32_t wlen)

@@ -235,7 +235,11 @@ uint8_t ll_setup_iso_path(uint16_t handle, uint8_t path_dir, uint8_t path_id,
 		 * Identifier (0x02)
 		 */
 		cis = ll_conn_iso_stream_get(handle);
+<<<<<<< HEAD
 		if (!cis->group) {
+=======
+		if (!cis || !cis->group) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* CIS does not belong to a CIG */
 			return BT_HCI_ERR_UNKNOWN_CONN_ID;
 		}
@@ -491,11 +495,19 @@ uint8_t ll_setup_iso_path(uint16_t handle, uint8_t path_dir, uint8_t path_id,
 					  pdu_release, &source_handle);
 
 		if (!err) {
+<<<<<<< HEAD
 			if (cis) {
 				cis->hdr.datapath_in = dp;
 			}
 
 			if (adv_stream) {
+=======
+			if (IS_ENABLED(CONFIG_BT_CTLR_CONN_ISO) && cis != NULL) {
+				cis->hdr.datapath_in = dp;
+			}
+
+			if (IS_ENABLED(CONFIG_BT_CTLR_ADV_ISO) && adv_stream != NULL) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				adv_stream->dp = dp;
 			}
 
@@ -909,6 +921,7 @@ uint8_t ll_read_iso_link_quality(uint16_t  handle,
 				 uint32_t *rx_unreceived_packets,
 				 uint32_t *duplicate_packets)
 {
+<<<<<<< HEAD
 	ARG_UNUSED(handle);
 	ARG_UNUSED(tx_unacked_packets);
 	ARG_UNUSED(tx_flushed_packets);
@@ -919,6 +932,47 @@ uint8_t ll_read_iso_link_quality(uint16_t  handle,
 	ARG_UNUSED(duplicate_packets);
 
 	return BT_HCI_ERR_CMD_DISALLOWED;
+=======
+	uint8_t status;
+
+	*tx_unacked_packets = 0;
+	*tx_flushed_packets = 0;
+	*tx_last_subevent_packets = 0;
+	*retransmitted_packets = 0;
+	*crc_error_packets = 0;
+	*rx_unreceived_packets = 0;
+	*duplicate_packets = 0;
+
+	status = BT_HCI_ERR_SUCCESS;
+
+	if (IS_CIS_HANDLE(handle)) {
+		struct ll_conn_iso_stream *cis;
+
+		cis = ll_iso_stream_connected_get(handle);
+
+		if (!cis) {
+			/* CIS is not connected */
+			return BT_HCI_ERR_UNKNOWN_CONN_ID;
+		}
+
+		*tx_unacked_packets       = cis->hdr.link_quality.tx_unacked_packets;
+		*tx_flushed_packets       = cis->hdr.link_quality.tx_flushed_packets;
+		*tx_last_subevent_packets = cis->hdr.link_quality.tx_last_subevent_packets;
+		*retransmitted_packets    = cis->hdr.link_quality.retransmitted_packets;
+		*crc_error_packets        = cis->hdr.link_quality.crc_error_packets;
+		*rx_unreceived_packets    = cis->hdr.link_quality.rx_unreceived_packets;
+		*duplicate_packets        = cis->hdr.link_quality.duplicate_packets;
+
+	} else if (IS_SYNC_ISO_HANDLE(handle)) {
+		/* FIXME: Implement for sync receiver */
+		status = BT_HCI_ERR_CMD_DISALLOWED;
+	} else {
+		/* Handle is out of range */
+		status = BT_HCI_ERR_UNKNOWN_CONN_ID;
+	}
+
+	return status;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif /* CONFIG_BT_CTLR_READ_ISO_LINK_QUALITY */
 
@@ -954,6 +1008,10 @@ void ll_iso_transmit_test_send_sdu(uint16_t handle, uint32_t ticks_at_expire)
 		struct ll_conn_iso_group *cig;
 		uint32_t rand_max_sdu;
 		uint8_t event_offset;
+<<<<<<< HEAD
+=======
+		uint8_t max_sdu;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint8_t rand_8;
 
 		cis = ll_iso_stream_connected_get(handle);
@@ -967,21 +1025,37 @@ void ll_iso_transmit_test_send_sdu(uint16_t handle, uint32_t ticks_at_expire)
 		cig = cis->group;
 		source_handle = cis->hdr.datapath_in->source_hdl;
 
+<<<<<<< HEAD
+=======
+		max_sdu = IS_PERIPHERAL(cig) ? cis->p_max_sdu : cis->c_max_sdu;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		switch (cis->hdr.test_mode.tx_payload_type) {
 		case BT_HCI_ISO_TEST_ZERO_SIZE_SDU:
 			remaining_tx = 0;
 			break;
 
 		case BT_HCI_ISO_TEST_VARIABLE_SIZE_SDU:
+<<<<<<< HEAD
 			/* Randomize the length [4..p_max_sdu] */
 			lll_rand_get(&rand_8, sizeof(rand_8));
 			rand_max_sdu = rand_8 * (cis->p_max_sdu - ISO_TEST_PACKET_COUNTER_SIZE);
+=======
+			/* Randomize the length [4..max_sdu] */
+			lll_rand_get(&rand_8, sizeof(rand_8));
+			rand_max_sdu = rand_8 * (max_sdu - ISO_TEST_PACKET_COUNTER_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			remaining_tx = ISO_TEST_PACKET_COUNTER_SIZE + (rand_max_sdu >> 8);
 			break;
 
 		case BT_HCI_ISO_TEST_MAX_SIZE_SDU:
+<<<<<<< HEAD
 			LL_ASSERT(cis->p_max_sdu > ISO_TEST_PACKET_COUNTER_SIZE);
 			remaining_tx = cis->p_max_sdu;
+=======
+			LL_ASSERT(max_sdu > ISO_TEST_PACKET_COUNTER_SIZE);
+			remaining_tx = max_sdu;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		default:
@@ -1026,7 +1100,12 @@ void ll_iso_transmit_test_send_sdu(uint16_t handle, uint32_t ticks_at_expire)
 
 		/* Send all SDU fragments */
 		do {
+<<<<<<< HEAD
 			sdu.time_stamp = HAL_TICKER_TICKS_TO_US(ticks_at_expire);
+=======
+			sdu.cntr_time_stamp = HAL_TICKER_TICKS_TO_US(ticks_at_expire);
+			sdu.time_stamp = sdu.cntr_time_stamp;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sdu.size = MIN(remaining_tx, ISO_TEST_TX_BUFFER_SIZE);
 			memset(tx_buffer, 0, sdu.size);
 
@@ -1122,6 +1201,7 @@ uint8_t ll_iso_transmit_test(uint16_t handle, uint8_t payload_type)
 		cis->hdr.datapath_in = dp;
 		cig = cis->group;
 
+<<<<<<< HEAD
 		if (cig->lll.role == BT_HCI_ROLE_PERIPHERAL) {
 			/* peripheral */
 			sdu_interval = cig->c_sdu_interval;
@@ -1134,6 +1214,14 @@ uint8_t ll_iso_transmit_test(uint16_t handle, uint8_t payload_type)
 		err = isoal_source_create(handle, cig->lll.role, cis->framed,
 					  cis->lll.rx.bn, cis->lll.rx.ft,
 					  cis->lll.rx.max_pdu, sdu_interval,
+=======
+		sdu_interval = IS_PERIPHERAL(cig) ? cig->p_sdu_interval : cig->c_sdu_interval;
+
+		/* Setup the test source */
+		err = isoal_source_create(handle, cig->lll.role, cis->framed,
+					  cis->lll.tx.bn, cis->lll.tx.ft,
+					  cis->lll.tx.max_pdu, sdu_interval,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					  cig->iso_interval, cis->sync_delay,
 					  cig->sync_delay, ll_iso_pdu_alloc,
 					  ll_iso_pdu_write, ll_iso_pdu_emit,

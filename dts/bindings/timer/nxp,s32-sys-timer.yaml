@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Copyright 2022 NXP
+=======
+# Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 description: NXP S32 System Timer Module (STM)
@@ -14,10 +18,15 @@ properties:
   interrupts:
     required: true
 
+<<<<<<< HEAD
   clock-frequency:
     type: int
     required: true
     description: Module clock frequency in Hz.
+=======
+  clocks:
+    required: true
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   prescaler:
     type: int

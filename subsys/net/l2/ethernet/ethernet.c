@@ -14,7 +14,11 @@ LOG_MODULE_REGISTER(net_ethernet, CONFIG_NET_L2_ETHERNET_LOG_LEVEL);
 #include <zephyr/net/ethernet.h>
 #include <zephyr/net/ethernet_mgmt.h>
 #include <zephyr/net/gptp.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_NET_LLDP)
 #include <zephyr/net/lldp.h>
@@ -302,6 +306,10 @@ static enum net_verdict ethernet_recv(struct net_if *iface,
 	    !net_eth_is_addr_multicast((struct net_eth_addr *)lladdr->addr) &&
 	    !net_eth_is_addr_lldp_multicast(
 		    (struct net_eth_addr *)lladdr->addr) &&
+<<<<<<< HEAD
+=======
+	    !net_eth_is_addr_ptp_multicast((struct net_eth_addr *)lladdr->addr) &&
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	    !net_linkaddr_cmp(net_if_get_link_addr(iface), lladdr)) {
 		/* The ethernet frame is not for me as the link addresses
 		 * are different.

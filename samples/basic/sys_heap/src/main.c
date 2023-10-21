@@ -12,7 +12,11 @@
 static char heap_mem[HEAP_SIZE];
 static struct sys_heap heap;
 
+<<<<<<< HEAD
 void print_sys_memory_stats(void);
+=======
+static void print_sys_memory_stats(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int main(void)
 {
@@ -34,7 +38,11 @@ int main(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 void print_sys_memory_stats(void)
+=======
+static void print_sys_memory_stats(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct sys_memory_stats stats;
 

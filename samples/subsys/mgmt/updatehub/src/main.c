@@ -8,8 +8,16 @@
 #include <zephyr/mgmt/updatehub.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
 #include <zephyr/net/wifi_mgmt.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+
+#ifdef CONFIG_NET_L2_WIFI_MGMT
+#include <zephyr/net/wifi_mgmt.h>
+#endif /* CONFIG_NET_L2_WIFI_MGMT */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_UPDATEHUB_DTLS)
 #include <zephyr/net/tls_credentials.h>
@@ -150,6 +158,10 @@ int main(void)
 
 	net_mgmt_init_event_callback(&mgmt_cb, event_handler, EVENT_MASK);
 	net_mgmt_add_event_callback(&mgmt_cb);
+<<<<<<< HEAD
 	conn_mgr_resend_status();
+=======
+	conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

@@ -5,7 +5,11 @@
 macro(toolchain_ld_base)
 
   if(NOT PROPERTY_LINKER_SCRIPT_DEFINES)
+<<<<<<< HEAD
     set_property(GLOBAL PROPERTY PROPERTY_LINKER_SCRIPT_DEFINES -D__GCC_LINKER_CMD__)
+=======
+    set_property(GLOBAL PROPERTY PROPERTY_LINKER_SCRIPT_DEFINES -D__LLD_LINKER_CMD__)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   endif()
 
   # TOOLCHAIN_LD_FLAGS comes from compiler/clang/target.cmake
@@ -41,7 +45,18 @@ macro(toolchain_ld_base)
     )
   endif()
 
+<<<<<<< HEAD
   zephyr_link_libraries(
     --config ${ZEPHYR_BASE}/cmake/toolchain/llvm/clang.cfg
+=======
+  if(CONFIG_LIBGCC_RTLIB)
+    set(runtime_lib "libgcc")
+  elseif(CONFIG_COMPILER_RT_RTLIB)
+    set(runtime_lib "compiler_rt")
+  endif()
+
+  zephyr_link_libraries(
+    --config ${ZEPHYR_BASE}/cmake/toolchain/llvm/clang_${runtime_lib}.cfg
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   )
 endmacro()

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sntp-client-sample:
 
 SNTP client sample
 ##################
+=======
+.. zephyr:code-sample:: sntp-client
+   :name: SNTP client
+   :relevant-api: bsd_sockets sntp
+
+   Use SNTP to get the current time from the host.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

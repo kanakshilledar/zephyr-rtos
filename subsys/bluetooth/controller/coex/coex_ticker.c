@@ -4,12 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#define DT_DRV_COMPAT gpio_radio_coex
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <errno.h>
 #include <soc.h>
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/sys/__assert.h>
@@ -195,6 +203,7 @@ static int coex_ticker_init(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 #define RADIO_NODE DT_NODELABEL(radio)
 #define COEX_NODE DT_PROP(RADIO_NODE, coex)
 
@@ -210,3 +219,13 @@ DEVICE_DEFINE(coex_ticker, "COEX_TICKER", &coex_ticker_init, NULL,
 	APPLICATION, 90,
 	NULL);
 #endif
+=======
+static struct coex_ticker_config config = {
+	.grant_spec = GPIO_DT_SPEC_INST_GET(0, grant_gpios),
+	.grant_delay_us = DT_INST_PROP(0, grant_delay_us)
+};
+static struct coex_ticker_data data;
+
+DEVICE_DT_INST_DEFINE(0, &coex_ticker_init, NULL, &data, &config,
+		      POST_KERNEL, 90, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

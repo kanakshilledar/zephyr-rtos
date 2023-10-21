@@ -140,12 +140,21 @@
 		.mair_idx = MPU_MAIR_INDEX_DEVICE,		      \
 	}
 
+<<<<<<< HEAD
 #define REGION_RAM_ATTR						      \
 	{							      \
 		/* AP, XN, SH */				      \
 		.rbar = NOT_EXEC | P_RW_U_NA_Msk | NON_SHAREABLE_Msk, \
 		/* Cache-ability */				      \
 		.mair_idx = MPU_MAIR_INDEX_SRAM,		      \
+=======
+#define REGION_RAM_ATTR							\
+	{								\
+		/* AP, XN, SH */					\
+		.rbar = NOT_EXEC | P_RW_U_NA_Msk | OUTER_SHAREABLE_Msk, \
+		/* Cache-ability */					\
+		.mair_idx = MPU_MAIR_INDEX_SRAM,			\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 #define REGION_RAM_NOCACHE_ATTR					      \
@@ -156,6 +165,7 @@
 		.mair_idx = MPU_MAIR_INDEX_SRAM_NOCACHE,	      \
 	}
 
+<<<<<<< HEAD
 #define REGION_RAM_TEXT_ATTR				   \
 	{						   \
 		/* AP, XN, SH */			   \
@@ -170,6 +180,22 @@
 		.rbar = NOT_EXEC | P_RO_U_RO_Msk | NON_SHAREABLE_Msk, \
 		/* Cache-ability */				      \
 		.mair_idx = MPU_MAIR_INDEX_SRAM,		      \
+=======
+#define REGION_RAM_TEXT_ATTR					\
+	{							\
+		/* AP, XN, SH */				\
+		.rbar = P_RO_U_RO_Msk | INNER_SHAREABLE_Msk,	\
+		/* Cache-ability */				\
+		.mair_idx = MPU_MAIR_INDEX_SRAM,		\
+	}
+
+#define REGION_RAM_RO_ATTR						\
+	{								\
+		/* AP, XN, SH */					\
+		.rbar = NOT_EXEC | P_RO_U_RO_Msk | INNER_SHAREABLE_Msk, \
+		/* Cache-ability */					\
+		.mair_idx = MPU_MAIR_INDEX_SRAM,			\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 #if defined(CONFIG_MPU_ALLOW_FLASH_WRITE)
@@ -194,7 +220,11 @@
 
 struct arm_mpu_region_attr {
 	/* Attributes belonging to PRBAR */
+<<<<<<< HEAD
 	uint8_t rbar : 5;
+=======
+	uint8_t rbar : 6;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* MAIR index for attribute indirection */
 	uint8_t mair_idx : 3;
 };
@@ -227,6 +257,7 @@ struct arm_mpu_config {
 		.attr = _attr,			      \
 	}
 
+<<<<<<< HEAD
 #define MPU_REGION_ENTRY_FROM_DTS(_name, _base, _size, _attr) \
 	{						      \
 		.name = _name,				      \
@@ -235,6 +266,8 @@ struct arm_mpu_config {
 		.attr = _attr,				      \
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define K_MEM_PARTITION_P_RW_U_RW ((k_mem_partition_attr_t) \
 	{(P_RW_U_RW_Msk), MPU_MAIR_INDEX_SRAM})
 #define K_MEM_PARTITION_P_RW_U_NA ((k_mem_partition_attr_t) \
@@ -256,6 +289,20 @@ typedef struct arm_mpu_region_attr k_mem_partition_attr_t;
  */
 extern const struct arm_mpu_config mpu_config;
 
+<<<<<<< HEAD
+=======
+struct dynamic_region_info {
+	int index;
+	struct arm_mpu_region region_conf;
+};
+
+#define ARM64_MPU_MAX_DYNAMIC_REGIONS						\
+	1 + /* data section */							\
+	(CONFIG_MAX_DOMAIN_PARTITIONS + 2) +					\
+	(IS_ENABLED(CONFIG_ARM64_STACK_PROTECTION) ? 2 : 0) +			\
+	(IS_ENABLED(CONFIG_USERSPACE) ? 2 : 0)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif	/* _ASMLANGUAGE */
 
 #endif	/* ZEPHYR_INCLUDE_ARCH_ARM64_CORTEX_R_MPU_ARM_MPU_H_ */

@@ -1102,5 +1102,9 @@ DEVICE_DT_INST_DEFINE(0,
 		    &pax_dma_data,
 		    &pax_dma_cfg,
 		    POST_KERNEL,
+<<<<<<< HEAD
 		    CONFIG_DMA_INIT_PRIORITY,
+=======
+		    CONFIG_DMA_IPROC_PAX_V2_INIT_PRIORITY,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		    &pax_dma_driver_api);

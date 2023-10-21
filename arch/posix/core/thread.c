@@ -16,7 +16,10 @@
 #include <zephyr/toolchain.h>
 #include <zephyr/kernel_structs.h>
 #include <ksched.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "posix_core.h"
 #include <zephyr/arch/posix/posix_soc_if.h>
@@ -47,6 +50,7 @@ void arch_new_thread(struct k_thread *thread, k_thread_stack_t *stack,
 
 	thread->callee_saved.thread_status = thread_status;
 
+<<<<<<< HEAD
 	posix_new_thread(thread_status);
 }
 
@@ -54,3 +58,64 @@ void posix_new_thread_pre_start(void)
 {
 	posix_irq_full_unlock();
 }
+=======
+	thread_status->thread_idx = posix_new_thread((void *)thread_status);
+}
+
+void posix_arch_thread_entry(void *pa_thread_status)
+{
+	posix_thread_status_t *ptr = pa_thread_status;
+	posix_irq_full_unlock();
+	z_thread_entry(ptr->entry_point, ptr->arg1, ptr->arg2, ptr->arg3);
+}
+
+#if defined(CONFIG_ARCH_HAS_THREAD_ABORT)
+void z_impl_k_thread_abort(k_tid_t thread)
+{
+	unsigned int key;
+	int thread_idx;
+
+	posix_thread_status_t *tstatus =
+					(posix_thread_status_t *)
+					thread->callee_saved.thread_status;
+
+	thread_idx = tstatus->thread_idx;
+
+	key = irq_lock();
+
+	if (_current == thread) {
+		if (tstatus->aborted == 0) { /* LCOV_EXCL_BR_LINE */
+			tstatus->aborted = 1;
+		} else {
+			posix_print_warning(/* LCOV_EXCL_LINE */
+				"POSIX arch: The kernel is trying to abort and swap "
+				"out of an already aborted thread %i. This "
+				"should NOT have happened\n",
+				thread_idx);
+		}
+		posix_abort_thread(thread_idx);
+	}
+
+	z_thread_abort(thread);
+
+	if (tstatus->aborted == 0) {
+		PC_DEBUG("%s aborting now [%i] %i\n",
+			__func__,
+			posix_arch_get_unique_thread_id(thread_idx),
+			thread_idx);
+
+		tstatus->aborted = 1;
+		posix_abort_thread(thread_idx);
+	} else {
+		PC_DEBUG("%s ignoring re_abort of [%i] "
+			"%i\n",
+			__func__,
+			posix_arch_get_unique_thread_id(thread_idx),
+			thread_idx);
+	}
+
+	/* The abort handler might have altered the ready queue. */
+	z_reschedule_irqlock(key);
+}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

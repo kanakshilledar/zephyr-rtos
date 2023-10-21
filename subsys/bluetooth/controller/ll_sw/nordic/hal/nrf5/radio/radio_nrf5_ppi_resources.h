@@ -3,10 +3,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #include <zephyr/sys/util.h>
 #include "radio_nrf5_fem.h"
 
 #if defined(CONFIG_BT_CTLR_TIFS_HW) || !defined(CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER)
+=======
+
+#if (EVENT_TIMER_ID == 0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* PPI channel 20 is pre-programmed with the following fixed settings:
  *   EEP: TIMER0->EVENTS_COMPARE[0]
@@ -37,7 +42,11 @@
  */
 #define HAL_RADIO_END_TIME_CAPTURE_PPI 27
 
+<<<<<<< HEAD
 #else /* CONFIG_BT_CTLR_TIFS_HW || !CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
+=======
+#else /* EVENT_TIMER_ID != 0 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define HAL_RADIO_ENABLE_TX_ON_TICK_PPI 2
 #define HAL_RADIO_ENABLE_RX_ON_TICK_PPI 2
@@ -45,7 +54,11 @@
 #define HAL_RADIO_DISABLE_ON_HCTO_PPI 4
 #define HAL_RADIO_END_TIME_CAPTURE_PPI 5
 
+<<<<<<< HEAD
 #endif /* CONFIG_BT_CTLR_TIFS_HW || !CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
+=======
+#endif /* EVENT_TIMER_ID != 0 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Start event timer on RTC tick wire the RTC0 EVENTS_COMPARE[2] event to
  * EVENT_TIMER  TASKS_START task.
@@ -91,7 +104,11 @@
 #if !defined(CONFIG_BT_CTLR_TIFS_HW)
 /* PPI setup used for SW-based auto-switching during TIFS. */
 
+<<<<<<< HEAD
 #if !defined(CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER)
+=======
+#if (EVENT_TIMER_ID == 0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Clear SW-switch timer on packet end:
  * wire the RADIO EVENTS_END event to SW_SWITCH_TIMER TASKS_CLEAR task.
@@ -100,7 +117,11 @@
  */
 #define HAL_SW_SWITCH_TIMER_CLEAR_PPI 8
 
+<<<<<<< HEAD
 #else /* !CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
+=======
+#else /* EVENT_TIMER_ID != 0  */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Clear event timer (sw-switch timer) on Radio end:
  * wire the RADIO EVENTS_END event to the
@@ -111,7 +132,11 @@
  */
 #define HAL_SW_SWITCH_TIMER_CLEAR_PPI HAL_RADIO_END_TIME_CAPTURE_PPI
 
+<<<<<<< HEAD
 #endif /* !CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER */
+=======
+#endif /* EVENT_TIMER_ID != 0  */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Wire a SW SWITCH TIMER EVENTS_COMPARE[<cc_offset>] event
  * to a PPI GROUP TASK DISABLE task (PPI group with index <index>).
@@ -145,9 +170,12 @@
 #define HAL_SW_SWITCH_RADIO_ENABLE_PPI_BASE 12
 #endif
 
+<<<<<<< HEAD
 #if defined(CONFIG_BT_CTLR_PHY_CODED) && \
 	defined(CONFIG_HAS_HW_NRF_RADIO_BLE_CODED)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Wire the SW SWITCH TIMER EVENTS_COMPARE[<cc_offset>] event
  * to RADIO TASKS_TXEN/RXEN task.
  */
@@ -158,8 +186,11 @@
  */
 #define HAL_SW_SWITCH_TIMER_S8_DISABLE_PPI 19
 
+<<<<<<< HEAD
 #endif /* CONFIG_HAS_HW_NRF_RADIO_BLE_CODED */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CTLR_DF_PHYEND_OFFSET_COMPENSATION_ENABLE)
 /* Wire the SW SWITCH PHYEND delay compensation TIMER EVENTS_COMPARE[<cc_offset>] event to software
  * switch TIMER0->CLEAR taks task.

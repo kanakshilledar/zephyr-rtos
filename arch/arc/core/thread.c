@@ -14,7 +14,10 @@
 #include <zephyr/kernel.h>
 #include <ksched.h>
 #include <offsets_short.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_USERSPACE
 #include <zephyr/arch/arc/v2/mpu/arc_core_mpu.h>

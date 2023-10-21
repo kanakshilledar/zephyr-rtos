@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2018 Savoir-Faire Linux.
  * Copyright (c) 2020 Peter Bigot Consulting, LLC
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Intercreate, Inc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * This driver is heavily inspired from the spi_flash_w25qxxdv.c SPI NOR driver.
  *
@@ -11,11 +15,19 @@
 
 #include <errno.h>
 #include <zephyr/drivers/flash.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/gpio.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/spi.h>
 #include <zephyr/init.h>
 #include <string.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys_clock.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/pm/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "spi_nor.h"
 #include "jesd216.h"
@@ -61,11 +73,29 @@ LOG_MODULE_REGISTER(spi_nor, CONFIG_FLASH_LOG_LEVEL);
 #define T_DPDD_MS 0
 #endif /* DPD_WAKEUP_SEQUENCE */
 
+<<<<<<< HEAD
+=======
+#define _INST_HAS_WP_OR(inst) DT_INST_NODE_HAS_PROP(inst, wp_gpios) ||
+#define ANY_INST_HAS_WP_GPIOS DT_INST_FOREACH_STATUS_OKAY(_INST_HAS_WP_OR) 0
+
+#define _INST_HAS_HOLD_OR(inst) DT_INST_NODE_HAS_PROP(inst, hold_gpios) ||
+#define ANY_INST_HAS_HOLD_GPIOS DT_INST_FOREACH_STATUS_OKAY(_INST_HAS_HOLD_OR) 0
+
+#define DEV_CFG(_dev_) ((const struct spi_nor_config * const) (_dev_)->config)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Build-time data associated with the device. */
 struct spi_nor_config {
 	/* Devicetree SPI configuration */
 	struct spi_dt_spec spi;
 
+<<<<<<< HEAD
+=======
+#if DT_INST_NODE_HAS_PROP(0, reset_gpios)
+	const struct gpio_dt_spec reset;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Runtime SFDP stores no static configuration. */
 
 #ifndef CONFIG_SPI_NOR_SFDP_RUNTIME
@@ -101,6 +131,18 @@ struct spi_nor_config {
 	 * This information cannot be derived from SFDP.
 	 */
 	uint8_t has_lock;
+<<<<<<< HEAD
+=======
+
+#if ANY_INST_HAS_WP_GPIOS
+	/* The write-protect GPIO (wp-gpios) */
+	const struct gpio_dt_spec *wp;
+#endif
+#if ANY_INST_HAS_HOLD_GPIOS
+	/* The hold GPIO (hold-gpios) */
+	const struct gpio_dt_spec *hold;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -774,7 +816,11 @@ static int spi_nor_erase(const struct device *dev, off_t addr, size_t size)
 
 				if ((etp->exp != 0)
 				    && SPI_NOR_IS_ALIGNED(addr, etp->exp)
+<<<<<<< HEAD
 				    && SPI_NOR_IS_ALIGNED(size, etp->exp)
+=======
+				    && (size >= BIT(etp->exp))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				    && ((bet == NULL)
 					|| (etp->exp > bet->exp))) {
 					bet = etp;
@@ -823,6 +869,15 @@ static int spi_nor_write_protection_set(const struct device *dev,
 {
 	int ret;
 
+<<<<<<< HEAD
+=======
+#if ANY_INST_HAS_WP_GPIOS
+	if (DEV_CFG(dev)->wp && write_protect == false) {
+		gpio_pin_set_dt(DEV_CFG(dev)->wp, 0);
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret = spi_nor_cmd_write(dev, (write_protect) ?
 	      SPI_NOR_CMD_WRDI : SPI_NOR_CMD_WREN);
 
@@ -832,6 +887,15 @@ static int spi_nor_write_protection_set(const struct device *dev,
 		ret = spi_nor_cmd_write(dev, SPI_NOR_CMD_ULBPR);
 	}
 
+<<<<<<< HEAD
+=======
+#if ANY_INST_HAS_WP_GPIOS
+	if (DEV_CFG(dev)->wp && write_protect == true) {
+		gpio_pin_set_dt(DEV_CFG(dev)->wp, 1);
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return ret;
 }
 
@@ -1143,10 +1207,38 @@ static int spi_nor_configure(const struct device *dev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
+=======
+#if DT_INST_NODE_HAS_PROP(0, reset_gpios)
+	if (!gpio_is_ready_dt(&cfg->reset)) {
+		LOG_ERR("Reset pin not ready");
+		return -ENODEV;
+	}
+	if (gpio_pin_configure_dt(&cfg->reset, GPIO_OUTPUT_ACTIVE)) {
+		LOG_ERR("Couldn't configure reset pin");
+		return -ENODEV;
+	}
+	rc = gpio_pin_set_dt(&cfg->reset, 0);
+	if (rc) {
+		return rc;
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* After a soft-reset the flash might be in DPD or busy writing/erasing.
 	 * Exit DPD and wait until flash is ready.
 	 */
 	acquire_device(dev);
+<<<<<<< HEAD
+=======
+
+	rc = exit_dpd(dev);
+	if (rc < 0) {
+		LOG_ERR("Failed to exit DPD (%d)", rc);
+		return -ENODEV;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rc = spi_nor_rdsr(dev);
 	if (rc > 0 && (rc & SPI_NOR_WIP_BIT)) {
 		LOG_WRN("Waiting until flash is ready");
@@ -1246,6 +1338,47 @@ static int spi_nor_configure(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PM_DEVICE
+
+static int spi_nor_pm_control(const struct device *dev, enum pm_device_action action)
+{
+	int rc = 0;
+
+	switch (action) {
+#ifdef CONFIG_SPI_NOR_IDLE_IN_DPD
+	case PM_DEVICE_ACTION_SUSPEND:
+	case PM_DEVICE_ACTION_RESUME:
+		break;
+#else
+	case PM_DEVICE_ACTION_SUSPEND:
+		acquire_device(dev);
+		rc = enter_dpd(dev);
+		release_device(dev);
+		break;
+	case PM_DEVICE_ACTION_RESUME:
+		acquire_device(dev);
+		rc = exit_dpd(dev);
+		release_device(dev);
+		break;
+#endif /* CONFIG_SPI_NOR_IDLE_IN_DPD */
+	case PM_DEVICE_ACTION_TURN_ON:
+		/* Coming out of power off */
+		rc = spi_nor_configure(dev);
+		break;
+	case PM_DEVICE_ACTION_TURN_OFF:
+		break;
+	default:
+		rc = -ENOSYS;
+	}
+
+	return rc;
+}
+
+#endif /* CONFIG_PM_DEVICE */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Initialize and configure the flash
  *
@@ -1260,6 +1393,34 @@ static int spi_nor_init(const struct device *dev)
 		k_sem_init(&driver_data->sem, 1, K_SEM_MAX_LIMIT);
 	}
 
+<<<<<<< HEAD
+=======
+#if ANY_INST_HAS_WP_GPIOS
+	if (DEV_CFG(dev)->wp) {
+		if (!device_is_ready(DEV_CFG(dev)->wp->port)) {
+			LOG_ERR("Write-protect pin not ready");
+			return -ENODEV;
+		}
+		if (gpio_pin_configure_dt(DEV_CFG(dev)->wp, GPIO_OUTPUT_ACTIVE)) {
+			LOG_ERR("Write-protect pin failed to set active");
+			return -ENODEV;
+		}
+	}
+#endif /* ANY_INST_HAS_WP_GPIOS */
+#if ANY_INST_HAS_HOLD_GPIOS
+	if (DEV_CFG(dev)->hold) {
+		if (!device_is_ready(DEV_CFG(dev)->hold->port)) {
+			LOG_ERR("Hold pin not ready");
+			return -ENODEV;
+		}
+		if (gpio_pin_configure_dt(DEV_CFG(dev)->hold, GPIO_OUTPUT_INACTIVE)) {
+			LOG_ERR("Hold pin failed to set inactive");
+			return -ENODEV;
+		}
+	}
+#endif /* ANY_INST_HAS_HOLD_GPIOS */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return spi_nor_configure(dev);
 }
 
@@ -1356,9 +1517,34 @@ BUILD_ASSERT(DT_INST_PROP(0, has_lock) == (DT_INST_PROP(0, has_lock) & 0xFF),
 	     "Need support for lock clear beyond SR1");
 #endif
 
+<<<<<<< HEAD
 static const struct spi_nor_config spi_nor_config_0 = {
 	.spi = SPI_DT_SPEC_INST_GET(0, SPI_WORD_SET(8),
 				    CONFIG_SPI_NOR_CS_WAIT_DELAY),
+=======
+#define INST_HAS_WP_GPIO(idx) DT_INST_NODE_HAS_PROP(idx, wp_gpios)
+
+#define INST_WP_GPIO_SPEC(idx)                                                                     \
+	IF_ENABLED(INST_HAS_WP_GPIO(idx), (static const struct gpio_dt_spec wp_##idx =             \
+						   GPIO_DT_SPEC_INST_GET(idx, wp_gpios);))
+
+#define INST_HAS_HOLD_GPIO(idx) DT_INST_NODE_HAS_PROP(idx, hold_gpios)
+
+#define INST_HOLD_GPIO_SPEC(idx)                                                                   \
+	IF_ENABLED(INST_HAS_HOLD_GPIO(idx), (static const struct gpio_dt_spec hold_##idx =         \
+						     GPIO_DT_SPEC_INST_GET(idx, hold_gpios);))
+
+INST_WP_GPIO_SPEC(0)
+INST_HOLD_GPIO_SPEC(0)
+
+static const struct spi_nor_config spi_nor_config_0 = {
+	.spi = SPI_DT_SPEC_INST_GET(0, SPI_WORD_SET(8),
+				    CONFIG_SPI_NOR_CS_WAIT_DELAY),
+#if DT_INST_NODE_HAS_PROP(0, reset_gpios)
+	.reset = GPIO_DT_SPEC_INST_GET(0, reset_gpios),
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_SPI_NOR_SFDP_RUNTIME)
 
 #if defined(CONFIG_FLASH_PAGE_LAYOUT)
@@ -1385,11 +1571,27 @@ static const struct spi_nor_config spi_nor_config_0 = {
 #endif /* CONFIG_SPI_NOR_SFDP_DEVICETREE */
 
 #endif /* CONFIG_SPI_NOR_SFDP_RUNTIME */
+<<<<<<< HEAD
+=======
+
+#if DT_INST_NODE_HAS_PROP(0, wp_gpios)
+	.wp = &wp_0,
+#endif
+
+#if DT_INST_NODE_HAS_PROP(0, hold_gpios)
+	.hold = &hold_0,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static struct spi_nor_data spi_nor_data_0;
 
+<<<<<<< HEAD
 DEVICE_DT_INST_DEFINE(0, &spi_nor_init, NULL,
+=======
+PM_DEVICE_DT_INST_DEFINE(0, spi_nor_pm_control);
+DEVICE_DT_INST_DEFINE(0, &spi_nor_init, PM_DEVICE_DT_INST_GET(0),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 &spi_nor_data_0, &spi_nor_config_0,
 		 POST_KERNEL, CONFIG_SPI_NOR_INIT_PRIORITY,
 		 &spi_nor_api);

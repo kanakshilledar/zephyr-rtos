@@ -23,8 +23,13 @@
 
 LOG_MODULE_REGISTER(LSM6DSO, CONFIG_SENSOR_LOG_LEVEL);
 
+<<<<<<< HEAD
 static const uint16_t lsm6dso_odr_map[] = {0, 12, 26, 52, 104, 208, 416, 833,
 					1660, 3330, 6660};
+=======
+static const uint16_t lsm6dso_odr_map[] = {0, 12, 26, 52, 104, 208, 417, 833,
+					1667, 3333, 6667};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int lsm6dso_freq_to_odr_val(uint16_t freq)
 {

@@ -13,6 +13,17 @@ tests:
     extra_args: CONF_FILE="prj_user.conf"
     integration_platforms:
       - qemu_x86
+<<<<<<< HEAD
+=======
+    platform_exclude:
+      - mr_canhubk3
+    harness_config:
+      type: multi_line
+      regex:
+        - "thread_a: Hello World from (.*)!"
+        - "thread_b: Hello World from (.*)!"
+        - "sys_trace_.*_user.*"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   sample.tracing.format.sysview:
     platform_allow:
       - nrf52840dk_nrf52840
@@ -61,4 +72,8 @@ tests:
     platform_allow: frdm_k64f
     extra_args: CONF_FILE="prj_percepio.conf"
     modules:
+<<<<<<< HEAD
       - TraceRecorderSource
+=======
+      - percepio
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

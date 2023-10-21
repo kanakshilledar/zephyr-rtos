@@ -93,8 +93,13 @@ JTAG-only sessions.
 Flashing
 ========
 
+<<<<<<< HEAD
 If the correct headers are installed, this board supports both J-TAG and also
 the ChromiumOS servo.
+=======
+If the correct IDC headers are installed, this board supports both J-TAG and
+also the ChromiumOS servo.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 To flash using Servo V2, μServo, or Servo V4 (CCD), see the
 `Chromium EC Flashing Documentation`_ for more information.
@@ -102,6 +107,7 @@ To flash using Servo V2, μServo, or Servo V4 (CCD), see the
 To flash with J-TAG, install the drivers for your programmer, for example:
 SEGGER J-link's drivers are at https://www.segger.com/downloads/jlink/
 
+<<<<<<< HEAD
 The openocd from Zephyr SDK 0.14.2 doesn't include npcx support, so build openocd from source.::
 
   sudo apt-get install libftdi-dev libusb-1.0.0-dev
@@ -118,6 +124,13 @@ Build and flash the blinky sample.::
   west build -t clean && \
     west build -c -p auto -b npcx9m6f_evb samples/basic/blinky && \
     west flash --openocd /usr/local/bin/openocd
+=======
+.. zephyr-app-commands::
+   :zephyr-app: samples/basic/blinky
+   :board: npcx9m6f_evb
+   :maybe-skip-config:
+   :goals: build flash
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Debugging
 =========

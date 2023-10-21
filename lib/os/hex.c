@@ -27,9 +27,15 @@ int char2hex(char c, uint8_t *x)
 int hex2char(uint8_t x, char *c)
 {
 	if (x <= 9) {
+<<<<<<< HEAD
 		*c = x + '0';
 	} else  if (x <= 15) {
 		*c = x - 10 + 'a';
+=======
+		*c = x + (char)'0';
+	} else  if (x <= 15) {
+		*c = x - 10 + (char)'a';
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		return -EINVAL;
 	}
@@ -39,33 +45,57 @@ int hex2char(uint8_t x, char *c)
 
 size_t bin2hex(const uint8_t *buf, size_t buflen, char *hex, size_t hexlen)
 {
+<<<<<<< HEAD
 	if (hexlen < (buflen * 2 + 1)) {
+=======
+	if (hexlen < (buflen * 2U + 1U)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return 0;
 	}
 
 	for (size_t i = 0; i < buflen; i++) {
+<<<<<<< HEAD
 		if (hex2char(buf[i] >> 4, &hex[2 * i]) < 0) {
 			return 0;
 		}
 		if (hex2char(buf[i] & 0xf, &hex[2 * i + 1]) < 0) {
+=======
+		if (hex2char(buf[i] >> 4, &hex[2U * i]) < 0) {
+			return 0;
+		}
+		if (hex2char(buf[i] & 0xf, &hex[2U * i + 1U]) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return 0;
 		}
 	}
 
+<<<<<<< HEAD
 	hex[2 * buflen] = '\0';
 	return 2 * buflen;
+=======
+	hex[2U * buflen] = '\0';
+	return 2U * buflen;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 size_t hex2bin(const char *hex, size_t hexlen, uint8_t *buf, size_t buflen)
 {
 	uint8_t dec;
 
+<<<<<<< HEAD
 	if (buflen < hexlen / 2 + hexlen % 2) {
+=======
+	if (buflen < hexlen / 2U + hexlen % 2U) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return 0;
 	}
 
 	/* if hexlen is uneven, insert leading zero nibble */
+<<<<<<< HEAD
 	if (hexlen % 2) {
+=======
+	if ((hexlen % 2U) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (char2hex(hex[0], &dec) < 0) {
 			return 0;
 		}
@@ -75,17 +105,30 @@ size_t hex2bin(const char *hex, size_t hexlen, uint8_t *buf, size_t buflen)
 	}
 
 	/* regular hex conversion */
+<<<<<<< HEAD
 	for (size_t i = 0; i < hexlen / 2; i++) {
 		if (char2hex(hex[2 * i], &dec) < 0) {
+=======
+	for (size_t i = 0; i < hexlen / 2U; i++) {
+		if (char2hex(hex[2U * i], &dec) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return 0;
 		}
 		buf[i] = dec << 4;
 
+<<<<<<< HEAD
 		if (char2hex(hex[2 * i + 1], &dec) < 0) {
+=======
+		if (char2hex(hex[2U * i + 1U], &dec) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return 0;
 		}
 		buf[i] += dec;
 	}
 
+<<<<<<< HEAD
 	return hexlen / 2 + hexlen % 2;
+=======
+	return hexlen / 2U + hexlen % 2U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

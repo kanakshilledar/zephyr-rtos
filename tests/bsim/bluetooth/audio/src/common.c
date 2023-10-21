@@ -16,8 +16,12 @@ const struct bt_data ad[AD_SIZE] = {
 	BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR))
 };
 
+<<<<<<< HEAD
 void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 			 struct net_buf_simple *ad)
+=======
+static void device_found(const struct bt_le_scan_recv_info *info, struct net_buf_simple *ad)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	char addr_str[BT_ADDR_LE_STR_LEN];
 	int err;
@@ -27,6 +31,7 @@ void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 	}
 
 	/* We're only interested in connectable events */
+<<<<<<< HEAD
 	if (type != BT_HCI_ADV_IND && type != BT_HCI_ADV_DIRECT_IND) {
 		return;
 	}
@@ -36,6 +41,17 @@ void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 
 	/* connect only to devices in close proximity */
 	if (rssi < -70) {
+=======
+	if ((info->adv_props & BT_GAP_ADV_PROP_CONNECTABLE) == 0) {
+		return;
+	}
+
+	bt_addr_le_to_str(info->addr, addr_str, sizeof(addr_str));
+	printk("Device found: %s (RSSI %d)\n", addr_str, info->rssi);
+
+	/* connect only to devices in close proximity */
+	if (info->rssi < -70) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		FAIL("RSSI too low");
 		return;
 	}
@@ -46,13 +62,25 @@ void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 		return;
 	}
 
+<<<<<<< HEAD
 	err = bt_conn_le_create(addr, BT_CONN_LE_CREATE_CONN,
 				BT_LE_CONN_PARAM_DEFAULT, &default_conn);
+=======
+	err = bt_conn_le_create(info->addr, BT_CONN_LE_CREATE_CONN, BT_LE_CONN_PARAM_DEFAULT,
+				&default_conn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		FAIL("Could not connect to peer: %d", err);
 	}
 }
 
+<<<<<<< HEAD
+=======
+struct bt_le_scan_cb common_scan_cb = {
+	.recv = device_found,
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void connected(struct bt_conn *conn, uint8_t err)
 {
 	char addr[BT_ADDR_LE_STR_LEN];
@@ -67,7 +95,11 @@ static void connected(struct bt_conn *conn, uint8_t err)
 		bt_conn_unref(default_conn);
 		default_conn = NULL;
 
+<<<<<<< HEAD
 		FAIL("Failed to connect to %s (%u)\n", addr, err);
+=======
+		FAIL("Failed to connect to %s (0x%02x)\n", addr, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -85,7 +117,11 @@ void disconnected(struct bt_conn *conn, uint8_t reason)
 
 	bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
 
+<<<<<<< HEAD
 	printk("Disconnected: %s (reason %u)\n", addr, reason);
+=======
+	printk("Disconnected: %s (reason 0x%02x)\n", addr, reason);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bt_conn_unref(default_conn);
 	default_conn = NULL;

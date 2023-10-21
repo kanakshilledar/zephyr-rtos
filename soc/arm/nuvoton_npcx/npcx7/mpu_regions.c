@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "../../common/cortex_m/arm_mpu_mem_cfg.h"
+=======
+#include <zephyr/arch/arm/cortex_m/arm_mpu_mem_cfg.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static const struct arm_mpu_region mpu_regions[] = {
 	MPU_REGION_ENTRY("FLASH_0_0",

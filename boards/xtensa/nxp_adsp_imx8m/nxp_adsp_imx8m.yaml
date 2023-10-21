@@ -8,5 +8,9 @@ testing:
   only_tags:
     - kernel
     - sof
+<<<<<<< HEAD
+=======
+    - ipm
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 supported:
   - uart

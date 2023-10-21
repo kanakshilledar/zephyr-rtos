@@ -32,6 +32,10 @@ properties:
     description: |
       Default frequency in Hz for HFCG output clock (OFMCLK). Currently,
       only the following values are allowed:
+<<<<<<< HEAD
+=======
+        120000000, 120 MHz
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         100000000, 100 MHz
         96000000, 96 MHz
         90000000, 90 MHz
@@ -39,9 +43,14 @@ properties:
         66000000, 66 MHz
         50000000, 50 MHz
         48000000, 48 MHz
+<<<<<<< HEAD
         40000000, 40 MHz (default value after reset)
         33000000, 33 MHz
     enum:
+=======
+    enum:
+      - 120000000
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - 100000000
       - 96000000
       - 90000000
@@ -49,8 +58,11 @@ properties:
       - 66000000
       - 50000000
       - 48000000
+<<<<<<< HEAD
       - 40000000
       - 33000000
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   core-prescaler:
     type: int
@@ -208,6 +220,10 @@ properties:
   ram-pd-depth:
     type: int
     enum:
+<<<<<<< HEAD
+=======
+      - 8
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - 12
       - 15
     description: |
@@ -216,6 +232,16 @@ properties:
       itself to 1 for better power consumption and this valid bit-depth
       varies in different NPCX series.
 
+<<<<<<< HEAD
+=======
+  pwdwn-ctl-val:
+    type: array
+    required: true
+    description: |
+      Power-down (turn off clock) the modules during system initialization for
+      better power consumption.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 clock-cells:
   - bus
   - ctl

@@ -6,8 +6,14 @@
 
 /dts-v1/;
 
+<<<<<<< HEAD
 #include <espressif/esp32c3.dtsi>
 #include "esp32c3_devkitm-pinctrl.dtsi"
+=======
+#include <espressif/esp32c3/esp32c3_mini_n4.dtsi>
+#include "esp32c3_devkitm-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "esp32c3_devkitm";
@@ -26,6 +32,7 @@
 		watchdog0 = &wdt0;
 	};
 
+<<<<<<< HEAD
 	power-states {
 		light_sleep: light_sleep {
 			compatible = "zephyr,power-state";
@@ -42,18 +49,27 @@
 		};
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	gpio_keys {
 		compatible = "gpio-keys";
 		user_button1: button_1 {
 			label = "User SW1";
 			gpios = <&gpio0 9 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };
 
 &cpu0 {
 	clock-frequency = <ESP32_CLK_CPU_160M>;
+<<<<<<< HEAD
 	cpu-power-states = <&deep_sleep &light_sleep>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &uart0 {

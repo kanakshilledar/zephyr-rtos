@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _mqtt-azure-sample:
 
 MQTT Azure Sample
 #################
+=======
+.. zephyr:code-sample:: mqtt-azure
+   :name: Microsoft Azure IoT Hub MQTT
+   :relevant-api: bsd_sockets mqtt_socket tls_credentials random_api
+
+   Connect to Azure IoT Hub and publish messages using MQTT.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

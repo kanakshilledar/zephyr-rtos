@@ -18,6 +18,12 @@
 
 LOG_MODULE_DECLARE(net_test, CONFIG_NET_SOCKETS_LOG_LEVEL);
 
+<<<<<<< HEAD
 extern struct k_work_q test_socketpair_work_q;
+=======
+struct net_socketpair_fixture {
+	int sv[2];
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* TEST_SOCKETPAIR_THREAD_H_ */

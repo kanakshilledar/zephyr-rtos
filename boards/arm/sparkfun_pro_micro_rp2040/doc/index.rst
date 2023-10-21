@@ -79,6 +79,12 @@ hardware features:
    * - Flash
      - :kconfig:option:`CONFIG_FLASH`
      - :dtcompatible:`raspberrypi,pico-flash`
+<<<<<<< HEAD
+=======
+   * - UART (PIO)
+     - :kconfig:option:`CONFIG_SERIAL`
+     - :dtcompatible:`raspberrypi,pico-uart-pio`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Pin Mapping
 ===========

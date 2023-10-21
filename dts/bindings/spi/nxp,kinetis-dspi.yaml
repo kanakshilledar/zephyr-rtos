@@ -36,7 +36,10 @@ properties:
       select assert. If not set, the minimum supported delay is used.
 
   pinctrl-0:
+<<<<<<< HEAD
     type: phandles
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     required: true
 
   nxp,rx-tx-chn-share:

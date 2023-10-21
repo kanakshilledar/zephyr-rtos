@@ -27,7 +27,11 @@ static void find_rsdp(void)
 {
 	uint8_t *bda_seg, *zero_page_base;
 	uint64_t *search;
+<<<<<<< HEAD
 	uintptr_t search_phys, rsdp_phys = 0U;
+=======
+	uintptr_t search_phys, rsdp_phys;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	size_t search_length = 0U, rsdp_length;
 
 	if (is_rsdp_searched) {
@@ -94,7 +98,10 @@ static void find_rsdp(void)
 	search_length = 128 * 1024;
 	z_phys_map((uint8_t **)&search, search_phys, search_length, 0);
 
+<<<<<<< HEAD
 	rsdp_phys = 0U;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	for (int i = 0; i < 128*1024/8; i++) {
 		if (search[i] == ACPI_RSDP_SIGNATURE) {
 			rsdp_phys = search_phys + i * 8;

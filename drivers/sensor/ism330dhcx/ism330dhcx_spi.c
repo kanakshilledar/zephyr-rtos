@@ -107,7 +107,11 @@ int ism330dhcx_spi_init(const struct device *dev)
 	data->ctx_spi.mdelay = (stmdev_mdelay_ptr) stmemsc_mdelay;
 
 	data->ctx = &data->ctx_spi;
+<<<<<<< HEAD
 	data->ctx->handle = data;
+=======
+	data->ctx->handle = (void *)dev;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

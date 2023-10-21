@@ -7,10 +7,18 @@
 /dts-v1/;
 #include <st/f4/stm32f407Xe.dtsi>
 #include <st/f4/stm32f407v(e-g)tx-pinctrl.dtsi>
+<<<<<<< HEAD
 
 / {
 	model = "black_f407ve board";
 	compatible = "st,stm32f407";
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	model = "black_f407ve board";
+	compatible = "black-stm32f407";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	chosen {
 		zephyr,console = &usart1;
@@ -38,14 +46,26 @@
 		user_button_0: K0 {
 			label = "Key K0";
 			gpios = <&gpioe 4 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_1: K1 {
 			label = "Key K1";
 			gpios = <&gpioe 3 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		user_button_UP: K_UP {
 			label = "Key WK_UP";
 			gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_UP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

@@ -52,6 +52,10 @@ these references:
 - `MIMXRT595-EVK Website`_
 - `MIMXRT595-EVK User Guide`_
 - `MIMXRT595-EVK Schematics`_
+<<<<<<< HEAD
+=======
+- `MIMXRT595-EVK Debug Firmware`_
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Supported Features
 ==================
@@ -107,9 +111,16 @@ already supported, which can also be re-used on this mimxrt595_evk board:
 +-----------+------------+-------------------------------------+
 | I2S       | on-chip    | i2s                                 |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
 | DISPLAY   | on-chip    | LCDIF; MIPI-DSI. Tested with RM68200|
 |           |            | based MIPI display                  |
 |           |            | (`RK055HDMIPI4M`_)                  |
+=======
+| DISPLAY   | on-chip    | LCDIF; MIPI-DSI. Tested with        |
+|           |            | :ref:`rk055hdmipi4m`,               |
+|           |            | :ref:`rk055hdmipi4ma0`, and         |
+|           |            | :ref:`g1120b0mipi` display shields  |
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 +-----------+------------+-------------------------------------+
 
 The default configuration can be found in the defconfig file:
@@ -207,6 +218,14 @@ configured by default to use the LPC-Link2.
 
         See :ref:`jlink-external-debug-probe` for more information.
 
+<<<<<<< HEAD
+=======
+    .. group-tab:: Linkserver
+
+        1. Install the :ref:`linkserver-debug-host-tools` and make sure they are in your search path.
+        2. To update the debug firmware, please follow the instructions on `MIMXRT595-EVK Debug Firmware`
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Configuring a Console
 =====================
 
@@ -292,6 +311,12 @@ steps:
 .. _MIMXRT595-EVK User Guide:
    https://www.nxp.com/webapp/Download?colCode=MIMXRT595EVKHUG
 
+<<<<<<< HEAD
+=======
+.. _MIMXRT595-EVK Debug Firmware:
+   https://www.nxp.com/docs/en/application-note/AN13206.pdf
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _MIMXRT595-EVK Schematics:
    https://www.nxp.com/downloads/en/schematics/MIMXRT595-EVK-DESIGN-FILES.zip
 
@@ -303,6 +328,9 @@ steps:
 
 .. _i.MX RT595 Reference Manual:
    https://www.nxp.com/webapp/Download?colCode=IMXRT500RM
+<<<<<<< HEAD
 
 .. _RK055HDMIPI4M:
    https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/5-5-lcd-panel:RK055HDMIPI4M
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

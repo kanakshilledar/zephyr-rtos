@@ -50,7 +50,11 @@ endif()
 
 find_package(Deprecated COMPONENTS XCC_USE_CLANG CROSS_COMPILE)
 
+<<<<<<< HEAD
 find_package(Zephyr-sdk 0.15)
+=======
+find_package(Zephyr-sdk 0.16)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # gperf is an optional dependency
 find_program(GPERF gperf)

@@ -8,7 +8,11 @@
 #include <zephyr/rtio/rtio.h>
 #include <zephyr/logging/log.h>
 
+<<<<<<< HEAD
 LOG_MODULE_REGISTER(main);
+=======
+LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define N		(8)
 #define M		(N/2)

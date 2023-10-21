@@ -4,6 +4,7 @@
 description: |
     Nuvoton NCT38XX series I2C-based GPIO expander
 
+<<<<<<< HEAD
     Example:
       &i2c0_0 {
         nct3807@70 {
@@ -29,10 +30,44 @@ description: |
             #gpio-cells = <2>;
             ngpios = <8>;
             pin_mask = <0xff>;
+=======
+    This must be a child of the NCT38xx multi-function device.
+
+    Example:
+      &i2c0_0 {
+        nct3807@70 {
+          compatible = "nuvoton,nct38xx";
+          reg = <0x70>;
+
+          nct3807-gpio {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            compatible = "nuvoton,nct38xx-gpio";
+
+            gpio@0 {
+              compatible = "nuvoton,nct38xx-gpio-port";
+              reg = <0x0>;
+              gpio-controller;
+              #gpio-cells = <2>;
+              ngpios = <8>;
+              pin_mask = <0xff>;
+              pinmux_mask = <0xf7>;
+            };
+
+            gpio@1 {
+              compatible = "nuvoton,nct38xx-gpio-port";
+              reg = <0x1>;
+              gpio-controller;
+              #gpio-cells = <2>;
+              ngpios = <8>;
+              pin_mask = <0xff>;
+            };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           };
         };
 
         nct3808_0_P1@71 {
+<<<<<<< HEAD
           #address-cells = <1>;
           #size-cells = <0>;
           compatible = "nuvoton,nct38xx-gpio";
@@ -46,10 +81,30 @@ description: |
             ngpios = <8>;
             pin_mask = <0xdc>;
             pinmux_mask = <0xff>;
+=======
+          compatible = "nuvoton,nct38xx";
+          reg = <0x71>;
+
+          nct3808-0-p1-gpio {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            compatible = "nuvoton,nct38xx-gpio";
+
+            gpio@0 {
+              compatible = "nuvoton,nct38xx-gpio-port";
+              reg = <0x0>;
+              gpio-controller;
+              #gpio-cells = <2>;
+              ngpios = <8>;
+              pin_mask = <0xdc>;
+              pinmux_mask = <0xff>;
+            };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           };
         };
 
         nct3808_0_P2@75 {
+<<<<<<< HEAD
           #address-cells = <1>;
           #size-cells = <0>;
           compatible = "nuvoton,nct38xx-gpio";
@@ -63,10 +118,33 @@ description: |
             ngpios = <8>;
             pin_mask = <0xdc>;
             pinmux_mask = <0xff>;
+=======
+          compatible = "nuvoton,nct38xx";
+          reg = <0x75>;
+
+          nct3808-0-P2-gpio {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            compatible = "nuvoton,nct38xx-gpio";
+
+            gpio@0 {
+              compatible = "nuvoton,nct38xx-gpio-port";
+              reg = <0x0>;
+              gpio-controller;
+              #gpio-cells = <2>;
+              ngpios = <8>;
+              pin_mask = <0xdc>;
+              pinmux_mask = <0xff>;
+            };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
           };
         };
       };
 
 compatible: "nuvoton,nct38xx-gpio"
 
+<<<<<<< HEAD
 include: [i2c-device.yaml]
+=======
+include: [base.yaml]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

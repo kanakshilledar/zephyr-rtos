@@ -1,5 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 / {
 	aliases {
 		led0 = &led0;
@@ -58,21 +63,37 @@
 			/* gpio flags need validation */
 			gpios = <&gpio0 0 GPIO_ACTIVE_LOW>;
 			label = "DIP SW1 - Switch 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		switch1: switch_1 {
 			/* gpio flags need validation */
 			gpios = <&gpio0 1 GPIO_ACTIVE_LOW>;
 			label = "DIP SW1 - Switch 2";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		switch2: switch_2 {
 			/* gpio flags need validation */
 			gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
 			label = "DIP SW1 - Switch 3";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		switch3: switch_3 {
 			/* gpio flags need validation */
 			gpios = <&gpio0 3 GPIO_ACTIVE_LOW>;
 			label = "DIP SW1 - Switch 4";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

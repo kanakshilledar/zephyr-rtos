@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _i2s_echo_sample:
 
 I2S Echo Sample
 ###############
+=======
+.. zephyr:code-sample:: i2s-echo
+   :name: I2S echo
+   :relevant-api: i2s_interface
+
+   Process an audio stream to add an echo effect.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

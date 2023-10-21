@@ -234,11 +234,14 @@ struct can_bus_err_cnt {
 	uint8_t rx_err_cnt;
 };
 
+<<<<<<< HEAD
 /** Synchronization Jump Width (SJW) value to indicate that the SJW should not
  * be changed by the timing calculation.
  */
 #define CAN_SJW_NO_CHANGE 0
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief CAN bus timing structure
  *
@@ -865,8 +868,11 @@ __syscall int can_calc_timing_data(const struct device *dev, struct can_timing *
 /**
  * @brief Configure the bus timing for the data phase of a CAN-FD controller.
  *
+<<<<<<< HEAD
  * If the sjw equals CAN_SJW_NO_CHANGE, the sjw parameter is not changed.
  *
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @note @kconfig{CONFIG_CAN_FD_MODE} must be selected for this function to be
  * available.
  *
@@ -936,8 +942,11 @@ int can_calc_prescaler(const struct device *dev, struct can_timing *timing,
 /**
  * @brief Configure the bus timing of a CAN controller.
  *
+<<<<<<< HEAD
  * If the sjw equals CAN_SJW_NO_CHANGE, the sjw parameter is not changed.
  *
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @see can_set_timing_data()
  *
  * @param dev         Pointer to the device structure for the driver instance.
@@ -1360,7 +1369,11 @@ static inline uint8_t can_dlc_to_bytes(uint8_t dlc)
 	static const uint8_t dlc_table[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12,
 					    16, 20, 24, 32, 48, 64};
 
+<<<<<<< HEAD
 	return dlc > 0x0F ? 64 : dlc_table[dlc];
+=======
+	return dlc_table[MIN(dlc, ARRAY_SIZE(dlc_table) - 1)];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**

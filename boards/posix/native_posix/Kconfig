@@ -2,8 +2,14 @@
 
 config BOARD_NATIVE_POSIX
 	bool
+<<<<<<< HEAD
 	select NATIVE_POSIX_TIMER
 	select POSIX_ARCH_CONSOLE
+=======
+	imply NATIVE_POSIX_TIMER
+	select POSIX_ARCH_CONSOLE
+	select NATIVE_APPLICATION
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if BOARD_NATIVE_POSIX
 
@@ -21,6 +27,7 @@ config NATIVE_POSIX_SLOWDOWN_TO_REAL_TIME
 	  case the zephyr kernel and application cannot tell the difference unless they
 	  interact with some other driver/device which runs at real time.
 
+<<<<<<< HEAD
 config HAS_SDL
 	bool
 	help
@@ -39,5 +46,8 @@ config SDL_THREAD_PRIORITY
 	depends on HAS_SDL
 	help
 	  Priority of SDL thread to handle events.
+=======
+source "boards/$(ARCH)/common/sdl/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endif # BOARD_NATIVE_POSIX

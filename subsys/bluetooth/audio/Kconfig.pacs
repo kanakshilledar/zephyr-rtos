@@ -13,6 +13,7 @@ config BT_PAC_SNK
 	  This option enables support for Sink Published Audio Capabilities.
 
 if BT_PAC_SNK
+<<<<<<< HEAD
 config BT_PACS_SNK_CONTEXT
 	hex "Supported Sink Contexts"
 	default 0x03ff
@@ -30,6 +31,13 @@ config BT_PACS_SNK_CONTEXT
 	  0x0080: EmergencyAlert
 	  0x0100: Ringtone
 	  0x0200: TV
+=======
+config BT_PAC_SNK_NOTIFIABLE
+	bool "Sink PAC Notifiable Support"
+	help
+	  This option enables support for clients to be notified on the Sink
+	  PAC Characteristic changes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config BT_PAC_SNK_LOC
 	bool "Sink PAC Location Support"
@@ -44,6 +52,16 @@ config BT_PAC_SNK_LOC_WRITEABLE
 	  This option enables support for clients to write to the Sink PAC
 	  Location Characteristic.
 
+<<<<<<< HEAD
+=======
+config BT_PAC_SNK_LOC_NOTIFIABLE
+	bool "Sink Audio Location Notifiable Support"
+	depends on BT_PAC_SNK_LOC
+	help
+	  This option enables support for clients to be notified on the Sink
+	  Audio Location Characteristic changes.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # BT_PACS_SNK
 
 config BT_PAC_SRC
@@ -52,6 +70,7 @@ config BT_PAC_SRC
 	  This option enables support for Source Published Audio Capabilities.
 
 if BT_PAC_SRC
+<<<<<<< HEAD
 config BT_PACS_SRC_CONTEXT
 	hex "Supported Source Contexts"
 	default 0x03ff
@@ -69,6 +88,14 @@ config BT_PACS_SRC_CONTEXT
 	  0x0080: EmergencyAlert
 	  0x0100: Ringtone
 	  0x0200: TV
+=======
+
+config BT_PAC_SRC_NOTIFIABLE
+	bool "Source PAC Notifiable Support"
+	help
+	  This option enables support for clients to be notified on the Source
+	  PAC Characteristic changes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config BT_PAC_SRC_LOC
 	bool "Source PAC Location Support"
@@ -83,9 +110,29 @@ config BT_PAC_SRC_LOC_WRITEABLE
 	  This option enables support for clients to write to the Source PAC
 	  Location Characteristic.
 
+<<<<<<< HEAD
+=======
+config BT_PAC_SRC_LOC_NOTIFIABLE
+	bool "Source Audio Location Notifiable Support"
+	depends on BT_PAC_SRC_LOC
+	help
+	  This option enables support for clients to be notified on the Source
+	  Audio Location Characteristic changes.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # BT_PAC_SRC
 
 config BT_PACS
 	def_bool BT_PAC_SNK || BT_PAC_SRC
 
+<<<<<<< HEAD
+=======
+config BT_PACS_SUPPORTED_CONTEXT_NOTIFIABLE
+	bool "Supported Audio Context Notifiable Support"
+	depends on BT_PACS
+	help
+	  This option enables support for clients to be notified on the
+	  Supported Audio Contexts Characteristic changes.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu

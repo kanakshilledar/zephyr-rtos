@@ -24,8 +24,16 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /* Early boot functions */
 
+=======
+/* Initialize a thread */
+void z_init_thread_base(struct _thread_base *thread_base, int priority,
+			uint32_t initial_state, unsigned int options);
+
+/* Early boot functions */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void z_early_memset(void *dst, int c, size_t n);
 void z_early_memcpy(void *dst, const void *src, size_t n);
 
@@ -141,10 +149,19 @@ z_thread_return_value_set_with_data(struct k_thread *thread,
 
 #ifdef CONFIG_SMP
 extern void z_smp_init(void);
+<<<<<<< HEAD
 extern void smp_timer_init(void);
 #endif
 
 extern void z_early_boot_rand_get(uint8_t *buf, size_t length);
+=======
+#ifdef CONFIG_SYS_CLOCK_EXISTS
+extern void smp_timer_init(void);
+#endif
+#endif
+
+extern void z_early_rand_get(uint8_t *buf, size_t length);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if CONFIG_STACK_POINTER_RANDOM
 extern int z_stack_adjust_initialized;
@@ -225,10 +242,15 @@ void z_mem_manage_init(void);
  */
 void z_mem_manage_boot_finish(void);
 
+<<<<<<< HEAD
 #define LOCKED(lck) for (k_spinlock_key_t __i = {},			\
 					  __key = k_spin_lock(lck);	\
 			!__i.key;					\
 			k_spin_unlock(lck, __key), __i.key = 1)
+=======
+
+void z_handle_obj_poll_events(sys_dlist_t *events, uint32_t state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_PM
 
@@ -289,6 +311,25 @@ void z_paging_histogram_inc(struct k_mem_paging_histogram_t *hist,
 			    uint32_t cycles);
 #endif /* CONFIG_DEMAND_PAGING_TIMING_HISTOGRAM */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_STATS_THREAD
+int z_thread_stats_raw(struct k_obj_core *obj_core, void *stats);
+int z_thread_stats_query(struct k_obj_core *obj_core, void *stats);
+int z_thread_stats_reset(struct k_obj_core *obj_core);
+int z_thread_stats_disable(struct k_obj_core *obj_core);
+int z_thread_stats_enable(struct k_obj_core *obj_core);
+#endif
+
+#ifdef CONFIG_OBJ_CORE_STATS_SYSTEM
+int z_cpu_stats_raw(struct k_obj_core *obj_core, void *stats);
+int z_cpu_stats_query(struct k_obj_core *obj_core, void *stats);
+
+int z_kernel_stats_raw(struct k_obj_core *obj_core, void *stats);
+int z_kernel_stats_query(struct k_obj_core *obj_core, void *stats);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

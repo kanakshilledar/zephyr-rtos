@@ -36,8 +36,13 @@ static const struct bt_data ad[] = {
 static struct k_thread pwr_thread_data;
 static K_THREAD_STACK_DEFINE(pwr_thread_stack, 512);
 
+<<<<<<< HEAD
 static const int8_t txp[DEVICE_BEACON_TXPOWER_NUM] = {4, 0, -3, -8,
 						    -15, -18, -23, -30};
+=======
+static const int8_t txpower[DEVICE_BEACON_TXPOWER_NUM] = {4, 0, -3, -8,
+							  -15, -18, -23, -30};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct bt_le_adv_param *param =
 	BT_LE_ADV_PARAM(BT_LE_ADV_OPT_CONNECTABLE | BT_LE_ADV_OPT_USE_NAME,
 			0x0020, 0x0020, NULL);
@@ -235,9 +240,15 @@ void modulate_tx_power(void *p1, void *p2, void *p3)
 
 	while (1) {
 		if (!default_conn) {
+<<<<<<< HEAD
 			printk("Set Tx power level to %d\n", txp[idx]);
 			set_tx_power(BT_HCI_VS_LL_HANDLE_TYPE_ADV,
 				     0, txp[idx]);
+=======
+			printk("Set Tx power level to %d\n", txpower[idx]);
+			set_tx_power(BT_HCI_VS_LL_HANDLE_TYPE_ADV,
+				     0, txpower[idx]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			k_sleep(K_SECONDS(5));
 

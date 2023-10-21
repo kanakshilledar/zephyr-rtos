@@ -138,10 +138,18 @@
 		};
 
 		i2c0: i2c@40044000 {
+<<<<<<< HEAD
 			compatible = "snps,designware-i2c";
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <0x40044000 DT_SIZE_K(4)>;
+=======
+			compatible = "raspberrypi,pico-i2c", "snps,designware-i2c";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x40044000 DT_SIZE_K(4)>;
+			resets = <&reset RPI_PICO_RESETS_RESET_I2C0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			clocks = <&system_clk>;
 			interrupts = <23 RPI_PICO_DEFAULT_IRQ_PRIORITY>;
 			interrupt-names = "i2c0";
@@ -149,10 +157,18 @@
 		};
 
 		i2c1: i2c@40048000 {
+<<<<<<< HEAD
 			compatible = "snps,designware-i2c";
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <0x40048000 DT_SIZE_K(4)>;
+=======
+			compatible = "raspberrypi,pico-i2c", "snps,designware-i2c";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0x40048000 DT_SIZE_K(4)>;
+			resets = <&reset RPI_PICO_RESETS_RESET_I2C0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			clocks = <&system_clk>;
 			interrupts = <24 RPI_PICO_DEFAULT_IRQ_PRIORITY>;
 			interrupt-names = "i2c1";
@@ -187,6 +203,25 @@
 			#pwm-cells = <3>;
 		};
 
+<<<<<<< HEAD
+=======
+		timer: timer@40054000 {
+			compatible = "raspberrypi,pico-timer";
+			reg = <0x40054000 DT_SIZE_K(4)>;
+			resets = <&reset RPI_PICO_RESETS_RESET_TIMER>;
+			clocks = <&xtal_clk>;
+			interrupts = <0 RPI_PICO_DEFAULT_IRQ_PRIORITY>,
+				     <1 RPI_PICO_DEFAULT_IRQ_PRIORITY>,
+				     <2 RPI_PICO_DEFAULT_IRQ_PRIORITY>,
+				     <3 RPI_PICO_DEFAULT_IRQ_PRIORITY>;
+			interrupt-names = "TIMER_IRQ_0",
+					  "TIMER_IRQ_1",
+					  "TIMER_IRQ_2",
+					  "TIMER_IRQ_3";
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		dma: dma@50000000 {
 			compatible = "raspberrypi,pico-dma";
 			reg = <0x50000000 DT_SIZE_K(64)>;

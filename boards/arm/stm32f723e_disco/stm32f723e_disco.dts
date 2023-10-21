@@ -8,6 +8,10 @@
 #include <st/f7/stm32f723Xe.dtsi>
 #include <st/f7/stm32f723i(c-e)kx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32F723E DISCOVERY board";
@@ -42,6 +46,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

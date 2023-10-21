@@ -4,6 +4,10 @@
 zephyr_library()
 zephyr_library_sources(common.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_TELINK_B91 pinctrl_b91.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_PINCTRL_AMBIQ_APOLLO4 pinctrl_ambiq_apollo4.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_GD32_AF pinctrl_gd32_af.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_GD32_AFIO pinctrl_gd32_afio.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_ITE_IT8XXX2 pinctrl_ite_it8xxx2.c)
@@ -31,3 +35,9 @@ zephyr_library_sources_ifdef(CONFIG_PINCTRL_NXP_S32 pinctrl_nxp_s32.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_GECKO pinctrl_gecko.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_TI_K3 pinctrl_ti_k3.c)
 zephyr_library_sources_ifdef(CONFIG_PINCTRL_EMSDP pinctrl_emsdp.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_PINCTRL_TI_CC32XX pinctrl_ti_cc32xx.c)
+zephyr_library_sources_ifdef(CONFIG_PINCTRL_NUMAKER pinctrl_numaker.c)
+zephyr_library_sources_ifdef(CONFIG_PINCTRL_QUICKLOGIC_EOS_S3 pinctrl_eos_s3.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

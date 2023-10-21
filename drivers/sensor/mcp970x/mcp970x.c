@@ -46,7 +46,11 @@ static int fetch(const struct device *dev, enum sensor_channel chan)
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	ret = adc_read(config->adc.dev, &data->sequence);
+=======
+	ret = adc_read_dt(&config->adc, &data->sequence);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret != 0) {
 		LOG_ERR("adc_read: %d", ret);
 	}
@@ -102,7 +106,11 @@ static int init(const struct device *dev)
 	struct mcp970x_data *data = dev->data;
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->adc.dev)) {
+=======
+	if (!adc_is_ready_dt(&config->adc)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("ADC is not ready");
 		return -ENODEV;
 	}

@@ -255,7 +255,11 @@ static void IRAM_ATTR i2c_esp32_configure_timeout(const struct device *dev)
 		 * at least for ESP32-C3 (tested with communication to bq76952 chip). So we set the
 		 * timeout to maximum supported value instead.
 		 */
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_ESP32C3) || defined(CONFIG_SOC_ESP32)
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32C3) || defined(CONFIG_SOC_SERIES_ESP32)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c_hal_set_tout(&data->hal, I2C_LL_MAX_TIMEOUT);
 #else
 		i2c_hal_set_tout_en(&data->hal, 0);
@@ -560,12 +564,26 @@ static int IRAM_ATTR i2c_esp32_transfer(const struct device *dev, struct i2c_msg
 {
 	struct i2c_esp32_data *data = (struct i2c_esp32_data *const)(dev)->data;
 	struct i2c_msg *current, *next;
+<<<<<<< HEAD
+=======
+	uint32_t timeout = I2C_TRANSFER_TIMEOUT_MSEC * USEC_PER_MSEC;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret = 0;
 
 	if (!num_msgs) {
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+	while (i2c_hal_is_bus_busy(&data->hal)) {
+		k_busy_wait(1);
+		if (timeout-- == 0) {
+			return -EBUSY;
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Check for validity of all messages before transfer */
 	current = msgs;
 
@@ -674,12 +692,20 @@ static int IRAM_ATTR i2c_esp32_init(const struct device *dev)
 #ifndef SOC_I2C_SUPPORT_HW_CLR_BUS
 	struct i2c_esp32_data *data = (struct i2c_esp32_data *const)(dev)->data;
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->scl.gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->scl.gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SCL GPIO device is not ready");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->sda.gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->sda.gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SDA GPIO device is not ready");
 		return -EINVAL;
 	}

@@ -6,7 +6,11 @@
  * Application overlay for w1 devices
  */
 
+<<<<<<< HEAD
 test-w1-ds18b20 {
+=======
+test_w1_ds18b20: ds18b20 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	compatible = "maxim,ds18b20";
 	family-code = <0x28>;
 	resolution = <12>;

@@ -116,10 +116,17 @@ Building
 ********
 
 In order to get started with Zephyr on the PineTime, you can use the
+<<<<<<< HEAD
 board-specific sample:
 
 .. zephyr-app-commands::
    :zephyr-app: samples/boards/pine64_pinetime
+=======
+basic button sample:
+
+.. zephyr-app-commands::
+   :zephyr-app: samples/basic/button
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: pinetime_devkit0
    :goals: build
 

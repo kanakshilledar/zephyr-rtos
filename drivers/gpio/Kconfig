@@ -69,6 +69,11 @@ config GPIO_ENABLE_DISABLE_INTERRUPT
 	  pending register, etc. The driver must implement it to work.
 
 
+<<<<<<< HEAD
+=======
+source "drivers/gpio/Kconfig.axp192"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/gpio/Kconfig.b91"
 
 source "drivers/gpio/Kconfig.dw"
@@ -197,4 +202,16 @@ source "drivers/gpio/Kconfig.bd8lb600fs"
 
 source "drivers/gpio/Kconfig.sc18im704"
 
+<<<<<<< HEAD
+=======
+source "drivers/gpio/Kconfig.numaker"
+
+source "drivers/gpio/Kconfig.efinix_sapphire"
+
+source "drivers/gpio/Kconfig.davinci"
+source "drivers/gpio/Kconfig.sedi"
+
+source "drivers/gpio/Kconfig.altera"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # GPIO

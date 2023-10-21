@@ -17,11 +17,20 @@ struct ctx {
 static ZTEST_BMEM struct ctx ctx;
 static ZTEST_BMEM struct k_work work;
 
+<<<<<<< HEAD
 static void work_handler(struct k_work *work)
+=======
+static void work_handler(struct k_work *w)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int res;
 	char c = '\0';
 
+<<<<<<< HEAD
+=======
+	(void)w;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("doing work");
 
 	while (true) {
@@ -54,6 +63,7 @@ static void work_handler(struct k_work *work)
 	}
 }
 
+<<<<<<< HEAD
 ZTEST(net_socketpair, test_write_block)
 {
 	int res;
@@ -66,11 +76,24 @@ ZTEST(net_socketpair, test_write_block)
 	for (size_t i = 0; i < 2; ++i) {
 
 		LOG_DBG("data direction %d -> %d", sv[i], sv[(!i) & 1]);
+=======
+ZTEST_F(net_socketpair, test_write_block)
+{
+	int res;
+
+	for (size_t i = 0; i < 2; ++i) {
+
+		LOG_DBG("data direction %d -> %d", fixture->sv[i], fixture->sv[(!i) & 1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LOG_DBG("setting up context");
 		memset(&ctx, 0, sizeof(ctx));
 		ctx.write = true;
+<<<<<<< HEAD
 		ctx.fd = sv[(!i) & 1];
+=======
+		ctx.fd = fixture->sv[(!i) & 1];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LOG_DBG("queueing work");
 		k_work_init(&work, work_handler);
@@ -80,7 +103,11 @@ ZTEST(net_socketpair, test_write_block)
 		for (ctx.m = 0; atomic_get(&ctx.m)
 			< CONFIG_NET_SOCKETPAIR_BUFFER_SIZE;) {
 
+<<<<<<< HEAD
 			res = send(sv[i], "x", 1, 0);
+=======
+			res = send(fixture->sv[i], "x", 1, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			zassert_not_equal(res, -1, "send() failed: %d", errno);
 			zassert_equal(res, 1, "wrote %d bytes instead of 1",
 				res);
@@ -90,13 +117,19 @@ ZTEST(net_socketpair, test_write_block)
 		}
 
 		/* try to write one more byte */
+<<<<<<< HEAD
 		LOG_DBG("writing to fd %d", sv[i]);
 		res = send(sv[i], "x", 1, 0);
+=======
+		LOG_DBG("writing to fd %d", fixture->sv[i]);
+		res = send(fixture->sv[i], "x", 1, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_not_equal(res, -1, "send() failed: %d", errno);
 		zassert_equal(res, 1, "wrote %d bytes instead of 1", res);
 
 		LOG_DBG("success!");
 	}
+<<<<<<< HEAD
 
 	close(sv[0]);
 	close(sv[1]);
@@ -115,26 +148,51 @@ ZTEST(net_socketpair, test_read_block)
 	for (size_t i = 0; i < 2; ++i) {
 
 		LOG_DBG("data direction %d <- %d", sv[i], sv[(!i) & 1]);
+=======
+}
+
+ZTEST_F(net_socketpair, test_read_block)
+{
+	int res;
+	char x;
+
+	for (size_t i = 0; i < 2; ++i) {
+
+		LOG_DBG("data direction %d <- %d", fixture->sv[i], fixture->sv[(!i) & 1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LOG_DBG("setting up context");
 		memset(&ctx, 0, sizeof(ctx));
 		ctx.write = false;
+<<<<<<< HEAD
 		ctx.fd = sv[(!i) & 1];
+=======
+		ctx.fd = fixture->sv[(!i) & 1];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LOG_DBG("queueing work");
 		k_work_init(&work, work_handler);
 		k_work_submit(&work);
 
 		/* try to read one byte */
+<<<<<<< HEAD
 		LOG_DBG("reading from fd %d", sv[i]);
 		x = '\0';
 		res = recv(sv[i], &x, 1, 0);
+=======
+		LOG_DBG("reading from fd %d", fixture->sv[i]);
+		x = '\0';
+		res = recv(fixture->sv[i], &x, 1, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_not_equal(res, -1, "recv() failed: %d", errno);
 		zassert_equal(res, 1, "read %d bytes instead of 1", res);
 
 		LOG_DBG("success!");
 	}
+<<<<<<< HEAD
 
 	close(sv[0]);
 	close(sv[1]);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

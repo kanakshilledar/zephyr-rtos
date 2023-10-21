@@ -3,10 +3,17 @@ common:
 tests:
   filesystem.nvs:
     platform_allow: qemu_x86
+<<<<<<< HEAD
   filesystem.nvs_0x00:
     extra_args: DTC_OVERLAY_FILE=boards/qemu_x86_ev_0x00.overlay
     platform_allow: qemu_x86
   filesystem.nvs_cache:
+=======
+  filesystem.nvs.0x00:
+    extra_args: DTC_OVERLAY_FILE=boards/qemu_x86_ev_0x00.overlay
+    platform_allow: qemu_x86
+  filesystem.nvs.cache:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args:
       - CONFIG_NVS_LOOKUP_CACHE=y
       - CONFIG_NVS_LOOKUP_CACHE_SIZE=64

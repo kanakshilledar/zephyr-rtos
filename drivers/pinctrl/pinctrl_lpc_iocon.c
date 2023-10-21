@@ -5,6 +5,11 @@
  */
 
 #include <zephyr/drivers/pinctrl.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if !defined(CONFIG_SOC_SERIES_LPC11U6X)
 #include <fsl_clock.h>
 #endif

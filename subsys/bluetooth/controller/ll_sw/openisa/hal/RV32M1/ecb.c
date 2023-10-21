@@ -8,11 +8,18 @@
 
 #include <string.h>
 
+<<<<<<< HEAD
 #include <zephyr/bluetooth/hci_types.h>
 
 #include <zephyr/sys/dlist.h>
 #include <zephyr/sys/byteorder.h>
 
+=======
+#include <zephyr/sys/byteorder.h>
+
+#include <zephyr/bluetooth/hci_types.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "hal/ecb.h"
 
 #include <zephyr/logging/log.h>

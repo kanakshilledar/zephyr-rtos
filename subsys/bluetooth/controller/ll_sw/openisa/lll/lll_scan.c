@@ -579,8 +579,13 @@ static void isr_abort(void *param)
 	 * Deferred attempt to stop can fail as it would have
 	 * expired, hence ignore failure.
 	 */
+<<<<<<< HEAD
 	ticker_stop(TICKER_INSTANCE_ID_CTLR, TICKER_USER_ID_LLL,
 		    TICKER_ID_SCAN_STOP, NULL, NULL);
+=======
+	(void)ticker_stop(TICKER_INSTANCE_ID_CTLR, TICKER_USER_ID_LLL,
+			  TICKER_ID_SCAN_STOP, NULL, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Under race conditions, radio could get started while entering ISR */
 	radio_disable();

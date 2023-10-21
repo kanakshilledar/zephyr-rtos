@@ -6,6 +6,10 @@
 
 #define DT_DRV_COMPAT nxp_imx_ccm
 #include <errno.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/arch/cpu.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/dt-bindings/clock/imx_ccm.h>

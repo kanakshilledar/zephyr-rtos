@@ -577,7 +577,11 @@ static int eeprom_at2x_init(const struct device *dev)
 #if ANY_INST_HAS_WP_GPIOS
 	if (config->wp_gpio.port) {
 		int err;
+<<<<<<< HEAD
 		if (!device_is_ready(config->wp_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->wp_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("wp gpio device not ready");
 			return -EINVAL;
 		}

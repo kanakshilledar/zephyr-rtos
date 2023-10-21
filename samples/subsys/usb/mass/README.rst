@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb_mass:
 
 USB Mass Storage Sample Application
 ###################################
+=======
+.. zephyr:code-sample:: usb-mass
+   :name: USB Mass Storage
+   :relevant-api: usbd_api _usb_device_core_api file_system_api
+
+   Expose board's RAM or FLASH as a USB disk using USB Mass Storage driver.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -14,8 +22,12 @@ into an USB disk.  This sample can be found under
 Requirements
 ************
 
+<<<<<<< HEAD
 This project requires a USB device driver, and either 32KiB (96KiB optional)
 of RAM or a FLASH device.
+=======
+This project requires a USB device driver, and either 96KiB of RAM or a FLASH device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************
@@ -29,12 +41,20 @@ RAM-disk Example without any file system
 ========================================
 
 The default configurations selects RAM-based disk without any file system.
+<<<<<<< HEAD
 This example only needs additional 32KiB RAM for the RAM-disk and is intended
+=======
+This example only needs additional 96KiB RAM for the RAM-disk and is intended
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 for testing USB mass storage class implementation.
 
 .. zephyr-app-commands::
    :zephyr-app: samples/subsys/usb/mass
    :board: reel_board
+<<<<<<< HEAD
+=======
+   :gen-args: -DEXTRA_DTC_OVERLAY_FILE="ramdisk.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :goals: build
    :compact:
 
@@ -49,7 +69,11 @@ In this example we will build the sample with a RAM-based disk:
 .. zephyr-app-commands::
    :zephyr-app: samples/subsys/usb/mass
    :board: reel_board
+<<<<<<< HEAD
    :gen-args: -DCONFIG_APP_MSC_STORAGE_RAM=y
+=======
+   :gen-args: -DEXTRA_DTC_OVERLAY_FILE="ramdisk.overlay" -DCONFIG_APP_MSC_STORAGE_RAM=y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :goals: build
    :compact:
 
@@ -157,7 +181,11 @@ LittleFS Example
 
 This board configures to use the external 64 MiBi QSPI flash chip with a
 128 KiBy `littlefs`_ partition compatible with the one produced by the
+<<<<<<< HEAD
 :ref:`littlefs-sample`.
+=======
+:zephyr:code-sample:`littlefs` sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/subsys/usb/mass

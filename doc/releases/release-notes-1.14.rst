@@ -858,11 +858,19 @@ Networking
 * Added support for SOCKS5 proxy in MQTT client.
 * Added support for IPSO Timer object in LWM2M.
 * Added support for receiving gratuitous ARP request.
+<<<<<<< HEAD
 * Added :ref:`sample application <google-iot-mqtt-sample>` for Google IoT Cloud.
 * :ref:`Network interface <net_if_interface>` numbering starts now from 1 for
   POSIX compatibility.
 * :ref:`OpenThread <thread_protocol_interface>` enhancements.
 * :ref:`zperf <zperf-sample>` sample application fixes.
+=======
+* Added sample application for Google IoT Cloud.
+* :ref:`Network interface <net_if_interface>` numbering starts now from 1 for
+  POSIX compatibility.
+* :ref:`OpenThread <thread_protocol_interface>` enhancements.
+* :zephyr:code-sample:`zperf <zperf>` sample application fixes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * :ref:`LLDP <lldp_interface>` (Link Layer Discovery Protocol) enhancements.
 * ARP cache update fix.
 * gPTP link delay calculation fixes.

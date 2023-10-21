@@ -14,10 +14,19 @@ if(CONFIG_FILE_SYSTEM)
                                            LFS_CONFIG=zephyr_lfs_config.h
   )
 
+<<<<<<< HEAD
+=======
+  add_subdirectory_ifdef(CONFIG_FILE_SYSTEM_EXT2 ext2)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   zephyr_library_link_libraries(FS)
 
   target_link_libraries_ifdef(CONFIG_FAT_FILESYSTEM_ELM   FS INTERFACE ELMFAT)
   target_link_libraries_ifdef(CONFIG_FILE_SYSTEM_LITTLEFS FS INTERFACE LITTLEFS)
+<<<<<<< HEAD
+=======
+  target_link_libraries_ifdef(CONFIG_FILE_SYSTEM_EXT2     FS INTERFACE EXT2)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif()
 
 add_subdirectory_ifdef(CONFIG_FCB  ./fcb)

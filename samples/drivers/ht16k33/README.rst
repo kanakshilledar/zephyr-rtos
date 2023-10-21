@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _ht16k33:
 
 HT16K33 LED driver with keyscan
 ###############################
+=======
+.. zephyr:code-sample:: ht16k33
+   :name: HT16K33 LED driver with keyscan
+   :relevant-api: led_interface kscan_interface
+
+   Control up to 128 LEDs connected to an HT16K33 LED driver and log keyscan events.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -23,7 +31,11 @@ Building and Running
 ********************
 
 Build the application for the :ref:`nrf52840dk_nrf52840` board, and
+<<<<<<< HEAD
 connect a HT16K33 LED driver at address 0x70 on the I2C-0 bus.
+=======
+connect an HT16K33 LED driver at address 0x70 on the I2C-0 bus.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/drivers/ht16k33

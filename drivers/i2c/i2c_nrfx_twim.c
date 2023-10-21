@@ -13,6 +13,10 @@
 #include <soc.h>
 #include <nrfx_twim.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/linker/devicetree_regions.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/logging/log.h>
 #include <zephyr/irq.h>
@@ -34,10 +38,17 @@ struct i2c_nrfx_twim_data {
 struct i2c_nrfx_twim_config {
 	nrfx_twim_t twim;
 	nrfx_twim_config_t twim_config;
+<<<<<<< HEAD
 	uint16_t concat_buf_size;
 	uint16_t flash_buf_max_size;
 	void (*irq_connect)(void);
 	const struct pinctrl_dev_config *pcfg;
+=======
+	uint16_t msg_buf_size;
+	void (*irq_connect)(void);
+	const struct pinctrl_dev_config *pcfg;
+	uint16_t max_transfer_size;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static int i2c_nrfx_twim_recover_bus(const struct device *dev);
@@ -51,7 +62,11 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 	int ret = 0;
 	uint8_t *msg_buf = dev_data->msg_buf;
 	uint16_t msg_buf_used = 0;
+<<<<<<< HEAD
 	uint16_t concat_buf_size = dev_config->concat_buf_size;
+=======
+	uint16_t msg_buf_size = dev_config->msg_buf_size;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	nrfx_twim_xfer_desc_t cur_xfer = {
 		.address = addr
 	};
@@ -69,6 +84,11 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 			break;
 		}
 
+<<<<<<< HEAD
+=======
+		bool dma_accessible = nrf_dma_accessible_check(&dev_config->twim, msgs[i].buf);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* This fragment needs to be merged with the next one if:
 		 * - it is not the last fragment
 		 * - it does not end a bus transaction
@@ -82,6 +102,7 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 				    == (msgs[i + 1].flags & I2C_MSG_READ));
 
 		/* If we need to concatenate the next message, or we've
+<<<<<<< HEAD
 		 * already committed to concatenate this message, add it to
 		 * the buffer after verifying there's room.
 		 */
@@ -94,6 +115,23 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 					"property in the \"%s\" node.",
 					msg_buf_used, msgs[i].len,
 					concat_buf_size, dev->name);
+=======
+		 * already committed to concatenate this message, or its buffer
+		 * is not accessible by DMA, add it to the internal driver
+		 * buffer after verifying there's room.
+		 */
+		if (concat_next || (msg_buf_used != 0) || !dma_accessible) {
+			if ((msg_buf_used + msgs[i].len) > msg_buf_size) {
+				LOG_ERR("Need to use the internal driver "
+					"buffer but its size is insufficient "
+					"(%u + %u > %u). "
+					"Adjust the zephyr,concat-buf-size or "
+					"zephyr,flash-buf-max-size property "
+					"(the one with greater value) in the "
+					"\"%s\" node.",
+					msg_buf_used, msgs[i].len,
+					msg_buf_size, dev->name);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				ret = -ENOSPC;
 				break;
 			}
@@ -103,6 +141,7 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 				       msgs[i].len);
 			}
 			msg_buf_used += msgs[i].len;
+<<<<<<< HEAD
 
 		/* TWIM peripherals cannot transfer data directly from
 		 * flash. If a buffer located in flash is provided for
@@ -122,6 +161,8 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 
 			memcpy(msg_buf, msgs[i].buf, msgs[i].len);
 			msg_buf_used = msgs[i].len;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		if (concat_next) {
@@ -138,6 +179,17 @@ static int i2c_nrfx_twim_transfer(const struct device *dev,
 		cur_xfer.type = (msgs[i].flags & I2C_MSG_READ) ?
 			NRFX_TWIM_XFER_RX : NRFX_TWIM_XFER_TX;
 
+<<<<<<< HEAD
+=======
+		if (cur_xfer.primary_length > dev_config->max_transfer_size) {
+			LOG_ERR("Trying to transfer more than the maximum size "
+				"for this device: %d > %d",
+				cur_xfer.primary_length,
+				dev_config->max_transfer_size);
+			return -ENOSPC;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		nrfx_err_t res = nrfx_twim_xfer(&dev_config->twim,
 						&cur_xfer,
 						(msgs[i].flags & I2C_MSG_STOP) ?
@@ -377,6 +429,10 @@ static int i2c_nrfx_twim_init(const struct device *dev)
 					    I2C_NRFX_TWIM_INVALID_FREQUENCY)
 
 #define I2C(idx) DT_NODELABEL(i2c##idx)
+<<<<<<< HEAD
+=======
+#define I2C_HAS_PROP(idx, prop)	DT_NODE_HAS_PROP(I2C(idx), prop)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define I2C_FREQUENCY(idx)						       \
 	I2C_NRFX_TWIM_FREQUENCY(DT_PROP(I2C(idx), clock_frequency))
 
@@ -404,7 +460,12 @@ static int i2c_nrfx_twim_init(const struct device *dev)
 			    nrfx_isr, nrfx_twim_##idx##_irq_handler, 0);       \
 	}								       \
 	IF_ENABLED(USES_MSG_BUF(idx),					       \
+<<<<<<< HEAD
 		(static uint8_t twim_##idx##_msg_buf[MSG_BUF_SIZE(idx)];))     \
+=======
+		(static uint8_t twim_##idx##_msg_buf[MSG_BUF_SIZE(idx)]	       \
+		 I2C_MEMORY_SECTION(idx);))				       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static struct i2c_nrfx_twim_data twim_##idx##_data = {		       \
 		.transfer_sync = Z_SEM_INITIALIZER(			       \
 			twim_##idx##_data.transfer_sync, 1, 1),		       \
@@ -421,10 +482,18 @@ static int i2c_nrfx_twim_init(const struct device *dev)
 			.skip_psel_cfg = true,				       \
 			.frequency = I2C_FREQUENCY(idx),		       \
 		},							       \
+<<<<<<< HEAD
 		.concat_buf_size = CONCAT_BUF_SIZE(idx),		       \
 		.flash_buf_max_size = FLASH_BUF_MAX_SIZE(idx),		       \
 		.irq_connect = irq_connect##idx,			       \
 		.pcfg = PINCTRL_DT_DEV_CONFIG_GET(I2C(idx)),		       \
+=======
+		.msg_buf_size = MSG_BUF_SIZE(idx),			       \
+		.irq_connect = irq_connect##idx,			       \
+		.pcfg = PINCTRL_DT_DEV_CONFIG_GET(I2C(idx)),		       \
+		.max_transfer_size = BIT_MASK(				       \
+				DT_PROP(I2C(idx), easydma_maxcnt_bits)),       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};								       \
 	PM_DEVICE_DT_DEFINE(I2C(idx), twim_nrfx_pm_action);		       \
 	I2C_DEVICE_DT_DEFINE(I2C(idx),					       \
@@ -436,6 +505,7 @@ static int i2c_nrfx_twim_init(const struct device *dev)
 		      CONFIG_I2C_INIT_PRIORITY,				       \
 		      &i2c_nrfx_twim_driver_api)
 
+<<<<<<< HEAD
 #ifdef CONFIG_I2C_0_NRF_TWIM
 I2C_NRFX_TWIM_DEVICE(0);
 #endif
@@ -449,5 +519,26 @@ I2C_NRFX_TWIM_DEVICE(2);
 #endif
 
 #ifdef CONFIG_I2C_3_NRF_TWIM
+=======
+#define I2C_MEMORY_SECTION(idx)						       \
+	COND_CODE_1(I2C_HAS_PROP(idx, memory_regions),			       \
+		(__attribute__((__section__(LINKER_DT_NODE_REGION_NAME(	       \
+			DT_PHANDLE(I2C(idx), memory_regions)))))),	       \
+		())
+
+#ifdef CONFIG_HAS_HW_NRF_TWIM0
+I2C_NRFX_TWIM_DEVICE(0);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_TWIM1
+I2C_NRFX_TWIM_DEVICE(1);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_TWIM2
+I2C_NRFX_TWIM_DEVICE(2);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_TWIM3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 I2C_NRFX_TWIM_DEVICE(3);
 #endif

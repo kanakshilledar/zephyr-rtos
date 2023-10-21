@@ -1,5 +1,9 @@
 # Create an EFI image
+<<<<<<< HEAD
 if(CONFIG_BOARD_UP_SQUARED AND CONFIG_BUILD_OUTPUT_EFI)
+=======
+if(CONFIG_BUILD_OUTPUT_EFI)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 set_property(GLOBAL APPEND PROPERTY extra_post_build_commands
   COMMAND ${PYTHON_EXECUTABLE} ${PROJECT_SOURCE_DIR}/arch/x86/zefi/zefi.py
   -c ${CMAKE_C_COMPILER}

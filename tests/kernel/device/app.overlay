@@ -51,4 +51,24 @@
 			    "dale";
 		status = "okay";
 	};
+<<<<<<< HEAD
+=======
+
+	fakedomain_0: fakedomain_0 {
+		compatible = "fakedomain";
+		status = "okay";
+		power-domain = <&fakedomain_2>;
+	};
+
+	fakedomain_1: fakedomain_1 {
+		compatible = "fakedomain";
+		status = "okay";
+		power-domain = <&fakedomain_0>;
+	};
+
+	fakedomain_2: fakedomain_2 {
+		compatible = "fakedomain";
+		status = "okay";
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };

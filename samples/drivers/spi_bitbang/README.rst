@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _spi-bitbang-sample:
 
 SPI-Bitbang Sample
 ####################
+=======
+.. zephyr:code-sample:: spi-bitbang
+   :name: SPI bitbang
+   :relevant-api: spi_interface
+
+   Use the bitbang SPI driver for communicating with a slave.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

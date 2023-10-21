@@ -311,7 +311,13 @@ extern int z_user_string_copy(char *dst, const char *src, size_t maxlen);
 #define Z_SYSCALL_VERIFY_MSG(expr, fmt, ...) ({ \
 	bool expr_copy = !(expr); \
 	if (expr_copy) { \
+<<<<<<< HEAD
 		LOG_MODULE_DECLARE(os, CONFIG_KERNEL_LOG_LEVEL); \
+=======
+		TOOLCHAIN_IGNORE_WSHADOW_BEGIN \
+		LOG_MODULE_DECLARE(os, CONFIG_KERNEL_LOG_LEVEL); \
+		TOOLCHAIN_IGNORE_WSHADOW_END \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("syscall %s failed check: " fmt, \
 			__func__, ##__VA_ARGS__); \
 	} \

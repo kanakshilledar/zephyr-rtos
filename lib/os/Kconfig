@@ -3,6 +3,16 @@
 
 menu "OS Support Library"
 
+<<<<<<< HEAD
+=======
+config FDTABLE
+	bool "File descriptor table"
+	help
+	  This file provides generic file descriptor table implementation, suitable
+	  for any I/O object implementing POSIX I/O semantics (i.e. read/write +
+	  aux operations).
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config JSON_LIBRARY
 	bool "Build JSON library"
 	help
@@ -26,6 +36,7 @@ config BASE64
 	help
 	  Enable base64 encoding and decoding functionality
 
+<<<<<<< HEAD
 config CRC
 	bool "Cyclic redundancy check (CRC) Support"
 	default y
@@ -44,6 +55,11 @@ endif # CRC
 config PRINTK_SYNC
 	bool "Serialize printk() calls"
 	default y if SMP && MP_NUM_CPUS > 1 && !(EFI_CONSOLE && LOG)
+=======
+config PRINTK_SYNC
+	bool "Serialize printk() calls"
+	default y if SMP && MP_MAX_NUM_CPUS > 1 && !(EFI_CONSOLE && LOG)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  When true, a spinlock will be taken around the output from a
 	  single printk() call, preventing the output data from
@@ -166,6 +182,20 @@ config REBOOT
 	  needed to perform a "safe" reboot (e.g. to stop the system clock before
 	  issuing a reset).
 
+<<<<<<< HEAD
+=======
+config HAS_POWEROFF
+	bool
+	help
+	  Option to signal that power off functionality is implemented.
+
+config POWEROFF
+	bool "Power off functionality"
+	depends on HAS_POWEROFF
+	help
+	  Enable support for system power off.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config UTF8
 	bool "UTF-8 string operation supported"
 	help

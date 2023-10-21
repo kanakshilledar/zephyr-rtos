@@ -12,7 +12,10 @@
 #include <zephyr/sys/check.h>
 #include <zephyr/sys/util.h>
 
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/init.h>
 
 #include <zephyr/bluetooth/bluetooth.h>
@@ -131,10 +134,17 @@ static void bt_debug_dump_recv_state(const struct bass_recv_state_internal *recv
 	for (int i = 0; i < state->num_subgroups; i++) {
 		const struct bt_bap_scan_delegator_subgroup *subgroup = &state->subgroups[i];
 
+<<<<<<< HEAD
 		LOG_DBG("\tSubgroup[%d]: BIS sync %u (requested %u), metadata_len %u, metadata: %s",
 			i, subgroup->bis_sync, recv_state->requested_bis_sync[i],
 			subgroup->metadata_len,
 			bt_hex(subgroup->metadata, subgroup->metadata_len));
+=======
+		LOG_DBG("\tSubgroup[%d]: BIS sync %u (requested %u), metadata_len %zu, metadata: "
+			"%s",
+			i, subgroup->bis_sync, recv_state->requested_bis_sync[i],
+			subgroup->metadata_len, bt_hex(subgroup->metadata, subgroup->metadata_len));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -249,7 +259,11 @@ static void scan_delegator_security_changed(struct bt_conn *conn,
 	/* Notify all receive states after a bonded device reconnects */
 	for (int i = 0; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 		struct bass_recv_state_internal *internal_state = &scan_delegator.recv_states[i];
+<<<<<<< HEAD
 		int err;
+=======
+		int gatt_err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (!internal_state->active) {
 			continue;
@@ -257,12 +271,21 @@ static void scan_delegator_security_changed(struct bt_conn *conn,
 
 		net_buf_put_recv_state(internal_state);
 
+<<<<<<< HEAD
 		err = bt_gatt_notify_uuid(conn, BT_UUID_BASS_RECV_STATE,
 					  internal_state->attr, read_buf.data,
 					  read_buf.len);
 		if (err != 0) {
 			LOG_WRN("Could not notify receive state[%d] to reconnecting assistant: %d",
 				i, err);
+=======
+		gatt_err = bt_gatt_notify_uuid(conn, BT_UUID_BASS_RECV_STATE,
+					       internal_state->attr, read_buf.data,
+					       read_buf.len);
+		if (gatt_err != 0) {
+			LOG_WRN("Could not notify receive state[%d] to reconnecting assistant: %d",
+				i, gatt_err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
@@ -867,9 +890,18 @@ static int scan_delegator_rem_src(struct bt_conn *conn,
 		internal_state->index, src_id);
 
 	internal_state->active = false;
+<<<<<<< HEAD
 	(void)memset(&internal_state->state, 0, sizeof(internal_state->state));
 	(void)memset(internal_state->broadcast_code, 0,
 		     sizeof(internal_state->broadcast_code));
+=======
+	internal_state->pa_sync = NULL;
+	(void)memset(&internal_state->state, 0, sizeof(internal_state->state));
+	(void)memset(internal_state->broadcast_code, 0,
+		     sizeof(internal_state->broadcast_code));
+	(void)memset(internal_state->requested_bis_sync, 0,
+		     sizeof(internal_state->requested_bis_sync));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	receive_state_updated(conn, internal_state);
 
@@ -1027,7 +1059,11 @@ BT_GATT_SERVICE_DEFINE(bass_svc,
 #endif /* CONFIG_BT_BAP_SCAN_DELEGATOR_RECV_STATE_COUNT > 1 */
 );
 
+<<<<<<< HEAD
 static int bt_bap_scan_delegator_init(const struct device *unused)
+=======
+static int bt_bap_scan_delegator_init(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* Store the pointer to the first characteristic in each receive state */
 	scan_delegator.recv_states[0].attr = &bass_svc.attrs[3];
@@ -1046,9 +1082,13 @@ static int bt_bap_scan_delegator_init(const struct device *unused)
 	return 0;
 }
 
+<<<<<<< HEAD
 DEVICE_DEFINE(bt_bap_scan_delegator, "bt_bap_scan_delegator",
 	      &bt_bap_scan_delegator_init, NULL, NULL, NULL,
 	      APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEVICE, NULL);
+=======
+SYS_INIT(bt_bap_scan_delegator_init, APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEVICE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /****************************** PUBLIC API ******************************/
 void bt_bap_scan_delegator_register_cb(struct bt_bap_scan_delegator_cb *cb)
@@ -1298,7 +1338,11 @@ int bt_bap_scan_delegator_mod_src(const struct bt_bap_scan_delegator_mod_src_par
 {
 	struct bass_recv_state_internal *internal_state = NULL;
 	struct bt_bap_scan_delegator_recv_state *state;
+<<<<<<< HEAD
 	static bool state_changed;
+=======
+	bool state_changed = false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	CHECKIF(!valid_bt_bap_scan_delegator_mod_src_param(param)) {
 		return -EINVAL;
@@ -1340,7 +1384,14 @@ int bt_bap_scan_delegator_mod_src(const struct bt_bap_scan_delegator_mod_src_par
 		const struct bt_bap_scan_delegator_subgroup *param_subgroup = &param->subgroups[i];
 		struct bt_bap_scan_delegator_subgroup *subgroup = &state->subgroups[i];
 
+<<<<<<< HEAD
 		subgroup->bis_sync = param_subgroup->bis_sync;
+=======
+		if (subgroup->bis_sync != param_subgroup->bis_sync) {
+			subgroup->bis_sync = param_subgroup->bis_sync;
+			state_changed = true;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* If the metadata len is 0, we shall not overwrite the existing metadata */
 		if (param_subgroup->metadata_len == 0U) {
@@ -1390,10 +1441,17 @@ void bt_bap_scan_delegator_foreach_state(bt_bap_scan_delegator_state_func_t func
 {
 	for (size_t i = 0U; i < ARRAY_SIZE(scan_delegator.recv_states); i++) {
 		if (scan_delegator.recv_states[i].active) {
+<<<<<<< HEAD
 			enum bt_bap_scan_delegator_iter iter;
 
 			iter = func(&scan_delegator.recv_states[i].state, user_data);
 			if (iter == BT_BAP_SCAN_DELEGATOR_ITER_STOP) {
+=======
+			bool stop;
+
+			stop = func(&scan_delegator.recv_states[i].state, user_data);
+			if (stop) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				return;
 			}
 		}
@@ -1406,7 +1464,11 @@ struct scan_delegator_state_find_state_param {
 	void *user_data;
 };
 
+<<<<<<< HEAD
 static enum bt_bap_scan_delegator_iter
+=======
+static bool
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 scan_delegator_state_find_state_cb(const struct bt_bap_scan_delegator_recv_state *recv_state,
 				   void *user_data)
 {
@@ -1417,10 +1479,17 @@ scan_delegator_state_find_state_cb(const struct bt_bap_scan_delegator_recv_state
 	if (found) {
 		param->recv_state = recv_state;
 
+<<<<<<< HEAD
 		return BT_BAP_SCAN_DELEGATOR_ITER_STOP;
 	}
 
 	return BT_BAP_SCAN_DELEGATOR_ITER_CONTINUE;
+=======
+		return true;
+	}
+
+	return false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 const struct bt_bap_scan_delegator_recv_state *

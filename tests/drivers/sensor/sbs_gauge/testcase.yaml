@@ -1,6 +1,10 @@
 tests:
   # section.subsection
+<<<<<<< HEAD
   drivers.sensors.sbs_gauge:
+=======
+  drivers.sensor.sbs_gauge:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     build_only: true
     tags:
       - drivers
@@ -9,7 +13,11 @@ tests:
       dt_compat_enabled("sbs,sbs-gauge") and not dt_compat_enabled("zephyr,i2c-emul-controller")
     integration_platforms:
       - nucleo_f070rb
+<<<<<<< HEAD
   drivers.sensors.sbs_gauge.emulated:
+=======
+  drivers.sensor.sbs_gauge.emulated:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - drivers
       - sensors

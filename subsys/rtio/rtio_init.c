@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/rtio/rtio.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/app_memory/app_memdomain.h>

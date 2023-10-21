@@ -28,6 +28,16 @@
 		#interrupt-cells = <3>;
 	};
 
+<<<<<<< HEAD
+=======
+	intc_loapic: loapic@fee00000  {
+		compatible = "intel,loapic";
+		reg = <0xfee00000 0x1000>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+	};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * Platforms with Lakemont SoC can have different hardware
 	 * configurations. So RAM and peripherals need to be

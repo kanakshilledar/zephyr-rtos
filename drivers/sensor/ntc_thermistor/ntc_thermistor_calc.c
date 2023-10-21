@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <limits.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdlib.h>
 #include <zephyr/devicetree.h>
 #include "ntc_thermistor.h"
@@ -30,6 +34,7 @@ static int ntc_fixp_linear_interpolate(int x0, int y0, int x1, int y1, int x)
 }
 
 /**
+<<<<<<< HEAD
  * ntc_compensation_compare_ohm() - Helper comparison function for bsearch
  *
  * Ohms are sorted in descending order, perform comparison to find
@@ -71,6 +76,8 @@ int ntc_compensation_compare_ohm(const struct ntc_type *type, const void *key, c
 }
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * ntc_lookup_comp() - Finds indicies where ohm falls between
  *
  * @ohm: key value search is looking for
@@ -79,6 +86,7 @@ int ntc_compensation_compare_ohm(const struct ntc_type *type, const void *key, c
  */
 static void ntc_lookup_comp(const struct ntc_type *type, unsigned int ohm, int *i_low, int *i_high)
 {
+<<<<<<< HEAD
 	const struct ntc_compensation *ptr;
 	struct ntc_compensation search_ohm_key = {.ohm = ohm};
 
@@ -91,12 +99,36 @@ static void ntc_lookup_comp(const struct ntc_type *type, unsigned int ohm, int *
 		*i_low = 0;
 		*i_high = 0;
 	}
+=======
+	int low = 0;
+	int high = type->n_comp - 1;
+
+	if (ohm > type->comp[low].ohm) {
+		high = low;
+	} else if (ohm < type->comp[high].ohm) {
+		low = high;
+	}
+
+	while (high - low > 1) {
+		int mid = (low + high) / 2;
+
+		if (ohm > type->comp[mid].ohm) {
+			high = mid;
+		} else {
+			low = mid;
+		}
+	}
+
+	*i_low = low;
+	*i_high = high;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
  * ntc_get_ohm_of_thermistor() - Calculate the resistance read from NTC Thermistor
  *
  * @cfg: NTC Thermistor configuration
+<<<<<<< HEAD
  * @max_adc: Max ADC value
  * @raw_adc: Raw ADC value read
  */
@@ -108,6 +140,27 @@ uint32_t ntc_get_ohm_of_thermistor(const struct ntc_config *cfg, uint32_t max_ad
 		ohm = cfg->pulldown_ohm * max_adc / (raw_adc - 1);
 	} else {
 		ohm = cfg->pullup_ohm * (raw_adc - 1) / max_adc;
+=======
+ * @sample_mv: Measured voltage in mV
+ */
+uint32_t ntc_get_ohm_of_thermistor(const struct ntc_config *cfg, int sample_mv)
+{
+	int pullup_mv = cfg->pullup_uv / 1000;
+	uint32_t ohm;
+
+	if (sample_mv <= 0) {
+		return cfg->connected_positive ? INT_MAX : 0;
+	}
+
+	if (sample_mv >= pullup_mv) {
+		return cfg->connected_positive ? 0 : INT_MAX;
+	}
+
+	if (cfg->connected_positive) {
+		ohm = cfg->pulldown_ohm * (pullup_mv - sample_mv) / sample_mv;
+	} else {
+		ohm = cfg->pullup_ohm * sample_mv / (pullup_mv - sample_mv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return ohm;

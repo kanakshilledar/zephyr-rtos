@@ -2496,6 +2496,7 @@ Libraries / Subsystems
     * Uses mutex to control channels access.
     * Added the following samples:
 
+<<<<<<< HEAD
       * :ref:`zbus-hello-world-sample`
       * :ref:`zbus-work-queue-sample`
       * :ref:`zbus-dyn-channel-sample`
@@ -2503,6 +2504,15 @@ Libraries / Subsystems
       * :ref:`zbus-remote-mock-sample`
       * :ref:`zbus-runtime-obs-registration-sample`
       * :ref:`zbus-benchmark-sample`
+=======
+      * :zephyr:code-sample:`zbus-hello-world`
+      * :zephyr:code-sample:`zbus-work-queue`
+      * :zephyr:code-sample:`zbus-dyn-channel`
+      * :zephyr:code-sample:`zbus-uart-bridge`
+      * :zephyr:code-sample:`zbus-remote-mock`
+      * :zephyr:code-sample:`zbus-runtime-obs-registration`
+      * :zephyr:code-sample:`zbus-benchmark`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     * Added zbus channels APIs:
 

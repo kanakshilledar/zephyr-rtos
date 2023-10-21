@@ -25,17 +25,29 @@ static int storage_erase(void)
 
 	if (rc < 0) {
 		LOG_ERR("Failed to open flash area");
+<<<<<<< HEAD
 		rc = ZEPHYR_MGMT_GRP_CMD_RC_FLASH_OPEN_FAILED;
 	} else {
 		if (flash_area_get_device(fa) == NULL) {
 			LOG_ERR("Failed to get flash area device");
 			rc = ZEPHYR_MGMT_GRP_CMD_RC_FLASH_CONFIG_QUERY_FAIL;
+=======
+		rc = ZEPHYRBASIC_MGMT_ERR_FLASH_OPEN_FAILED;
+	} else {
+		if (flash_area_get_device(fa) == NULL) {
+			LOG_ERR("Failed to get flash area device");
+			rc = ZEPHYRBASIC_MGMT_ERR_FLASH_CONFIG_QUERY_FAIL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		} else {
 			rc = flash_area_erase(fa, 0, fa->fa_size);
 
 			if (rc < 0) {
 				LOG_ERR("Failed to erase flash area");
+<<<<<<< HEAD
 				rc = ZEPHYR_MGMT_GRP_CMD_RC_FLASH_ERASE_FAILED;
+=======
+				rc = ZEPHYRBASIC_MGMT_ERR_FLASH_ERASE_FAILED;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 
@@ -53,8 +65,13 @@ static int storage_erase_handler(struct smp_streamer *ctxt)
 
 	rc = storage_erase();
 
+<<<<<<< HEAD
 	if (rc != ZEPHYR_MGMT_GRP_CMD_RC_OK) {
 		ok = smp_add_cmd_ret(zse, ZEPHYR_MGMT_GRP_BASIC, rc);
+=======
+	if (rc != ZEPHYRBASIC_MGMT_ERR_OK) {
+		ok = smp_add_cmd_err(zse, ZEPHYR_MGMT_GRP_BASIC, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (!ok) {
@@ -64,6 +81,39 @@ static int storage_erase_handler(struct smp_streamer *ctxt)
 	return MGMT_ERR_EOK;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+/*
+ * @brief	Translate zephyr basic group error code into MCUmgr error code
+ *
+ * @param ret	#zephyr_basic_group_err_code_t error code
+ *
+ * @return	#mcumgr_err_t error code
+ */
+static int zephyr_basic_group_translate_error_code(uint16_t ret)
+{
+	int rc;
+
+	switch (ret) {
+	case ZEPHYRBASIC_MGMT_ERR_FLASH_OPEN_FAILED:
+		rc = MGMT_ERR_ENOENT;
+		break;
+
+	case ZEPHYRBASIC_MGMT_ERR_FLASH_CONFIG_QUERY_FAIL:
+	case ZEPHYRBASIC_MGMT_ERR_FLASH_ERASE_FAILED:
+		rc = MGMT_ERR_EOK;
+		break;
+
+	default:
+		rc = MGMT_ERR_EUNKNOWN;
+	}
+
+	return rc;
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct mgmt_handler zephyr_mgmt_basic_handlers[] = {
 	[ZEPHYR_MGMT_GRP_BASIC_CMD_ERASE_STORAGE] = {
 		.mh_read  = NULL,
@@ -75,6 +125,12 @@ static struct mgmt_group zephyr_basic_mgmt_group = {
 	.mg_handlers = (struct mgmt_handler *)zephyr_mgmt_basic_handlers,
 	.mg_handlers_count = ARRAY_SIZE(zephyr_mgmt_basic_handlers),
 	.mg_group_id = (ZEPHYR_MGMT_GRP_BASIC),
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+	.mg_translate_error = zephyr_basic_group_translate_error_code,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static void zephyr_basic_mgmt_init(void)
@@ -82,6 +138,7 @@ static void zephyr_basic_mgmt_init(void)
 	mgmt_register_group(&zephyr_basic_mgmt_group);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 int zephyr_basic_group_translate_error_code(uint16_t ret)
 {
@@ -105,4 +162,6 @@ int zephyr_basic_group_translate_error_code(uint16_t ret)
 }
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 MCUMGR_HANDLER_DEFINE(zephyr_basic_mgmt, zephyr_basic_mgmt_init);

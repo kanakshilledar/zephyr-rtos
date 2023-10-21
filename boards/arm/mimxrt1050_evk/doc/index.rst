@@ -85,6 +85,26 @@ these references:
 - `MIMXRT1050-EVK User Guide`_
 - `MIMXRT1050-EVK Schematics`_
 
+<<<<<<< HEAD
+=======
+External Memory
+===============
+
+This platform has the following external memories:
+
++--------------------+------------+-------------------------------------+
+| Device             | Controller | Status                              |
++====================+============+=====================================+
+| IS42S16160J        | SEMC       | Enabled via device configuration    |
+|                    |            | data block, which sets up SEMC at   |
+|                    |            | boot time                           |
++--------------------+------------+-------------------------------------+
+| S26KS512SDPBHI020  | FLEXSPI    | Enabled via flash configurationn    |
+|                    |            | block, which sets up FLEXSPI at     |
+|                    |            | boot time.                          |
++--------------------+------------+-------------------------------------+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Supported Features
 ==================
 
@@ -419,9 +439,15 @@ Board Revisions
 ***************
 
 The original MIMXRT1050-EVK (rev A0) board was updated with a newer
+<<<<<<< HEAD
 MIMXRT1050-EVKB (rev A1) board, with these major hardware differences::
 
 - SoC changed from MIMXRT1052DVL6**A** to MIMXRT1052DVL6**B**
+=======
+MIMXRT1050-EVKB (rev A1) board, with these major hardware differences:
+
+- SoC changed from MIMXRT1052DVL6\ **A** to MIMXRT1052DVL6\ **B**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - Hardware bug fixes for: power, interfaces, and memory
 - Arduino headers included
 

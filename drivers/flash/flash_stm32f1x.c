@@ -163,6 +163,7 @@ static int write_value(const struct device *dev, off_t offset,
 	return rc;
 }
 
+<<<<<<< HEAD
 /* offset and len must be aligned on 2 for write
  * positive and not beyond end of flash
  */
@@ -174,6 +175,8 @@ bool flash_stm32_valid_range(const struct device *dev, off_t offset,
 		flash_stm32_range_exists(dev, offset, len);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int flash_stm32_block_erase_loop(const struct device *dev,
 				 unsigned int offset,
 				 unsigned int len)

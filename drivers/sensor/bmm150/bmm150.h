@@ -2,6 +2,10 @@
 
 /*
  * Copyright (c) 2017 Intel Corporation
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 FTP Technologies
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -59,6 +63,10 @@ extern const struct bmm150_bus_io bmm150_bus_io_i2c;
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/pm/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/sys/__assert.h>
 #include <zephyr/drivers/gpio.h>
@@ -82,8 +90,13 @@ extern const struct bmm150_bus_io bmm150_bus_io_i2c;
 
 #define BMM150_REG_POWER           0x4B
 #define BMM150_MASK_POWER_CTL      BIT(0)
+<<<<<<< HEAD
 #define BMM150_MASK_SOFT_RESET     (BIT(1) | BIT(7))
 #define BMM150_SOFT_RESET          0x81
+=======
+#define BMM150_MASK_SOFT_RESET     (BIT(7) | BIT(1))
+#define BMM150_SOFT_RESET          BMM150_MASK_SOFT_RESET
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BMM150_REG_OPMODE_ODR      0x4C
 #define BMM150_MASK_OPMODE         (BIT(2) | BIT(1))
@@ -116,7 +129,11 @@ extern const struct bmm150_bus_io bmm150_bus_io_i2c;
 #define BMM150_REG_INT_DRDY                0x4E
 #define BMM150_MASK_DRDY_EN                BIT(7)
 #define BMM150_SHIFT_DRDY_EN               7
+<<<<<<< HEAD
 #define BMM150_DRDY_INT3              BIT(6)
+=======
+#define BMM150_DRDY_INT3                   BIT(6)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define BMM150_MASK_DRDY_Z_EN              BIT(5)
 #define BMM150_MASK_DRDY_Y_EN              BIT(4)
 #define BMM150_MASK_DRDY_X_EN              BIT(3)
@@ -155,6 +172,7 @@ struct bmm150_trim_regs {
 struct bmm150_config {
 	union bmm150_bus bus;
 	const struct bmm150_bus_io *bus_io;
+<<<<<<< HEAD
 };
 
 struct bmm150_data {
@@ -168,6 +186,40 @@ enum bmm150_power_modes {
 	BMM150_POWER_MODE_SUSPEND,
 	BMM150_POWER_MODE_SLEEP,
 	BMM150_POWER_MODE_NORMAL
+=======
+
+#ifdef CONFIG_BMM150_TRIGGER
+	struct gpio_dt_spec drdy_int;
+#endif
+};
+
+struct bmm150_data {
+	struct bmm150_trim_regs tregs;
+	int rep_xy, rep_z, odr, max_odr;
+	int sample_x, sample_y, sample_z;
+
+#if defined(CONFIG_BMM150_TRIGGER)
+	struct gpio_callback gpio_cb;
+#endif
+
+#ifdef CONFIG_BMM150_TRIGGER_OWN_THREAD
+	struct k_sem sem;
+#endif
+
+#ifdef CONFIG_BMM150_TRIGGER_GLOBAL_THREAD
+	struct k_work work;
+#endif
+
+#if defined(CONFIG_BMM150_TRIGGER_GLOBAL_THREAD) || \
+	defined(CONFIG_BMM150_TRIGGER_DIRECT)
+	const struct device *dev;
+#endif
+
+#ifdef CONFIG_BMM150_TRIGGER
+	const struct sensor_trigger *drdy_trigger;
+	sensor_trigger_handler_t drdy_handler;
+#endif /* CONFIG_BMM150_TRIGGER */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 enum bmm150_axis {
@@ -196,6 +248,21 @@ enum bmm150_presets {
 	#define BMM150_DEFAULT_PRESET BMM150_HIGH_ACCURACY_PRESET
 #endif
 
+<<<<<<< HEAD
+=======
+/* Power On Reset time - from OFF to Suspend (Max) */
+#define BMM150_POR_TIME K_MSEC(1)
+
+/* Start-Up Time - from suspend to sleep (Max) */
+#define BMM150_START_UP_TIME K_MSEC(3)
+
+int bmm150_trigger_mode_init(const struct device *dev);
+
+int bmm150_trigger_set(const struct device *dev,
+		       const struct sensor_trigger *trig,
+		       sensor_trigger_handler_t handler);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int bmm150_reg_update_byte(const struct device *dev, uint8_t reg,
 			   uint8_t mask, uint8_t value);
 

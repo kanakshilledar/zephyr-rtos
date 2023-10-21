@@ -5,7 +5,11 @@ description: Test ADC-based temperature sensor
 
 compatible: "vnd,adc-temp-sensor"
 
+<<<<<<< HEAD
 include: [base.yaml, reset-device.yaml]
+=======
+include: [base.yaml, pinctrl-device.yaml, reset-device.yaml]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   io-channels:
@@ -18,6 +22,7 @@ properties:
 
   clocks:
     required: true
+<<<<<<< HEAD
 
   pinctrl-0:
     type: phandles
@@ -27,3 +32,5 @@ properties:
 
   pinctrl-2:
     type: phandles
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

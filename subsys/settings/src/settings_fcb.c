@@ -158,6 +158,7 @@ static int settings_fcb_load_priv(struct settings_store *cs,
 	while ((rc = fcb_getnext(&cf->cf_fcb, &entry_ctx.loc)) == 0) {
 		char name[SETTINGS_MAX_NAME_LEN + SETTINGS_EXTRA_LEN + 1];
 		size_t name_len;
+<<<<<<< HEAD
 		int rc;
 		bool pass_entry = true;
 
@@ -165,6 +166,15 @@ static int settings_fcb_load_priv(struct settings_store *cs,
 					     (void *)&entry_ctx);
 		if (rc) {
 			LOG_ERR("Failed to load line name: %d", rc);
+=======
+		int rc2;
+		bool pass_entry = true;
+
+		rc2 = settings_line_name_read(name, sizeof(name), &name_len,
+					     (void *)&entry_ctx);
+		if (rc2) {
+			LOG_ERR("Failed to load line name: %d", rc2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			continue;
 		}
 		name[name_len] = '\0';

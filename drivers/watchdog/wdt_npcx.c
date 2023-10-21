@@ -39,6 +39,10 @@
 #include <zephyr/logging/log.h>
 
 #include <soc.h>
+<<<<<<< HEAD
+=======
+#include "soc_dbg.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 LOG_MODULE_REGISTER(wdt_npcx, CONFIG_WDT_LOG_LEVEL);
 
 /* Watchdog operating frequency is fixed to LFCLK (32.768) kHz */
@@ -227,9 +231,17 @@ static int wdt_npcx_setup(const struct device *dev, uint8_t options)
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	if ((options & WDT_OPT_PAUSE_HALTED_BY_DBG) != 0) {
 		LOG_ERR("WDT_OPT_PAUSE_HALTED_BY_DBG is not supported");
 		return -ENOTSUP;
+=======
+	/* Stall the WDT counter when halted by debugger */
+	if ((options & WDT_OPT_PAUSE_HALTED_BY_DBG) != 0) {
+		npcx_dbg_freeze_enable(true);
+	} else {
+		npcx_dbg_freeze_enable(false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/*

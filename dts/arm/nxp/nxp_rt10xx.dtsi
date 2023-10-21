@@ -15,6 +15,10 @@
 / {
 	chosen {
 		zephyr,entropy = &trng;
+<<<<<<< HEAD
+=======
+		die-temp0 = &tempmon;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	cpus {
@@ -26,6 +30,10 @@
 			compatible = "arm,cortex-m7";
 			d-cache-line-size = <32>;
 			reg = <0>;
+<<<<<<< HEAD
+=======
+			cpu-power-states = <&idle &suspend>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			#address-cells = <1>;
 			#size-cells = <1>;
 
@@ -41,6 +49,24 @@
 				swo-ref-frequency = <132000000>;
 			};
 		};
+<<<<<<< HEAD
+=======
+
+		power-states {
+			idle: idle {
+				compatible = "zephyr,power-state";
+				power-state-name = "runtime-idle";
+				exit-latency-us = <4000>;
+				min-residency-us = <5000>;
+			};
+			suspend: suspend {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				exit-latency-us = <5000>;
+				min-residency-us = <10000>;
+			};
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	sysclk: system-clock {
@@ -417,6 +443,10 @@
 			reg = <0x402b8000 0x4000>;
 			interrupts = <42 0>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			nxp,pxp = <&pxp>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		lpspi1: spi@40394000 {
@@ -564,7 +594,11 @@
 			reg = <0x403dc000 0x4000>;
 			interrupts = <106 0>;
 
+<<<<<<< HEAD
 			flexpwm1_pwm0: pwm0 {
+=======
+			flexpwm1_pwm0: flexpwm1_pwm0 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <0>;
 				interrupts = <102 0>;
@@ -574,7 +608,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm1_pwm1: pwm1 {
+=======
+			flexpwm1_pwm1: flexpwm1_pwm1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <1>;
 				interrupts = <103 0>;
@@ -584,7 +622,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm1_pwm2: pwm2 {
+=======
+			flexpwm1_pwm2: flexpwm1_pwm2 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <2>;
 				interrupts = <104 0>;
@@ -594,7 +636,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm1_pwm3: pwm3 {
+=======
+			flexpwm1_pwm3: flexpwm1_pwm3 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <3>;
 				interrupts = <105 0>;
@@ -610,7 +656,11 @@
 			reg = <0x403e0000 0x4000>;
 			interrupts =  <141 0>;
 
+<<<<<<< HEAD
 			flexpwm2_pwm0: pwm0 {
+=======
+			flexpwm2_pwm0: flexpwm2_pwm0 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <0>;
 				interrupts = <137 0>;
@@ -620,7 +670,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm2_pwm1: pwm1 {
+=======
+			flexpwm2_pwm1: flexpwm2_pwm1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <1>;
 				interrupts = <138 0>;
@@ -630,7 +684,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm2_pwm2: pwm2 {
+=======
+			flexpwm2_pwm2: flexpwm2_pwm2 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <2>;
 				interrupts = <139 0>;
@@ -640,7 +698,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm2_pwm3: pwm3 {
+=======
+			flexpwm2_pwm3: flexpwm2_pwm3 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <3>;
 				interrupts = <140 0>;
@@ -656,7 +718,11 @@
 			reg = <0x403e4000 0x4000>;
 			interrupts =  <146 0>;
 
+<<<<<<< HEAD
 			flexpwm3_pwm0: pwm0 {
+=======
+			flexpwm3_pwm0: flexpwm3_pwm0 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <0>;
 				interrupts = <142 0>;
@@ -666,7 +732,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm3_pwm1: pwm1 {
+=======
+			flexpwm3_pwm1: flexpwm3_pwm1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <1>;
 				interrupts = <143 0>;
@@ -676,7 +746,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm3_pwm2: pwm2 {
+=======
+			flexpwm3_pwm2: flexpwm3_pwm2 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <2>;
 				interrupts = <144 0>;
@@ -686,7 +760,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm3_pwm3: pwm3 {
+=======
+			flexpwm3_pwm3: flexpwm3_pwm3 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <3>;
 				interrupts = <145 0>;
@@ -702,7 +780,11 @@
 			reg = <0x403e8000 0x4000>;
 			interrupts = <151 0>;
 
+<<<<<<< HEAD
 			flexpwm4_pwm0: pwm0 {
+=======
+			flexpwm4_pwm0: flexpwm4_pwm0 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <0>;
 				interrupts = <147 0>;
@@ -712,7 +794,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm4_pwm1: pwm1 {
+=======
+			flexpwm4_pwm1: flexpwm4_pwm1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <1>;
 				interrupts = <148 0>;
@@ -722,7 +808,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm4_pwm2: pwm2 {
+=======
+			flexpwm4_pwm2: flexpwm4_pwm2 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <2>;
 				interrupts = <149 0>;
@@ -732,7 +822,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 			flexpwm4_pwm3: pwm3 {
+=======
+			flexpwm4_pwm3: flexpwm4_pwm3 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				compatible = "nxp,imx-pwm";
 				index = <3>;
 				interrupts = <150 0>;
@@ -838,6 +932,10 @@
 				<8 0>, <9 0>, <10 0>, <11 0>,
 				<12 0>, <13 0>, <14 0>, <15 0>,
 				<16 0>;
+<<<<<<< HEAD
+=======
+			irq-shared-offset = <16>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			clocks = <&ccm IMX_CCM_EDMA_CLK 0x7C 0x000000C0>;
 			status = "disabled";
 		};
@@ -849,7 +947,10 @@
 			interrupt-names = "common";
 			clocks = <&ccm IMX_CCM_CAN_CLK 0x68 14>;
 			clk-source = <2>;
+<<<<<<< HEAD
 			sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 			status = "disabled";
 		};
@@ -861,7 +962,10 @@
 			interrupt-names = "common";
 			clocks = <&ccm IMX_CCM_CAN_CLK 0x68 18>;
 			clk-source = <2>;
+<<<<<<< HEAD
 			sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 			status = "disabled";
 		};
@@ -873,8 +977,11 @@
 			interrupt-names = "common";
 			clocks = <&ccm IMX_CCM_CAN_CLK 0x84 6>;
 			clk-source = <2>;
+<<<<<<< HEAD
 			sjw = <1>;
 			sjw-data = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 			sample-point-data = <875>;
 			status = "disabled";
@@ -907,6 +1014,17 @@
 			#pinmux-cells = <2>;
 		};
 
+<<<<<<< HEAD
+=======
+		pxp: pxp@402b4000 {
+			compatible = "nxp,pxp";
+			reg = <0x402b4000 0x4000>;
+			interrupts = <44 0>;
+			status = "disabled";
+			#dma-cells = <0>;
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		sai1: sai@40384000 {
 			compatible = "nxp,mcux-i2s";
 			#address-cells = <1>;
@@ -1041,6 +1159,22 @@
 			reg = <0x403c4000 0x4000>;
 			status = "disabled";
 		};
+<<<<<<< HEAD
+=======
+
+		dcp: dcp@402fc000 {
+			compatible = "nxp,mcux-dcp";
+			reg = <0x402fc000 0x4000>;
+			interrupts = <50 0>, <51 0>;
+			status = "okay";
+		};
+
+		tempmon: tempmon@400d8000 {
+			compatible = "nxp,tempmon";
+			reg = <0x400d8000 0x2a0>;
+			status = "disabled";
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 

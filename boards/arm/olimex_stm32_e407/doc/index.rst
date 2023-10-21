@@ -375,4 +375,8 @@ way.  Here is an example for the :ref:`hello_world` application.
    https://www.olimex.com/Products/ARM/ST/STM32-E407/resources/STM32-E407.pdf
 
 .. _ST STM32F407ZG Datasheet:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00031020.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00031020.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

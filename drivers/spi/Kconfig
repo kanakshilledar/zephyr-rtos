@@ -107,8 +107,11 @@ source "drivers/spi/Kconfig.test"
 
 source "drivers/spi/Kconfig.psoc6"
 
+<<<<<<< HEAD
 source "drivers/spi/Kconfig.npcx_fiu"
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/spi/Kconfig.bitbang"
 
 source "drivers/spi/Kconfig.gd32"
@@ -129,4 +132,15 @@ source "drivers/spi/Kconfig.smartbond"
 
 source "drivers/spi/Kconfig.opentitan"
 
+<<<<<<< HEAD
+=======
+source "drivers/spi/Kconfig.numaker"
+
+source "drivers/spi/Kconfig.ambiq"
+
+source "drivers/spi/Kconfig.rpi_pico"
+
+source "drivers/spi/Kconfig.ifx_cat1"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # SPI

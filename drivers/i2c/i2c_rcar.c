@@ -9,7 +9,10 @@
 #include <errno.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
+<<<<<<< HEAD
 #include <soc.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/i2c.h>
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/renesas_cpg_mssr.h>

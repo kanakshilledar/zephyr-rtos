@@ -12,4 +12,8 @@ properties:
     type: boolean
     description: |
       FIFO1 supports channel A.
+<<<<<<< HEAD
       FIFO2 only supports one channel of B or C.
+=======
+      FIFO2 supports channel B.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

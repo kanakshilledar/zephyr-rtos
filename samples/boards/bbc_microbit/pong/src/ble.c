@@ -360,35 +360,59 @@ static void create_conn(const bt_addr_le_t *addr)
 }
 
 static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
+<<<<<<< HEAD
 			 struct net_buf_simple *ad)
+=======
+			 struct net_buf_simple *ad_buf)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	if (type != BT_GAP_ADV_TYPE_ADV_IND) {
 		return;
 	}
 
+<<<<<<< HEAD
 	while (ad->len > 1) {
 		uint8_t len = net_buf_simple_pull_u8(ad);
 		uint8_t type;
+=======
+	while (ad_buf->len > 1) {
+		uint8_t len = net_buf_simple_pull_u8(ad_buf);
+		uint8_t ad_type;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Check for early termination */
 		if (len == 0U) {
 			return;
 		}
 
+<<<<<<< HEAD
 		if (len > ad->len) {
+=======
+		if (len > ad_buf->len) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			printk("AD malformed\n");
 			return;
 		}
 
+<<<<<<< HEAD
 		type = net_buf_simple_pull_u8(ad);
 		if (type == BT_DATA_UUID128_ALL &&
 		    pong_uuid_match(ad->data, len - 1)) {
+=======
+		ad_type = net_buf_simple_pull_u8(ad_buf);
+		if (ad_type == BT_DATA_UUID128_ALL &&
+		    pong_uuid_match(ad_buf->data, len - 1)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			bt_le_scan_stop();
 			create_conn(addr);
 			return;
 		}
 
+<<<<<<< HEAD
 		net_buf_simple_pull(ad, len - 1);
+=======
+		net_buf_simple_pull(ad_buf, len - 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

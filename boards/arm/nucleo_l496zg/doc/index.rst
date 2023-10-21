@@ -232,6 +232,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo L496ZG website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-l496zg.html
 
 .. _STM32 Nucleo-144 board User Manual:
@@ -242,3 +243,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32L496 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00083560.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-l496zg.html
+
+.. _STM32 Nucleo-144 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00368330.pdf
+
+.. _STM32L496ZG on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32l496zg.html
+
+.. _STM32L496 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00083560.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

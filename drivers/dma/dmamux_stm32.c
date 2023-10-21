@@ -422,7 +422,20 @@ DEVICE_DT_INST_DEFINE(index,						\
 		    &dmamux_stm32_init,					\
 		    NULL,						\
 		    &dmamux_stm32_data_##index, &dmamux_stm32_config_##index,\
+<<<<<<< HEAD
 		    PRE_KERNEL_1, CONFIG_DMA_INIT_PRIORITY,		\
 		    &dma_funcs);
 
 DT_INST_FOREACH_STATUS_OKAY(DMAMUX_INIT)
+=======
+		    PRE_KERNEL_1, CONFIG_DMAMUX_STM32_INIT_PRIORITY,	\
+		    &dma_funcs);
+
+DT_INST_FOREACH_STATUS_OKAY(DMAMUX_INIT)
+
+/*
+ * Make sure that this driver is initialized after the DMA driver (higher priority)
+ */
+BUILD_ASSERT(CONFIG_DMAMUX_STM32_INIT_PRIORITY >= CONFIG_DMA_INIT_PRIORITY,
+	     "CONFIG_DMAMUX_STM32_INIT_PRIORITY must be higher than CONFIG_DMA_INIT_PRIORITY");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

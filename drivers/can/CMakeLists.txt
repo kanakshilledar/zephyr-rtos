@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/can.h)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library()
 zephyr_sources_ifdef(CONFIG_CAN_MCUX_MCAN    can_mcux_mcan.c)
 
@@ -8,12 +13,23 @@ zephyr_library_sources_ifdef(CONFIG_CAN_FAKE         can_fake.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_LOOPBACK     can_loopback.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_MCAN         can_mcan.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_MCP2515      can_mcp2515.c)
+<<<<<<< HEAD
 zephyr_library_sources_ifdef(CONFIG_CAN_MCUX_FLEXCAN can_mcux_flexcan.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_SAM          can_sam.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_SAM0         can_sam0.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_STM32        can_stm32.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_STM32FD      can_stm32fd.c)
 zephyr_library_sources_ifdef(CONFIG_CAN_STM32H7      can_stm32h7.c)
+=======
+zephyr_library_sources_ifdef(CONFIG_CAN_MCP251XFD    can_mcp251xfd.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_MCUX_FLEXCAN can_mcux_flexcan.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_SAM          can_sam.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_SAM0         can_sam0.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_STM32_BXCAN  can_stm32_bxcan.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_STM32_FDCAN  can_stm32_fdcan.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_STM32H7_FDCAN can_stm32h7_fdcan.c)
+zephyr_library_sources_ifdef(CONFIG_CAN_TCAN4X5X     can_tcan4x5x.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_CAN_RCAR         can_rcar.c)
 
 if(CONFIG_CAN_NATIVE_POSIX_LINUX)

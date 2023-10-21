@@ -51,6 +51,12 @@ config OPENTHREAD_BORDER_ROUTING
 config OPENTHREAD_BORDER_ROUTING_COUNTERS
 	bool "Border routing counters support"
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_BORDER_ROUTING_DHCP6_PD
+	bool "DHCPv6-PD support in border routing"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_CHANNEL_MONITOR
 	bool "Channel monitor support"
 
@@ -89,6 +95,19 @@ config OPENTHREAD_CSL_RECEIVER
 	help
 	  Enable CSL Receiver support for Thread 1.2
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_DEVICE_PROP_LEADER_WEIGHT
+	bool "Device props for leader weight"
+	default n if (OPENTHREAD_THREAD_VERSION_1_1 || \
+		      OPENTHREAD_THREAD_VERSION_1_2 || \
+		      OPENTHREAD_THREAD_VERSION_1_3)
+	default y
+	help
+	  Enable the device properties which are then used to determine and set
+	  the Leader Weight.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_DATASET_UPDATER
 	bool "Dataset updater"
 
@@ -162,6 +181,12 @@ config OPENTHREAD_LEGACY
 config OPENTHREAD_LINK_METRICS_INITIATOR
 	bool "Link Metrics initiator"
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_LINK_METRICS_MANAGER
+	bool "Link Metrics manager"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_LINK_METRICS_SUBJECT
 	bool "Link Metrics subject"
 
@@ -209,6 +234,13 @@ config OPENTHREAD_NEIGHBOR_DISCOVERY_AGENT
 config OPENTHREAD_NETDATA_PUBLISHER
 	bool "Thread Network Data publisher"
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_OPERATIONAL_DATASET_AUTO_INIT
+	bool "Operational dataset auto init"
+	default y
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_OTNS
 	bool "OTNS support"
 
@@ -247,6 +279,12 @@ config OPENTHREAD_POWER_SUPPLY
 	default "EXTERNAL_UNSTABLE" if OPENTHREAD_POWER_SUPPLY_EXTERNAL_UNSTABLE
 	default ""
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_RADIO_STATS
+	bool "Support for Radio Statistics"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_RAW
 	bool "Raw Link support"
 
@@ -282,6 +320,12 @@ config OPENTHREAD_TREL
 config OPENTHREAD_TX_BEACON_PAYLOAD
 	bool "TX beacon payload support"
 
+<<<<<<< HEAD
+=======
+config OPENTHREAD_TX_QUEUE_STATISTICS
+	bool "TX queue statistics support"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config OPENTHREAD_UDP_FORWARD
 	bool "UDP forward support"
 

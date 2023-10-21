@@ -10,13 +10,18 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
+<<<<<<< HEAD
 #include <SDL.h>
+=======
+#include "gpio_emul_sdl_bottom.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(gpio_emul_sdl, CONFIG_GPIO_LOG_LEVEL);
 
 struct gpio_sdl_config {
 	const struct device *emul;
 
+<<<<<<< HEAD
 	const SDL_Scancode *codes;
 	uint8_t num_codes;
 };
@@ -24,11 +29,22 @@ struct gpio_sdl_config {
 static int sdl_filter(void *arg, SDL_Event *event)
 {
 	const struct device *port = arg;
+=======
+	const int *codes;
+	uint8_t num_codes;
+	struct gpio_sdl_data *data;
+};
+
+static int sdl_filter_top(struct gpio_sdl_data *bottom_data)
+{
+	const struct device *port = bottom_data->dev;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct gpio_sdl_config *config = port->config;
 	int ret;
 
 	gpio_pin_t pin = 0;
 
+<<<<<<< HEAD
 	/* Only handle keyboard events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
@@ -41,6 +57,11 @@ static int sdl_filter(void *arg, SDL_Event *event)
 	/* Search for the corresponding scancode */
 	while (pin < config->num_codes) {
 		if (config->codes[pin] == event->key.keysym.scancode) {
+=======
+	/* Search for the corresponding scancode */
+	while (pin < config->num_codes) {
+		if (config->codes[pin] == bottom_data->event_scan_code) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 		}
 		pin++;
@@ -58,7 +79,11 @@ static int sdl_filter(void *arg, SDL_Event *event)
 	k_sched_lock();
 
 	/* Update the pin state */
+<<<<<<< HEAD
 	ret = gpio_emul_input_set(config->emul, pin, event->type == SDL_KEYDOWN ? 1 : 0);
+=======
+	ret = gpio_emul_input_set(config->emul, pin, bottom_data->key_down);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_sched_unlock();
 	if (ret < 0) {
@@ -73,13 +98,23 @@ static int gpio_sdl_init(const struct device *dev)
 	const struct gpio_sdl_config *config = dev->config;
 
 	for (uint8_t pin = 0; pin < config->num_codes; ++pin) {
+<<<<<<< HEAD
 		if (config->codes[pin] != SDL_SCANCODE_UNKNOWN) {
+=======
+		if (config->codes[pin] != GPIOEMULSDL_SCANCODE_UNKNOWN) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_INF("GPIO %s:%u = %u", dev->name, pin, config->codes[pin]);
 		}
 	}
 
+<<<<<<< HEAD
 	SDL_AddEventWatch(sdl_filter, (void *)dev);
 
+=======
+	config->data->dev = (void *)dev;
+	config->data->callback = sdl_filter_top;
+	gpio_sdl_init_bottom(config->data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -88,15 +123,29 @@ static int gpio_sdl_init(const struct device *dev)
 					       zephyr_gpio_emul, okay),			\
 		     "Enabled parent zephyr,gpio-emul node is required");		\
 											\
+<<<<<<< HEAD
 	static const SDL_Scancode gpio_sdl_##inst##_codes[]				\
 		= DT_INST_PROP(inst, scancodes);					\
 											\
+=======
+	static const int gpio_sdl_##inst##_codes[]					\
+		= DT_INST_PROP(inst, scancodes);					\
+											\
+	static struct gpio_sdl_data data_##inst;				\
+											\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static const struct gpio_sdl_config gpio_sdl_##inst##_config = {		\
 		.emul = DEVICE_DT_GET(DT_INST_PARENT(inst)),				\
 		.codes = gpio_sdl_##inst##_codes,					\
 		.num_codes = DT_INST_PROP_LEN(inst, scancodes),				\
+<<<<<<< HEAD
 	};										\
 											\
+=======
+		.data = &data_##inst,					\
+	};										\
+												\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	DEVICE_DT_INST_DEFINE(inst, gpio_sdl_init, NULL, NULL,				\
 			      &gpio_sdl_##inst##_config, POST_KERNEL,			\
 			      CONFIG_GPIO_INIT_PRIORITY, NULL);

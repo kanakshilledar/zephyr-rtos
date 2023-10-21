@@ -266,13 +266,21 @@ int main(void)
 		uart_line_ctrl_get(dev, UART_LINE_CTRL_DTR, &dtr);
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(led0_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&led0_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", led0_gpio.port->name);
 		return 0;
 	}
 	gpio_pin_configure_dt(&led0_gpio, GPIO_OUTPUT_ACTIVE);
 
+<<<<<<< HEAD
 	if (!device_is_ready(led1_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&led1_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", led1_gpio.port->name);
 		return 0;
 	}

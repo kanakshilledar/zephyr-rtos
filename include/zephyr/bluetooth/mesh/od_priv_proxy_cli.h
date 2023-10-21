@@ -47,7 +47,10 @@ struct bt_mesh_od_priv_proxy_cli {
 			 _bt_mesh_od_priv_proxy_cli_op, NULL, cli_data,            \
 			 &_bt_mesh_od_priv_proxy_cli_cb)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Get the target's On-Demand Private GATT Proxy state.
  *
  *  This method can be used asynchronously by setting @p val_rsp as NULL.
@@ -57,12 +60,21 @@ struct bt_mesh_od_priv_proxy_cli {
  *  To process the response arguments of an async method, register
  *  the @c od_status callback in @c bt_mesh_od_priv_proxy_cli struct.
  *
+<<<<<<< HEAD
  *  @param ctx        Message context for the message.
+=======
+ *  @param net_idx    Network index to encrypt with.
+ *  @param addr       Target node address.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  @param val_rsp    Response buffer for On-Demand Private GATT Proxy value.
  *
  *  @return 0 on success, or (negative) error code otherwise.
  */
+<<<<<<< HEAD
 int bt_mesh_od_priv_proxy_cli_get(struct bt_mesh_msg_ctx *ctx, uint8_t *val_rsp);
+=======
+int bt_mesh_od_priv_proxy_cli_get(uint16_t net_idx, uint16_t addr, uint8_t *val_rsp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Set the target's On-Demand Private GATT Proxy state.
  *
@@ -73,13 +85,22 @@ int bt_mesh_od_priv_proxy_cli_get(struct bt_mesh_msg_ctx *ctx, uint8_t *val_rsp)
  *  To process the response arguments of an async method, register
  *  the @c od_status callback in @c bt_mesh_od_priv_proxy_cli struct.
  *
+<<<<<<< HEAD
  *  @param ctx        Message context for the message.
+=======
+ *  @param net_idx    Network index to encrypt with.
+ *  @param addr       Target node address.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  @param val        On-Demand Private GATT Proxy state to be set
  *  @param val_rsp    Response buffer for On-Demand Private GATT Proxy value.
  *
  *  @return 0 on success, or (negative) error code otherwise.
  */
+<<<<<<< HEAD
 int bt_mesh_od_priv_proxy_cli_set(struct bt_mesh_msg_ctx *ctx, uint8_t val, uint8_t *val_rsp);
+=======
+int bt_mesh_od_priv_proxy_cli_set(uint16_t net_idx, uint16_t addr, uint8_t val, uint8_t *val_rsp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Set the transmission timeout value.
  *

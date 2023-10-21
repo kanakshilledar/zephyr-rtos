@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,6 +11,10 @@
 / {
 	/* Switch to lpuart2, since primary core uses lpuart1 */
 	chosen {
+<<<<<<< HEAD
+=======
+		zephyr,flash = &ocram;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zephyr,console = &lpuart2;
 		zephyr,shell-uart = &lpuart2;
 		zephyr,ipc_shm = &ocram2_overlay;
@@ -32,7 +40,11 @@
 		compatible = "zephyr,memory-region", "mmio-sram";
 		reg = <0x202c0000 DT_SIZE_K(16)>;
 		zephyr,memory-region="OCRAM2_OVERLAY";
+<<<<<<< HEAD
 		zephyr,memory-region-mpu = "IO";
+=======
+		zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_IO) )>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 

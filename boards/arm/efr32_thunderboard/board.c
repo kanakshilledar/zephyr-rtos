@@ -28,7 +28,11 @@ static int thunderboard_init(void)
 		GPIO_DT_SPEC_GET(DT_NODELABEL(wake_up_trigger), gpios);
 
 
+<<<<<<< HEAD
 	if (!device_is_ready(wake_up_gpio_dev.port)) {
+=======
+	if (!gpio_is_ready_dt(&wake_up_gpio_dev)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Wake-up GPIO device was not found!\n");
 		return -ENODEV;
 	}

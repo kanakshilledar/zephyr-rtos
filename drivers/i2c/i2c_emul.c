@@ -144,8 +144,13 @@ static struct i2c_driver_api i2c_emul_api = {
 	},
 
 #define I2C_EMUL_INIT(n)                                                                           \
+<<<<<<< HEAD
 	static const struct emul_link_for_bus emuls_##n[] = { DT_FOREACH_CHILD(                    \
 		DT_DRV_INST(n), EMUL_LINK_AND_COMMA) };                                            \
+=======
+	static const struct emul_link_for_bus emuls_##n[] = {                                      \
+		DT_FOREACH_CHILD_STATUS_OKAY(DT_DRV_INST(n), EMUL_LINK_AND_COMMA)};                \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static struct emul_list_for_bus i2c_emul_cfg_##n = {                                       \
 		.children = emuls_##n,                                                             \
 		.num_children = ARRAY_SIZE(emuls_##n),                                             \

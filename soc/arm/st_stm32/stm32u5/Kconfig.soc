@@ -20,4 +20,10 @@ config SOC_STM32U595XX
 config SOC_STM32U599XX
 	bool "STM32U599XX"
 
+<<<<<<< HEAD
+=======
+config SOC_STM32U5A5XX
+	bool "STM32U5A5XX"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endchoice

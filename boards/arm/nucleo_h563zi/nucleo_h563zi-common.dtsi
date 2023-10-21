@@ -8,9 +8,17 @@
 #include <st/h5/stm32h563Xi.dtsi>
 #include <st/h5/stm32h563zitx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
 
 / {
 	leds {
+=======
+#include "st_morpho_connector.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_1: led_1 {
 			gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
@@ -31,6 +39,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -138,6 +150,11 @@
 &adc1 {
 	pinctrl-0 = <&adc1_inp3_pa6 &adc1_inp15_pa3>; /* Zio A0, Zio D35 */
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <ASYNC>;
+	st,adc-prescaler = <6>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
@@ -166,6 +183,15 @@
 	};
 };
 
+<<<<<<< HEAD
+=======
+zephyr_udc0: &usb {
+	pinctrl-0 = <&usb_dm_pa11 &usb_dp_pa12>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &vref {
 	status = "okay";
 };

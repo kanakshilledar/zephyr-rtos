@@ -3,7 +3,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #include <zephyr/timeout_q.h>
+=======
+#include <timeout_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "msgdev.h"
 
 /* This file implements a fake device that creates and enqueues

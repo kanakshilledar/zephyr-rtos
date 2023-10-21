@@ -6,10 +6,21 @@
 #ifndef ZEPHYR_INCLUDE_ARCH_POSIX_POSIX_TRACE_H_
 #define ZEPHYR_INCLUDE_ARCH_POSIX_POSIX_TRACE_H_
 
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+<<<<<<< HEAD
+=======
+void posix_vprint_error_and_exit(const char *format, va_list vargs);
+void posix_vprint_warning(const char *format, va_list vargs);
+void posix_vprint_trace(const char *format, va_list vargs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void posix_print_error_and_exit(const char *format, ...);
 void posix_print_warning(const char *format, ...);
 void posix_print_trace(const char *format, ...);

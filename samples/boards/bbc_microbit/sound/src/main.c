@@ -85,13 +85,21 @@ int main(void)
 {
 	static struct gpio_callback button_cb_data;
 
+<<<<<<< HEAD
 	if (!device_is_ready(pwm.dev)) {
+=======
+	if (!pwm_is_ready_dt(&pwm)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", pwm.dev->name);
 		return 0;
 	}
 
 	/* since sw0_gpio.port == sw1_gpio.port, we only need to check ready once */
+<<<<<<< HEAD
 	if (!device_is_ready(sw0_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&sw0_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", sw0_gpio.port->name);
 		return 0;
 	}

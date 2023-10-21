@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _cmsis_rtos_v2-sync_sample:
 
 Synchronization using CMSIS RTOS V2 APIs
 ########################################
+=======
+.. zephyr:code-sample:: cmsis-rtos-v2-sync
+   :name: Synchronization using CMSIS RTOS V2 APIs
+
+   Use timers and message queues from CMSIS RTOS v2 API to synchronize threads.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -5,6 +5,11 @@
  */
 
 #include <zephyr/cache.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/device.h>
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log_backend.h>
 #include <zephyr/logging/log_core.h>
 #include <zephyr/logging/log_output.h>
@@ -332,8 +337,15 @@ void adsp_hda_log_init(adsp_hda_log_hook_t fn, uint32_t channel)
 static inline void hda_ipc_msg(const struct device *dev, uint32_t data,
 			       uint32_t ext, k_timeout_t timeout)
 {
+<<<<<<< HEAD
 	__ASSERT(intel_adsp_ipc_send_message_sync(dev, data, ext, timeout),
 		"Unexpected ipc send message failure, try increasing IPC_TIMEOUT");
+=======
+	int ret = intel_adsp_ipc_send_message_sync(dev, data, ext, timeout);
+
+	__ASSERT(!ret, "Unexpected ipc send message failure, error code: %d",
+		ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 
@@ -342,6 +354,7 @@ void adsp_hda_log_cavstool_hook(uint32_t written)
 	/* We *must* send this, but we may be in a timer ISR, so we are
 	 * forced into a retry loop without timeouts and such.
 	 */
+<<<<<<< HEAD
 	bool done = false;
 
 	/*  Send IPC message notifying log data has been written */
@@ -356,6 +369,22 @@ void adsp_hda_log_cavstool_hook(uint32_t written)
 		done = intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV);
 	} while (!done);
 
+=======
+	int ret = -1;
+
+	/*  Send IPC message notifying log data has been written */
+	do {
+		ret = intel_adsp_ipc_send_message(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_HDA_PRINT,
+					     (written << 8) | CHANNEL);
+		if (ret == -ESHUTDOWN) {
+			return;
+		}
+	} while (ret);
+
+	/* Wait for confirmation log data has been received */
+	while (!intel_adsp_ipc_is_complete(INTEL_ADSP_IPC_HOST_DEV))
+		;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int adsp_hda_log_cavstool_init(void)

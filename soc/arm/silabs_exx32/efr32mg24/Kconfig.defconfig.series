@@ -18,6 +18,11 @@ config NUM_IRQS
 
 config PM
 	default n
+<<<<<<< HEAD
+=======
+	select COUNTER
+	select UART_INTERRUPT_DRIVEN if SERIAL_SUPPORT_INTERRUPT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 choice PM_POLICY
 	default PM_POLICY_DEFAULT

@@ -7,8 +7,16 @@
 #include <zephyr/kernel.h>
 #include <zephyr/syscall_handler.h>
 #include <zephyr/kernel_structs.h>
+<<<<<<< HEAD
 
 static struct z_object *validate_any_object(const void *obj)
+=======
+#include <zephyr/toolchain.h>
+
+static struct z_object *validate_kernel_object(const void *obj,
+					       enum k_objects otype,
+					       enum _obj_init_check init)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct z_object *ko;
 	int ret;
@@ -18,10 +26,17 @@ static struct z_object *validate_any_object(const void *obj)
 	/* This can be any kernel object and it doesn't have to be
 	 * initialized
 	 */
+<<<<<<< HEAD
 	ret = z_object_validate(ko, K_OBJ_ANY, _OBJ_INIT_ANY);
 	if (ret != 0) {
 #ifdef CONFIG_LOG
 		z_dump_object_error(ret, obj, ko, K_OBJ_ANY);
+=======
+	ret = z_object_validate(ko, otype, init);
+	if (ret != 0) {
+#ifdef CONFIG_LOG
+		z_dump_object_error(ret, obj, ko, otype);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 		return NULL;
 	}
@@ -29,6 +44,23 @@ static struct z_object *validate_any_object(const void *obj)
 	return ko;
 }
 
+<<<<<<< HEAD
+=======
+static ALWAYS_INLINE struct z_object *validate_any_object(const void *obj)
+{
+	return validate_kernel_object(obj, K_OBJ_ANY, _OBJ_INIT_ANY);
+}
+
+bool k_object_is_valid(const void *obj, enum k_objects otype)
+{
+	struct z_object *ko;
+
+	ko = validate_kernel_object(obj, otype, _OBJ_INIT_TRUE);
+
+	return (ko != NULL);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Normally these would be included in userspace.c, but the way
  * syscall_dispatch.c declares weak handlers results in build errors if these
  * are located in userspace.c. Just put in a separate file.
@@ -65,3 +97,12 @@ static inline void *z_vrfy_k_object_alloc(enum k_objects otype)
 	return z_impl_k_object_alloc(otype);
 }
 #include <syscalls/k_object_alloc_mrsh.c>
+<<<<<<< HEAD
+=======
+
+static inline void *z_vrfy_k_object_alloc_size(enum k_objects otype, size_t size)
+{
+	return z_impl_k_object_alloc_size(otype, size);
+}
+#include <syscalls/k_object_alloc_size_mrsh.c>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

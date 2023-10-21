@@ -9,6 +9,10 @@
 /dts-v1/;
 #include <nordic/nrf52832_qfaa.dtsi>
 #include "thingy52_nrf52832-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Nordic Thingy52 NRF52832";
@@ -60,6 +64,10 @@
 			/* gpio flags need validation */
 			gpios = <&gpio0 11 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

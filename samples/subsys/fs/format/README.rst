@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _fs_format_sample:
 
 FS Format Sample
 ################
+=======
+.. zephyr:code-sample:: fs-format
+   :name: Format filesystem
+   :relevant-api: file_system_api
+
+   Format different storage devices for different file systems.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ***********

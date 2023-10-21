@@ -117,7 +117,11 @@ In order to support FXOS8700 triggers (interrupts) the 0 ohm resistors
 devicetree must also be modified to describe the FXOS8700 interrupt
 GPIOs:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
   /dts-v1/;
 

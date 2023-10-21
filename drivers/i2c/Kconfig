@@ -30,11 +30,34 @@ config I2C_STATS
 	  Enable I2C Stats.
 
 config I2C_DUMP_MESSAGES
+<<<<<<< HEAD
 	bool "Log all I2C transactions"
 	depends on LOG
 	help
 	  Dump every I2C transaction to the system log as debug level log messages.
 
+=======
+	bool "Log I2C transactions"
+	depends on LOG
+	depends on I2C_LOG_LEVEL_DBG
+	help
+	  Dump every I2C transaction to the system log as debug level log messages.
+
+config I2C_DUMP_MESSAGES_ALLOWLIST
+	bool "Use allowlist for logging of I2C transactions"
+	depends on I2C_DUMP_MESSAGES
+	depends on DT_HAS_ZEPHYR_I2C_DUMP_ALLOWLIST_ENABLED
+	help
+	  Use allowlist to specify which devices transactions should be logged.
+	  The allowlist is defined in the devicetree using the compatible string of
+	  "zephyr,i2c-dump-allowlist" and phandles to the devices that need to be traced.
+	  Example of devicetree node:
+	  i2c-dump-allowlist {
+	    compatible = "zephyr,i2c-dump-allowlist";
+	    devices = < &display0 >, < &sensor3 >;
+	  };
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config I2C_CALLBACK
 	bool "I2C asynchronous callback API"
 	help
@@ -70,10 +93,20 @@ source "drivers/i2c/Kconfig.rcar"
 source "drivers/i2c/Kconfig.tca954x"
 source "drivers/i2c/Kconfig.gd32"
 source "drivers/i2c/Kconfig.ifx_cat1"
+<<<<<<< HEAD
+=======
+source "drivers/i2c/Kconfig.ifx_xmc4"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/i2c/Kconfig.andes_atciic100"
 source "drivers/i2c/Kconfig.sc18im704"
 source "drivers/i2c/Kconfig.smartbond"
 source "drivers/i2c/Kconfig.xilinx_axi"
+<<<<<<< HEAD
+=======
+source "drivers/i2c/Kconfig.mchp_mss"
+source "drivers/i2c/Kconfig.sedi"
+source "drivers/i2c/Kconfig.ambiq"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config I2C_INIT_PRIORITY
 	int "Init priority"
@@ -151,6 +184,10 @@ config I2C_CC32XX
 	bool "CC32XX I2C driver"
 	default y
 	depends on DT_HAS_TI_CC32XX_I2C_ENABLED
+<<<<<<< HEAD
+=======
+	select PINCTRL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the CC32XX I2C driver.
 

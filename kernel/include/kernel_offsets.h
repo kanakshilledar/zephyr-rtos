@@ -73,8 +73,15 @@ GEN_OFFSET_SYM(_thread_t, tls);
 GEN_ABSOLUTE_SYM(__z_interrupt_stack_SIZEOF, sizeof(z_interrupt_stacks[0]));
 
 /* member offsets in the device structure. Used in image post-processing */
+<<<<<<< HEAD
 GEN_ABSOLUTE_SYM(_DEVICE_STRUCT_HANDLES_OFFSET,
 		 offsetof(struct device, handles));
+=======
+#ifdef CONFIG_DEVICE_DEPS
+GEN_ABSOLUTE_SYM(_DEVICE_STRUCT_HANDLES_OFFSET,
+		 offsetof(struct device, deps));
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_PM_DEVICE
 GEN_ABSOLUTE_SYM(_DEVICE_STRUCT_PM_OFFSET,

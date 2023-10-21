@@ -15,7 +15,11 @@
 #ifndef ZEPHYR_INCLUDE_DRIVERS_SYSTEM_MM_H_
 #define ZEPHYR_INCLUDE_DRIVERS_SYSTEM_MM_H_
 
+<<<<<<< HEAD
 #include <zephyr/kernel.h>
+=======
+#include <zephyr/types.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef _ASMLANGUAGE
 

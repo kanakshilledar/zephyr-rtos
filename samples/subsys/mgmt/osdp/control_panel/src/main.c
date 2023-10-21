@@ -76,7 +76,11 @@ int main(void)
 		.output.timer_count = 10,  /* Timer: 10 * 100ms = 1 second */
 	};
 
+<<<<<<< HEAD
 	if (!device_is_ready(led0.port)) {
+=======
+	if (!gpio_is_ready_dt(&led0)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Failed to get LED GPIO port %s\n", led0.port->name);
 		return 0;
 	}

@@ -48,6 +48,11 @@ __imr void boot_d3_restore(void)
 	/* reset memory hole */
 	CAVS_SHIM.l2mecs = 0;
 #endif
+<<<<<<< HEAD
+=======
+	extern void hp_sram_init(uint32_t memory_size);
+	hp_sram_init(L2_SRAM_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	extern void lp_sram_init(void);
 	lp_sram_init();

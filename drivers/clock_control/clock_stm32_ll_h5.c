@@ -18,6 +18,10 @@
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/drivers/clock_control/stm32_clock_control.h>
+<<<<<<< HEAD
+=======
+#include "clock_stm32_ll_mco.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Macros to fill up prescaler values */
 #define z_hsi_divider(v) LL_RCC_HSI_DIV_ ## v
@@ -74,6 +78,13 @@ static uint32_t get_startup_frequency(void)
 		return STM32_CSI_FREQ;
 	case LL_RCC_SYS_CLKSOURCE_STATUS_HSI:
 		return STM32_HSI_FREQ;
+<<<<<<< HEAD
+=======
+	case LL_RCC_SYS_CLKSOURCE_STATUS_HSE:
+		return STM32_HSE_FREQ;
+	case LL_RCC_SYS_CLKSOURCE_STATUS_PLL1:
+		return get_pllsrc_frequency(PLL1_ID);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		__ASSERT(0, "Unexpected startup freq");
 		return 0;
@@ -367,11 +378,19 @@ static uint32_t get_vco_output_range(uint32_t vco_input_range)
 
 static void set_regu_voltage(uint32_t hclk_freq)
 {
+<<<<<<< HEAD
 	if (hclk_freq < MHZ(80)) {
 		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
 	} else if (hclk_freq < MHZ(130)) {
 		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE2);
 	} else if (hclk_freq < MHZ(180)) {
+=======
+	if (hclk_freq <= MHZ(100)) {
+		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE3);
+	} else if (hclk_freq <= MHZ(150)) {
+		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE2);
+	} else if (hclk_freq <= MHZ(200)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
 	} else {
 		LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE0);
@@ -748,6 +767,12 @@ int stm32_clock_control_init(const struct device *dev)
 	/* Update CMSIS variable */
 	SystemCoreClock = CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC;
 
+<<<<<<< HEAD
+=======
+	/* configure MCO1/MCO2 based on Kconfig */
+	stm32_clock_control_mco_init();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

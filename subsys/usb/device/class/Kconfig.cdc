@@ -6,6 +6,10 @@ menu "USB CDC ACM Class support"
 config USB_CDC_ACM
 	bool "USB CDC ACM Class support"
 	default y
+<<<<<<< HEAD
+=======
+	select USB_COMPOSITE_DEVICE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	depends on SERIAL
 	depends on DT_HAS_ZEPHYR_CDC_ACM_UART_ENABLED
 	select SERIAL_HAS_DRIVER

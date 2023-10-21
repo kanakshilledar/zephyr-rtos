@@ -20,7 +20,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(adc_esp32, CONFIG_ADC_LOG_LEVEL);
 
+<<<<<<< HEAD
 #if CONFIG_SOC_ESP32
+=======
+#if CONFIG_SOC_SERIES_ESP32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define ADC_CALI_SCHEME		ESP_ADC_CAL_VAL_EFUSE_VREF
 #define ADC_RESOLUTION_MIN	SOC_ADC_DIGI_MIN_BITWIDTH
 #define ADC_RESOLUTION_MAX	SOC_ADC_DIGI_MAX_BITWIDTH
@@ -31,16 +35,32 @@ LOG_MODULE_REGISTER(adc_esp32, CONFIG_ADC_LOG_LEVEL);
  */
 #define ADC_CLIP_MVOLT_11DB	2550
 
+<<<<<<< HEAD
 #elif CONFIG_SOC_ESP32S2
+=======
+#elif CONFIG_SOC_SERIES_ESP32S2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define ADC_CALI_SCHEME		ESP_ADC_CAL_VAL_EFUSE_TP
 #define ADC_RESOLUTION_MIN	SOC_ADC_DIGI_MAX_BITWIDTH
 #define ADC_RESOLUTION_MAX	SOC_ADC_MAX_BITWIDTH
 
+<<<<<<< HEAD
 #elif CONFIG_SOC_ESP32C3
+=======
+#elif CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define ADC_CALI_SCHEME		ESP_ADC_CAL_VAL_EFUSE_TP
 #define ADC_RESOLUTION_MIN	SOC_ADC_DIGI_MAX_BITWIDTH
 #define ADC_RESOLUTION_MAX	SOC_ADC_DIGI_MAX_BITWIDTH
 
+<<<<<<< HEAD
+=======
+#elif CONFIG_SOC_SERIES_ESP32S3
+#define ADC_CALI_SCHEME		ESP_ADC_CAL_VAL_EFUSE_TP_FIT
+#define ADC_RESOLUTION_MIN	SOC_ADC_DIGI_MIN_BITWIDTH
+#define ADC_RESOLUTION_MAX	SOC_ADC_DIGI_MAX_BITWIDTH
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 /* Convert resolution in bits to esp32 enum values */
@@ -152,6 +172,21 @@ static int adc_esp32_read(const struct device *dev, const struct adc_sequence *s
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
+=======
+	if (seq->options) {
+		if (seq->options->extra_samplings) {
+			LOG_ERR("Extra samplings not supported");
+			return -ENOTSUP;
+		}
+
+		if (seq->options->interval_us) {
+			LOG_ERR("Interval between samplings not supported");
+			return -ENOTSUP;
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (INVALID_RESOLUTION(seq->resolution)) {
 		LOG_ERR("unsupported resolution (%d)", seq->resolution);
 		return -ENOTSUP;
@@ -165,14 +200,22 @@ static int adc_esp32_read(const struct device *dev, const struct adc_sequence *s
 
 	data->resolution[channel_id] = seq->resolution;
 
+<<<<<<< HEAD
 #if CONFIG_SOC_ESP32C3
+=======
+#if CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* NOTE: nothing to set on ESP32C3 SoC */
 	if (conf->unit == ADC_UNIT_1) {
 		adc1_config_width(ADC_WIDTH_BIT_DEFAULT);
 	}
 #else
 	adc_set_data_width(conf->unit, WIDTH_MASK(data->resolution[channel_id]));
+<<<<<<< HEAD
 #endif /* CONFIG_SOC_ESP32C3 */
+=======
+#endif /* CONFIG_SOC_SERIES_ESP32C3 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Read raw value */
 	if (conf->unit == ADC_UNIT_1) {
@@ -191,13 +234,21 @@ static int adc_esp32_read(const struct device *dev, const struct adc_sequence *s
 		/* Get corrected voltage output */
 		cal = cal_mv = esp_adc_cal_raw_to_voltage(reading, &data->chars[channel_id]);
 
+<<<<<<< HEAD
 #if CONFIG_SOC_ESP32
+=======
+#if CONFIG_SOC_SERIES_ESP32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (data->attenuation[channel_id] == ADC_ATTEN_DB_11) {
 			if (cal > ADC_CLIP_MVOLT_11DB) {
 				cal = ADC_CLIP_MVOLT_11DB;
 			}
 		}
+<<<<<<< HEAD
 #endif /* CONFIG_SOC_ESP32 */
+=======
+#endif /* CONFIG_SOC_SERIES_ESP32 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Fit according to selected attenuation */
 		atten_to_gain(data->attenuation[channel_id], &cal);

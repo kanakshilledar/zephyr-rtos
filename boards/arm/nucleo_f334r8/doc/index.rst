@@ -143,7 +143,11 @@ Flashing an application to Nucleo F334R8
 
 Connect the Nucleo F334R8 to your host computer using the USB port,
 then build and flash an application. Here is an example for the
+<<<<<<< HEAD
 :ref:`blinky-sample` application.
+=======
+:zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -156,7 +160,11 @@ Debugging
 =========
 
 You can debug an application in the usual way.  Here is an example for
+<<<<<<< HEAD
 the :ref:`blinky-sample` application.
+=======
+the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -170,6 +178,7 @@ References
 .. target-notes::
 
 .. _Nucleo F334R8 website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f334r8.html
 
 .. _STM32F334 reference manual:
@@ -177,3 +186,12 @@ References
 
 .. _STM32 Nucleo-64 board User Manual:
    http://www.st.com/resource/en/user_manual/dm00105823.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f334r8.html
+
+.. _STM32F334 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00093941.pdf
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

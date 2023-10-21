@@ -78,6 +78,7 @@ static int vrt_xfer_control(const struct device *dev,
 			    struct uhc_transfer *const xfer)
 {
 	struct uhc_vrt_data *priv = uhc_get_private(dev);
+<<<<<<< HEAD
 	struct uvb_packet *uvb_pkt;
 	struct net_buf *buf;
 
@@ -96,6 +97,18 @@ static int vrt_xfer_control(const struct device *dev,
 		uvb_pkt = uvb_alloc_pkt(UVB_REQUEST_SETUP,
 					xfer->addr, USB_CONTROL_EP_OUT,
 					buf->data, buf->len);
+=======
+	struct net_buf *buf = xfer->buf;
+	struct uvb_packet *uvb_pkt;
+	uint8_t *data = NULL;
+	size_t length = 0;
+
+	if (xfer->stage == UHC_CONTROL_STAGE_SETUP) {
+		LOG_DBG("Handle SETUP stage");
+		uvb_pkt = uvb_alloc_pkt(UVB_REQUEST_SETUP,
+					xfer->addr, USB_CONTROL_EP_OUT,
+					xfer->setup_pkt, sizeof(xfer->setup_pkt));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (uvb_pkt == NULL) {
 			LOG_ERR("Failed to allocate UVB packet");
 			return -ENOMEM;
@@ -103,17 +116,24 @@ static int vrt_xfer_control(const struct device *dev,
 
 		priv->req = UVB_REQUEST_SETUP;
 		priv->busy = true;
+<<<<<<< HEAD
 		uhc_xfer_setup(xfer);
 		uhc_xfer_queued(xfer);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		return uvb_advert_pkt(priv->host_node, uvb_pkt);
 	}
 
+<<<<<<< HEAD
 	if (buf->size != 0) {
 		uint8_t *data;
 		size_t length;
 
 		LOG_DBG("Handle DATA stage");
+=======
+	if (buf != NULL && xfer->stage == UHC_CONTROL_STAGE_DATA) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (USB_EP_DIR_IS_IN(xfer->ep)) {
 			length = MIN(net_buf_tailroom(buf), xfer->mps);
 			data = net_buf_tail(buf);
@@ -122,6 +142,10 @@ static int vrt_xfer_control(const struct device *dev,
 			data = buf->data;
 		}
 
+<<<<<<< HEAD
+=======
+		LOG_DBG("Handle DATA stage");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uvb_pkt = uvb_alloc_pkt(UVB_REQUEST_DATA,
 					xfer->addr, xfer->ep,
 					data, length);
@@ -132,7 +156,15 @@ static int vrt_xfer_control(const struct device *dev,
 
 		priv->req = UVB_REQUEST_DATA;
 		priv->busy = true;
+<<<<<<< HEAD
 	} else {
+=======
+
+		return uvb_advert_pkt(priv->host_node, uvb_pkt);
+	}
+
+	if (xfer->stage == UHC_CONTROL_STAGE_STATUS) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint8_t ep;
 
 		LOG_DBG("Handle STATUS stage");
@@ -144,7 +176,11 @@ static int vrt_xfer_control(const struct device *dev,
 
 		uvb_pkt = uvb_alloc_pkt(UVB_REQUEST_DATA,
 					xfer->addr, ep,
+<<<<<<< HEAD
 					buf->data, 0);
+=======
+					NULL, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (uvb_pkt == NULL) {
 			LOG_ERR("Failed to allocate UVB packet");
 			return -ENOMEM;
@@ -152,15 +188,24 @@ static int vrt_xfer_control(const struct device *dev,
 
 		priv->req = UVB_REQUEST_DATA;
 		priv->busy = true;
+<<<<<<< HEAD
 	}
 
 	return uvb_advert_pkt(priv->host_node, uvb_pkt);
+=======
+
+		return uvb_advert_pkt(priv->host_node, uvb_pkt);
+	}
+
+	return -EINVAL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int vrt_xfer_bulk(const struct device *dev,
 			 struct uhc_transfer *const xfer)
 {
 	struct uhc_vrt_data *priv = uhc_get_private(dev);
+<<<<<<< HEAD
 	struct uvb_packet *uvb_pkt;
 	struct net_buf *buf;
 	uint8_t *data;
@@ -172,6 +217,12 @@ static int vrt_xfer_bulk(const struct device *dev,
 		LOG_ERR("No buffers to handle");
 		return -ENODATA;
 	}
+=======
+	struct net_buf *buf = xfer->buf;
+	struct uvb_packet *uvb_pkt;
+	uint8_t *data;
+	size_t length;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (USB_EP_DIR_IS_IN(xfer->ep)) {
 		length = MIN(net_buf_tailroom(buf), xfer->mps);
@@ -188,12 +239,16 @@ static int vrt_xfer_bulk(const struct device *dev,
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	ret = uvb_advert_pkt(priv->host_node, uvb_pkt);
 	if (!ret) {
 		uhc_xfer_queued(xfer);
 	}
 
 	return ret;
+=======
+	return uvb_advert_pkt(priv->host_node, uvb_pkt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int vrt_schedule_xfer(const struct device *dev)
@@ -218,6 +273,7 @@ static int vrt_schedule_xfer(const struct device *dev)
 	return vrt_xfer_bulk(dev, priv->last_xfer);
 }
 
+<<<<<<< HEAD
 static int vrt_hrslt_success(const struct device *dev,
 			     struct uvb_packet *const pkt)
 {
@@ -237,12 +293,47 @@ static int vrt_hrslt_success(const struct device *dev,
 		err = uhc_xfer_done(xfer);
 		break;
 	case UVB_REQUEST_DATA:
+=======
+static void vrt_hrslt_success(const struct device *dev,
+			      struct uvb_packet *const pkt)
+{
+	struct uhc_vrt_data *priv = uhc_get_private(dev);
+	struct uhc_transfer *const xfer = priv->last_xfer;
+	struct net_buf *buf = xfer->buf;
+	bool finished = false;
+	size_t length;
+
+	switch (pkt->request) {
+	case UVB_REQUEST_SETUP:
+		if (xfer->buf != NULL) {
+			xfer->stage = UHC_CONTROL_STAGE_DATA;
+		} else {
+			xfer->stage = UHC_CONTROL_STAGE_STATUS;
+		}
+
+		break;
+	case UVB_REQUEST_DATA:
+		if (xfer->stage == UHC_CONTROL_STAGE_STATUS) {
+			LOG_DBG("Status stage finished");
+			finished = true;
+			break;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (USB_EP_DIR_IS_OUT(pkt->ep)) {
 			length = MIN(buf->len, xfer->mps);
 			net_buf_pull(buf, length);
 			LOG_DBG("OUT chunk %zu out of %u", length, buf->len);
 			if (buf->len == 0) {
+<<<<<<< HEAD
 				err = uhc_xfer_done(xfer);
+=======
+				if (pkt->ep == USB_CONTROL_EP_OUT) {
+					xfer->stage = UHC_CONTROL_STAGE_STATUS;
+				} else {
+					finished = true;
+				}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		} else {
 			length = MIN(net_buf_tailroom(buf), pkt->length);
@@ -254,13 +345,29 @@ static int vrt_hrslt_success(const struct device *dev,
 
 			LOG_DBG("IN chunk %zu out of %zu", length, net_buf_tailroom(buf));
 			if (pkt->length < xfer->mps || !net_buf_tailroom(buf)) {
+<<<<<<< HEAD
 				err = uhc_xfer_done(xfer);
+=======
+				if (pkt->ep == USB_CONTROL_EP_IN) {
+					xfer->stage = UHC_CONTROL_STAGE_STATUS;
+				} else {
+					finished = true;
+				}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 		break;
 	}
 
+<<<<<<< HEAD
 	return err;
+=======
+	if (finished) {
+		LOG_DBG("Transfer finished");
+		uhc_xfer_return(dev, xfer, 0);
+		priv->last_xfer = NULL;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void vrt_xfer_drop_active(const struct device *dev, int err)
@@ -278,7 +385,11 @@ static int vrt_handle_reply(const struct device *dev,
 {
 	struct uhc_vrt_data *priv = uhc_get_private(dev);
 	struct uhc_transfer *const xfer = priv->last_xfer;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (xfer == NULL) {
 		LOG_ERR("No transfers to handle");
@@ -286,6 +397,7 @@ static int vrt_handle_reply(const struct device *dev,
 		goto handle_reply_err;
 	}
 
+<<<<<<< HEAD
 	/* If an active xfer is not marked then something has gone wrong */
 	if (!uhc_xfer_is_queued(xfer)) {
 		LOG_ERR("Active transfer not queued");
@@ -301,10 +413,14 @@ static int vrt_handle_reply(const struct device *dev,
 		ret = -ENODATA;
 		goto handle_reply_err;
 	}
+=======
+	priv->busy = false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	switch (pkt->reply) {
 	case UVB_REPLY_NACK:
 		/* Restart last transaction */
+<<<<<<< HEAD
 		priv->busy = false;
 		break;
 	case UVB_REPLY_STALL:
@@ -327,6 +443,16 @@ static int vrt_handle_reply(const struct device *dev,
 		break;
 	default:
 		priv->busy = false;
+=======
+		break;
+	case UVB_REPLY_STALL:
+		vrt_xfer_drop_active(dev, -EPIPE);
+		break;
+	case UVB_REPLY_ACK:
+		vrt_hrslt_success(dev, pkt);
+		break;
+	default:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		vrt_xfer_drop_active(dev, -EINVAL);
 		ret = -EINVAL;
 		break;
@@ -349,7 +475,15 @@ static void xfer_work_handler(struct k_work *work)
 
 		switch (ev->type) {
 		case UHC_VRT_EVT_REPLY:
+<<<<<<< HEAD
 			vrt_handle_reply(dev, ev->pkt);
+=======
+			err = vrt_handle_reply(dev, ev->pkt);
+			if (unlikely(err)) {
+				uhc_submit_event(dev, UHC_EVT_ERROR, err);
+			}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			schedule = true;
 			break;
 		case UHC_VRT_EVT_XFER:
@@ -374,11 +508,19 @@ static void xfer_work_handler(struct k_work *work)
 		if (schedule && !priv->busy) {
 			err = vrt_schedule_xfer(dev);
 			if (unlikely(err)) {
+<<<<<<< HEAD
 				uhc_submit_event(dev, UHC_EVT_ERROR, err, NULL);
 			}
 		}
 
 		k_mem_slab_free(&uhc_vrt_slab, (void **)&ev);
+=======
+				uhc_submit_event(dev, UHC_EVT_ERROR, err);
+			}
+		}
+
+		k_mem_slab_free(&uhc_vrt_slab, (void *)ev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -411,7 +553,11 @@ static void vrt_device_act(const struct device *dev,
 		type = UHC_EVT_ERROR;
 	}
 
+<<<<<<< HEAD
 	uhc_submit_event(dev, type, 0, NULL);
+=======
+	uhc_submit_event(dev, type, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void uhc_vrt_uvb_cb(const void *const vrt_priv,

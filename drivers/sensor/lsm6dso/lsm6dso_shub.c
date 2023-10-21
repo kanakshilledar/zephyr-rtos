@@ -485,7 +485,11 @@ static int lsm6dso_shub_read_target_reg(const struct device *dev,
 	trgt_cfg.slv_subadd = trgt_reg;
 	trgt_cfg.slv_len = len;
 
+<<<<<<< HEAD
 	lsm6dso_sh_slv0_cfg_read(ctx, &trgt_cfg);
+=======
+	lsm6dso_sh_slv_cfg_read(ctx, 0, &trgt_cfg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* turn SH on, wait for shub i2c read to finish */
 	lsm6dso_shub_enable(dev, 1);
@@ -565,12 +569,15 @@ static int lsm6dso_shub_set_data_channel(const struct device *dev)
 	stmdev_ctx_t *ctx = (stmdev_ctx_t *)&cfg->ctx;
 	uint8_t n;
 	struct lsm6dso_shub_slist *sp;
+<<<<<<< HEAD
 	int32_t (*sh_chan_cfg[LSM6DSO_SHUB_MAX_NUM_TARGETS])
 			(stmdev_ctx_t *ctx, lsm6dso_sh_cfg_read_t *val) = {
 		lsm6dso_sh_slv1_cfg_read,
 		lsm6dso_sh_slv2_cfg_read,
 		lsm6dso_sh_slv3_cfg_read,
 	};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	lsm6dso_sh_cfg_read_t trgt_cfg;
 
 	/* Configure shub data channels to access external targets */
@@ -581,7 +588,11 @@ static int lsm6dso_shub_set_data_channel(const struct device *dev)
 		trgt_cfg.slv_subadd = sp->out_data_addr;
 		trgt_cfg.slv_len = sp->out_data_len;
 
+<<<<<<< HEAD
 		if (sh_chan_cfg[n](ctx, &trgt_cfg) < 0) {
+=======
+		if (lsm6dso_sh_slv_cfg_read(ctx, n + 1, &trgt_cfg) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_DBG("shub: error configuring shub for ext targets");
 			return -EIO;
 		}
@@ -629,7 +640,14 @@ int lsm6dso_shub_fetch_external_devs(const struct device *dev)
 	struct lsm6dso_shub_slist *sp;
 
 	/* read data from external target */
+<<<<<<< HEAD
 	lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK);
+=======
+	if (lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK) < 0) {
+		LOG_DBG("failed to enter SENSOR_HUB bank");
+		return -EIO;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (n = 0; n < data->num_ext_dev; n++) {
 		sp = &lsm6dso_shub_slist[data->shub_ext[n]];
@@ -637,14 +655,22 @@ int lsm6dso_shub_fetch_external_devs(const struct device *dev)
 		if (lsm6dso_read_reg(ctx, sp->sh_out_reg,
 				     data->ext_data[n], sp->out_data_len) < 0) {
 			LOG_DBG("shub: failed to read sample");
+<<<<<<< HEAD
 			lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
+=======
+			(void) lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return -EIO;
 		}
 	}
 
+<<<<<<< HEAD
 	lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
 
 	return 0;
+=======
+	return lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int lsm6dso_shub_config(const struct device *dev, enum sensor_channel chan,

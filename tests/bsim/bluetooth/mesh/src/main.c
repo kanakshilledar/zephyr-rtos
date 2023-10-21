@@ -14,10 +14,21 @@ extern struct bst_test_list *test_provision_pst_install(struct bst_test_list *te
 #if defined(CONFIG_BT_MESH_V1d1)
 extern struct bst_test_list *test_dfu_install(struct bst_test_list *test);
 extern struct bst_test_list *test_blob_pst_install(struct bst_test_list *test);
+<<<<<<< HEAD
+=======
+extern struct bst_test_list *test_lcd_install(struct bst_test_list *test);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 extern struct bst_test_list *test_sar_pst_install(struct bst_test_list *test);
 #endif /* defined(CONFIG_BT_MESH_V1d1) */
 #elif defined(CONFIG_BT_MESH_GATT_PROXY)
 extern struct bst_test_list *test_adv_install(struct bst_test_list *test);
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_V1d1)
+extern struct bst_test_list *test_beacon_install(struct bst_test_list *tests);
+#endif /* defined(CONFIG_BT_MESH_V1d1) */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_BT_CTLR_LOW_LAT)
 extern struct bst_test_list *test_transport_install(struct bst_test_list *tests);
 extern struct bst_test_list *test_friendship_install(struct bst_test_list *tests);
@@ -35,7 +46,11 @@ extern struct bst_test_list *test_adv_install(struct bst_test_list *test);
 extern struct bst_test_list *test_blob_install(struct bst_test_list *test);
 extern struct bst_test_list *test_op_agg_install(struct bst_test_list *test);
 extern struct bst_test_list *test_sar_install(struct bst_test_list *test);
+<<<<<<< HEAD
 extern struct bst_test_list *test_lcd_install(struct bst_test_list *test);
+=======
+extern struct bst_test_list *test_cdp1_install(struct bst_test_list *test);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* defined(CONFIG_BT_MESH_V1d1) */
 #endif
 
@@ -47,10 +62,20 @@ bst_test_install_t test_installers[] = {
 	test_provision_pst_install,
 	test_dfu_install,
 	test_blob_pst_install,
+<<<<<<< HEAD
+=======
+	test_lcd_install,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	test_sar_pst_install,
 #endif /* defined(CONFIG_BT_MESH_V1d1) */
 #elif defined(CONFIG_BT_MESH_GATT_PROXY)
 	test_adv_install,
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_V1d1)
+	test_beacon_install,
+#endif /* defined(CONFIG_BT_MESH_V1d1) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_BT_CTLR_LOW_LAT)
 	test_transport_install,
 	test_friendship_install,
@@ -68,7 +93,11 @@ bst_test_install_t test_installers[] = {
 	test_blob_install,
 	test_op_agg_install,
 	test_sar_install,
+<<<<<<< HEAD
 	test_lcd_install,
+=======
+	test_cdp1_install,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* defined(CONFIG_BT_MESH_V1d1) */
 #endif
 	NULL
@@ -77,7 +106,11 @@ bst_test_install_t test_installers[] = {
 static struct k_thread bsim_mesh_thread;
 static K_KERNEL_STACK_DEFINE(bsim_mesh_thread_stack, 4096);
 
+<<<<<<< HEAD
 static void bsim_mesh_entry_point(void *, void *, void *)
+=======
+static void bsim_mesh_entry_point(void *unused1, void *unused2, void *unused3)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	bst_main();
 }

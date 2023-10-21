@@ -20,7 +20,11 @@ void mutex_test(void)
 	uint32_t et; /* elapsed time */
 	int i;
 
+<<<<<<< HEAD
 	PRINT_STRING(dashline, output_file);
+=======
+	PRINT_STRING(dashline);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	et = BENCH_START();
 	for (i = 0; i < NR_OF_MUTEX_RUNS; i++) {
 		k_mutex_lock(&DEMO_MUTEX, K_FOREVER);
@@ -29,7 +33,11 @@ void mutex_test(void)
 	et = TIME_STAMP_DELTA_GET(et);
 	check_result();
 
+<<<<<<< HEAD
 	PRINT_F(output_file, FORMAT, "average lock and unlock mutex",
+=======
+	PRINT_F(FORMAT, "average lock and unlock mutex",
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		SYS_CLOCK_HW_CYCLES_TO_NS_AVG(et, (2 * NR_OF_MUTEX_RUNS)));
 }
 

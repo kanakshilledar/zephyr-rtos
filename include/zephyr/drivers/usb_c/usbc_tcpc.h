@@ -106,7 +106,11 @@ struct tcpc_chip_info {
 	/** Device Id */
 	uint16_t device_id;
 	/** Firmware version number */
+<<<<<<< HEAD
 	uint64_t fw_verion_number;
+=======
+	uint64_t fw_version_number;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	union {
 		/** Minimum Required firmware version string */

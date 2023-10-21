@@ -244,17 +244,29 @@ ZTEST(drivers_i2s_speed, test_i2s_transfer_short)
 	/* Verify received data */
 	ret = verify_buf((uint16_t *)rx_block[0], 0);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[0]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 1);
 
 	ret = verify_buf((uint16_t *)rx_block[1], 1);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[1]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 2);
 
 	ret = verify_buf((uint16_t *)rx_block[2], 2);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[2]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[2]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 3);
 }
 
@@ -344,7 +356,11 @@ ZTEST(drivers_i2s_speed, test_i2s_transfer_long)
 		} else {
 			num_verified++;
 		}
+<<<<<<< HEAD
 		k_mem_slab_free(&rx_0_mem_slab, &rx_block[rx_idx]);
+=======
+		k_mem_slab_free(&rx_0_mem_slab, rx_block[rx_idx]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	zassert_equal(num_verified, NUM_BLOCKS, "Invalid RX blocks received");
 }
@@ -403,17 +419,29 @@ ZTEST(drivers_i2s_speed_both_rxtx, test_i2s_dir_both_transfer_short)
 	/* Verify received data */
 	ret = verify_buf((uint16_t *)rx_block[0], 0);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[0]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 1);
 
 	ret = verify_buf((uint16_t *)rx_block[1], 1);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[1]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[1]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 2);
 
 	ret = verify_buf((uint16_t *)rx_block[2], 2);
 	zassert_equal(ret, 0);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_0_mem_slab, &rx_block[2]);
+=======
+	k_mem_slab_free(&rx_0_mem_slab, rx_block[2]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	TC_PRINT("%d<-OK\n", 3);
 }
 
@@ -492,7 +520,11 @@ ZTEST(drivers_i2s_speed_both_rxtx, test_i2s_dir_both_transfer_long)
 		} else {
 			num_verified++;
 		}
+<<<<<<< HEAD
 		k_mem_slab_free(&rx_0_mem_slab, &rx_block[rx_idx]);
+=======
+		k_mem_slab_free(&rx_0_mem_slab, rx_block[rx_idx]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	zassert_equal(num_verified, NUM_BLOCKS, "Invalid RX blocks received");
 }

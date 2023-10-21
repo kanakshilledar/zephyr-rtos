@@ -10,9 +10,17 @@
 
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
+<<<<<<< HEAD
 #include <zephyr/rtio/rtio.h>
 #include <zephyr/shell/shell.h>
 #include <zephyr/sys/iterable_sections.h>
+=======
+#include <zephyr/kernel.h>
+#include <zephyr/rtio/rtio.h>
+#include <zephyr/shell/shell.h>
+#include <zephyr/sys/iterable_sections.h>
+#include <zephyr/sys/util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(sensor_shell);
 
@@ -154,6 +162,12 @@ enum dynamic_command_context {
 
 static enum dynamic_command_context current_cmd_ctx = NONE;
 
+<<<<<<< HEAD
+=======
+/* Mutex for accessing shared RTIO/IODEV data structures */
+K_MUTEX_DEFINE(cmd_get_mutex);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Crate a single common config for one-shot reading */
 static enum sensor_channel iodev_sensor_shell_channels[SENSOR_CHAN_ALL];
 static struct sensor_read_config iodev_sensor_shell_read_config = {
@@ -239,11 +253,15 @@ static void sensor_shell_processing_callback(int result, uint8_t *buf, uint32_t 
 {
 	struct sensor_shell_processing_context *ctx = userdata;
 	const struct sensor_decoder_api *decoder;
+<<<<<<< HEAD
 	sensor_frame_iterator_t fit = {0};
 	sensor_channel_iterator_t cit = {0};
 	uint64_t timestamp;
 	enum sensor_channel channel;
 	q31_t q;
+=======
+	uint8_t decoded_buffer[128];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int rc;
 
 	ARG_UNUSED(buf_len);
@@ -259,6 +277,7 @@ static void sensor_shell_processing_callback(int result, uint8_t *buf, uint32_t 
 		return;
 	}
 
+<<<<<<< HEAD
 	rc = decoder->get_timestamp(buf, &timestamp);
 	if (rc != 0) {
 		shell_error(ctx->sh, "Failed to get fetch timestamp for '%s'", ctx->dev->name);
@@ -292,6 +311,87 @@ static void sensor_shell_processing_callback(int result, uint8_t *buf, uint32_t 
 			shell_print(ctx->sh, "channel idx=%d %s value=%s%d.%06d", channel,
 				    sensor_channel_name[channel], is_negative ? "-" : "", numerator,
 				    denominator);
+=======
+	for (int channel = 0; channel < SENSOR_CHAN_ALL; ++channel) {
+		uint32_t fit = 0;
+		size_t base_size;
+		size_t frame_size;
+		size_t channel_idx = 0;
+		uint16_t frame_count;
+
+		if (channel == SENSOR_CHAN_ACCEL_X || channel == SENSOR_CHAN_ACCEL_Y ||
+		    channel == SENSOR_CHAN_ACCEL_Z || channel == SENSOR_CHAN_GYRO_X ||
+		    channel == SENSOR_CHAN_GYRO_Y || channel == SENSOR_CHAN_GYRO_Z ||
+		    channel == SENSOR_CHAN_MAGN_X || channel == SENSOR_CHAN_MAGN_Y ||
+		    channel == SENSOR_CHAN_MAGN_Z || channel == SENSOR_CHAN_POS_DY ||
+		    channel == SENSOR_CHAN_POS_DZ) {
+			continue;
+		}
+
+		rc = decoder->get_size_info(channel, &base_size, &frame_size);
+		if (rc != 0) {
+			/* Channel not supported, skipping */
+			continue;
+		}
+
+		if (base_size > ARRAY_SIZE(decoded_buffer)) {
+			shell_error(ctx->sh,
+				    "Channel (%d) requires %zu bytes to decode, but only %zu are "
+				    "available",
+				    channel, base_size, ARRAY_SIZE(decoded_buffer));
+			continue;
+		}
+
+		while (decoder->get_frame_count(buf, channel, channel_idx, &frame_count) == 0) {
+			fit = 0;
+			while (decoder->decode(buf, channel, channel_idx, &fit, 1, decoded_buffer) >
+			       0) {
+
+				switch (channel) {
+				case SENSOR_CHAN_ACCEL_XYZ:
+				case SENSOR_CHAN_GYRO_XYZ:
+				case SENSOR_CHAN_MAGN_XYZ:
+				case SENSOR_CHAN_POS_DX: {
+					struct sensor_three_axis_data *data =
+						(struct sensor_three_axis_data *)decoded_buffer;
+
+					shell_info(ctx->sh,
+						   "channel idx=%d %s shift=%d "
+						   "value=%" PRIsensor_three_axis_data,
+						   channel, sensor_channel_name[channel],
+						   data->shift,
+						   PRIsensor_three_axis_data_arg(*data, 0));
+					break;
+				}
+				case SENSOR_CHAN_PROX: {
+					struct sensor_byte_data *data =
+						(struct sensor_byte_data *)decoded_buffer;
+
+					shell_info(ctx->sh,
+						   "channel idx=%d %s value=%" PRIsensor_byte_data(
+							   is_near),
+						   channel, sensor_channel_name[channel],
+						   PRIsensor_byte_data_arg(*data, 0, is_near));
+					break;
+				}
+				default: {
+					struct sensor_q31_data *data =
+						(struct sensor_q31_data *)decoded_buffer;
+
+					shell_info(ctx->sh,
+						   "channel idx=%d %s shift=%d "
+						   "value=%" PRIsensor_q31_data,
+						   channel,
+						   (channel >= ARRAY_SIZE(sensor_channel_name))
+							   ? ""
+							   : sensor_channel_name[channel],
+						   data->shift, PRIsensor_q31_data_arg(*data, 0));
+					break;
+				}
+				}
+			}
+			++channel_idx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
@@ -299,28 +399,52 @@ static void sensor_shell_processing_callback(int result, uint8_t *buf, uint32_t 
 static int cmd_get_sensor(const struct shell *sh, size_t argc, char *argv[])
 {
 	const struct device *dev;
+<<<<<<< HEAD
 	int err;
 
 	dev = device_get_binding(argv[1]);
 	if (dev == NULL) {
 		shell_error(sh, "Device unknown (%s)", argv[1]);
+=======
+	int count = 0;
+	int err;
+
+	err = k_mutex_lock(&cmd_get_mutex, K_NO_WAIT);
+	if (err < 0) {
+		shell_error(sh, "Another sensor reading in progress");
+		return err;
+	}
+
+	dev = device_get_binding(argv[1]);
+	if (dev == NULL) {
+		shell_error(sh, "Device unknown (%s)", argv[1]);
+		k_mutex_unlock(&cmd_get_mutex);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -ENODEV;
 	}
 
 	if (argc == 2) {
 		/* read all channels */
+<<<<<<< HEAD
 		int count = 0;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		for (int i = 0; i < ARRAY_SIZE(iodev_sensor_shell_channels); ++i) {
 			if (SENSOR_CHANNEL_3_AXIS(i)) {
 				continue;
 			}
 			iodev_sensor_shell_channels[count++] = i;
 		}
+<<<<<<< HEAD
 		iodev_sensor_shell_read_config.count = count;
 	} else {
 		/* read specific channels */
 		iodev_sensor_shell_read_config.count = 0;
+=======
+	} else {
+		/* read specific channels */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		for (int i = 2; i < argc; ++i) {
 			int chan = parse_named_int(argv[i], sensor_channel_name,
 						   ARRAY_SIZE(sensor_channel_name));
@@ -329,6 +453,7 @@ static int cmd_get_sensor(const struct shell *sh, size_t argc, char *argv[])
 				shell_error(sh, "Failed to read channel (%s)", argv[i]);
 				continue;
 			}
+<<<<<<< HEAD
 			iodev_sensor_shell_channels[iodev_sensor_shell_read_config.count++] =
 				chan;
 		}
@@ -339,6 +464,19 @@ static int cmd_get_sensor(const struct shell *sh, size_t argc, char *argv[])
 		return -EINVAL;
 	}
 	iodev_sensor_shell_read_config.sensor = dev;
+=======
+			iodev_sensor_shell_channels[count++] = chan;
+		}
+	}
+
+	if (count == 0) {
+		shell_error(sh, "No channels to read, bailing");
+		k_mutex_unlock(&cmd_get_mutex);
+		return -EINVAL;
+	}
+	iodev_sensor_shell_read_config.sensor = dev;
+	iodev_sensor_shell_read_config.count = count;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	struct sensor_shell_processing_context ctx = {
 		.dev = dev,
@@ -350,6 +488,11 @@ static int cmd_get_sensor(const struct shell *sh, size_t argc, char *argv[])
 	}
 	sensor_processing_with_callback(&sensor_read_rtio, sensor_shell_processing_callback);
 
+<<<<<<< HEAD
+=======
+	k_mutex_unlock(&cmd_get_mutex);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -603,8 +746,12 @@ static int cmd_get_sensor_info(const struct shell *sh, size_t argc, char **argv)
 #ifdef CONFIG_SENSOR_INFO
 	const char *null_str = "(null)";
 
+<<<<<<< HEAD
 	STRUCT_SECTION_FOREACH(sensor_info, sensor)
 	{
+=======
+	STRUCT_SECTION_FOREACH(sensor_info, sensor) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		shell_print(sh,
 			    "device name: %s, vendor: %s, model: %s, "
 			    "friendly name: %s",

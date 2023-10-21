@@ -98,4 +98,11 @@ void smp_dummy_disable(void);
  */
 bool smp_dummy_get_status(void);
 
+<<<<<<< HEAD
+=======
+#ifdef __cplusplus
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_MGMT_MCUMGR_TRANSPORT_DUMMY_H_ */

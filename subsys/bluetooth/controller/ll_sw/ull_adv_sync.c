@@ -99,8 +99,11 @@ uint8_t ll_adv_sync_param_set(uint8_t handle, uint16_t interval, uint16_t flags)
 	}
 
 	if (IS_ENABLED(CONFIG_BT_CTLR_PARAM_CHECK)) {
+<<<<<<< HEAD
 		uint8_t err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = adv_type_check(adv);
 		if (err) {
 			return err;
@@ -112,7 +115,10 @@ uint8_t ll_adv_sync_param_set(uint8_t handle, uint16_t interval, uint16_t flags)
 		struct pdu_adv *ter_pdu;
 		struct lll_adv *lll;
 		uint8_t chm_last;
+<<<<<<< HEAD
 		int err;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		sync = sync_acquire();
 		if (!sync) {
@@ -225,7 +231,11 @@ uint8_t ll_adv_sync_param_set(uint8_t handle, uint16_t interval, uint16_t flags)
 }
 
 #if defined(CONFIG_BT_CTLR_ADV_ISO) && defined(CONFIG_BT_TICKER_EXT_EXPIRE_INFO)
+<<<<<<< HEAD
 void ull_adv_iso_created(struct ll_adv_sync_set *sync)
+=======
+void ull_adv_sync_iso_created(struct ll_adv_sync_set *sync)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	if (sync->lll.iso && sync->is_started) {
 		uint8_t iso_handle = sync->lll.iso->handle;
@@ -268,8 +278,11 @@ uint8_t ll_adv_sync_ad_data_set(uint8_t handle, uint8_t op, uint8_t len,
 
 	/* Check for advertising set type */
 	if (IS_ENABLED(CONFIG_BT_CTLR_PARAM_CHECK)) {
+<<<<<<< HEAD
 		uint8_t err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = adv_type_check(adv);
 		if (err) {
 			return err;
@@ -757,8 +770,11 @@ uint8_t ll_adv_sync_enable(uint8_t handle, uint8_t enable)
 
 	/* Check for advertising set type */
 	if (IS_ENABLED(CONFIG_BT_CTLR_PARAM_CHECK)) {
+<<<<<<< HEAD
 		uint8_t err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = adv_type_check(adv);
 		if (err) {
 			return BT_HCI_ERR_CMD_DISALLOWED;
@@ -1143,7 +1159,11 @@ uint32_t ull_adv_sync_evt_init(struct ll_adv_set *adv,
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_XTAL_US);
 	sync->ull.ticks_preempt_to_start =
 		HAL_TICKER_US_TO_TICKS(EVENT_OVERHEAD_PREEMPT_MIN_US);
+<<<<<<< HEAD
 	sync->ull.ticks_slot = HAL_TICKER_US_TO_TICKS(time_us);
+=======
+	sync->ull.ticks_slot = HAL_TICKER_US_TO_TICKS_CEIL(time_us);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ticks_slot_offset = MAX(sync->ull.ticks_active_to_start,
 				sync->ull.ticks_prepare_to_start);
@@ -1210,6 +1230,7 @@ uint32_t ull_adv_sync_start(struct ll_adv_set *adv,
 uint8_t ull_adv_sync_time_update(struct ll_adv_sync_set *sync,
 				 struct pdu_adv *pdu)
 {
+<<<<<<< HEAD
 	uint32_t volatile ret_cb;
 	uint32_t ticks_minus;
 	uint32_t ticks_plus;
@@ -1219,6 +1240,20 @@ uint8_t ull_adv_sync_time_update(struct ll_adv_sync_set *sync,
 
 	time_us = sync_time_get(sync, pdu);
 	time_ticks = HAL_TICKER_US_TO_TICKS(time_us);
+=======
+	uint32_t time_ticks;
+	uint32_t time_us;
+
+	time_us = sync_time_get(sync, pdu);
+	time_ticks = HAL_TICKER_US_TO_TICKS(time_us);
+
+#if !defined(CONFIG_BT_CTLR_JIT_SCHEDULING)
+	uint32_t volatile ret_cb;
+	uint32_t ticks_minus;
+	uint32_t ticks_plus;
+	uint32_t ret;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (sync->ull.ticks_slot > time_ticks) {
 		ticks_minus = sync->ull.ticks_slot - time_ticks;
 		ticks_plus = 0U;
@@ -1239,6 +1274,10 @@ uint8_t ull_adv_sync_time_update(struct ll_adv_sync_set *sync,
 	if (ret != TICKER_STATUS_SUCCESS) {
 		return BT_HCI_ERR_CMD_DISALLOWED;
 	}
+<<<<<<< HEAD
+=======
+#endif /* !CONFIG_BT_CTLR_JIT_SCHEDULING */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	sync->ull.ticks_slot = time_ticks;
 

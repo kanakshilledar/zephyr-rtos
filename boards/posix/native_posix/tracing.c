@@ -16,14 +16,38 @@
 #include "posix_board_if.h"
 #include "cmdline.h"
 
+<<<<<<< HEAD
+=======
+void posix_vprint_error_and_exit(const char *format, va_list vargs)
+{
+	vfprintf(stderr, format, vargs);
+	posix_exit(1);
+}
+
+void posix_vprint_warning(const char *format, va_list vargs)
+{
+	vfprintf(stderr, format, vargs);
+}
+
+void posix_vprint_trace(const char *format, va_list vargs)
+{
+	vfprintf(stdout, format, vargs);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void posix_print_error_and_exit(const char *format, ...)
 {
 	va_list variable_args;
 
 	va_start(variable_args, format);
+<<<<<<< HEAD
 	vfprintf(stderr, format, variable_args);
 	va_end(variable_args);
 	posix_exit(1);
+=======
+	posix_vprint_error_and_exit(format, variable_args);
+	va_end(variable_args);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void posix_print_warning(const char *format, ...)

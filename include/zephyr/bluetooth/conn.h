@@ -98,9 +98,15 @@ enum {
 
 /** Preferred PHY parameters for LE connections */
 struct bt_conn_le_phy_param {
+<<<<<<< HEAD
 	uint16_t options;     /** Connection PHY options. */
 	uint8_t  pref_tx_phy; /** Bitmask of preferred transmit PHYs */
 	uint8_t  pref_rx_phy; /** Bitmask of preferred receive PHYs */
+=======
+	uint16_t options; /**< Connection PHY options. */
+	uint8_t  pref_tx_phy; /**< Bitmask of preferred transmit PHYs */
+	uint8_t  pref_rx_phy; /**< Bitmask of preferred receive PHYs */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /** Initialize PHY parameters
@@ -196,6 +202,24 @@ struct bt_conn_le_data_len_param {
 	BT_CONN_LE_DATA_LEN_PARAM(BT_GAP_DATA_LEN_MAX, \
 				  BT_GAP_DATA_TIME_MAX)
 
+<<<<<<< HEAD
+=======
+/** Connection Type */
+enum __packed bt_conn_type {
+	/** LE Connection Type */
+	BT_CONN_TYPE_LE = BIT(0),
+	/** BR/EDR Connection Type */
+	BT_CONN_TYPE_BR = BIT(1),
+	/** SCO Connection Type */
+	BT_CONN_TYPE_SCO = BIT(2),
+	/** ISO Connection Type */
+	BT_CONN_TYPE_ISO = BIT(3),
+	/** All Connection Type */
+	BT_CONN_TYPE_ALL = BT_CONN_TYPE_LE | BT_CONN_TYPE_BR |
+			   BT_CONN_TYPE_SCO | BT_CONN_TYPE_ISO,
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Increment a connection's reference count.
  *
  *  Increment the reference count of a connection object.
@@ -233,7 +257,12 @@ void bt_conn_unref(struct bt_conn *conn);
  * @param func  Function to call for each connection.
  * @param data  Data to pass to the callback function.
  */
+<<<<<<< HEAD
 void bt_conn_foreach(int type, void (*func)(struct bt_conn *conn, void *data),
+=======
+void bt_conn_foreach(enum bt_conn_type type,
+		     void (*func)(struct bt_conn *conn, void *data),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		     void *data);
 
 /** @brief Look up an existing connection by address.
@@ -270,6 +299,7 @@ const bt_addr_le_t *bt_conn_get_dst(const struct bt_conn *conn);
  */
 uint8_t bt_conn_index(const struct bt_conn *conn);
 
+<<<<<<< HEAD
 /** Connection Type */
 enum {
 	/** LE Connection Type */
@@ -285,6 +315,8 @@ enum {
 			   BT_CONN_TYPE_SCO | BT_CONN_TYPE_ISO,
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** LE Connection Info Structure */
 struct bt_conn_le_info {
 	/** Source (Local) Identity Address */
@@ -297,9 +329,15 @@ struct bt_conn_le_info {
 	const bt_addr_le_t *local;
 	/** Remote device address used during connection setup. */
 	const bt_addr_le_t *remote;
+<<<<<<< HEAD
 	uint16_t interval; /** Connection interval */
 	uint16_t latency; /** Connection peripheral latency */
 	uint16_t timeout; /** Connection supervision timeout */
+=======
+	uint16_t interval; /**< Connection interval */
+	uint16_t latency; /**< Connection peripheral latency */
+	uint16_t timeout; /**< Connection supervision timeout */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_BT_USER_PHY_UPDATE)
 	const struct bt_conn_le_phy_info      *phy;
@@ -328,7 +366,11 @@ struct bt_conn_le_info {
 
 /** BR/EDR Connection Info Structure */
 struct bt_conn_br_info {
+<<<<<<< HEAD
 	const bt_addr_t *dst; /** Destination (Remote) BR/EDR address */
+=======
+	const bt_addr_t *dst; /**< Destination (Remote) BR/EDR address */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 enum {
@@ -390,7 +432,11 @@ struct bt_security_info {
 /** Connection Info Structure */
 struct bt_conn_info {
 	/** Connection Type. */
+<<<<<<< HEAD
 	uint8_t type;
+=======
+	enum bt_conn_type type;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** Connection Role. */
 	uint8_t role;
 	/** Which local identity the connection was created with */
@@ -744,7 +790,11 @@ int bt_conn_le_create_synced(const struct bt_le_ext_adv *adv,
 			     const struct bt_conn_le_create_synced_param *synced_param,
 			     const struct bt_le_conn_param *conn_param, struct bt_conn **conn);
 
+<<<<<<< HEAD
 /** @brief Automatically connect to remote devices in the filter accept list..
+=======
+/** @brief Automatically connect to remote devices in the filter accept list.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  *  This uses the Auto Connection Establishment procedure.
  *  The procedure will continue until a single connection is established or the
@@ -812,6 +862,12 @@ int bt_le_set_auto_conn(const bt_addr_le_t *addr,
  *  @note When @kconfig{CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY} is enabled then the
  *        security level will always be level 3.
  *
+<<<<<<< HEAD
+=======
+ *  @note When @ref BT_SECURITY_FORCE_PAIR within @p sec is enabled then the pairing
+ *        procedure will always be initiated.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  @param conn Connection object.
  *  @param sec Requested security level.
  *
@@ -1081,6 +1137,29 @@ void bt_conn_cb_register(struct bt_conn_cb *cb);
  */
 void bt_set_bondable(bool enable);
 
+<<<<<<< HEAD
+=======
+/** @brief Set/clear the bonding flag for a given connection.
+ *
+ *  Set/clear the Bonding flag in the Authentication Requirements of
+ *  SMP Pairing Request/Response data for a given connection.
+ *
+ *  The bonding flag for a given connection cannot be set/cleared if
+ *  security procedures in the SMP module have already started.
+ *  This function can be called only once per connection.
+ *
+ *  If the bonding flag is not set/cleared for a given connection,
+ *  the value will depend on global configuration which is set using
+ *  bt_set_bondable.
+ *  The default value of the global configuration is defined using
+ *  CONFIG_BT_BONDABLE Kconfig option.
+ *
+ *  @param conn Connection object.
+ *  @param enable Value allowing/disallowing to be bondable.
+ */
+int bt_conn_set_bondable(struct bt_conn *conn, bool enable);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Allow/disallow remote LE SC OOB data to be used for pairing.
  *
  *  Set/clear the OOB data flag for LE SC SMP Pairing Request/Response data.

@@ -283,7 +283,11 @@ int lsm6dso16is_init_interrupt(const struct device *dev)
 	int ret;
 
 	/* setup data ready gpio interrupt (INT1 or INT2) */
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->gpio_drdy.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->gpio_drdy)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Cannot get pointer to drdy_gpio device");
 		return -EINVAL;
 	}

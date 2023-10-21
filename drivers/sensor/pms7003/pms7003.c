@@ -162,7 +162,11 @@ static int pms7003_channel_get(const struct device *dev,
 		val->val1 = drv_data->pm_10;
 		val->val2 = 0;
 	} else {
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	return 0;
 }

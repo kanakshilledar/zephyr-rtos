@@ -15,6 +15,11 @@
  *
  * - Bit 8: Drive strength (0=1mA, 1=6mA)
  * - Bit 9: Debounce (0=OFF, 1=ON)
+<<<<<<< HEAD
+=======
+ * - Bit 10: Watchdog reset (0=OFF, 1=ON)
+ * - Bit 11: Power loss warning (0=OFF, 1=ON)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @ingroup gpio_interface
  * @{
@@ -56,6 +61,45 @@
 
 /** @} */
 
+<<<<<<< HEAD
+=======
+/**
+ * @name nPM1300 GPIO watchdog reset flags
+ * @brief nPM1300 GPIO watchdog reset flags
+ * @{
+ */
+
+/** @cond INTERNAL_HIDDEN */
+/** watchdog reset field mask */
+#define NPM1300_GPIO_WDT_RESET_MSK 0x0400U
+/** @endcond */
+
+/** Off */
+#define NPM1300_GPIO_WDT_RESET_OFF (0U << 10U)
+/** On */
+#define NPM1300_GPIO_WDT_RESET_ON  (1U << 10U)
+
+/** @} */
+
+/**
+ * @name nPM1300 GPIO power loss warning flags
+ * @brief nPM1300 GPIO power loss warning flags
+ * @{
+ */
+
+/** @cond INTERNAL_HIDDEN */
+/** power loss warning field mask */
+#define NPM1300_GPIO_PWRLOSSWARN_MSK 0x0800U
+/** @endcond */
+
+/** Off */
+#define NPM1300_GPIO_PWRLOSSWARN_OFF (0U << 11U)
+/** On */
+#define NPM1300_GPIO_PWRLOSSWARN_ON (1U << 11U)
+
+/** @} */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @} */
 
 #endif /* ZEPHYR_INCLUDE_DT_BINDINGS_GPIO_NORDIC_NPM1300_GPIO_H_ */

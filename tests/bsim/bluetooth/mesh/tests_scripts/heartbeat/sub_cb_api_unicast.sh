@@ -15,3 +15,13 @@ RunTest mesh_heartbeat_sub_cb_api_unicast_1d1 \
 	heartbeat_publish_unicast \
 	heartbeat_publish_unicast \
 	heartbeat_subscribe_unicast
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_heartbeat_sub_cb_api_unicast_psa \
+	heartbeat_publish_unicast \
+	heartbeat_publish_unicast \
+	heartbeat_subscribe_unicast
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

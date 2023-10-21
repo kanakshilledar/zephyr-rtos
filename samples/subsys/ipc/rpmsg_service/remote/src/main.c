@@ -6,6 +6,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/ipm.h>
 #include <zephyr/sys/printk.h>

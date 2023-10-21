@@ -7,6 +7,7 @@
 /dts-v1/;
 #include <silabs/efr32bg22.dtsi>
 #include <silabs/efr32bg2x-pinctrl.dtsi>
+<<<<<<< HEAD
 #include "thunderboard.dtsi"
 
 / {
@@ -58,12 +59,21 @@
 			reg = <0x0007c000 0x00004000>;
 		};
 	};
+=======
+#include "efr32bg22_brd4184.dtsi"
+
+/ {
+	model = "Silicon Labs EFR32BG BRD4184A (aka Thunderboard BG22)";
+	compatible = "silabs,efr32bg22c224f512im40", "silabs,efr32bg_brd4184a",
+		"silabs,efr32bg22";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &sw_sensor_enable {
 	enable-gpios = <&gpioa GECKO_PIN(4) GPIO_ACTIVE_HIGH>;
 };
 
+<<<<<<< HEAD
 
 &sw_mic_enable {
 	enable-gpios = <&gpioa GECKO_PIN(0) GPIO_ACTIVE_HIGH>;
@@ -73,3 +83,8 @@
 &sw_imu_enable {
 	enable-gpios = <&gpiob GECKO_PIN(4) GPIO_ACTIVE_HIGH>;
 };
+=======
+&sw_mic_enable {
+	enable-gpios = <&gpioa GECKO_PIN(0) GPIO_ACTIVE_HIGH>;
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

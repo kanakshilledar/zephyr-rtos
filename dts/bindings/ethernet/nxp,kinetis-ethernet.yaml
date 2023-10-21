@@ -5,7 +5,11 @@ description: NXP Kinetis Ethernet
 
 compatible: "nxp,kinetis-ethernet"
 
+<<<<<<< HEAD
 include: ["ethernet.yaml", "ethernet,fixed-link.yaml", "pinctrl-device.yaml"]
+=======
+include: ["ethernet-controller.yaml", "ethernet,fixed-link.yaml", "pinctrl-device.yaml"]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   reg:

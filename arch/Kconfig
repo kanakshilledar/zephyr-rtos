@@ -22,6 +22,10 @@ config ARC
 	select HAS_DTS
 	imply XIP
 	select ARCH_HAS_THREAD_LOCAL_STORAGE
+<<<<<<< HEAD
+=======
+	select ARCH_SUPPORTS_ROM_START
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  ARC architecture
 
@@ -43,6 +47,10 @@ config ARM64
 	select ARCH_IS_SET
 	select 64BIT
 	select HAS_DTS
+<<<<<<< HEAD
+=======
+	select ARCH_SUPPORTS_COREDUMP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select HAS_ARM_SMCCC
 	select ARCH_HAS_THREAD_LOCAL_STORAGE
 	select USE_SWITCH
@@ -80,6 +88,10 @@ config X86
 	select ATOMIC_OPERATIONS_BUILTIN
 	select HAS_DTS
 	select ARCH_SUPPORTS_COREDUMP
+<<<<<<< HEAD
+=======
+	select ARCH_SUPPORTS_ROM_START if !X86_64
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select CPU_HAS_MMU
 	select ARCH_MEM_DOMAIN_DATA if USERSPACE && !X86_COMMON_PAGE_TABLE
 	select ARCH_MEM_DOMAIN_SYNCHRONOUS_API if USERSPACE
@@ -91,6 +103,10 @@ config X86
 	select NEED_LIBC_MEM_PARTITION if USERSPACE && TIMING_FUNCTIONS \
 					  && !BOARD_HAS_TIMING_FUNCTIONS \
 					  && !SOC_HAS_TIMING_FUNCTIONS
+<<<<<<< HEAD
+=======
+	select ARCH_HAS_STACK_CANARIES_TLS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  x86 architecture
 
@@ -109,6 +125,10 @@ config RISCV
 	select ARCH_IS_SET
 	select HAS_DTS
 	select ARCH_SUPPORTS_COREDUMP
+<<<<<<< HEAD
+=======
+	select ARCH_SUPPORTS_ROM_START if !SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select ARCH_HAS_CODE_DATA_RELOCATION
 	select ARCH_HAS_THREAD_LOCAL_STORAGE
 	select IRQ_OFFLOAD_NESTED if IRQ_OFFLOAD
@@ -141,7 +161,11 @@ config ARCH_POSIX
 	select ARCH_HAS_CUSTOM_SWAP_TO_MAIN
 	select ARCH_HAS_CUSTOM_BUSY_WAIT
 	select ARCH_HAS_THREAD_ABORT
+<<<<<<< HEAD
 	select NATIVE_APPLICATION
+=======
+	select NATIVE_BUILD
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select HAS_COVERAGE_SUPPORT
 	select BARRIER_OPERATIONS_BUILTIN
 	help
@@ -401,6 +425,26 @@ config DYNAMIC_INTERRUPTS
 	  interrupt-related data structures to RAM instead of ROM, and
 	  on some architectures increase code size.
 
+<<<<<<< HEAD
+=======
+config SHARED_INTERRUPTS
+	bool "Set this to enable support for shared interrupts"
+	depends on GEN_SW_ISR_TABLE
+	select EXPERIMENTAL
+	help
+	  Set this to enable support for shared interrupts. Use this with
+	  caution as enabling this will increase the image size by a
+	  non-negligible amount.
+
+config SHARED_IRQ_MAX_NUM_CLIENTS
+	int "Maximum number of clients allowed per shared interrupt"
+	default 2
+	depends on SHARED_INTERRUPTS
+	help
+	  This option controls the maximum number of clients allowed
+	  per shared interrupt. Set this according to your needs.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config GEN_ISR_TABLES
 	bool "Use generated IRQ tables"
 	help
@@ -461,13 +505,21 @@ config GEN_SW_ISR_TABLE
 
 config ARCH_SW_ISR_TABLE_ALIGN
 	int "Alignment size of a software ISR table"
+<<<<<<< HEAD
+=======
+	default 64 if RISCV_HAS_CLIC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 4
 	depends on GEN_SW_ISR_TABLE
 	help
 	  This option controls alignment size of generated
 	  _sw_isr_table.  Some architecture needs a software ISR table
 	  to be aligned to architecture specific size.  The default
+<<<<<<< HEAD
 	  size is 0 for no alignment.
+=======
+	  size is 4.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config GEN_IRQ_START_VECTOR
 	int
@@ -577,6 +629,12 @@ config ARCH_SUPPORTS_COREDUMP
 config ARCH_SUPPORTS_ARCH_HW_INIT
 	bool
 
+<<<<<<< HEAD
+=======
+config ARCH_SUPPORTS_ROM_START
+	bool
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config ARCH_HAS_EXTRA_EXCEPTION_INFO
 	bool
 
@@ -598,6 +656,12 @@ config ARCH_HAS_SUSPEND_TO_RAM
 	help
 	  When selected, the architecture supports suspend-to-RAM (S2RAM).
 
+<<<<<<< HEAD
+=======
+config ARCH_HAS_STACK_CANARIES_TLS
+	bool
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #
 # Other architecture related options
 #

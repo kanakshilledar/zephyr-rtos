@@ -19,8 +19,13 @@ struct btp_ascs_configure_codec_cmd {
 	uint8_t coding_format;
 	uint16_t vid;
 	uint16_t cid;
+<<<<<<< HEAD
 	uint8_t ltvs_len;
 	uint8_t ltvs[0];
+=======
+	uint8_t cc_ltvs_len;
+	uint8_t cc_ltvs[0];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 } __packed;
 
 #define BTP_ASCS_CONFIGURE_QOS	0x03
@@ -73,6 +78,17 @@ struct btp_ascs_update_metadata_cmd {
 	uint8_t ase_id;
 } __packed;
 
+<<<<<<< HEAD
+=======
+#define BTP_ASCS_ADD_ASE_TO_CIS	0x0a
+struct btp_ascs_add_ase_to_cis {
+	bt_addr_le_t address;
+	uint8_t ase_id;
+	uint8_t cig_id;
+	uint8_t cis_id;
+} __packed;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* ASCS events */
 #define BTP_ASCS_EV_OPERATION_COMPLETED	0x80
 struct btp_ascs_operation_completed_ev {
@@ -85,5 +101,17 @@ struct btp_ascs_operation_completed_ev {
 	uint8_t flags;
 } __packed;
 
+<<<<<<< HEAD
+=======
+#define BTP_ASCS_EV_CHARACTERISTIC_SUBSCRIBED 0x81
+
+#define BTP_ASCS_EV_ASE_STATE_CHANGED	0x82
+struct btp_ascs_ase_state_changed_ev {
+	bt_addr_le_t address;
+	uint8_t ase_id;
+	uint8_t state;
+} __packed;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define BTP_ASCS_STATUS_SUCCESS	0x00
 #define BTP_ASCS_STATUS_FAILED	0x01

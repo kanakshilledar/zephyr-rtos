@@ -1225,11 +1225,19 @@ int espi_test(void)
 	k_sleep(K_SECONDS(1));
 
 #if DT_NODE_HAS_STATUS(BRD_PWR_NODE, okay)
+<<<<<<< HEAD
 	if (!device_is_ready(pwrgd_gpio.port)) {
 		LOG_ERR("%s: device not ready.", pwrgd_gpio.port->name);
 		return -ENODEV;
 	}
 	if (!device_is_ready(rsm_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&pwrgd_gpio)) {
+		LOG_ERR("%s: device not ready.", pwrgd_gpio.port->name);
+		return -ENODEV;
+	}
+	if (!gpio_is_ready_dt(&rsm_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: device not ready.", rsm_gpio.port->name);
 		return -ENODEV;
 	}

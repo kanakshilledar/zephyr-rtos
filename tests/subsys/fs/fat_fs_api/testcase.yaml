@@ -1,5 +1,11 @@
 common:
+<<<<<<< HEAD
   tags: filesystem
+=======
+  tags:
+    - filesystem
+    - fatfs
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   modules:
     - fatfs
 tests:
@@ -13,7 +19,13 @@ tests:
     filter: dt_compat_enabled("zephyr,mmc-disk")
   filesystem.fat.ram.api:
     platform_allow: native_posix
+<<<<<<< HEAD
     extra_args: CONF_FILE="prj_native_posix_ram.conf"
+=======
+    extra_args:
+      - CONF_FILE="prj_native_posix_ram.conf"
+      - EXTRA_DTC_OVERLAY_FILE="ramdisk.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   filesystem.fat.api.reentrant:
     platform_allow: native_posix
     extra_configs:

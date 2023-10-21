@@ -21,8 +21,15 @@ int main(void)
 	}
 
 	if (display_set_pixel_format(display, PIXEL_FORMAT_MONO10) != 0) {
+<<<<<<< HEAD
 		printk("Failed to set required pixel format\n");
 		return 0;
+=======
+		if (display_set_pixel_format(display, PIXEL_FORMAT_MONO01) != 0) {
+			printk("Failed to set required pixel format");
+			return 0;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (display_blanking_off(display) != 0) {

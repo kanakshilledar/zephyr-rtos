@@ -55,7 +55,11 @@ LOG_MODULE_REGISTER(display_stm32_ltdc, CONFIG_DISPLAY_LOG_LEVEL);
 #endif
 
 #if defined(CONFIG_HAS_CMSIS_CORE_M)
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if __DCACHE_PRESENT == 1
 #define CACHE_INVALIDATE(addr, size)	SCB_InvalidateDCache_by_Addr((addr), (size))
@@ -336,7 +340,11 @@ static int stm32_ltdc_suspend(const struct device *dev)
 	}
 
 	/* Turn off backlight (if its GPIO is defined in device tree) */
+<<<<<<< HEAD
 	if (config->disp_on_gpio.port) {
+=======
+	if (config->bl_ctrl_gpio.port) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = gpio_pin_set_dt(&config->bl_ctrl_gpio, 0);
 		if (err < 0) {
 			return err;

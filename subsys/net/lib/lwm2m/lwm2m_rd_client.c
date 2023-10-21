@@ -64,6 +64,7 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 #include "lwm2m_util.h"
 
 #define LWM2M_RD_CLIENT_URI "rd"
+<<<<<<< HEAD
 
 #define SECONDS_TO_UPDATE_EARLY	CONFIG_LWM2M_SECONDS_TO_UPDATE_EARLY
 #define STATE_MACHINE_UPDATE_INTERVAL_MS 500
@@ -72,10 +73,26 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 #define CLIENT_BINDING_LEN sizeof("UQ")
 #define CLIENT_QUEUE_LEN sizeof("Q")
+=======
+#define SECONDS_TO_UPDATE_EARLY	CONFIG_LWM2M_SECONDS_TO_UPDATE_EARLY
+#define CLIENT_EP_LEN		CONFIG_LWM2M_RD_CLIENT_ENDPOINT_NAME_MAX_LENGTH
+#define CLIENT_BINDING_LEN sizeof("UQ")
+#define CLIENT_QUEUE_LEN sizeof("Q")
+#define DELAY_BEFORE_CLOSING	(1 * MSEC_PER_SEC)
+#define DELAY_FOR_ACK		100U
+#define EXCHANGE_LIFETIME	247U
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void sm_handle_registration_update_failure(void);
 static int sm_send_registration_msg(void);
 static bool sm_is_suspended(void);
+<<<<<<< HEAD
+=======
+static void lwm2m_rd_client_service(struct k_work *work);
+static int64_t calc_next_event(void);
+static void set_sm_state_delayed(uint8_t sm_state, int64_t delay_ms);
+static void set_sm_state(uint8_t sm_state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* The states for the RD client state machine */
 /*
@@ -86,12 +103,18 @@ static bool sm_is_suspended(void);
 enum sm_engine_state {
 	ENGINE_IDLE,
 	ENGINE_INIT,
+<<<<<<< HEAD
 #if defined(CONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ENGINE_DO_BOOTSTRAP_REG,
 	ENGINE_BOOTSTRAP_REG_SENT,
 	ENGINE_BOOTSTRAP_REG_DONE,
 	ENGINE_BOOTSTRAP_TRANS_DONE,
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ENGINE_DO_REGISTRATION,
 	ENGINE_SEND_REGISTRATION,
 	ENGINE_REGISTRATION_SENT,
@@ -117,6 +140,11 @@ struct lwm2m_rd_client_info {
 
 	int64_t last_update;
 	int64_t last_tx;
+<<<<<<< HEAD
+=======
+	int64_t next_event;
+	int64_t last_state_change;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	char ep_name[CLIENT_EP_LEN];
 	char server_ep[CLIENT_EP_LEN];
@@ -167,7 +195,17 @@ void engine_update_tx_time(void)
 	client.last_tx = k_uptime_get();
 }
 
+<<<<<<< HEAD
 static void set_sm_state(uint8_t sm_state)
+=======
+static void next_event_at(int64_t timestamp)
+{
+	client.next_event = timestamp;
+	(void)lwm2m_engine_call_at(lwm2m_rd_client_service, timestamp);
+}
+
+static void set_sm_state_delayed(uint8_t sm_state, int64_t delay_ms)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	k_mutex_lock(&client.mutex, K_FOREVER);
 	enum lwm2m_rd_client_event event = LWM2M_RD_CLIENT_EVENT_NONE;
@@ -206,6 +244,11 @@ static void set_sm_state(uint8_t sm_state)
 		}
 	} else if (sm_state == ENGINE_UPDATE_REGISTRATION) {
 		event = LWM2M_RD_CLIENT_EVENT_REG_UPDATE;
+<<<<<<< HEAD
+=======
+	} else if (sm_state == ENGINE_DEREGISTER) {
+		event = LWM2M_RD_CLIENT_EVENT_DEREGISTER;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (sm_is_suspended()) {
@@ -228,9 +271,22 @@ static void set_sm_state(uint8_t sm_state)
 			lwm2m_close_socket(client.ctx);
 		}
 	}
+<<<<<<< HEAD
 	k_mutex_unlock(&client.mutex);
 }
 
+=======
+	client.last_state_change = k_uptime_get();
+	next_event_at(k_uptime_get() + delay_ms);
+	k_mutex_unlock(&client.mutex);
+}
+
+static void set_sm_state(uint8_t sm_state)
+{
+	set_sm_state_delayed(sm_state, 0);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static bool sm_is_bootstrap(void)
 {
 #if defined(CONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP)
@@ -337,6 +393,7 @@ static void sm_handle_failure_state(enum sm_engine_state sm_state)
 static void socket_fault_cb(int error)
 {
 	LOG_ERR("RD Client socket error: %d", error);
+<<<<<<< HEAD
 
 	if (sm_is_bootstrap()) {
 		client.ctx->sec_obj_inst = -1;
@@ -345,6 +402,22 @@ static void socket_fault_cb(int error)
 	}
 
 	lwm2m_socket_close(client.ctx);
+=======
+	lwm2m_socket_close(client.ctx);
+
+	if (IS_ENABLED(CONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP) && sm_is_bootstrap()) {
+		client.ctx->sec_obj_inst = -1;
+		/* force full registration */
+		client.last_update = 0;
+
+		if (get_sm_state() == ENGINE_BOOTSTRAP_TRANS_DONE) {
+			/* Ignore the error, some servers close the connection immediately
+			 * after receiving Ack to Bootstrap-Finish command.
+			 */
+			return;
+		}
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Network error state causes engine to re-register,
 	 * so only trigger that state if we are not stopping the
@@ -369,6 +442,11 @@ void engine_trigger_update(bool update_objects)
 	}
 
 	client.trigger_update = true;
+<<<<<<< HEAD
+=======
+	/* short delay for Ack, then trigger an update */
+	next_event_at(k_uptime_get() + DELAY_FOR_ACK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (update_objects) {
 		client.update_objects = true;
@@ -452,7 +530,11 @@ int engine_trigger_bootstrap(void)
 	rd_client_message_free();
 	client.use_bootstrap = true;
 	client.trigger_update = false;
+<<<<<<< HEAD
 	client.engine_state = ENGINE_INIT;
+=======
+	set_sm_state_delayed(ENGINE_INIT, DELAY_BEFORE_CLOSING);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_unlock(&client.mutex);
 	return 0;
 #else
@@ -504,12 +586,15 @@ static int do_registration_reply_cb(const struct coap_packet *response,
 			client.server_ep);
 
 		return 0;
+<<<<<<< HEAD
 	} else if (code == COAP_RESPONSE_CODE_CONTINUE) {
 #if defined(CONFIG_LWM2M_COAP_BLOCK_TRANSFER)
 		return 0;
 #else
 		LOG_ERR("Response code CONTINUE not supported");
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_ERR("Failed with code %u.%u (%s). Not Retrying.",
@@ -832,7 +917,14 @@ static int sm_do_bootstrap_reg(void)
 void engine_bootstrap_finish(void)
 {
 	LOG_INF("Bootstrap data transfer done!");
+<<<<<<< HEAD
 	set_sm_state(ENGINE_BOOTSTRAP_TRANS_DONE);
+=======
+	/* Delay the state transition, so engine have some time to send ACK
+	 * before we close the socket
+	 */
+	set_sm_state_delayed(ENGINE_BOOTSTRAP_TRANS_DONE, DELAY_BEFORE_CLOSING);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int sm_bootstrap_trans_done(void)
@@ -997,8 +1089,13 @@ static void sm_handle_registration_update_failure(void)
 {
 	k_mutex_lock(&client.mutex, K_FOREVER);
 	LOG_WRN("Registration Update fail -> trigger full registration");
+<<<<<<< HEAD
 	client.engine_state = ENGINE_SEND_REGISTRATION;
 	lwm2m_engine_context_close(client.ctx);
+=======
+	lwm2m_engine_context_close(client.ctx);
+	set_sm_state(ENGINE_SEND_REGISTRATION);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_unlock(&client.mutex);
 }
 
@@ -1079,15 +1176,21 @@ static int sm_do_registration(void)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int sm_registration_done(void)
 {
 	k_mutex_lock(&client.mutex, K_FOREVER);
 	int ret = 0;
 
+=======
+static int64_t next_update(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * check for lifetime seconds - SECONDS_TO_UPDATE_EARLY
 	 * so that we can update early and avoid lifetime timeout
 	 */
+<<<<<<< HEAD
 	if (sm_is_registered() &&
 	    (client.trigger_update ||
 	     ((client.lifetime - SECONDS_TO_UPDATE_EARLY) <=
@@ -1101,6 +1204,45 @@ static int sm_registration_done(void)
 	}
 	k_mutex_unlock(&client.mutex);
 	return ret;
+=======
+	return client.last_update + (client.lifetime - SECONDS_TO_UPDATE_EARLY) * MSEC_PER_SEC;
+}
+
+static int64_t next_rx_off(void)
+{
+	if (IS_ENABLED(CONFIG_LWM2M_QUEUE_MODE_ENABLED)) {
+		return client.last_tx + CONFIG_LWM2M_QUEUE_MODE_UPTIME * MSEC_PER_SEC;
+	} else {
+		return next_update();
+	}
+}
+
+/** Return timestamp to next even whether it is RX_OFF or update event */
+static int64_t calc_next_event(void)
+{
+	return Z_MIN(next_update(), next_rx_off());
+}
+
+static void sm_registration_done(void)
+{
+	k_mutex_lock(&client.mutex, K_FOREVER);
+
+	int64_t now = k_uptime_get();
+
+	if (sm_is_registered() &&
+	    (client.trigger_update ||
+	     now >= next_update())) {
+		set_sm_state(ENGINE_UPDATE_REGISTRATION);
+	} else if (IS_ENABLED(CONFIG_LWM2M_QUEUE_MODE_ENABLED) &&
+	    (client.engine_state != ENGINE_REGISTRATION_DONE_RX_OFF) &&
+	    (now >= next_rx_off())) {
+		set_sm_state(ENGINE_REGISTRATION_DONE_RX_OFF);
+		next_event_at(next_update());
+	} else {
+		next_event_at(calc_next_event());
+	}
+	k_mutex_unlock(&client.mutex);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int update_registration(void)
@@ -1214,7 +1356,13 @@ static void sm_do_network_error(void)
 {
 	int err;
 
+<<<<<<< HEAD
 	if (--client.retry_delay > 0) {
+=======
+	if (client.retry_delay) {
+		client.retry_delay = 0;
+		next_event_at(k_uptime_get() + client.retry_delay * MSEC_PER_SEC);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -1226,7 +1374,12 @@ static void sm_do_network_error(void)
 	}
 #endif
 
+<<<<<<< HEAD
 	if (!client.last_update || (k_uptime_get() - client.last_update) / 1000 > client.lifetime) {
+=======
+	if (!client.last_update ||
+	    (k_uptime_get() - client.last_update) / MSEC_PER_SEC > client.lifetime) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* do full registration as there is no active registration or lifetime exceeded */
 		lwm2m_engine_context_close(client.ctx);
 		set_sm_state(ENGINE_DO_REGISTRATION);
@@ -1251,7 +1404,15 @@ static void lwm2m_rd_client_service(struct k_work *work)
 {
 	k_mutex_lock(&client.mutex, K_FOREVER);
 
+<<<<<<< HEAD
 	if (client.ctx) {
+=======
+	int64_t timeout = 0;
+
+	if (client.ctx) {
+		LOG_DBG("State: %d", get_sm_state());
+		client.next_event = INT64_MAX;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		switch (get_sm_state()) {
 		case ENGINE_IDLE:
 			if (client.ctx->sock_fd > -1) {
@@ -1274,10 +1435,18 @@ static void lwm2m_rd_client_service(struct k_work *work)
 
 		case ENGINE_BOOTSTRAP_REG_SENT:
 			/* wait for bootstrap registration done */
+<<<<<<< HEAD
+=======
+			timeout = EXCHANGE_LIFETIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case ENGINE_BOOTSTRAP_REG_DONE:
 			/* wait for transfer done */
+<<<<<<< HEAD
+=======
+			timeout = EXCHANGE_LIFETIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case ENGINE_BOOTSTRAP_TRANS_DONE:
@@ -1295,6 +1464,10 @@ static void lwm2m_rd_client_service(struct k_work *work)
 
 		case ENGINE_REGISTRATION_SENT:
 			/* wait registration to be done or timeout */
+<<<<<<< HEAD
+=======
+			timeout = EXCHANGE_LIFETIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case ENGINE_REGISTRATION_DONE:
@@ -1308,6 +1481,10 @@ static void lwm2m_rd_client_service(struct k_work *work)
 
 		case ENGINE_UPDATE_SENT:
 			/* wait update to be done or abort */
+<<<<<<< HEAD
+=======
+			timeout = EXCHANGE_LIFETIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case ENGINE_DEREGISTER:
@@ -1316,6 +1493,10 @@ static void lwm2m_rd_client_service(struct k_work *work)
 
 		case ENGINE_DEREGISTER_SENT:
 			/* wait for deregister to be done or reset */
+<<<<<<< HEAD
+=======
+			timeout = EXCHANGE_LIFETIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case ENGINE_DEREGISTERED:
@@ -1331,6 +1512,20 @@ static void lwm2m_rd_client_service(struct k_work *work)
 			LOG_ERR("Unhandled state: %d", get_sm_state());
 
 		}
+<<<<<<< HEAD
+=======
+
+		if (timeout) {
+			int64_t end = client.last_state_change + timeout * MSEC_PER_SEC;
+
+			if (end < k_uptime_get()) {
+				LOG_DBG("State machine have timed out");
+				sm_handle_timeout_state(NULL, ENGINE_INIT);
+			} else if (client.next_event > end) {
+				next_event_at(end);
+			}
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_mutex_unlock(&client.mutex);
@@ -1374,7 +1569,14 @@ int lwm2m_rd_client_start(struct lwm2m_ctx *client_ctx, const char *ep_name,
 	client.ep_name[CLIENT_EP_LEN - 1] = '\0';
 	LOG_INF("Start LWM2M Client: %s", client.ep_name);
 
+<<<<<<< HEAD
 	k_mutex_unlock(&client.mutex);
+=======
+	next_event_at(0);
+
+	k_mutex_unlock(&client.mutex);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -1402,12 +1604,20 @@ int lwm2m_rd_client_stop(struct lwm2m_ctx *client_ctx,
 
 	k_mutex_unlock(&client.mutex);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
 int lwm2m_rd_client_pause(void)
 {
 	enum lwm2m_rd_client_event event = LWM2M_RD_CLIENT_EVENT_ENGINE_SUSPENDED;
+<<<<<<< HEAD
+=======
+	LOG_DBG("lwm2m_rd_client_pause()");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_mutex_lock(&client.mutex, K_FOREVER);
 
@@ -1415,19 +1625,39 @@ int lwm2m_rd_client_pause(void)
 		k_mutex_unlock(&client.mutex);
 		LOG_ERR("Cannot pause. No context");
 		return -EPERM;
+<<<<<<< HEAD
 	} else if (client.engine_state == ENGINE_SUSPENDED) {
+=======
+	} else if (sm_is_suspended()) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_mutex_unlock(&client.mutex);
 		LOG_ERR("LwM2M client already suspended");
 		return 0;
 	}
 
 	LOG_INF("Suspend client");
+<<<<<<< HEAD
 	if (!client.ctx->connection_suspended && client.ctx->event_cb) {
 		client.ctx->event_cb(client.ctx, event);
 	}
 
 	suspended_client_state = get_sm_state();
 	client.engine_state = ENGINE_SUSPENDED;
+=======
+	if (client.ctx->event_cb) {
+		client.ctx->event_cb(client.ctx, event);
+	}
+
+	/* Suspend or close the socket */
+	if (IS_ENABLED(CONFIG_LWM2M_RD_CLIENT_CLOSE_SOCKET_AT_IDLE)) {
+		lwm2m_close_socket(client.ctx);
+	} else {
+		lwm2m_socket_suspend(client.ctx);
+	}
+
+	suspended_client_state = get_sm_state();
+	set_sm_state(ENGINE_SUSPENDED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_mutex_unlock(&client.mutex);
 
@@ -1436,6 +1666,7 @@ int lwm2m_rd_client_pause(void)
 
 int lwm2m_rd_client_resume(void)
 {
+<<<<<<< HEAD
 	int ret;
 
 	k_mutex_lock(&client.mutex, K_FOREVER);
@@ -1449,13 +1680,26 @@ int lwm2m_rd_client_resume(void)
 	if (client.engine_state != ENGINE_SUSPENDED) {
 		k_mutex_unlock(&client.mutex);
 		LOG_WRN("Cannot resume state is not Suspended");
+=======
+	k_mutex_lock(&client.mutex, K_FOREVER);
+
+	if (!client.ctx || !lwm2m_rd_client_is_suspended(client.ctx)) {
+		k_mutex_unlock(&client.mutex);
+		LOG_WRN("Cannot resume, state is not suspended");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -EPERM;
 	}
 
 	LOG_INF("Resume Client state");
+<<<<<<< HEAD
 	lwm2m_close_socket(client.ctx);
 	if (suspended_client_state == ENGINE_UPDATE_SENT) {
 		/* Set back to Registration done for enable trigger Update */
+=======
+
+	if (suspended_client_state == ENGINE_UPDATE_SENT) {
+		/* Set back to Registration done and trigger an update */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		suspended_client_state = ENGINE_REGISTRATION_DONE;
 	}
 	/* Clear Possible pending RD Client message */
@@ -1463,6 +1707,7 @@ int lwm2m_rd_client_resume(void)
 
 	client.engine_state = suspended_client_state;
 
+<<<<<<< HEAD
 	if (!client.last_update ||
 	    (client.lifetime <= (k_uptime_get() - client.last_update) / 1000)) {
 		client.engine_state = ENGINE_DO_REGISTRATION;
@@ -1477,6 +1722,29 @@ int lwm2m_rd_client_resume(void)
 		client.engine_state = ENGINE_INIT;
 	}
 
+=======
+	/* Do we need to resume the bootstrap? */
+#if defined(CONFIG_LWM2M_RD_CLIENT_SUPPORT_BOOTSTRAP)
+	if (sm_is_bootstrap()) {
+		client.engine_state = ENGINE_DO_BOOTSTRAP_REG;
+	}
+#endif
+	/* Or do we resume into registration state */
+	if (client.engine_state >= ENGINE_DO_REGISTRATION &&
+		client.engine_state <= ENGINE_SUSPENDED) {
+		if (!client.last_update ||
+			(client.lifetime <= (k_uptime_get() - client.last_update) / MSEC_PER_SEC)) {
+			/* No lifetime left, register again */
+			client.engine_state = ENGINE_DO_REGISTRATION;
+		} else {
+			/* Resume similarly like from QUEUE mode */
+			client.engine_state = ENGINE_REGISTRATION_DONE_RX_OFF;
+			lwm2m_rd_client_connection_resume(client.ctx);
+		}
+	}
+
+	next_event_at(0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_unlock(&client.mutex);
 
 	return 0;
@@ -1499,6 +1767,7 @@ int lwm2m_rd_client_connection_resume(struct lwm2m_ctx *client_ctx)
 	}
 
 	if (client.engine_state == ENGINE_REGISTRATION_DONE_RX_OFF) {
+<<<<<<< HEAD
 #ifdef CONFIG_LWM2M_DTLS_SUPPORT
 		/*
 		 * Switch state for triggering a proper registration message
@@ -1506,15 +1775,31 @@ int lwm2m_rd_client_connection_resume(struct lwm2m_ctx *client_ctx)
 		 * registration after Fully DTLS handshake
 		 */
 		if (IS_ENABLED(CONFIG_LWM2M_TLS_SESSION_CACHING)) {
+=======
+		/*
+		 * Switch state to triggering a proper registration message
+		 * If the socket stays open (Connection ID or no-sec), or we have TLS session cache,
+		 * we can trigger the update, otherwise fall back to full registration.
+		 */
+		if ((IS_ENABLED(CONFIG_LWM2M_RD_CLIENT_SUSPEND_SOCKET_AT_IDLE) &&
+		     IS_ENABLED(CONFIG_LWM2M_TLS_SESSION_CACHING)) ||
+		    (IS_ENABLED(CONFIG_LWM2M_RD_CLIENT_STOP_POLLING_AT_IDLE) ||
+		     IS_ENABLED(CONFIG_LWM2M_RD_CLIENT_LISTEN_AT_IDLE)) ||
+		    !IS_ENABLED(CONFIG_LWM2M_DTLS_SUPPORT)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			client.engine_state = ENGINE_REGISTRATION_DONE;
 			client.trigger_update = true;
 		} else {
 			client.engine_state = ENGINE_DO_REGISTRATION;
 		}
+<<<<<<< HEAD
 #else
 		client.engine_state = ENGINE_REGISTRATION_DONE;
 		client.trigger_update = true;
 #endif
+=======
+		next_event_at(0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -1531,7 +1816,12 @@ int lwm2m_rd_client_timeout(struct lwm2m_ctx *client_ctx)
 	}
 	k_mutex_lock(&client.mutex, K_FOREVER);
 	LOG_WRN("Confirmable Timeout -> Re-connect and register");
+<<<<<<< HEAD
 	client.engine_state = ENGINE_DO_REGISTRATION;
+=======
+	set_sm_state(ENGINE_DO_REGISTRATION);
+	next_event_at(0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_mutex_unlock(&client.mutex);
 	return 0;
 }
@@ -1561,9 +1851,13 @@ int lwm2m_rd_client_init(void)
 	client.engine_state = ENGINE_IDLE;
 	k_mutex_init(&client.mutex);
 
+<<<<<<< HEAD
 	return lwm2m_engine_add_service(lwm2m_rd_client_service,
 					STATE_MACHINE_UPDATE_INTERVAL_MS);
 
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int sys_lwm2m_rd_client_init(void)

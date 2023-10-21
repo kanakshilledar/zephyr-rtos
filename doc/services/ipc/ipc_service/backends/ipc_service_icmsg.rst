@@ -83,4 +83,8 @@ and the backend informs the application by calling
 Samples
 =======
 
+<<<<<<< HEAD
  - :ref:`ipc_icmsg_sample`
+=======
+ - :zephyr:code-sample:`ipc-icmsg`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

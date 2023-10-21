@@ -31,7 +31,11 @@ Building, Flashing and Running
 
 .. zephyr-app-commands::
    :zephyr-app: samples/boards/esp32/light_sleep
+<<<<<<< HEAD
    :board: esp32
+=======
+   :board: esp32_devkitc_wroom
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :goals: build flash
    :compact:
 

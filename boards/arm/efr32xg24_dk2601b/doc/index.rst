@@ -27,6 +27,17 @@ Hardware
 - Transmit power: up to +20 dBm
 - Operation frequency: 2.4 GHz
 - Crystals for LFXO (32.768 kHz) and HFXO (38.4 MHz).
+<<<<<<< HEAD
+=======
+- On board sensors:
+
+  - Silicon Labs Si7021 relative humidity & temperature sensor
+  - Silicon Labs Si7210 hall effect sensor
+  - 2x TDK InvenSense ICS-43434 MEMS microphones with I2S output
+  - TDK InvenSense ICM-20689 6-axis inertial measurement sensor
+  - Vishay VEML6035 ambient light sensor
+  - Bosch BMP384 pressure sensor with internal temperature sensor
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 For more information about the EFR32MG24 SoC and BRD2601B board, refer to these
 documents:

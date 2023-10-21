@@ -35,7 +35,11 @@ For more information about DNS configuration variables, see:
 Sample usage
 ************
 
+<<<<<<< HEAD
 See :ref:`DNS resolve sample application <dns-resolve-sample>` for details.
+=======
+See :zephyr:code-sample:`dns-resolve` sample application for details.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 API Reference
 *************

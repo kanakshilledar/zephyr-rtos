@@ -37,11 +37,19 @@ struct zperf_upload_params {
 	struct {
 		uint8_t tos;
 		int tcp_nodelay;
+<<<<<<< HEAD
+=======
+		int priority;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} options;
 };
 
 struct zperf_download_params {
 	uint16_t port;
+<<<<<<< HEAD
+=======
+	struct sockaddr addr;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct zperf_results {

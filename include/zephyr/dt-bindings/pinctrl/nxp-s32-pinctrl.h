@@ -7,7 +7,11 @@
 #ifndef ZEPHYR_INCLUDE_DT_BINDINGS_PINCTRL_NXP_S32_PINCTRL_H_
 #define ZEPHYR_INCLUDE_DT_BINDINGS_PINCTRL_NXP_S32_PINCTRL_H_
 
+<<<<<<< HEAD
 #include <zephyr/sys/util_macro.h>
+=======
+#include <zephyr/dt-bindings/dt-util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * The NXP S32 pinmux configuration is encoded in a 32-bit field value as follows:

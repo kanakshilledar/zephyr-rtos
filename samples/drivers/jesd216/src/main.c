@@ -20,6 +20,11 @@
 #define FLASH_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(st_stm32_qspi_nor)
 #elif DT_HAS_COMPAT_STATUS_OKAY(st_stm32_ospi_nor)
 #define FLASH_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(st_stm32_ospi_nor)
+<<<<<<< HEAD
+=======
+#elif DT_HAS_COMPAT_STATUS_OKAY(nxp_s32_qspi_nor)
+#define FLASH_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(nxp_s32_qspi_nor)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #error Unsupported flash driver
 #define FLASH_NODE DT_INVALID_NODE

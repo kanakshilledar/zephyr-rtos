@@ -20,3 +20,7 @@ DECLARE_FAKE_VALUE_FUNC(int, k_work_schedule, struct k_work_delayable *, k_timeo
 DECLARE_FAKE_VALUE_FUNC(bool, k_work_cancel_delayable_sync, struct k_work_delayable *,
 			struct k_work_sync *);
 DECLARE_FAKE_VOID_FUNC(k_work_init_delayable, struct k_work_delayable *, k_work_handler_t);
+<<<<<<< HEAD
+=======
+DECLARE_FAKE_VALUE_FUNC(int, k_work_submit, struct k_work *);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

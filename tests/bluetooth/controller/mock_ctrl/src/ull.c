@@ -263,6 +263,14 @@ int ull_disable(void *lll)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+void *ull_pdu_rx_alloc(void)
+{
+	return NULL;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void ull_rx_put(memq_link_t *link, void *rx)
 {
 }

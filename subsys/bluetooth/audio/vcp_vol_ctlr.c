@@ -28,6 +28,7 @@ LOG_MODULE_REGISTER(bt_vcp_vol_ctlr, CONFIG_BT_VCP_VOL_CTLR_LOG_LEVEL);
 
 #include "common/bt_str.h"
 
+<<<<<<< HEAD
 struct bt_vcp_vol_ctlr {
 	struct vcs_state state;
 	uint8_t flags;
@@ -57,6 +58,8 @@ struct bt_vcp_vol_ctlr {
 	struct bt_aics *aics[CONFIG_BT_VCP_VOL_CTLR_MAX_AICS_INST];
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Callback functions */
 static struct bt_vcp_vol_ctlr_cb *vcp_vol_ctlr_cb;
 
@@ -467,8 +470,11 @@ static uint8_t vcs_discover_func(struct bt_conn *conn,
 		}
 
 		if (sub_params != NULL) {
+<<<<<<< HEAD
 			int err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sub_params->value = BT_GATT_CCC_NOTIFY;
 			sub_params->value_handle = chrc->value_handle;
 			sub_params->ccc_handle = 0;

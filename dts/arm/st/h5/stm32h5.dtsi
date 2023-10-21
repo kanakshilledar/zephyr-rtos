@@ -263,14 +263,21 @@
 			status = "disabled";
 			vref-mv = <3300>;
 			#io-channel-cells = <1>;
+<<<<<<< HEAD
 			vbat-channel = <2>;
 			temp-channel = <16>;
 			vref-channel = <17>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			resolutions = <STM32_ADC_RES(12, 0x00)
 				       STM32_ADC_RES(10, 0x01)
 				       STM32_ADC_RES(8, 0x02)
 				       STM32_ADC_RES(6, 0x03)>;
 			sampling-times = <3 7 13 25 48 93 248 641>;
+<<<<<<< HEAD
+=======
+			st,adc-sequencer = <FULLY_CONFIGURABLE>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		rtc: rtc@44007800 {
@@ -436,7 +443,11 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		can1: can@4000a400 {
+=======
+		fdcan1: can@4000a400 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			compatible = "st,stm32-fdcan";
 			reg = <0x4000a400 0x400>, <0x4000ac00 0x350>;
 			reg-names = "m_can", "message_ram";
@@ -444,9 +455,13 @@
 			interrupt-names = "LINE_0", "LINE_1";
 			clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000200>;
 			bosch,mram-cfg = <0x0 28 8 3 3 0 3 3>;
+<<<<<<< HEAD
 			sjw = <1>;
 			sample-point = <875>;
 			sjw-data = <1>;
+=======
+			sample-point = <875>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point-data = <875>;
 			status = "disabled";
 		};
@@ -461,6 +476,20 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		mac: ethernet@40028000 {
+			compatible = "st,stm32-ethernet";
+			reg = <0x40028000 0x8000>;
+			interrupts = <106 0>;
+			clock-names = "stmmaceth", "mac-clk-tx", "mac-clk-rx";
+			clocks = <&rcc STM32_CLOCK_BUS_AHB1 0x00080000>,
+				 <&rcc STM32_CLOCK_BUS_AHB1 0x00100000>,
+				 <&rcc STM32_CLOCK_BUS_AHB1 0x00200000>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		gpdma1: dma@40020000 {
 			compatible = "st,stm32u5-dma";
 			#dma-cells = <3>;
@@ -484,6 +513,22 @@
 			dma-offset = <8>;
 			status = "disabled";
 		};
+<<<<<<< HEAD
+=======
+
+		usb: usb@40016000 {
+			compatible = "st,stm32-usb";
+			reg = <0x40016000 0x400>;
+			interrupts = <74 0>;
+			interrupt-names = "usb";
+			num-bidir-endpoints = <8>;
+			ram-size = <2048>;
+			phys = <&usb_fs_phy>;
+			clocks = <&rcc STM32_CLOCK_BUS_APB2 0x01000000>,
+				 <&rcc STM32_SRC_HSI48 USB_SEL(3)>;
+			status = "disabled";
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	die_temp: dietemp {
@@ -512,6 +557,14 @@
 		io-channels = <&adc1 2>;
 		status = "disabled";
 	};
+<<<<<<< HEAD
+=======
+
+	usb_fs_phy: usbphy {
+		compatible = "usb-nop-xceiv";
+		#phy-cells = <0>;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &nvic {

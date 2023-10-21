@@ -4,6 +4,10 @@
 
 #include "asm_ldo_management.h"
 #include "asm_memory_management.h"
+<<<<<<< HEAD
+=======
+#include "adsp_memory.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define IPC_HOST_BASE		0x00071E00
 #define IPC_DIPCIDD		0x18
@@ -42,8 +46,11 @@ sram_dis_loop_cnt:
 #define host_base		     a10
 #define pfl_reg                      a15
 
+<<<<<<< HEAD
 #define MAX_MEMORY_SEGMENTS 2
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 power_down_cavs:
 	entry sp, 32
 	/**
@@ -102,8 +109,13 @@ _PD_DISABLE_HPSRAM:
  * where mask is given in pu32_hpsram_mask register
  */
 
+<<<<<<< HEAD
 	.set seg_index, MAX_MEMORY_SEGMENTS - 1
 	.rept MAX_MEMORY_SEGMENTS
+=======
+	.set seg_index, HPSRAM_SEGMENTS - 1
+	.rept HPSRAM_SEGMENTS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	l32i temp_reg0, pu32_hpsram_mask, 4 * seg_index
 	m_cavs_hpsram_power_change\
 	/*segment_index=*/	seg_index,\

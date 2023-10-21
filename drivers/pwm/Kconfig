@@ -35,11 +35,20 @@ config PWM_CAPTURE
 
 source "drivers/pwm/Kconfig.b91"
 
+<<<<<<< HEAD
+=======
+source "drivers/pwm/Kconfig.cc13xx_cc26xx_timer"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/pwm/Kconfig.stm32"
 
 source "drivers/pwm/Kconfig.sifive"
 
+<<<<<<< HEAD
 source "drivers/pwm/Kconfig.nrf5_sw"
+=======
+source "drivers/pwm/Kconfig.nrf_sw"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 source "drivers/pwm/Kconfig.nrfx"
 
@@ -81,8 +90,28 @@ source "drivers/pwm/Kconfig.rcar"
 
 source "drivers/pwm/Kconfig.pca9685"
 
+<<<<<<< HEAD
+=======
+source "drivers/pwm/Kconfig.max31790"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/pwm/Kconfig.test"
 
 source "drivers/pwm/Kconfig.rpi_pico"
 
+<<<<<<< HEAD
+=======
+source "drivers/pwm/Kconfig.intel_blinky"
+
+source "drivers/pwm/Kconfig.xmc4xxx_ccu4"
+
+source "drivers/pwm/Kconfig.xmc4xxx_ccu8"
+
+source "drivers/pwm/Kconfig.mcux_ctimer"
+
+source "drivers/pwm/Kconfig.numaker"
+
+source "drivers/pwm/Kconfig.nxp_s32_emios"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # PWM

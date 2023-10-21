@@ -21,13 +21,20 @@ NET_BUF_POOL_VAR_DEFINE(uhc_ep_pool,
 
 int uhc_submit_event(const struct device *dev,
 		     const enum uhc_event_type type,
+<<<<<<< HEAD
 		     const int status,
 		     struct uhc_transfer *const xfer)
+=======
+		     const int status)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct uhc_data *data = dev->data;
 	struct uhc_event drv_evt = {
 		.type = type,
+<<<<<<< HEAD
 		.xfer = xfer,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.status = status,
 		.dev = dev,
 	};
@@ -43,10 +50,25 @@ void uhc_xfer_return(const struct device *dev,
 		     struct uhc_transfer *const xfer,
 		     const int err)
 {
+<<<<<<< HEAD
 	sys_dlist_remove(&xfer->node);
 	xfer->queued = 0;
 	xfer->claimed = 0;
 	uhc_submit_event(dev, UHC_EVT_EP_REQUEST, err, xfer);
+=======
+	struct uhc_data *data = dev->data;
+	struct uhc_event drv_evt = {
+		.type = UHC_EVT_EP_REQUEST,
+		.xfer = xfer,
+		.dev = dev,
+	};
+
+	sys_dlist_remove(&xfer->node);
+	xfer->queued = 0;
+	xfer->err = err;
+
+	data->event_cb(dev, &drv_evt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 struct uhc_transfer *uhc_xfer_get_next(const struct device *dev)
@@ -74,13 +96,32 @@ int uhc_xfer_append(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+struct net_buf *uhc_xfer_buf_alloc(const struct device *dev,
+				   const size_t size)
+{
+	return net_buf_alloc_len(&uhc_ep_pool, size, K_NO_WAIT);
+}
+
+void uhc_xfer_buf_free(const struct device *dev, struct net_buf *const buf)
+{
+	net_buf_unref(buf);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct uhc_transfer *uhc_xfer_alloc(const struct device *dev,
 				    const uint8_t addr,
 				    const uint8_t ep,
 				    const uint8_t attrib,
 				    const uint16_t mps,
 				    const uint16_t timeout,
+<<<<<<< HEAD
 				    void *const owner)
+=======
+				    void *const udev,
+				    void *const cb)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct uhc_api *api = dev->api;
 	struct uhc_transfer *xfer = NULL;
@@ -91,8 +132,13 @@ struct uhc_transfer *uhc_xfer_alloc(const struct device *dev,
 		goto xfer_alloc_error;
 	}
 
+<<<<<<< HEAD
 	LOG_DBG("Allocate xfer, ep 0x%02x attrib 0x%02x owner %p",
 		ep, attrib, owner);
+=======
+	LOG_DBG("Allocate xfer, ep 0x%02x attrib 0x%02x cb %p",
+		ep, attrib, cb);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (k_mem_slab_alloc(&uhc_xfer_pool, (void **)&xfer, K_NO_WAIT)) {
 		LOG_ERR("Failed to allocate transfer");
@@ -100,14 +146,22 @@ struct uhc_transfer *uhc_xfer_alloc(const struct device *dev,
 	}
 
 	memset(xfer, 0, sizeof(struct uhc_transfer));
+<<<<<<< HEAD
 	k_fifo_init(&xfer->queue);
 	k_fifo_init(&xfer->done);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	xfer->addr = addr;
 	xfer->ep = ep;
 	xfer->attrib = attrib;
 	xfer->mps = mps;
 	xfer->timeout = timeout;
+<<<<<<< HEAD
 	xfer->owner = owner;
+=======
+	xfer->udev = udev;
+	xfer->cb = cb;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 xfer_alloc_error:
 	api->unlock(dev);
@@ -115,14 +169,50 @@ xfer_alloc_error:
 	return xfer;
 }
 
+<<<<<<< HEAD
 int uhc_xfer_free(const struct device *dev, struct uhc_transfer *const xfer)
 {
 	const struct uhc_api *api = dev->api;
 	struct net_buf *buf;
+=======
+struct uhc_transfer *uhc_xfer_alloc_with_buf(const struct device *dev,
+					     const uint8_t addr,
+					     const uint8_t ep,
+					     const uint8_t attrib,
+					     const uint16_t mps,
+					     const uint16_t timeout,
+					     void *const udev,
+					     void *const cb,
+					     size_t size)
+{
+	struct uhc_transfer *xfer;
+	struct net_buf *buf;
+
+	buf = uhc_xfer_buf_alloc(dev, size);
+	if (buf == NULL) {
+		return NULL;
+	}
+
+	xfer = uhc_xfer_alloc(dev, addr, ep, attrib, mps, timeout, udev, cb);
+	if (xfer == NULL) {
+		net_buf_unref(buf);
+		return NULL;
+	}
+
+	xfer->buf = buf;
+
+	return xfer;
+}
+
+int uhc_xfer_free(const struct device *dev, struct uhc_transfer *const xfer)
+{
+	const struct uhc_api *api = dev->api;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret = 0;
 
 	api->lock(dev);
 
+<<<<<<< HEAD
 	if (xfer->queued || xfer->claimed) {
 		ret = -EBUSY;
 		LOG_ERR("Transfer is still claimed");
@@ -140,6 +230,15 @@ int uhc_xfer_free(const struct device *dev, struct uhc_transfer *const xfer)
 	}
 
 	k_mem_slab_free(&uhc_xfer_pool, (void **)&xfer);
+=======
+	if (xfer->queued) {
+		ret = -EBUSY;
+		LOG_ERR("Transfer is still queued");
+		goto xfer_free_error;
+	}
+
+	k_mem_slab_free(&uhc_xfer_pool, (void *)xfer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 xfer_free_error:
 	api->unlock(dev);
@@ -147,6 +246,7 @@ xfer_free_error:
 	return ret;
 }
 
+<<<<<<< HEAD
 struct net_buf *uhc_xfer_buf_alloc(const struct device *dev,
 				   struct uhc_transfer *const xfer,
 				   const size_t size)
@@ -187,12 +287,26 @@ buf_alloc_error:
 }
 
 int uhc_xfer_buf_free(const struct device *dev, struct net_buf *const buf)
+=======
+int uhc_xfer_buf_add(const struct device *dev,
+		     struct uhc_transfer *const xfer,
+		     struct net_buf *buf)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct uhc_api *api = dev->api;
 	int ret = 0;
 
 	api->lock(dev);
+<<<<<<< HEAD
 	net_buf_unref(buf);
+=======
+	if (xfer->queued) {
+		ret = -EBUSY;
+	} else {
+		xfer->buf = buf;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	api->unlock(dev);
 
 	return ret;
@@ -210,12 +324,22 @@ int uhc_ep_enqueue(const struct device *dev, struct uhc_transfer *const xfer)
 		goto ep_enqueue_error;
 	}
 
+<<<<<<< HEAD
 	xfer->claimed = 1;
 	ret = api->ep_enqueue(dev, xfer);
 	if (ret) {
 		xfer->claimed = 0;
 	}
 
+=======
+	xfer->queued = 1;
+	ret = api->ep_enqueue(dev, xfer);
+	if (ret) {
+		xfer->queued = 0;
+	}
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ep_enqueue_error:
 	api->unlock(dev);
 
@@ -235,6 +359,10 @@ int uhc_ep_dequeue(const struct device *dev, struct uhc_transfer *const xfer)
 	}
 
 	ret = api->ep_dequeue(dev, xfer);
+<<<<<<< HEAD
+=======
+	xfer->queued = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ep_dequeue_error:
 	api->unlock(dev);

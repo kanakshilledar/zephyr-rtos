@@ -7,16 +7,23 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_a_r/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/barrier.h>
 
 #include <OsIf.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_INIT_CLOCK_AT_BOOT_TIME
 #include <Clock_Ip.h>
 #include <Clock_Ip_Cfg.h>
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void z_arm_platform_init(void)
 {
 	/* enable peripheral port access at EL1 and EL0 */
@@ -45,6 +52,7 @@ void z_arm_platform_init(void)
 
 static int soc_init(void)
 {
+<<<<<<< HEAD
 
 	/* Install default handler that simply resets the CPU if configured in the
 	 * kernel, NOP otherwise
@@ -58,6 +66,10 @@ static int soc_init(void)
 	Clock_Ip_Init(Clock_Ip_aClockConfig);
 #endif
 
+=======
+	OsIf_Init(NULL);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

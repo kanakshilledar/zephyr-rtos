@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _mbox-sample:
 
 MBOX Interface
 ##############
+=======
+.. zephyr:code-sample:: mbox
+   :name: MBOX
+   :relevant-api: mbox_interface
+
+   Perform inter-processor mailbox communication using the MBOX API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

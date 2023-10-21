@@ -12,7 +12,11 @@
 #include <stddef.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
 #include <zephyr/pm/pm.h>
+=======
+#include <zephyr/sys/poweroff.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/hci.h>
@@ -146,7 +150,13 @@ int main(void)
 		printk("Bluetooth disable failed (err %d)\n", err);
 	}
 
+<<<<<<< HEAD
 	printk("Shutdown\n");
 	pm_state_force(0u, &(struct pm_state_info){PM_STATE_SOFT_OFF, 0, 0});
+=======
+	printk("Powering off\n");
+	sys_poweroff();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

@@ -20,6 +20,7 @@ extern "C" {
 /**
  * Command result codes for shell management group.
  */
+<<<<<<< HEAD
 enum shell_mgmt_ret_code_t {
 	/** No error, this is implied if there is no ret value in the response */
 	SHELL_MGMT_RET_RC_OK = 0,
@@ -45,6 +46,22 @@ enum shell_mgmt_ret_code_t {
 int shell_mgmt_translate_error_code(uint16_t ret);
 #endif
 
+=======
+enum shell_mgmt_err_code_t {
+	/** No error, this is implied if there is no ret value in the response */
+	SHELL_MGMT_ERR_OK = 0,
+
+	/** Unknown error occurred. */
+	SHELL_MGMT_ERR_UNKNOWN,
+
+	/** The provided command to execute is too long. */
+	SHELL_MGMT_ERR_COMMAND_TOO_LONG,
+
+	/** No command to execute was provided. */
+	SHELL_MGMT_ERR_EMPTY_COMMAND,
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

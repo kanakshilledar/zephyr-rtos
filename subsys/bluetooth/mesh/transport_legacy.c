@@ -34,6 +34,10 @@
 #include "settings.h"
 #include "heartbeat.h"
 #include "transport.h"
+<<<<<<< HEAD
+=======
+#include "va.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LOG_LEVEL CONFIG_BT_MESH_TRANS_LOG_LEVEL
 #include <zephyr/logging/log.h>
@@ -78,6 +82,7 @@ LOG_MODULE_REGISTER(bt_mesh_transport);
 /* How long to wait for available buffers before giving up */
 #define BUF_TIMEOUT                 K_NO_WAIT
 
+<<<<<<< HEAD
 struct virtual_addr {
 	uint16_t ref:15,
 		 changed:1;
@@ -92,6 +97,8 @@ struct va_val {
 	uint8_t uuid[16];
 } __packed;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct seg_tx {
 	struct bt_mesh_subnet *sub;
 	void                  *seg[BT_MESH_TX_SEG_MAX];
@@ -138,8 +145,11 @@ static struct seg_rx {
 
 K_MEM_SLAB_DEFINE(segs, BT_MESH_APP_SEG_SDU_MAX, CONFIG_BT_MESH_SEG_BUFS, 4);
 
+<<<<<<< HEAD
 static struct virtual_addr virtual_addrs[CONFIG_BT_MESH_LABEL_COUNT];
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int send_unseg(struct bt_mesh_net_tx *tx, struct net_buf_simple *sdu,
 		      const struct bt_mesh_send_cb *cb, void *cb_data,
 		      const uint8_t *ctl_op)
@@ -219,7 +229,11 @@ bool bt_mesh_tx_in_progress(void)
 
 static void seg_tx_done(struct seg_tx *tx, uint8_t seg_idx)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(&segs, (void **)&tx->seg[seg_idx]);
+=======
+	k_mem_slab_free(&segs, (void *)tx->seg[seg_idx]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	tx->seg[seg_idx] = NULL;
 	tx->nack_count--;
 }
@@ -445,7 +459,11 @@ static void seg_tx_send_unacked(struct seg_tx *tx)
 
 end:
 	if (IS_ENABLED(CONFIG_BT_MESH_LOW_POWER) &&
+<<<<<<< HEAD
 	    bt_mesh_lpn_established()) {
+=======
+	    bt_mesh_lpn_established() && !bt_mesh_has_addr(ctx.addr)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bt_mesh_lpn_poll();
 	}
 
@@ -565,7 +583,11 @@ static int send_seg(struct bt_mesh_net_tx *net_tx, struct net_buf_simple *sdu,
 				/* PDUs for a specific Friend should only go
 				 * out through the Friend Queue.
 				 */
+<<<<<<< HEAD
 				k_mem_slab_free(&segs, &buf);
+=======
+				k_mem_slab_free(&segs, buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				tx->seg[seg_o] = NULL;
 			}
 
@@ -600,7 +622,11 @@ static int send_seg(struct bt_mesh_net_tx *net_tx, struct net_buf_simple *sdu,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int trans_encrypt(const struct bt_mesh_net_tx *tx, const uint8_t *key,
+=======
+static int trans_encrypt(const struct bt_mesh_net_tx *tx, const struct bt_mesh_key *key,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 struct net_buf_simple *msg)
 {
 	struct bt_mesh_app_crypto_ctx crypto = {
@@ -613,7 +639,14 @@ static int trans_encrypt(const struct bt_mesh_net_tx *tx, const uint8_t *key,
 	};
 
 	if (BT_MESH_ADDR_IS_VIRTUAL(tx->ctx->addr)) {
+<<<<<<< HEAD
 		crypto.ad = bt_mesh_va_label_get(tx->ctx->addr);
+=======
+		crypto.ad = tx->ctx->uuid;
+		if (crypto.ad == NULL) {
+			return -ENOENT;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return bt_mesh_app_encrypt(key, &crypto, msg);
@@ -622,7 +655,11 @@ static int trans_encrypt(const struct bt_mesh_net_tx *tx, const uint8_t *key,
 int bt_mesh_trans_send(struct bt_mesh_net_tx *tx, struct net_buf_simple *msg,
 		       const struct bt_mesh_send_cb *cb, void *cb_data)
 {
+<<<<<<< HEAD
 	const uint8_t *key;
+=======
+	const struct bt_mesh_key *key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t aid;
 	int err;
 
@@ -717,6 +754,7 @@ struct decrypt_ctx {
 	struct seg_rx *seg;
 };
 
+<<<<<<< HEAD
 static int sdu_try_decrypt(struct bt_mesh_net_rx *rx, const uint8_t key[16],
 			   void *cb_data)
 {
@@ -729,6 +767,40 @@ static int sdu_try_decrypt(struct bt_mesh_net_rx *rx, const uint8_t key[16],
 	net_buf_simple_reset(ctx->sdu);
 
 	return bt_mesh_app_decrypt(key, &ctx->crypto, ctx->buf, ctx->sdu);
+=======
+static int sdu_try_decrypt(struct bt_mesh_net_rx *rx, const struct bt_mesh_key *key,
+			   void *cb_data)
+{
+	struct decrypt_ctx *ctx = cb_data;
+	int err;
+
+	ctx->crypto.ad = NULL;
+
+	do {
+		if (ctx->seg) {
+			seg_rx_assemble(ctx->seg, ctx->buf, ctx->crypto.aszmic);
+		}
+
+		if (BT_MESH_ADDR_IS_VIRTUAL(rx->ctx.recv_dst)) {
+			ctx->crypto.ad = bt_mesh_va_uuid_get(rx->ctx.recv_dst, ctx->crypto.ad,
+							     NULL);
+
+			if (!ctx->crypto.ad) {
+				return -ENOENT;
+			}
+		}
+
+		net_buf_simple_reset(ctx->sdu);
+
+		err = bt_mesh_app_decrypt(key, &ctx->crypto, ctx->buf, ctx->sdu);
+	} while (err && ctx->crypto.ad != NULL);
+
+	if (!err && BT_MESH_ADDR_IS_VIRTUAL(rx->ctx.recv_dst)) {
+		rx->ctx.uuid = ctx->crypto.ad;
+	}
+
+	return err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int sdu_recv(struct bt_mesh_net_rx *rx, uint8_t hdr, uint8_t aszmic,
@@ -755,10 +827,13 @@ static int sdu_recv(struct bt_mesh_net_rx *rx, uint8_t hdr, uint8_t aszmic,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (BT_MESH_ADDR_IS_VIRTUAL(rx->ctx.recv_dst)) {
 		ctx.crypto.ad = bt_mesh_va_label_get(rx->ctx.recv_dst);
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rx->ctx.app_idx = bt_mesh_app_key_find(ctx.crypto.dev_key, AID(&hdr),
 					       rx, sdu_try_decrypt, &ctx);
 	if (rx->ctx.app_idx == BT_MESH_KEY_UNUSED) {
@@ -1069,7 +1144,11 @@ static int send_ack(struct bt_mesh_subnet *sub, uint16_t src, uint16_t dst,
 
 	LOG_DBG("SeqZero 0x%04x Block 0x%08x OBO %u", seq_zero, block, obo);
 
+<<<<<<< HEAD
 	if (bt_mesh_lpn_established()) {
+=======
+	if (bt_mesh_lpn_established() && !bt_mesh_has_addr(ctx.addr)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_WRN("Not sending ack when LPN is enabled");
 		return 0;
 	}
@@ -1112,7 +1191,11 @@ static void seg_rx_reset(struct seg_rx *rx, bool full_reset)
 			continue;
 		}
 
+<<<<<<< HEAD
 		k_mem_slab_free(&segs, &rx->seg[i]);
+=======
+		k_mem_slab_free(&segs, rx->seg[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rx->seg[i] = NULL;
 	}
 
@@ -1625,11 +1708,14 @@ void bt_mesh_rx_reset(void)
 	}
 }
 
+<<<<<<< HEAD
 static void store_va_label(void)
 {
 	bt_mesh_settings_store_schedule(BT_MESH_SETTINGS_VA_PENDING);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void bt_mesh_trans_reset(void)
 {
 	int i;
@@ -1642,6 +1728,7 @@ void bt_mesh_trans_reset(void)
 		seg_tx_reset(&seg_tx[i]);
 	}
 
+<<<<<<< HEAD
 	for (i = 0; i < ARRAY_SIZE(virtual_addrs); i++) {
 		if (virtual_addrs[i].ref) {
 			virtual_addrs[i].ref = 0U;
@@ -1654,6 +1741,10 @@ void bt_mesh_trans_reset(void)
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		store_va_label();
 	}
+=======
+	bt_mesh_rpl_clear();
+	bt_mesh_va_clear();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void bt_mesh_trans_init(void)
@@ -1668,6 +1759,7 @@ void bt_mesh_trans_init(void)
 		k_work_init_delayable(&seg_rx[i].ack, seg_ack);
 	}
 }
+<<<<<<< HEAD
 
 static inline void va_store(struct virtual_addr *store)
 {
@@ -1864,3 +1956,5 @@ void bt_mesh_va_pending_store(void)
 	/* Do nothing. */
 }
 #endif /* CONFIG_BT_MESH_LABEL_COUNT > 0 */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

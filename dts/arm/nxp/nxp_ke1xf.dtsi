@@ -28,6 +28,7 @@
 			device_type = "cpu";
 			compatible = "arm,cortex-m4f";
 			reg = <0>;
+<<<<<<< HEAD
 		};
 	};
 
@@ -53,6 +54,34 @@
 			compatible = "zephyr,power-state";
 			power-state-name = "suspend-to-idle";
 			substate-id = <2>;
+=======
+			cpu-power-states = <&idle &stop &pstop1 &pstop2>;
+		};
+
+		power-states {
+			idle: idle {
+				compatible = "zephyr,power-state";
+				power-state-name = "runtime-idle";
+			};
+
+			stop: stop {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <0>;
+			};
+
+			pstop1: pstop1 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <1>;
+			};
+
+			pstop2: pstop2 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <2>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -404,7 +433,10 @@
 					  "mb-0-15";
 			clocks = <&scg KINETIS_SCG_BUS_CLK>;
 			clk-source = <1>;
+<<<<<<< HEAD
 			sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 			status = "disabled";
 		};
@@ -417,7 +449,10 @@
 					  "mb-0-15";
 			clocks = <&scg KINETIS_SCG_BUS_CLK>;
 			clk-source = <1>;
+<<<<<<< HEAD
 			sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 			status = "disabled";
 		};

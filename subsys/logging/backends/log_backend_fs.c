@@ -24,7 +24,11 @@ enum backend_fs_state {
 	BACKEND_FS_OK
 };
 
+<<<<<<< HEAD
 static struct fs_file_t file;
+=======
+static struct fs_file_t fs_file;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static enum backend_fs_state backend_state = BACKEND_FS_NOT_INITIALIZED;
 static int file_ctr, newest, oldest;
 
@@ -149,7 +153,11 @@ close_dir:
 int write_log_to_file(uint8_t *data, size_t length, void *ctx)
 {
 	int rc;
+<<<<<<< HEAD
 	struct fs_file_t *f = &file;
+=======
+	struct fs_file_t *f = &fs_file;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (backend_state == BACKEND_FS_NOT_INITIALIZED) {
 		if (check_log_volumen_available()) {
@@ -157,7 +165,11 @@ int write_log_to_file(uint8_t *data, size_t length, void *ctx)
 		}
 		rc = create_log_dir(CONFIG_LOG_BACKEND_FS_DIR);
 		if (!rc) {
+<<<<<<< HEAD
 			rc = allocate_new_file(&file);
+=======
+			rc = allocate_new_file(&fs_file);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 		backend_state = (rc ? BACKEND_FS_CORRUPTED : BACKEND_FS_OK);
 	}

@@ -31,6 +31,31 @@
 			device_type = "cpu";
 			compatible = "arm,cortex-m4f";
 			reg = <0>;
+<<<<<<< HEAD
+=======
+			cpu-power-states = <&stop0 &stop1 &stop2>;
+		};
+
+		power-states {
+			stop0: state0 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <1>;
+				min-residency-us = <100>;
+			};
+			stop1: state1 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <2>;
+				min-residency-us = <500>;
+			};
+			stop2: state2 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				substate-id = <3>;
+				min-residency-us = <900>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -115,6 +140,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	power-states {
 		stop0: state0 {
 			compatible = "zephyr,power-state";
@@ -136,6 +162,8 @@
 		};
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	soc {
 		flash: flash-controller@58004000 {
 			compatible = "st,stm32-flash-controller", "st,stm32wb-flash-controller";
@@ -412,14 +440,21 @@
 			interrupts = <18 0>;
 			status = "disabled";
 			#io-channel-cells = <1>;
+<<<<<<< HEAD
 			temp-channel = <17>;
 			vbat-channel = <18>;
 			vref-channel = <0>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			resolutions = <STM32_ADC_RES(12, 0x00)
 				       STM32_ADC_RES(10, 0x01)
 				       STM32_ADC_RES(8, 0x02)
 				       STM32_ADC_RES(6, 0x03)>;
 			sampling-times = <3 7 13 25 48 93 248 641>;
+<<<<<<< HEAD
+=======
+			st,adc-sequencer = <FULLY_CONFIGURABLE>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		iwdg: watchdog@40003000 {

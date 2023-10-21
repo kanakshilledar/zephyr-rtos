@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _async-sockets-echo-sample:
 
 Asynchronous Socket Echo Server
 ###############################
+=======
+.. zephyr:code-sample:: async-sockets-echo
+   :name: Asynchronous echo server using poll()
+   :relevant-api: bsd_sockets
+
+   Implement an asynchronous IPv4/IPv6 TCP echo server using BSD sockets and poll()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -9,7 +17,11 @@ Overview
 The sockets/echo-async sample application for Zephyr implements an
 asynchronous IPv4/IPv6 TCP echo server using a BSD Sockets compatible API
 with non-blocking sockets and a ``poll()`` call. This is an extension of
+<<<<<<< HEAD
 the :ref:`sockets-echo-sample` sample. It's a more involved application,
+=======
+the :zephyr:code-sample:`sockets-echo` sample. It's a more involved application,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 supporting both IPv4 and IPv6 with concurrent connections, limiting
 maximum number of simultaneous connections, and basic error handling.
 
@@ -42,7 +54,11 @@ After the sample starts, it expects connections at 192.0.2.1 (IPv4), or
     $ telnet 2001:db8::1 4242   # or this for IPv6
 
 After a connection is made, the application will echo back any line sent to
+<<<<<<< HEAD
 it. Unlike the above-mentioned :ref:`sockets-echo-sample`, this application
+=======
+it. Unlike the above-mentioned :zephyr:code-sample:`sockets-echo` sample, this application
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 supports multiple concurrent client connections. You can open
 another terminal window and run the same telnet command as above.
 The sample supports up to three connected clients, but this can be adjusted

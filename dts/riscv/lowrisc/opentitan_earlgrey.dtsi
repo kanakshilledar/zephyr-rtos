@@ -19,7 +19,11 @@
 			reg = <0x00>;
 			status = "okay";
 			compatible = "riscv";
+<<<<<<< HEAD
 			riscv,isa = "rv32imc";
+=======
+			riscv,isa = "rv32imcb_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			hlic: interrupt-controller {
 				#interrupt-cells = <0x01>;
@@ -75,10 +79,14 @@
 			#interrupt-cells = <2>;
 			interrupt-controller;
 			interrupts-extended = <&hlic 11>;
+<<<<<<< HEAD
 			reg = <0x48000000 0x00001000
 			       0x48002000 0x00001000
 			       0x48200000 0x00000008>;
 			reg-names = "prio", "irq_en", "reg";
+=======
+			reg = <0x48000000 0x04000000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			riscv,max-priority = <7>;
 			riscv,ndev = <184>;
 			status = "okay";

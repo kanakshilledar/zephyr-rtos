@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 .. _rgb-led-sample:
 
 PWM: RGB LED
 ############
+=======
+.. zephyr:code-sample:: rgb-led
+   :name: PWM RGB LED
+   :relevant-api: pwm_interface
+
+   Drive an RGB LED using the PWM API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This is a sample app which drives an RGB LED using PWM.
+=======
+This is a sample app which drives an RGB LED using the :ref:`PWM API <pwm_api>`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 There are three single-color component LEDs in an RGB LED. Each component LED
 is driven by a PWM port where the pulse width is changed from zero to the period

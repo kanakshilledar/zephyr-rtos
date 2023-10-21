@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _x-nucleo-iks01a3-shub-sample:
 
 X-NUCLEO-IKS01A3: shield (Mode 2) sample
 ########################################
+=======
+.. zephyr:code-sample:: x-nucleo-iks01a3-shub
+   :name: X-NUCLEO-IKS01A3 shield - SensorHub (Mode 2)
+   :relevant-api: sensor_interface
+
+   Interact with all the sensors of an X-NUCLEO-IKS01A3 shield using Sensor Hub mode.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -45,7 +53,11 @@ as sensors multiple instances are not supported.
 References
 **********
 
+<<<<<<< HEAD
 - X-NUCLEO-IKS01A3: http://www.st.com/en/ecosystems/x-nucleo-iks01a3.html
+=======
+- X-NUCLEO-IKS01A3: https://www.st.com/en/ecosystems/x-nucleo-iks01a3.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

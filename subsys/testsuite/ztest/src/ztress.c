@@ -6,7 +6,11 @@
 #include <zephyr/ztress.h>
 #include <zephyr/ztest_test.h>
 #include <zephyr/sys/printk.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <string.h>
 
 /* Flag set at startup which determines if stress test can run on this platform.

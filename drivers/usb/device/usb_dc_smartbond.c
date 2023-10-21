@@ -15,6 +15,10 @@
 
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/usb/usb_dc.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/usb/usb_device.h>
 

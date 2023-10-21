@@ -113,11 +113,19 @@ static int bt_mesh_sar_cfg_cli_init(struct bt_mesh_model *model)
 
 static void bt_mesh_sar_cfg_cli_reset(struct bt_mesh_model *model)
 {
+<<<<<<< HEAD
 	struct bt_mesh_sar_cfg_cli *cli;
 
 	cli = model->user_data;
 
 	bt_mesh_msg_ack_ctx_clear(&cli->ack_ctx);
+=======
+	struct bt_mesh_sar_cfg_cli *model_cli;
+
+	model_cli = model->user_data;
+
+	bt_mesh_msg_ack_ctx_clear(&model_cli->ack_ctx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 const struct bt_mesh_model_cb _bt_mesh_sar_cfg_cli_cb = {

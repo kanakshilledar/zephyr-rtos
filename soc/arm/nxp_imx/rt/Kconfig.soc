@@ -352,6 +352,10 @@ config SOC_MIMXRT1176_CM7
 	select HAS_MCUX_ACMP
 	select HAS_MCUX_SRC_V2
 	select HAS_MCUX_IOMUXC
+<<<<<<< HEAD
+=======
+	select HAS_MCUX_XBARA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select HAS_SWO
 
 config SOC_MIMXRT1176_CM4
@@ -703,7 +707,11 @@ config PM_MCUX_PMU
 
 menuconfig NXP_IMX_RT_BOOT_HEADER
 	bool "Boot header"
+<<<<<<< HEAD
 	depends on (!BOOTLOADER_MCUBOOT)
+=======
+	depends on (!BOOTLOADER_MCUBOOT) && CPU_CORTEX_M7
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable data structures required by the boot ROM to boot the
 	  application from an external flash device.
@@ -748,10 +756,18 @@ config IMAGE_VECTOR_TABLE_OFFSET
 
 config DEVICE_CONFIGURATION_DATA
 	bool "Device configuration data"
+<<<<<<< HEAD
 	default y if HAS_MCUX_SEMC
 	help
 	  Device configuration data (DCD) provides a sequence of commands to
 	  the boot ROM to initialize components such as an SDRAM.
+=======
+	help
+	  Device configuration data (DCD) provides a sequence of commands to
+	  the boot ROM to initialize components such as an SDRAM. This is
+	  useful if your application expects components like SDRAM to be
+	  initialized at boot time.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endif # NXP_IMX_RT_BOOT_HEADER
 
@@ -785,6 +801,7 @@ config CODE_OCRAM
 
 endchoice
 
+<<<<<<< HEAD
 config OCRAM_NOCACHE
 	bool "Create noncacheable OCRAM region"
 	select CPU_HAS_CUSTOM_FIXED_SOC_MPU_REGIONS
@@ -792,6 +809,32 @@ config OCRAM_NOCACHE
 	help
 	  Creates linker section and MPU region for OCRAM region with
 	  noncacheable attribute. OCRAM memory is useful for fast DMA transfers.
+=======
+config NXP_IMX_EXTERNAL_SDRAM
+	bool "Allow access to external SDRAM region"
+	help
+	  Enable access to external SDRAM region managed by the SEMC. This
+	  setting should be enabled when the application uses SDRAM, or
+	  an MPU region will be defined to disable cached access to the
+	  SDRAM memory space.
+
+config NXP_IMX_RT_ROM_RAMLOADER
+	depends on !FLASH_MCUX_FLEXSPI_XIP && NXP_IMX_RT_BOOT_HEADER
+	# Required so that debugger will load image to correct offset
+	select BUILD_OUTPUT_HEX
+	bool "Create output image that IMX RT ROM can load from FlexSPI to ram"
+	help
+	  Builds an output image that the IMX RT BootROM can load from the
+	  FlexSPI boot device into RAM region. The image will be loaded
+	  from FLEXSPI into the region specified by `zephyr,flash` node.
+
+# Setup LMA adjustment if using the RAMLOADER feature of ROM
+FLASH_CHOSEN := zephyr,flash
+FLASH_BASE := $(dt_chosen_reg_addr_hex,$(FLASH_CHOSEN))
+FLEXSPI_BASE := $(dt_node_reg_addr_hex,/soc/spi@402a8000,1)
+config BUILD_OUTPUT_ADJUST_LMA
+	default "$(FLEXSPI_BASE) - $(FLASH_BASE)" if NXP_IMX_RT_ROM_RAMLOADER
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config SECOND_CORE_MCUX
 	bool "Dual core operation on the RT11xx series"

@@ -109,7 +109,11 @@ found in :ref:`nordic_segger_flashing`. Then build and flash
 applications as usual (see :ref:`build_an_application` and
 :ref:`application_run` for more details).
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky

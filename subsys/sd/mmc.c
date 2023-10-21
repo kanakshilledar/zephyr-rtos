@@ -380,10 +380,17 @@ static int mmc_set_bus_width(struct sd_card *card)
 	int ret;
 	struct sdhc_command cmd = {0};
 
+<<<<<<< HEAD
 	if (card->host_props.host_caps.bus_8_bit_support) {
 		cmd.arg = MMC_SWITCH_8_BIT_BUS_ARG;
 		card->bus_io.bus_width = SDHC_BUS_WIDTH8BIT;
 	} else if (card->host_props.host_caps.bus_4_bit_support) {
+=======
+	if (card->host_props.host_caps.bus_8_bit_support && card->bus_width == 8) {
+		cmd.arg = MMC_SWITCH_8_BIT_BUS_ARG;
+		card->bus_io.bus_width = SDHC_BUS_WIDTH8BIT;
+	} else if (card->host_props.host_caps.bus_4_bit_support && card->bus_width >= 4) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		cmd.arg = MMC_SWITCH_4_BIT_BUS_ARG;
 		card->bus_io.bus_width = SDHC_BUS_WIDTH4BIT;
 	} else {

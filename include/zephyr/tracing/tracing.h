@@ -1633,6 +1633,7 @@
  */
 #define sys_port_trace_k_pipe_get_exit(pipe, timeout, ret)
 
+<<<<<<< HEAD
 /**
  * @brief Trace Pipe block put enter
  * @param pipe Pipe object
@@ -1647,6 +1648,8 @@
  */
 #define sys_port_trace_k_pipe_block_put_exit(pipe, sem)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @} */ /* end of subsys_tracing_apis_pipe */
 
 /**

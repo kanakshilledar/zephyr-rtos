@@ -280,7 +280,11 @@ static int bt_esp32_ble_init(void)
 	int ret;
 	esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
 
+<<<<<<< HEAD
 #if defined(CONFIG_BT_BREDR) && defined(CONFIG_SOC_ESP32)
+=======
+#if defined(CONFIG_BT_BREDR) && defined(CONFIG_SOC_SERIES_ESP32)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	esp_bt_mode_t mode = ESP_BT_MODE_BTDM;
 #else
 	esp_bt_mode_t mode = ESP_BT_MODE_BLE;

@@ -749,7 +749,11 @@ struct bt_ots_cb {
 };
 
 /** @brief Descriptor for OTS initialization. */
+<<<<<<< HEAD
 struct bt_ots_init {
+=======
+struct bt_ots_init_param {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* OTS features */
 	struct bt_ots_feat features;
 
@@ -803,7 +807,11 @@ void *bt_ots_svc_decl_get(struct bt_ots *ots);
  *
  *  @return 0 in case of success or negative value in case of error.
  */
+<<<<<<< HEAD
 int bt_ots_init(struct bt_ots *ots, struct bt_ots_init *ots_init);
+=======
+int bt_ots_init(struct bt_ots *ots, struct bt_ots_init_param *ots_init);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Get a free instance of OTS from the pool.
  *
@@ -937,6 +945,20 @@ struct bt_ots_client_cb {
  */
 int bt_ots_client_register(struct bt_ots_client *ots_inst);
 
+<<<<<<< HEAD
+=======
+/** @brief Unregister an Object Transfer Service Instance.
+ *
+ *  Unregister an Object Transfer Service instance when disconnect from the peer.
+ *  Call this function when an ACL using OTS instance is disconnected.
+ *
+ *  @param[in]  index	      Index of OTS instance.
+ *
+ *  @return int               0 if success, ERRNO on failure.
+ */
+int bt_ots_client_unregister(uint8_t index);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief OTS Indicate Handler function.
  *
  *  Set this function as callback for indicate handler when discovering OTS.
@@ -1146,10 +1168,18 @@ void bt_ots_metadata_display(struct bt_ots_obj_metadata *metadata,
  * @return CRC32 value.
  *
  */
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_OTS_OACP_CHECKSUM_SUPPORT)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline uint32_t bt_ots_client_calc_checksum(const uint8_t *data, size_t len)
 {
 	return crc32_ieee(data, len);
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 }

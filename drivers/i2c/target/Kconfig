@@ -19,6 +19,15 @@ config I2C_TARGET_INIT_PRIORITY
 	help
 	  I2C Target device driver initialization priority.
 
+<<<<<<< HEAD
+=======
+config I2C_TARGET_BUFFER_MODE
+	bool "I2C target driver for buffer mode [EXPERIMENTAL]"
+	select EXPERIMENTAL
+	help
+	  This is an option to enable buffer mode.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/i2c/target/Kconfig.eeprom"
 
 endif # I2C_TARGET

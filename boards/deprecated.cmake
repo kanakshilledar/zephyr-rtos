@@ -20,3 +20,7 @@ set(nrf9160_innblue21ns_DEPRECATED nrf9160_innblue21_ns)
 set(nrf9160_innblue22ns_DEPRECATED nrf9160_innblue22_ns)
 set(sparkfun_thing_plus_nrf9160ns_DEPRECATED sparkfun_thing_plus_nrf9160_ns)
 set(thingy53_nrf5340_cpuappns_DEPRECATED thingy53_nrf5340_cpuapp_ns)
+<<<<<<< HEAD
+=======
+set(esp32_DEPRECATED esp32_devkitc_wrover)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -1143,7 +1143,11 @@ Networking
     which allow to disable ND/MLD respectively on an interface.
   * Reworked network interface mutex protection, to use individual mutex for
     each interface, instead of a global one.
+<<<<<<< HEAD
   * Added new :ref:`aws-iot-mqtt-sample`.
+=======
+  * Added new :zephyr:code-sample:`aws-iot-mqtt`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   * Added a few missing NULL pointer checks in network interface functions.
 
 * OpenThread:

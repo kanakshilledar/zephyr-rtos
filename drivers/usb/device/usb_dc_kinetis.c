@@ -14,7 +14,11 @@
 #include <zephyr/kernel.h>
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/usb/usb_device.h>
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LOG_LEVEL CONFIG_USB_DRIVER_LOG_LEVEL
 #include <zephyr/logging/log.h>
@@ -878,7 +882,11 @@ static void usb_kinetis_isr_handler(void)
 		/*
 		 * Device reset is not possible because the stack does not
 		 * configure the endpoints after the USB_DC_RESET event,
+<<<<<<< HEAD
 		 * therefore, we must reenable the default control 0 endpoint
+=======
+		 * therefore, we must re-enable the default control 0 endpoint
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 * after a reset event
 		 */
 		USB0->CTL |= USB_CTL_ODDRST_MASK;

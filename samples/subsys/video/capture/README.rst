@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 .. _video_capture-sample:
 
 Video Capture
 #############
+=======
+.. zephyr:code-sample:: video-capture
+   :name: Video capture
+   :relevant-api: video_interface
+
+   Use the video API to retrieve video frames from a capture device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Description
 ***********
 
+<<<<<<< HEAD
 This sample application uses the Video API to retrieve video frames from the
+=======
+This sample application uses the :ref:`Video API <video_api>` to retrieve video frames from the
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 video capture device, writes a frame count message to the console, and then
 discards the video frame data.
 
@@ -32,7 +44,11 @@ Building and Running
 For :ref:`mimxrt1064_evk`, build this sample application with the following commands:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/video/mt9m114
+=======
+   :zephyr-app: samples/subsys/video/capture
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: mimxrt1064_evk
    :goals: build
    :compact:

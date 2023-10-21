@@ -16,11 +16,22 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(bt_hci_driver_slz);
 
+<<<<<<< HEAD
 #define SL_BT_CONFIG_ACCEPT_LIST_SIZE	1
 #define SL_BT_CONFIG_MAX_CONNECTIONS	1
 #define SL_BT_CONFIG_USER_ADVERTISERS	1
 #define SL_BT_CONTROLLER_BUFFER_MEMORY  CONFIG_BT_SILABS_HCI_BUFFER_MEMORY
 #define SL_BT_SILABS_LL_STACK_SIZE	1024
+=======
+#define SL_BT_CONFIG_ACCEPT_LIST_SIZE				1
+#define SL_BT_CONFIG_MAX_CONNECTIONS				1
+#define SL_BT_CONFIG_USER_ADVERTISERS				1
+#define SL_BT_CONTROLLER_BUFFER_MEMORY				CONFIG_BT_SILABS_HCI_BUFFER_MEMORY
+#define SL_BT_CONTROLLER_LE_BUFFER_SIZE_MAX			CONFIG_BT_BUF_ACL_TX_COUNT
+#define SL_BT_CONTROLLER_COMPLETED_PACKETS_THRESHOLD		1
+#define SL_BT_CONTROLLER_COMPLETED_PACKETS_EVENTS_TIMEOUT	3
+#define SL_BT_SILABS_LL_STACK_SIZE				1024
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static K_KERNEL_STACK_DEFINE(slz_ll_stack, SL_BT_SILABS_LL_STACK_SIZE);
 static struct k_thread slz_ll_thread;
@@ -76,7 +87,12 @@ uint32_t hci_common_transport_transmit(uint8_t *data, int16_t len)
 	}
 
 	net_buf_add_mem(buf, data, len);
+<<<<<<< HEAD
 	if ((packet_type == h4_event) && (flags & BT_HCI_EVT_FLAG_RECV_PRIO)) {
+=======
+	if (IS_ENABLED(CONFIG_BT_RECV_BLOCKING) &&
+	    (packet_type == h4_event) && (flags & BT_HCI_EVT_FLAG_RECV_PRIO)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bt_recv_prio(buf);
 	} else {
 		bt_recv(buf);
@@ -134,6 +150,11 @@ static int slz_bt_open(void)
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
+=======
+	sl_btctrl_configure_le_buffer_size(SL_BT_CONTROLLER_LE_BUFFER_SIZE_MAX);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret = sl_btctrl_init_ll();
 	if (ret) {
 		LOG_ERR("Bluetooth link layer init failed %d", ret);
@@ -154,6 +175,13 @@ static int slz_bt_open(void)
 		goto deinit;
 	}
 
+<<<<<<< HEAD
+=======
+	sl_btctrl_configure_completed_packets_reporting(
+		SL_BT_CONTROLLER_COMPLETED_PACKETS_THRESHOLD,
+		SL_BT_CONTROLLER_COMPLETED_PACKETS_EVENTS_TIMEOUT);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sl_bthci_init_upper();
 	sl_btctrl_hci_parser_init_default();
 	sl_btctrl_hci_parser_init_conn();

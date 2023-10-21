@@ -46,11 +46,22 @@ config XTENSA_TIMER_ID
 	default 0
 
 config SYS_CLOCK_HW_CYCLES_PER_SEC
+<<<<<<< HEAD
 	default 400000000 if XTENSA_TIMER
 	default 19200000 if INTEL_ADSP_TIMER
 
 config SYS_CLOCK_TICKS_PER_SEC
 	default 50000
+=======
+	default 393216000 if XTENSA_TIMER
+	default 38400000 if INTEL_ADSP_TIMER
+
+config SYS_CLOCK_TICKS_PER_SEC
+	default 12000
+
+config XTENSA_CCOUNT_HZ
+	default 393216000
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config DYNAMIC_INTERRUPTS
 	default y

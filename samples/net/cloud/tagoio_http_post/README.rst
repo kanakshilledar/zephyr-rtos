@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _cloud-tagoio-http-post-sample:
 
 TagoIO IoT Cloud HTTP Sample
 ############################
+=======
+.. zephyr:code-sample:: tagoio-http-post
+   :name: TagoIO HTTP Post
+   :relevant-api: bsd_sockets http_client dns_resolve tls_credentials
+
+   Send random temperature values to TagoIO IoT Cloud Platform using HTTP.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

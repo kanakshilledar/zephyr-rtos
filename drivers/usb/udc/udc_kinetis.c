@@ -40,7 +40,11 @@ LOG_MODULE_REGISTER(usbfsotg, CONFIG_UDC_DRIVER_LOG_LEVEL);
 #define USBFSOTG_REV		0x33
 
 /*
+<<<<<<< HEAD
  * There is no real advantage to change control enpoint size
+=======
+ * There is no real advantage to change control endpoint size
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * but we can use it for testing UDC driver API and higher layers.
  */
 #define USBFSOTG_MPS0		UDC_MPS0_64
@@ -498,7 +502,11 @@ static void xfer_work_handler(struct k_work *item)
 			udc_submit_event(ev->dev, UDC_EVT_ERROR, err);
 		}
 
+<<<<<<< HEAD
 		/* Peek next transer */
+=======
+		/* Peek next transfer */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (ev->ep != USB_CONTROL_EP_OUT && !udc_ep_is_busy(ev->dev, ev->ep)) {
 			if (usbfsotg_xfer_next(ev->dev, ep_cfg) == 0) {
 				udc_ep_set_busy(ev->dev, ev->ep, true);
@@ -506,7 +514,11 @@ static void xfer_work_handler(struct k_work *item)
 		}
 
 xfer_work_error:
+<<<<<<< HEAD
 		k_mem_slab_free(&usbfsotg_ee_slab, (void **)&ev);
+=======
+		k_mem_slab_free(&usbfsotg_ee_slab, (void *)ev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

@@ -250,6 +250,18 @@ config MBEDTLS_AES_ROM_TABLES
 	bool "Use precomputed AES tables stored in ROM."
 	default y
 
+<<<<<<< HEAD
+=======
+config MBEDTLS_AES_FEWER_TABLES
+	depends on MBEDTLS_CIPHER_AES_ENABLED
+	bool "Reduce the size of precomputed AES tables by ~6kB"
+	help
+	  Reduce the size of the AES tables at a tradeoff of more
+	  arithmetic operations at runtime. Specifically 4 table
+	  lookups are converted to 1 table lookup, 3 additions
+	  and 6 bit shifts.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config MBEDTLS_CIPHER_CAMELLIA_ENABLED
 	bool "Camellia block cipher"
 
@@ -413,6 +425,10 @@ config MBEDTLS_SERVER_NAME_INDICATION
 
 config MBEDTLS_PK_WRITE_C
 	bool "The generic public (asymmetric) key writer"
+<<<<<<< HEAD
+=======
+	default y if MBEDTLS_PSA_CRYPTO_C
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable generic public key write functions.
 
@@ -463,4 +479,15 @@ config MBEDTLS_LMS
 	depends on MBEDTLS_PSA_CRYPTO_C
 	depends on MBEDTLS_HASH_SHA256_ENABLED
 
+<<<<<<< HEAD
+=======
+config MBEDTLS_SSL_DTLS_CONNECTION_ID
+	bool "DTLS Connection ID extension"
+	depends on MBEDTLS_DTLS
+	help
+	  Enable support for the DTLS Connection ID extension
+	  which allows to identify DTLS connections across changes
+	  in the underlying transport.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endmenu

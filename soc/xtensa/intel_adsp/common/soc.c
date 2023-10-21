@@ -3,7 +3,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+#include <zephyr/linker/section_tags.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 extern void power_init(void);
 extern void adsp_clock_init(void);

@@ -9,9 +9,17 @@ Networking with QEMU
 
 This page describes how to set up a virtual network between a (Linux) host
 and a Zephyr application running in a QEMU virtual machine (built for Zephyr
+<<<<<<< HEAD
 targets such as qemu_x86 and qemu_cortex_m3).
 
 In this example, the :ref:`sockets-echo-server-sample` sample application from
+=======
+targets such as qemu_x86 and qemu_cortex_m3). Some virtual ARM boards (such as
+qemu_cortex_a53) only support a single UART, in this case QEMU Ethernet is
+preferred, see :ref:`networking_with_eth_qemu` for details.
+
+In this example, the :zephyr:code-sample:`sockets-echo-server` sample application from
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 the Zephyr source distribution is run in QEMU. The QEMU instance is
 connected to a Linux host using a serial port, and SLIP is used to
 transfer data between the Zephyr application and Linux (over a chain of

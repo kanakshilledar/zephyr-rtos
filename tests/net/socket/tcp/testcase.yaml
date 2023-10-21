@@ -6,7 +6,11 @@ common:
     - socket
     - userspace
   filter: TOOLCHAIN_HAS_NEWLIB == 1
+<<<<<<< HEAD
   timeout: 120
+=======
+  timeout: 180
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   # FIXME: This test fails very frequently on mps2_an385 due to the system
   #        timer stability issues, so keep it disabled until the root cause
   #        is fixed (GitHub issue zephyrproject-rtos/zephyr#48608).

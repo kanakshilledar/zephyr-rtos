@@ -37,3 +37,7 @@ Bluetooth APIs
    shell/csip.rst
    shell/iso.rst
    shell/mcp.rst
+<<<<<<< HEAD
+=======
+   shell/tmap.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

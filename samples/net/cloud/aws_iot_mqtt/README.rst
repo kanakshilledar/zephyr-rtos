@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _aws-iot-mqtt-sample:
 
 AWS IoT Core MQTT Sample
 ########################
+=======
+.. zephyr:code-sample:: aws-iot-mqtt
+   :name: AWS IoT Core MQTT
+   :relevant-api: bsd_sockets mqtt_socket dns_resolve tls_credentials json sntp random_api
+
+   Connect to AWS IoT Core and publish messages using MQTT.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

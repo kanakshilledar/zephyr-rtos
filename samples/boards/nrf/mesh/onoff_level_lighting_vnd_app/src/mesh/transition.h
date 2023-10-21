@@ -18,7 +18,11 @@ enum transition_types {
 	NON_MOVE
 };
 
+<<<<<<< HEAD
 struct transition {
+=======
+struct transition_data {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bool just_started;
 	uint8_t type;
 	uint8_t tt;
@@ -32,11 +36,19 @@ struct transition {
 	struct k_timer timer;
 };
 
+<<<<<<< HEAD
 extern struct transition transition;
 
 extern struct k_timer dummy_timer;
 
 void calculate_rt(struct transition *transition);
+=======
+extern struct transition_data onoff_transition;
+
+extern struct k_timer dummy_timer;
+
+void calculate_rt(struct transition_data *transition);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void set_transition_values(uint8_t type);
 
 void onoff_handler(void);

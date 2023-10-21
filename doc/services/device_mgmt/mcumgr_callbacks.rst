@@ -123,6 +123,11 @@ Events can be selected by enabling their corresponding Kconfig option:
     :c:enumerator:`MGMT_EVT_OP_IMG_MGMT_DFU_CONFIRMED`)
  - :kconfig:option:`CONFIG_MCUMGR_GRP_OS_RESET_HOOK`
     os_mgmt reset check (:c:enumerator:`MGMT_EVT_OP_OS_MGMT_RESET`)
+<<<<<<< HEAD
+=======
+ - :kconfig:option:`CONFIG_MCUMGR_GRP_SETTINGS_ACCESS_HOOK`
+    settings_mgmt access (:c:enumerator:`MGMT_EVT_OP_SETTINGS_MGMT_ACCESS`)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Actions
 =======
@@ -193,7 +198,11 @@ Two types of errors can be returned, the ``rc`` parameter can be set to an
 :c:enumerator:`mcumgr_err_t` error code and :c:enumerator:`MGMT_CB_ERROR_RC`
 can be returned, or a group error code (introduced with version 2 of the MCUmgr
 protocol) can be set by setting the ``group`` value to the group and ``rc``
+<<<<<<< HEAD
 value to the group error code and returning :c:enumerator:`MGMT_CB_ERROR_RET`.
+=======
+value to the group error code and returning :c:enumerator:`MGMT_CB_ERROR_ERR`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 MCUmgr Command Callback Usage/Adding New Event Types
 ====================================================
@@ -234,8 +243,13 @@ An example MCUmgr command handler:
     static int test_command(struct mgmt_ctxt *ctxt)
     {
         int rc;
+<<<<<<< HEAD
         int ret_rc;
         uint16_t ret_group;
+=======
+        int err_rc;
+        uint16_t err_group;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         zcbor_state_t *zse = ctxt->cnbe->zs;
         bool ok;
         struct test_struct test_data = {
@@ -243,17 +257,29 @@ An example MCUmgr command handler:
         };
 
         rc = mgmt_callback_notify(MGMT_EVT_OP_USER_ONE_FIRST, &test_data,
+<<<<<<< HEAD
                                   sizeof(test_data), &ret_rc, &ret_group);
+=======
+                                  sizeof(test_data), &err_rc, &err_group);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         if (rc != MGMT_CB_OK) {
             /* A handler returned a failure code */
             if (rc == MGMT_CB_ERROR_RC) {
                 /* The failure code is the RC value */
+<<<<<<< HEAD
                 return ret_rc;
             }
 
             /* The failure is a group and ID error value */
             ok = smp_add_cmd_ret(zse, ret_group, (uint16_t)ret_rc);
+=======
+                return err_rc;
+            }
+
+            /* The failure is a group and ID error value */
+            ok = smp_add_cmd_err(zse, err_group, (uint16_t)err_rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             goto end;
         }
 

@@ -35,7 +35,11 @@ static const int adc_channels_count = ARRAY_SIZE(adc_channels);
 
 const struct device *get_adc_device(void)
 {
+<<<<<<< HEAD
 	if (!device_is_ready(adc_channels[0].dev)) {
+=======
+	if (!adc_is_ready_dt(&adc_channels[0])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("ADC device is not ready\n");
 		return NULL;
 	}
@@ -47,9 +51,15 @@ static void init_adc(void)
 {
 	int i, ret;
 
+<<<<<<< HEAD
 	zassert_true(device_is_ready(adc_channels[0].dev), "ADC device is not ready");
 
 	for (int i = 0; i < adc_channels_count; i++) {
+=======
+	zassert_true(adc_is_ready_dt(&adc_channels[0]), "ADC device is not ready");
+
+	for (i = 0; i < adc_channels_count; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = adc_channel_setup_dt(&adc_channels[i]);
 		zassert_equal(ret, 0, "Setting up of channel %d failed with code %d", i, ret);
 	}
@@ -93,7 +103,11 @@ static int test_task_one_channel(void)
 	init_adc();
 	(void)adc_sequence_init_dt(&adc_channels[0], &sequence);
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "adc_read() failed with code %d", ret);
 
 	check_samples(1);
@@ -124,7 +138,14 @@ static int test_task_multiple_channels(void)
 		sequence.channels |= BIT(adc_channels[i].channel_id);
 	}
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+	if (ret == -ENOTSUP) {
+		ztest_test_skip();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "adc_read() failed with code %d", ret);
 
 	check_samples(adc_channels_count);
@@ -227,7 +248,14 @@ static int test_task_with_interval(void)
 
 	(void)adc_sequence_init_dt(&adc_channels[0], &sequence);
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+	if (ret == -ENOTSUP) {
+		ztest_test_skip();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "adc_read() failed with code %d", ret);
 
 	zassert_equal(user_data, sequence.options->user_data,
@@ -255,12 +283,20 @@ static enum adc_action repeated_samplings_callback(const struct device *dev,
 	++m_samplings_done;
 	TC_PRINT("%s: done %d\n", __func__, m_samplings_done);
 	if (m_samplings_done == 1U) {
+<<<<<<< HEAD
 		check_samples(adc_channels_count);
+=======
+		check_samples(MIN(adc_channels_count, 2));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* After first sampling continue normally. */
 		return ADC_ACTION_CONTINUE;
 	} else {
+<<<<<<< HEAD
 		check_samples(2 * adc_channels_count);
+=======
+		check_samples(2 * MIN(adc_channels_count, 2));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/*
 		 * The second sampling is repeated 9 times (the samples are
@@ -304,7 +340,14 @@ static int test_task_repeated_samplings(void)
 		sequence.channels |=  BIT(adc_channels[1].channel_id);
 	}
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+	if (ret == -ENOTSUP) {
+		ztest_test_skip();
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "adc_read() failed with code %d", ret);
 
 	return TC_PASS;
@@ -330,7 +373,11 @@ static int test_task_invalid_request(void)
 
 	init_adc();
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_not_equal(ret, 0, "adc_read() unexpectedly succeeded");
 
 #if defined(CONFIG_ADC_ASYNC)
@@ -343,7 +390,11 @@ static int test_task_invalid_request(void)
 	 */
 	sequence.resolution = adc_channels[0].resolution;
 
+<<<<<<< HEAD
 	ret = adc_read(adc_channels[0].dev, &sequence);
+=======
+	ret = adc_read_dt(&adc_channels[0], &sequence);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0, "adc_read() failed with code %d", ret);
 
 	check_samples(1);

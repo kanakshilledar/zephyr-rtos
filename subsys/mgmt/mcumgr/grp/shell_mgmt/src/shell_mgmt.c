@@ -83,19 +83,29 @@ shell_mgmt_exec(struct smp_streamer *ctxt)
 
 		ok = zcbor_tstr_decode(zsd, &value);
 		if (ok) {
+<<<<<<< HEAD
 			/* TODO: This is original error when failed to collect command line
 			 * to buffer, but should be rather MGMT_ERR_ENOMEM.
 			 */
 			if ((len + value.len) >= (ARRAY_SIZE(line) - 1)) {
 				ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_SHELL,
 						     SHELL_MGMT_RET_RC_COMMAND_TOO_LONG);
+=======
+			if ((len + value.len) >= (ARRAY_SIZE(line) - 1)) {
+				ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_SHELL,
+						     SHELL_MGMT_ERR_COMMAND_TOO_LONG);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				goto end;
 			}
 
 			memcpy(&line[len], value.value, value.len);
 			len += value.len + 1;
 			line[len - 1] = ' ';
+<<<<<<< HEAD
 		} else {
+=======
+		} else if (len > 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			line[len - 1] = 0;
 			/* Implicit break by while condition */
 		}
@@ -107,7 +117,11 @@ shell_mgmt_exec(struct smp_streamer *ctxt)
 	if (len == 0) {
 		/* We do not bother to close decoder */
 		LOG_ERR("Failed to compose command line");
+<<<<<<< HEAD
 		ok = smp_add_cmd_ret(zse, MGMT_GROUP_ID_SHELL, SHELL_MGMT_RET_RC_EMPTY_COMMAND);
+=======
+		ok = smp_add_cmd_err(zse, MGMT_GROUP_ID_SHELL, SHELL_MGMT_ERR_EMPTY_COMMAND);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto end;
 	}
 
@@ -131,7 +145,37 @@ end:
 	return ok ? MGMT_ERR_EOK : MGMT_ERR_EMSGSIZE;
 }
 
+<<<<<<< HEAD
 static struct mgmt_handler shell_mgmt_handlers[] = {
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+/*
+ * @brief	Translate shell mgmt group error code into MCUmgr error code
+ *
+ * @param ret	#shell_mgmt_err_code_t error code
+ *
+ * @return	#mcumgr_err_t error code
+ */
+static int shell_mgmt_translate_error_code(uint16_t err)
+{
+	int rc;
+
+	switch (err) {
+	case SHELL_MGMT_ERR_COMMAND_TOO_LONG:
+	case SHELL_MGMT_ERR_EMPTY_COMMAND:
+		rc = MGMT_ERR_EINVAL;
+		break;
+
+	default:
+		rc = MGMT_ERR_EUNKNOWN;
+	}
+
+	return rc;
+}
+#endif
+
+static const struct mgmt_handler shell_mgmt_handlers[] = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	[SHELL_MGMT_ID_EXEC] = { NULL, shell_mgmt_exec },
 };
 
@@ -141,6 +185,12 @@ static struct mgmt_group shell_mgmt_group = {
 	.mg_handlers = shell_mgmt_handlers,
 	.mg_handlers_count = SHELL_MGMT_HANDLER_CNT,
 	.mg_group_id = MGMT_GROUP_ID_SHELL,
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
+	.mg_translate_error = shell_mgmt_translate_error_code,
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static void shell_mgmt_register_group(void)
@@ -148,6 +198,7 @@ static void shell_mgmt_register_group(void)
 	mgmt_register_group(&shell_mgmt_group);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MCUMGR_SMP_SUPPORT_ORIGINAL_PROTOCOL
 int shell_mgmt_translate_error_code(uint16_t ret)
 {
@@ -167,4 +218,6 @@ int shell_mgmt_translate_error_code(uint16_t ret)
 }
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 MCUMGR_HANDLER_DEFINE(shell_mgmt, shell_mgmt_register_group);

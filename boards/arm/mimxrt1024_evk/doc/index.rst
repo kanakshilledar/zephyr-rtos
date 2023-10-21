@@ -64,6 +64,22 @@ these references:
 - `MIMXRT1024-EVK User Guide`_
 - `MIMXRT1024-EVK Design Files`_
 
+<<<<<<< HEAD
+=======
+External Memory
+===============
+
+This platform has the following external memories:
+
++----------------+------------+-------------------------------------+
+| Device         | Controller | Status                              |
++================+============+=====================================+
+| MT48LC16M16A2P | SEMC       | Enabled via device configuration    |
+|                |            | data block, which sets up SEMC at   |
+|                |            | boot time                           |
++----------------+------------+-------------------------------------+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Supported Features
 ==================
 
@@ -164,6 +180,11 @@ The MIMXRT1024 SoC has five pairs of pinmux/gpio controllers.
 +---------------+-----------------+---------------------------+
 | GPIO_SD_B1_03 | LPI2C4_SDA      | I2C SDA                   |
 +---------------+-----------------+---------------------------+
+<<<<<<< HEAD
+=======
+| GPIO_SD_B1_05 | DQS             | QSPI flash                |
++---------------+-----------------+---------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | GPIO_AD_B1_11 | ADC1            | ADC1 Channel 11           |
 +---------------+-----------------+---------------------------+
 | GPIO_AD_B1_10 | ADC1            | ADC1 Channel 10           |

@@ -17,8 +17,13 @@ extern "C" {
 #endif
 
 /**
+<<<<<<< HEAD
  * @brief Non-volatile Storage
  * @defgroup nvs Non-volatile Storage
+=======
+ * @brief Non-volatile Storage (NVS)
+ * @defgroup nvs Non-volatile Storage (NVS)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @ingroup file_system_storage
  * @{
  * @}
@@ -33,6 +38,7 @@ extern "C" {
 
 /**
  * @brief Non-volatile Storage File system structure
+<<<<<<< HEAD
  *
  * @param offset File system offset in flash
  * @param ate_wra Allocation table entry write address. Addresses are stored as uint32_t:
@@ -54,6 +60,31 @@ struct nvs_fs {
 	bool ready;
 	struct k_mutex nvs_lock;
 	const struct device *flash_device;
+=======
+ */
+struct nvs_fs {
+	 /** File system offset in flash **/
+	off_t offset;
+	/** Allocation table entry write address.
+	 * Addresses are stored as uint32_t:
+	 * - high 2 bytes correspond to the sector
+	 * - low 2 bytes are the offset in the sector
+	 */
+	uint32_t ate_wra;
+	/** Data write address */
+	uint32_t data_wra;
+	/** File system is split into sectors, each sector must be multiple of erase-block-size */
+	uint16_t sector_size;
+	/** Number of sectors in the file system */
+	uint16_t sector_count;
+	/** Flag indicating if the file system is initialized */
+	bool ready;
+	/** Mutex */
+	struct k_mutex nvs_lock;
+	/** Flash device runtime structure */
+	const struct device *flash_device;
+	/** Flash memory parameters structure */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct flash_parameters *flash_parameters;
 #if CONFIG_NVS_LOOKUP_CACHE
 	uint32_t lookup_cache[CONFIG_NVS_LOOKUP_CACHE_SIZE];
@@ -72,9 +103,13 @@ struct nvs_fs {
  */
 
 /**
+<<<<<<< HEAD
  * @brief nvs_mount
  *
  * Mount a NVS file system onto the flash device specified in @p fs.
+=======
+ * @brief Mount an NVS file system onto the flash device specified in @p fs.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  * @retval 0 Success
@@ -83,9 +118,14 @@ struct nvs_fs {
 int nvs_mount(struct nvs_fs *fs);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_clear
  *
  * Clears the NVS file system from flash.
+=======
+ * @brief Clear the NVS file system from flash.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param fs Pointer to file system
  * @retval 0 Success
  * @retval -ERRNO errno code if error
@@ -93,9 +133,18 @@ int nvs_mount(struct nvs_fs *fs);
 int nvs_clear(struct nvs_fs *fs);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_write
  *
  * Write an entry to the file system.
+=======
+ * @brief Write an entry to the file system.
+ *
+ * @note  When @p len parameter is equal to @p 0 then entry is effectively removed (it is
+ * equivalent to calling of nvs_delete). Any calls to nvs_read for entries with data of length
+ * @p 0 will return error.@n It is not possible to distinguish between deleted entry and entry
+ * with data of length 0.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  * @param id Id of the entry to be written
@@ -109,9 +158,13 @@ int nvs_clear(struct nvs_fs *fs);
 ssize_t nvs_write(struct nvs_fs *fs, uint16_t id, const void *data, size_t len);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_delete
  *
  * Delete an entry from the file system
+=======
+ * @brief Delete an entry from the file system
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  * @param id Id of the entry to be deleted
@@ -121,9 +174,13 @@ ssize_t nvs_write(struct nvs_fs *fs, uint16_t id, const void *data, size_t len);
 int nvs_delete(struct nvs_fs *fs, uint16_t id);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_read
  *
  * Read an entry from the file system.
+=======
+ * @brief Read an entry from the file system.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  * @param id Id of the entry to be read
@@ -138,9 +195,13 @@ int nvs_delete(struct nvs_fs *fs, uint16_t id);
 ssize_t nvs_read(struct nvs_fs *fs, uint16_t id, void *data, size_t len);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_read_hist
  *
  * Read a history entry from the file system.
+=======
+ * @brief Read a history entry from the file system.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  * @param id Id of the entry to be read
@@ -156,9 +217,13 @@ ssize_t nvs_read(struct nvs_fs *fs, uint16_t id, void *data, size_t len);
 ssize_t nvs_read_hist(struct nvs_fs *fs, uint16_t id, void *data, size_t len, uint16_t cnt);
 
 /**
+<<<<<<< HEAD
  * @brief nvs_calc_free_space
  *
  * Calculate the available free space in the file system.
+=======
+ * @brief Calculate the available free space in the file system.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param fs Pointer to file system
  *

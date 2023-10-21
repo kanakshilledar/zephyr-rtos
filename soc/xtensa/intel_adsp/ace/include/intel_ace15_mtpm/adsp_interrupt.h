@@ -6,6 +6,11 @@
 #ifndef ZEPHYR_SOC_INTEL_ADSP_INTERRUPT_H_
 #define ZEPHYR_SOC_INTEL_ADSP_INTERRUPT_H_
 
+<<<<<<< HEAD
+=======
+#include <stdint.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Low priority interrupt indices */
 #define ACE_INTL_HIPC	  0
 #define ACE_INTL_SBIPC	  1

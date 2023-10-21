@@ -22,7 +22,11 @@ static bool failed_expectation;
 #include <stdlib.h>
 #include <time.h>
 
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define NUM_ITER_PER_SUITE CONFIG_ZTEST_SHUFFLE_SUITE_REPEAT_COUNT
 #define NUM_ITER_PER_TEST  CONFIG_ZTEST_SHUFFLE_TEST_REPEAT_COUNT
 #else
@@ -33,6 +37,7 @@ static bool failed_expectation;
 /* ZTEST_DMEM and ZTEST_BMEM are used for the application shared memory test  */
 
 /**
+<<<<<<< HEAD
  * @brief Each enum member represents a distinct phase of execution for the
  *        test binary. TEST_PHASE_FRAMEWORK is active when internal ztest code
  *        is executing; the rest refer to corresponding phases of user test
@@ -48,6 +53,8 @@ enum ztest_phase {
 };
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief The current status of the test binary
  */
 enum ztest_status {
@@ -59,7 +66,11 @@ enum ztest_status {
 /**
  * @brief Tracks the current phase that ztest is operating in.
  */
+<<<<<<< HEAD
 ZTEST_DMEM enum ztest_phase phase = TEST_PHASE_FRAMEWORK;
+=======
+ZTEST_DMEM enum ztest_phase cur_phase = TEST_PHASE_FRAMEWORK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static ZTEST_BMEM enum ztest_status test_status = ZTEST_STATUS_OK;
 
@@ -222,6 +233,7 @@ __maybe_unused static void run_test_rules(bool is_before, struct ztest_unit_test
 static void run_test_functions(struct ztest_suite_node *suite, struct ztest_unit_test *test,
 			       void *data)
 {
+<<<<<<< HEAD
 	phase = TEST_PHASE_TEST;
 	test->test(data);
 }
@@ -234,6 +246,12 @@ enum ztest_result {
 	ZTEST_RESULT_SUITE_SKIP,
 	ZTEST_RESULT_SUITE_FAIL,
 };
+=======
+	__ztest_set_test_phase(TEST_PHASE_TEST);
+	test->test(data);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 COND_CODE_1(KERNEL, (ZTEST_BMEM), ()) static enum ztest_result test_result;
 
 static int get_final_test_result(const struct ztest_unit_test *test, int ret)
@@ -326,6 +344,7 @@ static jmp_buf test_suite_fail;
 
 void ztest_test_fail(void)
 {
+<<<<<<< HEAD
 	switch (phase) {
 	case TEST_PHASE_SETUP:
 		PRINT(" at %s function\n", get_friendly_phase_name(phase));
@@ -333,36 +352,65 @@ void ztest_test_fail(void)
 	case TEST_PHASE_BEFORE:
 	case TEST_PHASE_TEST:
 		PRINT(" at %s function\n", get_friendly_phase_name(phase));
+=======
+	switch (cur_phase) {
+	case TEST_PHASE_SETUP:
+		PRINT(" at %s function\n", get_friendly_phase_name(cur_phase));
+		longjmp(test_suite_fail, 1);
+	case TEST_PHASE_BEFORE:
+	case TEST_PHASE_TEST:
+		PRINT(" at %s function\n", get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		longjmp(test_fail, 1);
 	case TEST_PHASE_AFTER:
 	case TEST_PHASE_TEARDOWN:
 	case TEST_PHASE_FRAMEWORK:
 		PRINT(" ERROR: cannot fail in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
+=======
+		      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		longjmp(stack_fail, 1);
 	}
 }
 
 void ztest_test_pass(void)
 {
+<<<<<<< HEAD
 	if (phase == TEST_PHASE_TEST) {
 		longjmp(test_pass, 1);
 	}
 	PRINT(" ERROR: cannot pass in test phase '%s()', bailing\n",
 	      get_friendly_phase_name(phase));
+=======
+	if (cur_phase == TEST_PHASE_TEST) {
+		longjmp(test_pass, 1);
+	}
+	PRINT(" ERROR: cannot pass in test phase '%s()', bailing\n",
+	      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	longjmp(stack_fail, 1);
 }
 
 void ztest_test_skip(void)
 {
+<<<<<<< HEAD
 	switch (phase) {
+=======
+	switch (cur_phase) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case TEST_PHASE_SETUP:
 	case TEST_PHASE_BEFORE:
 	case TEST_PHASE_TEST:
 		longjmp(test_skip, 1);
 	default:
 		PRINT(" ERROR: cannot skip in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
+=======
+		      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		longjmp(stack_fail, 1);
 	}
 }
@@ -371,6 +419,7 @@ void ztest_test_expect_fail(void)
 {
 	failed_expectation = true;
 
+<<<<<<< HEAD
 	switch (phase) {
 	case TEST_PHASE_SETUP:
 		PRINT(" at %s function\n", get_friendly_phase_name(phase));
@@ -378,12 +427,25 @@ void ztest_test_expect_fail(void)
 	case TEST_PHASE_BEFORE:
 	case TEST_PHASE_TEST:
 		PRINT(" at %s function\n", get_friendly_phase_name(phase));
+=======
+	switch (cur_phase) {
+	case TEST_PHASE_SETUP:
+		PRINT(" at %s function\n", get_friendly_phase_name(cur_phase));
+		break;
+	case TEST_PHASE_BEFORE:
+	case TEST_PHASE_TEST:
+		PRINT(" at %s function\n", get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	case TEST_PHASE_AFTER:
 	case TEST_PHASE_TEARDOWN:
 	case TEST_PHASE_FRAMEWORK:
 		PRINT(" ERROR: cannot fail in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
+=======
+		      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		longjmp(stack_fail, 1);
 	}
 }
@@ -393,7 +455,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 	int ret = TC_PASS;
 
 	TC_START(test->name);
+<<<<<<< HEAD
 	phase = TEST_PHASE_BEFORE;
+=======
+	__ztest_set_test_phase(TEST_PHASE_BEFORE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (test_result == ZTEST_RESULT_SUITE_FAIL) {
 		ret = TC_FAIL;
@@ -426,14 +492,22 @@ out:
 		ret = TC_FAIL;
 	}
 
+<<<<<<< HEAD
 	phase = TEST_PHASE_AFTER;
+=======
+	__ztest_set_test_phase(TEST_PHASE_AFTER);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (test_result != ZTEST_RESULT_SUITE_FAIL) {
 		if (suite->after != NULL) {
 			suite->after(data);
 		}
 		run_test_rules(/*is_before=*/false, test, data);
 	}
+<<<<<<< HEAD
 	phase = TEST_PHASE_FRAMEWORK;
+=======
+	__ztest_set_test_phase(TEST_PHASE_FRAMEWORK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret |= cleanup_test(test);
 
 	ret = get_final_test_result(test, ret);
@@ -468,6 +542,7 @@ static void test_finalize(void)
 
 void ztest_test_fail(void)
 {
+<<<<<<< HEAD
 	switch (phase) {
 	case TEST_PHASE_SETUP:
 		test_result = ZTEST_RESULT_SUITE_FAIL;
@@ -475,11 +550,24 @@ void ztest_test_fail(void)
 	case TEST_PHASE_BEFORE:
 	case TEST_PHASE_TEST:
 		test_result = ZTEST_RESULT_FAIL;
+=======
+	switch (cur_phase) {
+	case TEST_PHASE_SETUP:
+		__ztest_set_test_result(ZTEST_RESULT_SUITE_FAIL);
+		break;
+	case TEST_PHASE_BEFORE:
+	case TEST_PHASE_TEST:
+		__ztest_set_test_result(ZTEST_RESULT_FAIL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		test_finalize();
 		break;
 	default:
 		PRINT(" ERROR: cannot fail in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
+=======
+		      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		test_status = ZTEST_STATUS_CRITICAL_ERROR;
 		break;
 	}
@@ -487,16 +575,28 @@ void ztest_test_fail(void)
 
 void ztest_test_pass(void)
 {
+<<<<<<< HEAD
 	switch (phase) {
 	case TEST_PHASE_TEST:
 		test_result = ZTEST_RESULT_PASS;
+=======
+	switch (cur_phase) {
+	case TEST_PHASE_TEST:
+		__ztest_set_test_result(ZTEST_RESULT_PASS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		test_finalize();
 		break;
 	default:
 		PRINT(" ERROR: cannot pass in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
 		test_status = ZTEST_STATUS_CRITICAL_ERROR;
 		if (phase == TEST_PHASE_BEFORE) {
+=======
+		      get_friendly_phase_name(cur_phase));
+		test_status = ZTEST_STATUS_CRITICAL_ERROR;
+		if (cur_phase == TEST_PHASE_BEFORE) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			test_finalize();
 		}
 	}
@@ -504,6 +604,7 @@ void ztest_test_pass(void)
 
 void ztest_test_skip(void)
 {
+<<<<<<< HEAD
 	switch (phase) {
 	case TEST_PHASE_SETUP:
 		test_result = ZTEST_RESULT_SUITE_SKIP;
@@ -511,11 +612,24 @@ void ztest_test_skip(void)
 	case TEST_PHASE_BEFORE:
 	case TEST_PHASE_TEST:
 		test_result = ZTEST_RESULT_SKIP;
+=======
+	switch (cur_phase) {
+	case TEST_PHASE_SETUP:
+		__ztest_set_test_result(ZTEST_RESULT_SUITE_SKIP);
+		break;
+	case TEST_PHASE_BEFORE:
+	case TEST_PHASE_TEST:
+		__ztest_set_test_result(ZTEST_RESULT_SKIP);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		test_finalize();
 		break;
 	default:
 		PRINT(" ERROR: cannot skip in test phase '%s()', bailing\n",
+<<<<<<< HEAD
 		      get_friendly_phase_name(phase));
+=======
+		      get_friendly_phase_name(cur_phase));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		test_status = ZTEST_STATUS_CRITICAL_ERROR;
 		break;
 	}
@@ -542,6 +656,7 @@ static void test_cb(void *a, void *b, void *c)
 {
 	struct ztest_suite_node *suite = a;
 	struct ztest_unit_test *test = b;
+<<<<<<< HEAD
 
 	test_result = ZTEST_RESULT_PENDING;
 	run_test_rules(/*is_before=*/true, test, /*data=*/c);
@@ -550,6 +665,22 @@ static void test_cb(void *a, void *b, void *c)
 	}
 	run_test_functions(suite, test, c);
 	test_result = ZTEST_RESULT_PASS;
+=======
+	const bool config_user_mode = FIELD_GET(K_USER, test->thread_options) != 0;
+
+	if (!IS_ENABLED(CONFIG_USERSPACE) || !k_is_user_context()) {
+		__ztest_set_test_result(ZTEST_RESULT_PENDING);
+		run_test_rules(/*is_before=*/true, test, /*data=*/c);
+		if (suite->before) {
+			suite->before(/*data=*/c);
+		}
+		if (IS_ENABLED(CONFIG_USERSPACE) && config_user_mode) {
+			k_thread_user_mode_enter(test_cb, a, b, c);
+		}
+	}
+	run_test_functions(suite, test, c);
+	__ztest_set_test_result(ZTEST_RESULT_PASS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test, void *data)
@@ -561,7 +692,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 #endif
 	TC_START(test->name);
 
+<<<<<<< HEAD
 	phase = TEST_PHASE_BEFORE;
+=======
+	__ztest_set_test_phase(TEST_PHASE_BEFORE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* If the suite's setup function marked us as skipped, don't bother
 	 * running the tests.
@@ -572,7 +707,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 				K_THREAD_STACK_SIZEOF(ztest_thread_stack),
 				(k_thread_entry_t)test_cb, suite, test, data,
 				CONFIG_ZTEST_THREAD_PRIORITY,
+<<<<<<< HEAD
 				test->thread_options | K_INHERIT_PERMS, K_FOREVER);
+=======
+				K_INHERIT_PERMS, K_FOREVER);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		k_thread_access_grant(&ztest_thread, suite, test, suite->stats);
 		if (test->name != NULL) {
@@ -586,7 +725,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 		}
 	} else if (test_result != ZTEST_RESULT_SUITE_SKIP &&
 		   test_result != ZTEST_RESULT_SUITE_FAIL) {
+<<<<<<< HEAD
 		test_result = ZTEST_RESULT_PENDING;
+=======
+		__ztest_set_test_result(ZTEST_RESULT_PENDING);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		get_start_time_cyc();
 		run_test_rules(/*is_before=*/true, test, data);
 		if (suite->before) {
@@ -595,7 +738,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 		run_test_functions(suite, test, data);
 	}
 
+<<<<<<< HEAD
 	phase = TEST_PHASE_AFTER;
+=======
+	__ztest_set_test_phase(TEST_PHASE_AFTER);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (suite->after != NULL) {
 		suite->after(data);
 	}
@@ -606,7 +753,11 @@ static int run_test(struct ztest_suite_node *suite, struct ztest_unit_test *test
 		test->stats->duration_worst_ms = tc_spend_time;
 	}
 
+<<<<<<< HEAD
 	phase = TEST_PHASE_FRAMEWORK;
+=======
+	__ztest_set_test_phase(TEST_PHASE_FRAMEWORK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Flush all logs in case deferred mode and default logging thread are used. */
 	while (IS_ENABLED(CONFIG_TEST_LOGGING_FLUSH_AFTER_TEST) &&
@@ -692,7 +843,11 @@ static int z_ztest_run_test_suite_ptr(struct ztest_suite_node *suite)
 	int fail = 0;
 	int tc_result = TC_PASS;
 
+<<<<<<< HEAD
 	if (test_status < 0) {
+=======
+	if (FAIL_FAST && test_status != ZTEST_STATUS_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return test_status;
 	}
 
@@ -714,11 +869,19 @@ static int z_ztest_run_test_suite_ptr(struct ztest_suite_node *suite)
 
 	TC_SUITE_START(suite->name);
 	current_test_failed_assumption = false;
+<<<<<<< HEAD
 	test_result = ZTEST_RESULT_PENDING;
 	phase = TEST_PHASE_SETUP;
 #ifndef KERNEL
 	if (setjmp(test_suite_fail)) {
 		test_result = ZTEST_RESULT_SUITE_FAIL;
+=======
+	__ztest_set_test_result(ZTEST_RESULT_PENDING);
+	__ztest_set_test_phase(TEST_PHASE_SETUP);
+#ifndef KERNEL
+	if (setjmp(test_suite_fail)) {
+		__ztest_set_test_result(ZTEST_RESULT_SUITE_FAIL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 #endif
 	if (test_result != ZTEST_RESULT_SUITE_FAIL && suite->setup != NULL) {
@@ -734,8 +897,13 @@ static int z_ztest_run_test_suite_ptr(struct ztest_suite_node *suite)
 		memset(tests_to_run, 0, ZTEST_TEST_COUNT * sizeof(struct ztest_unit_test *));
 		z_ztest_shuffle((void **)tests_to_run, (intptr_t)_ztest_unit_test_list_start,
 				ZTEST_TEST_COUNT, sizeof(struct ztest_unit_test));
+<<<<<<< HEAD
 		for (size_t i = 0; i < ZTEST_TEST_COUNT; ++i) {
 			test = tests_to_run[i];
+=======
+		for (size_t j = 0; j < ZTEST_TEST_COUNT; ++j) {
+			test = tests_to_run[j];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Make sure that the test belongs to this suite */
 			if (strcmp(suite->name, test->test_suite_name) != 0) {
 				continue;
@@ -789,7 +957,11 @@ static int z_ztest_run_test_suite_ptr(struct ztest_suite_node *suite)
 	}
 
 	TC_SUITE_END(suite->name, (fail > 0 ? TC_FAIL : TC_PASS));
+<<<<<<< HEAD
 	phase = TEST_PHASE_TEARDOWN;
+=======
+	__ztest_set_test_phase(TEST_PHASE_TEARDOWN);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (suite->teardown != NULL) {
 		suite->teardown(data);
 	}
@@ -899,6 +1071,7 @@ static void __ztest_show_suite_summary_verbose(struct ztest_suite_node *suite)
 			tc_result = TC_SKIP;
 		} else if (test->stats->pass_count == test->stats->run_count) {
 			tc_result = TC_PASS;
+<<<<<<< HEAD
 		} else {
 			tc_result = TC_FAIL;
 		}
@@ -908,6 +1081,30 @@ static void __ztest_show_suite_summary_verbose(struct ztest_suite_node *suite)
 				test->test_suite_name, test->name,
 				test->stats->duration_worst_ms / 1000,
 				test->stats->duration_worst_ms % 1000);
+=======
+		} else if (test->stats->pass_count == 0) {
+			tc_result = TC_FAIL;
+		} else {
+			tc_result = TC_FLAKY;
+		}
+
+		if (tc_result == TC_FLAKY) {
+			TC_SUMMARY_PRINT(" - %s - [%s.%s] - (Failed %d of %d attempts)"
+					 " - duration = %u.%03u seconds\n",
+					TC_RESULT_TO_STR(tc_result),
+					test->test_suite_name, test->name,
+					test->stats->run_count - test->stats->pass_count,
+					test->stats->run_count,
+					test->stats->duration_worst_ms / 1000,
+					test->stats->duration_worst_ms % 1000);
+		} else {
+			TC_SUMMARY_PRINT(" - %s - [%s.%s] duration = %u.%03u seconds\n",
+					TC_RESULT_TO_STR(tc_result),
+					test->test_suite_name, test->name,
+					test->stats->duration_worst_ms / 1000,
+					test->stats->duration_worst_ms % 1000);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (flush_frequency % 3 == 0) {
 			/** Reduce the flush frequencey a bit to speed up the output */
@@ -947,7 +1144,10 @@ static int __ztest_run_test_suite(struct ztest_suite_node *ptr, const void *stat
 
 	for (int i = 0; i < NUM_ITER_PER_SUITE; i++) {
 		if (ztest_api.should_suite_run(state, ptr)) {
+<<<<<<< HEAD
 			__ztest_init_unit_test_result_for_suite(ptr);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			int fail = z_ztest_run_test_suite_ptr(ptr);
 
 			count++;
@@ -976,6 +1176,12 @@ int z_impl_ztest_run_test_suites(const void *state)
 	z_ztest_shuffle((void **)suites_to_run, (intptr_t)_ztest_suite_node_list_start,
 			ZTEST_SUITE_COUNT, sizeof(struct ztest_suite_node));
 	for (size_t i = 0; i < ZTEST_SUITE_COUNT; ++i) {
+<<<<<<< HEAD
+=======
+		__ztest_init_unit_test_result_for_suite(suites_to_run[i]);
+	}
+	for (size_t i = 0; i < ZTEST_SUITE_COUNT; ++i) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		count += __ztest_run_test_suite(suites_to_run[i], state);
 		/* Stop running tests if we have a critical error or if we have a failure and
 		 * FAIL_FAST was set
@@ -988,6 +1194,10 @@ int z_impl_ztest_run_test_suites(const void *state)
 #else
 	for (struct ztest_suite_node *ptr = _ztest_suite_node_list_start;
 	     ptr < _ztest_suite_node_list_end; ++ptr) {
+<<<<<<< HEAD
+=======
+		__ztest_init_unit_test_result_for_suite(ptr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		count += __ztest_run_test_suite(ptr, state);
 		/* Stop running tests if we have a critical error or if we have a failure and
 		 * FAIL_FAST was set
@@ -1002,6 +1212,33 @@ int z_impl_ztest_run_test_suites(const void *state)
 	return count;
 }
 
+<<<<<<< HEAD
+=======
+void z_impl___ztest_set_test_result(enum ztest_result new_result)
+{
+	test_result = new_result;
+}
+
+void z_impl___ztest_set_test_phase(enum ztest_phase new_phase)
+{
+	cur_phase = new_phase;
+}
+
+#ifdef CONFIG_USERSPACE
+void z_vrfy___ztest_set_test_result(enum ztest_result new_result)
+{
+	z_impl___ztest_set_test_result(new_result);
+}
+#include <syscalls/__ztest_set_test_result_mrsh.c>
+
+void z_vrfy___ztest_set_test_phase(enum ztest_phase new_phase)
+{
+	z_impl___ztest_set_test_phase(new_phase);
+}
+#include <syscalls/__ztest_set_test_phase_mrsh.c>
+#endif /* CONFIG_USERSPACE */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void ztest_verify_all_test_suites_ran(void)
 {
 	bool all_tests_run = true;
@@ -1056,7 +1293,22 @@ int main(void)
 	z_init_mock();
 	test_main();
 	end_report();
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_ZTEST_NO_YIELD
+	/*
+	 * Rather than yielding to idle thread, keep the part awake so debugger can
+	 * still access it, since some SOCs cannot be debugged in low power states.
+	 */
+	uint32_t key = irq_lock();
+
+	while (1) {
+		; /* Spin */
+	}
+	irq_unlock(key);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return test_status;
 }
 #else
@@ -1101,6 +1353,21 @@ int main(void)
 			state.boots = 0;
 		}
 	}
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ZTEST_NO_YIELD
+	/*
+	 * Rather than yielding to idle thread, keep the part awake so debugger can
+	 * still access it, since some SOCs cannot be debugged in low power states.
+	 */
+	uint32_t key = irq_lock();
+
+	while (1) {
+		; /* Spin */
+	}
+	irq_unlock(key);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 #endif

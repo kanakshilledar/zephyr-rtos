@@ -116,6 +116,7 @@ uint8_t test_ase_get(const struct bt_uuid *uuid, int num_ase, ...)
 
 uint8_t test_ase_id_get(const struct bt_gatt_attr *ase)
 {
+<<<<<<< HEAD
 	const struct test_ase_chrc_value_hdr *hdr;
 	ssize_t ret;
 
@@ -141,6 +142,26 @@ static int unicast_server_cb_config_custom_fake(struct bt_conn *conn, const stru
 						enum bt_audio_dir dir, const struct bt_codec *codec,
 						struct bt_bap_stream **stream,
 						struct bt_codec_qos_pref *const pref,
+=======
+	struct test_ase_chrc_value_hdr hdr = { 0 };
+	ssize_t ret;
+
+	ret = ase->read(NULL, ase, &hdr, sizeof(hdr), 0);
+	zassert_false(ret < 0, "ase->read returned unexpected (err 0x%02x)", BT_GATT_ERR(ret));
+
+	return hdr.ase_id;
+}
+
+static struct bt_bap_stream *stream_allocated;
+static const struct bt_audio_codec_qos_pref qos_pref =
+	BT_AUDIO_CODEC_QOS_PREF(true, BT_GAP_LE_PHY_2M, 0x02, 10, 40000, 40000, 40000, 40000);
+
+static int unicast_server_cb_config_custom_fake(struct bt_conn *conn, const struct bt_bap_ep *ep,
+						enum bt_audio_dir dir,
+						const struct bt_audio_codec_cfg *codec_cfg,
+						struct bt_bap_stream **stream,
+						struct bt_audio_codec_qos_pref *const pref,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 						struct bt_bap_ascs_rsp *rsp)
 {
 	*stream = stream_allocated;
@@ -252,8 +273,13 @@ void test_ase_control_client_update_metadata(struct bt_conn *conn, uint8_t ase_i
 		0x07,                   /* Opcode = Update Metadata */
 		0x01,                   /* Number_of_ASEs */
 		ase_id,                 /* ASE_ID[0] */
+<<<<<<< HEAD
 		0x03,                   /* Metadata_Length[0] */
 		0x02, 0x02, 0x04,       /* Metadata[0] = Streaming Context (Media) */
+=======
+		0x04,                   /* Metadata_Length[0] */
+		0x03, 0x02, 0x04, 0x00, /* Metadata[0] = Streaming Context (Media) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	ssize_t ret;
 
@@ -337,16 +363,25 @@ void test_preamble_state_streaming(struct bt_conn *conn, uint8_t ase_id,
 }
 
 void test_preamble_state_disabling(struct bt_conn *conn, uint8_t ase_id,
+<<<<<<< HEAD
 				   struct bt_bap_stream *stream)
 {
 	struct bt_iso_chan *chan;
+=======
+				   struct bt_bap_stream *stream, struct bt_iso_chan **chan)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	test_ase_control_client_config_codec(conn, ase_id, stream);
 	test_ase_control_client_config_qos(conn, ase_id);
 	test_ase_control_client_enable(conn, ase_id);
 
+<<<<<<< HEAD
 	err = mock_bt_iso_accept(conn, 0x01, 0x01, &chan);
+=======
+	err = mock_bt_iso_accept(conn, 0x01, 0x01, chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(0, err, "Failed to connect iso: err %d", err);
 
 	test_ase_control_client_receiver_start_ready(conn, ase_id);

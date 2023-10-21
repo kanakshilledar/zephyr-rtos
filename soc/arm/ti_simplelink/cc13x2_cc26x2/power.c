@@ -54,11 +54,18 @@ extern PowerCC26X2_ModuleState PowerCC26X2_module;
  * Power state mapping:
  * PM_STATE_SUSPEND_TO_IDLE: Idle
  * PM_STATE_STANDBY: Standby
+<<<<<<< HEAD
  * PM_STATE_SUSPEND_TO_RAM | PM_STATE_SUSPEND_TO_DISK: Shutdown
  */
 
 /* Invoke Low Power/System Off specific Tasks */
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+ */
+
+/* Invoke Low Power/System Off specific Tasks */
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -106,6 +113,7 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		/* go to standby mode */
 		Power_sleep(PowerCC26XX_STANDBY);
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SUSPEND_TO_RAM:
 		__fallthrough;
 	case PM_STATE_SUSPEND_TO_DISK:
@@ -113,6 +121,8 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 	case PM_STATE_SOFT_OFF:
 		Power_shutdown(0, 0);
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power state %u", state);
 		break;
@@ -122,7 +132,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(state);
 	ARG_UNUSED(substate_id);

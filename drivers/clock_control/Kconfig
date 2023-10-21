@@ -32,6 +32,11 @@ source "drivers/clock_control/Kconfig.stm32"
 
 source "drivers/clock_control/Kconfig.beetle"
 
+<<<<<<< HEAD
+=======
+source "drivers/clock_control/Kconfig.fixed"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/clock_control/Kconfig.lpc11u6x"
 
 source "drivers/clock_control/Kconfig.mcux_ccm"
@@ -72,4 +77,13 @@ source "drivers/clock_control/Kconfig.sam"
 
 source "drivers/clock_control/Kconfig.smartbond"
 
+<<<<<<< HEAD
+=======
+source "drivers/clock_control/Kconfig.numaker"
+
+source "drivers/clock_control/Kconfig.nxp_s32"
+
+source "drivers/clock_control/Kconfig.agilex5"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # CLOCK_CONTROL

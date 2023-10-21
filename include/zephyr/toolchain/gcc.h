@@ -7,6 +7,13 @@
 #ifndef ZEPHYR_INCLUDE_TOOLCHAIN_GCC_H_
 #define ZEPHYR_INCLUDE_TOOLCHAIN_GCC_H_
 
+<<<<<<< HEAD
+=======
+#ifndef ZEPHYR_INCLUDE_TOOLCHAIN_H_
+#error Please do not include toolchain-specific headers directly, use <zephyr/toolchain.h> instead
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @file
  * @brief GCC toolchain abstraction
@@ -30,6 +37,11 @@
 #define TOOLCHAIN_HAS_C_AUTO_TYPE 1
 #endif
 
+<<<<<<< HEAD
+=======
+#define TOOLCHAIN_HAS_ZLA 1
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Older versions of GCC do not define __BYTE_ORDER__, so it must be manually
  * detected and defined using arch-specific definitions.
@@ -123,12 +135,21 @@
 #endif
 
 /* Unaligned access */
+<<<<<<< HEAD
 #define UNALIGNED_GET(p)						\
 __extension__ ({							\
 	struct  __attribute__((__packed__)) {				\
 		__typeof__(*(p)) __v;					\
 	} *__p = (__typeof__(__p)) (p);					\
 	__p->__v;							\
+=======
+#define UNALIGNED_GET(g)						\
+__extension__ ({							\
+	struct  __attribute__((__packed__)) {				\
+		__typeof__(*(g)) __v;					\
+	} *__g = (__typeof__(__g)) (g);					\
+	__g->__v;							\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 })
 
 
@@ -639,5 +660,15 @@ do {                                                                    \
 #define FUNC_NO_STACK_PROTECTOR
 #endif
 
+<<<<<<< HEAD
+=======
+#define TOOLCHAIN_IGNORE_WSHADOW_BEGIN \
+	_Pragma("GCC diagnostic push") \
+	_Pragma("GCC diagnostic ignored \"-Wshadow\"")
+
+#define TOOLCHAIN_IGNORE_WSHADOW_END \
+	_Pragma("GCC diagnostic pop")
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* !_LINKER */
 #endif /* ZEPHYR_INCLUDE_TOOLCHAIN_GCC_H_ */

@@ -131,7 +131,11 @@ int main(void)
 	int err;
 
 	for (int i = 0; i < ARRAY_SIZE(led_dev); i++) {
+<<<<<<< HEAD
 		if (!device_is_ready(led_dev[i].port)) {
+=======
+		if (!gpio_is_ready_dt(&led_dev[i])) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("LED%u GPIO device not ready", i);
 			return 0;
 		}

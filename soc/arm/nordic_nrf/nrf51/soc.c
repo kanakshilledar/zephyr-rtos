@@ -14,8 +14,11 @@
  */
 
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <hal/nrf_power.h>
 #include <soc/nrfx_coredep.h>
 #include <zephyr/logging/log.h>
@@ -36,6 +39,7 @@ void sys_arch_reboot(int type)
 }
 #endif
 
+<<<<<<< HEAD
 static int nordicsemi_nrf51_init(void)
 {
 	uint32_t key;
@@ -53,6 +57,8 @@ static int nordicsemi_nrf51_init(void)
 	return 0;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define DELAY_CALL_OVERHEAD_US 2
 
 void arch_busy_wait(uint32_t time_us)
@@ -64,5 +70,8 @@ void arch_busy_wait(uint32_t time_us)
 	time_us -= DELAY_CALL_OVERHEAD_US;
 	nrfx_coredep_delay_us(time_us);
 }
+<<<<<<< HEAD
 
 SYS_INIT(nordicsemi_nrf51_init, PRE_KERNEL_1, 0);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

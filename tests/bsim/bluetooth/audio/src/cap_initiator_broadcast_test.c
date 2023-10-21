@@ -11,6 +11,10 @@
 #include <zephyr/bluetooth/audio/bap_lc3_preset.h>
 #include <zephyr/bluetooth/audio/cap.h>
 #include <zephyr/bluetooth/audio/bap.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/bluetooth/audio/lc3.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "common.h"
 
 #define BROADCAST_STREMT_CNT    CONFIG_BT_BAP_BROADCAST_SRC_STREAM_COUNT
@@ -47,8 +51,15 @@ static void broadcast_stopped_cb(struct bt_bap_stream *stream, uint8_t reason)
 	k_sem_give(&sem_broadcast_stopped);
 }
 
+<<<<<<< HEAD
 static void broadcast_sent_cb(struct bt_bap_stream *stream)
 {
+=======
+static void broadcast_sent_cb(struct bt_bap_stream *bap_stream)
+{
+	struct bt_cap_stream *cap_stream =
+		CONTAINER_OF(bap_stream, struct bt_cap_stream, bap_stream);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	static uint8_t mock_data[CONFIG_BT_ISO_TX_MTU];
 	static bool mock_data_initialized;
 	static uint32_t seq_num;
@@ -75,16 +86,27 @@ static void broadcast_sent_cb(struct bt_bap_stream *stream)
 
 	buf = net_buf_alloc(&tx_pool, K_FOREVER);
 	if (buf == NULL) {
+<<<<<<< HEAD
 		printk("Could not allocate buffer when sending on %p\n", stream);
+=======
+		printk("Could not allocate buffer when sending on %p\n", bap_stream);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
 	net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
 	net_buf_add_mem(buf, mock_data, broadcast_preset_16_2_1.qos.sdu);
+<<<<<<< HEAD
 	ret = bt_bap_stream_send(stream, buf, seq_num++, BT_ISO_TIMESTAMP_NONE);
 	if (ret < 0) {
 		/* This will end broadcasting on this stream. */
 		printk("Unable to broadcast data on %p: %d\n", stream, ret);
+=======
+	ret = bt_cap_stream_send(cap_stream, buf, seq_num++, BT_ISO_TIMESTAMP_NONE);
+	if (ret < 0) {
+		/* This will end broadcasting on this stream. */
+		printk("Unable to broadcast data on %p: %d\n", bap_stream, ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		net_buf_unref(buf);
 		return;
 	}
@@ -154,7 +176,11 @@ static void setup_extended_adv_data(struct bt_cap_broadcast_source *source,
 	net_buf_simple_add_le16(&ad_buf, BT_UUID_BROADCAST_AUDIO_VAL);
 	net_buf_simple_add_le24(&ad_buf, broadcast_id);
 	ext_ad.type = BT_DATA_SVC_DATA16;
+<<<<<<< HEAD
 	ext_ad.data_len = ad_buf.len + sizeof(ext_ad.type);
+=======
+	ext_ad.data_len = ad_buf.len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ext_ad.data = ad_buf.data;
 	err = bt_le_ext_adv_set_data(adv, &ext_ad, 1, NULL, 0);
 	if (err != 0) {
@@ -224,26 +250,45 @@ static void stop_and_delete_extended_adv(struct bt_le_ext_adv *adv)
 
 static void test_broadcast_audio_create_inval(void)
 {
+<<<<<<< HEAD
 	struct bt_codec_data bis_codec_data =
 		BT_CODEC_DATA(BT_CODEC_CONFIG_LC3_FREQ, BT_CODEC_CONFIG_LC3_FREQ_16KHZ);
+=======
+	uint8_t bis_codec_data[] = {3, BT_AUDIO_CODEC_CONFIG_LC3_FREQ,
+				    BT_BYTES_LIST_LE16(BT_AUDIO_CODEC_CONFIG_LC3_FREQ_16KHZ)};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_cap_initiator_broadcast_stream_param
 		stream_params[ARRAY_SIZE(broadcast_source_streams)];
 	struct bt_cap_initiator_broadcast_subgroup_param subgroup_param;
 	struct bt_cap_initiator_broadcast_create_param create_param;
 	struct bt_cap_broadcast_source *broadcast_source;
+<<<<<<< HEAD
 	struct bt_codec invalid_codec =
 		BT_CODEC_LC3_CONFIG_16_2(BT_AUDIO_LOCATION_FRONT_LEFT, BT_AUDIO_CONTEXT_TYPE_MEDIA);
+=======
+	struct bt_audio_codec_cfg invalid_codec = BT_AUDIO_CODEC_LC3_CONFIG_16_2(
+		BT_AUDIO_LOCATION_FRONT_LEFT, BT_AUDIO_CONTEXT_TYPE_MEDIA);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	for (size_t i = 0U; i < ARRAY_SIZE(broadcast_streams); i++) {
 		stream_params[i].stream = &broadcast_source_streams[i];
+<<<<<<< HEAD
 		stream_params[i].data_count = 1U;
 		stream_params[i].data = &bis_codec_data;
+=======
+		stream_params[i].data_len = ARRAY_SIZE(bis_codec_data);
+		stream_params[i].data = bis_codec_data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	subgroup_param.stream_count = ARRAY_SIZE(broadcast_streams);
 	subgroup_param.stream_params = stream_params;
+<<<<<<< HEAD
 	subgroup_param.codec = &broadcast_preset_16_2_1.codec;
+=======
+	subgroup_param.codec_cfg = &broadcast_preset_16_2_1.codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	create_param.subgroup_count = 1U;
 	create_param.subgroup_params = &subgroup_param;
@@ -267,7 +312,11 @@ static void test_broadcast_audio_create_inval(void)
 
 	/* Clear metadata so that it does not contain the mandatory stream context */
 	memset(&invalid_codec.meta, 0, sizeof(invalid_codec.meta));
+<<<<<<< HEAD
 	subgroup_param.codec = &invalid_codec;
+=======
+	subgroup_param.codec_cfg = &invalid_codec;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_cap_initiator_broadcast_audio_create(&create_param, NULL);
 	if (err == 0) {
 		FAIL("bt_cap_initiator_broadcast_audio_create with invalid metadata did not "
@@ -282,8 +331,13 @@ static void test_broadcast_audio_create_inval(void)
 
 static void test_broadcast_audio_create(struct bt_cap_broadcast_source **broadcast_source)
 {
+<<<<<<< HEAD
 	struct bt_codec_data bis_codec_data =
 		BT_CODEC_DATA(BT_CODEC_CONFIG_LC3_FREQ, BT_CODEC_CONFIG_LC3_FREQ_16KHZ);
+=======
+	uint8_t bis_codec_data[] = {3, BT_AUDIO_CODEC_CONFIG_LC3_FREQ,
+				    BT_BYTES_LIST_LE16(BT_AUDIO_CODEC_CONFIG_LC3_FREQ_16KHZ)};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_cap_initiator_broadcast_stream_param
 		stream_params[ARRAY_SIZE(broadcast_source_streams)];
 	struct bt_cap_initiator_broadcast_subgroup_param subgroup_param;
@@ -292,13 +346,22 @@ static void test_broadcast_audio_create(struct bt_cap_broadcast_source **broadca
 
 	for (size_t i = 0; i < ARRAY_SIZE(broadcast_streams); i++) {
 		stream_params[i].stream = &broadcast_source_streams[i];
+<<<<<<< HEAD
 		stream_params[i].data_count = 1U;
 		stream_params[i].data = &bis_codec_data;
+=======
+		stream_params[i].data_len = ARRAY_SIZE(bis_codec_data);
+		stream_params[i].data = bis_codec_data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	subgroup_param.stream_count = ARRAY_SIZE(broadcast_streams);
 	subgroup_param.stream_params = stream_params;
+<<<<<<< HEAD
 	subgroup_param.codec = &broadcast_preset_16_2_1.codec;
+=======
+	subgroup_param.codec_cfg = &broadcast_preset_16_2_1.codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	create_param.subgroup_count = 1U;
 	create_param.subgroup_params = &subgroup_param;
@@ -356,6 +419,7 @@ static void test_broadcast_audio_start(struct bt_cap_broadcast_source *broadcast
 
 static void test_broadcast_audio_update_inval(struct bt_cap_broadcast_source *broadcast_source)
 {
+<<<<<<< HEAD
 	const uint16_t mock_ccid = 0x1234;
 	const struct bt_codec_data new_metadata[] = {
 		BT_CODEC_DATA(BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT,
@@ -367,6 +431,16 @@ static void test_broadcast_audio_update_inval(struct bt_cap_broadcast_source *br
 	const struct bt_codec_data invalid_metadata[] = {
 		BT_CODEC_DATA(BT_AUDIO_METADATA_TYPE_CCID_LIST, (mock_ccid & 0xFFU),
 			      ((mock_ccid >> 8) & 0xFFU)),
+=======
+	const uint16_t mock_ccid = 0xAB;
+	const uint8_t new_metadata[] = {
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT,
+				    BT_BYTES_LIST_LE16(BT_AUDIO_CONTEXT_TYPE_MEDIA)),
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_CCID_LIST, mock_ccid),
+	};
+	const uint8_t invalid_metadata[] = {
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_CCID_LIST, mock_ccid),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	int err;
 
@@ -406,11 +480,19 @@ static void test_broadcast_audio_update_inval(struct bt_cap_broadcast_source *br
 
 static void test_broadcast_audio_update(struct bt_cap_broadcast_source *broadcast_source)
 {
+<<<<<<< HEAD
 	const uint16_t mock_ccid = 0x1234;
 	const struct bt_codec_data new_metadata[] = {
 		BT_CODEC_DATA(BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT,
 			      BT_BYTES_LIST_LE16(BT_AUDIO_CONTEXT_TYPE_MEDIA)),
 		BT_CODEC_DATA(BT_AUDIO_METADATA_TYPE_CCID_LIST, BT_BYTES_LIST_LE16(mock_ccid)),
+=======
+	const uint16_t mock_ccid = 0xAB;
+	const uint8_t new_metadata[] = {
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_STREAM_CONTEXT,
+				    BT_BYTES_LIST_LE16(BT_AUDIO_CONTEXT_TYPE_MEDIA)),
+		BT_AUDIO_CODEC_DATA(BT_AUDIO_METADATA_TYPE_CCID_LIST, mock_ccid),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 	int err;
 
@@ -439,6 +521,31 @@ static void test_broadcast_audio_stop_inval(void)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void test_broadcast_audio_tx_sync(void)
+{
+	for (size_t i = 0U; i < ARRAY_SIZE(broadcast_streams); i++) {
+		struct bt_cap_stream *cap_stream = broadcast_streams[i];
+		struct bt_iso_tx_info info;
+		int err;
+
+		err = bt_cap_stream_get_tx_sync(cap_stream, &info);
+		if (err != 0) {
+			FAIL("Failed to get TX sync for stream[%zu]: %p: %d\n", i, cap_stream, err);
+			return;
+		}
+
+		if (info.seq_num != 0) {
+			printk("stream[%zu]: %p seq_num: %u\n", i, cap_stream, info.seq_num);
+		} else {
+			FAIL("stream[%zu]: %p seq_num was 0\n", i, cap_stream);
+			return;
+		}
+	}
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void test_broadcast_audio_stop(struct bt_cap_broadcast_source *broadcast_source)
 {
 	int err;
@@ -547,6 +654,11 @@ static void test_main_cap_initiator_broadcast(void)
 	/* Keeping running for a little while */
 	k_sleep(K_SECONDS(5));
 
+<<<<<<< HEAD
+=======
+	test_broadcast_audio_tx_sync();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	test_broadcast_audio_stop_inval();
 	test_broadcast_audio_stop(broadcast_source);
 

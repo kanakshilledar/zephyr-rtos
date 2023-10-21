@@ -25,6 +25,10 @@
 			clock-frequency = <DT_FREQ_M(108)>;
 			mcause-exception-mask = <0x7ff>;
 			compatible = "nuclei,bumblebee";
+<<<<<<< HEAD
+=======
+			riscv,isa = "rv32imac_zicsr_zifencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0>;
 		};
 	};

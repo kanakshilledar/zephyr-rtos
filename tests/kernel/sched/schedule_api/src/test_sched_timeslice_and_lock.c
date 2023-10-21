@@ -18,7 +18,11 @@ struct k_thread t;
 
 K_SEM_DEFINE(pend_sema, 0, 1);
 K_SEM_DEFINE(timer_sema, 0, 1);
+<<<<<<< HEAD
 struct k_timer timer;
+=======
+struct k_timer th_wakeup_timer;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void thread_entry(void *p1, void *p2, void *p3)
 {
@@ -80,8 +84,13 @@ static void timer_handler(struct k_timer *timer)
 
 static void thread_handler(void *p1, void *p2, void *p3)
 {
+<<<<<<< HEAD
 	k_timer_init(&timer, timer_handler, NULL);
 	k_timer_start(&timer, DURATION, K_NO_WAIT);
+=======
+	k_timer_init(&th_wakeup_timer, timer_handler, NULL);
+	k_timer_start(&th_wakeup_timer, DURATION, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* test cases */

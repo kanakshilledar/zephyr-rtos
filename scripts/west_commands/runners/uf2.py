@@ -49,7 +49,11 @@ class UF2BinaryRunner(ZephyrBinaryRunner):
     @staticmethod
     def is_uf2_partition(part):
         try:
+<<<<<<< HEAD
             return ((part.fstype in ['vfat', 'FAT']) and
+=======
+            return ((part.fstype in ['vfat', 'FAT', 'msdos']) and
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     UF2BinaryRunner.get_uf2_info_path(part).is_file())
         except PermissionError:
             return False

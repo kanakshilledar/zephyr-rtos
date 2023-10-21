@@ -588,7 +588,11 @@ static void i2s_litex_isr_tx(void *arg)
 			 stream->cfg.word_size, stream->cfg.channels);
 	i2s_clear_pending_irq(cfg->base);
 
+<<<<<<< HEAD
 	k_mem_slab_free(stream->cfg.mem_slab, &stream->mem_block);
+=======
+	k_mem_slab_free(stream->cfg.mem_slab, stream->mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static const struct i2s_driver_api i2s_litex_driver_api = {

@@ -7,9 +7,16 @@
 #include <st/u5/stm32u575Xi.dtsi>
 #include <st/u5/stm32u575zitxq-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
 
 / {
 	leds {
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_1: led_1 {
 			gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
@@ -30,6 +37,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -126,12 +137,22 @@
 &adc1 {
 	pinctrl-0 = <&adc1_in1_pc0>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <ASYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
 &adc4 {
 	pinctrl-0 = <&adc4_in18_pb0>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <ASYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
@@ -165,7 +186,11 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &can1 {
+=======
+&fdcan1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	clocks = <&rcc STM32_CLOCK_BUS_APB1_2 0x00000200>,
 		 <&rcc STM32_SRC_PLL1_Q FDCAN1_SEL(1)>;
 	pinctrl-0 = <&fdcan1_rx_pd0 &fdcan1_tx_pd1>;

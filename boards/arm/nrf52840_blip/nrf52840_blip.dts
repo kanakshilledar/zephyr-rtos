@@ -10,6 +10,10 @@
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "nrf52840_blip-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Electronut Labs Blip";
@@ -47,6 +51,10 @@
 		button0: button_0 {
 			gpios = <&gpio1 7 GPIO_ACTIVE_LOW>;
 			label = "Push button switch 0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -64,6 +72,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };

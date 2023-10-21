@@ -3,5 +3,9 @@
 zephyr_library()
 
 zephyr_library_sources(input.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources(input_utils.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 zephyr_library_sources_ifdef(CONFIG_INPUT_LONGPRESS input_longpress.c)

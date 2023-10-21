@@ -18,6 +18,11 @@
 #define NPCX_CLOCK_BUS_APB4        8
 #define NPCX_CLOCK_BUS_AHB6        9
 #define NPCX_CLOCK_BUS_FMCLK       10
+<<<<<<< HEAD
+=======
+#define NPCX_CLOCK_BUS_FIU0        NPCX_CLOCK_BUS_FIU
+#define NPCX_CLOCK_BUS_FIU1        11
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* clock enable/disable references */
 #define NPCX_PWDWN_CTL1            0

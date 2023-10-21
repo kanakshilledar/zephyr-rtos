@@ -269,6 +269,7 @@ Again you have to use the adapted command for newer PCB revisions (E and newer):
    :goals: debug
 
 .. _STM32F3DISCOVERY website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/stm32f3discovery.html
 
 .. _STM32F3DISCOVERY board User Manual:
@@ -279,3 +280,15 @@ Again you have to use the adapted command for newer PCB revisions (E and newer):
 
 .. _STM32F303xC reference manual:
    http://www.st.com/resource/en/reference_manual/dm00043574.pdf
+=======
+   https://www.st.com/en/evaluation-tools/stm32f3discovery.html
+
+.. _STM32F3DISCOVERY board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00063382.pdf
+
+.. _STM32F303VC on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f303vc.html
+
+.. _STM32F303xC reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00043574.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

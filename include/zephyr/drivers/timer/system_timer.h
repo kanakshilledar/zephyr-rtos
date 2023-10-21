@@ -23,8 +23,13 @@ extern "C" {
 #endif
 
 /**
+<<<<<<< HEAD
  * @brief Clock APIs
  * @defgroup clock_apis Clock APIs
+=======
+ * @brief System Clock APIs
+ * @defgroup clock_apis System Clock APIs
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 

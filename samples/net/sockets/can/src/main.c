@@ -37,7 +37,11 @@ static const struct can_filter zfilter = {
 	.mask = CAN_STD_ID_MASK
 };
 
+<<<<<<< HEAD
 static struct socketcan_filter sfilter;
+=======
+static struct socketcan_filter sock_filter;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void tx(int *can_fd)
 {
@@ -169,7 +173,11 @@ static int setup_socket(void)
 	int fd, rx_fd;
 	int ret;
 
+<<<<<<< HEAD
 	socketcan_from_can_filter(&zfilter, &sfilter);
+=======
+	socketcan_from_can_filter(&zfilter, &sock_filter);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	iface = net_if_get_first_by_type(&NET_L2_GET_NAME(CANBUS_RAW));
 	if (!iface) {
@@ -194,8 +202,13 @@ static int setup_socket(void)
 		goto cleanup;
 	}
 
+<<<<<<< HEAD
 	ret = setsockopt(fd, SOL_CAN_RAW, CAN_RAW_FILTER, &sfilter,
 			 sizeof(sfilter));
+=======
+	ret = setsockopt(fd, SOL_CAN_RAW, CAN_RAW_FILTER, &sock_filter,
+			 sizeof(sock_filter));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret < 0) {
 		ret = -errno;
 		LOG_ERR("Cannot set CAN sockopt (%d)", ret);
@@ -221,14 +234,22 @@ static int setup_socket(void)
 	rx_fd = fd;
 
 #if CONFIG_NET_SOCKETS_CAN_RECEIVERS == 2
+<<<<<<< HEAD
 	fd = create_socket(&sfilter);
+=======
+	fd = create_socket(&sock_filter);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (fd >= 0) {
 		rx_tid = k_thread_create(&rx_data, rx_stack,
 					 K_THREAD_STACK_SIZEOF(rx_stack),
 					 (k_thread_entry_t)rx,
 					 INT_TO_POINTER(fd),
 					 INT_TO_POINTER(CLOSE_PERIOD),
+<<<<<<< HEAD
 					 &sfilter, PRIORITY, 0, K_NO_WAIT);
+=======
+					 &sock_filter, PRIORITY, 0, K_NO_WAIT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!rx_tid) {
 			ret = -ENOENT;
 			errno = -ret;

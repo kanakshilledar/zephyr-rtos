@@ -234,7 +234,11 @@ References
    https://sourceforge.net/p/stm32flash/wiki/Home/
 
 .. _ST-LINK/V2:
+<<<<<<< HEAD
    http://www.st.com/en/development-tools/st-link-v2.html
+=======
+   https://www.st.com/en/development-tools/st-link-v2.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _TTL-232RG:
    http://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232RG_CABLES.pdf

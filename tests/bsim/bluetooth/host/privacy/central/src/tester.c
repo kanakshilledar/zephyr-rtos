@@ -12,7 +12,11 @@
 #include <zephyr/bluetooth/addr.h>
 #include <zephyr/bluetooth/bluetooth.h>
 #include <zephyr/bluetooth/conn.h>
+<<<<<<< HEAD
 #include <zephyr/toolchain/gcc.h>
+=======
+#include <zephyr/toolchain.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 DEFINE_FLAG(flag_new_address);
 

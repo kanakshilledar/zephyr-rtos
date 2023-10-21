@@ -19,7 +19,11 @@
 LOG_MODULE_DECLARE(sd, CONFIG_SD_LOG_LEVEL);
 
 static inline void sdmmc_decode_scr(struct sd_scr *scr,
+<<<<<<< HEAD
 	uint32_t *raw_scr, uint32_t *version)
+=======
+	uint32_t *raw_scr, uint8_t *version)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	uint32_t tmp_version = 0;
 

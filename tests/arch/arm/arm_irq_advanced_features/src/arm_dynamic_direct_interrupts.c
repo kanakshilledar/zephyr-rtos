@@ -6,7 +6,11 @@
 
 #include <zephyr/ztest.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/barrier.h>
 
 /* Offset for the Direct interrupt used in this test. */

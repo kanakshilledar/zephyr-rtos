@@ -11,6 +11,10 @@ config BT_CAP
 config BT_CAP_ACCEPTOR
 	bool "Common Audio Profile Acceptor Role Support [EXPERIMENTAL]"
 	depends on BT_BAP_UNICAST_SERVER || (BT_BAP_BROADCAST_SINK && BT_BAP_SCAN_DELEGATOR)
+<<<<<<< HEAD
+=======
+	depends on BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE >= 4
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select EXPERIMENTAL
 	help
 	  Enabling this will enable the CAP Acceptor role. This instantiates the
@@ -30,6 +34,10 @@ config BT_CAP_ACCEPTOR_SET_MEMBER
 config BT_CAP_INITIATOR
 	bool "Common Audio Profile Initiator Role Support [EXPERIMENTAL]"
 	depends on (BT_BAP_UNICAST_CLIENT && BT_CSIP_SET_COORDINATOR) || BT_BAP_BROADCAST_SOURCE
+<<<<<<< HEAD
+=======
+	depends on BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE >= 4
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select EXPERIMENTAL
 	help
 	  Enabling this will enable the CAP Initiator role.

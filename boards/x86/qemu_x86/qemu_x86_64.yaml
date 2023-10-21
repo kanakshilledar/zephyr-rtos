@@ -9,8 +9,17 @@ simulation: qemu
 supported:
   - can
   - smp
+<<<<<<< HEAD
+=======
+  - smbus
+  - rtc
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 testing:
   default: true
   ignore_tags:
     - net
     - bluetooth
+<<<<<<< HEAD
+=======
+vendor: qemu
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

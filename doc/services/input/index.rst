@@ -38,7 +38,11 @@ Application API
 ***************
 
 An application can register a callback using the
+<<<<<<< HEAD
 :c:macro:`INPUT_LISTENER_CB_DEFINE` macro. If a device node is specified, the
+=======
+:c:macro:`INPUT_CALLBACK_DEFINE` macro. If a device node is specified, the
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 callback is only invoked for events from the specific device, otherwise the
 callback will receive all the events in the system. This is the only type of
 filtering supported, any more complex filtering logic has to be implemented in

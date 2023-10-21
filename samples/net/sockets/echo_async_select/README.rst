@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _async-sockets-echo-select-sample:
 
 Asynchronous Socket Echo Server Using select()
 ##############################################
+=======
+.. zephyr:code-sample:: async-sockets-echo-select
+   :name: Asynchronous echo server using select()
+   :relevant-api: bsd_sockets
+
+   Implement an asynchronous IPv4/IPv6 TCP echo server using BSD sockets and select()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -9,7 +17,11 @@ Overview
 The sockets/echo_async_select sample application for Zephyr implements an
 asynchronous IPv4/IPv6 TCP echo server using a BSD Sockets compatible API
 with non-blocking sockets and a ``select()`` call. This is a variant of
+<<<<<<< HEAD
 the :ref:`async-sockets-echo-sample` sample.
+=======
+the :zephyr:code-sample:`async-sockets-echo` sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The source code for this sample application can be found at:
 :zephyr_file:`samples/net/sockets/echo_async_select`.
@@ -40,7 +52,11 @@ After the sample starts, it expects connections at 192.0.2.1 (IPv4), or
     $ telnet 2001:db8::1 4242   # or this for IPv6
 
 After a connection is made, the application will echo back any line sent to
+<<<<<<< HEAD
 it. Unlike the :ref:`sockets-echo-sample`, this application
+=======
+it. Unlike the :zephyr:code-sample:`sockets-echo` sample, this application
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 supports multiple concurrent client connections. You can open
 another terminal window and run the same telnet command as above.
 The sample supports up to three connected clients, but this can be adjusted

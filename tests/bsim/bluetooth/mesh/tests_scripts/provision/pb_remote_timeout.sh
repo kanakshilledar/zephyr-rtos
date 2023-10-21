@@ -29,3 +29,13 @@ RunTest mesh_prov_pb_remote_provisioning_timeout \
 	prov_provisioner_pb_remote_client_provision_timeout \
 	prov_device_pb_remote_server_unproved_unresponsive \
 	prov_device_unresponsive
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_prov_pb_remote_provisioning_timeout_psa \
+	prov_provisioner_pb_remote_client_provision_timeout \
+	prov_device_pb_remote_server_unproved_unresponsive \
+	prov_device_unresponsive
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

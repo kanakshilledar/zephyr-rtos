@@ -69,7 +69,11 @@ static int neorv32_trng_get_entropy_isr(const struct device *dev, uint8_t *buffe
 		}
 
 		/* No entropy available */
+<<<<<<< HEAD
 		return 0;
+=======
+		return -ENODATA;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	err = neorv32_trng_get_entropy(dev, buffer, len);

@@ -12,6 +12,7 @@
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <stm32_ll_system.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
@@ -19,6 +20,13 @@
 #include <zephyr/linker/linker-defs.h>
 #include <string.h>
 
+=======
+#include <zephyr/linker/linker-defs.h>
+#include <string.h>
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_SW_VECTOR_RELAY) || defined(CONFIG_SW_VECTOR_RELAY_CLIENT)
 extern void *_vector_table_pointer;
 #endif
@@ -69,6 +77,7 @@ void relocate_vector_table(void)
  */
 static int stm32f0_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
@@ -81,6 +90,8 @@ static int stm32f0_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Update CMSIS SystemCoreClock variable (HCLK) */
 	/* At reset, system core clock is set to 8 MHz from HSI */
 	SystemCoreClock = 8000000;

@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <st/f4/stm32f401Xc.dtsi>
 #include <st/f4/stm32f401c(b-c)ux-pinctrl.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STM32 Mini F401";
@@ -32,6 +36,10 @@
 		boot1: button {
 			label = "BOOT1";
 			gpios = <&gpiob 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -115,6 +123,11 @@ zephyr_udc0: &usbotg_fs {
 &adc1 {
 	pinctrl-0 = <&adc1_in1_pa1>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 

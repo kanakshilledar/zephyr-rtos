@@ -79,6 +79,12 @@ struct log_msg_hdr {
 	const void *source;
 	log_timestamp_t timestamp;
 #endif
+<<<<<<< HEAD
+=======
+#if CONFIG_LOG_THREAD_ID_PREFIX
+	void *tid;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Messages are aligned to alignment required by cbprintf package. */
@@ -235,7 +241,13 @@ do { \
 		CBPRINTF_STATIC_PACKAGE(NULL, 0, _plen, Z_LOG_MSG_ALIGN_OFFSET, _options, \
 					__VA_ARGS__); \
 	} \
+<<<<<<< HEAD
 	struct log_msg *_msg; \
+=======
+	TOOLCHAIN_IGNORE_WSHADOW_BEGIN \
+	struct log_msg *_msg; \
+	TOOLCHAIN_IGNORE_WSHADOW_END \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	Z_LOG_MSG_ON_STACK_ALLOC(_msg, Z_LOG_MSG_LEN(_plen, 0)); \
 	Z_LOG_ARM64_VLA_PROTECT(); \
 	if (_plen != 0) { \
@@ -653,6 +665,25 @@ static inline log_timestamp_t log_msg_get_timestamp(struct log_msg *msg)
 	return msg->hdr.timestamp;
 }
 
+<<<<<<< HEAD
+=======
+/** @brief Get Thread ID.
+ *
+ * @param msg Log message.
+ *
+ * @return Thread ID.
+ */
+static inline void *log_msg_get_tid(struct log_msg *msg)
+{
+#if CONFIG_LOG_THREAD_ID_PREFIX
+	return msg->hdr.tid;
+#else
+	ARG_UNUSED(msg);
+	return NULL;
+#endif
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @brief Get data buffer.
  *
  * @param msg log message.

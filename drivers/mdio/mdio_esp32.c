@@ -30,7 +30,11 @@ struct mdio_esp32_dev_config {
 	const struct pinctrl_dev_config *pcfg;
 };
 
+<<<<<<< HEAD
 static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
+=======
+static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t regad,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 bool write, uint16_t data_in, uint16_t *data_out)
 {
 	struct mdio_esp32_dev_data *const dev_data = dev->data;
@@ -46,7 +50,11 @@ static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 	if (write) {
 		emac_ll_set_phy_data(dev_data->hal.mac_regs, data_in);
 	}
+<<<<<<< HEAD
 	emac_hal_set_phy_cmd(&dev_data->hal, prtad, devad, write);
+=======
+	emac_hal_set_phy_cmd(&dev_data->hal, prtad, regad, write);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Poll until operation complete */
 	bool success = false;
@@ -73,17 +81,30 @@ static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mdio_esp32_read(const struct device *dev, uint8_t prtad, uint8_t devad,
 			 uint16_t *data)
 {
 	return mdio_transfer(dev, prtad, devad, false, 0, data);
+=======
+static int mdio_esp32_read(const struct device *dev, uint8_t prtad, uint8_t regad,
+			 uint16_t *data)
+{
+	return mdio_transfer(dev, prtad, regad, false, 0, data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 }
 
 static int mdio_esp32_write(const struct device *dev, uint8_t prtad,
+<<<<<<< HEAD
 			  uint8_t devad, uint16_t data)
 {
 	return mdio_transfer(dev, prtad, devad, true, data, NULL);
+=======
+			  uint8_t regad, uint16_t data)
+{
+	return mdio_transfer(dev, prtad, regad, true, data, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void mdio_esp32_bus_enable(const struct device *dev)
@@ -143,12 +164,16 @@ static const struct mdio_esp32_dev_config mdio_esp32_dev_config_##n = {	\
 	.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(n),			\
 };
 
+<<<<<<< HEAD
 #define MDIO_ESP32_PROTOCOL_ASSERT(n)					\
 	BUILD_ASSERT(DT_INST_ENUM_IDX(n, protocol) == CLAUSE_22,	\
 		     "ESP32 MDIO only supports CLAUSE_22 protocol")
 
 #define MDIO_ESP32_DEVICE(n)						\
 	MDIO_ESP32_PROTOCOL_ASSERT(n);					\
+=======
+#define MDIO_ESP32_DEVICE(n)						\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PINCTRL_DT_INST_DEFINE(n);					\
 	MDIO_ESP32_CONFIG(n);						\
 	static struct mdio_esp32_dev_data mdio_esp32_dev_data##n;	\

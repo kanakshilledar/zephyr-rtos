@@ -16,10 +16,14 @@ LOG_MODULE_DECLARE(TMP108, CONFIG_SENSOR_LOG_LEVEL);
 
 void tmp108_trigger_handle_one_shot(struct k_work *work)
 {
+<<<<<<< HEAD
 	struct k_work_delayable *delayable_work = CONTAINER_OF(work,
 							       struct k_work_delayable,
 							       work);
 
+=======
+	struct k_work_delayable *delayable_work = k_work_delayable_from_work(work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct tmp108_data *drv_data = CONTAINER_OF(delayable_work,
 						    struct tmp108_data,
 						    scheduled_work);

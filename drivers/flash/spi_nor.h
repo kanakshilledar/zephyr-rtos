@@ -110,5 +110,10 @@
 /* Test whether offset is aligned to a given number of bits. */
 #define SPI_NOR_IS_ALIGNED(_ofs, _bits) (((_ofs) & BIT_MASK(_bits)) == 0)
 #define SPI_NOR_IS_SECTOR_ALIGNED(_ofs) SPI_NOR_IS_ALIGNED(_ofs, 12)
+<<<<<<< HEAD
+=======
+#define SPI_NOR_IS_32K_ALIGNED(_ofs) SPI_NOR_IS_ALIGNED(_ofs, 15)
+#define SPI_NOR_IS_64K_ALIGNED(_ofs) SPI_NOR_IS_ALIGNED(_ofs, 16)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /*__SPI_NOR_H__*/

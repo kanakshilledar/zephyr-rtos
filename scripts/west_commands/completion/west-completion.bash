@@ -644,7 +644,11 @@ __comp_west_completion()
 		*)
 			local counter=$( __west_pos_first_nonflag "$(__west_to_extglob "$global_args_opts")" )
 			if [ "$cword" -eq "$counter" ]; then
+<<<<<<< HEAD
 				__set_comp "bash zsh"
+=======
+				__set_comp "bash zsh fish"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			fi
 			;;
 	esac

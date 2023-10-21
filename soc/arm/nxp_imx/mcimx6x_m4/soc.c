@@ -5,6 +5,7 @@
  */
 
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/irq.h>
 #include <zephyr/sys/barrier.h>
 #include <soc.h>
@@ -13,6 +14,15 @@
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include "wdog_imx.h"
 
+=======
+#include <zephyr/sys/barrier.h>
+#include <soc.h>
+#include <zephyr/dt-bindings/rdc/imx_rdc.h>
+#include "wdog_imx.h"
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Initialize Resource Domain Controller. */
 static void SOC_RdcInit(void)
 {
@@ -288,12 +298,15 @@ static void SOC_ClockInit(void)
  */
 static int mcimx6x_m4_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int oldLevel; /* Old interrupt lock level */
 
 	/* Disable interrupts */
 	oldLevel = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Configure RDC */
 	SOC_RdcInit();
 
@@ -306,6 +319,7 @@ static int mcimx6x_m4_init(void)
 	/* Initialize clock */
 	SOC_ClockInit();
 
+<<<<<<< HEAD
 	/*
 	 * Install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
@@ -315,6 +329,8 @@ static int mcimx6x_m4_init(void)
 	/* Restore interrupt state */
 	irq_unlock(oldLevel);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "zephyr/sys/util.h"
+=======
+#include <zephyr/sys/util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio/gpio_emul.h>
 #include <zephyr/kernel.h>
@@ -43,7 +47,11 @@ static void test_gpio_keys_cb_handler(struct input_event *evt)
 	last_code = evt->code;
 	last_val = evt->value;
 }
+<<<<<<< HEAD
 INPUT_LISTENER_CB_DEFINE(test_gpio_keys_dev, test_gpio_keys_cb_handler);
+=======
+INPUT_CALLBACK_DEFINE(test_gpio_keys_dev, test_gpio_keys_cb_handler);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief TestPurpose: Verify gpio_keys_config pressed raw.

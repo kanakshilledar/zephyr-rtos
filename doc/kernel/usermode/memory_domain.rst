@@ -419,7 +419,11 @@ dependent.
 
 The complete list of available partition attributes for a specific architecture
 is found in the architecture-specific include file
+<<<<<<< HEAD
 ``include/arch/<arch name>/arch.h``, (for example, ``include/arch/arm/aarch32/arch.h``.)
+=======
+``include/zephyr/arch/<arch name>/arch.h``, (for example, ``include/zehpyr/arch/arm/arch.h``.)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Some examples of partition attributes are:
 
 .. code-block:: c

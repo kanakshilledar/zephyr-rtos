@@ -94,15 +94,27 @@ static void prov_invite(const uint8_t *data)
 			bt_mesh_prov->input_size > 0 || bt_mesh_prov->static_val;
 
 	if (IS_ENABLED(CONFIG_BT_MESH_ECDH_P256_HMAC_SHA256_AES_CCM)) {
+<<<<<<< HEAD
 		algorithm_bm |= BIT(BT_MESH_PROV_AUTH_HMAC_SHA256_AES_CCM);
 	}
 
 	if (IS_ENABLED(CONFIG_BT_MESH_ECDH_P256_CMAC_AES128_AES_CCM)) {
 		algorithm_bm |= BIT(BT_MESH_PROV_AUTH_CMAC_AES128_AES_CCM);
+=======
+		WRITE_BIT(algorithm_bm, BT_MESH_PROV_AUTH_HMAC_SHA256_AES_CCM, 1);
+	}
+
+	if (IS_ENABLED(CONFIG_BT_MESH_ECDH_P256_CMAC_AES128_AES_CCM)) {
+		WRITE_BIT(algorithm_bm, BT_MESH_PROV_AUTH_CMAC_AES128_AES_CCM, 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (oob_availability && IS_ENABLED(CONFIG_BT_MESH_OOB_AUTH_REQUIRED)) {
 		oob_type |= BT_MESH_OOB_AUTH_REQUIRED;
+<<<<<<< HEAD
+=======
+		WRITE_BIT(algorithm_bm, BT_MESH_PROV_AUTH_CMAC_AES128_AES_CCM, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Supported algorithms */
@@ -176,16 +188,43 @@ static void prov_start(const uint8_t *data)
 	bt_mesh_prov_link.oob_action = data[3];
 	bt_mesh_prov_link.oob_size = data[4];
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_BT_MESH_OOB_AUTH_REQUIRED) &&
+	    (bt_mesh_prov_link.oob_method == AUTH_METHOD_NO_OOB ||
+	    bt_mesh_prov_link.algorithm == BT_MESH_PROV_AUTH_CMAC_AES128_AES_CCM)) {
+		prov_fail(PROV_ERR_NVAL_FMT);
+		return;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (bt_mesh_prov_auth(false, data[2], data[3], data[4]) < 0) {
 		LOG_ERR("Invalid authentication method: 0x%02x; "
 			"action: 0x%02x; size: 0x%02x", data[2], data[3], data[4]);
 		prov_fail(PROV_ERR_NVAL_FMT);
+<<<<<<< HEAD
 	}
 
 	if (atomic_test_bit(bt_mesh_prov_link.flags, OOB_STATIC_KEY)) {
 		memcpy(bt_mesh_prov_link.auth + auth_size - bt_mesh_prov->static_val_len,
 			bt_mesh_prov->static_val, bt_mesh_prov->static_val_len);
 		memset(bt_mesh_prov_link.auth, 0, auth_size - bt_mesh_prov->static_val_len);
+=======
+		return;
+	}
+
+	if (atomic_test_bit(bt_mesh_prov_link.flags, OOB_STATIC_KEY)) {
+		/* Trim the Auth if it is longer than required length */
+		memcpy(bt_mesh_prov_link.auth, bt_mesh_prov->static_val,
+		       bt_mesh_prov->static_val_len > auth_size ? auth_size
+								: bt_mesh_prov->static_val_len);
+
+		/* Padd with zeros if the Auth is shorter the required length*/
+		if (bt_mesh_prov->static_val_len < auth_size) {
+			memset(bt_mesh_prov_link.auth + bt_mesh_prov->static_val_len, 0,
+			       auth_size - bt_mesh_prov->static_val_len);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -357,6 +396,16 @@ static void prov_pub_key(const uint8_t *data)
 			return;
 		}
 
+<<<<<<< HEAD
+=======
+		if (!memcmp(bt_mesh_prov->public_key_be,
+			    bt_mesh_prov_link.conf_inputs.pub_key_provisioner, PDU_LEN_PUB_KEY)) {
+			LOG_ERR("Public keys are identical");
+			prov_fail(PROV_ERR_NVAL_FMT);
+			return;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* No swap needed since user provides public key in big-endian */
 		memcpy(bt_mesh_prov_link.conf_inputs.pub_key_device, bt_mesh_prov->public_key_be,
 		       PDU_LEN_PUB_KEY);
@@ -459,7 +508,11 @@ static bool refresh_is_valid(const uint8_t *netkey, uint16_t net_idx,
 		return false;
 	}
 
+<<<<<<< HEAD
 	if (!sub || memcmp(netkey, sub->keys[SUBNET_KEY_TX_IDX(sub)].net, 16)) {
+=======
+	if (!sub || bt_mesh_key_compare(netkey, &sub->keys[SUBNET_KEY_TX_IDX(sub)].net)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Invalid netkey");
 		return false;
 	}
@@ -481,7 +534,11 @@ static bool refresh_is_valid(const uint8_t *netkey, uint16_t net_idx,
 static void prov_data(const uint8_t *data)
 {
 	PROV_BUF(msg, PDU_LEN_COMPLETE);
+<<<<<<< HEAD
 	uint8_t session_key[16];
+=======
+	struct bt_mesh_key session_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t nonce[13];
 	uint8_t dev_key[16];
 	uint8_t pdu[25];
@@ -494,30 +551,49 @@ static void prov_data(const uint8_t *data)
 	LOG_DBG("");
 
 	err = bt_mesh_session_key(bt_mesh_prov_link.dhkey,
+<<<<<<< HEAD
 				  bt_mesh_prov_link.prov_salt, session_key);
+=======
+				  bt_mesh_prov_link.prov_salt, &session_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		LOG_ERR("Unable to generate session key");
 		prov_fail(PROV_ERR_UNEXP_ERR);
 		return;
 	}
 
+<<<<<<< HEAD
 	LOG_DBG("SessionKey: %s", bt_hex(session_key, 16));
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_mesh_prov_nonce(bt_mesh_prov_link.dhkey,
 				 bt_mesh_prov_link.prov_salt, nonce);
 	if (err) {
 		LOG_ERR("Unable to generate session nonce");
 		prov_fail(PROV_ERR_UNEXP_ERR);
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_DBG("Nonce: %s", bt_hex(nonce, 13));
 
+<<<<<<< HEAD
 	err = bt_mesh_prov_decrypt(session_key, nonce, data, pdu);
 	if (err) {
 		LOG_ERR("Unable to decrypt provisioning data");
 		prov_fail(PROV_ERR_DECRYPT);
 		return;
+=======
+	err = bt_mesh_prov_decrypt(&session_key, nonce, data, pdu);
+	if (err) {
+		LOG_ERR("Unable to decrypt provisioning data");
+		prov_fail(PROV_ERR_DECRYPT);
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	err = bt_mesh_dev_key(bt_mesh_prov_link.dhkey,
@@ -525,11 +601,17 @@ static void prov_data(const uint8_t *data)
 	if (err) {
 		LOG_ERR("Unable to generate device key");
 		prov_fail(PROV_ERR_UNEXP_ERR);
+<<<<<<< HEAD
 		return;
 	}
 
 	LOG_DBG("DevKey: %s", bt_hex(dev_key, 16));
 
+=======
+		goto session_key_destructor;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	net_idx = sys_get_be16(&pdu[16]);
 	flags = pdu[18];
 	iv_index = sys_get_be32(&pdu[19]);
@@ -539,7 +621,11 @@ static void prov_data(const uint8_t *data)
 	    atomic_test_bit(bt_mesh_prov_link.flags, REPROVISION) &&
 	    !refresh_is_valid(pdu, net_idx, iv_index)) {
 		prov_send_fail_msg(PROV_ERR_INVALID_DATA);
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_DBG("net_idx %u iv_index 0x%08x, addr 0x%04x",
@@ -548,7 +634,11 @@ static void prov_data(const uint8_t *data)
 	bt_mesh_prov_buf_init(&msg, PROV_COMPLETE);
 	if (bt_mesh_prov_send(&msg, NULL)) {
 		LOG_ERR("Failed to send Provisioning Complete");
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Ignore any further PDUs on this link */
@@ -558,7 +648,11 @@ static void prov_data(const uint8_t *data)
 	if (IS_ENABLED(CONFIG_BT_MESH_RPR_SRV) &&
 	    atomic_test_bit(bt_mesh_prov_link.flags, REPROVISION)) {
 		bt_mesh_dev_key_cand(dev_key);
+<<<<<<< HEAD
 		return;
+=======
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Store info, since bt_mesh_provision() will end up clearing it */
@@ -568,11 +662,18 @@ static void prov_data(const uint8_t *data)
 		identity_enable = false;
 	}
 
+<<<<<<< HEAD
 	err = bt_mesh_provision(pdu, net_idx, flags, iv_index,
 				bt_mesh_prov_link.addr, dev_key);
 	if (err) {
 		LOG_ERR("Failed to provision (err %d)", err);
 		return;
+=======
+	err = bt_mesh_provision(pdu, net_idx, flags, iv_index, bt_mesh_prov_link.addr, dev_key);
+	if (err) {
+		LOG_ERR("Failed to provision (err %d)", err);
+		goto session_key_destructor;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* After PB-GATT provisioning we should start advertising
@@ -581,6 +682,12 @@ static void prov_data(const uint8_t *data)
 	if (IS_ENABLED(CONFIG_BT_MESH_GATT_PROXY) && identity_enable) {
 		bt_mesh_proxy_identity_enable();
 	}
+<<<<<<< HEAD
+=======
+
+session_key_destructor:
+	bt_mesh_key_destroy(&session_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void reprovision_complete(void)
@@ -670,7 +777,11 @@ int bt_mesh_prov_enable(bt_mesh_prov_bearer_t bearers)
 		return -EALREADY;
 	}
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_BT_MESH_PROV_DEVICE_LOG_LEVEL)
+=======
+#if defined(CONFIG_BT_MESH_PROV_DEVICE_LOG_LEVEL)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (CONFIG_BT_MESH_PROV_DEVICE_LOG_LEVEL > 2) {
 		struct bt_uuid_128 uuid = { .uuid = { BT_UUID_TYPE_128 } };
 

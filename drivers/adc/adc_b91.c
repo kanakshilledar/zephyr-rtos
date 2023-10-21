@@ -35,7 +35,11 @@ struct b91_adc_data {
 	struct k_sem acq_sem;
 	struct k_thread thread;
 
+<<<<<<< HEAD
 	K_THREAD_STACK_MEMBER(stack, CONFIG_ADC_B91_ACQUISITION_THREAD_STACK_SIZE);
+=======
+	K_KERNEL_STACK_MEMBER(stack, CONFIG_ADC_B91_ACQUISITION_THREAD_STACK_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct b91_adc_cfg {

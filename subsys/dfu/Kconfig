@@ -89,7 +89,11 @@ if !MCUBOOT
 config UPDATEABLE_IMAGE_NUMBER
 	int "Number of updateable images"
 	default 1
+<<<<<<< HEAD
 	range 1 2
+=======
+	range 1 3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  If value is set to 2 or greater then, this enables support needed when
 	  application is combined with MCUboot multi-image boot.

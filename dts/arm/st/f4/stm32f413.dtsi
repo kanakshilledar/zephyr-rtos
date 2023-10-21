@@ -73,13 +73,20 @@
 		};
 
 		can3: can@40006c00 {
+<<<<<<< HEAD
 			compatible = "st,stm32-can";
+=======
+			compatible = "st,stm32-bxcan";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0x40006c00 0x400>;
 			interrupts = <74 0>, <75 0>, <76 0>, <77 0>;
 			interrupt-names = "TX", "RX0", "RX1", "SCE";
 			clocks = <&rcc STM32_CLOCK_BUS_APB1 0x08000000>;
 			status = "disabled";
+<<<<<<< HEAD
 			sjw = <1>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			sample-point = <875>;
 		};
 	};

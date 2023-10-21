@@ -60,7 +60,11 @@ static int mem_slab_free_test(int no_of_loops)
 	int i;
 
 	for (i = 0; i < no_of_loops; i++) {
+<<<<<<< HEAD
 		k_mem_slab_free(&my_slab, &slab_array[i]);
+=======
+		k_mem_slab_free(&my_slab, slab_array[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return i;

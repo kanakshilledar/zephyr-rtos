@@ -12,7 +12,11 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/kernel_structs.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/spinlock.h>
 #include <errno.h>
 #include <ksched.h>
@@ -370,6 +374,10 @@ int z_work_submit_to_queue(struct k_work_q *queue,
 		  struct k_work *work)
 {
 	__ASSERT_NO_MSG(work != NULL);
+<<<<<<< HEAD
+=======
+	__ASSERT_NO_MSG(work->handler != NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_spinlock_key_t key = k_spin_lock(&lock);
 
@@ -598,6 +606,12 @@ bool k_work_cancel_sync(struct k_work *work,
  */
 static void work_queue_main(void *workq_ptr, void *p2, void *p3)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(p2);
+	ARG_UNUSED(p3);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct k_work_q *queue = (struct k_work_q *)workq_ptr;
 
 	while (true) {

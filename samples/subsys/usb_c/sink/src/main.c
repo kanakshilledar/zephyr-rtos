@@ -117,6 +117,7 @@ static void display_pdo(const int idx,
 	}
 	break;
 	case PDO_BATTERY: {
+<<<<<<< HEAD
 		union pd_battery_supply_pdo_source pdo;
 
 		pdo.raw_value = pdo_value;
@@ -154,6 +155,45 @@ static void display_pdo(const int idx,
 		LOG_INF("\tMax Current:       %d",
 			PD_CONVERT_AUGMENTED_PDO_CURRENT_TO_MA(pdo.max_current));
 		LOG_INF("\tPPS Power Limited: %d", pdo.pps_power_limited);
+=======
+		union pd_battery_supply_pdo_source batt_pdo;
+
+		batt_pdo.raw_value = pdo_value;
+		LOG_INF("\tType:              BATTERY");
+		LOG_INF("\tMin Voltage: %d",
+			PD_CONVERT_BATTERY_PDO_VOLTAGE_TO_MV(batt_pdo.min_voltage));
+		LOG_INF("\tMax Voltage: %d",
+			PD_CONVERT_BATTERY_PDO_VOLTAGE_TO_MV(batt_pdo.max_voltage));
+		LOG_INF("\tMax Power:   %d",
+			PD_CONVERT_BATTERY_PDO_POWER_TO_MW(batt_pdo.max_power));
+	}
+	break;
+	case PDO_VARIABLE: {
+		union pd_variable_supply_pdo_source var_pdo;
+
+		var_pdo.raw_value = pdo_value;
+		LOG_INF("\tType:        VARIABLE");
+		LOG_INF("\tMin Voltage: %d",
+			PD_CONVERT_VARIABLE_PDO_VOLTAGE_TO_MV(var_pdo.min_voltage));
+		LOG_INF("\tMax Voltage: %d",
+			PD_CONVERT_VARIABLE_PDO_VOLTAGE_TO_MV(var_pdo.max_voltage));
+		LOG_INF("\tMax Current: %d",
+			PD_CONVERT_VARIABLE_PDO_CURRENT_TO_MA(var_pdo.max_current));
+	}
+	break;
+	case PDO_AUGMENTED: {
+		union pd_augmented_supply_pdo_source aug_pdo;
+
+		aug_pdo.raw_value = pdo_value;
+		LOG_INF("\tType:              AUGMENTED");
+		LOG_INF("\tMin Voltage:       %d",
+			PD_CONVERT_AUGMENTED_PDO_VOLTAGE_TO_MV(aug_pdo.min_voltage));
+		LOG_INF("\tMax Voltage:       %d",
+			PD_CONVERT_AUGMENTED_PDO_VOLTAGE_TO_MV(aug_pdo.max_voltage));
+		LOG_INF("\tMax Current:       %d",
+			PD_CONVERT_AUGMENTED_PDO_CURRENT_TO_MA(aug_pdo.max_current));
+		LOG_INF("\tPPS Power Limited: %d", aug_pdo.pps_power_limited);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	break;
 	}

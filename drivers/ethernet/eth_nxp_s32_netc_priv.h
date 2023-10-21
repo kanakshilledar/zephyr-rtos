@@ -99,8 +99,11 @@ struct nxp_s32_eth_msix {
 struct nxp_s32_eth_config {
 	const Netc_Eth_Ip_ConfigType netc_cfg;
 
+<<<<<<< HEAD
 	const Netc_EthSwt_Ip_ConfigType switch_cfg;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	Netc_Eth_Ip_MACFilterHashTableEntryType *mac_filter_hash_table;
 
 	uint8_t si_idx;

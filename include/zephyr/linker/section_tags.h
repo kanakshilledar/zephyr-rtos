@@ -18,6 +18,13 @@
 #define __irq_vector_table	Z_GENERIC_SECTION(_IRQ_VECTOR_TABLE_SECTION_NAME)
 #define __sw_isr_table		Z_GENERIC_SECTION(_SW_ISR_TABLE_SECTION_NAME)
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SHARED_INTERRUPTS
+#define __shared_sw_isr_table	Z_GENERIC_SECTION(_SHARED_SW_ISR_TABLE_SECTION_NAME)
+#endif /* CONFIG_SHARED_INTERRUPTS */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Attribute macros to place code and data into IMR memory */
 #define __imr __in_section_unique(imr)
 #define __imrdata __in_section_unique(imrdata)

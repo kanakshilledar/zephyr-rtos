@@ -166,6 +166,11 @@ static inline int net_capture_disable(const struct device *dev)
 #endif
 }
 
+<<<<<<< HEAD
+=======
+/** @cond INTERNAL_HIDDEN */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Send captured packet.
  *
@@ -192,8 +197,11 @@ static inline int net_capture_send(const struct device *dev, struct net_if *ifac
 #endif
 }
 
+<<<<<<< HEAD
 /** @cond INTERNAL_HIDDEN */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Check if the network packet needs to be captured or not.
  *        This is called for every network packet being sent.

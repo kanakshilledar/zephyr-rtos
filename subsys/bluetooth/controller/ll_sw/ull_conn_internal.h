@@ -22,7 +22,11 @@ bool ull_conn_peer_connected(uint8_t const own_id_addr_type,
 			     uint8_t const peer_id_addr_type,
 			     uint8_t const *const peer_id_addr);
 void ull_conn_setup(memq_link_t *rx_link, struct node_rx_hdr *rx);
+<<<<<<< HEAD
 int ull_conn_rx(memq_link_t *link, struct node_rx_pdu **rx);
+=======
+void ull_conn_rx(memq_link_t *link, struct node_rx_pdu **rx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int ull_conn_llcp(struct ll_conn *conn, uint32_t ticks_at_expire,
 		  uint32_t remainder, uint16_t lazy);
 void ull_conn_done(struct node_rx_event_done *done);

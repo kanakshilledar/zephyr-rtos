@@ -207,9 +207,20 @@ static inline uint32_t intel_adsp_hda_get_buffer_size(uint32_t base,
  * @param regblock_size Register block size
  * @param sid Stream ID
  */
+<<<<<<< HEAD
 static inline void intel_adsp_hda_enable(uint32_t base, uint32_t regblock_size, uint32_t sid)
 {
 	*DGCS(base, regblock_size, sid) |= DGCS_GEN | DGCS_FIFORDY;
+=======
+static inline void intel_adsp_hda_enable(uint32_t base, uint32_t regblock_size,
+					 uint32_t sid, bool set_fifordy)
+{
+	*DGCS(base, regblock_size, sid) |= DGCS_GEN;
+
+	if (set_fifordy) {
+		*DGCS(base, regblock_size, sid) |= DGCS_FIFORDY;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -224,7 +235,10 @@ static inline void intel_adsp_hda_disable(uint32_t base, uint32_t regblock_size,
 	*DGCS(base, regblock_size, sid) &= ~(DGCS_GEN | DGCS_FIFORDY);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Check if stream is enabled
  *
@@ -237,7 +251,10 @@ static inline bool intel_adsp_hda_is_enabled(uint32_t base, uint32_t regblock_si
 	return *DGCS(base, regblock_size, sid) & (DGCS_GEN | DGCS_FIFORDY);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Determine the number of unused bytes in the buffer
  *
@@ -383,4 +400,112 @@ static inline void intel_adsp_hda_underrun_clear(uint32_t base, uint32_t regbloc
 	*DGCS(base, regblock_size, sid) |= DGCS_BUR;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Set the buffer segment ptr
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ * @param size
+ */
+static inline void intel_adsp_hda_set_buffer_segment_ptr(uint32_t base, uint32_t regblock_size,
+							 uint32_t sid, uint32_t size)
+{
+	*DGBSP(base, regblock_size, sid) = size;
+}
+
+/**
+ * @brief Get the buffer segment ptr
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ *
+ * @retval buffer segment ptr
+ */
+static inline uint32_t intel_adsp_hda_get_buffer_segment_ptr(uint32_t base, uint32_t regblock_size,
+							     uint32_t sid)
+{
+	return *DGBSP(base, regblock_size, sid);
+}
+
+/**
+ * @brief Enable BSC interrupt
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ */
+static inline void intel_adsp_hda_enable_buffer_interrupt(uint32_t base, uint32_t regblock_size,
+							  uint32_t sid)
+{
+	*DGCS(base, regblock_size, sid) |= DGCS_BSCIE;
+}
+
+/**
+ * @brief Disable BSC interrupt
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ */
+static inline void intel_adsp_hda_disable_buffer_interrupt(uint32_t base, uint32_t regblock_size,
+							   uint32_t sid)
+{
+	*DGCS(base, regblock_size, sid) &= ~DGCS_BSCIE;
+}
+
+/**
+ * @brief Clear BSC interrupt
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ */
+static inline void intel_adsp_hda_clear_buffer_interrupt(uint32_t base, uint32_t regblock_size,
+							 uint32_t sid)
+{
+	*DGCS(base, regblock_size, sid) |= DGCS_BSC;
+}
+
+/**
+ * @brief Get status of BSC interrupt
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ *
+ * @retval interrupt status
+ */
+static inline uint32_t intel_adsp_hda_check_buffer_interrupt(uint32_t base, uint32_t regblock_size,
+							     uint32_t sid)
+{
+	return (*DGCS(base, regblock_size, sid) & DGCS_BSC) == DGCS_BSC;
+}
+
+/**
+ * @brief Set the Sample Container Size (SCS)
+ *
+ * Sample Container Size indicates the container size of the audio samples in local memory
+ * SCS bit must cleared to 0 for 32bit sample size (HD Audio container size)
+ * SCS bit must be set to 1 for non 32bit sample sizes
+ *
+ * @param base Base address of the IP register block
+ * @param regblock_size Register block size
+ * @param sid Stream ID
+ * @param sample_size
+ */
+static inline void intel_adsp_hda_set_sample_container_size(uint32_t base, uint32_t regblock_size,
+							    uint32_t sid, uint32_t sample_size)
+{
+	if (sample_size <= 3) {
+		*DGCS(base, regblock_size, sid) |= DGCS_SCS;
+	} else {
+		*DGCS(base, regblock_size, sid) &= ~DGCS_SCS;
+	}
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_INTEL_ADSP_HDA_H */

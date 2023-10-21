@@ -8,6 +8,10 @@
 #include <helpers/nrfx_gppi.h>
 #include <zephyr/drivers/timer/nrf_rtc_timer.h>
 #include <zephyr/drivers/mbox.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(sync_rtc, CONFIG_SYNC_RTC_LOG_LEVEL);

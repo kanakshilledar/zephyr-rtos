@@ -213,13 +213,24 @@ You can debug an application in the usual way.  Here is an example for the
 
 
 .. _32F769I-DISCO website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32f769idiscovery.html
 
 .. _32F769I-DISCO board User Manual:
    http://www.st.com/resource/en/user_manual/dm00276557.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32f769idiscovery.html
+
+.. _32F769I-DISCO board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00276557.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32F769NIH6 on www.st.com:
 	https://www.st.com/content/st_com/en/products/microcontrollers/stm32-32-bit-arm-cortex-mcus/stm32-high-performance-mcus/stm32f7-series/stm32f7x9/stm32f769ni.html
 
 .. _STM32F76xxx reference manual:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00224583.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00224583.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

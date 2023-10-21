@@ -14,6 +14,10 @@
 
 #include <zephyr/sys/__assert.h>
 #include <zephyr/device.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/gpio.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
 
@@ -47,11 +51,14 @@ struct ec_host_cmd_rx_ctx {
 	uint8_t *buf;
 	/** Number of bytes written to @a buf by backend. */
 	size_t len;
+<<<<<<< HEAD
 	/**
 	 * The backend gives @a handler_owns, when data in @a buf are ready.
 	 * The handler takes @a handler_owns to read data in @a buf.
 	 */
 	struct k_sem handler_owns;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -148,6 +155,21 @@ struct ec_host_cmd_backend *ec_host_cmd_backend_get_shi_ite(void);
 struct ec_host_cmd_backend *ec_host_cmd_backend_get_uart(const struct device *dev);
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Get the SPI Host Command backend pointer
+ *
+ * Get the SPI pointer backend and pass a chip select pin that will be used for the Host Command
+ * communication.
+ *
+ * @param cs Chip select pin..
+ *
+ * @retval The SPI backend pointer.
+ */
+struct ec_host_cmd_backend *ec_host_cmd_backend_get_spi(struct gpio_dt_spec *cs);
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @}
  */
 

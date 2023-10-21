@@ -12,7 +12,11 @@
 #include <math.h>
 #include <zephyr/arch/posix/posix_trace.h>
 #include "posix_board_if.h"
+<<<<<<< HEAD
 #include "zephyr/types.h"
+=======
+#include <zephyr/types.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "cmdline_common.h"
 
 /**

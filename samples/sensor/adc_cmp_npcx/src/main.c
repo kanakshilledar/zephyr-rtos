@@ -26,7 +26,11 @@ enum threshold_state {
 
 atomic_val_t stop;
 
+<<<<<<< HEAD
 const struct sensor_trigger trigger = {
+=======
+const struct sensor_trigger sensor_trig = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.type = SENSOR_TRIG_THRESHOLD,
 	.chan = SENSOR_CHAN_VOLTAGE
 };
@@ -107,7 +111,11 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	err = sensor_trigger_set(adc_cmp, &trigger,
+=======
+	err = sensor_trigger_set(adc_cmp, &sensor_trig,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		threshold_trigger_handler);
 	if (err) {
 		printf("ADC CMP: Error setting handler");

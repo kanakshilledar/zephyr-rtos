@@ -171,6 +171,15 @@ EXTERN(ext_man_fw_ver)
 
 SECTIONS
 {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OPENAMP_RSC_TABLE
+    SECTION_PROLOGUE(.resource_table,, SUBALIGN(4))
+    {
+      KEEP(*(.resource_table*))
+    } GROUP_LINK_IN(ROMABLE_REGION)
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/linker/rel-sections.ld>
   .ResetVector.text : ALIGN(4)

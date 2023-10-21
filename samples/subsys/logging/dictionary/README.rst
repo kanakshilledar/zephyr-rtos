@@ -1,9 +1,22 @@
+<<<<<<< HEAD
 .. _logging_dictionary_sample:
 
 Dictionary-based Logging Sample
 ###############################
 
 This is a sample app which utilizes dictionary based logging and
+=======
+.. zephyr:code-sample:: logging-dictionary
+   :name: Dictionary-based logging
+   :relevant-api: log_api
+
+   Output binary log data using the dictionary-based logging API.
+
+Overview
+********
+
+This is a sample app which utilizes :ref:`dictionary-based logging <logging_guide_dictionary>` and
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 the UART backend. This is configured to output binary log data
 in hexadecimal so it could be run in terminal.
 

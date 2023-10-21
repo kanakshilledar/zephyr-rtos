@@ -10,4 +10,14 @@ if BOARD_STM32H573I_DK
 config BOARD
 	default "stm32h573i_dk"
 
+<<<<<<< HEAD
+=======
+if NETWORKING
+
+config NET_L2_ETHERNET
+	default y
+
+endif # NETWORKING
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # BOARD_STM32H573I_DK

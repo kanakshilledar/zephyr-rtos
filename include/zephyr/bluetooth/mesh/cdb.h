@@ -10,6 +10,10 @@
 #include <stdint.h>
 
 #include <zephyr/sys/atomic.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/bluetooth/mesh.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,7 +40,11 @@ struct bt_mesh_cdb_node {
 	uint16_t addr;
 	uint16_t net_idx;
 	uint8_t  num_elem;
+<<<<<<< HEAD
 	uint8_t  dev_key[16];
+=======
+	struct bt_mesh_key dev_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ATOMIC_DEFINE(flags, BT_MESH_CDB_NODE_FLAG_COUNT);
 };
@@ -47,7 +55,11 @@ struct bt_mesh_cdb_subnet {
 	uint8_t kr_phase;
 
 	struct {
+<<<<<<< HEAD
 		uint8_t net_key[16];
+=======
+		struct bt_mesh_key net_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} keys[2];
 };
 
@@ -56,7 +68,11 @@ struct bt_mesh_cdb_app_key {
 	uint16_t app_idx;
 
 	struct {
+<<<<<<< HEAD
 		uint8_t app_key[16];
+=======
+		struct bt_mesh_key app_key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} keys[2];
 };
 
@@ -189,6 +205,35 @@ struct bt_mesh_cdb_node *bt_mesh_cdb_node_get(uint16_t addr);
  */
 void bt_mesh_cdb_node_store(const struct bt_mesh_cdb_node *node);
 
+<<<<<<< HEAD
+=======
+/** @brief Import device key for selected node.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to import the key.
+ *
+ *  @param node Selected node.
+ *  @param in key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_node_key_import(struct bt_mesh_cdb_node *node, const uint8_t in[16]);
+
+/** @brief Export device key from selected node.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to export the key.
+ *
+ *  @param node Selected node.
+ *  @param out key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_node_key_export(const struct bt_mesh_cdb_node *node, uint8_t out[16]);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum {
 	BT_MESH_CDB_ITER_STOP = 0,
 	BT_MESH_CDB_ITER_CONTINUE,
@@ -260,6 +305,42 @@ void bt_mesh_cdb_subnet_store(const struct bt_mesh_cdb_subnet *sub);
  */
 uint8_t bt_mesh_cdb_subnet_flags(const struct bt_mesh_cdb_subnet *sub);
 
+<<<<<<< HEAD
+=======
+/** @brief Import network key for selected subnetwork.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to import the key.
+ *
+ *  @param sub Selected subnetwork.
+ *  @param key_idx 0 or 1. If Key Refresh procedure is in progress then two keys are available.
+ *                 The old key has an index 0 and the new one has an index 1.
+ *                 Otherwise, the only key with index 0 exists.
+ *  @param in key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_subnet_key_import(struct bt_mesh_cdb_subnet *sub, int key_idx,
+				  const uint8_t in[16]);
+
+/** @brief Export network key from selected subnetwork.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to export the key.
+ *
+ *  @param sub Selected subnetwork.
+ *  @param key_idx 0 or 1. If Key Refresh procedure is in progress then two keys are available.
+ *                 The old key has an index 0 and the new one has an index 1.
+ *                 Otherwise, the only key with index 0 exists.
+ *  @param out key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_subnet_key_export(const struct bt_mesh_cdb_subnet *sub, int key_idx,
+				  uint8_t out[16]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Allocate an application key.
  *
@@ -299,6 +380,41 @@ struct bt_mesh_cdb_app_key *bt_mesh_cdb_app_key_get(uint16_t app_idx);
  */
 void bt_mesh_cdb_app_key_store(const struct bt_mesh_cdb_app_key *key);
 
+<<<<<<< HEAD
+=======
+/** @brief Import application key.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to import the key.
+ *
+ *  @param key cdb application key structure.
+ *  @param key_idx 0 or 1. If Key Refresh procedure is in progress then two keys are available.
+ *                 The old key has an index 0 and the new one has an index 1.
+ *                 Otherwise, the only key with index 0 exists.
+ *  @param in key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_app_key_import(struct bt_mesh_cdb_app_key *key, int key_idx, const uint8_t in[16]);
+
+/** @brief Export application key.
+ *
+ *  Using security library with PSA implementation access to the key by pointer
+ *  will not give a valid value since the key is hidden in the library.
+ *  The application has to export the key.
+ *
+ *  @param key cdb application key structure.
+ *  @param key_idx 0 or 1. If Key Refresh procedure is in progress then two keys are available.
+ *                 The old key has an index 0 and the new one has an index 1.
+ *                 Otherwise, the only key with index 0 exists.
+ *  @param out key value.
+ *
+ *  @return 0 on success or negative error code on failure.
+ */
+int bt_mesh_cdb_app_key_export(const struct bt_mesh_cdb_app_key *key, int key_idx, uint8_t out[16]);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

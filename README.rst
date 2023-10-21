@@ -54,6 +54,7 @@ Resources
 
 Here's a quick summary of resources to help you find your way around:
 
+<<<<<<< HEAD
 * **Help**: `Asking for Help Tips`_
 * **Documentation**: http://docs.zephyrproject.org (`Getting Started Guide`_)
 * **Source Code**: https://github.com/zephyrproject-rtos/zephyr is the main
@@ -90,3 +91,61 @@ Here's a quick summary of resources to help you find your way around:
 .. _Sample and Demo Code Examples: http://docs.zephyrproject.org/latest/samples/index.html
 .. _Security: http://docs.zephyrproject.org/latest/security/index.html
 .. _Asking for Help Tips: https://docs.zephyrproject.org/latest/develop/getting_started/index.html#asking-for-help
+=======
+Getting Started
+---------------
+
+  | 📖 `Zephyr Documentation`_
+  | 🚀 `Getting Started Guide`_
+  | 🙋🏽 `Tips when asking for help`_
+  | 💻 `Code samples`_
+
+Code and Development
+--------------------
+
+  | 🌐 `Source Code Repository`_
+  | 📦 `Releases`_
+  | 🤝 `Contribution Guide`_
+
+Community and Support
+---------------------
+
+  | 💬 `Discord Server`_ for real-time community discussions
+  | 📧 `User mailing list (users@lists.zephyrproject.org)`_
+  | 📧 `Developer mailing list (devel@lists.zephyrproject.org)`_
+  | 📬 `Other project mailing lists`_
+  | 📚 `Project Wiki`_
+
+Issue Tracking and Security
+---------------------------
+
+  | 🐛 `GitHub Issues`_
+  | 🔒 `Security documentation`_
+  | 🛡️ `Security Advisories Repository`_
+  | ⚠️ Report security vulnerabilities at vulnerabilities@zephyrproject.org
+
+Additional Resources
+--------------------
+  | 🌐 `Zephyr Project Website`_
+  | 📺 `Zephyr Tech Talks`_
+
+.. _Zephyr Project Website: https://www.zephyrproject.org
+.. _Discord Server: https://chat.zephyrproject.org
+.. _supported boards: https://docs.zephyrproject.org/latest/boards/index.html
+.. _Zephyr Documentation: https://docs.zephyrproject.org
+.. _Introduction to Zephyr: https://docs.zephyrproject.org/latest/introduction/index.html
+.. _Getting Started Guide: https://docs.zephyrproject.org/latest/develop/getting_started/index.html
+.. _Contribution Guide: https://docs.zephyrproject.org/latest/contribute/index.html
+.. _Source Code Repository: https://github.com/zephyrproject-rtos/zephyr
+.. _GitHub Issues: https://github.com/zephyrproject-rtos/zephyr/issues
+.. _Releases: https://github.com/zephyrproject-rtos/zephyr/releases
+.. _Project Wiki: https://github.com/zephyrproject-rtos/zephyr/wiki
+.. _User mailing list (users@lists.zephyrproject.org): https://lists.zephyrproject.org/g/users
+.. _Developer mailing list (devel@lists.zephyrproject.org): https://lists.zephyrproject.org/g/devel
+.. _Other project mailing lists: https://lists.zephyrproject.org/g/main/subgroups
+.. _Code samples: https://docs.zephyrproject.org/latest/samples/index.html
+.. _Security documentation: https://docs.zephyrproject.org/latest/security/index.html
+.. _Security Advisories Repository: https://github.com/zephyrproject-rtos/zephyr/security
+.. _Tips when asking for help: https://docs.zephyrproject.org/latest/develop/getting_started/index.html#asking-for-help
+.. _Zephyr Tech Talks: https://www.zephyrproject.org/tech-talks
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

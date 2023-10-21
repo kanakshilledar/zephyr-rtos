@@ -100,6 +100,11 @@ bool z_device_is_ready(const struct device *dev)
 	return dev->state->initialized && (dev->state->init_res == 0U);
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEVICE_DEPS
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int device_visitor(const device_handle_t *handles,
 			   size_t handle_count,
 			   device_visitor_callback_t visitor_cb,
@@ -138,3 +143,8 @@ int device_supported_foreach(const struct device *dev,
 
 	return device_visitor(handles, handle_count, visitor_cb, context);
 }
+<<<<<<< HEAD
+=======
+
+#endif /* CONFIG_DEVICE_DEPS */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

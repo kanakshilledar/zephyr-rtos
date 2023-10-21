@@ -73,6 +73,7 @@ void __stdin_hook_install(unsigned char (*hook)(void))
 	__stdin.flags |= _FDEV_SETUP_READ;
 }
 
+<<<<<<< HEAD
 int z_impl_zephyr_read_stdin(char *buf, int nbytes)
 {
 	int i = 0;
@@ -101,6 +102,8 @@ int z_impl_zephyr_write_stdout(const void *buffer, int nbytes)
 	return nbytes;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/cbprintf.h>
 
 struct cb_bits {
@@ -131,7 +134,11 @@ __weak void _exit(int status)
 {
 	printk("exit\n");
 	while (1) {
+<<<<<<< HEAD
 		;
+=======
+		Z_SPIN_DELAY(100);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -154,6 +161,7 @@ SYS_INIT(picolibc_locks_prepare, POST_KERNEL,
 	 CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
 #endif /* CONFIG_USERSPACE */
 
+<<<<<<< HEAD
 /* Create a new dynamic non-recursive lock */
 void __retarget_lock_init(_LOCK_T *lock)
 {
@@ -170,6 +178,8 @@ void __retarget_lock_init(_LOCK_T *lock)
 	k_sem_init((struct k_sem *)*lock, 1, 1);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Create a new dynamic recursive lock */
 void __retarget_lock_init_recursive(_LOCK_T *lock)
 {
@@ -186,6 +196,7 @@ void __retarget_lock_init_recursive(_LOCK_T *lock)
 	k_mutex_init((struct k_mutex *)*lock);
 }
 
+<<<<<<< HEAD
 /* Close dynamic non-recursive lock */
 void __retarget_lock_close(_LOCK_T lock)
 {
@@ -195,6 +206,12 @@ void __retarget_lock_close(_LOCK_T lock)
 #else
 	k_object_release(lock);
 #endif /* !CONFIG_USERSPACE */
+=======
+/* Create a new dynamic non-recursive lock */
+void __retarget_lock_init(_LOCK_T *lock)
+{
+	__retarget_lock_init_recursive(lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Close dynamic recursive lock */
@@ -208,11 +225,18 @@ void __retarget_lock_close_recursive(_LOCK_T lock)
 #endif /* !CONFIG_USERSPACE */
 }
 
+<<<<<<< HEAD
 /* Acquiure non-recursive lock */
 void __retarget_lock_acquire(_LOCK_T lock)
 {
 	__ASSERT_NO_MSG(lock != NULL);
 	k_sem_take((struct k_sem *)lock, K_FOREVER);
+=======
+/* Close dynamic non-recursive lock */
+void __retarget_lock_close(_LOCK_T lock)
+{
+	__retarget_lock_close_recursive(lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Acquiure recursive lock */
@@ -222,11 +246,18 @@ void __retarget_lock_acquire_recursive(_LOCK_T lock)
 	k_mutex_lock((struct k_mutex *)lock, K_FOREVER);
 }
 
+<<<<<<< HEAD
 /* Try acquiring non-recursive lock */
 int __retarget_lock_try_acquire(_LOCK_T lock)
 {
 	__ASSERT_NO_MSG(lock != NULL);
 	return !k_sem_take((struct k_sem *)lock, K_NO_WAIT);
+=======
+/* Acquiure non-recursive lock */
+void __retarget_lock_acquire(_LOCK_T lock)
+{
+	__retarget_lock_acquire_recursive(lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Try acquiring recursive lock */
@@ -236,11 +267,18 @@ int __retarget_lock_try_acquire_recursive(_LOCK_T lock)
 	return !k_mutex_lock((struct k_mutex *)lock, K_NO_WAIT);
 }
 
+<<<<<<< HEAD
 /* Release non-recursive lock */
 void __retarget_lock_release(_LOCK_T lock)
 {
 	__ASSERT_NO_MSG(lock != NULL);
 	k_sem_give((struct k_sem *)lock);
+=======
+/* Try acquiring non-recursive lock */
+int __retarget_lock_try_acquire(_LOCK_T lock)
+{
+	return __retarget_lock_try_acquire_recursive(lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Release recursive lock */
@@ -250,6 +288,15 @@ void __retarget_lock_release_recursive(_LOCK_T lock)
 	k_mutex_unlock((struct k_mutex *)lock);
 }
 
+<<<<<<< HEAD
+=======
+/* Release non-recursive lock */
+void __retarget_lock_release(_LOCK_T lock)
+{
+	__retarget_lock_release_recursive(lock);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_MULTITHREADING */
 
 /* This function gets called if static buffer overflow detection is enabled on

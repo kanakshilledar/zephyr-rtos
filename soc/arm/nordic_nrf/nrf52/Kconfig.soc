@@ -64,10 +64,24 @@ config SOC_NRF52832_QFAB
 	bool "NRF52832_QFAB"
 	select SOC_NRF52832
 
+<<<<<<< HEAD
+=======
+config SOC_NRF52833_QDAA
+	bool "NRF52833_QDAA"
+	select SOC_NRF52833
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config SOC_NRF52833_QIAA
 	bool "NRF52833_QIAA"
 	select SOC_NRF52833
 
+<<<<<<< HEAD
+=======
+config SOC_NRF52840_QFAA
+	bool "NRF52840_QFAA"
+	select SOC_NRF52840
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config SOC_NRF52840_QIAA
 	bool "NRF52840_QIAA"
 	select SOC_NRF52840
@@ -81,13 +95,29 @@ config SOC_DCDC_NRF52X
 
 config SOC_DCDC_NRF52X_HV
 	bool
+<<<<<<< HEAD
 	depends on SOC_NRF52840
+=======
+	depends on SOC_NRF52840_QIAA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable nRF52 series System on Chip High Voltage DC/DC converter.
 
 config GPIO_AS_PINRESET
+<<<<<<< HEAD
 	bool "GPIO as pin reset (reset button)"
 	default y
+=======
+	bool "[DEPRECATED] GPIO as pin reset (reset button)"
+	select DEPRECATED
+	help
+	  This option is deprecated, use devicetree instead. Example
+	  configuration:
+
+	  &uicr {
+	      gpio-as-nreset;
+	  };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config NRF_ENABLE_ICACHE
 	bool "The instruction cache (I-Cache)"
@@ -121,4 +151,18 @@ config NRF52_ANOMALY_198_WORKAROUND
 	  This anomaly applies to IC revisions "Engineering B" up to "3", the most
 	  recent one.
 
+<<<<<<< HEAD
+=======
+config NRF52_ANOMALY_109_WORKAROUND
+	bool "Anomaly 109 workaround"
+	default y
+	depends on SOC_NRF52832
+	depends on NRFX_SPIS || NRFX_SPIM || NRFX_TWIM || NRFX_PWM
+	help
+	  Due to Anomaly 109 the first byte sent out by these peripherals is
+	  sometimes wrong. This occurs when the system enters IDLE and stops the
+	  64MHz clock at the same time as the peripheral that is using DMA is started.
+	  This anomaly applies to IC revisions up to "3", the most recent one.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # SOC_SERIES_NRF52X

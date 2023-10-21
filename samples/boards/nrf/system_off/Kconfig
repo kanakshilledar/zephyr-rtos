@@ -5,7 +5,11 @@ mainmenu "Nordic SYSTEM_OFF demo"
 
 config APP_RETENTION
 	bool "State retention in system off"
+<<<<<<< HEAD
 	depends on SOC_COMPATIBLE_NRF52X
+=======
+	depends on SOC_COMPATIBLE_NRF52X && CRC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  On some Nordic chips this application supports retaining
 	  memory while in system off.  Select this to enable the

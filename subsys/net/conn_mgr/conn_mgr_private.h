@@ -27,7 +27,11 @@
 /* Configuration flags */
 #define CONN_MGR_IF_IGNORED		BIT(7)
 
+<<<<<<< HEAD
 /* Internal state flags*/
+=======
+/* Internal state flags */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CONN_MGR_IF_READY		BIT(14)
 
 /* Event flags */
@@ -37,6 +41,15 @@
 #define CONN_MGR_IFACE_EVENTS_MASK	(NET_EVENT_IF_DOWN		| \
 					 NET_EVENT_IF_UP)
 
+<<<<<<< HEAD
+=======
+#define CONN_MGR_CONN_IFACE_EVENTS_MASK	(NET_EVENT_IF_ADMIN_UP		|\
+					 NET_EVENT_IF_DOWN)
+
+#define CONN_MGR_CONN_SELF_EVENTS_MASK	(NET_EVENT_CONN_IF_TIMEOUT	| \
+					 NET_EVENT_CONN_IF_FATAL_ERROR)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CONN_MGR_IPV6_EVENTS_MASK	(NET_EVENT_IPV6_ADDR_ADD	| \
 					 NET_EVENT_IPV6_ADDR_DEL	| \
 					 NET_EVENT_IPV6_DAD_SUCCEED	| \
@@ -45,6 +58,7 @@
 #define CONN_MGR_IPV4_EVENTS_MASK	(NET_EVENT_IPV4_ADDR_ADD	| \
 					 NET_EVENT_IPV4_ADDR_DEL)
 
+<<<<<<< HEAD
 extern struct k_sem conn_mgr_event_signal;
 extern struct k_mutex conn_mgr_lock;
 
@@ -71,5 +85,14 @@ static inline struct conn_mgr_conn_binding *conn_mgr_if_get_binding(struct net_i
 	}
 	return NULL;
 }
+=======
+extern struct k_sem conn_mgr_mon_updated;
+extern struct k_mutex conn_mgr_mon_lock;
+
+void conn_mgr_init_events_handler(void);
+
+/* Cause conn_mgr_connectivity to Initialize all connectivity implementation bindings */
+void conn_mgr_conn_init(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* __CONN_MGR_PRV_H__ */

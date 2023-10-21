@@ -4,6 +4,32 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 &twai {
         status = "okay";
+=======
+/* Enable CAN bus */
+&twai {
+	status = "okay";
+	pinctrl-0 = <&twai_default>;
+	pinctrl-names = "default";
+	bus-speed = <125000>;
+
+	can-transceiver {
+		max-bitrate = <1000000>;
+	};
+};
+
+&pinctrl {
+	twai_default: twai_default {
+		group1 {
+			pinmux = <TWAI_RX_GPIO5>;
+			output-enable;	/* enable internal loopback */
+		};
+		group2 {
+			pinmux = <TWAI_TX_GPIO5>;
+			input-enable;	/* enable internal loopback */
+		};
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };

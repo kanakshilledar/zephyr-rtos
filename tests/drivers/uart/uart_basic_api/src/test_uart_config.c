@@ -25,7 +25,10 @@
  */
 
 #include "test_uart.h"
+<<<<<<< HEAD
 struct uart_config uart_cfg_check;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 const struct uart_config uart_cfg = {
 		.baudrate = 115200,
 		.parity = UART_CFG_PARITY_NONE,
@@ -58,6 +61,10 @@ static int test_configure(void)
 /* test UART configure get (retrieve configuration) */
 static int test_config_get(void)
 {
+<<<<<<< HEAD
+=======
+	struct uart_config uart_cfg_check;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct device *const uart_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
 
 	if (!device_is_ready(uart_dev)) {

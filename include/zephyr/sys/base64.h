@@ -32,6 +32,18 @@ extern "C" {
 #endif
 
 /**
+<<<<<<< HEAD
+=======
+ * @file
+ *
+ * @defgroup base64 Base64
+ * @brief Base64 encoding/decoding functions
+ * @ingroup utilities
+ * @{
+ */
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief          Encode a buffer into base64 format
  *
  * @param dst      destination buffer
@@ -72,6 +84,13 @@ int base64_encode(uint8_t *dst, size_t dlen, size_t *olen, const uint8_t *src,
 int base64_decode(uint8_t *dst, size_t dlen, size_t *olen, const uint8_t *src,
 		  size_t slen);
 
+<<<<<<< HEAD
+=======
+/**
+ * @}
+ */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

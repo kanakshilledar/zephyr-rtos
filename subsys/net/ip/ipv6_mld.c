@@ -17,6 +17,10 @@ LOG_MODULE_DECLARE(net_ipv6, CONFIG_NET_IPV6_LOG_LEVEL);
 #include <zephyr/net/net_stats.h>
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_mgmt.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/icmp.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "net_private.h"
 #include "connection.h"
 #include "icmpv6.h"
@@ -308,12 +312,24 @@ drop:
 #define dbg_addr_recv(pkt_str, src, dst)	\
 	dbg_addr("Received", pkt_str, src, dst)
 
+<<<<<<< HEAD
 static enum net_verdict handle_mld_query(struct net_pkt *pkt,
 					 struct net_ipv6_hdr *ip_hdr,
 					 struct net_icmp_hdr *icmp_hdr)
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(mld_access,
 					      struct net_icmpv6_mld_query);
+=======
+static int handle_mld_query(struct net_icmp_ctx *ctx,
+			    struct net_pkt *pkt,
+			    struct net_icmp_ip_hdr *hdr,
+			    struct net_icmp_hdr *icmp_hdr,
+			    void *user_data)
+{
+	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(mld_access,
+					      struct net_icmpv6_mld_query);
+	struct net_ipv6_hdr *ip_hdr = hdr->ipv6;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t length = net_pkt_get_len(pkt);
 	struct net_icmpv6_mld_query *mld_query;
 	uint16_t pkt_len;
@@ -352,13 +368,18 @@ static enum net_verdict handle_mld_query(struct net_pkt *pkt,
 
 	send_mld_report(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	net_pkt_unref(pkt);
 
 	return NET_OK;
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 drop:
 	net_stats_update_ipv6_mld_drop(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	return NET_DROP;
 }
 
@@ -371,4 +392,19 @@ static struct net_icmpv6_handler mld_query_input_handler = {
 void net_ipv6_mld_init(void)
 {
 	net_icmpv6_register_handler(&mld_query_input_handler);
+=======
+	return -EIO;
+}
+
+void net_ipv6_mld_init(void)
+{
+	static struct net_icmp_ctx ctx;
+	int ret;
+
+	ret = net_icmp_init_ctx(&ctx, NET_ICMPV6_MLD_QUERY, 0, handle_mld_query);
+	if (ret < 0) {
+		NET_ERR("Cannot register %s handler (%d)", STRINGIFY(NET_ICMPV6_MLD_QUERY),
+			ret);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

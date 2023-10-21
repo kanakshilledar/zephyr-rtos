@@ -45,7 +45,10 @@ int sema_context_switch(void)
 {
 	uint32_t diff;
 
+<<<<<<< HEAD
 	bench_test_start();
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timing_start();
 
 	k_thread_create(&thread_one_data, thread_one_stack,
@@ -57,13 +60,21 @@ int sema_context_switch(void)
 
 	timestamp_end_sema_t_c = timing_counter_get();
 	diff = timing_cycles_get(&timestamp_start_sema_t_c, &timestamp_end_sema_t_c);
+<<<<<<< HEAD
 	PRINT_STATS("Semaphore take time (context switch)", diff);
+=======
+	PRINT_STATS("Semaphore take time (context switch)", diff, false, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 	timestamp_start_sema_g_c = timing_counter_get();
 	k_sem_give(&sem_bench);
 	diff = timing_cycles_get(&timestamp_start_sema_g_c, &timestamp_end_sema_g_c);
+<<<<<<< HEAD
 	PRINT_STATS("Semaphore give time (context switch)", diff);
+=======
+	PRINT_STATS("Semaphore give time (context switch)", diff, false, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	timing_stop();
 
@@ -85,6 +96,11 @@ int sema_test_signal(void)
 	uint32_t diff;
 	timing_t timestamp_start;
 	timing_t timestamp_end;
+<<<<<<< HEAD
+=======
+	const char *notes = "";
+	int  end;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bench_test_start();
 	timing_start();
@@ -96,6 +112,7 @@ int sema_test_signal(void)
 	}
 
 	timestamp_end = timing_counter_get();
+<<<<<<< HEAD
 	timing_stop();
 
 	if (bench_test_end() == 0) {
@@ -106,6 +123,20 @@ int sema_test_signal(void)
 		PRINT_OVERFLOW_ERROR();
 	}
 
+=======
+	end = bench_test_end();
+	timing_stop();
+
+	if (end != 0) {
+		error_count++;
+		notes = TICK_OCCURRENCE_ERROR;
+	}
+
+	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
+	PRINT_STATS_AVG("Average semaphore signal time", diff, N_TEST_SEMA,
+			false, notes);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bench_test_start();
 	timing_start();
 
@@ -116,6 +147,7 @@ int sema_test_signal(void)
 	}
 
 	timestamp_end = timing_counter_get();
+<<<<<<< HEAD
 	timing_stop();
 
 	if (bench_test_end() == 0) {
@@ -126,5 +158,19 @@ int sema_test_signal(void)
 		PRINT_OVERFLOW_ERROR();
 	}
 
+=======
+	end = bench_test_end();
+	timing_stop();
+
+	if (end != 0) {
+		error_count++;
+		notes = TICK_OCCURRENCE_ERROR;
+	}
+
+	diff = timing_cycles_get(&timestamp_start, &timestamp_end);
+	PRINT_STATS_AVG("Average semaphore test time", diff, N_TEST_SEMA,
+			false, notes);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

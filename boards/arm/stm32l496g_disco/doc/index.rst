@@ -142,6 +142,11 @@ The Zephyr stm32l496g_disco board configuration supports the following hardware 
 +-----------+------------+-------------------------------------+
 | SPI       | on-chip    | spi                                 |
 +-----------+------------+-------------------------------------+
+<<<<<<< HEAD
+=======
+| QSPI NOR  | on-chip    | off-chip flash                      |
++-----------+------------+-------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | PWM       | on-chip    | pwm                                 |
 +-----------+------------+-------------------------------------+
 | ADC       | on-chip    | adc                                 |
@@ -245,6 +250,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _STM32L496G Discovery website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32l496gdiscovery.html
 
 .. _STM32L496G Discovery board User Manual:
@@ -255,3 +261,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32L496 reference manual:
    http://www.st.com/resource/en/reference_manual/DM00083560.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32l496gdiscovery.html
+
+.. _STM32L496G Discovery board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00353127.pdf
+
+.. _STM32L496AG on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32l496ag.html
+
+.. _STM32L496 reference manual:
+   https://www.st.com/resource/en/reference_manual/DM00083560.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

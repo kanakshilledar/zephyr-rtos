@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -23,3 +27,12 @@
 	prescaler = <32>;
 	status = "okay";
 };
+<<<<<<< HEAD
+=======
+
+&pit0 {
+	pit-channel = <0>;
+	pit-period = <1000000>;
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

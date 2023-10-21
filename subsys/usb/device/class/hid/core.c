@@ -59,7 +59,11 @@ struct usb_hid_config {
 		.bNumEndpoints = 1,					\
 		.bInterfaceClass = USB_BCC_HID,				\
 		.bInterfaceSubClass = 1,				\
+<<<<<<< HEAD
 		.bInterfaceProtocol = CONFIG_USB_HID_PROTOCOL_CODE,	\
+=======
+		.bInterfaceProtocol = 0,				\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.iInterface = 0,					\
 	}
 #else
@@ -354,13 +358,31 @@ static void hid_do_status_cb(struct hid_device_info *dev_data,
 	case USB_DC_ERROR:
 		LOG_INF("Device error");
 		break;
+<<<<<<< HEAD
 	case USB_DC_RESET:
+=======
+	case USB_DC_RESET: {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("Device reset detected");
 		dev_data->configured = false;
 		dev_data->suspended = false;
 #ifdef CONFIG_USB_HID_BOOT_PROTOCOL
+<<<<<<< HEAD
 		dev_data->protocol = HID_PROTOCOL_REPORT;
 #endif
+=======
+		const struct device *dev = dev_data->common.dev;
+		uint8_t prev = dev_data->protocol;
+
+		dev_data->protocol = HID_PROTOCOL_REPORT;
+		if (prev != HID_PROTOCOL_REPORT) {
+			if (dev_data->ops && dev_data->ops->protocol_change) {
+				dev_data->ops->protocol_change(dev, dev_data->protocol);
+			}
+		}
+#endif
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_USB_DEVICE_SOF
 		hid_clear_idle_ctx(dev_data);
 #endif

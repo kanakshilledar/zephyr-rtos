@@ -7,11 +7,28 @@ choice
 
 config SOC_NIOSV_M
 	bool "Intel FPGA NIOSV Microcontroller Core Processor"
+<<<<<<< HEAD
 	select ATOMIC_OPERATIONS_C
+=======
+	select ATOMIC_OPERATIONS_BUILTIN
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select INCLUDE_RESET_VECTOR
 	select RISCV_ISA_RV32I
 	select RISCV_ISA_EXT_A
 	select RISCV_ISA_EXT_ZICSR
 	select RISCV_ISA_EXT_ZIFENCEI
 
+<<<<<<< HEAD
+=======
+config SOC_NIOSV_G
+	bool "Intel FPGA NIOSV General Purpose Processor"
+	select ATOMIC_OPERATIONS_BUILTIN
+	select INCLUDE_RESET_VECTOR
+	select RISCV_ISA_RV32I
+	select RISCV_ISA_EXT_A
+	select RISCV_ISA_EXT_M
+	select RISCV_ISA_EXT_ZICSR
+	select RISCV_ISA_EXT_ZIFENCEI
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endchoice

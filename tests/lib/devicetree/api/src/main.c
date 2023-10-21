@@ -25,6 +25,11 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/mbox.h>
 
+<<<<<<< HEAD
+=======
+#include <stdlib.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define TEST_CHILDREN	DT_PATH(test, test_children)
 #define TEST_DEADBEEF	DT_PATH(test, gpio_deadbeef)
 #define TEST_ABCD1234	DT_PATH(test, gpio_abcd1234)
@@ -39,6 +44,10 @@
 #define TEST_VENDOR	DT_NODELABEL(test_vendor)
 #define TEST_MODEL	DT_NODELABEL(test_vendor)
 #define TEST_ENUM_0	DT_NODELABEL(test_enum_0)
+<<<<<<< HEAD
+=======
+#define TEST_64BIT	DT_NODELABEL(test_reg_64)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define TEST_I2C DT_NODELABEL(test_i2c)
 #define TEST_I2C_DEV DT_PATH(test, i2c_11112222, test_i2c_dev_10)
@@ -86,6 +95,19 @@
 
 #define TEST_RANGES_PCIE  DT_NODELABEL(test_ranges_pcie)
 #define TEST_RANGES_OTHER DT_NODELABEL(test_ranges_other)
+<<<<<<< HEAD
+=======
+#define TEST_RANGES_EMPTY DT_NODELABEL(test_ranges_empty)
+
+#define TEST_MTD_0 DT_PATH(test, test_mtd_ffeeddcc)
+#define TEST_MTD_1 DT_PATH(test, test_mtd_33221100)
+
+#define TEST_MEM_0 DT_CHILD(TEST_MTD_0, flash_20000000)
+
+#define TEST_PARTITION_0 DT_PATH(test, test_mtd_ffeeddcc, flash_20000000, partitions, partition_0)
+#define TEST_PARTITION_1 DT_PATH(test, test_mtd_ffeeddcc, flash_20000000, partitions, partition_c0)
+#define TEST_PARTITION_2 DT_PATH(test, test_mtd_33221100, partitions, partition_6ff80)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define ZEPHYR_USER DT_PATH(zephyr_user)
 
@@ -292,6 +314,10 @@ ZTEST(devicetree_api, test_has_compat)
 	zassert_true(DT_HAS_COMPAT_STATUS_OKAY(vnd_gpio_device), "");
 	zassert_true(DT_HAS_COMPAT_STATUS_OKAY(vnd_gpio_device), "");
 	zassert_false(DT_HAS_COMPAT_STATUS_OKAY(vnd_disabled_compat), "");
+<<<<<<< HEAD
+=======
+	zassert_false(DT_HAS_COMPAT_STATUS_OKAY(vnd_reserved_compat), "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(TA_HAS_COMPAT(vnd_array_holder), 1, "");
 	zassert_equal(TA_HAS_COMPAT(vnd_undefined_compat), 1, "");
@@ -308,16 +334,38 @@ ZTEST(devicetree_api, test_has_status)
 		      1, "");
 	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(test_gpio_1), disabled),
 		      0, "");
+<<<<<<< HEAD
+=======
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(test_gpio_1), reserved),
+		      0, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(test_no_status), okay),
 		      1, "");
 	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(test_no_status), disabled),
 		      0, "");
+<<<<<<< HEAD
+=======
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(test_no_status), reserved),
+		      0, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(disabled_gpio), disabled),
 		      1, "");
 	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(disabled_gpio), okay),
 		      0, "");
+<<<<<<< HEAD
+=======
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(disabled_gpio), reserved),
+		      0, "");
+
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(reserved_gpio), reserved),
+		      1, "");
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(reserved_gpio), disabled),
+		      0, "");
+	zassert_equal(DT_NODE_HAS_STATUS(DT_NODELABEL(reserved_gpio), okay),
+		      0, "");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST(devicetree_api, test_bus)
@@ -455,6 +503,7 @@ ZTEST(devicetree_api, test_bus)
 #undef DT_DRV_COMPAT
 
 	/*
+<<<<<<< HEAD
 	 * Make sure the underlying DT_COMPAT_ON_BUS_INTERNAL used by
 	 * DT_ANY_INST_ON_BUS works without DT_DRV_COMPAT defined.
 	 */
@@ -467,6 +516,20 @@ ZTEST(devicetree_api, test_bus)
 	zassert_equal(DT_COMPAT_ON_BUS_INTERNAL(vnd_gpio_expander, i2c), 1,
 		      NULL);
 	zassert_equal(DT_COMPAT_ON_BUS_INTERNAL(vnd_gpio_expander, spi), 1,
+=======
+	 * Make sure the underlying DT_HAS_COMPAT_ON_BUS_STATUS_OKAY used by
+	 * DT_ANY_INST_ON_BUS works without DT_DRV_COMPAT defined.
+	 */
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_spi_device, spi), 1);
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_spi_device, i2c), 0);
+
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_i2c_device, i2c), 1);
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_i2c_device, spi), 0);
+
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_gpio_expander, i2c), 1,
+		      NULL);
+	zassert_equal(DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_gpio_expander, spi), 1,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		      NULL);
 }
 
@@ -546,6 +609,12 @@ ZTEST(devicetree_api, test_reg)
 	/* DT_REG_ADDR */
 	zassert_equal(DT_REG_ADDR(TEST_ABCD1234), 0xabcd1234, "");
 
+<<<<<<< HEAD
+=======
+	/* DT_REG_ADDR_U64 */
+	zassert_equal(DT_REG_ADDR_U64(TEST_ABCD1234), 0xabcd1234, "");
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* DT_REG_SIZE */
 	zassert_equal(DT_REG_SIZE(TEST_ABCD1234), 0x500, "");
 
@@ -553,6 +622,13 @@ ZTEST(devicetree_api, test_reg)
 	zassert_equal(DT_REG_ADDR_BY_NAME(TEST_ABCD1234, one), 0xabcd1234, "");
 	zassert_equal(DT_REG_ADDR_BY_NAME(TEST_ABCD1234, two), 0x98765432, "");
 
+<<<<<<< HEAD
+=======
+	/* DT_REG_ADDR_BY_NAME_U64 */
+	zassert_equal(DT_REG_ADDR_BY_NAME_U64(TEST_ABCD1234, one), 0xabcd1234, "");
+	zassert_equal(DT_REG_ADDR_BY_NAME_U64(TEST_ABCD1234, two), 0x98765432, "");
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* DT_REG_SIZE_BY_NAME */
 	zassert_equal(DT_REG_SIZE_BY_NAME(TEST_ABCD1234, one), 0x500, "");
 	zassert_equal(DT_REG_SIZE_BY_NAME(TEST_ABCD1234, two), 0xff, "");
@@ -576,6 +652,12 @@ ZTEST(devicetree_api, test_reg)
 	/* DT_INST_REG_ADDR */
 	zassert_equal(DT_INST_REG_ADDR(0), 0x9999aaaa, "");
 
+<<<<<<< HEAD
+=======
+	/* DT_INST_REG_ADDR_U64 */
+	zassert_equal(DT_INST_REG_ADDR_U64(0), 0x9999aaaa, "");
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* DT_INST_REG_SIZE */
 	zassert_equal(DT_INST_REG_SIZE(0), 0x1000, "");
 
@@ -583,12 +665,39 @@ ZTEST(devicetree_api, test_reg)
 	zassert_equal(DT_INST_REG_ADDR_BY_NAME(0, first), 0x9999aaaa, "");
 	zassert_equal(DT_INST_REG_ADDR_BY_NAME(0, second), 0xbbbbcccc, "");
 
+<<<<<<< HEAD
+=======
+	/* DT_INST_REG_ADDR_BY_NAME_U64 */
+	zassert_equal(DT_INST_REG_ADDR_BY_NAME_U64(0, first), 0x9999aaaa, "");
+	zassert_equal(DT_INST_REG_ADDR_BY_NAME_U64(0, second), 0xbbbbcccc, "");
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* DT_INST_REG_SIZE_BY_NAME */
 	zassert_equal(DT_INST_REG_SIZE_BY_NAME(0, first), 0x1000, "");
 	zassert_equal(DT_INST_REG_SIZE_BY_NAME(0, second), 0x3f, "");
 }
 
 #undef DT_DRV_COMPAT
+<<<<<<< HEAD
+=======
+#define DT_DRV_COMPAT vnd_reg_holder_64
+ZTEST(devicetree_api, test_reg_64)
+{
+	/* DT_REG_ADDR_U64 */
+	zassert_equal(DT_REG_ADDR_U64(TEST_64BIT), 0xffffffff11223344, "");
+
+	/* DT_REG_ADDR_BY_NAME_U64 */
+	zassert_equal(DT_REG_ADDR_BY_NAME_U64(TEST_64BIT, test_name), 0xffffffff11223344, "");
+
+	/* DT_INST_REG_ADDR_U64 */
+	zassert_equal(DT_INST_REG_ADDR_U64(0), 0xffffffff11223344, "");
+
+	/* DT_INST_REG_ADDR_BY_NAME_U64 */
+	zassert_equal(DT_INST_REG_ADDR_BY_NAME_U64(0, test_name), 0xffffffff11223344, "");
+}
+
+#undef DT_DRV_COMPAT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define DT_DRV_COMPAT vnd_interrupt_holder
 ZTEST(devicetree_api, test_irq)
 {
@@ -1380,8 +1489,24 @@ ZTEST(devicetree_api, test_foreach)
 	zassert_equal(1, DT_FOREACH_STATUS_OKAY_NODE(IS_ALIASES), "");
 	zassert_equal(0, DT_FOREACH_STATUS_OKAY_NODE(IS_DISABLED_GPIO), "");
 
+<<<<<<< HEAD
 #undef IS_ALIASES
 #undef IS_DISABLED_GPIO
+=======
+#define IS_ALIASES_VARGS(node_id, mul) + ((mul) * DT_SAME_NODE(DT_PATH(aliases), node_id))
+#define IS_DISABLED_GPIO_VARGS(node_id, mul) + ((mul) * \
+			       DT_SAME_NODE(DT_NODELABEL(disabled_gpio), node_id))
+	zassert_equal(2, DT_FOREACH_NODE_VARGS(IS_ALIASES_VARGS, 2), "");
+	zassert_equal(2, DT_FOREACH_NODE_VARGS(IS_DISABLED_GPIO_VARGS, 2), "");
+	zassert_equal(2, DT_FOREACH_STATUS_OKAY_NODE_VARGS(IS_ALIASES_VARGS, 2), "");
+	zassert_equal(0, DT_FOREACH_STATUS_OKAY_NODE_VARGS(IS_DISABLED_GPIO_VARGS, 2), "");
+
+
+#undef IS_ALIASES
+#undef IS_DISABLED_GPIO
+#undef IS_ALIASES_VARGS
+#undef IS_DISABLED_GPIO_VARGS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #undef DT_DRV_COMPAT
@@ -2210,6 +2335,25 @@ ZTEST(devicetree_api, test_ranges_other)
 #undef LENGTH
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(devicetree_api, test_ranges_empty)
+{
+	zassert_equal(DT_NODE_HAS_PROP(TEST_RANGES_EMPTY, ranges), 1, "");
+
+	zassert_equal(DT_NUM_RANGES(TEST_RANGES_EMPTY), 0, "");
+
+	zassert_equal(DT_RANGES_HAS_IDX(TEST_RANGES_EMPTY, 0), 0, "");
+	zassert_equal(DT_RANGES_HAS_IDX(TEST_RANGES_EMPTY, 1), 0, "");
+
+#define FAIL(node_id, idx) ztest_test_fail();
+
+	DT_FOREACH_RANGE(TEST_RANGES_EMPTY, FAIL);
+
+#undef FAIL
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(devicetree_api, test_compat_get_any_status_okay)
 {
 	zassert_true(
@@ -2383,6 +2527,31 @@ ZTEST(devicetree_api, test_dep_ord)
 	}
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(devicetree_api, test_dep_ord_str_sortable)
+{
+	const char *root_ord = STRINGIFY(DT_DEP_ORD_STR_SORTABLE(DT_ROOT));
+
+	/* Root ordinal is always 0 */
+	zassert_mem_equal(root_ord, "00000", 6);
+
+	/* Test string sortable versions equal decimal values.
+	 * We go through the STRINGIFY()->atoi conversion cycle to avoid
+	 * the C compiler treating the number as octal due to leading zeros.
+	 * atoi() simply ignores them.
+	 */
+	zassert_equal(atoi(STRINGIFY(DT_DEP_ORD_STR_SORTABLE(DT_ROOT))),
+		      DT_DEP_ORD(DT_ROOT), "Invalid sortable string");
+	zassert_equal(atoi(STRINGIFY(DT_DEP_ORD_STR_SORTABLE(TEST_DEADBEEF))),
+		      DT_DEP_ORD(TEST_DEADBEEF), "Invalid sortable string");
+	zassert_equal(atoi(STRINGIFY(DT_DEP_ORD_STR_SORTABLE(TEST_TEMP))),
+		      DT_DEP_ORD(TEST_TEMP), "Invalid sortable string");
+	zassert_equal(atoi(STRINGIFY(DT_DEP_ORD_STR_SORTABLE(TEST_REG))),
+		      DT_DEP_ORD(TEST_REG), "Invalid sortable string");
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(devicetree_api, test_path)
 {
 	zassert_true(!strcmp(DT_NODE_PATH(DT_ROOT), "/"), "");
@@ -2610,6 +2779,81 @@ ZTEST(devicetree_api, test_mbox)
 				  DT_NODELABEL(test_mbox_zero_cell)), "");
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(devicetree_api, test_fixed_partitions)
+{
+	/* Test finding fixed partitions by the 'label' property. */
+	zassert_true(DT_HAS_FIXED_PARTITION_LABEL(test_partition_0));
+	zassert_true(DT_HAS_FIXED_PARTITION_LABEL(test_partition_1));
+	zassert_true(DT_HAS_FIXED_PARTITION_LABEL(test_partition_2));
+
+	zassert_true(DT_SAME_NODE(TEST_PARTITION_0,
+				  DT_NODE_BY_FIXED_PARTITION_LABEL(test_partition_0)));
+	zassert_true(DT_SAME_NODE(TEST_PARTITION_1,
+				  DT_NODE_BY_FIXED_PARTITION_LABEL(test_partition_1)));
+	zassert_true(DT_SAME_NODE(TEST_PARTITION_2,
+				  DT_NODE_BY_FIXED_PARTITION_LABEL(test_partition_2)));
+
+	zassert_true(DT_FIXED_PARTITION_EXISTS(TEST_PARTITION_0));
+	zassert_true(DT_FIXED_PARTITION_EXISTS(TEST_PARTITION_1));
+	zassert_true(DT_FIXED_PARTITION_EXISTS(TEST_PARTITION_2));
+
+	/* There should not be a node with `label = "test_partition_3"`. */
+	zassert_false(DT_HAS_FIXED_PARTITION_LABEL(test_partition_3));
+	zassert_false(DT_NODE_EXISTS(DT_NODE_BY_FIXED_PARTITION_LABEL(test_partition_3)));
+
+	/* There is a node with `label = "TEST_GPIO_0"`, but it is not a fixed partition. */
+	zassert_false(DT_HAS_FIXED_PARTITION_LABEL(TEST_GPIO_0));
+	zassert_false(DT_NODE_EXISTS(DT_NODE_BY_FIXED_PARTITION_LABEL(TEST_GPIO_0)));
+
+	/* Test DT_MTD_FROM_FIXED_PARTITION. */
+	zassert_true(DT_NODE_EXISTS(DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_0)));
+	zassert_true(DT_NODE_EXISTS(DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_1)));
+	zassert_true(DT_NODE_EXISTS(DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_2)));
+
+	zassert_true(DT_SAME_NODE(TEST_MTD_0, DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_0)));
+	zassert_true(DT_SAME_NODE(TEST_MTD_0, DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_1)));
+	zassert_true(DT_SAME_NODE(TEST_MTD_1, DT_MTD_FROM_FIXED_PARTITION(TEST_PARTITION_2)));
+
+	/* Test DT_MEM_FROM_FIXED_PARTITION. */
+	zassert_true(DT_NODE_EXISTS(DT_MEM_FROM_FIXED_PARTITION(TEST_PARTITION_0)));
+	zassert_true(DT_NODE_EXISTS(DT_MEM_FROM_FIXED_PARTITION(TEST_PARTITION_1)));
+	zassert_false(DT_NODE_EXISTS(DT_MEM_FROM_FIXED_PARTITION(TEST_PARTITION_2)));
+
+	zassert_true(DT_SAME_NODE(TEST_MEM_0, DT_MEM_FROM_FIXED_PARTITION(TEST_PARTITION_0)));
+	zassert_true(DT_SAME_NODE(TEST_MEM_0, DT_MEM_FROM_FIXED_PARTITION(TEST_PARTITION_1)));
+
+	/* Test DT_FIXED_PARTITION_ADDR. */
+	zassert_equal(DT_FIXED_PARTITION_ADDR(TEST_PARTITION_0), 0x20000000);
+	zassert_equal(DT_FIXED_PARTITION_ADDR(TEST_PARTITION_1), 0x200000c0);
+
+	/* DT_FIXED_PARTITION_ADDR(TEST_PARTITION_2) expands to an invalid expression.
+	 * Test this by way of string comparison.
+	 */
+	zassert_true(!strcmp(TO_STRING(DT_FIXED_PARTITION_ADDR(TEST_PARTITION_2)),
+			     "(__REG_IDX_0_VAL_ADDRESS + 458624)"));
+	zassert_equal(DT_REG_ADDR(TEST_PARTITION_2), 458624);
+
+	/* Test that all DT_FIXED_PARTITION_ID are defined and unique. */
+#define FIXED_PARTITION_ID_COMMA(node_id) DT_FIXED_PARTITION_ID(node_id),
+
+	static const int ids[] = {
+		DT_FOREACH_STATUS_OKAY_VARGS(fixed_partitions, DT_FOREACH_CHILD,
+					     FIXED_PARTITION_ID_COMMA)
+	};
+	bool found[ARRAY_SIZE(ids)] = { false };
+
+	for (int i = 0; i < ARRAY_SIZE(ids); i++) {
+		zassert_between_inclusive(ids[i], 0, ARRAY_SIZE(ids) - 1, "");
+		zassert_false(found[ids[i]]);
+		found[ids[i]] = true;
+	}
+
+#undef FIXED_PARTITION_ID_COMMA
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(devicetree_api, test_string_token)
 {
 #undef DT_DRV_COMPAT

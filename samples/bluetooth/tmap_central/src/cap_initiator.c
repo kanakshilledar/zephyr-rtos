@@ -33,7 +33,11 @@ static K_SEM_DEFINE(sem_discover_source, 0, 1);
 static K_SEM_DEFINE(sem_audio_start, 0, 1);
 
 static void unicast_stream_configured(struct bt_bap_stream *stream,
+<<<<<<< HEAD
 				      const struct bt_codec_qos_pref *pref)
+=======
+				      const struct bt_audio_codec_qos_pref *pref)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	printk("Configured stream %p\n", stream);
 
@@ -180,6 +184,7 @@ static void print_hex(const uint8_t *ptr, size_t len)
 	}
 }
 
+<<<<<<< HEAD
 static void print_codec_capabilities(const struct bt_codec *codec)
 {
 	printk("codec 0x%02x cid 0x%04x vid 0x%04x count %u\n",
@@ -210,6 +215,33 @@ static void print_remote_codec(const struct bt_codec *codec_capabilities, enum b
 {
 	printk("codec_capabilities %p dir 0x%02x\n", codec_capabilities, dir);
 	print_codec_capabilities(codec_capabilities);
+=======
+static bool print_cb(struct bt_data *data, void *user_data)
+{
+	const char *str = (const char *)user_data;
+
+	printk("%s: type 0x%02x value_len %u\n", str, data->type, data->data_len);
+	print_hex(data->data, data->data_len);
+	printk("\n");
+
+	return true;
+}
+
+static void print_remote_codec(const struct bt_audio_codec_cap *codec_cap, enum bt_audio_dir dir)
+{
+	printk("codec id 0x%02x cid 0x%04x vid 0x%04x count %u\n", codec_cap->id, codec_cap->cid,
+	       codec_cap->vid, codec_cap->data_len);
+
+	if (codec_cap->id == BT_HCI_CODING_FORMAT_LC3) {
+		bt_audio_data_parse(codec_cap->data, codec_cap->data_len, print_cb, "data");
+	} else { /* If not LC3, we cannot assume it's LTV */
+		printk("data: ");
+		print_hex(codec_cap->data, codec_cap->data_len);
+		printk("\n");
+	}
+
+	bt_audio_data_parse(codec_cap->meta, codec_cap->meta_len, print_cb, "meta");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void add_remote_sink(struct bt_bap_ep *ep)
@@ -250,9 +282,16 @@ static void discover_cb(struct bt_conn *conn, int err, enum bt_audio_dir dir)
 	}
 }
 
+<<<<<<< HEAD
 static void pac_record_cb(struct bt_conn *conn, enum bt_audio_dir dir, const struct bt_codec *codec)
 {
 	print_remote_codec(codec, dir);
+=======
+static void pac_record_cb(struct bt_conn *conn, enum bt_audio_dir dir,
+			  const struct bt_audio_codec_cap *codec_cap)
+{
+	print_remote_codec(codec_cap, dir);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void endpoint_cb(struct bt_conn *conn, enum bt_audio_dir dir, struct bt_bap_ep *ep)
@@ -347,8 +386,12 @@ static int unicast_audio_start(struct bt_conn *conn, struct bt_bap_unicast_group
 	stream_param.member.member = conn;
 	stream_param.stream = &unicast_streams[0];
 	stream_param.ep = unicast_sink_eps[0];
+<<<<<<< HEAD
 	stream_param.codec = &unicast_preset_48_2_1.codec;
 	stream_param.qos = &unicast_preset_48_2_1.qos;
+=======
+	stream_param.codec_cfg = &unicast_preset_48_2_1.codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	err = bt_cap_initiator_unicast_audio_start(&param, unicast_group);
 	if (err != 0) {

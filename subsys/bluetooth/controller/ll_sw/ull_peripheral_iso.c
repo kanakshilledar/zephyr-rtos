@@ -104,11 +104,24 @@ uint8_t ll_cis_accept(uint16_t handle)
 	if (conn) {
 		uint32_t cis_offset_min;
 
+<<<<<<< HEAD
 		if (IS_ENABLED(CONFIG_BT_CTLR_JIT_SCHEDULING)) {
 			cis_offset_min = MAX(400, EVENT_OVERHEAD_CIS_SETUP_US);
 		} else {
 			cis_offset_min = HAL_TICKER_TICKS_TO_US(conn->ull.ticks_slot) +
 					 (EVENT_TICKER_RES_MARGIN_US << 1U);
+=======
+		if (IS_ENABLED(CONFIG_BT_CTLR_PERIPHERAL_ISO_EARLY_CIG_START)) {
+			/* Early start allows offset down to spec defined minimum */
+			cis_offset_min = CIS_MIN_OFFSET_MIN;
+		} else {
+			cis_offset_min = HAL_TICKER_TICKS_TO_US(conn->ull.ticks_slot) +
+					 (EVENT_TICKER_RES_MARGIN_US << 1U);
+
+			if (!IS_ENABLED(CONFIG_BT_CTLR_EVENT_OVERHEAD_RESERVE_MAX)) {
+				cis_offset_min += EVENT_OVERHEAD_START_US + EVENT_OVERHEAD_END_US;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Accept request */
@@ -186,6 +199,10 @@ uint8_t ull_peripheral_iso_acquire(struct ll_conn *acl,
 
 		cig->iso_interval = sys_le16_to_cpu(req->iso_interval);
 		iso_interval_us = cig->iso_interval * CONN_INT_UNIT_US;
+<<<<<<< HEAD
+=======
+		cig->lll.iso_interval_us = iso_interval_us;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		cig->cig_id = req->cig_id;
 		cig->lll.handle = LLL_HANDLE_INVALID;
@@ -249,12 +266,18 @@ uint8_t ull_peripheral_iso_acquire(struct ll_conn *acl,
 	cis->p_max_sdu = (uint16_t)(req->p_max_sdu[1] & 0x0F) << 8 |
 				    req->p_max_sdu[0];
 
+<<<<<<< HEAD
 	cis->lll.handle = 0xFFFF;
+=======
+	cis->lll.active = 0U;
+	cis->lll.handle = LLL_HANDLE_INVALID;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	cis->lll.acl_handle = acl->lll.handle;
 	cis->lll.sub_interval = sys_get_le24(req->sub_interval);
 	cis->lll.nse = req->nse;
 
 	cis->lll.rx.phy = req->c_phy;
+<<<<<<< HEAD
 	cis->lll.rx.bn = req->c_bn;
 	cis->lll.rx.ft = req->c_ft;
 	cis->lll.rx.max_pdu = sys_le16_to_cpu(req->c_max_pdu);
@@ -267,6 +290,18 @@ uint8_t ull_peripheral_iso_acquire(struct ll_conn *acl,
 	cis->lll.tx.max_pdu = sys_le16_to_cpu(req->p_max_pdu);
 	cis->lll.tx.payload_count = 0;
 	cis->lll.tx.bn_curr = 1U;
+=======
+	cis->lll.rx.phy_flags = PHY_FLAGS_S8;
+	cis->lll.rx.bn = req->c_bn;
+	cis->lll.rx.ft = req->c_ft;
+	cis->lll.rx.max_pdu = sys_le16_to_cpu(req->c_max_pdu);
+
+	cis->lll.tx.phy = req->p_phy;
+	cis->lll.tx.phy_flags = PHY_FLAGS_S8;
+	cis->lll.tx.bn = req->p_bn;
+	cis->lll.tx.ft = req->p_ft;
+	cis->lll.tx.max_pdu = sys_le16_to_cpu(req->p_max_pdu);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!cis->lll.link_tx_free) {
 		cis->lll.link_tx_free = &cis->lll.link_tx;
@@ -321,14 +356,24 @@ uint8_t ull_peripheral_iso_setup(struct pdu_data_llctrl_cis_ind *ind,
 	cis->sync_delay = sys_get_le24(ind->cis_sync_delay);
 	cis->offset = cis_offset;
 	memcpy(cis->lll.access_addr, ind->aa, sizeof(ind->aa));
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_CTLR_ISOAL_PSN_IGNORE)
+	cis->pkt_seq_num = 0U;
+#endif /* CONFIG_BT_CTLR_ISOAL_PSN_IGNORE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	cis->lll.event_count = LLL_CONN_ISO_EVENT_COUNT_MAX;
 	cis->lll.next_subevent = 0U;
 	cis->lll.sn = 0U;
 	cis->lll.nesn = 0U;
 	cis->lll.cie = 0U;
 	cis->lll.npi = 0U;
+<<<<<<< HEAD
 	cis->lll.flushed = 0U;
 	cis->lll.active = 0U;
+=======
+	cis->lll.flush = LLL_CIS_FLUSH_NONE;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	cis->lll.datapath_ready_rx = 0U;
 	cis->lll.tx.payload_count = 0U;
 	cis->lll.rx.payload_count = 0U;

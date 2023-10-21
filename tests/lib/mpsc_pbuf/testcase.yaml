@@ -19,7 +19,11 @@ tests:
     integration_platforms:
       - native_posix
 
+<<<<<<< HEAD
   libraries.mpsc_pbuf_concurrent:
+=======
+  libraries.mpsc_pbuf.concurrent:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags: mpsc_pbuf
     platform_allow:
       - qemu_cortex_m3

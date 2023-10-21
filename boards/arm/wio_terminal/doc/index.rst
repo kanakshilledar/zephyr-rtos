@@ -122,7 +122,11 @@ USB Device Port
 
 The SAMD51 MCU has a USB device port that can be used to communicate with a
 host PC.  See the :ref:`usb-samples` sample applications for more, such as the
+<<<<<<< HEAD
 :ref:`usb_cdc-acm` sample which sets up a virtual serial port that echos
+=======
+:zephyr:code-sample:`usb-cdc-acm` sample which sets up a virtual serial port that echos
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 characters back to the host PC.
 
 Programming and Debugging

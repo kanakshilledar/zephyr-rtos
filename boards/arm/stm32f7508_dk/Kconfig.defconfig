@@ -17,9 +17,12 @@ endif # NETWORKING
 
 if DISPLAY
 
+<<<<<<< HEAD
 config KSCAN
 	default y
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # MEMC needs to be enabled in order to store
 # display buffer to external SDRAM connected to FMC
 config MEMC
@@ -28,7 +31,11 @@ config MEMC
 endif # DISPLAY
 
 config INPUT
+<<<<<<< HEAD
 	default y if KSCAN
+=======
+	default y if LVGL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if INPUT
 

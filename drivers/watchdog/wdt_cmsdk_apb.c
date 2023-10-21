@@ -12,7 +12,11 @@
 
 #include <errno.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/nmi.h>
+=======
+#include <zephyr/arch/arm/nmi.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/watchdog.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/sys/reboot.h>

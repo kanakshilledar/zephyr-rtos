@@ -17,7 +17,10 @@
 #include <fsl_cache.h>
 #endif
 
+<<<<<<< HEAD
 #define NOR_WRITE_SIZE	1
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define NOR_ERASE_VALUE	0xff
 
 #ifdef CONFIG_FLASH_MCUX_FLEXSPI_NOR_WRITE_BUFFER
@@ -40,8 +43,16 @@ static uint8_t nor_write_buf[SPI_NOR_PAGE_SIZE];
 /* FLASH_ENABLE_OCTAL_CMD: (01 = STR OPI Enable) , (02 = DTR OPI Enable) */
 #if CONFIG_FLASH_MCUX_FLEXSPI_MX25UM51345G_OPI_DTR
 #define NOR_FLASH_ENABLE_OCTAL_CMD 0x2
+<<<<<<< HEAD
 #else
 #define NOR_FLASH_ENABLE_OCTAL_CMD 0x1
+=======
+/* In OPI DTR mode, all writes must be 2 byte aligned, and multiples of 2 bytes */
+#define NOR_WRITE_SIZE	2
+#else
+#define NOR_FLASH_ENABLE_OCTAL_CMD 0x1
+#define NOR_WRITE_SIZE	1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 LOG_MODULE_REGISTER(flash_flexspi_nor, CONFIG_FLASH_LOG_LEVEL);
@@ -388,6 +399,15 @@ static int flash_flexspi_nor_write(const struct device *dev, off_t offset,
 		 */
 		key = irq_lock();
 	}
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_FLASH_MCUX_FLEXSPI_MX25UM51345G_OPI_DTR)) {
+		/* Check that write size and length are even */
+		if ((offset & 0x1) || (len & 0x1)) {
+			return -EINVAL;
+		}
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	while (len) {
 		/* If the offset isn't a multiple of the NOR page size, we first need

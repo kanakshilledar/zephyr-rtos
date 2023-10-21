@@ -7,8 +7,13 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/sys/printk.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/exc.h>
+=======
+#include <cmsis_core.h>
+#include <zephyr/arch/arm/exc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LED0_NODE DT_ALIAS(led0)
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
@@ -58,7 +63,11 @@ void z_arm_debug_monitor(void)
 int main(void)
 {
 	/* Set up led and led timer */
+<<<<<<< HEAD
 	if (!device_is_ready(led.port)) {
+=======
+	if (!gpio_is_ready_dt(&led)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Device not ready\n");
 		return 0;
 	}

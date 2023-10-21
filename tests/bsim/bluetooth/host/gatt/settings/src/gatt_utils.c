@@ -125,8 +125,11 @@ DEFINE_FLAG(flag_discovered);
 static uint8_t discover_func(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 			     struct bt_gatt_discover_params *params)
 {
+<<<<<<< HEAD
 	int err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (attr == NULL) {
 		for (int i = 0; i < ARRAY_SIZE(gatt_handles); i++) {
 			printk("handle[%d] = 0x%x\n", i, gatt_handles[i]);
@@ -143,6 +146,7 @@ static uint8_t discover_func(struct bt_conn *conn, const struct bt_gatt_attr *at
 		return BT_GATT_ITER_STOP;
 	}
 
+<<<<<<< HEAD
 	if (params->type == BT_GATT_DISCOVER_PRIMARY &&
 	    bt_uuid_cmp(params->uuid, &test_svc_uuid.uuid) == 0) {
 		printk("Found test service\n");
@@ -157,6 +161,9 @@ static uint8_t discover_func(struct bt_conn *conn, const struct bt_gatt_attr *at
 
 		return BT_GATT_ITER_STOP;
 	} else if (params->type == BT_GATT_DISCOVER_CHARACTERISTIC) {
+=======
+	if (params->type == BT_GATT_DISCOVER_CHARACTERISTIC) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		const struct bt_gatt_chrc *chrc = (struct bt_gatt_chrc *)attr->user_data;
 
 		if (bt_uuid_cmp(chrc->uuid, BT_UUID_GATT_CLIENT_FEATURES) == 0) {

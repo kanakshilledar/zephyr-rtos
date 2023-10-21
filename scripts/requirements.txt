@@ -1,6 +1,9 @@
 -r requirements-base.txt
 -r requirements-build-test.txt
+<<<<<<< HEAD
 -r requirements-doc.txt
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 -r requirements-run-test.txt
 -r requirements-extras.txt
 -r requirements-compliance.txt

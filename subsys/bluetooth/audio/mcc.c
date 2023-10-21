@@ -135,7 +135,11 @@ struct mcs_instance_t {
 #endif /* CONFIG_BT_MCC_OTS */
 };
 
+<<<<<<< HEAD
 static struct mcs_instance_t mcs_inst;
+=======
+static struct mcs_instance_t mcs_instance;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct bt_uuid_16 uuid = BT_UUID_INIT_16(0);
 
 static struct bt_mcc_cb *mcc_cb;
@@ -168,7 +172,11 @@ static struct mcs_instance_t *lookup_inst_by_conn(struct bt_conn *conn)
 	}
 
 	/* TODO: Expand when supporting more instances */
+<<<<<<< HEAD
 	return &mcs_inst;
+=======
+	return &mcs_instance;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void mcc_player_name_cb(struct bt_conn *conn, uint8_t err, const void *data, uint16_t length)

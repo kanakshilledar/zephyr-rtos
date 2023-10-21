@@ -6,8 +6,13 @@
 
 /**
  * @file
+<<<<<<< HEAD
  * @brief API for defining generic interfaces for configuring and firing network association
  *	  routines on network devices that support it.
+=======
+ * @brief API for controlling generic network association routines on network devices that
+ * support it.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 
 #ifndef ZEPHYR_INCLUDE_CONN_MGR_CONNECTIVITY_H_
@@ -16,6 +21,10 @@
 #include <zephyr/device.h>
 #include <zephyr/net/net_if.h>
 #include <zephyr/sys/iterable_sections.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/net_mgmt.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,14 +43,25 @@ extern "C" {
 /* Connectivity Events */
 #define _NET_MGMT_CONN_LAYER			NET_MGMT_LAYER(NET_MGMT_LAYER_L2)
 #define _NET_MGMT_CONN_CODE			NET_MGMT_LAYER_CODE(0x207)
+<<<<<<< HEAD
 #define _NET_MGMT_CONN_BASE			(_NET_MGMT_CONN_LAYER | _NET_MGMT_CONN_CODE)
 #define _NET_MGMT_CONN_IF_EVENT			(NET_MGMT_IFACE_BIT | _NET_MGMT_CONN_BASE)
 
 enum net_event_ethernet_cmd {
+=======
+#define _NET_MGMT_CONN_BASE			(_NET_MGMT_CONN_LAYER | _NET_MGMT_CONN_CODE | \
+						 NET_MGMT_EVENT_BIT)
+#define _NET_MGMT_CONN_IF_EVENT			(NET_MGMT_IFACE_BIT | _NET_MGMT_CONN_BASE)
+
+/** @endcond */
+
+enum net_event_conn_cmd {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	NET_EVENT_CONN_CMD_IF_TIMEOUT = 1,
 	NET_EVENT_CONN_CMD_IF_FATAL_ERROR,
 };
 
+<<<<<<< HEAD
 #define NET_EVENT_CONN_IF_TIMEOUT					\
 	(_NET_MGMT_CONN_IF_EVENT | NET_EVENT_CONN_CMD_IF_TIMEOUT)
 
@@ -167,23 +187,63 @@ struct conn_mgr_conn_impl {
 #define CONN_MGR_CONN_BINDING_GET_DATA(dev_id, sfx)	__conn_mgr_bndg_data_##dev_id##_##sfx
 #define CONN_MGR_CONN_BINDING_GET_MUTEX(dev_id, sfx)	__conn_mgr_bndg_mutex_##dev_id##_##sfx
 /** @endcond */
+=======
+/**
+ * @brief net_mgmt event raised when a connection attempt times out
+ */
+#define NET_EVENT_CONN_IF_TIMEOUT					\
+	(_NET_MGMT_CONN_IF_EVENT | NET_EVENT_CONN_CMD_IF_TIMEOUT)
+
+/**
+ * @brief net_mgmt event raised when a non-recoverable connectivity error occurs on an iface
+ */
+#define NET_EVENT_CONN_IF_FATAL_ERROR					\
+	(_NET_MGMT_CONN_IF_EVENT | NET_EVENT_CONN_CMD_IF_FATAL_ERROR)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Per-iface connectivity flags
  */
 enum conn_mgr_if_flag {
+<<<<<<< HEAD
 	/* Persistent
+=======
+	/**
+	 * Persistent
+	 *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * When set, indicates that the connectivity implementation bound to this iface should
 	 * attempt to persist connectivity by automatically reconnecting after connection loss.
 	 */
 	CONN_MGR_IF_PERSISTENT,
 
+<<<<<<< HEAD
+=======
+	/**
+	 * No auto-connect
+	 *
+	 * When set, conn_mgr will not automatically attempt to connect this iface when it reaches
+	 * admin-up.
+	 */
+	CONN_MGR_IF_NO_AUTO_CONNECT,
+
+	/**
+	 * No auto-down
+	 *
+	 * When set, conn_mgr will not automatically take the iface admin-down when it stops
+	 * trying to connect, even if CONFIG_NET_CONNECTION_MANAGER_AUTO_IF_DOWN is enabled.
+	 */
+	CONN_MGR_IF_NO_AUTO_DOWN,
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @cond INTERNAL_HIDDEN */
 	/* Total number of flags - must be at the end of the enum */
 	CONN_MGR_NUM_IF_FLAGS,
 /** @endcond */
 };
 
+<<<<<<< HEAD
 /* Value to use with conn_mgr_conn_binding->timeout to indicate no timeout */
 #define CONN_MGR_IF_NO_TIMEOUT 0
 
@@ -255,12 +315,24 @@ struct conn_mgr_conn_binding {
 	CONN_MGR_BIND_CONN_INST(dev_id, 0, conn_id)
 
 /**
+=======
+/** Value to use with @ref conn_mgr_if_set_timeout and @ref conn_mgr_conn_binding.timeout to
+ * indicate no timeout
+ */
+#define CONN_MGR_IF_NO_TIMEOUT 0
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Connect interface
  *
  * If the provided iface has been bound to a connectivity implementation, initiate
  * network connect/association.
  *
+<<<<<<< HEAD
  * Automatically takes the iface admin-up (by calling net_if_up) if it isn't already.
+=======
+ * Automatically takes the iface admin-up (by calling @ref net_if_up) if it isn't already.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * Non-Blocking.
  *
@@ -396,18 +468,85 @@ int conn_mgr_if_get_timeout(struct net_if *iface);
  *
  * @param iface - Pointer to the network interface to modify.
  * @param timeout - The timeout value to set (in seconds).
+<<<<<<< HEAD
  *		    Pass CONN_MGR_IF_NO_TIMEOUT to disable the timeout.
+=======
+ *		    Pass @ref CONN_MGR_IF_NO_TIMEOUT to disable the timeout.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @retval 0 on success.
  * @retval -ENOTSUP if the provided iface is not bound to a connectivity implementation.
  */
 int conn_mgr_if_set_timeout(struct net_if *iface, int timeout);
 
 /**
+<<<<<<< HEAD
  * @brief  Initialize all connectivity implementation bindings
  *
  *
  */
 void conn_mgr_conn_init(void);
+=======
+ * @}
+ */
+
+/**
+ * @brief Connection Manager Bulk API
+ * @defgroup conn_mgr_connectivity_bulk Connection Manager Connectivity Bulk API
+ * @ingroup networking
+ * @{
+ */
+
+/**
+ * @brief Convenience function that takes all available ifaces into the admin-up state.
+ *
+ * Essentially a wrapper for @ref net_if_up.
+ *
+ * @param skip_ignored - If true, only affect ifaces that aren't ignored by conn_mgr.
+ *			 Otherwise, affect all ifaces.
+ * @return 0 if all net_if_up calls returned 0, otherwise the first nonzero value
+ *         returned by a net_if_up call.
+ */
+int conn_mgr_all_if_up(bool skip_ignored);
+
+
+/**
+ * @brief Convenience function that takes all available ifaces into the admin-down state.
+ *
+ * Essentially a wrapper for @ref net_if_down.
+ *
+ * @param skip_ignored - If true, only affect ifaces that aren't ignored by conn_mgr.
+ *			 Otherwise, affect all ifaces.
+ * @return 0 if all net_if_down calls returned 0, otherwise the first nonzero value
+ *         returned by a net_if_down call.
+ */
+int conn_mgr_all_if_down(bool skip_ignored);
+
+/**
+ * @brief Convenience function that takes all available ifaces into the admin-up state, and
+ * connects those that support connectivity.
+ *
+ * Essentially a wrapper for @ref net_if_up and @ref conn_mgr_if_connect.
+ *
+ * @param skip_ignored - If true, only affect ifaces that aren't ignored by conn_mgr.
+ *			 Otherwise, affect all ifaces.
+ * @return 0 if all net_if_up and conn_mgr_if_connect calls returned 0, otherwise the first nonzero
+ *	   value returned by either net_if_up or conn_mgr_if_connect.
+ */
+int conn_mgr_all_if_connect(bool skip_ignored);
+
+/**
+ * @brief Convenience function that disconnects all available ifaces that support connectivity
+ *        without putting them into admin-down state (unless auto-down is enabled for the iface).
+ *
+ * Essentially a wrapper for @ref net_if_down.
+ *
+ * @param skip_ignored - If true, only affect ifaces that aren't ignored by conn_mgr.
+ *			 Otherwise, affect all ifaces.
+ * @return 0 if all net_if_up and conn_mgr_if_connect calls returned 0, otherwise the first nonzero
+ *	   value returned by either net_if_up or conn_mgr_if_connect.
+ */
+int conn_mgr_all_if_disconnect(bool skip_ignored);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @}

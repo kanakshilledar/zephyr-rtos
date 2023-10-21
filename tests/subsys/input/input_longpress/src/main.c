@@ -28,7 +28,11 @@ static void test_cb(struct input_event *evt)
 	memcpy(&last_events[1], &last_events[0], sizeof(struct input_event));
 	memcpy(&last_events[0], evt, sizeof(struct input_event));
 }
+<<<<<<< HEAD
 INPUT_LISTENER_CB_DEFINE(longpress_dev, test_cb);
+=======
+INPUT_CALLBACK_DEFINE(longpress_dev, test_cb);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ZTEST(longpress, test_longpress_test)
 {

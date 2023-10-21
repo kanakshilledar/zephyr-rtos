@@ -9,11 +9,24 @@
 #define LL_BIS_ADV_HANDLE_BASE BT_CTLR_ADV_ISO_STREAM_HANDLE_BASE
 #define LL_BIS_ADV_IDX_FROM_HANDLE(conn_handle) \
 	((conn_handle) - (LL_BIS_ADV_HANDLE_BASE))
+<<<<<<< HEAD
+=======
+/* Conditional compile to prevent coverity issue CWE570, comparison of unsigned int to 0 */
+#if (LL_BIS_ADV_HANDLE_BASE > 0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define IS_ADV_ISO_HANDLE(conn_handle) \
 	(((conn_handle) >= (LL_BIS_ADV_HANDLE_BASE)) && \
 	 ((conn_handle) <= ((LL_BIS_ADV_HANDLE_BASE) + \
 			    (BT_CTLR_ADV_ISO_STREAM_MAX) - 1U)))
 #else
+<<<<<<< HEAD
+=======
+#define IS_ADV_ISO_HANDLE(conn_handle) \
+	((conn_handle) <= ((LL_BIS_ADV_HANDLE_BASE) + \
+			   (BT_CTLR_ADV_ISO_STREAM_MAX) - 1U))
+#endif /* LL_BIS_ADV_HANDLE_BASE */
+#else
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define LL_BIS_ADV_IDX_FROM_HANDLE(conn_handle) 0U
 #define IS_ADV_ISO_HANDLE(conn_handle) 0U
 #endif /* CONFIG_BT_CTLR_ADV_ISO */
@@ -23,11 +36,24 @@
 #define LL_BIS_SYNC_HANDLE_BASE BT_CTLR_SYNC_ISO_STREAM_HANDLE_BASE
 #define LL_BIS_SYNC_IDX_FROM_HANDLE(conn_handle) \
 	((conn_handle) - (LL_BIS_SYNC_HANDLE_BASE))
+<<<<<<< HEAD
+=======
+/* Conditional compile to prevent coverity issue CWE570, comparison of unsigned int to 0 */
+#if (LL_BIS_SYNC_HANDLE_BASE > 0)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define IS_SYNC_ISO_HANDLE(conn_handle) \
 	(((conn_handle) >= (LL_BIS_SYNC_HANDLE_BASE)) && \
 	 ((conn_handle) <= ((LL_BIS_SYNC_HANDLE_BASE) + \
 			    (BT_CTLR_SYNC_ISO_STREAM_MAX) - 1U)))
 #else
+<<<<<<< HEAD
+=======
+#define IS_SYNC_ISO_HANDLE(conn_handle) \
+	((conn_handle) <= ((LL_BIS_SYNC_HANDLE_BASE) + \
+			   (BT_CTLR_SYNC_ISO_STREAM_MAX) - 1U))
+#endif /* LL_BIS_SYNC_HANDLE_BASE */
+#else
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define LL_BIS_SYNC_IDX_FROM_HANDLE(conn_handle) 0U
 #define IS_SYNC_ISO_HANDLE(conn_handle) 0U
 #endif /* CONFIG_BT_CTLR_SYNC_ISO */
@@ -55,13 +81,35 @@ struct ll_iso_test_mode_data {
 	uint64_t rx_payload_type:4;
 };
 
+<<<<<<< HEAD
+=======
+struct ll_iso_link_quality {
+	uint32_t tx_unacked_packets;
+	uint32_t tx_flushed_packets;
+	uint32_t tx_last_subevent_packets;
+	uint32_t retransmitted_packets;
+	uint32_t crc_error_packets;
+	uint32_t rx_unreceived_packets;
+	uint32_t duplicate_packets;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Common members for ll_conn_iso_stream and ll_broadcast_iso_stream */
 struct ll_iso_stream_hdr {
 	struct ll_iso_test_mode_data test_mode;
 	struct ll_iso_datapath *datapath_in;
 	struct ll_iso_datapath *datapath_out;
+<<<<<<< HEAD
 };
 
+=======
+#if defined(CONFIG_BT_CTLR_READ_ISO_LINK_QUALITY)
+	struct ll_iso_link_quality link_quality;
+#endif /* CONFIG_BT_CTLR_READ_ISO_LINK_QUALITY */
+};
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct ll_iso_datapath {
 	uint8_t  path_dir;
 	uint8_t  path_id;

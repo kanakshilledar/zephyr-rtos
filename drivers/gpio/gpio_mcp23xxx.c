@@ -408,7 +408,11 @@ static void mcp23xxx_work_handler(struct k_work *work)
 	ret = read_port_regs(dev, REG_INTF, &intf);
 	if (ret != 0) {
 		LOG_ERR("Failed to read INTF");
+<<<<<<< HEAD
 		goto done;
+=======
+		goto fail;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (!intf) {
@@ -416,7 +420,11 @@ static void mcp23xxx_work_handler(struct k_work *work)
 		 * handler had a chance to run
 		 */
 		LOG_ERR("Spurious interrupt");
+<<<<<<< HEAD
 		goto done;
+=======
+		goto fail;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	uint16_t intcap;
@@ -425,7 +433,11 @@ static void mcp23xxx_work_handler(struct k_work *work)
 	ret = read_port_regs(dev, REG_INTCAP, &intcap);
 	if (ret != 0) {
 		LOG_ERR("Failed to read INTCAP");
+<<<<<<< HEAD
 		goto done;
+=======
+		goto fail;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* mcp23xxx does not support single-edge interrupts in hardware, filter them out manually */
@@ -434,8 +446,16 @@ static void mcp23xxx_work_handler(struct k_work *work)
 	intf &= level_ints | (intcap & drv_data->rising_edge_ints) |
 		(~intcap & drv_data->falling_edge_ints);
 
+<<<<<<< HEAD
 	gpio_fire_callbacks(&drv_data->callbacks, dev, intf);
 done:
+=======
+	k_sem_give(&drv_data->lock);
+	gpio_fire_callbacks(&drv_data->callbacks, dev, intf);
+	return;
+
+fail:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&drv_data->lock);
 }
 
@@ -512,7 +532,11 @@ int gpio_mcp23xxx_init(const struct device *dev)
 			}
 		}
 
+<<<<<<< HEAD
 		if (!device_is_ready(config->gpio_int.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->gpio_int)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("INT port is not ready");
 			return -ENODEV;
 		}

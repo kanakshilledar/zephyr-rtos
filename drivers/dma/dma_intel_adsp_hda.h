@@ -9,6 +9,12 @@
 
 #define INTEL_ADSP_HDA_MAX_CHANNELS DT_PROP(DT_NODELABEL(hda_host_out), dma_channels)
 
+<<<<<<< HEAD
+=======
+/* Minimum recommended FPI increment */
+#define INTEL_HDA_MIN_FPI_INCREMENT_FOR_INTERRUPT 32
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/dma.h>
 #include <zephyr/pm/device.h>
 #include <zephyr/pm/device_runtime.h>
@@ -24,6 +30,10 @@ struct intel_adsp_hda_dma_cfg {
 	uint32_t regblock_size;
 	uint32_t dma_channels;
 	enum dma_channel_direction direction;
+<<<<<<< HEAD
+=======
+	void (*irq_config)(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 int intel_adsp_hda_dma_host_in_config(const struct device *dev,
@@ -62,6 +72,11 @@ int intel_adsp_hda_dma_init(const struct device *dev);
 
 int intel_adsp_hda_dma_get_attribute(const struct device *dev, uint32_t type, uint32_t *value);
 
+<<<<<<< HEAD
+=======
+void intel_adsp_hda_dma_isr(void);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_PM_DEVICE
 int intel_adsp_hda_dma_pm_action(const struct device *dev, enum pm_device_action action);
 #endif

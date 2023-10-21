@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 common:
   depends_on: netif
 tests:
@@ -6,3 +7,14 @@ tests:
     tags:
       - lwm2m
       - net
+=======
+tests:
+  net.lwm2m.content_plain_text:
+    platform_key:
+      - simulation
+    tags:
+      - lwm2m
+      - net
+    integration_platforms:
+      - native_posix
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -17,6 +17,7 @@ LOG_MODULE_REGISTER(bt_mesh_op_agg);
 #define LENGTH_SHORT_MAX BIT_MASK(7)
 
 NET_BUF_SIMPLE_DEFINE_STATIC(sdu, BT_MESH_TX_SDU_MAX);
+<<<<<<< HEAD
 
 #ifdef CONFIG_BT_MESH_OP_AGG_CLI
 NET_BUF_SIMPLE_DEFINE_STATIC(srcs, BT_MESH_TX_SDU_MAX);
@@ -25,6 +26,13 @@ NET_BUF_SIMPLE_DEFINE_STATIC(srcs, BT_MESH_TX_SDU_MAX);
 static struct op_agg_ctx agg_ctx = {
 	.sdu = &sdu,
 #ifdef CONFIG_BT_MESH_OP_AGG_CLI
+=======
+NET_BUF_SIMPLE_DEFINE_STATIC(srcs, BT_MESH_TX_SDU_MAX);
+
+static struct op_agg_ctx agg_ctx = {
+	.sdu = &sdu,
+#if IS_ENABLED(CONFIG_BT_MESH_OP_AGG_CLI)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.srcs = &srcs,
 #endif
 };
@@ -42,11 +50,15 @@ static bool ctx_match(struct bt_mesh_msg_ctx *ctx)
 
 int bt_mesh_op_agg_accept(struct bt_mesh_msg_ctx *msg_ctx)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_BT_MESH_OP_AGG_CLI
 	return agg_ctx.initialized && ctx_match(msg_ctx);
 #else
 	return 0;
 #endif
+=======
+	return agg_ctx.initialized && ctx_match(msg_ctx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void bt_mesh_op_agg_ctx_reinit(void)
@@ -58,12 +70,16 @@ int bt_mesh_op_agg_send(struct bt_mesh_model *model,
 			struct bt_mesh_msg_ctx *ctx, struct net_buf_simple *msg,
 			const struct bt_mesh_send_cb *cb)
 {
+<<<<<<< HEAD
 	uint16_t src;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	/* Model responded so mark this message as acknowledged */
 	agg_ctx.ack = true;
 
+<<<<<<< HEAD
 	/* Store source address so that Opcodes Aggregator Client can match
 	 * response with source model
 	 */
@@ -75,6 +91,21 @@ int bt_mesh_op_agg_send(struct bt_mesh_model *model,
 
 	net_buf_simple_add_le16(&srcs, src);
 
+=======
+	if (IS_ENABLED(CONFIG_BT_MESH_OP_AGG_CLI)) {
+		/* Store source address so that Opcodes Aggregator Client can
+		 * match response with source model
+		 */
+		uint16_t src = bt_mesh_model_elem(model)->addr;
+
+		if (net_buf_simple_tailroom(&srcs) < 2) {
+			return -ENOMEM;
+		}
+
+		net_buf_simple_add_le16(&srcs, src);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = bt_mesh_op_agg_encode_msg(msg);
 	if (err) {
 		agg_ctx.rsp_err = ACCESS_STATUS_RESPONSE_OVERFLOW;

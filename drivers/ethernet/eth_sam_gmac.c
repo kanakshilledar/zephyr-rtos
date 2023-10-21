@@ -1381,9 +1381,15 @@ static void eth_rx(struct gmac_queue *queue)
 		 * the used VLAN tag.
 		 */
 		{
+<<<<<<< HEAD
 			struct net_eth_hdr *hdr = NET_ETH_HDR(rx_frame);
 
 			if (ntohs(hdr->type) == NET_ETH_PTYPE_VLAN) {
+=======
+			struct net_eth_hdr *p_hdr = NET_ETH_HDR(rx_frame);
+
+			if (ntohs(p_hdr->type) == NET_ETH_PTYPE_VLAN) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				struct net_eth_vlan_hdr *hdr_vlan =
 					(struct net_eth_vlan_hdr *)
 					NET_ETH_HDR(rx_frame);
@@ -1973,7 +1979,13 @@ static void eth0_iface_init(struct net_if *iface)
 	}
 
 	/* Do not start the interface until PHY link is up */
+<<<<<<< HEAD
 	net_if_carrier_off(iface);
+=======
+	if (!(dev_data->link_up)) {
+		net_if_carrier_off(iface);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	init_done = true;
 }
@@ -2222,11 +2234,15 @@ static const struct eth_sam_dev_cfg eth0_config = {
 	.clock_cfg = SAM_DT_INST_CLOCK_PMC_CFG(0),
 #endif
 	.config_func = eth0_irq_config,
+<<<<<<< HEAD
 #if DT_NODE_EXISTS(DT_INST_CHILD(0, phy))
 	.phy_dev = DEVICE_DT_GET(DT_INST_CHILD(0, phy))
 #else
 #error "No PHY driver specified"
 #endif
+=======
+	.phy_dev = DEVICE_DT_GET(DT_INST_PHANDLE(0, phy_handle))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static struct eth_sam_dev_data eth0_data = {

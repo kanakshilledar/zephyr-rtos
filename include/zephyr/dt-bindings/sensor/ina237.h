@@ -9,6 +9,10 @@
 #include <zephyr/dt-bindings/dt-util.h>
 
 /* Operating Mode */
+<<<<<<< HEAD
+=======
+#define INA237_CFG_HIGH_PRECISION			BIT(4)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define INA237_OPER_MODE_SHUTDOWN			0x00
 #define INA237_OPER_MODE_BUS_VOLTAGE_TRIG		0x01
 #define INA237_OPER_MODE_SHUNT_VOLTAGE_TRIG		0x02

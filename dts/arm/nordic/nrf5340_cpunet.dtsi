@@ -144,6 +144,10 @@
 			reg = <0x4100e000 0x1000>;
 			interrupts = <14 NRF_DEFAULT_IRQ_PRIORITY>;
 			length-field-length-8-bits;
+<<<<<<< HEAD
+=======
+			headermask-supported;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "okay";
 		};
 

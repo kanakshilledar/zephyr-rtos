@@ -25,11 +25,19 @@
 #include <zephyr/arch/cpu.h>
 
 #if defined(CONFIG_CPU_CORTEX_M)
+<<<<<<< HEAD
 #include <aarch32/cortex_m/stack.h>
 #include <aarch32/cortex_m/exc.h>
 #elif defined(CONFIG_CPU_AARCH32_CORTEX_R) || defined(CONFIG_CPU_AARCH32_CORTEX_A)
 #include <aarch32/cortex_a_r/stack.h>
 #include <aarch32/cortex_a_r/exc.h>
+=======
+#include <cortex_m/stack.h>
+#include <cortex_m/exc.h>
+#elif defined(CONFIG_CPU_AARCH32_CORTEX_R) || defined(CONFIG_CPU_AARCH32_CORTEX_A)
+#include <cortex_a_r/stack.h>
+#include <cortex_a_r/exc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifndef _ASMLANGUAGE

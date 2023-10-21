@@ -22,6 +22,10 @@ import shutil
 import signal
 import subprocess
 import re
+<<<<<<< HEAD
+=======
+from dataclasses import dataclass, field
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 from functools import partial
 from enum import Enum
 from inspect import isabstract
@@ -199,6 +203,12 @@ class MissingProgram(FileNotFoundError):
         super().__init__(errno.ENOENT, os.strerror(errno.ENOENT), program)
 
 
+<<<<<<< HEAD
+=======
+_RUNNERCAPS_COMMANDS = {'flash', 'debug', 'debugserver', 'attach'}
+
+@dataclass
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 class RunnerCaps:
     '''This class represents a runner class's capabilities.
 
@@ -229,6 +239,7 @@ class RunnerCaps:
       erased by the underlying tool before flashing; UICR on nRF SoCs
       is one example.)
 
+<<<<<<< HEAD
     - tool_opt: whether the runner supports a --tool-opt (-O) option, which
       can be given multiple times and is passed on to the underlying tool
       that the runner wraps.
@@ -257,6 +268,31 @@ class RunnerCaps:
                 f'tool_opt={self.tool_opt}, '
                 f'file={self.file}'
                 ')')
+=======
+    - reset: whether the runner supports a --reset option, which
+      resets the device after a flash operation is complete.
+
+    - tool_opt: whether the runner supports a --tool-opt (-O) option, which
+      can be given multiple times and is passed on to the underlying tool
+      that the runner wraps.
+
+    - file: whether the runner supports a --file option, which specifies
+      exactly the file that should be used to flash, overriding any default
+      discovered in the build directory.
+    '''
+
+    commands: Set[str] = field(default_factory=lambda: set(_RUNNERCAPS_COMMANDS))
+    dev_id: bool = False
+    flash_addr: bool = False
+    erase: bool = False
+    reset: bool = False
+    tool_opt: bool = False
+    file: bool = False
+
+    def __post_init__(self):
+        if not self.commands.issubset(_RUNNERCAPS_COMMANDS):
+            raise ValueError(f'{self.commands=} contains invalid command')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 def _missing_cap(cls: Type['ZephyrBinaryRunner'], option: str) -> NoReturn:
@@ -284,6 +320,10 @@ class RunnerConfig(NamedTuple):
     build_dir: str                  # application build directory
     board_dir: str                  # board definition directory
     elf_file: Optional[str]         # zephyr.elf path, or None
+<<<<<<< HEAD
+=======
+    exe_file: Optional[str]         # zephyr.exe path, or None
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     hex_file: Optional[str]         # zephyr.hex path, or None
     bin_file: Optional[str]         # zephyr.bin path, or None
     uf2_file: Optional[str]         # zephyr.uf2 path, or None
@@ -521,9 +561,22 @@ class ZephyrBinaryRunner(abc.ABC):
 
         parser.add_argument('--erase', '--no-erase', nargs=0,
                             action=_ToggleAction,
+<<<<<<< HEAD
                             help=("mass erase flash before loading, or don't"
                                   if caps.erase else argparse.SUPPRESS))
 
+=======
+                            help=("mass erase flash before loading, or don't. "
+                                  "Default action depends on each specific runner."
+                                  if caps.erase else argparse.SUPPRESS))
+
+        parser.add_argument('--reset', '--no-reset', nargs=0,
+                            action=_ToggleAction,
+                            help=("reset device after flashing, or don't. "
+                                  "Default action depends on each specific runner."
+                                  if caps.reset else argparse.SUPPRESS))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         parser.add_argument('-O', '--tool-opt', dest='tool_opt',
                             default=[], action='append',
                             help=(cls.tool_opt_help() if caps.tool_opt
@@ -552,6 +605,11 @@ class ZephyrBinaryRunner(abc.ABC):
             _missing_cap(cls, '--dt-flash')
         if args.erase and not caps.erase:
             _missing_cap(cls, '--erase')
+<<<<<<< HEAD
+=======
+        if args.reset and not caps.reset:
+            _missing_cap(cls, '--reset')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if args.tool_opt and not caps.tool_opt:
             _missing_cap(cls, '--tool-opt')
         if args.file and not caps.file:
@@ -564,6 +622,11 @@ class ZephyrBinaryRunner(abc.ABC):
         ret = cls.do_create(cfg, args)
         if args.erase:
             ret.logger.info('mass erase requested')
+<<<<<<< HEAD
+=======
+        if args.reset:
+            ret.logger.info('reset after flashing requested')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         return ret
 
     @classmethod

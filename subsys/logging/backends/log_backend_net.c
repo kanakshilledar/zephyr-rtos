@@ -10,6 +10,10 @@ LOG_MODULE_REGISTER(log_backend_net, CONFIG_LOG_DEFAULT_LEVEL);
 #include <zephyr/logging/log_backend.h>
 #include <zephyr/logging/log_core.h>
 #include <zephyr/logging/log_output.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/logging/log_backend_net.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/net/net_context.h>
 
@@ -196,6 +200,7 @@ static int format_set(const struct log_backend *const backend, uint32_t log_type
 	return 0;
 }
 
+<<<<<<< HEAD
 static void init_net(struct log_backend const *const backend)
 {
 	ARG_UNUSED(backend);
@@ -209,6 +214,56 @@ static void init_net(struct log_backend const *const backend)
 	if (ret == 0) {
 		LOG_ERR("Cannot configure syslog server address");
 		return;
+=======
+bool log_backend_net_set_addr(const char *addr)
+{
+	bool ret = false;
+
+	if (net_init_done) {
+		/* Release context so it can be recreated with the specified ip address
+		 * next time process() is called
+		 */
+		int released = net_context_put(log_output_net.control_block->ctx);
+
+		if (released < 0) {
+			LOG_ERR("Cannot release context (%d)", ret);
+			ret = false;
+		} else {
+			/* The context is successfully released so we flag it
+			 * to be recreated with the new ip address
+			 */
+			net_init_done = false;
+			ret = true;
+		}
+
+		if (!ret) {
+			return ret;
+		}
+	}
+
+	net_sin(&server_addr)->sin_port = htons(514);
+
+	ret = net_ipaddr_parse(addr, strlen(addr), &server_addr);
+
+	if (!ret) {
+		LOG_ERR("Cannot parse syslog server address");
+		return ret;
+	}
+
+	return ret;
+}
+
+static void init_net(struct log_backend const *const backend)
+{
+	ARG_UNUSED(backend);
+
+	if (strlen(CONFIG_LOG_BACKEND_NET_SERVER) != 0) {
+		bool ret = log_backend_net_set_addr(CONFIG_LOG_BACKEND_NET_SERVER);
+
+		if (!ret) {
+			return;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	log_backend_deactivate(log_backend_net_get());

@@ -1,5 +1,16 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
+<<<<<<< HEAD
+=======
+&dmac {
+	status = "okay";
+};
+
+&sercom0 {
+	status = "disabled";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 dut: &sercom1 {
 	/* Internally loop-back TX and RX on PAD0 */
 	rxpo = <0>;
@@ -9,3 +20,12 @@ dut: &sercom1 {
 	dmas = <&dmac 0 3>, <&dmac 1 4>;
 	dma-names = "rx", "tx";
 };
+<<<<<<< HEAD
+=======
+
+&sercom3 {
+	/* configure DMA channels for async operation */
+	dmas = <&dmac 10 7>, <&dmac 11 8>;
+	dma-names = "rx", "tx";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -3,6 +3,10 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+<<<<<<< HEAD
+=======
+#include <stdint.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdlib.h>
 #include <string.h>
 
@@ -97,6 +101,7 @@ static int check_flash_device(const struct shell *sh)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void dump_buffer(const struct shell *sh, uint8_t *buf, size_t size)
 {
 	bool newline = false;
@@ -131,6 +136,35 @@ static void dump_buffer(const struct shell *sh, uint8_t *buf, size_t size)
 	if (newline) {
 		PR_SHELL(sh, "\n");
 	}
+=======
+static int dump_buffer(const struct shell *sh, uint8_t *buf, size_t size,
+			uint8_t *cmp_buf)
+{
+	int ret = 0;
+	size_t i;
+
+	for (i = 0; i < size; i++) {
+		/* Print each byte mismatch as error */
+		if (cmp_buf != NULL && buf[i] != cmp_buf[i]) {
+			PR_ERROR(sh, "%02x ", buf[i]);
+			ret = -EIO;
+		} else {
+			PR_SHELL(sh, "%02x ", buf[i]);
+		}
+
+		if ((i + 1) % 16 == 0) {
+			PR_SHELL(sh, "\n");
+		} else if ((i + 1) % 4 == 0) {
+			PR_SHELL(sh, "| ");
+		}
+	}
+
+	if (i % 16 != 0) {
+		PR_SHELL(sh, "\n");
+	}
+
+	return ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int parse_ul(const char *str, unsigned long *result)
@@ -160,6 +194,7 @@ static int parse_u8(const char *str, uint8_t *result)
 }
 
 /* Read bytes, dumping contents to console and printing on error. */
+<<<<<<< HEAD
 static int do_read(const struct shell *sh, off_t offset, size_t len)
 {
 	uint8_t buf[64];
@@ -184,6 +219,40 @@ static int do_read(const struct shell *sh, off_t offset, size_t len)
  err_read:
 	PR_ERROR(sh, "flash_read error: %d\n", ret);
 	return ret;
+=======
+static int do_read(const struct shell *sh, off_t offset, size_t len,
+		   uint8_t *cmp_buf)
+{
+	uint8_t buf[64];
+	int ret;
+	size_t read_len;
+	bool cmp_error = false;
+
+	do {
+		read_len = len > sizeof(buf) ? sizeof(buf) : len;
+		ret = flash_read(flash_device, offset, buf, read_len);
+		if (ret != 0) {
+			PR_ERROR(sh, "flash_read error: %d\n", ret);
+			return ret;
+		}
+		ret = dump_buffer(sh, buf, read_len, cmp_buf);
+		if (ret == -EIO) {
+			cmp_error = true;
+		}
+		if (cmp_buf != NULL) {
+			cmp_buf += read_len;
+		}
+		len -= read_len;
+		offset += read_len;
+	} while (len > 0);
+
+	if (cmp_error) {
+		PR_ERROR(sh, "Write verification error, unexpected values "
+				"marked red\n");
+	}
+
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Erase area and printing on error. */
@@ -214,7 +283,11 @@ static int do_write(const struct shell *sh, off_t offset, uint8_t *buf,
 
 	if (read_back) {
 		PR_SHELL(sh, "Reading back written bytes:\n");
+<<<<<<< HEAD
 		ret = do_read(sh, offset, len);
+=======
+		ret = do_read(sh, offset, len, buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	return ret;
 }
@@ -325,7 +398,11 @@ static int do_write_unaligned(const struct shell *sh, off_t offset, uint8_t *buf
 
 	if (read_back) {
 		PR_SHELL(sh, "Reading back written bytes:\n");
+<<<<<<< HEAD
 		ret = do_read(sh, offset, len);
+=======
+		ret = do_read(sh, offset, len, buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 free_buffers:
@@ -366,7 +443,11 @@ static int cmd_read(const struct shell *sh, size_t argc, char **argv)
 		goto exit;
 	}
 
+<<<<<<< HEAD
 	err = do_read(sh, offset, len);
+=======
+	err = do_read(sh, offset, len, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 exit:
 	return err;
@@ -608,7 +689,11 @@ static int cmd_page_read(const struct shell *sh, size_t argc, char **argv)
 		return ret;
 	}
 	offset += info.start_offset;
+<<<<<<< HEAD
 	ret = do_read(sh, offset, len);
+=======
+	ret = do_read(sh, offset, len, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return ret;
 
  bail:

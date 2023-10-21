@@ -10,6 +10,7 @@ compatible: "ethernet-phy"
 include: phy.yaml
 
 properties:
+<<<<<<< HEAD
   address:
     type: int
     required: true
@@ -18,6 +19,11 @@ properties:
     type: phandle
     required: true
     description: MDIO driver node
+=======
+  reg:
+    required: true
+    description: PHY address
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   no-reset:
     type: boolean
     description: Do not reset the PHY during initialization

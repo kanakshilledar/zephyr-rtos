@@ -162,10 +162,17 @@ schema = yaml.safe_load(METADATA_SCHEMA)
 def validate_setting(setting, module_path, filename=None):
     if setting is not None:
         if filename is not None:
+<<<<<<< HEAD
             checkfile = os.path.join(module_path, setting, filename)
         else:
             checkfile = os.path.join(module_path, setting)
         if not os.path.isfile(checkfile):
+=======
+            checkfile = Path(module_path) / setting / filename
+        else:
+            checkfile = Path(module_path) / setting
+        if not checkfile.resolve().is_file():
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return False
     return True
 

@@ -151,8 +151,20 @@ def load_domains(path):
     domains_file = Path(path) / 'domains.yaml'
 
     if not domains_file.is_file():
+<<<<<<< HEAD
         return Domains.from_data({'default': 'app',
                                   'build_dir': path,
                                   'domains': [{'name': 'app', 'build_dir': path}]})
+=======
+        return Domains.from_yaml(f'''\
+default: app
+build_dir: {path}
+domains:
+  - name: app
+    build_dir: {path}
+flash_order:
+  - app
+''')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     return Domains.from_file(domains_file)

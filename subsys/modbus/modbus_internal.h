@@ -55,6 +55,7 @@
 #define MODBUS_FC08_SUBF_SERVER_MSG_CTR		14
 #define MODBUS_FC08_SUBF_SERVER_NO_RESP_CTR	15
 
+<<<<<<< HEAD
 /* Modbus exception codes */
 #define MODBUS_EXC_NONE				0
 #define MODBUS_EXC_ILLEGAL_FC			1
@@ -67,6 +68,8 @@
 #define MODBUS_EXC_GW_PATH_UNAVAILABLE		10
 #define MODBUS_EXC_GW_TARGET_FAILED_TO_RESP	11
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Modbus RTU (ASCII) constants */
 #define MODBUS_COIL_OFF_CODE			0x0000
 #define MODBUS_COIL_ON_CODE			0xFF00
@@ -142,6 +145,11 @@ struct modbus_context {
 	uint16_t mbs_server_msg_ctr;
 	uint16_t mbs_noresp_ctr;
 #endif
+<<<<<<< HEAD
+=======
+	/* A linked list of function code, handler pairs */
+	sys_slist_t user_defined_cbs;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Unit ID */
 	uint8_t unit_id;
 

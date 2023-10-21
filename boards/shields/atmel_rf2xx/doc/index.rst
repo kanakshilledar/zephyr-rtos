@@ -283,8 +283,13 @@ and Echo client samples, which provide out-of-the-box configuration for
 both IEEE 802.15.4 and OpenThread.  To enable IEEE 802.15.4 support in the
 samples, build them with ``overlay-802154.conf`` overlay config file.  Same
 way, to enable OpenThread support, build them with ``overlay-ot.conf`` overlay
+<<<<<<< HEAD
 config file. See :ref:`sockets-echo-server-sample` and
 :ref:`sockets-echo-client-sample` for details.
+=======
+config file. See :zephyr:code-sample:`sockets-echo-server` and
+:zephyr:code-sample:`sockets-echo-client` samples for details.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Build and Programming
 *********************

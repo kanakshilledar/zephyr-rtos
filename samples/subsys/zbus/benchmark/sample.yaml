@@ -4,7 +4,11 @@ tests:
   sample.zbus.benchmark_async:
     tags: zbus
     min_ram: 16
+<<<<<<< HEAD
     filter: CONFIG_SYS_CLOCK_EXISTS
+=======
+    filter: CONFIG_SYS_CLOCK_EXISTS and not (CONFIG_ARCH_POSIX and not CONFIG_BOARD_NATIVE_POSIX)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     harness: console
     harness_config:
       type: multi_line
@@ -21,13 +25,20 @@ tests:
       - CONFIG_BM_ASYNC=y
       - arch:nios2:CONFIG_SYS_CLOCK_TICKS_PER_SEC=1000
       - CONFIG_IDLE_STACK_SIZE=1024
+<<<<<<< HEAD
     platform_exclude: nrf52_bsim
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - qemu_x86
   sample.zbus.benchmark_sync:
     tags: zbus
     min_ram: 16
+<<<<<<< HEAD
     filter: CONFIG_SYS_CLOCK_EXISTS
+=======
+    filter: CONFIG_SYS_CLOCK_EXISTS and not (CONFIG_ARCH_POSIX and not CONFIG_BOARD_NATIVE_POSIX)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     harness: console
     harness_config:
       type: multi_line
@@ -44,6 +55,9 @@ tests:
       - CONFIG_BM_ASYNC=n
       - arch:nios2:CONFIG_SYS_CLOCK_TICKS_PER_SEC=1000
       - CONFIG_IDLE_STACK_SIZE=1024
+<<<<<<< HEAD
     platform_exclude: nrf52_bsim
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - qemu_x86

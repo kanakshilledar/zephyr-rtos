@@ -25,8 +25,13 @@ Requirements
 ************
 
 * Two boards with Bluetooth Low Energy support
+<<<<<<< HEAD
 * Two boards with a push button connected via a GPIO pin, see :ref:`Button
   sample <button-sample>` for more details
+=======
+* Two boards with a push button connected via a GPIO pin, see the :zephyr:code-sample:`button`
+  sample for more details
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

@@ -156,6 +156,23 @@ This :file:`snippet.yml` adds :file:`foo.conf` to the build:
 The path to :file:`foo.conf` is relative to the directory containing
 :file:`snippet.yml`.
 
+<<<<<<< HEAD
+=======
+``DTS_EXTRA_CPPFLAGS``
+**********************
+
+This :file:`snippet.yml` adds ``DTS_EXTRA_CPPFLAGS`` CMake Cache variables
+to the build:
+
+.. code-block:: yaml
+
+   name: foo
+   append:
+     DTS_EXTRA_CPPFLAGS: -DMY_DTS_CONFIGURE
+
+Adding these flags enables control over the content of a devicetree file.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Board-specific settings
 ***********************
 

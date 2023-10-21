@@ -19,7 +19,11 @@
 		zephyr,flash = &flash0;
 	};
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_3: led_3 {
 			gpios = <&gpiob 3 GPIO_ACTIVE_HIGH>;
@@ -103,6 +107,11 @@
 &adc1 {
 	pinctrl-0 = <&adc_in0_pa0>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 

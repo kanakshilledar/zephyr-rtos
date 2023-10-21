@@ -14,8 +14,11 @@ CONFIG_USE_SEGGER_RTT=y
 # Enable GPIO
 CONFIG_GPIO=y
 
+<<<<<<< HEAD
 # additional board options
 # set y to disable R button
 CONFIG_GPIO_AS_PINRESET=n
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 CONFIG_PINCTRL=y

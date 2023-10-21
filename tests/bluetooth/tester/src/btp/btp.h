@@ -23,6 +23,15 @@
 #include "btp_pacs.h"
 #include "btp_ascs.h"
 #include "btp_bap.h"
+<<<<<<< HEAD
+=======
+#include "btp_has.h"
+#include "btp_csis.h"
+#include "btp_micp.h"
+#include "btp_mics.h"
+#include "btp_ccp.h"
+#include "btp_vcp.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BTP_MTU 1024
 #define BTP_DATA_MAX_SIZE (BTP_MTU - sizeof(struct btp_hdr))
@@ -45,13 +54,29 @@
 #define BTP_SERVICE_ID_PACS	12
 #define BTP_SERVICE_ID_ASCS	13
 #define BTP_SERVICE_ID_BAP	14
+<<<<<<< HEAD
 #define BTP_SERVICE_ID_MAX	BTP_SERVICE_ID_BAP
+=======
+#define BTP_SERVICE_ID_HAS	15
+#define BTP_SERVICE_ID_MICP	16
+#define BTP_SERVICE_ID_CSIS	17
+#define BTP_SERVICE_ID_MICS	18
+#define BTP_SERVICE_ID_CCP	19
+#define BTP_SERVICE_ID_VCP	20
+
+#define BTP_SERVICE_ID_MAX	BTP_SERVICE_ID_VCP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BTP_STATUS_SUCCESS	0x00
 #define BTP_STATUS_FAILED	0x01
 #define BTP_STATUS_UNKNOWN_CMD	0x02
 #define BTP_STATUS_NOT_READY	0x03
 
+<<<<<<< HEAD
+=======
+#define BTP_STATUS_VAL(err) (err) ? BTP_STATUS_FAILED : BTP_STATUS_SUCCESS
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* TODO indicate delay response, should be removed when all commands are
  * converted to cmd+status+ev pattern
  */
@@ -65,7 +90,11 @@ struct btp_hdr {
 	uint8_t  data[];
 } __packed;
 
+<<<<<<< HEAD
 #define BTP_STATUS			0x00
+=======
+#define BTP_STATUS		0x00
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct btp_status {
 	uint8_t code;
 } __packed;

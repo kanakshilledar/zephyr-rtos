@@ -14,6 +14,15 @@ module = fpga
 module-str = fpga
 source "subsys/logging/Kconfig.template.log_config"
 
+<<<<<<< HEAD
+=======
+config FPGA_INIT_PRIORITY
+	int "Init priority"
+	default 75
+	help
+	  FPGA device drivers initialization priority
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config FPGA_SHELL
 	bool "FPGA Shell"
 	depends on SHELL && FPGA

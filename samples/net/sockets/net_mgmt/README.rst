@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sockets-net-mgmt-sample:
 
 Network Management Socket
 #########################
+=======
+.. zephyr:code-sample:: sockets-net-mgmt
+   :name: Network management socket
+   :relevant-api: bsd_sockets net_if
+
+   Listen to network management events using a network management socket.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -99,7 +99,11 @@ void ieee802154_security_teardown_session(struct ieee802154_security_ctx *sec_ct
 	sec_ctx->level = IEEE802154_SECURITY_LEVEL_NONE;
 }
 
+<<<<<<< HEAD
 static void prepare_cipher_aead_pkt(uint8_t *frame, uint8_t level, uint8_t hdr_len,
+=======
+static void prepare_cipher_aead_pkt(uint8_t *frame, uint8_t level, uint8_t ll_hdr_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				    uint8_t payload_len, uint8_t authtag_len,
 				    struct cipher_aead_pkt *apkt, struct cipher_pkt *pkt)
 {
@@ -112,11 +116,19 @@ static void prepare_cipher_aead_pkt(uint8_t *frame, uint8_t level, uint8_t hdr_l
 	is_authenticated = level != IEEE802154_SECURITY_LEVEL_NONE;
 
 	/* See section 9.3.5.3 */
+<<<<<<< HEAD
 	pkt->in_buf = is_encrypted && payload_len ? frame + hdr_len : NULL;
 	pkt->in_len = is_encrypted ? payload_len : 0;
 
 	/* See section 9.3.5.4 */
 	uint8_t out_buf_offset = is_encrypted ? hdr_len : hdr_len + payload_len;
+=======
+	pkt->in_buf = is_encrypted && payload_len ? frame + ll_hdr_len : NULL;
+	pkt->in_len = is_encrypted ? payload_len : 0;
+
+	/* See section 9.3.5.4 */
+	uint8_t out_buf_offset = is_encrypted ? ll_hdr_len : ll_hdr_len + payload_len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t auth_len = is_authenticated ? out_buf_offset : 0;
 
 	pkt->out_buf = frame + out_buf_offset;
@@ -124,12 +136,20 @@ static void prepare_cipher_aead_pkt(uint8_t *frame, uint8_t level, uint8_t hdr_l
 
 	apkt->ad = is_authenticated ? frame : NULL;
 	apkt->ad_len = auth_len;
+<<<<<<< HEAD
 	apkt->tag = is_authenticated ? frame + hdr_len + payload_len : NULL;
+=======
+	apkt->tag = is_authenticated ? frame + ll_hdr_len + payload_len : NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	apkt->pkt = pkt;
 }
 
 bool ieee802154_decrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *frame,
+<<<<<<< HEAD
 			     uint8_t hdr_len, uint8_t payload_len, uint8_t authtag_len,
+=======
+			     uint8_t ll_hdr_len, uint8_t payload_len, uint8_t authtag_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     uint8_t *src_ext_addr, uint32_t frame_counter)
 {
 	struct cipher_aead_pkt apkt;
@@ -149,11 +169,19 @@ bool ieee802154_decrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *f
 	sys_put_be32(frame_counter, &nonce[8]);
 	nonce[12] = level;
 
+<<<<<<< HEAD
 	prepare_cipher_aead_pkt(frame, level, hdr_len, payload_len, authtag_len, &apkt, &pkt);
 
 	ret = cipher_ccm_op(&sec_ctx->dec, &apkt, nonce);
 	if (ret) {
 		NET_ERR("Cannot decrypt/auth (%i): %p %u/%u - fc %u", ret, frame, hdr_len,
+=======
+	prepare_cipher_aead_pkt(frame, level, ll_hdr_len, payload_len, authtag_len, &apkt, &pkt);
+
+	ret = cipher_ccm_op(&sec_ctx->dec, &apkt, nonce);
+	if (ret) {
+		NET_ERR("Cannot decrypt/auth (%i): %p %u/%u - fc %u", ret, frame, ll_hdr_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			payload_len, frame_counter);
 		return false;
 	}
@@ -162,7 +190,11 @@ bool ieee802154_decrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *f
 }
 
 bool ieee802154_encrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *frame,
+<<<<<<< HEAD
 			     uint8_t hdr_len, uint8_t payload_len, uint8_t authtag_len,
+=======
+			     uint8_t ll_hdr_len, uint8_t payload_len, uint8_t authtag_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     uint8_t *src_ext_addr)
 {
 	struct cipher_aead_pkt apkt;
@@ -192,11 +224,19 @@ bool ieee802154_encrypt_auth(struct ieee802154_security_ctx *sec_ctx, uint8_t *f
 	sys_put_be32(sec_ctx->frame_counter, &nonce[8]);
 	nonce[12] = level;
 
+<<<<<<< HEAD
 	prepare_cipher_aead_pkt(frame, level, hdr_len, payload_len, authtag_len, &apkt, &pkt);
 
 	ret = cipher_ccm_op(&sec_ctx->enc, &apkt, nonce);
 	if (ret) {
 		NET_ERR("Cannot encrypt/auth (%i): %p %u/%u - fc %u", ret, frame, hdr_len,
+=======
+	prepare_cipher_aead_pkt(frame, level, ll_hdr_len, payload_len, authtag_len, &apkt, &pkt);
+
+	ret = cipher_ccm_op(&sec_ctx->enc, &apkt, nonce);
+	if (ret) {
+		NET_ERR("Cannot encrypt/auth (%i): %p %u/%u - fc %u", ret, frame, ll_hdr_len,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			payload_len, sec_ctx->frame_counter);
 		return false;
 	}

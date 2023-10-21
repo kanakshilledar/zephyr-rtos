@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2018 qianfan Zhao
+<<<<<<< HEAD
  * Copyright (c) 2018 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -7,10 +8,25 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
+=======
+ * Copyright (c) 2018, 2023 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <string.h>
+
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/input/input.h>
+#include <zephyr/sys/util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/usb/usb_device.h>
 #include <zephyr/usb/class/usb_hid.h>
 
+<<<<<<< HEAD
 #define LOG_LEVEL LOG_LEVEL_DBG
 LOG_MODULE_REGISTER(main);
 
@@ -65,24 +81,52 @@ static enum usb_dc_status_code usb_status;
 #define MOUSE_BTN_LEFT		BIT(0)
 #define MOUSE_BTN_RIGHT		BIT(1)
 #define MOUSE_BTN_MIDDLE	BIT(2)
+=======
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
+
+static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
+static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
+static enum usb_dc_status_code usb_status;
+
+#define MOUSE_BTN_LEFT		0
+#define MOUSE_BTN_RIGHT		1
+
+enum mouse_report_idx {
+	MOUSE_BTN_REPORT_IDX = 0,
+	MOUSE_X_REPORT_IDX = 1,
+	MOUSE_Y_REPORT_IDX = 2,
+	MOUSE_WHEEL_REPORT_IDX = 3,
+	MOUSE_REPORT_COUNT = 4,
+};
+
+static uint8_t report[MOUSE_REPORT_COUNT];
+static K_SEM_DEFINE(report_sem, 0, 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void status_cb(enum usb_dc_status_code status, const uint8_t *param)
 {
 	usb_status = status;
 }
 
+<<<<<<< HEAD
 static void left_button(const struct device *gpio, struct gpio_callback *cb,
 			uint32_t pins)
 {
 	int ret;
 	uint8_t state = status[MOUSE_BTN_REPORT_POS];
 
+=======
+static ALWAYS_INLINE void rwup_if_suspended(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (IS_ENABLED(CONFIG_USB_DEVICE_REMOTE_WAKEUP)) {
 		if (usb_status == USB_DC_SUSPEND) {
 			usb_wakeup_request();
 			return;
 		}
 	}
+<<<<<<< HEAD
 
 	ret = gpio_pin_get(gpio, sw0.pin);
 	if (ret < 0) {
@@ -242,6 +286,57 @@ int main(void)
 	const struct device *hid_dev;
 
 	if (!device_is_ready(led0.port)) {
+=======
+}
+
+static void input_cb(struct input_event *evt)
+{
+	uint8_t tmp[MOUSE_REPORT_COUNT];
+
+	(void)memcpy(tmp, report, sizeof(tmp));
+
+	switch (evt->code) {
+	case INPUT_KEY_0:
+		rwup_if_suspended();
+		WRITE_BIT(tmp[MOUSE_BTN_REPORT_IDX], MOUSE_BTN_LEFT, evt->value);
+		break;
+	case INPUT_KEY_1:
+		rwup_if_suspended();
+		WRITE_BIT(tmp[MOUSE_BTN_REPORT_IDX], MOUSE_BTN_RIGHT, evt->value);
+		break;
+	case INPUT_KEY_2:
+		if (evt->value) {
+			tmp[MOUSE_X_REPORT_IDX] += 10U;
+		}
+
+		break;
+	case INPUT_KEY_3:
+		if (evt->value) {
+			tmp[MOUSE_Y_REPORT_IDX] += 10U;
+		}
+
+		break;
+	default:
+		LOG_INF("Unrecognized input code %u value %d",
+			evt->code, evt->value);
+		return;
+	}
+
+	if (memcmp(tmp, report, sizeof(tmp))) {
+		memcpy(report, tmp, sizeof(report));
+		k_sem_give(&report_sem);
+	}
+}
+
+INPUT_CALLBACK_DEFINE(NULL, input_cb);
+
+int main(void)
+{
+	const struct device *hid_dev;
+	int ret;
+
+	if (!gpio_is_ready_dt(&led0)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("LED device %s is not ready", led0.port->name);
 		return 0;
 	}
@@ -258,6 +353,7 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (callbacks_configure(&sw0, &left_button, &callback[0],
 				&def_val[0])) {
 		LOG_ERR("Failed configuring left button callback.");
@@ -280,6 +376,8 @@ int main(void)
 		return 0;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	usb_hid_register_device(hid_dev,
 				hid_report_desc, sizeof(hid_report_desc),
 				NULL);
@@ -293,6 +391,7 @@ int main(void)
 	}
 
 	while (true) {
+<<<<<<< HEAD
 		k_sem_take(&sem, K_FOREVER);
 
 		report[MOUSE_BTN_REPORT_POS] = status[MOUSE_BTN_REPORT_POS];
@@ -301,6 +400,13 @@ int main(void)
 		report[MOUSE_Y_REPORT_POS] = status[MOUSE_Y_REPORT_POS];
 		status[MOUSE_Y_REPORT_POS] = 0U;
 		ret = hid_int_ep_write(hid_dev, report, sizeof(report), NULL);
+=======
+		k_sem_take(&report_sem, K_FOREVER);
+
+		ret = hid_int_ep_write(hid_dev, report, sizeof(report), NULL);
+		report[MOUSE_X_REPORT_IDX] = 0U;
+		report[MOUSE_Y_REPORT_IDX] = 0U;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (ret) {
 			LOG_ERR("HID write error, %d", ret);
 		}

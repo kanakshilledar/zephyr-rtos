@@ -63,7 +63,11 @@ static struct bt_mesh_elem elements[] = {
 	BT_MESH_ELEM(0, root_models, BT_MESH_MODEL_NONE),
 };
 
+<<<<<<< HEAD
 static const struct bt_mesh_comp comp = {
+=======
+static const struct bt_mesh_comp mesh_comp = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.cid = BT_COMP_ID_LF,
 	.elem = elements,
 	.elem_count = ARRAY_SIZE(elements),
@@ -72,6 +76,11 @@ static const struct bt_mesh_comp comp = {
 static void setup_cdb(void)
 {
 	struct bt_mesh_cdb_app_key *key;
+<<<<<<< HEAD
+=======
+	uint8_t app_key[16];
+	int err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	key = bt_mesh_cdb_app_key_alloc(net_idx, app_idx);
 	if (key == NULL) {
@@ -79,7 +88,17 @@ static void setup_cdb(void)
 		return;
 	}
 
+<<<<<<< HEAD
 	bt_rand(key->keys[0].app_key, 16);
+=======
+	bt_rand(app_key, 16);
+
+	err = bt_mesh_cdb_app_key_import(key, 0, app_key);
+	if (err) {
+		printk("Failed to import appkey into cdb. Err:%d\n", err);
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		bt_mesh_cdb_app_key_store(key);
@@ -89,6 +108,10 @@ static void setup_cdb(void)
 static void configure_self(struct bt_mesh_cdb_node *self)
 {
 	struct bt_mesh_cdb_app_key *key;
+<<<<<<< HEAD
+=======
+	uint8_t app_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t status = 0;
 	int err;
 
@@ -100,9 +123,21 @@ static void configure_self(struct bt_mesh_cdb_node *self)
 		return;
 	}
 
+<<<<<<< HEAD
 	/* Add Application Key */
 	err = bt_mesh_cfg_cli_app_key_add(self->net_idx, self->addr, self->net_idx, app_idx,
 					  key->keys[0].app_key, &status);
+=======
+	err = bt_mesh_cdb_app_key_export(key, 0, app_key);
+	if (err) {
+		printk("Failed to export appkey from cdb. Err:%d\n", err);
+		return;
+	}
+
+	/* Add Application Key */
+	err = bt_mesh_cfg_cli_app_key_add(self->net_idx, self->addr, self->net_idx, app_idx,
+					  app_key, &status);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err || status) {
 		printk("Failed to add app-key (err %d, status %d)\n", err,
 		       status);
@@ -131,6 +166,10 @@ static void configure_node(struct bt_mesh_cdb_node *node)
 	NET_BUF_SIMPLE_DEFINE(buf, BT_MESH_RX_SDU_MAX);
 	struct bt_mesh_comp_p0_elem elem;
 	struct bt_mesh_cdb_app_key *key;
+<<<<<<< HEAD
+=======
+	uint8_t app_key[16];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_mesh_comp_p0 comp;
 	uint8_t status;
 	int err, elem_addr;
@@ -143,9 +182,20 @@ static void configure_node(struct bt_mesh_cdb_node *node)
 		return;
 	}
 
+<<<<<<< HEAD
 	/* Add Application Key */
 	err = bt_mesh_cfg_cli_app_key_add(net_idx, node->addr, net_idx, app_idx,
 					  key->keys[0].app_key, &status);
+=======
+	err = bt_mesh_cdb_app_key_export(key, 0, app_key);
+	if (err) {
+		printk("Failed to export appkey from cdb. Err:%d\n", err);
+		return;
+	}
+
+	/* Add Application Key */
+	err = bt_mesh_cfg_cli_app_key_add(net_idx, node->addr, net_idx, app_idx, app_key, &status);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err || status) {
 		printk("Failed to add app-key (err %d status %d)\n", err, status);
 		return;
@@ -222,7 +272,11 @@ static void unprovisioned_beacon(uint8_t uuid[16],
 	k_sem_give(&sem_unprov_beacon);
 }
 
+<<<<<<< HEAD
 static void node_added(uint16_t net_idx, uint8_t uuid[16], uint16_t addr, uint8_t num_elem)
+=======
+static void node_added(uint16_t idx, uint8_t uuid[16], uint16_t addr, uint8_t num_elem)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	node_addr = addr;
 	k_sem_give(&sem_node_added);
@@ -239,7 +293,11 @@ static int bt_ready(void)
 	uint8_t net_key[16], dev_key[16];
 	int err;
 
+<<<<<<< HEAD
 	err = bt_mesh_init(&prov, &comp);
+=======
+	err = bt_mesh_init(&prov, &mesh_comp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		printk("Initializing mesh failed (err %d)\n", err);
 		return err;
@@ -307,7 +365,11 @@ static void button_init(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(button.port)) {
+=======
+	if (!gpio_is_ready_dt(&button)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Error: button device %s is not ready\n", button.port->name);
 		return;
 	}

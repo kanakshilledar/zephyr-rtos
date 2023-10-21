@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Copyright (c) 2017 Intel Corporation
+=======
+# Copyright (c) 2017, 2023 Intel Corporation
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 if BOARD_QEMU_XTENSA
@@ -13,3 +17,19 @@ config IPM_CONSOLE_STACK_SIZE
 	default 2048 if IPM_CONSOLE_RECEIVER
 
 endif # BOARD_QEMU_XTENSA
+<<<<<<< HEAD
+=======
+
+if BOARD_QEMU_XTENSA_MMU
+
+config BUILD_OUTPUT_BIN
+	default n
+
+config BOARD
+	default "qemu_xtensa_mmu"
+
+config IPM_CONSOLE_STACK_SIZE
+	default 2048 if IPM_CONSOLE_RECEIVER
+
+endif # BOARD_QEMU_XTENSA
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -14,12 +14,20 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/init.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <hal/nrf_power.h>
 #include <soc/nrfx_coredep.h>
 #include <zephyr/logging/log.h>
 
+<<<<<<< HEAD
+=======
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define LOG_LEVEL CONFIG_SOC_LOG_LEVEL
 LOG_MODULE_REGISTER(soc);
 
@@ -38,11 +46,14 @@ void sys_arch_reboot(int type)
 
 static int nordicsemi_nrf52_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
 	key = irq_lock();
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_NRF_ENABLE_ICACHE
 	/* Enable the instruction cache */
 	NRF_NVMC->ICACHECNF = NVMC_ICACHECNF_CACHEEN_Msk;
@@ -55,6 +66,7 @@ static int nordicsemi_nrf52_init(void)
 	nrf_power_dcdcen_vddh_set(NRF_POWER, true);
 #endif
 
+<<<<<<< HEAD
 	/* Install default handler that simply resets the CPU
 	* if configured in the kernel, NOP otherwise
 	*/
@@ -62,6 +74,8 @@ static int nordicsemi_nrf52_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

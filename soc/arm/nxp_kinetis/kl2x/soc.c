@@ -81,6 +81,7 @@ static ALWAYS_INLINE void clock_init(void)
 
 static int kl2x_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int oldLevel; /* old interrupt lock level */
 
@@ -98,6 +99,11 @@ static int kl2x_init(void)
 
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
+=======
+	/* Initialize system clock to 48 MHz */
+	clock_init();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

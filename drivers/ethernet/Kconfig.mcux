@@ -7,7 +7,11 @@ menuconfig ETH_MCUX
 	bool "MCUX Ethernet driver"
 	default y
 	depends on DT_HAS_NXP_KINETIS_ETHERNET_ENABLED
+<<<<<<< HEAD
 	select NOCACHE_MEMORY if HAS_MCUX_CACHE
+=======
+	select NOCACHE_MEMORY if HAS_MCUX_CACHE && CPU_HAS_DCACHE
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select ARM_MPU if CPU_CORTEX_M7
 	select NET_POWER_MANAGEMENT if PM_DEVICE
 	help

@@ -14,4 +14,8 @@ tests:
       - bt610
       - bl5340_dvk_cpuapp
       - bl5340_dvk_cpuapp_ns
+<<<<<<< HEAD
+=======
+      - m5stack_core2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - mimxrt595_evk_cm33

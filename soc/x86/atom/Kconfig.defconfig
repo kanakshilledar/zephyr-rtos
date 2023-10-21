@@ -11,7 +11,10 @@ config SOC
 config SYS_CLOCK_HW_CYCLES_PER_SEC
 	default 25000000  if HPET_TIMER
 
+<<<<<<< HEAD
 config UART_NS16550_ACCESS_IOPORT
 	default y if UART_NS16550
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif

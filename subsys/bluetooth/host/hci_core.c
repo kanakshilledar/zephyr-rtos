@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <zephyr/sys/atomic.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/sys/check.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 #include <zephyr/sys/slist.h>
 #include <zephyr/sys/byteorder.h>
@@ -110,8 +114,21 @@ struct cmd_data {
 
 static struct cmd_data cmd_data[CONFIG_BT_BUF_CMD_TX_COUNT];
 
+<<<<<<< HEAD
 #define cmd(buf) (&cmd_data[net_buf_id(buf)])
 #define acl(buf) ((struct acl_data *)net_buf_user_data(buf))
+=======
+#if defined(CONFIG_BT_CONN)
+struct acl_data {
+	uint16_t acl_handle;
+};
+
+static struct acl_data acl_data[CONFIG_BT_BUF_ACL_RX_COUNT];
+#endif
+
+#define cmd(buf) (&cmd_data[net_buf_id(buf)])
+#define acl(buf) (&acl_data[net_buf_id(buf)])
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void bt_hci_cmd_state_set_init(struct net_buf *buf,
 			       struct bt_hci_cmd_state_set *state,
@@ -200,10 +217,16 @@ void bt_hci_host_num_completed_packets(struct net_buf *buf)
 {
 
 	struct bt_hci_cp_host_num_completed_packets *cp;
+<<<<<<< HEAD
 	uint16_t handle = acl(buf)->handle;
 	struct bt_hci_handle_count *hc;
 	struct bt_conn *conn;
 	uint8_t index = acl(buf)->index;
+=======
+	uint16_t handle = acl(buf)->acl_handle;
+	struct bt_hci_handle_count *hc;
+	struct bt_conn *conn;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	net_buf_destroy(buf);
 
@@ -212,9 +235,15 @@ void bt_hci_host_num_completed_packets(struct net_buf *buf)
 		return;
 	}
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_index(index);
 	if (!conn) {
 		LOG_WRN("Unable to look up conn with index 0x%02x", index);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+	if (!conn) {
+		LOG_WRN("Unable to look up conn with ACL handle %u", handle);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
@@ -446,7 +475,11 @@ static void hci_num_completed_packets(struct net_buf *buf)
 
 		LOG_DBG("handle %u count %u", handle, count);
 
+<<<<<<< HEAD
 		conn = bt_conn_lookup_handle(handle);
+=======
+		conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!conn) {
 			LOG_ERR("No connection for handle %u", handle);
 			continue;
@@ -500,18 +533,32 @@ static void hci_acl(struct net_buf *buf)
 	uint8_t flags;
 
 	LOG_DBG("buf %p", buf);
+<<<<<<< HEAD
 
 	BT_ASSERT(buf->len >= sizeof(*hdr));
+=======
+	if (buf->len < sizeof(*hdr)) {
+		LOG_ERR("Invalid HCI ACL packet size (%u)", buf->len);
+		net_buf_unref(buf);
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	hdr = net_buf_pull_mem(buf, sizeof(*hdr));
 	len = sys_le16_to_cpu(hdr->len);
 	handle = sys_le16_to_cpu(hdr->handle);
 	flags = bt_acl_flags(handle);
 
+<<<<<<< HEAD
 	acl(buf)->handle = bt_acl_handle(handle);
 	acl(buf)->index = BT_CONN_INDEX_INVALID;
 
 	LOG_DBG("handle %u len %u flags %u", acl(buf)->handle, len, flags);
+=======
+	acl(buf)->acl_handle = bt_acl_handle(handle);
+
+	LOG_DBG("handle %u len %u flags %u", acl(buf)->acl_handle, len, flags);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (buf->len != len) {
 		LOG_ERR("ACL data length mismatch (%u != %u)", buf->len, len);
@@ -519,15 +566,24 @@ static void hci_acl(struct net_buf *buf)
 		return;
 	}
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(acl(buf)->handle);
 	if (!conn) {
 		LOG_ERR("Unable to find conn for handle %u", acl(buf)->handle);
+=======
+	conn = bt_conn_lookup_handle(acl(buf)->acl_handle, BT_CONN_TYPE_ALL);
+	if (!conn) {
+		LOG_ERR("Unable to find conn for handle %u", acl(buf)->acl_handle);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		net_buf_unref(buf);
 		return;
 	}
 
+<<<<<<< HEAD
 	acl(buf)->index = bt_conn_index(conn);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	bt_conn_recv(conn, buf, flags);
 	bt_conn_unref(conn);
 }
@@ -823,7 +879,11 @@ static void hci_disconn_complete_prio(struct net_buf *buf)
 		return;
 	}
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		/* Priority disconnect complete event received before normal
 		 * connection complete event.
@@ -848,7 +908,11 @@ static void hci_disconn_complete(struct net_buf *buf)
 		return;
 	}
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to look up conn with handle %u", handle);
 		return;
@@ -1511,8 +1575,17 @@ void bt_hci_le_enh_conn_complete_sync(struct bt_hci_evt_le_enh_conn_complete_v2 
 
 	bt_addr_le_copy(&conn->le.init_addr, &peer_addr);
 
+<<<<<<< HEAD
 	/* There is no random addr to get, set responder addr to local identity addr. */
 	bt_addr_le_copy(&conn->le.resp_addr, &bt_dev.id_addr[conn->id]);
+=======
+	if (IS_ENABLED(CONFIG_BT_PRIVACY)) {
+		conn->le.resp_addr.type = BT_ADDR_LE_RANDOM;
+		bt_addr_copy(&conn->le.resp_addr.a, &evt->local_rpa);
+	} else {
+		bt_addr_le_copy(&conn->le.resp_addr, &bt_dev.id_addr[conn->id]);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	bt_conn_set_state(conn, BT_CONN_CONNECTED);
 
@@ -1616,7 +1689,11 @@ static void le_remote_feat_complete(struct net_buf *buf)
 	uint16_t handle = sys_le16_to_cpu(evt->handle);
 	struct bt_conn *conn;
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		return;
@@ -1644,7 +1721,11 @@ static void le_data_len_change(struct net_buf *buf)
 	uint16_t handle = sys_le16_to_cpu(evt->handle);
 	struct bt_conn *conn;
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		return;
@@ -1677,7 +1758,11 @@ static void le_phy_update_complete(struct net_buf *buf)
 	uint16_t handle = sys_le16_to_cpu(evt->handle);
 	struct bt_conn *conn;
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		return;
@@ -1698,6 +1783,13 @@ static void le_phy_update_complete(struct net_buf *buf)
 
 bool bt_le_conn_params_valid(const struct bt_le_conn_param *param)
 {
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_BT_CONN_PARAM_ANY)) {
+		return true;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* All limits according to BT Core spec 5.0 [Vol 2, Part E, 7.8.12] */
 
 	if (param->interval_min > param->interval_max ||
@@ -1773,7 +1865,11 @@ static void le_conn_param_req(struct net_buf *buf)
 	param.latency = sys_le16_to_cpu(evt->latency);
 	param.timeout = sys_le16_to_cpu(evt->timeout);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		le_conn_param_neg_reply(handle, BT_HCI_ERR_UNKNOWN_CONN_ID);
@@ -1799,7 +1895,11 @@ static void le_conn_update_complete(struct net_buf *buf)
 
 	LOG_DBG("status 0x%02x, handle %u", evt->status, handle);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		return;
@@ -1949,6 +2049,7 @@ int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BT_SMP) &&
 	    (!addr || bt_addr_le_eq(addr, BT_ADDR_LE_ANY))) {
 		bt_foreach_bond(id, unpair_remote, &id);
@@ -1956,6 +2057,23 @@ int bt_unpair(uint8_t id, const bt_addr_le_t *addr)
 	}
 
 	unpair(id, addr);
+=======
+	if (IS_ENABLED(CONFIG_BT_SMP)) {
+		if (!addr || bt_addr_le_eq(addr, BT_ADDR_LE_ANY)) {
+			bt_foreach_bond(id, unpair_remote, &id);
+		} else {
+			unpair(id, addr);
+		}
+	} else {
+		CHECKIF(addr == NULL) {
+			LOG_DBG("addr is NULL");
+			return -EINVAL;
+		}
+
+		unpair(id, addr);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -2011,7 +2129,11 @@ static void hci_encrypt_change(struct net_buf *buf)
 
 	LOG_DBG("status 0x%02x handle %u encrypt 0x%02x", evt->status, handle, evt->encrypt);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to look up conn with handle %u", handle);
 		return;
@@ -2086,7 +2208,11 @@ static void hci_encrypt_key_refresh_complete(struct net_buf *buf)
 
 	LOG_DBG("status 0x%02x handle %u", evt->status, handle);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to look up conn with handle %u", handle);
 		return;
@@ -2142,7 +2268,11 @@ static void bt_hci_evt_read_remote_version_complete(struct net_buf *buf)
 
 	evt = net_buf_pull_mem(buf, sizeof(*evt));
 	handle = sys_le16_to_cpu(evt->handle);
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_ALL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("No connection for handle %u", handle);
 		return;
@@ -2223,7 +2353,11 @@ static void le_ltk_request(struct net_buf *buf)
 
 	LOG_DBG("handle %u", handle);
 
+<<<<<<< HEAD
 	conn = bt_conn_lookup_handle(handle);
+=======
+	conn = bt_conn_lookup_handle(handle, BT_CONN_TYPE_LE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!conn) {
 		LOG_ERR("Unable to lookup conn for handle %u", handle);
 		return;
@@ -2629,7 +2763,15 @@ static void hci_event(struct net_buf *buf)
 {
 	struct bt_hci_evt_hdr *hdr;
 
+<<<<<<< HEAD
 	BT_ASSERT(buf->len >= sizeof(*hdr));
+=======
+	if (buf->len < sizeof(*hdr)) {
+		LOG_ERR("Invalid HCI event size (%u)", buf->len);
+		net_buf_unref(buf);
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	hdr = net_buf_pull_mem(buf, sizeof(*hdr));
 	LOG_DBG("event 0x%02x", hdr->evt);
@@ -3693,7 +3835,15 @@ void hci_event_prio(struct net_buf *buf)
 
 	net_buf_simple_save(&buf->b, &state);
 
+<<<<<<< HEAD
 	BT_ASSERT(buf->len >= sizeof(*hdr));
+=======
+	if (buf->len < sizeof(*hdr)) {
+		LOG_ERR("Invalid HCI event size (%u)", buf->len);
+		net_buf_unref(buf);
+		return;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	hdr = net_buf_pull_mem(buf, sizeof(*hdr));
 	evt_flags = bt_hci_evt_get_flags(hdr->evt);
@@ -3917,6 +4067,16 @@ static void rx_work_handler(struct k_work *work)
 }
 #endif /* !CONFIG_BT_RECV_BLOCKING */
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_TESTING)
+k_tid_t bt_testing_tx_tid_get(void)
+{
+	return &tx_thread_data;
+}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int bt_enable(bt_ready_cb_t cb)
 {
 	int err;
@@ -4089,11 +4249,19 @@ int bt_set_name(const char *name)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	strncpy(bt_dev.name, name, len);
 	bt_dev.name[len] = '\0';
 
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		err = settings_save_one("bt/name", bt_dev.name, len);
+=======
+	memcpy(bt_dev.name, name, len);
+	bt_dev.name[len] = '\0';
+
+	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
+		err = bt_settings_store_name(bt_dev.name, len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err) {
 			LOG_WRN("Unable to store name");
 		}
@@ -4128,9 +4296,13 @@ int bt_set_appearance(uint16_t appearance)
 {
 	if (bt_dev.appearance != appearance) {
 		if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
+<<<<<<< HEAD
 			int err = settings_save_one("bt/appearance", &appearance,
 					sizeof(appearance));
 
+=======
+			int err = bt_settings_store_appearance(&appearance, sizeof(appearance));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (err) {
 				LOG_ERR("Unable to save setting 'bt/appearance' (err %d).", err);
 				return err;

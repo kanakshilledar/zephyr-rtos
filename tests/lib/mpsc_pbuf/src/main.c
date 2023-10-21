@@ -15,7 +15,11 @@
 #include <stdbool.h>
 #include <zephyr/kernel.h>
 #include <zephyr/ztest.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define PUT_EXT_LEN \
 	((sizeof(union mpsc_pbuf_generic) + sizeof(void *)) / sizeof(uint32_t))
@@ -80,7 +84,11 @@ static void drop(const struct mpsc_pbuf_buffer *buffer, const union mpsc_pbuf_ge
 
 static uint32_t buf32[512];
 
+<<<<<<< HEAD
 static struct mpsc_pbuf_buffer_config cfg = {
+=======
+static struct mpsc_pbuf_buffer_config mpsc_buf_cfg = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.buf = buf32,
 	.size = ARRAY_SIZE(buf32),
 	.notify_drop = drop,
@@ -91,9 +99,15 @@ static void init(struct mpsc_pbuf_buffer *buffer, uint32_t wlen, bool overwrite)
 {
 	drop_cnt = 0;
 	exp_drop_cnt = 0;
+<<<<<<< HEAD
 	cfg.flags = overwrite ? MPSC_PBUF_MODE_OVERWRITE : 0;
 	cfg.size = wlen;
 	mpsc_pbuf_init(buffer, &cfg);
+=======
+	mpsc_buf_cfg.flags = overwrite ? MPSC_PBUF_MODE_OVERWRITE : 0;
+	mpsc_buf_cfg.size = wlen;
+	mpsc_pbuf_init(buffer, &mpsc_buf_cfg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if CONFIG_SOC_SERIES_NRF52X
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
@@ -235,12 +249,21 @@ void benchmark_item_put(bool pow2)
 
 	t = get_cyc();
 	for (int i = 0; i < repeat; i++) {
+<<<<<<< HEAD
 		union test_item *t;
 
 		t = (union test_item *)mpsc_pbuf_claim(&buffer);
 		zassert_true(t);
 		zassert_equal(t->data.data, i);
 		mpsc_pbuf_free(&buffer, &t->item);
+=======
+		union test_item *ti;
+
+		ti = (union test_item *)mpsc_pbuf_claim(&buffer);
+		zassert_true(ti);
+		zassert_equal(ti->data.data, i);
+		mpsc_pbuf_free(&buffer, &ti->item);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	t = get_cyc() - t;
@@ -405,12 +428,21 @@ void benchmark_item_put_ext(bool pow2)
 
 	t = get_cyc();
 	for (int i = 0; i < repeat; i++) {
+<<<<<<< HEAD
 		union test_item *t;
 
 		t = (union test_item *)mpsc_pbuf_claim(&buffer);
 		zassert_true(t);
 		zassert_equal(t->data.data, i);
 		mpsc_pbuf_free(&buffer, &t->item);
+=======
+		union test_item *ti;
+
+		ti = (union test_item *)mpsc_pbuf_claim(&buffer);
+		zassert_true(ti);
+		zassert_equal(ti->data.data, i);
+		mpsc_pbuf_free(&buffer, &ti->item);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	t = get_cyc() - t;
@@ -441,7 +473,11 @@ void benchmark_item_put_data(bool pow2)
 			.data = NULL
 		}
 	};
+<<<<<<< HEAD
 	uint32_t t = get_cyc();
+=======
+	uint32_t cyc = get_cyc();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (uintptr_t i = 0; i < repeat; i++) {
 		test_ext_item.data_ext.hdr.data = i;
@@ -450,6 +486,7 @@ void benchmark_item_put_data(bool pow2)
 				    PUT_EXT_LEN);
 	}
 
+<<<<<<< HEAD
 	t = get_cyc() - t;
 	PRINT("%spow2 buffer\n", pow2 ? "" : "non-");
 	PRINT("put_ext time: %d cycles\n", t/repeat);
@@ -466,6 +503,24 @@ void benchmark_item_put_data(bool pow2)
 
 	t = get_cyc() - t;
 	PRINT("ext item claim,free: %d cycles\n", t/repeat);
+=======
+	cyc = get_cyc() - cyc;
+	PRINT("%spow2 buffer\n", pow2 ? "" : "non-");
+	PRINT("put_ext time: %d cycles\n", cyc/repeat);
+
+	cyc = get_cyc();
+	for (int i = 0; i < repeat; i++) {
+		union test_item *ti;
+
+		ti = (union test_item *)mpsc_pbuf_claim(&buffer);
+		zassert_true(ti);
+		zassert_equal(ti->data.data, i);
+		mpsc_pbuf_free(&buffer, &ti->item);
+	}
+
+	cyc = get_cyc() - cyc;
+	PRINT("ext item claim,free: %d cycles\n", cyc/repeat);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_is_null(mpsc_pbuf_claim(&buffer));
 }
@@ -930,16 +985,26 @@ ZTEST(log_buffer, test_overwrite_consistency)
 	int id = 0;
 
 	while (id < repeat) {
+<<<<<<< HEAD
 		struct test_data_var *t = NULL;
+=======
+		struct test_data_var *tdv = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bool alloc_during_claim = (rand_get(1, 5) <= 2);
 
 		/* Occasionally claim buffer to simulate that claiming is
 		 * interrupted by allocation.
 		 */
 		if (alloc_during_claim) {
+<<<<<<< HEAD
 			t = (struct test_data_var *)mpsc_pbuf_claim(&buffer);
 			if (t) {
 				validate_packet(t);
+=======
+			tdv = (struct test_data_var *)mpsc_pbuf_claim(&buffer);
+			if (tdv) {
+				validate_packet(tdv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 
@@ -947,6 +1012,7 @@ ZTEST(log_buffer, test_overwrite_consistency)
 
 		for (int i = 0; i < wr_cnt; i++) {
 			uint32_t wlen = rand_get(1, 15);
+<<<<<<< HEAD
 			struct test_data_var *t;
 
 			t = (struct test_data_var *)mpsc_pbuf_alloc(&buffer,
@@ -960,11 +1026,27 @@ ZTEST(log_buffer, test_overwrite_consistency)
 		/* Put back item claimed before committing new items. */
 		if (t) {
 			mpsc_pbuf_free(&buffer, (union mpsc_pbuf_generic *)t);
+=======
+			struct test_data_var *tdv2;
+
+			tdv2 = (struct test_data_var *)mpsc_pbuf_alloc(&buffer,
+								       wlen,
+								       K_NO_WAIT);
+			tdv2->hdr.len = wlen;
+			tdv2->hdr.data = id++;
+			mpsc_pbuf_commit(&buffer, (union mpsc_pbuf_generic *)tdv2);
+		}
+
+		/* Put back item claimed before committing new items. */
+		if (tdv) {
+			mpsc_pbuf_free(&buffer, (union mpsc_pbuf_generic *)tdv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		uint32_t rd_cnt = rand_get(1, 30);
 
 		for (int i = 0; i < rd_cnt; i++) {
+<<<<<<< HEAD
 			struct test_data_var *t;
 
 			t = (struct test_data_var *)mpsc_pbuf_claim(&buffer);
@@ -974,6 +1056,17 @@ ZTEST(log_buffer, test_overwrite_consistency)
 
 			validate_packet(t);
 			mpsc_pbuf_free(&buffer, (union mpsc_pbuf_generic *)t);
+=======
+			struct test_data_var *tdv2;
+
+			tdv2 = (struct test_data_var *)mpsc_pbuf_claim(&buffer);
+			if (!tdv2) {
+				continue;
+			}
+
+			validate_packet(tdv2);
+			mpsc_pbuf_free(&buffer, (union mpsc_pbuf_generic *)tdv2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }

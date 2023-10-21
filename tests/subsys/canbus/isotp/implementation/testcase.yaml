@@ -5,6 +5,9 @@ tests:
       - isotp
     depends_on: can
     filter: dt_chosen_enabled("zephyr,canbus") and not dt_compat_enabled("kvaser,pcican")
+<<<<<<< HEAD
     platform_exclude:
       - native_posix
       - native_posix_64
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

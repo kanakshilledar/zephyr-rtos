@@ -4,14 +4,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/posix/unistd.h>
+=======
+#include <unistd.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/ztest.h>
 
 struct waker_work {
 	k_tid_t tid;
 	struct k_work_delayable dwork;
 };
+<<<<<<< HEAD
 static struct waker_work ww;
+=======
+static struct waker_work wake_work;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void waker_func(struct k_work *work)
 {
@@ -48,9 +57,15 @@ ZTEST(posix_apis, test_sleep)
 	zassert_true((now - then) >= 2 * MSEC_PER_SEC);
 
 	/* test that sleep reports the remainder */
+<<<<<<< HEAD
 	ww.tid = k_current_get();
 	k_work_init_delayable(&ww.dwork, waker_func);
 	zassert_equal(1, k_work_schedule(&ww.dwork, K_SECONDS(sleep_min_s)));
+=======
+	wake_work.tid = k_current_get();
+	k_work_init_delayable(&wake_work.dwork, waker_func);
+	zassert_equal(1, k_work_schedule(&wake_work.dwork, K_SECONDS(sleep_min_s)));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_true(sleep(sleep_max_s) >= sleep_rem_s);
 }
 
@@ -79,9 +94,15 @@ ZTEST(posix_apis, test_usleep)
 	zassert_equal(errno, EINVAL);
 
 	/* test that sleep reports errno = EINTR when woken up */
+<<<<<<< HEAD
 	ww.tid = k_current_get();
 	k_work_init_delayable(&ww.dwork, waker_func);
 	zassert_equal(1, k_work_schedule(&ww.dwork, K_USEC(USEC_PER_SEC / 2)));
+=======
+	wake_work.tid = k_current_get();
+	k_work_init_delayable(&wake_work.dwork, waker_func);
+	zassert_equal(1, k_work_schedule(&wake_work.dwork, K_USEC(USEC_PER_SEC / 2)));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(-1, usleep(USEC_PER_SEC - 1));
 	zassert_equal(EINTR, errno);
 }

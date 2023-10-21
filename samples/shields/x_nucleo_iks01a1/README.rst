@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _x-nucleo-iks01a1-sample:
 
 X-NUCLEO-IKS01A1: MEMS inertial and environmental multi-sensor shield
 #####################################################################
+=======
+.. zephyr:code-sample:: x-nucleo-iks01a1
+   :name: X-NUCLEO-IKS01A1 shield
+   :relevant-api: sensor_interface
+
+   Interact with all the sensors of an X-NUCLEO-IKS01A1 shield.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -27,7 +35,11 @@ does not yet support sensors multiple instances.
 References
 **********
 
+<<<<<<< HEAD
 -X-NUCLEO-IKS01A1: http://www.st.com/en/ecosystems/x-nucleo-iks01a1.html
+=======
+-X-NUCLEO-IKS01A1: https://www.st.com/en/ecosystems/x-nucleo-iks01a1.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

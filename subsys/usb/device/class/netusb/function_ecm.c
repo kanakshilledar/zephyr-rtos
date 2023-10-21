@@ -31,9 +31,13 @@ LOG_MODULE_REGISTER(usb_ecm, CONFIG_USB_DEVICE_NETWORK_LOG_LEVEL);
 static uint8_t tx_buf[NET_ETH_MAX_FRAME_SIZE], rx_buf[NET_ETH_MAX_FRAME_SIZE];
 
 struct usb_cdc_ecm_config {
+<<<<<<< HEAD
 #ifdef CONFIG_USB_COMPOSITE_DEVICE
 	struct usb_association_descriptor iad;
 #endif
+=======
+	struct usb_association_descriptor iad;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct usb_if_descriptor if0;
 	struct cdc_header_descriptor if0_header;
 	struct cdc_union_descriptor if0_union;
@@ -48,7 +52,10 @@ struct usb_cdc_ecm_config {
 } __packed;
 
 USBD_CLASS_DESCR_DEFINE(primary, 0) struct usb_cdc_ecm_config cdc_ecm_cfg = {
+<<<<<<< HEAD
 #ifdef CONFIG_USB_COMPOSITE_DEVICE
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.iad = {
 		.bLength = sizeof(struct usb_association_descriptor),
 		.bDescriptorType = USB_DESC_INTERFACE_ASSOC,
@@ -59,7 +66,10 @@ USBD_CLASS_DESCR_DEFINE(primary, 0) struct usb_cdc_ecm_config cdc_ecm_cfg = {
 		.bFunctionProtocol = 0,
 		.iFunction = 0,
 	},
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Interface descriptor 0 */
 	/* CDC Communication interface */
 	.if0 = {
@@ -422,9 +432,13 @@ static void ecm_interface_config(struct usb_desc_header *head,
 	cdc_ecm_cfg.if0_union.bSubordinateInterface0 = bInterfaceNumber + 1;
 	cdc_ecm_cfg.if1_0.bInterfaceNumber = bInterfaceNumber + 1;
 	cdc_ecm_cfg.if1_1.bInterfaceNumber = bInterfaceNumber + 1;
+<<<<<<< HEAD
 #ifdef CONFIG_USB_COMPOSITE_DEVICE
 	cdc_ecm_cfg.iad.bFirstInterface = bInterfaceNumber;
 #endif
+=======
+	cdc_ecm_cfg.iad.bFirstInterface = bInterfaceNumber;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 USBD_DEFINE_CFG_DATA(cdc_ecm_config) = {

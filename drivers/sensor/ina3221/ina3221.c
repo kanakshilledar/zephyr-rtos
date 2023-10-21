@@ -225,7 +225,11 @@ static int ina3221_channel_get(const struct device *dev, enum sensor_channel cha
 {
 	const struct ina3221_config *cfg = dev->config;
 	struct ina3221_data *data = dev->data;
+<<<<<<< HEAD
 	double result;
+=======
+	float result;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	switch (chan) {
 	case SENSOR_CHAN_VOLTAGE:
@@ -245,7 +249,11 @@ static int ina3221_channel_get(const struct device *dev, enum sensor_channel cha
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	return sensor_value_from_double(val, result);
+=======
+	return sensor_value_from_float(val, result);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int ina3221_attr_set(const struct device *dev, enum sensor_channel chan,

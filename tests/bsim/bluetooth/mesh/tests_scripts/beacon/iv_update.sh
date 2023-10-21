@@ -12,3 +12,12 @@ conf=prj_mesh1d1_conf
 RunTest mesh_beacon_on_iv_update_1d1 \
 	beacon_tx_on_iv_update \
 	beacon_rx_on_iv_update
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_beacon_on_iv_update_psa \
+	beacon_tx_on_iv_update \
+	beacon_rx_on_iv_update
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -134,6 +134,10 @@ ZTEST(bt_keys_update_usage_overwrite_oldest_enabled, test_update_non_latest_refe
 			bt_keys_get_last_keys_updated(), expected_updated_keys,
 			"bt_keys_update_usage() changed last updated key reference unexpectedly");
 
+<<<<<<< HEAD
 		expect_not_called_settings_save_one();
+=======
+		expect_not_called_bt_settings_store_keys();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }

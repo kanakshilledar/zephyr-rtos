@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _can-babbling-sample:
 
 Controller Area Network (CAN) Babbling Node
 ###########################################
+=======
+.. zephyr:code-sample:: can-babbling
+   :name: Controller Area Network (CAN) babbling node
+   :relevant-api: can_interface
+
+   Simulate a babbling CAN node.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

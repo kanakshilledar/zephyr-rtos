@@ -30,9 +30,24 @@
 
 	intc: ioapic@fec00000  {
 		compatible = "intel,ioapic";
+<<<<<<< HEAD
 		reg = <0xfec00000 0x1000>;
 		interrupt-controller;
 		#interrupt-cells = <3>;
+=======
+		#address-cells = <1>;
+		#interrupt-cells = <3>;
+		reg = <0xfec00000 0x1000>;
+		interrupt-controller;
+	};
+
+	intc_loapic: loapic@fee00000  {
+		compatible = "intel,loapic";
+		reg = <0xfee00000 0x1000>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		#address-cells = <1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	pcie0: pcie0 {
@@ -47,7 +62,11 @@
 			#size-cells = <0>;
 			vendor-id = <0x8086>;
 			device-id = <0x7a23>;
+<<<<<<< HEAD
 			interrupts = <18 IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
+=======
+			interrupts = <PCIE_IRQ_DETECT IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupt-parent = <&intc>;
 
 			status = "okay";
@@ -66,6 +85,16 @@
 			status = "okay";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c0_dma: i2c0_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c0>;
+			#dma-cells = <1>;
+			status = "okay";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c1: i2c1 {
 			compatible = "snps,designware-i2c";
 			clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -76,7 +105,18 @@
 			interrupts = <PCIE_IRQ_DETECT IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
 			interrupt-parent = <&intc>;
 
+<<<<<<< HEAD
 			status = "okay";
+=======
+			status = "disabled";
+		};
+
+		i2c1_dma: i2c1_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c1>;
+			#dma-cells = <1>;
+			status = "disabled";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		i2c2: i2c2 {
@@ -84,12 +124,28 @@
 			clock-frequency = <I2C_BITRATE_STANDARD>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+<<<<<<< HEAD
+=======
+			#address-cells = <1>;
+			#size-cells = <0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			vendor-id = <0x8086>;
 			device-id = <0x7ace>;
 			interrupts = <PCIE_IRQ_DETECT IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
 			interrupt-parent = <&intc>;
 
+<<<<<<< HEAD
 			status = "okay";
+=======
+			status = "disabled";
+		};
+
+		i2c2_dma: i2c2_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c2>;
+			#dma-cells = <1>;
+			status = "disabled";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		i2c3: i2c3 {
@@ -105,6 +161,16 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c3_dma: i2c3_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c3>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c4: i2c4 {
 			compatible = "snps,designware-i2c";
 			clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -118,6 +184,16 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c4_dma: i2c4_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c4>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c5: i2c5 {
 			compatible = "snps,designware-i2c";
 			clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -131,6 +207,16 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c5_dma: i2c5_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c5>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c6: i2c6 {
 			compatible = "snps,designware-i2c";
 			clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -144,6 +230,16 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c6_dma: i2c6_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c6>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		i2c7: i2c7 {
 			compatible = "snps,designware-i2c";
 			clock-frequency = <I2C_BITRATE_STANDARD>;
@@ -157,6 +253,16 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
+=======
+		i2c7_dma: i2c7_dma {
+			compatible = "intel,lpss";
+			dma-parent = <&i2c7>;
+			#dma-cells = <1>;
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		spi0: spi0 {
 			compatible = "intel,penwell-spi";
 			vendor-id = <0x8086>;
@@ -306,6 +412,10 @@
 		uart_ec_0: uart@3f8 {
 			compatible = "ns16550";
 			reg = <0x000003f8 0x100>;
+<<<<<<< HEAD
+=======
+			io-mapped;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			clock-frequency = <1843200>;
 			interrupts = <4 IRQ_TYPE_LOWEST_EDGE_RISING 3>;
 			interrupt-parent = <&intc>;
@@ -496,6 +606,19 @@
 			status = "okay";
 		};
 
+<<<<<<< HEAD
+=======
+		pwm0: pwm@e06a0000 {
+			compatible = "intel,blinky-pwm";
+			reg = <0xe06a0000 0x400>;
+			reg-offset = <0x304>;
+			clock-frequency = <32768>;
+			max-pins = <1>;
+			#pwm-cells = <2>;
+			status = "okay";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rtc: counter: rtc@70 {
 			compatible = "motorola,mc146818";
 			reg = <0x70 0x0D 0x71 0x0D>;
@@ -506,6 +629,17 @@
 			status = "okay";
 		};
 
+<<<<<<< HEAD
+=======
+		tgpio: tgpio@fe001200 {
+			compatible = "intel,timeaware-gpio";
+			reg = <0xfe001200 0x100>;
+			timer-clock = <19200000>;
+			max-pins = <2>;
+			status = "okay";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		hpet: hpet@fed00000 {
 			compatible = "intel,hpet";
 			reg = <0xfed00000 0x400>;
@@ -518,6 +652,11 @@
 		tco_wdt: tco_wdt@400 {
 			compatible = "intel,tco-wdt";
 			reg = <0x0400 0x20>;
+<<<<<<< HEAD
+=======
+
+			status = "disabled";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

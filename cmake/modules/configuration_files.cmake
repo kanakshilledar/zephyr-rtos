@@ -13,6 +13,11 @@
 # - CONF_FILE:              List of Kconfig fragments
 # - EXTRA_CONF_FILE:        List of additional Kconfig fragments
 # - DTC_OVERLAY_FILE:       List of devicetree overlay files
+<<<<<<< HEAD
+=======
+# - EXTRA_DTC_OVERLAY_FILE  List of additional devicetree overlay files
+# - DTS_EXTRA_CPPFLAGS      List of additional devicetree preprocessor defines
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # - APPLICATION_CONFIG_DIR: Root folder for application configuration
 #
 # If any of the above variables are already set when this CMake module is
@@ -81,7 +86,11 @@ if(CONF_FILE_INCLUDE_FRAGMENTS)
   zephyr_file(CONF_FILES ${APPLICATION_CONFIG_DIR}/boards KCONF CONF_FILE BUILD ${CONF_FILE_BUILD_TYPE})
 endif()
 
+<<<<<<< HEAD
 set(APPLICATION_CONFIG_DIR ${APPLICATION_CONFIG_DIR} CACHE INTERNAL "The application configuration folder")
+=======
+set(APPLICATION_CONFIG_DIR ${APPLICATION_CONFIG_DIR} CACHE INTERNAL "The application configuration folder" FORCE)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 set(CACHED_CONF_FILE ${CONF_FILE} CACHE STRING "If desired, you can build the application using\
 the configuration settings specified in an alternate .conf file using this parameter. \
 These settings will override the settings in the application’s .config file or its default .conf file.\
@@ -118,3 +127,7 @@ zephyr_boilerplate_watch(DTC_OVERLAY_FILE)
 
 zephyr_get(EXTRA_CONF_FILE SYSBUILD LOCAL VAR EXTRA_CONF_FILE OVERLAY_CONFIG MERGE REVERSE)
 zephyr_get(EXTRA_DTC_OVERLAY_FILE SYSBUILD LOCAL MERGE REVERSE)
+<<<<<<< HEAD
+=======
+zephyr_get(DTS_EXTRA_CPPFLAGS SYSBUILD LOCAL MERGE REVERSE)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

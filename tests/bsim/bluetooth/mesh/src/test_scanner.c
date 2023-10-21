@@ -185,7 +185,11 @@ static void test_rx_invalid_packet(void)
 	}
 
 	/* Verify that test data is received correct. */
+<<<<<<< HEAD
 	err = bt_mesh_test_recv(10, cfg->addr, K_SECONDS(10));
+=======
+	err = bt_mesh_test_recv(10, cfg->addr, NULL, K_SECONDS(10));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ASSERT_OK_MSG(err, "Failed receiving with valid ad_type");
 
 	PASS();

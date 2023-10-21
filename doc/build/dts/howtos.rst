@@ -149,7 +149,13 @@ that the node has ``status = "okay"``, like this:
 
 If you see the ``#error`` output, make sure to enable the node in your
 devicetree. In some situations your code will compile but it will fail to link
+<<<<<<< HEAD
 with a message similar to::
+=======
+with a message similar to:
+
+.. code-block:: none
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    ...undefined reference to `__device_dts_ord_N'
    collect2: error: ld returned 1 exit status
@@ -299,6 +305,10 @@ For example, if your BOARD.dts contains this node:
 These are equivalent ways to override the ``current-speed`` value in an
 overlay:
 
+<<<<<<< HEAD
+=======
+.. Disable syntax highlighting as this construct does not seem supported by pygments
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. code-block:: none
 
    /* Option 1 */
@@ -316,7 +326,11 @@ We'll use the ``&serial0`` style for the rest of these examples.
 You can add aliases to your devicetree using overlays: an alias is just a
 property of the ``/aliases`` node. For example:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    / {
    	aliases {
@@ -326,7 +340,11 @@ property of the ``/aliases`` node. For example:
 
 Chosen nodes work the same way. For example:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    / {
    	chosen {
@@ -337,7 +355,11 @@ Chosen nodes work the same way. For example:
 To delete a property (in addition to deleting properties in general, this is
 how to set a boolean property to false if it's true in BOARD.dts):
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    &serial0 {
    	/delete-property/ some-unwanted-property;
@@ -346,7 +368,11 @@ how to set a boolean property to false if it's true in BOARD.dts):
 You can add subnodes using overlays. For example, to configure a SPI or I2C
 child device on an existing bus node, do something like this:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: devicetree
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    /* SPI device example */
    &spi1 {
@@ -630,6 +656,10 @@ Applications that depend on board-specific devices
 
 One way to allow application code to run unmodified on multiple boards is by
 supporting a devicetree alias to specify the hardware specific portions, as is
+<<<<<<< HEAD
 done in the :ref:`blinky-sample`. The application can then be configured in
+=======
+done in the :zephyr:code-sample:`blinky` sample. The application can then be configured in
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 :ref:`BOARD.dts <devicetree-in-out-files>` files or via :ref:`devicetree
 overlays <use-dt-overlays>`.

@@ -26,7 +26,11 @@ which includes some Kconfig extensions:
 
   Consider the following example:
 
+<<<<<<< HEAD
   .. code-block:: none
+=======
+  .. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       source "foo/bar/*/Kconfig"
 
@@ -34,7 +38,11 @@ which includes some Kconfig extensions:
   :file:`foo/bar/baz/Kconfig` and :file:`foo/bar/qaz/Kconfig`, the statement
   above is equivalent to the following two ``source`` statements:
 
+<<<<<<< HEAD
   .. code-block:: none
+=======
+  .. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       source "foo/bar/baz/Kconfig"
       source "foo/bar/qaz/Kconfig"
@@ -61,7 +69,11 @@ which includes some Kconfig extensions:
   :file:`Kconfig` file, and that :file:`foo/bar/Kconfig` has the following
   statements:
 
+<<<<<<< HEAD
   .. code-block:: none
+=======
+  .. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       source "qaz/Kconfig1"
       rsource "qaz/Kconfig2"
@@ -83,7 +95,11 @@ which includes some Kconfig extensions:
   For example, the following statement will include :file:`Kconfig1` and
   :file:`Kconfig2` from the current directory (if they exist):
 
+<<<<<<< HEAD
   .. code-block:: none
+=======
+  .. code-block:: kconfig
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       orsource "Kconfig[12]"
 

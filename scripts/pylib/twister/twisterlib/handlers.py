@@ -5,6 +5,7 @@
 # Copyright 2022 NXP
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 import math
 import os
 import sys
@@ -18,6 +19,22 @@ import threading
 import select
 import re
 import psutil
+=======
+import csv
+import logging
+import math
+import os
+import psutil
+import re
+import select
+import shlex
+import signal
+import subprocess
+import sys
+import threading
+import time
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 from twisterlib.environment import ZEPHYR_BASE
 from twisterlib.error import TwisterException
 sys.path.insert(0, os.path.join(ZEPHYR_BASE, "scripts/pylib/build_helpers"))
@@ -39,7 +56,12 @@ except ImportError as capture_error:
 logger = logging.getLogger('twister')
 logger.setLevel(logging.DEBUG)
 
+<<<<<<< HEAD
 SUPPORTED_SIMS = ["mdb-nsim", "nsim", "renode", "qemu", "tsim", "armfvp", "xt-sim", "native"]
+=======
+SUPPORTED_SIMS = ["mdb-nsim", "nsim", "renode", "qemu", "tsim", "armfvp", "xt-sim", "native", "custom"]
+SUPPORTED_SIMS_IN_PYTEST = ['native', 'qemu']
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 def terminate_process(proc):
@@ -79,7 +101,10 @@ class Handler:
 
         self.name = instance.name
         self.instance = instance
+<<<<<<< HEAD
         self.timeout = math.ceil(instance.testsuite.timeout * instance.platform.timeout_multiplier)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.sourcedir = instance.testsuite.source_dir
         self.build_dir = instance.build_dir
         self.log = os.path.join(self.build_dir, "handler.log")
@@ -92,6 +117,14 @@ class Handler:
         self.args = []
         self.terminated = False
 
+<<<<<<< HEAD
+=======
+    def get_test_timeout(self):
+        return math.ceil(self.instance.testsuite.timeout *
+                         self.instance.platform.timeout_multiplier *
+                         self.options.timeout_multiplier)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     def record(self, harness):
         if harness.recording:
             filename = os.path.join(self.build_dir, "recording.csv")
@@ -187,7 +220,11 @@ class BinaryHandler(Handler):
 
         with open(self.log, "wt") as log_out_fp:
             timeout_extended = False
+<<<<<<< HEAD
             timeout_time = time.time() + self.timeout
+=======
+            timeout_time = time.time() + self.get_test_timeout()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             while True:
                 this_timeout = timeout_time - time.time()
                 if this_timeout < 0:
@@ -222,10 +259,14 @@ class BinaryHandler(Handler):
             except subprocess.TimeoutExpired:
                 self.terminate(proc)
 
+<<<<<<< HEAD
     def handle(self, harness):
 
         robot_test = getattr(harness, "is_robot_test", False)
 
+=======
+    def _create_command(self, robot_test):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if robot_test:
             command = [self.generator_cmd, "run_renode_test"]
         elif self.call_make_run:
@@ -235,7 +276,10 @@ class BinaryHandler(Handler):
         else:
             command = [self.binary]
 
+<<<<<<< HEAD
         run_valgrind = False
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if self.options.enable_valgrind:
             command = ["valgrind", "--error-exitcode=2",
                        "--leak-check=full",
@@ -243,7 +287,10 @@ class BinaryHandler(Handler):
                        "--log-file=" + self.build_dir + "/valgrind.log",
                        "--track-origins=yes",
                        ] + command
+<<<<<<< HEAD
             run_valgrind = True
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         # Only valid for native_posix
         if self.seed is not None:
@@ -251,12 +298,18 @@ class BinaryHandler(Handler):
         if self.extra_test_args is not None:
             command.extend(self.extra_test_args)
 
+<<<<<<< HEAD
         logger.debug("Spawning process: " +
                      " ".join(shlex.quote(word) for word in command) + os.linesep +
                      "in directory: " + self.build_dir)
 
         start_time = time.time()
 
+=======
+        return command
+
+    def _create_env(self):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         env = os.environ.copy()
         if self.options.enable_asan:
             env["ASAN_OPTIONS"] = "log_path=stdout:" + \
@@ -268,6 +321,43 @@ class BinaryHandler(Handler):
             env["UBSAN_OPTIONS"] = "log_path=stdout:halt_on_error=1:" + \
                                   env.get("UBSAN_OPTIONS", "")
 
+<<<<<<< HEAD
+=======
+        return env
+
+    def _update_instance_info(self, harness_state, handler_time):
+        self.instance.execution_time = handler_time
+        if not self.terminated and self.returncode != 0:
+            self.instance.status = "failed"
+            if self.options.enable_valgrind and self.returncode == 2:
+                self.instance.reason = "Valgrind error"
+            else:
+                # When a process is killed, the default handler returns 128 + SIGTERM
+                # so in that case the return code itself is not meaningful
+                self.instance.reason = "Failed"
+        elif harness_state:
+            self.instance.status = harness_state
+            if harness_state == "failed":
+                self.instance.reason = "Failed"
+        else:
+            self.instance.status = "failed"
+            self.instance.reason = "Timeout"
+            self.instance.add_missing_case_status("blocked", "Timeout")
+
+    def handle(self, harness):
+        robot_test = getattr(harness, "is_robot_test", False)
+
+        command = self._create_command(robot_test)
+
+        logger.debug("Spawning process: " +
+                     " ".join(shlex.quote(word) for word in command) + os.linesep +
+                     "in directory: " + self.build_dir)
+
+        start_time = time.time()
+
+        env = self._create_env()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if robot_test:
             harness.run_robot_test(command, self)
             return
@@ -296,6 +386,7 @@ class BinaryHandler(Handler):
         if sys.stdout.isatty():
             subprocess.call(["stty", "sane"], stdin=sys.stdout)
 
+<<<<<<< HEAD
         self.instance.execution_time = handler_time
         if not self.terminated and self.returncode != 0:
             self.instance.status = "failed"
@@ -313,6 +404,9 @@ class BinaryHandler(Handler):
             self.instance.status = "failed"
             self.instance.reason = "Timeout"
             self.instance.add_missing_case_status("blocked", "Timeout")
+=======
+        self._update_instance_info(harness.state, handler_time)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         self._final_handle_actions(harness, handler_time)
 
@@ -332,6 +426,10 @@ class SimulationHandler(BinaryHandler):
             self.binary = os.path.join(instance.build_dir, "zephyr", "zephyr.exe")
             self.ready = True
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 class DeviceHandler(Handler):
 
     def __init__(self, instance, type_str):
@@ -342,7 +440,11 @@ class DeviceHandler(Handler):
         super().__init__(instance, type_str)
 
     def monitor_serial(self, ser, halt_event, harness):
+<<<<<<< HEAD
         log_out_fp = open(self.log, "wt")
+=======
+        log_out_fp = open(self.log, "wb")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         if self.options.coverage:
             # Set capture_coverage to True to indicate that right after
@@ -394,7 +496,11 @@ class DeviceHandler(Handler):
                 sl = serial_line.decode('utf-8', 'ignore').lstrip()
                 logger.debug("DEVICE: {0}".format(sl.rstrip()))
 
+<<<<<<< HEAD
                 log_out_fp.write(sl)
+=======
+                log_out_fp.write(sl.encode('utf-8'))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 log_out_fp.flush()
                 harness.handle(sl.rstrip())
 
@@ -450,6 +556,7 @@ class DeviceHandler(Handler):
                 proc.communicate()
                 logger.error("{} timed out".format(script))
 
+<<<<<<< HEAD
     def get_hardware(self):
         try:
             hardware = self.device_is_available(self.instance)
@@ -486,6 +593,9 @@ class DeviceHandler(Handler):
 
         logger.debug(f"Using serial device {serial_device} @ {hardware.baud} baud")
 
+=======
+    def _create_command(self, runner, hardware):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if (self.options.west_flash is not None) or runner:
             command = ["west", "flash", "--skip-rebuild", "-d", self.build_dir]
             command_extra_args = []
@@ -512,6 +622,7 @@ class DeviceHandler(Handler):
                         command_extra_args.append(board_id)
                     elif runner == "openocd" and product == "STM32 STLink":
                         command_extra_args.append("--cmd-pre-init")
+<<<<<<< HEAD
                         command_extra_args.append("hla_serial %s" % (board_id))
                     elif runner == "openocd" and product == "STLINK-V3":
                         command_extra_args.append("--cmd-pre-init")
@@ -523,18 +634,36 @@ class DeviceHandler(Handler):
                         command.append("--tool-opt=-SelectEmuBySN  %s" % (board_id))
                     elif runner == "stm32cubeprogrammer":
                         command.append("--tool-opt=sn=%s" % (board_id))
+=======
+                        command_extra_args.append("hla_serial %s" % board_id)
+                    elif runner == "openocd" and product == "STLINK-V3":
+                        command_extra_args.append("--cmd-pre-init")
+                        command_extra_args.append("hla_serial %s" % board_id)
+                    elif runner == "openocd" and product == "EDBG CMSIS-DAP":
+                        command_extra_args.append("--cmd-pre-init")
+                        command_extra_args.append("cmsis_dap_serial %s" % board_id)
+                    elif runner == "jlink":
+                        command.append("--tool-opt=-SelectEmuBySN  %s" % board_id)
+                    elif runner == "stm32cubeprogrammer":
+                        command.append("--tool-opt=sn=%s" % board_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                     # Receive parameters from runner_params field.
                     if hardware.runner_params:
                         for param in hardware.runner_params:
                             command.append(param)
 
+<<<<<<< HEAD
             if command_extra_args != []:
+=======
+            if command_extra_args:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 command.append('--')
                 command.extend(command_extra_args)
         else:
             command = [self.generator_cmd, "-C", self.build_dir, "flash"]
 
+<<<<<<< HEAD
         pre_script = hardware.pre_script
         post_flash_script = hardware.post_flash_script
         post_script = hardware.post_script
@@ -554,6 +683,34 @@ class DeviceHandler(Handler):
                 stopbits=serial.STOPBITS_ONE,
                 bytesize=serial.EIGHTBITS,
                 timeout=max(flash_timeout, self.timeout)  # the worst case of no serial input
+=======
+        return command
+
+    def _update_instance_info(self, harness_state, handler_time, flash_error):
+        self.instance.execution_time = handler_time
+        if harness_state:
+            self.instance.status = harness_state
+            if harness_state == "failed":
+                self.instance.reason = "Failed"
+        elif not flash_error:
+            self.instance.status = "failed"
+            self.instance.reason = "Timeout"
+
+        if self.instance.status in ["error", "failed"]:
+            self.instance.add_missing_case_status("blocked", self.instance.reason)
+
+    def _create_serial_connection(self, serial_device, hardware_baud,
+                                  flash_timeout, serial_pty, ser_pty_process):
+        try:
+            ser = serial.Serial(
+                serial_device,
+                baudrate=hardware_baud,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                bytesize=serial.EIGHTBITS,
+                # the worst case of no serial input
+                timeout=max(flash_timeout, self.get_test_timeout())
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             )
         except serial.SerialException as e:
             self.instance.status = "failed"
@@ -570,6 +727,89 @@ class DeviceHandler(Handler):
                 self.make_device_available(serial_pty)
             else:
                 self.make_device_available(serial_device)
+<<<<<<< HEAD
+=======
+            raise
+
+        return ser
+
+    def get_hardware(self):
+        hardware = None
+        try:
+            hardware = self.device_is_available(self.instance)
+            while not hardware:
+                time.sleep(1)
+                hardware = self.device_is_available(self.instance)
+        except TwisterException as error:
+            self.instance.status = "failed"
+            self.instance.reason = str(error)
+            logger.error(self.instance.reason)
+        return hardware
+
+    def _get_serial_device(self, serial_pty, hardware_serial):
+        ser_pty_process = None
+        if serial_pty:
+            master, slave = pty.openpty()
+            try:
+                ser_pty_process = subprocess.Popen(
+                    re.split('[, ]', serial_pty),
+                    stdout=master,
+                    stdin=master,
+                    stderr=master
+                )
+            except subprocess.CalledProcessError as error:
+                logger.error(
+                    "Failed to run subprocess {}, error {}".format(
+                        serial_pty,
+                        error.output
+                    )
+                )
+                return
+
+            serial_device = os.ttyname(slave)
+        else:
+            serial_device = hardware_serial
+
+        return serial_device, ser_pty_process
+
+    def handle(self, harness):
+        runner = None
+        hardware = self.get_hardware()
+        if hardware:
+            self.instance.dut = hardware.id
+        if not hardware:
+            return
+
+        runner = hardware.runner or self.options.west_runner
+        serial_pty = hardware.serial_pty
+
+        serial_device, ser_pty_process = self._get_serial_device(serial_pty, hardware.serial)
+
+        logger.debug(f"Using serial device {serial_device} @ {hardware.baud} baud")
+
+        command = self._create_command(runner, hardware)
+
+        pre_script = hardware.pre_script
+        post_flash_script = hardware.post_flash_script
+        post_script = hardware.post_script
+
+        if pre_script:
+            self.run_custom_script(pre_script, 30)
+
+        flash_timeout = hardware.flash_timeout
+        if hardware.flash_with_test:
+            flash_timeout += self.get_test_timeout()
+
+        try:
+            ser = self._create_serial_connection(
+                serial_device,
+                hardware.baud,
+                flash_timeout,
+                serial_pty,
+                ser_pty_process
+            )
+        except serial.SerialException:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return
 
         halt_monitor_evt = threading.Event()
@@ -588,7 +828,11 @@ class DeviceHandler(Handler):
                 try:
                     (stdout, stderr) = proc.communicate(timeout=flash_timeout)
                     # ignore unencodable unicode chars
+<<<<<<< HEAD
                     logger.debug(stdout.decode(errors = "ignore"))
+=======
+                    logger.debug(stdout.decode(errors="ignore"))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
                     if proc.returncode != 0:
                         self.instance.status = "error"
@@ -619,7 +863,11 @@ class DeviceHandler(Handler):
 
         if not flash_error:
             # Always wait at most the test timeout here after flashing.
+<<<<<<< HEAD
             t.join(self.timeout)
+=======
+            t.join(self.get_test_timeout())
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         else:
             # When the flash error is due exceptions,
             # twister tell the monitor serial thread
@@ -641,6 +889,7 @@ class DeviceHandler(Handler):
 
         handler_time = time.time() - start_time
 
+<<<<<<< HEAD
         self.instance.execution_time = handler_time
         if harness.state:
             self.instance.status = harness.state
@@ -652,6 +901,9 @@ class DeviceHandler(Handler):
 
         if self.instance.status in ["error", "failed"]:
             self.instance.add_missing_case_status("blocked", self.instance.reason)
+=======
+        self._update_instance_info(harness.state, handler_time, flash_error)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         self._final_handle_actions(harness, handler_time)
 
@@ -663,6 +915,10 @@ class DeviceHandler(Handler):
         else:
             self.make_device_available(serial_device)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 class QEMUHandler(Handler):
     """Spawns a thread to monitor QEMU output from pipes
 
@@ -703,11 +959,22 @@ class QEMUHandler(Handler):
         return cpu_time.user + cpu_time.system
 
     @staticmethod
+<<<<<<< HEAD
     def _thread(handler, timeout, outdir, logfile, fifo_fn, pid_fn, results, harness,
                 ignore_unexpected_eof=False):
         fifo_in = fifo_fn + ".in"
         fifo_out = fifo_fn + ".out"
 
+=======
+    def _thread_get_fifo_names(fifo_fn):
+        fifo_in = fifo_fn + ".in"
+        fifo_out = fifo_fn + ".out"
+
+        return fifo_in, fifo_out
+
+    @staticmethod
+    def _thread_open_files(fifo_in, fifo_out, logfile):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         # These in/out nodes are named from QEMU's perspective, not ours
         if os.path.exists(fifo_in):
             os.unlink(fifo_in)
@@ -724,6 +991,54 @@ class QEMUHandler(Handler):
         in_fp = open(fifo_out, "rb", buffering=0)
         log_out_fp = open(logfile, "wt")
 
+<<<<<<< HEAD
+=======
+        return out_fp, in_fp, log_out_fp
+
+    @staticmethod
+    def _thread_close_files(fifo_in, fifo_out, pid, out_fp, in_fp, log_out_fp):
+        log_out_fp.close()
+        out_fp.close()
+        in_fp.close()
+        if pid:
+            try:
+                if pid:
+                    os.kill(pid, signal.SIGTERM)
+            except ProcessLookupError:
+                # Oh well, as long as it's dead! User probably sent Ctrl-C
+                pass
+
+        os.unlink(fifo_in)
+        os.unlink(fifo_out)
+
+    @staticmethod
+    def _thread_update_instance_info(handler, handler_time, out_state):
+        handler.instance.execution_time = handler_time
+        if out_state == "timeout":
+            handler.instance.status = "failed"
+            handler.instance.reason = "Timeout"
+        elif out_state == "failed":
+            handler.instance.status = "failed"
+            handler.instance.reason = "Failed"
+        elif out_state in ['unexpected eof', 'unexpected byte']:
+            handler.instance.status = "failed"
+            handler.instance.reason = out_state
+        else:
+            handler.instance.status = out_state
+            handler.instance.reason = "Unknown"
+
+    @staticmethod
+    def _thread(handler, timeout, outdir, logfile, fifo_fn, pid_fn, results,
+                harness, ignore_unexpected_eof=False):
+        fifo_in, fifo_out = QEMUHandler._thread_get_fifo_names(fifo_fn)
+
+        out_fp, in_fp, log_out_fp = QEMUHandler._thread_open_files(
+            fifo_in,
+            fifo_out,
+            logfile
+        )
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         start_time = time.time()
         timeout_time = start_time + timeout
         p = select.poll()
@@ -742,9 +1057,15 @@ class QEMUHandler(Handler):
             if this_timeout < 0 or not p.poll(this_timeout):
                 try:
                     if pid and this_timeout > 0:
+<<<<<<< HEAD
                         #there's possibility we polled nothing because
                         #of not enough CPU time scheduled by host for
                         #QEMU process during p.poll(this_timeout)
+=======
+                        # there's possibility we polled nothing because
+                        # of not enough CPU time scheduled by host for
+                        # QEMU process during p.poll(this_timeout)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                         cpu_time = QEMUHandler._get_cpu_time(pid)
                         if cpu_time < timeout and not out_state:
                             timeout_time = time.time() + (timeout - cpu_time)
@@ -779,7 +1100,11 @@ class QEMUHandler(Handler):
             # line contains a full line of data output from QEMU
             log_out_fp.write(line)
             log_out_fp.flush()
+<<<<<<< HEAD
             line = line.strip()
+=======
+            line = line.rstrip()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             logger.debug(f"QEMU ({pid}): {line}")
 
             harness.handle(line)
@@ -806,6 +1131,7 @@ class QEMUHandler(Handler):
         handler_time = time.time() - start_time
         logger.debug(f"QEMU ({pid}) complete ({out_state}) after {handler_time} seconds")
 
+<<<<<<< HEAD
         handler.instance.execution_time = handler_time
         if out_state == "timeout":
             handler.instance.status = "failed"
@@ -841,29 +1167,82 @@ class QEMUHandler(Handler):
         # We pass this to QEMU which looks for fifos with .in and .out
         # suffixes.
 
+=======
+        QEMUHandler._thread_update_instance_info(handler, handler_time, out_state)
+
+        QEMUHandler._thread_close_files(fifo_in, fifo_out, pid, out_fp, in_fp, log_out_fp)
+
+    def _get_sysbuild_build_dir(self):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if self.instance.testsuite.sysbuild:
             # Load domain yaml to get default domain build directory
             # Note: for targets using QEMU, we assume that the target will
             # have added any additional images to the run target manually
             domain_path = os.path.join(self.build_dir, "domains.yaml")
             domains = Domains.from_file(domain_path)
+<<<<<<< HEAD
             logger.debug("Loaded sysbuild domain data from %s" % (domain_path))
+=======
+            logger.debug("Loaded sysbuild domain data from %s" % domain_path)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             build_dir = domains.get_default_domain().build_dir
         else:
             build_dir = self.build_dir
 
+<<<<<<< HEAD
         # QEMU fifo will use main build dir
         self.fifo_fn = os.path.join(self.instance.build_dir, "qemu-fifo")
         # PID file will be created in the main sysbuild app's build dir
         self.pid_fn = os.path.join(build_dir, "qemu.pid")
+=======
+        return build_dir
+
+    def _set_qemu_filenames(self, sysbuild_build_dir):
+        # We pass this to QEMU which looks for fifos with .in and .out suffixes.
+        # QEMU fifo will use main build dir
+        self.fifo_fn = os.path.join(self.instance.build_dir, "qemu-fifo")
+        # PID file will be created in the main sysbuild app's build dir
+        self.pid_fn = os.path.join(sysbuild_build_dir, "qemu.pid")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         if os.path.exists(self.pid_fn):
             os.unlink(self.pid_fn)
 
         self.log_fn = self.log
 
+<<<<<<< HEAD
         self.thread = threading.Thread(name=self.name, target=QEMUHandler._thread,
                                        args=(self, self.timeout, self.build_dir,
+=======
+    def _create_command(self, sysbuild_build_dir):
+        command = [self.generator_cmd]
+        command += ["-C", sysbuild_build_dir, "run"]
+
+        return command
+
+    def _update_instance_info(self, harness_state, is_timeout):
+        if (self.returncode != 0 and not self.ignore_qemu_crash) or not harness_state:
+            self.instance.status = "failed"
+            if is_timeout:
+                self.instance.reason = "Timeout"
+            else:
+                if not self.instance.reason:
+                    self.instance.reason = "Exited with {}".format(self.returncode)
+            self.instance.add_missing_case_status("blocked")
+
+    def handle(self, harness):
+        self.results = {}
+        self.run = True
+
+        sysbuild_build_dir = self._get_sysbuild_build_dir()
+
+        command = self._create_command(sysbuild_build_dir)
+
+        self._set_qemu_filenames(sysbuild_build_dir)
+
+        self.thread = threading.Thread(name=self.name, target=QEMUHandler._thread,
+                                       args=(self, self.get_test_timeout(), self.build_dir,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                                              self.log_fn, self.fifo_fn,
                                              self.pid_fn, self.results, harness,
                                              self.ignore_unexpected_eof))
@@ -875,8 +1254,11 @@ class QEMUHandler(Handler):
             subprocess.call(["stty", "sane"], stdin=sys.stdout)
 
         logger.debug("Running %s (%s)" % (self.name, self.type_str))
+<<<<<<< HEAD
         command = [self.generator_cmd]
         command += ["-C", build_dir, "run"]
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         is_timeout = False
         qemu_pid = None
@@ -885,7 +1267,11 @@ class QEMUHandler(Handler):
             logger.debug("Spawning QEMUHandler Thread for %s" % self.name)
 
             try:
+<<<<<<< HEAD
                 proc.wait(self.timeout)
+=======
+                proc.wait(self.get_test_timeout())
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             except subprocess.TimeoutExpired:
                 # sometimes QEMU can't handle SIGTERM signal correctly
                 # in that case kill -9 QEMU process directly and leave
@@ -915,6 +1301,7 @@ class QEMUHandler(Handler):
 
         logger.debug(f"return code from QEMU ({qemu_pid}): {self.returncode}")
 
+<<<<<<< HEAD
         if (self.returncode != 0 and not self.ignore_qemu_crash) or not harness.state:
             self.instance.status = "failed"
             if is_timeout:
@@ -923,6 +1310,9 @@ class QEMUHandler(Handler):
                 if not self.instance.reason:
                     self.instance.reason = "Exited with {}".format(self.returncode)
             self.instance.add_missing_case_status("blocked")
+=======
+        self._update_instance_info(harness.state, is_timeout)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         self._final_handle_actions(harness, 0)
 

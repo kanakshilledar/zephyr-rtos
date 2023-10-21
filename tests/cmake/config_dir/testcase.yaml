@@ -1,5 +1,9 @@
 tests:
+<<<<<<< HEAD
   config_dir.user_defined:
+=======
+  buildsystem.config_dir.user_defined:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: native_posix
     build_only: true
     extra_args: APPLICATION_CONFIG_DIR:PATH=foo

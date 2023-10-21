@@ -6,7 +6,14 @@
 #include <zephyr/ztest.h>
 #include <zephyr/kernel.h>
 #include <zephyr/kernel_structs.h>
+<<<<<<< HEAD
 #include <kernel_internal.h>
+=======
+
+/* Internal APIs */
+#include <kernel_internal.h>
+#include <ksched.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct k_thread kthread_thread;
 struct k_thread kthread_thread1;

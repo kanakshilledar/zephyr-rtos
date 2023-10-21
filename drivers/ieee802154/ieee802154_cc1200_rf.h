@@ -23,9 +23,16 @@
 
 #if defined(CONFIG_IEEE802154_CC1200_RF_SET_0)
 
+<<<<<<< HEAD
 const struct cc1200_rf_registers_set cc1200_rf_settings = {
 	.chan_center_freq0 = 863125,
 	.channel_limit = 33,
+=======
+#define IEEE802154_CC1200_CHANNEL_LIMIT 33
+
+const struct cc1200_rf_registers_set cc1200_rf_settings = {
+	.chan_center_freq0 = 863125,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.channel_spacing = 2000, /* 200 KHz */
 	.registers = {
 		0x6F, /* SYNC3 */
@@ -133,9 +140,16 @@ const struct cc1200_rf_registers_set cc1200_rf_settings = {
 
 #elif defined(CONFIG_IEEE802154_CC1200_RF_SET_1)
 
+<<<<<<< HEAD
 const struct cc1200_rf_registers_set cc1200_rf_settings = {
 	.chan_center_freq0 = 920600,
 	.channel_limit = 38,
+=======
+#define IEEE802154_CC1200_CHANNEL_LIMIT 38
+
+const struct cc1200_rf_registers_set cc1200_rf_settings = {
+	.chan_center_freq0 = 920600,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.channel_spacing = 2000, /* 200 KHz */
 	.registers = {
 		0x6F, /* SYNC3 */
@@ -243,9 +257,16 @@ const struct cc1200_rf_registers_set cc1200_rf_settings = {
 
 #elif defined(CONFIG_IEEE802154_CC1200_RF_SET_2)
 
+<<<<<<< HEAD
 const struct cc1200_rf_registers_set cc1200_rf_settings = {
 	.chan_center_freq0 = 433164,
 	.channel_limit = 14,
+=======
+#define IEEE802154_CC1200_CHANNEL_LIMIT 14
+
+const struct cc1200_rf_registers_set cc1200_rf_settings = {
+	.chan_center_freq0 = 433164,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.channel_spacing = 2000, /* 200 KHz */
 	.registers = {
 		0x6F, /* SYNC3 */

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sockets-http-client-sample:
 
 Socket HTTP Client
 ##################
+=======
+.. zephyr:code-sample:: sockets-http-client
+   :name: HTTP client
+   :relevant-api: bsd_sockets http_client tls_credentials secure_sockets_options
+
+   Implement an HTTP(S) client that issues a variety of HTTP requests.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

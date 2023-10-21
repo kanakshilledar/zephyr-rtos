@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "adafruit_itsybitsy_nrf52840-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Adafruit ItsyBitsy nRF52840 Express";
@@ -21,6 +25,10 @@
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &code_partition;
+<<<<<<< HEAD
+=======
+		zephyr,ieee802154 = &ieee802154;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	leds {
@@ -36,6 +44,10 @@
 		button0: button_0 {
 			gpios = <&gpio0 29 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -52,6 +64,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };
@@ -122,6 +141,13 @@
 	};
 };
 
+<<<<<<< HEAD
+=======
+&ieee802154 {
+	status = "okay";
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &flash0 {
 	partitions {
 		compatible = "fixed-partitions";

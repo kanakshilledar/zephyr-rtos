@@ -4,9 +4,17 @@
 # SPDX-License-Identifier: Apache-2.0
 
 config ST7735R
+<<<<<<< HEAD
 	bool "ST7735R display driver"
+=======
+	bool "ST7735R/ST7735S display driver"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	depends on DT_HAS_SITRONIX_ST7735R_ENABLED
 	select SPI
 	help
+<<<<<<< HEAD
 	  Enable driver for ST7735R display driver.
+=======
+	  Enable driver for ST7735R/ST7735S display driver.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -35,6 +35,7 @@ ZTEST(hash_map, test_load_factor_custom)
 {
 	int ret;
 	uint32_t load_factor;
+<<<<<<< HEAD
 	struct sys_hashmap *const map = &custom_load_factor_map;
 
 	zassert_equal(map->config->load_factor, CUSTOM_LOAD_FACTOR);
@@ -46,12 +47,30 @@ ZTEST(hash_map, test_load_factor_custom)
 		ret = sys_hashmap_insert(map, i, i, NULL);
 		zassert_equal(1, ret, "failed to insert (%zu, %zu): %d", i, i, ret);
 		load_factor = sys_hashmap_load_factor(map);
+=======
+	struct sys_hashmap *const hmap = &custom_load_factor_map;
+
+	zassert_equal(hmap->config->load_factor, CUSTOM_LOAD_FACTOR);
+
+	zassert_true(sys_hashmap_is_empty(hmap));
+	zassert_equal(0, sys_hashmap_load_factor(hmap));
+
+	for (size_t i = 0; i < MANY; ++i) {
+		ret = sys_hashmap_insert(hmap, i, i, NULL);
+		zassert_equal(1, ret, "failed to insert (%zu, %zu): %d", i, i, ret);
+		load_factor = sys_hashmap_load_factor(hmap);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_true(load_factor > 0 && load_factor <= CUSTOM_LOAD_FACTOR);
 	}
 
 	for (size_t i = MANY; i > 0; --i) {
+<<<<<<< HEAD
 		zassert_equal(true, sys_hashmap_remove(map, i - 1, NULL));
 		load_factor = sys_hashmap_load_factor(map);
+=======
+		zassert_equal(true, sys_hashmap_remove(hmap, i - 1, NULL));
+		load_factor = sys_hashmap_load_factor(hmap);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zassert_true(load_factor <= CUSTOM_LOAD_FACTOR);
 	}
 }

@@ -10,6 +10,7 @@ menuconfig KSCAN
 
 if KSCAN
 
+<<<<<<< HEAD
 source "drivers/kscan/Kconfig.gt911"
 source "drivers/kscan/Kconfig.it8xxx2"
 source "drivers/kscan/Kconfig.xec"
@@ -17,6 +18,11 @@ source "drivers/kscan/Kconfig.ht16k33"
 source "drivers/kscan/Kconfig.cst816s"
 source "drivers/kscan/Kconfig.cap1203"
 source "drivers/kscan/Kconfig.xpt2046"
+=======
+source "drivers/kscan/Kconfig.it8xxx2"
+source "drivers/kscan/Kconfig.xec"
+source "drivers/kscan/Kconfig.ht16k33"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "drivers/kscan/Kconfig.input"
 
 module = KSCAN

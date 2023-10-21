@@ -43,10 +43,17 @@ struct uart_sam0_dev_cfg {
 	uint32_t pm_apbcmask;
 	uint16_t gclk_clkctrl_id;
 #endif
+<<<<<<< HEAD
 #if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
 	void (*irq_config_func)(const struct device *dev);
 #endif
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_SAM0_ASYNC
+	void (*irq_config_func)(const struct device *dev);
+#endif
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct device *dma_dev;
 	uint8_t tx_dma_request;
 	uint8_t tx_dma_channel;
@@ -64,7 +71,11 @@ struct uart_sam0_dev_data {
 	void *cb_data;
 	uint8_t txc_cache;
 #endif
+<<<<<<< HEAD
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct device *dev;
 	const struct uart_sam0_dev_cfg *cfg;
 
@@ -126,7 +137,11 @@ static int uart_sam0_set_baudrate(SercomUsart *const usart, uint32_t baudrate,
 }
 
 
+<<<<<<< HEAD
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void uart_sam0_dma_tx_done(const struct device *dma_dev, void *arg,
 				  uint32_t id, int error_code)
@@ -303,7 +318,12 @@ static void uart_sam0_dma_rx_done(const struct device *dma_dev, void *arg,
 
 static void uart_sam0_rx_timeout(struct k_work *work)
 {
+<<<<<<< HEAD
 	struct uart_sam0_dev_data *dev_data = CONTAINER_OF(work,
+=======
+	struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+	struct uart_sam0_dev_data *dev_data = CONTAINER_OF(dwork,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 							   struct uart_sam0_dev_data, rx_timeout_work);
 	const struct uart_sam0_dev_cfg *const cfg = dev_data->cfg;
 	SercomUsart * const regs = cfg->regs;
@@ -565,11 +585,19 @@ static int uart_sam0_init(const struct device *dev)
 	}
 	dev_data->config_cache.baudrate = cfg->baudrate;
 
+<<<<<<< HEAD
 #if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
 	cfg->irq_config_func(dev);
 #endif
 
 #ifdef CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_SAM0_ASYNC
+	cfg->irq_config_func(dev);
+#endif
+
+#ifdef CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	dev_data->dev = dev;
 	dev_data->cfg = cfg;
 	if (!device_is_ready(cfg->dma_dev)) {
@@ -705,7 +733,11 @@ static int uart_sam0_err_check(const struct device *dev)
 	return err;
 }
 
+<<<<<<< HEAD
 #if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void uart_sam0_isr(const struct device *dev)
 {
@@ -717,7 +749,11 @@ static void uart_sam0_isr(const struct device *dev)
 	}
 #endif
 
+<<<<<<< HEAD
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct uart_sam0_dev_cfg *const cfg = dev->config;
 	SercomUsart * const regs = cfg->regs;
 
@@ -935,10 +971,22 @@ static void uart_sam0_irq_callback_set(const struct device *dev,
 
 	dev_data->cb = cb;
 	dev_data->cb_data = cb_data;
+<<<<<<< HEAD
 }
 #endif
 
 #ifdef CONFIG_UART_ASYNC_API
+=======
+
+#if defined(CONFIG_UART_SAM0_ASYNC) && defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	dev_data->async_cb = NULL;
+	dev_data->async_cb_data = NULL;
+#endif
+}
+#endif
+
+#ifdef CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int uart_sam0_callback_set(const struct device *dev,
 				  uart_callback_t callback,
@@ -949,6 +997,14 @@ static int uart_sam0_callback_set(const struct device *dev,
 	dev_data->async_cb = callback;
 	dev_data->async_cb_data = user_data;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_UART_EXCLUSIVE_API_CALLBACKS)
+	dev_data->cb = NULL;
+	dev_data->cb_data = NULL;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -1142,7 +1198,11 @@ static int uart_sam0_rx_disable(const struct device *dev)
 	}
 
 	if (dev_data->rx_next_len) {
+<<<<<<< HEAD
 		struct uart_event evt = {
+=======
+		struct uart_event next_evt = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.type = UART_RX_BUF_RELEASED,
 			.data.rx_buf = {
 				.buf = dev_data->rx_next_buf,
@@ -1153,7 +1213,11 @@ static int uart_sam0_rx_disable(const struct device *dev)
 		dev_data->rx_next_len = 0U;
 
 		if (dev_data->async_cb) {
+<<<<<<< HEAD
 			dev_data->async_cb(dev, &evt, dev_data->async_cb_data);
+=======
+			dev_data->async_cb(dev, &next_evt, dev_data->async_cb_data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 
@@ -1195,7 +1259,11 @@ static const struct uart_driver_api uart_sam0_driver_api = {
 	.irq_update = uart_sam0_irq_update,
 	.irq_callback_set = uart_sam0_irq_callback_set,
 #endif
+<<<<<<< HEAD
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.callback_set = uart_sam0_callback_set,
 	.tx = uart_sam0_tx,
 	.tx_abort = uart_sam0_tx_abort,
@@ -1205,7 +1273,11 @@ static const struct uart_driver_api uart_sam0_driver_api = {
 #endif
 };
 
+<<<<<<< HEAD
 #if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_INTERRUPT_DRIVEN || CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define SAM0_UART_IRQ_CONNECT(n, m)					\
 	do {								\
@@ -1243,7 +1315,11 @@ static void uart_sam0_irq_config_##n(const struct device *dev)		\
 #define UART_SAM0_IRQ_HANDLER(n)
 #endif
 
+<<<<<<< HEAD
 #if CONFIG_UART_ASYNC_API
+=======
+#if CONFIG_UART_SAM0_ASYNC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define UART_SAM0_DMA_CHANNELS(n)					\
 	.dma_dev = DEVICE_DT_GET(ATMEL_SAM0_DT_INST_DMA_CTLR(n, tx)),	\
 	.tx_dma_request = ATMEL_SAM0_DT_INST_DMA_TRIGSRC(n, tx),	\

@@ -4,4 +4,11 @@
 
 	/* This node will be deleted by the `bar` snippet if applied. */
 	added-by-foo {};
+<<<<<<< HEAD
+=======
+
+#ifdef CMAKE_DTS_CONFIGURE
+	cmake-dts-configure {};
+#endif /* CMAKE_DTS_CONFIGURE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };

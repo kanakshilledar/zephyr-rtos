@@ -62,4 +62,8 @@ static int winstream_console_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(winstream_console_init, EARLY, CONFIG_CONSOLE_INIT_PRIORITY);
+=======
+SYS_INIT(winstream_console_init, PRE_KERNEL_1, CONFIG_CONSOLE_INIT_PRIORITY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

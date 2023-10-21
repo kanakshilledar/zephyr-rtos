@@ -91,6 +91,11 @@ static int uart_sam_err_check(const struct device *dev)
 		errors |= UART_ERROR_FRAMING;
 	}
 
+<<<<<<< HEAD
+=======
+	uart->UART_CR = UART_CR_RSTSTA;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return errors;
 }
 

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include "actinius_icarus_bee_common-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Actinius Icarus Bee";
@@ -59,6 +63,10 @@
 		button0: button_0 {
 			gpios = <&gpio0 4 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push Button 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

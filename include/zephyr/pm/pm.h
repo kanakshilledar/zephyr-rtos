@@ -167,6 +167,7 @@ static inline int pm_notifier_unregister(struct pm_notifier *notifier)
 	return -ENOSYS;
 }
 
+<<<<<<< HEAD
 static inline void pm_state_set(enum pm_state state, uint8_t substate_id)
 {
 	ARG_UNUSED(state);
@@ -180,6 +181,8 @@ static inline void pm_state_exit_post_ops(enum pm_state state,
 	ARG_UNUSED(substate_id);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline const struct pm_state_info *pm_state_next_get(uint8_t cpu)
 {
 	ARG_UNUSED(cpu);

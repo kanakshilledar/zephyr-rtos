@@ -3,7 +3,11 @@ common:
     - native_posix
 
 tests:
+<<<<<<< HEAD
   logging.log_immediate:
+=======
+  logging.immediate:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_core
       - logging
@@ -13,7 +17,11 @@ tests:
       - nucleo_f030r8
       - stm32f0_disco
       - nrf52_bsim
+<<<<<<< HEAD
   logging.log_immediate.clean_output:
+=======
+  logging.immediate.clean_output:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: CONFIG_LOG_IMMEDIATE_CLEAN_OUTPUT=y
     tags:
       - log_core

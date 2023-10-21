@@ -4,9 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/drivers/gpio/gpio_mmio32.h>
 #include <zephyr/init.h>
+=======
+#include <zephyr/drivers/gpio/gpio_mmio32.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <zephyr/linker/linker-defs.h>
 
@@ -24,6 +28,7 @@
 FPGAIO_INIT(0);
 FPGAIO_INIT(1);
 FPGAIO_INIT(2);
+<<<<<<< HEAD
 
 /**
  * @brief Perform basic hardware initialization at boot.
@@ -43,3 +48,5 @@ static int arm_mps3_init(void)
 }
 
 SYS_INIT(arm_mps3_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

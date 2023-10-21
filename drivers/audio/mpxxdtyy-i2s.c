@@ -44,7 +44,11 @@ int mpxxdtyy_i2s_read(const struct device *dev, uint8_t stream, void **buffer,
 
 	sw_filter_lib_run(pdm_filter, pdm_block, pcm_block, pdm_size,
 			  data->pcm_mem_size);
+<<<<<<< HEAD
 	k_mem_slab_free(&rx_pdm_i2s_mslab, &pdm_block);
+=======
+	k_mem_slab_free(&rx_pdm_i2s_mslab, pdm_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	*buffer = pcm_block;
 	*size = data->pcm_mem_size;

@@ -289,7 +289,11 @@ static const uint8_t *decode_time(struct tm *tp,
 	uint8_t reg;
 
 	if (with_sec) {
+<<<<<<< HEAD
 		uint8_t reg = *rp++;
+=======
+		reg = *rp++;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		tp->tm_sec = bcd2bin(reg & 0x7F);
 	}
@@ -1142,7 +1146,11 @@ static int ds3231_init(const struct device *dev)
 	 */
 
 	if (cfg->isw_gpios.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(cfg->isw_gpios.port)) {
+=======
+		if (!gpio_is_ready_dt(&cfg->isw_gpios)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("INTn/SQW GPIO device not ready");
 			rc = -ENODEV;
 			goto out;

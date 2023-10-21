@@ -200,7 +200,11 @@ static void producer_thread(void)
 
 	LOG_INF("Bytes sent = %lld, received = %lu", BYTES_TO_BE_SENT, atomic_get(&count));
 	LOG_INF("Average data rate: %llu.%lluMB/s", i, f);
+<<<<<<< HEAD
 	LOG_INF("Duration: %llu.%llus", duration / NSEC_PER_SEC, duration % NSEC_PER_SEC);
+=======
+	LOG_INF("Duration: %lld.%09llus", duration / NSEC_PER_SEC, duration % NSEC_PER_SEC);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	printk("\n@%llu\n", duration);
 }

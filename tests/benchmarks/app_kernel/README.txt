@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Title: Microkernel Object Performance
 
 Description:
@@ -26,6 +27,14 @@ issuing one of the following commands then rebuilding the project:
 or
     make pristine       # discard results of previous builds
                         # and restore pre-defined configuration info
+=======
+Title: Kernel Object Performance
+
+Description:
+
+The app_kernel test is used to measure the performance of the following
+kernel objects: message queues, semaphores, memory slabs, mailboxes and pipes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 --------------------------------------------------------------------------------
 
@@ -45,17 +54,21 @@ Sample Output:
 | signal semaphore                                                 |    NNNNNN|
 | signal to waiting high pri task                                  |    NNNNNN|
 | signal to waiting high pri task, with timeout                    |    NNNNNN|
+<<<<<<< HEAD
 | signal to waitm (2)                                              |    NNNNNN|
 | signal to waitm (2), with timeout                                |    NNNNNN|
 | signal to waitm (3)                                              |    NNNNNN|
 | signal to waitm (3), with timeout                                |   NNNNNNN|
 | signal to waitm (4)                                              |   NNNNNNN|
 | signal to waitm (4), with timeout                                |   NNNNNNN|
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 |-----------------------------------------------------------------------------|
 | average lock and unlock mutex                                    |    NNNNNN|
 |-----------------------------------------------------------------------------|
 | average alloc and dealloc memory page                            |    NNNNNN|
 |-----------------------------------------------------------------------------|
+<<<<<<< HEAD
 | average alloc and dealloc memory pool block                      |    NNNNNN|
 |-----------------------------------------------------------------------------|
 | Signal enabled event                                             |    NNNNNN|
@@ -64,6 +77,8 @@ Sample Output:
 | Signal event with installed handler                                         |
 |    Handler responds OK                                                      |
 |-----------------------------------------------------------------------------|
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 |                M A I L B O X   M E A S U R E M E N T S                      |
 |-----------------------------------------------------------------------------|
 | Send mailbox message to waiting high priority task and wait                 |

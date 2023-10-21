@@ -21,6 +21,10 @@
 #include "access.h"
 #include "foundation.h"
 #include "friend.h"
+<<<<<<< HEAD
+=======
+#include "va.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LOG_LEVEL CONFIG_BT_MESH_FRIEND_LOG_LEVEL
 #include <zephyr/logging/log.h>
@@ -60,9 +64,21 @@ struct friend_pdu_info {
 	uint32_t  iv_index;
 };
 
+<<<<<<< HEAD
 struct friend_adv {
 	uint16_t app_idx;
 	bool     seg;
+=======
+BUILD_ASSERT(CONFIG_BT_MESH_LABEL_COUNT <= 0xFFFU, "Friend doesn't support more than 4096 labels.");
+
+struct friend_adv {
+	uint16_t app_idx;
+	struct {
+		/* CONFIG_BT_MESH_LABEL_COUNT max value is 4096. */
+		uint16_t uuidx:15,
+			 seg:1;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 NET_BUF_POOL_FIXED_DEFINE(friend_buf_pool, FRIEND_BUF_COUNT, BT_MESH_ADV_DATA_SIZE,
@@ -129,7 +145,11 @@ static int friend_cred_create(struct bt_mesh_friend *frnd, uint8_t idx)
 	return bt_mesh_friend_cred_create(&frnd->cred[idx], frnd->lpn,
 					  bt_mesh_primary_addr(),
 					  frnd->lpn_counter, frnd->counter,
+<<<<<<< HEAD
 					  frnd->subnet->keys[idx].net);
+=======
+					  &frnd->subnet->keys[idx].net);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void purge_buffers(sys_slist_t *list)
@@ -164,6 +184,14 @@ static void friend_clear(struct bt_mesh_friend *frnd)
 	/* If cancelling the timer fails, we'll exit early in the work handler. */
 	(void)k_work_cancel_delayable(&frnd->timer);
 
+<<<<<<< HEAD
+=======
+	for (i = 0; i < ARRAY_SIZE(frnd->cred); i++) {
+		if (frnd->subnet->keys[i].valid) {
+			bt_mesh_friend_cred_destroy(&frnd->cred[i]);
+		}
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memset(frnd->cred, 0, sizeof(frnd->cred));
 
 	if (frnd->last) {
@@ -304,6 +332,10 @@ static void friend_sub_add(struct bt_mesh_friend *frnd, uint16_t addr)
 
 	if (empty_idx != INT_MAX) {
 		frnd->sub_list[empty_idx] = addr;
+<<<<<<< HEAD
+=======
+		LOG_DBG("%04x added %04x to subscription list", frnd->lpn, addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		LOG_WRN("No space in friend subscription list");
 	}
@@ -315,6 +347,10 @@ static void friend_sub_rem(struct bt_mesh_friend *frnd, uint16_t addr)
 
 	for (i = 0; i < ARRAY_SIZE(frnd->sub_list); i++) {
 		if (frnd->sub_list[i] == addr) {
+<<<<<<< HEAD
+=======
+			LOG_DBG("%04x removed %04x from subscription list", frnd->lpn, addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			frnd->sub_list[i] = BT_MESH_ADDR_UNASSIGNED;
 			return;
 		}
@@ -355,7 +391,11 @@ static struct net_buf *create_friend_pdu(struct bt_mesh_friend *frnd,
 
 struct unseg_app_sdu_meta {
 	struct bt_mesh_app_crypto_ctx crypto;
+<<<<<<< HEAD
 	const uint8_t *key;
+=======
+	const struct bt_mesh_key *key;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_mesh_subnet *subnet;
 	uint8_t aid;
 };
@@ -365,6 +405,10 @@ static int unseg_app_sdu_unpack(struct bt_mesh_friend *frnd,
 				struct unseg_app_sdu_meta *meta)
 {
 	uint16_t app_idx = FRIEND_ADV(buf)->app_idx;
+<<<<<<< HEAD
+=======
+	uint16_t uuidx = FRIEND_ADV(buf)->uuidx;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_mesh_net_rx net = {
 		.ctx = {
 			.app_idx = app_idx,
@@ -388,10 +432,14 @@ static int unseg_app_sdu_unpack(struct bt_mesh_friend *frnd,
 	meta->crypto.aszmic = 0;
 
 	if (BT_MESH_ADDR_IS_VIRTUAL(meta->crypto.dst)) {
+<<<<<<< HEAD
 		meta->crypto.ad = bt_mesh_va_label_get(meta->crypto.dst);
 		if (!meta->crypto.ad) {
 			return -ENOENT;
 		}
+=======
+		meta->crypto.ad = bt_mesh_va_get_uuid_by_idx(uuidx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		meta->crypto.ad = NULL;
 	}
@@ -514,12 +562,20 @@ static int encrypt_friend_pdu(struct bt_mesh_friend *frnd, struct net_buf *buf,
 
 	buf->data[0] = (cred->nid | (iv_index & 1) << 7);
 
+<<<<<<< HEAD
 	if (bt_mesh_net_encrypt(cred->enc, &buf->b, iv_index, BT_MESH_NONCE_NETWORK)) {
+=======
+	if (bt_mesh_net_encrypt(&cred->enc, &buf->b, iv_index, BT_MESH_NONCE_NETWORK)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Encrypting failed");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (bt_mesh_net_obfuscate(buf->data, iv_index, cred->privacy)) {
+=======
+	if (bt_mesh_net_obfuscate(buf->data, iv_index, &cred->privacy)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Obfuscating failed");
 		return -EINVAL;
 	}
@@ -1317,6 +1373,10 @@ static void subnet_evt(struct bt_mesh_subnet *sub, enum bt_mesh_key_evt evt)
 			break;
 		case BT_MESH_KEY_REVOKED:
 			LOG_DBG("Revoking old keys for 0x%04x", frnd->lpn);
+<<<<<<< HEAD
+=======
+			bt_mesh_friend_cred_destroy(&frnd->cred[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			memcpy(&frnd->cred[0], &frnd->cred[1],
 			       sizeof(frnd->cred[0]));
 			memset(&frnd->cred[1], 0, sizeof(frnd->cred[1]));
@@ -1498,11 +1558,33 @@ static void friend_lpn_enqueue_tx(struct bt_mesh_friend *frnd,
 		 * when encrypting in transport and network.
 		 */
 		FRIEND_ADV(buf)->app_idx = tx->ctx->app_idx;
+<<<<<<< HEAD
+=======
+
+		/* When reencrypting a virtual address message, we need to know uuid as well. */
+		if (BT_MESH_ADDR_IS_VIRTUAL(tx->ctx->addr)) {
+			uint16_t uuidx;
+			int err;
+
+			err = bt_mesh_va_get_idx_by_uuid(tx->ctx->uuid, &uuidx);
+			if (err) {
+				net_buf_unref(buf);
+				return;
+			}
+
+			FRIEND_ADV(buf)->uuidx = uuidx;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	enqueue_friend_pdu(frnd, type, info.src, seg_count, buf);
 
+<<<<<<< HEAD
 	LOG_DBG("Queued message for LPN 0x%04x", frnd->lpn);
+=======
+	LOG_DBG("Queued message for LPN 0x%04x, dst: %04x, uuid: %p", frnd->lpn, tx->ctx->addr,
+		tx->ctx->uuid);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static bool friend_lpn_matches(struct bt_mesh_friend *frnd, uint16_t net_idx,

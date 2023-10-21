@@ -177,7 +177,11 @@ static ALWAYS_INLINE int max3421e_hien_disable(const struct device *dev,
 }
 
 /* Set peripheral (device) address to be used in next transfer */
+<<<<<<< HEAD
 static int ALWAYS_INLINE max3421e_peraddr(const struct device *dev,
+=======
+static ALWAYS_INLINE int max3421e_peraddr(const struct device *dev,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					  const uint8_t addr)
 {
 	struct max3421e_data *priv = uhc_get_private(dev);
@@ -310,6 +314,7 @@ static int max3421e_xfer_control(const struct device *dev,
 				 const uint8_t hrsl)
 {
 	struct max3421e_data *priv = uhc_get_private(dev);
+<<<<<<< HEAD
 	struct net_buf *buf;
 	int ret;
 
@@ -332,6 +337,21 @@ static int max3421e_xfer_control(const struct device *dev,
 		/* Handle SETUP stage */
 		ret = max3421e_write(dev, MAX3421E_REG_SUDFIFO,
 				     buf->data, MIN(buf->len, 8));
+=======
+	struct net_buf *buf = xfer->buf;
+	int ret;
+
+	/* Just restart if device NAKed packet */
+	if (HRSLT_IS_NAK(hrsl)) {
+		return max3421e_hxfr_start(dev, priv->hxfr);
+	}
+
+
+	if (xfer->stage == UHC_CONTROL_STAGE_SETUP) {
+		LOG_DBG("Handle SETUP stage");
+		ret = max3421e_write(dev, MAX3421E_REG_SUDFIFO,
+				     xfer->setup_pkt, sizeof(xfer->setup_pkt));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (ret) {
 			return ret;
 		}
@@ -341,6 +361,7 @@ static int max3421e_xfer_control(const struct device *dev,
 			return ret;
 		}
 
+<<<<<<< HEAD
 		uhc_xfer_setup(xfer);
 		uhc_xfer_queued(xfer);
 
@@ -352,14 +373,34 @@ static int max3421e_xfer_control(const struct device *dev,
 		ret = max3421e_xfer_data(dev, buf, xfer->ep);
 	} else {
 		/* handle ACK stage */
+=======
+		return 0;
+	}
+
+	if (buf != NULL && xfer->stage == UHC_CONTROL_STAGE_DATA) {
+		LOG_DBG("Handle DATA stage");
+		return max3421e_xfer_data(dev, buf, xfer->ep);
+	}
+
+	if (xfer->stage == UHC_CONTROL_STAGE_STATUS) {
+		LOG_DBG("Handle STATUS stage");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (USB_EP_DIR_IS_IN(xfer->ep)) {
 			ret = max3421e_hxfr_start(dev, MAX3421E_HXFR_HSOUT(0));
 		} else {
 			ret = max3421e_hxfr_start(dev, MAX3421E_HXFR_HSIN(0));
 		}
+<<<<<<< HEAD
 	}
 
 	return ret;
+=======
+
+		return ret;
+	}
+
+	return -EINVAL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int max3421e_xfer_bulk(const struct device *dev,
@@ -367,6 +408,7 @@ static int max3421e_xfer_bulk(const struct device *dev,
 			      const uint8_t hrsl)
 {
 	struct max3421e_data *priv = uhc_get_private(dev);
+<<<<<<< HEAD
 	struct net_buf *buf;
 	int ret;
 
@@ -387,6 +429,21 @@ static int max3421e_xfer_bulk(const struct device *dev,
 	}
 
 	return ret;
+=======
+	struct net_buf *buf = xfer->buf;
+
+	/* Just restart if device NAKed packet */
+	if (HRSLT_IS_NAK(hrsl)) {
+		return max3421e_hxfr_start(dev, priv->hxfr);
+	}
+
+	if (buf == NULL) {
+		LOG_ERR("No buffer to handle");
+		return -ENODATA;
+	}
+
+	return max3421e_xfer_data(dev, buf, xfer->ep);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int max3421e_schedule_xfer(const struct device *dev)
@@ -444,11 +501,17 @@ static int max3421e_hrslt_success(const struct device *dev)
 {
 	struct max3421e_data *priv = uhc_get_private(dev);
 	struct uhc_transfer *const xfer = priv->last_xfer;
+<<<<<<< HEAD
 	struct net_buf *buf;
+=======
+	struct net_buf *buf = xfer->buf;
+	bool finished = false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err = 0;
 	size_t len;
 	uint8_t bc;
 
+<<<<<<< HEAD
 	buf = k_fifo_peek_head(&xfer->queue);
 	if (buf == NULL) {
 		return -ENODATA;
@@ -465,6 +528,23 @@ static int max3421e_hrslt_success(const struct device *dev)
 	case MAX3421E_HXFR_TYPE_HSIN:
 		LOG_DBG("HSIN");
 		err = uhc_xfer_done(xfer);
+=======
+	switch (MAX3421E_HXFR_TYPE(priv->hxfr)) {
+	case MAX3421E_HXFR_TYPE_SETUP:
+		if (xfer->buf != NULL) {
+			xfer->stage = UHC_CONTROL_STAGE_DATA;
+		} else {
+			xfer->stage = UHC_CONTROL_STAGE_STATUS;
+		}
+		break;
+	case MAX3421E_HXFR_TYPE_HSOUT:
+		LOG_DBG("HSOUT");
+		finished = true;
+		break;
+	case MAX3421E_HXFR_TYPE_HSIN:
+		LOG_DBG("HSIN");
+		finished = true;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	case MAX3421E_HXFR_TYPE_ISOOUT:
 		LOG_ERR("ISO OUT is not implemented");
@@ -477,7 +557,15 @@ static int max3421e_hrslt_success(const struct device *dev)
 	case MAX3421E_HXFR_TYPE_BULKOUT:
 		if (buf->len == 0) {
 			LOG_INF("hrslt bulk out %u", buf->len);
+<<<<<<< HEAD
 			err = uhc_xfer_done(xfer);
+=======
+			if (xfer->ep == USB_CONTROL_EP_OUT) {
+				xfer->stage = UHC_CONTROL_STAGE_STATUS;
+			} else {
+				finished = true;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 		break;
 	case MAX3421E_HXFR_TYPE_BULKIN:
@@ -502,11 +590,32 @@ static int max3421e_hrslt_success(const struct device *dev)
 
 		if (bc < MAX3421E_MAX_EP_SIZE || !net_buf_tailroom(buf)) {
 			LOG_INF("hrslt bulk in %u, %u", bc, len);
+<<<<<<< HEAD
 			err = uhc_xfer_done(xfer);
+=======
+			if (xfer->ep == USB_CONTROL_EP_IN) {
+				xfer->stage = UHC_CONTROL_STAGE_STATUS;
+			} else {
+				finished = true;
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 		break;
 	}
 
+<<<<<<< HEAD
+=======
+	if (finished) {
+		LOG_DBG("Transfer finished");
+		uhc_xfer_return(dev, xfer, 0);
+		priv->last_xfer = NULL;
+	}
+
+	if (err) {
+		max3421e_xfer_drop_active(dev, err);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return err;
 }
 
@@ -515,13 +624,18 @@ static int max3421e_handle_hxfrdn(const struct device *dev)
 	struct max3421e_data *priv = uhc_get_private(dev);
 	struct uhc_transfer *const xfer = priv->last_xfer;
 	const uint8_t hrsl = priv->hrsl;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (xfer == NULL) {
 		LOG_ERR("No transfers to handle");
 		return -ENODATA;
 	}
 
+<<<<<<< HEAD
 	/* If an active xfer is not marked then something has gone wrong */
 	if (!uhc_xfer_is_queued(xfer)) {
 		LOG_ERR("Active transfer not queued");
@@ -536,6 +650,8 @@ static int max3421e_handle_hxfrdn(const struct device *dev)
 		return -ENODATA;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	switch (MAX3421E_HRSLT(hrsl)) {
 	case MAX3421E_HR_NAK:
 		/*
@@ -549,6 +665,7 @@ static int max3421e_handle_hxfrdn(const struct device *dev)
 			max3421e_xfer_drop_active(dev, -ETIMEDOUT);
 		}
 
+<<<<<<< HEAD
 		ret = 0;
 		break;
 	case MAX3421E_HR_STALL:
@@ -570,6 +687,17 @@ static int max3421e_handle_hxfrdn(const struct device *dev)
 			}
 		}
 
+=======
+		break;
+	case MAX3421E_HR_STALL:
+		max3421e_xfer_drop_active(dev, -EPIPE);
+		break;
+	case MAX3421E_HR_TOGERR:
+		LOG_WRN("Toggle error");
+		break;
+	case MAX3421E_HR_SUCCESS:
+		ret = max3421e_hrslt_success(dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		/* TODO: Handle all reasonalbe result codes */
@@ -578,7 +706,11 @@ static int max3421e_handle_hxfrdn(const struct device *dev)
 		break;
 	}
 
+<<<<<<< HEAD
 	return 0;
+=======
+	return ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void max3421e_handle_condet(const struct device *dev)
@@ -607,7 +739,11 @@ static void max3421e_handle_condet(const struct device *dev)
 		type = UHC_EVT_DEV_CONNECTED_LS;
 	}
 
+<<<<<<< HEAD
 	uhc_submit_event(dev, type, 0, NULL);
+=======
+	uhc_submit_event(dev, type, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void max3421e_bus_event(const struct device *dev)
@@ -617,13 +753,21 @@ static void max3421e_bus_event(const struct device *dev)
 	if (atomic_test_and_clear_bit(&priv->state,
 				      MAX3421E_STATE_BUS_RESUME)) {
 		/* Resume operation done event */
+<<<<<<< HEAD
 		uhc_submit_event(dev, UHC_EVT_RESUMED, 0, NULL);
+=======
+		uhc_submit_event(dev, UHC_EVT_RESUMED, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (atomic_test_and_clear_bit(&priv->state,
 				      MAX3421E_STATE_BUS_RESET)) {
 		/* Reset operation done event */
+<<<<<<< HEAD
 		uhc_submit_event(dev, UHC_EVT_RESETED, 0, NULL);
+=======
+		uhc_submit_event(dev, UHC_EVT_RESETED, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -654,7 +798,11 @@ static int max3421e_handle_bus_irq(const struct device *dev)
 	/* Suspend operation Done Interrupt (bus suspended) */
 	if (hirq & MAX3421E_SUSDN) {
 		ret = max3421e_hien_disable(dev, MAX3421E_SUSDN);
+<<<<<<< HEAD
 		uhc_submit_event(dev, UHC_EVT_SUSPENDED, 0, NULL);
+=======
+		uhc_submit_event(dev, UHC_EVT_SUSPENDED, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Peripheral Connect/Disconnect Interrupt */
@@ -664,7 +812,11 @@ static int max3421e_handle_bus_irq(const struct device *dev)
 
 	/* Remote Wakeup Interrupt */
 	if (hirq & MAX3421E_RWU) {
+<<<<<<< HEAD
 		uhc_submit_event(dev, UHC_EVT_RWUP, 0, NULL);
+=======
+		uhc_submit_event(dev, UHC_EVT_RWUP, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Bus Reset or Bus Resume event */
@@ -695,7 +847,11 @@ static void uhc_max3421e_thread(const struct device *dev)
 		 */
 		err = max3421e_update_hrsl_hirq(dev);
 		if (unlikely(err)) {
+<<<<<<< HEAD
 			uhc_submit_event(dev, UHC_EVT_ERROR, err, NULL);
+=======
+			uhc_submit_event(dev, UHC_EVT_ERROR, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Host Transfer Done Interrupt */
@@ -713,20 +869,32 @@ static void uhc_max3421e_thread(const struct device *dev)
 		if (priv->hirq & ~(MAX3421E_FRAME | MAX3421E_HXFRDN)) {
 			err = max3421e_handle_bus_irq(dev);
 			if (unlikely(err)) {
+<<<<<<< HEAD
 				uhc_submit_event(dev, UHC_EVT_ERROR, err, NULL);
+=======
+				uhc_submit_event(dev, UHC_EVT_ERROR, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 
 		/* Clear interrupts and schedule new bus transfer */
 		err = max3421e_clear_hirq(dev, priv->hirq);
 		if (unlikely(err)) {
+<<<<<<< HEAD
 			uhc_submit_event(dev, UHC_EVT_ERROR, err, NULL);
+=======
+			uhc_submit_event(dev, UHC_EVT_ERROR, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		if (schedule) {
 			err = max3421e_schedule_xfer(dev);
 			if (unlikely(err)) {
+<<<<<<< HEAD
 				uhc_submit_event(dev, UHC_EVT_ERROR, err, NULL);
+=======
+				uhc_submit_event(dev, UHC_EVT_ERROR, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 
@@ -1052,7 +1220,11 @@ static int max3421e_driver_init(const struct device *dev)
 	int ret;
 
 	if (config->dt_rst.port) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->dt_rst.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->dt_rst)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("GPIO device %s not ready",
 				config->dt_rst.port->name);
 			return -EIO;
@@ -1072,7 +1244,11 @@ static int max3421e_driver_init(const struct device *dev)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->dt_int.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->dt_int)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device %s not ready", config->dt_int.port->name);
 		return -EIO;
 	}

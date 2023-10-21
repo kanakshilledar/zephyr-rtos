@@ -16,6 +16,7 @@
 
 #include "output_handler.hpp"
 
+<<<<<<< HEAD
 void HandleOutput(tflite::ErrorReporter *error_reporter, float x_value,
 		  float y_value)
 {
@@ -23,4 +24,12 @@ void HandleOutput(tflite::ErrorReporter *error_reporter, float x_value,
 	TF_LITE_REPORT_ERROR(error_reporter, "x_value: %f, y_value: %f\n",
 			     static_cast < double > (x_value),
 			     static_cast < double > (y_value));
+=======
+void HandleOutput(float x_value, float y_value)
+{
+	/* Log the current X and Y values */
+	MicroPrintf("x_value: %f, y_value: %f\n",
+			    static_cast < double > (x_value),
+			    static_cast < double > (y_value));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

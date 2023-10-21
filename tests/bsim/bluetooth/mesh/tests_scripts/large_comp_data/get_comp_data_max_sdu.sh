@@ -15,5 +15,16 @@ source $(dirname "${BASH_SOURCE[0]}")/../../_mesh_test.sh
 #    comp data with local comp data and assure that the received message length
 #    is 378 bytes (380 bytes access payload).
 conf=prj_mesh1d1_conf
+<<<<<<< HEAD
 RunTest mesh_lcd_test_max_access_payload \
 	lcd_cli_max_sdu_comp_data_request lcd_srv_comp_data_status_respond
+=======
+overlay=overlay_pst_conf
+RunTest mesh_lcd_test_max_access_payload \
+	lcd_cli_max_sdu_comp_data_request lcd_srv_comp_data_status_respond
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest mesh_lcd_test_max_access_payload_psa \
+	lcd_cli_max_sdu_comp_data_request lcd_srv_comp_data_status_respond
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -5,7 +5,11 @@
 
 config ESP32C3_SYS_TIMER
 	bool "ESP32C3 sys-timer support"
+<<<<<<< HEAD
 	depends on SOC_ESP32C3
+=======
+	depends on SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	select TICKLESS_CAPABLE
 	select TIMER_HAS_64BIT_CYCLE_COUNTER

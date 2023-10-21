@@ -6,7 +6,11 @@
 
 /** @file mqtt_sn.h
  *
+<<<<<<< HEAD
  * @defgroup mqtt_sn_socket MQTT Client library
+=======
+ * @defgroup mqtt_sn_socket MQTT-SN Client library
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @ingroup networking
  * @{
  * @brief MQTT-SN Client Implementation
@@ -50,11 +54,36 @@ enum mqtt_sn_qos {
  * MQTT-SN topic types.
  */
 enum mqtt_sn_topic_type {
+<<<<<<< HEAD
 	MQTT_SN_TOPIC_TYPE_NORMAL,
 	MQTT_SN_TOPIC_TYPE_PREDEF,
 	MQTT_SN_TOPIC_TYPE_SHORT
 };
 
+=======
+	/**
+	 * Normal topic.
+	 * It allows usage of any valid UTF-8 string as a topic name.
+	 */
+	MQTT_SN_TOPIC_TYPE_NORMAL,
+	/**
+	 * Pre-defined topic.
+	 * It allows usage of a two-byte identifier representing a topic name for
+	 * which the corresponding topic name is known in advance by both the client
+	 * and the gateway/server.
+	 */
+	MQTT_SN_TOPIC_TYPE_PREDEF,
+	/**
+	 * Short topic.
+	 * It allows usage of a two-byte string as a topic name.
+	 */
+	MQTT_SN_TOPIC_TYPE_SHORT
+};
+
+/**
+ * MQTT-SN return codes.
+ */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum mqtt_sn_return_code {
 	MQTT_SN_CODE_ACCEPTED = 0x00, /**< Accepted */
 	MQTT_SN_CODE_REJECTED_CONGESTION = 0x01, /**< Rejected: congestion */
@@ -105,9 +134,19 @@ enum mqtt_sn_evt_type {
  * Event metadata.
  */
 union mqtt_sn_evt_param {
+<<<<<<< HEAD
 	struct {
 		struct mqtt_sn_data data;
 		enum mqtt_sn_topic_type topic_type;
+=======
+	/** Structure holding publish event details */
+	struct {
+		/** The payload data associated with the event */
+		struct mqtt_sn_data data;
+		/** The type of topic for the event */
+		enum mqtt_sn_topic_type topic_type;
+		/** The identifier for the topic of the event */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint16_t topic_id;
 	} publish;
 };
@@ -116,7 +155,13 @@ union mqtt_sn_evt_param {
  * MQTT-SN event structure to be handled by the event callback.
  */
 struct mqtt_sn_evt {
+<<<<<<< HEAD
 	enum mqtt_sn_evt_type type;
+=======
+	/** Event type */
+	enum mqtt_sn_evt_type type;
+	/** Event parameters */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	union mqtt_sn_evt_param param;
 };
 
@@ -212,6 +257,7 @@ int mqtt_sn_transport_udp_init(struct mqtt_sn_transport_udp *udp, struct sockadd
  * Structure describing an MQTT-SN client.
  */
 struct mqtt_sn_client {
+<<<<<<< HEAD
 	struct mqtt_sn_data client_id; /**< 1-23 character unique client ID */
 
 	struct mqtt_sn_data will_topic; /**< Must be initialized before connecting with will=true */
@@ -235,26 +281,107 @@ struct mqtt_sn_client {
 	int64_t last_ping;
 	uint8_t ping_retries;
 
+=======
+	/** 1-23 character unique client ID */
+	struct mqtt_sn_data client_id;
+
+	/** Topic for Will message.
+	 * Must be initialized before connecting with will=true
+	 */
+	struct mqtt_sn_data will_topic;
+
+	/** Will message.
+	 * Must be initialized before connecting with will=true
+	 */
+	struct mqtt_sn_data will_msg;
+
+	/** Quality of Service for the Will message */
+	enum mqtt_sn_qos will_qos;
+
+	/** Flag indicating if the will message should be retained by the broker */
+	bool will_retain;
+
+	/** Underlying transport to be used by the client */
+	struct mqtt_sn_transport *transport;
+
+	/** Buffer for outgoing data */
+	struct net_buf_simple tx;
+
+	/** Buffer for incoming data */
+	struct net_buf_simple rx;
+
+	/** Event callback */
+	mqtt_sn_evt_cb_t evt_cb;
+
+	/** Message ID for the next message to be sent */
+	uint16_t next_msg_id;
+
+	/** List of pending publish messages */
+	sys_slist_t publish;
+
+	/** List of registered topics */
+	sys_slist_t topic;
+
+	/** Current state of the MQTT-SN client */
+	int state;
+
+	/** Timestamp of the last ping request */
+	int64_t last_ping;
+
+	/** Number of retries for failed ping attempts */
+	uint8_t ping_retries;
+
+	/** Delayable work structure for processing MQTT-SN events */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct k_work_delayable process_work;
 };
 
 /**
  * @brief Initialize a client.
+<<<<<<< HEAD
+=======
+ *
+ * @param client        The MQTT-SN client to initialize.
+ * @param client_id     The ID to be used by the client.
+ * @param transport     The transport to be used by the client.
+ * @param evt_cb        The event callback function for the client.
+ * @param tx            Pointer to the transmit buffer.
+ * @param txsz          Size of the transmit buffer.
+ * @param rx            Pointer to the receive buffer.
+ * @param rxsz          Size of the receive buffer.
+ *
+ * @return 0 or a negative error code (errno.h) indicating reason of failure.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 int mqtt_sn_client_init(struct mqtt_sn_client *client, const struct mqtt_sn_data *client_id,
 			struct mqtt_sn_transport *transport, mqtt_sn_evt_cb_t evt_cb, void *tx,
 			size_t txsz, void *rx, size_t rxsz);
 
 /**
+<<<<<<< HEAD
  * @brief Deinitialize the client
  *
  * This removes all topics and publishes, and also deinits the transport.
+=======
+ * @brief Deinitialize the client.
+ *
+ * This removes all topics and publishes, and also de-inits the transport.
+ *
+ * @param client        The MQTT-SN client to deinitialize.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 void mqtt_sn_client_deinit(struct mqtt_sn_client *client);
 
 /**
  * @brief Connect the client.
  *
+<<<<<<< HEAD
+=======
+ * @param client            The MQTT-SN client to connect.
+ * @param will              Flag indicating if a Will message should be sent.
+ * @param clean_session     Flag indicating if a clean session should be started.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
  */
 int mqtt_sn_connect(struct mqtt_sn_client *client, bool will, bool clean_session);
@@ -262,20 +389,41 @@ int mqtt_sn_connect(struct mqtt_sn_client *client, bool will, bool clean_session
 /**
  * @brief Disconnect the client.
  *
+<<<<<<< HEAD
+=======
+ * @param client            The MQTT-SN client to disconnect.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
  */
 int mqtt_sn_disconnect(struct mqtt_sn_client *client);
 
 /**
+<<<<<<< HEAD
  * @brief Set the client into sleep state for the given duration (seconds).
  *
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
+=======
+ * @brief Set the client into sleep state.
+ *
+ * @param client            The MQTT-SN client to be put to sleep.
+ * @param duration          Sleep duration (in seconds).
+ *
+ * @return 0 on success, negative errno code on failure.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 int mqtt_sn_sleep(struct mqtt_sn_client *client, uint16_t duration);
 
 /**
  * @brief Subscribe to a given topic.
  *
+<<<<<<< HEAD
+=======
+ * @param client            The MQTT-SN client that should subscribe.
+ * @param qos               The desired quality of service for the subscription.
+ * @param topic_name        The name of the topic to subscribe to.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
  */
 int mqtt_sn_subscribe(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
@@ -283,6 +431,15 @@ int mqtt_sn_subscribe(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
 
 /**
  * @brief Unsubscribe from a topic.
+<<<<<<< HEAD
+=======
+ *
+ * @param client            The MQTT-SN client that should unsubscribe.
+ * @param qos               The quality of service used when subscribing.
+ * @param topic_name        The name of the topic to unsubscribe from.
+ *
+ * @return 0 or a negative error code (errno.h) indicating reason of failure.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 int mqtt_sn_unsubscribe(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
 			struct mqtt_sn_data *topic_name);
@@ -292,6 +449,15 @@ int mqtt_sn_unsubscribe(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
  *
  * If the topic is not yet registered with the gateway, the library takes care of it.
  *
+<<<<<<< HEAD
+=======
+ * @param client            The MQTT-SN client that should publish.
+ * @param qos               The desired quality of service for the publish.
+ * @param topic_name        The name of the topic to publish to.
+ * @param retain            Flag indicating if the message should be retained by the broker.
+ * @param data              The data to be published.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
  */
 int mqtt_sn_publish(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
@@ -303,6 +469,11 @@ int mqtt_sn_publish(struct mqtt_sn_client *client, enum mqtt_sn_qos qos,
  * Call this function periodically, or if you have good reason to believe there is any data.
  * If the client's transport struct contains a poll-function, this function is non-blocking.
  *
+<<<<<<< HEAD
+=======
+ * @param client            The MQTT-SN client to check for incoming data.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @return 0 or a negative error code (errno.h) indicating reason of failure.
  */
 int mqtt_sn_input(struct mqtt_sn_client *client);

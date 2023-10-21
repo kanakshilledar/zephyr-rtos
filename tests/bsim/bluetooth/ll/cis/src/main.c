@@ -53,6 +53,10 @@ static bt_addr_le_t peer_addr;
 
 #define ISO_INTERVAL_US      10000U
 #define ISO_LATENCY_MS       DIV_ROUND_UP(ISO_INTERVAL_US, USEC_PER_MSEC)
+<<<<<<< HEAD
+=======
+#define ISO_LATENCY_FT_MS    20U
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BT_CONN_US_TO_INTERVAL(t) ((uint16_t)((t) * 4U / 5U / USEC_PER_MSEC))
 
@@ -103,7 +107,11 @@ static bt_addr_le_t peer_addr;
 
 #define NAME_LEN 30
 
+<<<<<<< HEAD
 #define BUF_ALLOC_TIMEOUT   (30) /* milliseconds */
+=======
+#define BUF_ALLOC_TIMEOUT   (50) /* milliseconds */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 NET_BUF_POOL_FIXED_DEFINE(tx_pool, CONFIG_BT_ISO_TX_BUF_COUNT,
 			  BT_ISO_SDU_BUF_SIZE(CONFIG_BT_ISO_TX_MTU), 8, NULL);
 
@@ -295,6 +303,7 @@ static void iso_recv(struct bt_iso_chan *chan, const struct bt_iso_recv_info *in
 	seq_num = sys_get_le32(buf->data);
 	if (info->flags & BT_ISO_FLAGS_VALID) {
 		if (seq_num != expected_seq_num[index]) {
+<<<<<<< HEAD
 			FAIL("ISO data miss match, expected %u actual %u\n",
 			     expected_seq_num[index], seq_num);
 			expected_seq_num[index] = seq_num;
@@ -302,6 +311,22 @@ static void iso_recv(struct bt_iso_chan *chan, const struct bt_iso_recv_info *in
 
 		expected_seq_num[index]++;
 
+=======
+			if (expected_seq_num[index]) {
+				FAIL("ISO data miss match, expected %u actual %u\n",
+				     expected_seq_num[index], seq_num);
+			}
+			expected_seq_num[index] = seq_num;
+		}
+
+		expected_seq_num[index] += 1U;
+
+#if defined(CONFIG_TEST_FT_PER_SKIP_SUBEVENTS)
+		expected_seq_num[index] += ((CONFIG_TEST_FT_PER_SKIP_EVENTS_COUNT - 1U) * 2U);
+#elif defined(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)
+		expected_seq_num[index] += ((CONFIG_TEST_FT_CEN_SKIP_EVENTS_COUNT - 1U) * 2U);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else if (expected_seq_num[index] &&
 		   expected_seq_num[index] < SEQ_NUM_MAX) {
 		FAIL("%s: Invalid ISO data after valid ISO data reception.\n"
@@ -338,12 +363,20 @@ static struct bt_iso_chan_ops iso_ops = {
 static void test_cis_central(void)
 {
 	struct bt_iso_chan_io_qos iso_tx[CONFIG_BT_ISO_MAX_CHAN];
+<<<<<<< HEAD
+=======
+	struct bt_iso_chan_io_qos iso_rx[CONFIG_BT_ISO_MAX_CHAN];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_iso_chan_qos iso_qos[CONFIG_BT_ISO_MAX_CHAN];
 	struct bt_iso_chan *channels[CONFIG_BT_ISO_MAX_CHAN];
 	struct bt_conn *conn_list[CONFIG_BT_MAX_CONN];
 	struct bt_iso_cig_param cig_param;
 	struct bt_iso_cig *cig;
+<<<<<<< HEAD
 	uint8_t conn_count;
+=======
+	int conn_count;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	printk("Bluetooth initializing...");
@@ -361,11 +394,42 @@ static void test_cis_central(void)
 	for (int i = 0; i < CONFIG_BT_ISO_MAX_CHAN; i++) {
 		iso_tx[i].sdu = CONFIG_BT_ISO_TX_MTU;
 		iso_tx[i].phy = BT_GAP_LE_PHY_2M;
+<<<<<<< HEAD
 		iso_tx[i].rtn = 0U;
 		iso_tx[i].path = NULL;
 
 		iso_qos[i].tx = &iso_tx[i];
 		iso_qos[i].rx = NULL;
+=======
+		iso_tx[i].path = NULL;
+		if (IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS)) {
+			iso_tx[i].rtn = 2U;
+		} else {
+			iso_tx[i].rtn = 0U;
+		}
+
+		if (!IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS) ||
+		    IS_ENABLED(CONFIG_TEST_FT_PER_SKIP_SUBEVENTS)) {
+			iso_qos[i].tx = &iso_tx[i];
+		} else {
+			iso_qos[i].tx = NULL;
+		}
+
+		iso_rx[i].sdu = CONFIG_BT_ISO_RX_MTU;
+		iso_rx[i].phy = BT_GAP_LE_PHY_2M;
+		iso_rx[i].path = NULL;
+		if (IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS)) {
+			iso_rx[i].rtn = 2U;
+		} else {
+			iso_rx[i].rtn = 0U;
+		}
+
+		if (IS_ENABLED(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)) {
+			iso_qos[i].rx = &iso_rx[i];
+		} else {
+			iso_qos[i].rx = NULL;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		iso_chan[i].ops = &iso_ops;
 		iso_chan[i].qos = &iso_qos[i];
@@ -381,8 +445,17 @@ static void test_cis_central(void)
 	cig_param.sca = BT_GAP_SCA_UNKNOWN;
 	cig_param.packing = 0U;
 	cig_param.framing = 0U;
+<<<<<<< HEAD
 	cig_param.latency = ISO_LATENCY_MS;
 	cig_param.interval = ISO_INTERVAL_US;
+=======
+	cig_param.interval = ISO_INTERVAL_US;
+	if (IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS)) {
+		cig_param.latency = ISO_LATENCY_FT_MS;
+	} else {
+		cig_param.latency = ISO_LATENCY_MS;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	printk("Create CIG...");
 	err = bt_iso_cig_create(&cig_param, &cig);
@@ -392,7 +465,17 @@ static void test_cis_central(void)
 	}
 	printk("success.\n");
 
+<<<<<<< HEAD
 	conn_count = 0U;
+=======
+	conn_count = 0;
+
+#if defined(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)
+	for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+		expected_seq_num[chan] = (CONFIG_TEST_FT_CEN_SKIP_EVENTS_COUNT - 1U) * 2U;
+	}
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if !defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
 	for (int i = 0; i < CONFIG_BT_MAX_CONN; i++) {
@@ -401,10 +484,17 @@ static void test_cis_central(void)
 #endif
 
 		struct bt_conn *conn;
+<<<<<<< HEAD
 		uint8_t conn_index;
 		uint8_t chan;
 
 		printk("Start scanning...");
+=======
+		int conn_index;
+		int chan;
+
+		printk("Start scanning (%d)...", i);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = bt_le_scan_start(BT_LE_SCAN_CUSTOM, NULL);
 		if (err) {
 			FAIL("Could not start scan: %d\n", err);
@@ -452,12 +542,20 @@ static void test_cis_central(void)
 #if defined(CONFIG_TEST_CONNECT_ACL_FIRST)
 	}
 
+<<<<<<< HEAD
 	for (uint8_t chan = 0U, conn_index = 0U;
+=======
+	for (int chan = 0, conn_index = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	     (conn_index < conn_count) && (chan < CONFIG_BT_ISO_MAX_CHAN);
 	     conn_index++, chan++) {
 
 #elif defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
+<<<<<<< HEAD
 	for (uint8_t chan = 0U, conn_index = 0U;
+=======
+	for (int chan = 0, conn_index = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	     (chan < CONFIG_BT_ISO_MAX_CHAN); chan++) {
 #endif
 
@@ -481,6 +579,7 @@ static void test_cis_central(void)
 		printk("connected to peer %d ISO channel.\n", chan);
 	}
 
+<<<<<<< HEAD
 	for (uint16_t seq_num = 0U; seq_num < SEQ_NUM_MAX; seq_num++) {
 
 		for (uint8_t chan = 0U; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
@@ -530,17 +629,77 @@ static void test_cis_central(void)
 		if (err) {
 			FAIL("Failed to disconnect channel %u (%d)\n",
 			     chan, err);
+=======
+	if (!IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS) ||
+	    IS_ENABLED(CONFIG_TEST_FT_PER_SKIP_SUBEVENTS)) {
+		for (uint16_t seq_num = 0U; seq_num < SEQ_NUM_MAX; seq_num++) {
+
+			for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+				uint8_t iso_data[CONFIG_BT_ISO_TX_MTU] = { 0, };
+				struct net_buf *buf;
+				int ret;
+
+				buf = net_buf_alloc(&tx_pool, K_MSEC(BUF_ALLOC_TIMEOUT));
+				if (!buf) {
+					FAIL("Data buffer allocate timeout on channel %d\n", chan);
+					return;
+				}
+
+				net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
+				sys_put_le16(seq_num, iso_data);
+				net_buf_add_mem(buf, iso_data, sizeof(iso_data));
+
+				ret = k_sem_take(&sem_iso_data, K_MSEC(BUF_ALLOC_TIMEOUT));
+				if (ret) {
+					FAIL("k_sem_take for ISO data sent failed.\n");
+					return;
+				}
+
+				printk("ISO send: seq_num %u, chan %d\n", seq_num, chan);
+				ret = bt_iso_chan_send(&iso_chan[chan], buf,
+						       seq_num, BT_ISO_TIMESTAMP_NONE);
+				if (ret < 0) {
+					FAIL("Unable to send data on channel %d : %d\n", chan, ret);
+					net_buf_unref(buf);
+					return;
+				}
+			}
+
+			if ((seq_num % 100) == 0) {
+				printk("Sending value %u\n", seq_num);
+			}
+		}
+
+		k_sleep(K_MSEC(1000));
+	} else {
+		k_sleep(K_SECONDS(11));
+	}
+
+	for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+		printk("ISO disconnect channel %d...", chan);
+		err = bt_iso_chan_disconnect(&iso_chan[chan]);
+		if (err) {
+			FAIL("Failed to disconnect channel %d (%d)\n", chan, err);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 		printk("success\n");
 
+<<<<<<< HEAD
 		printk("Waiting for ISO channel disconnect %u...", chan);
+=======
+		printk("Waiting for ISO channel disconnect %d...", chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = k_sem_take(&sem_iso_disc, K_FOREVER);
 		if (err) {
 			FAIL("failed (err %d)\n", err);
 			return;
 		}
+<<<<<<< HEAD
 		printk("disconnected to peer %u ISO channel.\n", chan);
+=======
+		printk("disconnected to peer %d ISO channel.\n", chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	bt_conn_foreach(BT_CONN_TYPE_LE, disconnect, NULL);
@@ -561,6 +720,19 @@ static void test_cis_central(void)
 	}
 #endif
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)) {
+		for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+			if (expected_seq_num[chan] < SEQ_NUM_MAX) {
+				FAIL("ISO Data reception incomplete %u (%u).\n",
+				     expected_seq_num[chan], SEQ_NUM_MAX);
+				return;
+			}
+		}
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PASS("Central ISO tests Passed\n");
 }
 
@@ -587,6 +759,11 @@ static int iso_accept(const struct bt_iso_accept_info *info,
 	*chan = &iso_chan_p[chan_count];
 	chan_count++;
 
+<<<<<<< HEAD
+=======
+	printk("Accepted on channel %p\n", *chan);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -599,6 +776,10 @@ static struct bt_iso_server iso_server = {
 
 static void test_cis_peripheral(void)
 {
+<<<<<<< HEAD
+=======
+	struct bt_iso_chan_io_qos iso_tx_p[CONFIG_BT_ISO_MAX_CHAN];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	printk("Bluetooth initializing...");
@@ -610,7 +791,22 @@ static void test_cis_peripheral(void)
 	printk("success.\n");
 
 	for (int i = 0; i < CONFIG_BT_ISO_MAX_CHAN; i++) {
+<<<<<<< HEAD
 		iso_rx_p[i].sdu = CONFIG_BT_ISO_TX_MTU;
+=======
+		iso_tx_p[i].sdu = CONFIG_BT_ISO_TX_MTU;
+		iso_tx_p[i].phy = BT_GAP_LE_PHY_2M;
+		iso_tx_p[i].path = NULL;
+		if (IS_ENABLED(CONFIG_TEST_FT_SKIP_SUBEVENTS)) {
+			iso_tx_p[i].rtn = 2U;
+		} else {
+			iso_tx_p[i].rtn = 0U;
+		}
+
+		iso_qos_p[i].tx = &iso_tx_p[i];
+
+		iso_rx_p[i].sdu = CONFIG_BT_ISO_RX_MTU;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		iso_qos_p[i].rx = &iso_rx_p[i];
 
@@ -671,7 +867,11 @@ static void test_cis_peripheral(void)
 	printk("connected to peer central.\n");
 
 #if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
+<<<<<<< HEAD
 	for (uint8_t chan = 0U; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+=======
+	for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 		printk("Waiting for ISO channel connection...");
@@ -684,8 +884,54 @@ static void test_cis_peripheral(void)
 
 #if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
 	}
+<<<<<<< HEAD
 
 	for (uint8_t chan = 0U; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+=======
+#endif
+
+	if (IS_ENABLED(CONFIG_TEST_FT_CEN_SKIP_SUBEVENTS)) {
+		for (uint16_t seq_num = 0U; seq_num < SEQ_NUM_MAX; seq_num++) {
+			for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+				uint8_t iso_data[CONFIG_BT_ISO_TX_MTU] = { 0, };
+				struct net_buf *buf;
+				int ret;
+
+				buf = net_buf_alloc(&tx_pool, K_MSEC(BUF_ALLOC_TIMEOUT));
+				if (!buf) {
+					FAIL("Data buffer allocate timeout on channel %d\n", chan);
+					return;
+				}
+
+				net_buf_reserve(buf, BT_ISO_CHAN_SEND_RESERVE);
+				sys_put_le16(seq_num, iso_data);
+				net_buf_add_mem(buf, iso_data, sizeof(iso_data));
+
+				ret = k_sem_take(&sem_iso_data, K_MSEC(BUF_ALLOC_TIMEOUT));
+				if (ret) {
+					FAIL("k_sem_take for ISO data sent failed.\n");
+					return;
+				}
+
+				printk("ISO send: seq_num %u, chan %d\n", seq_num, chan);
+				ret = bt_iso_chan_send(&iso_chan_p[chan], buf, seq_num,
+						       BT_ISO_TIMESTAMP_NONE);
+				if (ret < 0) {
+					FAIL("Unable to send data on channel %d : %d\n", chan, ret);
+					net_buf_unref(buf);
+					return;
+				}
+			}
+
+			if ((seq_num % 100) == 0) {
+				printk("Sending value %u\n", seq_num);
+			}
+		}
+	}
+
+#if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
+	for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 		printk("Waiting for ISO channel disconnect...");
@@ -708,6 +954,7 @@ static void test_cis_peripheral(void)
 	}
 	printk("disconnected from peer device.\n");
 
+<<<<<<< HEAD
 #if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
 	for (uint8_t chan = 0U; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
 #else
@@ -716,11 +963,26 @@ static void test_cis_peripheral(void)
 		if (expected_seq_num[chan] < SEQ_NUM_MAX) {
 			FAIL("ISO Data reception incomplete %u (%u).\n",
 			     expected_seq_num[chan], SEQ_NUM_MAX);
+=======
+#if !defined(CONFIG_TEST_FT_SKIP_SUBEVENTS) || defined(CONFIG_TEST_FT_PER_SKIP_SUBEVENTS)
+#if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
+	for (int chan = 0; chan < CONFIG_BT_ISO_MAX_CHAN; chan++) {
+#else
+		int  chan = 0;
+#endif
+		if (expected_seq_num[chan] < SEQ_NUM_MAX) {
+			FAIL("ISO Data reception incomplete %u (%u).\n", expected_seq_num[chan],
+			     SEQ_NUM_MAX);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 #if defined(CONFIG_TEST_MULTIPLE_PERIPERAL_CIS)
 	}
 #endif
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	PASS("Peripheral ISO tests Passed\n");
 }

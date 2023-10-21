@@ -89,11 +89,19 @@ static struct net_buf *l2cap_alloc_buf(struct bt_l2cap_chan *chan)
 
 static void l2cap_sent(struct bt_l2cap_chan *chan)
 {
+<<<<<<< HEAD
+=======
+	struct bt_l2cap_le_chan *l2chan = CONTAINER_OF(chan, struct bt_l2cap_le_chan, chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_gatt_ots_l2cap *l2cap_ctx;
 
 	LOG_DBG("Outgoing data channel %p transmitted", chan);
 
+<<<<<<< HEAD
 	l2cap_ctx = CONTAINER_OF(chan, struct bt_gatt_ots_l2cap, ot_chan);
+=======
+	l2cap_ctx = CONTAINER_OF(l2chan, struct bt_gatt_ots_l2cap, ot_chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Ongoing TX - sending next chunk. */
 	if (l2cap_ctx->tx.len != l2cap_ctx->tx.len_sent) {
@@ -114,11 +122,19 @@ static void l2cap_sent(struct bt_l2cap_chan *chan)
 
 static int l2cap_recv(struct bt_l2cap_chan *chan, struct net_buf *buf)
 {
+<<<<<<< HEAD
+=======
+	struct bt_l2cap_le_chan *l2chan = CONTAINER_OF(chan, struct bt_l2cap_le_chan, chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_gatt_ots_l2cap *l2cap_ctx;
 
 	LOG_DBG("Incoming data channel %p received", chan);
 
+<<<<<<< HEAD
 	l2cap_ctx = CONTAINER_OF(chan, struct bt_gatt_ots_l2cap, ot_chan);
+=======
+	l2cap_ctx = CONTAINER_OF(l2chan, struct bt_gatt_ots_l2cap, ot_chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!l2cap_ctx->rx_done) {
 		return -ENODEV;
@@ -139,11 +155,19 @@ static void l2cap_connected(struct bt_l2cap_chan *chan)
 
 static void l2cap_disconnected(struct bt_l2cap_chan *chan)
 {
+<<<<<<< HEAD
+=======
+	struct bt_l2cap_le_chan *l2chan = CONTAINER_OF(chan, struct bt_l2cap_le_chan, chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_gatt_ots_l2cap *l2cap_ctx;
 
 	LOG_DBG("Channel %p disconnected", chan);
 
+<<<<<<< HEAD
 	l2cap_ctx = CONTAINER_OF(chan, struct bt_gatt_ots_l2cap, ot_chan);
+=======
+	l2cap_ctx = CONTAINER_OF(l2chan, struct bt_gatt_ots_l2cap, ot_chan);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (l2cap_ctx->closed) {
 		l2cap_ctx->closed(l2cap_ctx, chan->conn);
@@ -184,7 +208,12 @@ static struct bt_gatt_ots_l2cap *find_free_l2cap_ctx(void)
 	return NULL;
 }
 
+<<<<<<< HEAD
 static int l2cap_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+=======
+static int l2cap_accept(struct bt_conn *conn, struct bt_l2cap_server *server,
+			struct bt_l2cap_chan **chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct bt_gatt_ots_l2cap *l2cap_ctx;
 

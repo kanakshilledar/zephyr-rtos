@@ -12,4 +12,8 @@ tests:
     harness_config:
       type: one_line
       regex:
+<<<<<<< HEAD
         - "CPU Die temperature\\[[A-Za-z0-9_]+\\]: [1-9][0-9].[0-9] °C"
+=======
+        - "CPU Die temperature\\[[A-Za-z0-9_@]+\\]: [1-9][0-9].[0-9] °C"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

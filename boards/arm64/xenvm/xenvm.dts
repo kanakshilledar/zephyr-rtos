@@ -18,8 +18,13 @@
 #include <zephyr/dt-bindings/interrupt-controller/arm-gic.h>
 
 / {
+<<<<<<< HEAD
 	model = "XENVM-4.15";
 	compatible = "xen,xenvm-4.15", "xen,xenvm";
+=======
+	model = "XENVM";
+	compatible = "xen,xenvm";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	interrupt-parent = <&gic>;
 	#address-cells = <0x02>;
 	#size-cells = <0x02>;
@@ -52,7 +57,11 @@
 	};
 
 	gic: interrupt-controller@3001000 {
+<<<<<<< HEAD
 		compatible = "arm,gic";
+=======
+		compatible = "arm,gic-v2", "arm,gic";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		#interrupt-cells = <0x04>;
 		#address-cells = <0x00>;
 		interrupt-controller;
@@ -68,7 +77,11 @@
 	};
 
 	hypervisor: hypervisor@38000000 {
+<<<<<<< HEAD
 		compatible = "xen,xen-4.15", "xen,xen";
+=======
+		compatible = "xen,xen";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		reg = <0x00 0x38000000 0x00 0x1000000>;
 		interrupts = <GIC_PPI 0x0f IRQ_TYPE_EDGE IRQ_DEFAULT_PRIORITY>;
 		interrupt-parent = <&gic>;

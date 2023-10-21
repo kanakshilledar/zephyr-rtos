@@ -411,6 +411,10 @@ def get_runner_config(build_dir, yaml_path, runners_yaml, args=None):
     return RunnerConfig(build_dir,
                         yaml_config['board_dir'],
                         output_file('elf'),
+<<<<<<< HEAD
+=======
+                        output_file('exe'),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                         output_file('hex'),
                         output_file('bin'),
                         output_file('uf2'),

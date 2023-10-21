@@ -11,19 +11,49 @@ source $(dirname "${BASH_SOURCE[0]}")/../../_mesh_test.sh
 # Provision, configure and reset a device
 overlay=overlay_pst_conf
 RunTest mesh_pst_repr persistence_reprovisioning_device \
+<<<<<<< HEAD
 	persistence_reprovisioning_provisioner -- -argstest clear-settings=1
+=======
+    -flash=../results/mesh_pst_repr/flash.bin -flash_erase \
+	persistence_reprovisioning_provisioner
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # Repeat the test
 overlay=overlay_pst_conf
 RunTest mesh_pst_repr persistence_reprovisioning_device \
+<<<<<<< HEAD
+=======
+	-flash=../results/mesh_pst_repr/flash.bin -flash_rm \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	persistence_reprovisioning_provisioner
 
 conf=prj_mesh1d1_conf
 overlay=overlay_pst_conf
 RunTest mesh_pst_repr_1d1 persistence_reprovisioning_device \
+<<<<<<< HEAD
 	persistence_reprovisioning_provisioner -- -argstest clear-settings=1
+=======
+    -flash=../results/mesh_pst_repr_1d1/flash.bin -flash_erase \
+	persistence_reprovisioning_provisioner
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 conf=prj_mesh1d1_conf
 overlay=overlay_pst_conf
 RunTest mesh_pst_repr_1d1 persistence_reprovisioning_device \
+<<<<<<< HEAD
+=======
+	-flash=../results/mesh_pst_repr_1d1/flash.bin -flash_rm \
+	persistence_reprovisioning_provisioner
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest mesh_pst_repr_psa persistence_reprovisioning_device \
+    -flash=../results/mesh_pst_repr_psa/flash.bin -flash_erase \
+	persistence_reprovisioning_provisioner
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest mesh_pst_repr_psa persistence_reprovisioning_device \
+	-flash=../results/mesh_pst_repr_psa/flash.bin -flash_rm \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	persistence_reprovisioning_provisioner

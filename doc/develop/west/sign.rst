@@ -5,7 +5,13 @@ Signing Binaries
 
 The ``west sign`` :ref:`extension <west-extensions>` command can be used to
 sign a Zephyr application binary for consumption by a bootloader using an
+<<<<<<< HEAD
 external tool. Run ``west sign -h`` for command line help.
+=======
+external tool. In some configurations, ``west sign`` is also used to invoke
+an external, post-processing tool that "stitches" the final components of
+the image together. Run ``west sign -h`` for command line help.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 MCUboot / imgtool
 *****************
@@ -40,7 +46,11 @@ Notes on the above commands:
 - The ``CONFIG_MCUBOOT_SIGNATURE_KEY_FILE`` value is the insecure default
   provided and used by by MCUboot for development and testing
 - You can change the ``hello_world`` application directory to any other
+<<<<<<< HEAD
   application that can be loaded by MCUboot, such as the :ref:`smp_svr_sample`
+=======
+  application that can be loaded by MCUboot, such as the :zephyr:code-sample:`smp-svr` sample.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 For more information on these and other related configuration options, see:
 

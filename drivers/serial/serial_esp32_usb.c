@@ -13,14 +13,41 @@
 #include <errno.h>
 #include <soc.h>
 #include <zephyr/drivers/uart.h>
+<<<<<<< HEAD
 #include <zephyr/drivers/interrupt_controller/intc_esp32c3.h>
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32C3)
+#include <zephyr/drivers/interrupt_controller/intc_esp32c3.h>
+#else
+#include <zephyr/drivers/interrupt_controller/intc_esp32.h>
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/sys/util.h>
 #include <esp_attr.h>
 
+<<<<<<< HEAD
 #define USBSERIAL_TIMEOUT_MAX_US 50000
 
 static int s_usbserial_timeout;
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+#define ISR_HANDLER isr_handler_t
+#else
+#define ISR_HANDLER intr_handler_t
+#endif
+
+/*
+ * Timeout after which the poll_out function stops waiting for space in the tx fifo.
+ *
+ * Without this timeout, the function would get stuck forever and block the processor if no host is
+ * connected to the USB port.
+ *
+ * USB full-speed uses a frame rate of 1 ms. Thus, a timeout of 50 ms provides plenty of safety
+ * margin even for a loaded bus. This is the same value as used in the ESP-IDF.
+ */
+#define USBSERIAL_POLL_OUT_TIMEOUT_MS (50U)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct serial_esp32_usb_config {
 	const struct device *clock_dev;
@@ -34,6 +61,10 @@ struct serial_esp32_usb_data {
 	void *irq_cb_data;
 #endif
 	int irq_line;
+<<<<<<< HEAD
+=======
+	int64_t last_tx_time;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
@@ -55,6 +86,7 @@ static int serial_esp32_usb_poll_in(const struct device *dev, unsigned char *p_c
 
 static void serial_esp32_usb_poll_out(const struct device *dev, unsigned char c)
 {
+<<<<<<< HEAD
 	ARG_UNUSED(dev);
 
 	/* Wait for space in FIFO */
@@ -69,6 +101,22 @@ static void serial_esp32_usb_poll_out(const struct device *dev, unsigned char c)
 		usb_serial_jtag_ll_txfifo_flush();
 		s_usbserial_timeout = 0;
 	}
+=======
+	struct serial_esp32_usb_data *data = dev->data;
+
+	/*
+	 * If there is no USB host connected, this function will busy-wait once for the timeout
+	 * period, but return immediately for subsequent calls.
+	 */
+	do {
+		if (usb_serial_jtag_ll_txfifo_writable()) {
+			usb_serial_jtag_ll_write_txfifo(&c, 1);
+			usb_serial_jtag_ll_txfifo_flush();
+			data->last_tx_time = k_uptime_get();
+			return;
+		}
+	} while ((k_uptime_get() - data->last_tx_time) < USBSERIAL_POLL_OUT_TIMEOUT_MS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int serial_esp32_usb_err_check(const struct device *dev)
@@ -90,7 +138,11 @@ static int serial_esp32_usb_init(const struct device *dev)
 	int ret = clock_control_on(config->clock_dev, config->clock_subsys);
 
 #ifdef CONFIG_UART_INTERRUPT_DRIVEN
+<<<<<<< HEAD
 	data->irq_line = esp_intr_alloc(config->irq_source, 0, (isr_handler_t)serial_esp32_usb_isr,
+=======
+	data->irq_line = esp_intr_alloc(config->irq_source, 0, (ISR_HANDLER)serial_esp32_usb_isr,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					(void *)dev, NULL);
 #endif
 	return ret;

@@ -19,7 +19,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/ieee802154_radio.h>
 #include <zephyr/irq.h>
 #if defined(CONFIG_NET_L2_OPENTHREAD)
@@ -30,7 +34,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 
 /* B91 data structure */
+<<<<<<< HEAD
 static struct  b91_data data;
+=======
+static struct b91_data data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Set filter PAN ID */
 static int b91_set_pan_id(uint16_t pan_id)
@@ -169,23 +177,46 @@ static void b91_update_rssi_and_lqi(struct net_pkt *pkt)
 	lqi = b91_convert_rssi_to_lqi(rssi);
 
 	net_pkt_set_ieee802154_lqi(pkt, lqi);
+<<<<<<< HEAD
 	net_pkt_set_ieee802154_rssi(pkt, rssi);
 }
 
 /* Prepare TX buffer */
 static void b91_set_tx_payload(uint8_t *payload, uint8_t payload_len)
+=======
+	net_pkt_set_ieee802154_rssi_dbm(pkt, rssi);
+}
+
+/* Prepare TX buffer */
+static int b91_set_tx_payload(uint8_t *payload, uint8_t payload_len)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	unsigned char rf_data_len;
 	unsigned int rf_tx_dma_len;
 
+<<<<<<< HEAD
+=======
+	/* See Telink SDK Dev Handbook, AN-21010600, section 21.5.2.2. */
+	if (payload_len > (B91_TRX_LENGTH - B91_PAYLOAD_OFFSET - IEEE802154_FCS_LENGTH)) {
+		return -EINVAL;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rf_data_len = payload_len + 1;
 	rf_tx_dma_len = rf_tx_packet_dma_len(rf_data_len);
 	data.tx_buffer[0] = rf_tx_dma_len & 0xff;
 	data.tx_buffer[1] = (rf_tx_dma_len >> 8) & 0xff;
 	data.tx_buffer[2] = (rf_tx_dma_len >> 16) & 0xff;
 	data.tx_buffer[3] = (rf_tx_dma_len >> 24) & 0xff;
+<<<<<<< HEAD
 	data.tx_buffer[4] = payload_len + 2;
 	memcpy(data.tx_buffer + B91_PAYLOAD_OFFSET, payload, payload_len);
+=======
+	data.tx_buffer[4] = payload_len + IEEE802154_FCS_LENGTH;
+	memcpy(data.tx_buffer + B91_PAYLOAD_OFFSET, payload, payload_len);
+
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Enable ack handler */
@@ -227,7 +258,11 @@ static void b91_handle_ack(void)
 	net_pkt_cursor_init(ack_pkt);
 
 	/* handle ack */
+<<<<<<< HEAD
 	if (ieee802154_radio_handle_ack(data.iface, ack_pkt) != NET_OK) {
+=======
+	if (ieee802154_handle_ack(data.iface, ack_pkt) != NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("ACK packet not handled - releasing.");
 	}
 
@@ -243,7 +278,14 @@ static void b91_send_ack(uint8_t seq_num)
 {
 	uint8_t ack_buf[] = { B91_ACK_TYPE, 0, seq_num };
 
+<<<<<<< HEAD
 	b91_set_tx_payload(ack_buf, sizeof(ack_buf));
+=======
+	if (b91_set_tx_payload(ack_buf, sizeof(ack_buf))) {
+		return;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rf_set_txmode();
 	delay_us(CONFIG_IEEE802154_B91_SET_TXRX_DELAY_US);
 	rf_tx_pkt(data.tx_buffer);
@@ -403,8 +445,13 @@ static enum ieee802154_hw_caps b91_get_capabilities(const struct device *dev)
 {
 	ARG_UNUSED(dev);
 
+<<<<<<< HEAD
 	return IEEE802154_HW_FCS | IEEE802154_HW_2_4_GHZ |
 	       IEEE802154_HW_FILTER | IEEE802154_HW_TX_RX_ACK;
+=======
+	return IEEE802154_HW_FCS | IEEE802154_HW_FILTER |
+	       IEEE802154_HW_TX_RX_ACK | IEEE802154_HW_RX_TX_ACK;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* API implementation: cca */
@@ -428,10 +475,21 @@ static int b91_set_channel(const struct device *dev, uint16_t channel)
 {
 	ARG_UNUSED(dev);
 
+<<<<<<< HEAD
 	if (channel < 11 || channel > 26) {
 		return -EINVAL;
 	}
 
+=======
+	if (channel > 26) {
+		return -EINVAL;
+	}
+
+	if (channel < 11) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (data.current_channel != channel) {
 		data.current_channel = channel;
 		rf_set_chn(B91_LOGIC_CHANNEL_TO_PHYSICAL(channel));
@@ -530,7 +588,14 @@ static int b91_tx(const struct device *dev,
 	}
 
 	/* prepare tx buffer */
+<<<<<<< HEAD
 	b91_set_tx_payload(frag->data, frag->len);
+=======
+	status = b91_set_tx_payload(frag->data, frag->len);
+	if (status) {
+		return status;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* reset semaphores */
 	k_sem_reset(&b91->tx_wait);
@@ -585,6 +650,23 @@ static int b91_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+<<<<<<< HEAD
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 11, 26);
+
+/* API implementation: attr_get */
+static int b91_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+		&drv_attr.phy_supported_channels, value);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* IEEE802154 driver APIs structure */
 static struct ieee802154_radio_api b91_radio_api = {
 	.iface_api.init = b91_iface_init,
@@ -598,6 +680,10 @@ static struct ieee802154_radio_api b91_radio_api = {
 	.tx = b91_tx,
 	.ed_scan = b91_ed_scan,
 	.configure = b91_configure,
+<<<<<<< HEAD
+=======
+	.attr_get = b91_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 

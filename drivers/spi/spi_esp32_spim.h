@@ -38,6 +38,10 @@ struct spi_esp32_config {
 	int dma_host;
 	int cs_setup;
 	int cs_hold;
+<<<<<<< HEAD
+=======
+	bool line_idle_low;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct spi_esp32_data {

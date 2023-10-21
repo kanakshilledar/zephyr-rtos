@@ -100,7 +100,11 @@ static void read_uri_schemes_string_cb(struct bt_conn *conn, int err,
 		}
 	}
 
+<<<<<<< HEAD
 	if (i > sizeof(remote_uri)) {
+=======
+	if (i >= sizeof(remote_uri)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("Cannot store URI of length %zu: %s\n", i, value);
 		return;
 	}
@@ -125,7 +129,11 @@ int ccp_call_ctrl_init(struct bt_conn *conn)
 
 	default_conn = bt_conn_ref(conn);
 	bt_tbs_client_register_cb(&tbs_client_cb);
+<<<<<<< HEAD
 	err = bt_tbs_client_discover(conn, true);
+=======
+	err = bt_tbs_client_discover(conn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err != 0) {
 		return err;
 	}

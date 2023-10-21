@@ -34,9 +34,12 @@ void pm_state_set(enum pm_state state, uint8_t substate_id)
 	ARG_UNUSED(substate_id);
 
 	switch (state_testing[_current_cpu->id]) {
+<<<<<<< HEAD
 	case PM_STATE_ACTIVE:
 		zassert_equal(PM_STATE_ACTIVE, state);
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case  PM_STATE_RUNTIME_IDLE:
 		zassert_equal(PM_STATE_RUNTIME_IDLE, state);
 		break;

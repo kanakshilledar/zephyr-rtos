@@ -10,7 +10,11 @@ LOG_MODULE_REGISTER(net_gptp, CONFIG_NET_GPTP_LOG_LEVEL);
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/drivers/ptp_clock.h>
 #include <zephyr/net/ethernet_mgmt.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/net/gptp.h>
 
@@ -941,6 +945,7 @@ static void disable_port(int port)
 
 static void vlan_enabled(struct k_work *work)
 {
+<<<<<<< HEAD
 	struct vlan_work *vlan = CONTAINER_OF(work,
 					      struct vlan_work,
 					      work);
@@ -950,6 +955,17 @@ static void vlan_enabled(struct k_work *work)
 		port = gptp_get_port_number(vlan->iface);
 		if (port < 0) {
 			NET_DBG("No port found for iface %p", vlan->iface);
+=======
+	struct vlan_work *one_vlan = CONTAINER_OF(work,
+						  struct vlan_work,
+						  work);
+	if (tid) {
+		int port;
+
+		port = gptp_get_port_number(one_vlan->iface);
+		if (port < 0) {
+			NET_DBG("No port found for iface %p", one_vlan->iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 
@@ -963,6 +979,7 @@ static void vlan_enabled(struct k_work *work)
 
 static void vlan_disabled(struct k_work *work)
 {
+<<<<<<< HEAD
 	struct vlan_work *vlan = CONTAINER_OF(work,
 					      struct vlan_work,
 					      work);
@@ -971,6 +988,16 @@ static void vlan_disabled(struct k_work *work)
 	port = gptp_get_port_number(vlan->iface);
 	if (port < 0) {
 		NET_DBG("No port found for iface %p", vlan->iface);
+=======
+	struct vlan_work *one_vlan = CONTAINER_OF(work,
+						  struct vlan_work,
+						  work);
+	int port;
+
+	port = gptp_get_port_number(one_vlan->iface);
+	if (port < 0) {
+		NET_DBG("No port found for iface %p", one_vlan->iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 

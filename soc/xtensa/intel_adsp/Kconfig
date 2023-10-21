@@ -95,6 +95,16 @@ config ADSP_INIT_HPSRAM
 	help
 	  Need to init HP SRAM.
 
+<<<<<<< HEAD
+=======
+config ADSP_POWER_DOWN_HPSRAM
+	bool
+	default n if ZTEST
+	default y
+	help
+	 Switch off HP SRAM during power down.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config ADSP_DISABLE_L2CACHE_AT_BOOT
 	bool
 

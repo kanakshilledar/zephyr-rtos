@@ -93,6 +93,7 @@ int i2c_stm32_runtime_configure(const struct device *dev, uint32_t config)
 	return ret;
 }
 
+<<<<<<< HEAD
 static inline int
 i2c_stm32_transaction(const struct device *dev,
 		      struct i2c_msg msg, uint8_t *next_msg_flags,
@@ -143,6 +144,8 @@ i2c_stm32_transaction(const struct device *dev,
 	return ret;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define OPERATION(msg) (((struct i2c_msg *) msg)->flags & I2C_MSG_RW_MASK)
 
 static int i2c_stm32_transfer(const struct device *dev, struct i2c_msg *msg,
@@ -196,11 +199,14 @@ static int i2c_stm32_transfer(const struct device *dev, struct i2c_msg *msg,
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ret = pm_device_runtime_get(dev);
 	if (ret < 0) {
 		return ret;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Send out messages */
 	k_sem_take(&data->bus_mutex, K_FOREVER);
 
@@ -220,7 +226,11 @@ static int i2c_stm32_transfer(const struct device *dev, struct i2c_msg *msg,
 			next = current + 1;
 			next_msg_flags = &(next->flags);
 		}
+<<<<<<< HEAD
 		ret = i2c_stm32_transaction(dev, *current, next_msg_flags, slave);
+=======
+		ret = stm32_i2c_transaction(dev, *current, next_msg_flags, slave);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (ret < 0) {
 			break;
 		}
@@ -276,12 +286,20 @@ static int i2c_stm32_recover_bus(const struct device *dev)
 
 	LOG_ERR("attempting to recover bus");
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->scl.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->scl)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SCL GPIO device not ready");
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->sda.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->sda)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("SDA GPIO device not ready");
 		return -EIO;
 	}

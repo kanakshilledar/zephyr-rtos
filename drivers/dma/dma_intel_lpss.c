@@ -82,7 +82,11 @@ static const struct dma_driver_api dma_intel_lpss_driver_api = {
 		.dw_cfg = {						\
 			.base = 0,					\
 		},							\
+<<<<<<< HEAD
 		.parent = DEVICE_DT_GET(DT_INST_PARENT(n)),		\
+=======
+		.parent = DEVICE_DT_GET(DT_INST_PHANDLE(n, dma_parent)),\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};								\
 									\
 	static struct dw_dma_dev_data dma_intel_lpss##n##_data = {	\

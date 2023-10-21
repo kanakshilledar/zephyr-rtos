@@ -43,12 +43,20 @@ static int init_callback(const struct device *dev,
 	}
 	if (rc == 0) {
 		/* 1. set PIN_OUT */
+<<<<<<< HEAD
 		rc = gpio_pin_configure(dev, PIN_OUT, GPIO_OUTPUT_LOW);
+=======
+		rc = gpio_pin_configure(dev, PIN_OUT, (GPIO_OUTPUT_LOW | PIN_OUT_FLAGS));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (rc == 0) {
 		/* 2. configure PIN_IN callback, but don't enable */
+<<<<<<< HEAD
 		rc = gpio_pin_configure(dev, PIN_IN, GPIO_INPUT);
+=======
+		rc = gpio_pin_configure(dev, PIN_IN, (GPIO_INPUT | PIN_IN_FLAGS));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (rc == 0) {

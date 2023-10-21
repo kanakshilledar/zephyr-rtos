@@ -12,7 +12,11 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <zephyr/init.h>
+=======
+#include <zephyr/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sw_isr_table.h>
 #include <zephyr/irq.h>
 
@@ -143,7 +147,11 @@ static void swerv_pic_irq_handler(const void *arg)
 	swerv_pic_write(SWERV_PIC_meigwclr(irq), 0);
 }
 
+<<<<<<< HEAD
 static int swerv_pic_init(void)
+=======
+static int swerv_pic_init(const struct device *dev)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int i;
 
@@ -236,4 +244,9 @@ int arch_irq_is_enabled(unsigned int irq)
 	return !!(mie & (1 << irq));
 }
 
+<<<<<<< HEAD
 SYS_INIT(swerv_pic_init, PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY);
+=======
+DEVICE_DT_INST_DEFINE(0, swerv_pic_init, NULL,  NULL,  NULL,
+		      PRE_KERNEL_1, CONFIG_INTC_INIT_PRIORITY, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

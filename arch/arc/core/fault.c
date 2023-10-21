@@ -18,7 +18,11 @@
 #include <zephyr/kernel.h>
 #include <kernel_internal.h>
 #include <zephyr/kernel_structs.h>
+<<<<<<< HEAD
 #include <zephyr/exc_handle.h>
+=======
+#include <zephyr/arch/common/exc_handle.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log.h>
 LOG_MODULE_DECLARE(os, CONFIG_KERNEL_LOG_LEVEL);
 

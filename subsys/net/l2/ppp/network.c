@@ -45,10 +45,17 @@ void ppp_network_done(struct ppp_context *ctx, int proto)
 {
 	ctx->network_protos_up--;
 	if (ctx->network_protos_up <= 0) {
+<<<<<<< HEAD
 		const struct ppp_protocol_handler *proto = ppp_lcp_get();
 
 		if (proto) {
 			proto->close(ctx, "All networks down");
+=======
+		const struct ppp_protocol_handler *ppp_proto = ppp_lcp_get();
+
+		if (ppp_proto) {
+			ppp_proto->close(ctx, "All networks down");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }

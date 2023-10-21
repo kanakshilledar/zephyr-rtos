@@ -11,6 +11,10 @@ LOG_MODULE_DECLARE(net_echo_server_sample, LOG_LEVEL_DBG);
 
 #include <zephyr/net/ethernet.h>
 #include <zephyr/net/virtual_mgmt.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* User data for the interface callback */
 struct ud {

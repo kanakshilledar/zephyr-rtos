@@ -117,7 +117,11 @@ static struct gsm_modem {
 	gsm_modem_power_cb modem_on_cb;
 	gsm_modem_power_cb modem_off_cb;
 	struct net_mgmt_event_callback gsm_mgmt_cb;
+<<<<<<< HEAD
 } gsm;
+=======
+} modem;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 NET_BUF_POOL_DEFINE(gsm_recv_pool, GSM_RECV_MAX_BUF, GSM_RECV_BUF_SIZE, 0, NULL);
 K_KERNEL_STACK_DEFINE(gsm_rx_stack, CONFIG_MODEM_GSM_RX_STACK_SIZE);
@@ -135,7 +139,11 @@ static inline void gsm_ppp_unlock(struct gsm_modem *gsm)
 
 static inline int gsm_work_reschedule(struct k_work_delayable *dwork, k_timeout_t delay)
 {
+<<<<<<< HEAD
 	return k_work_reschedule_for_queue(&gsm.workq, dwork, delay);
+=======
+	return k_work_reschedule_for_queue(&modem.workq, dwork, delay);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_MODEM_GSM_ENABLE_CESQ_RSSI)
@@ -185,7 +193,11 @@ MODEM_CMD_DEFINE(gsm_cmd_ok)
 {
 	(void)modem_cmd_handler_set_error(data, 0);
 	LOG_DBG("ok");
+<<<<<<< HEAD
 	k_sem_give(&gsm.sem_response);
+=======
+	k_sem_give(&modem.sem_response);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -193,7 +205,11 @@ MODEM_CMD_DEFINE(gsm_cmd_error)
 {
 	(void)modem_cmd_handler_set_error(data, -EINVAL);
 	LOG_DBG("error");
+<<<<<<< HEAD
 	k_sem_give(&gsm.sem_response);
+=======
+	k_sem_give(&modem.sem_response);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -202,7 +218,11 @@ MODEM_CMD_DEFINE(gsm_cmd_exterror)
 {
 	/* TODO: map extended error codes to values */
 	(void)modem_cmd_handler_set_error(data, -EIO);
+<<<<<<< HEAD
 	k_sem_give(&gsm.sem_response);
+=======
+	k_sem_give(&modem.sem_response);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -230,6 +250,7 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_cops)
 	if (argc >= 1) {
 #if defined(CONFIG_MODEM_CELL_INFO)
 		if (argc >= 3) {
+<<<<<<< HEAD
 			gsm.context.data_operator = unquoted_atoi(argv[2], 10);
 			LOG_INF("operator: %u",
 				gsm.context.data_operator);
@@ -239,6 +260,17 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_cops)
 			gsm.context.is_automatic_oper = true;
 		} else {
 			gsm.context.is_automatic_oper = false;
+=======
+			modem.context.data_operator = unquoted_atoi(argv[2], 10);
+			LOG_INF("operator: %u",
+				modem.context.data_operator);
+		}
+#endif
+		if (unquoted_atoi(argv[0], 10) == 0) {
+			modem.context.is_automatic_oper = true;
+		} else {
+			modem.context.is_automatic_oper = false;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 
@@ -255,11 +287,19 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_manufacturer)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_manufacturer,
 				    sizeof(gsm.minfo.mdm_manufacturer) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_manufacturer[out_len] = '\0';
 	LOG_INF("Manufacturer: %s", gsm.minfo.mdm_manufacturer);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_manufacturer,
+				    sizeof(modem.minfo.mdm_manufacturer) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_manufacturer[out_len] = '\0';
+	LOG_INF("Manufacturer: %s", modem.minfo.mdm_manufacturer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -269,11 +309,19 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_model)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_model,
 				    sizeof(gsm.minfo.mdm_model) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_model[out_len] = '\0';
 	LOG_INF("Model: %s", gsm.minfo.mdm_model);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_model,
+				    sizeof(modem.minfo.mdm_model) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_model[out_len] = '\0';
+	LOG_INF("Model: %s", modem.minfo.mdm_model);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -283,11 +331,19 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_revision)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_revision,
 				    sizeof(gsm.minfo.mdm_revision) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_revision[out_len] = '\0';
 	LOG_INF("Revision: %s", gsm.minfo.mdm_revision);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_revision,
+				    sizeof(modem.minfo.mdm_revision) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_revision[out_len] = '\0';
+	LOG_INF("Revision: %s", modem.minfo.mdm_revision);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -297,10 +353,17 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_imei)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_imei, sizeof(gsm.minfo.mdm_imei) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_imei[out_len] = '\0';
 	LOG_INF("IMEI: %s", gsm.minfo.mdm_imei);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_imei, sizeof(modem.minfo.mdm_imei) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_imei[out_len] = '\0';
+	LOG_INF("IMEI: %s", modem.minfo.mdm_imei);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -311,10 +374,17 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_imsi)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_imsi, sizeof(gsm.minfo.mdm_imsi) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_imsi[out_len] = '\0';
 	LOG_INF("IMSI: %s", gsm.minfo.mdm_imsi);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_imsi, sizeof(modem.minfo.mdm_imsi) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_imsi[out_len] = '\0';
+	LOG_INF("IMSI: %s", modem.minfo.mdm_imsi);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -324,6 +394,7 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_iccid)
 {
 	size_t out_len;
 
+<<<<<<< HEAD
 	out_len = net_buf_linearize(gsm.minfo.mdm_iccid, sizeof(gsm.minfo.mdm_iccid) - 1,
 				    data->rx_buf, 0, len);
 	gsm.minfo.mdm_iccid[out_len] = '\0';
@@ -340,6 +411,24 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_iccid)
 		}
 	}
 	LOG_INF("ICCID: %s", gsm.minfo.mdm_iccid);
+=======
+	out_len = net_buf_linearize(modem.minfo.mdm_iccid, sizeof(modem.minfo.mdm_iccid) - 1,
+				    data->rx_buf, 0, len);
+	modem.minfo.mdm_iccid[out_len] = '\0';
+	if (modem.minfo.mdm_iccid[0] == '+') {
+		/* Seen on U-blox SARA: "+CCID: nnnnnnnnnnnnnnnnnnnn".
+		 * Skip over the +CCID bit, which other modems omit.
+		 */
+		char *p = strchr(modem.minfo.mdm_iccid, ' ');
+
+		if (p) {
+			size_t iccid_len = strlen(p+1);
+
+			(void)memmove(modem.minfo.mdm_iccid, p+1, iccid_len+1);
+		}
+	}
+	LOG_INF("ICCID: %s", modem.minfo.mdm_iccid);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -347,9 +436,15 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_iccid)
 
 MODEM_CMD_DEFINE(on_cmd_net_reg_sts)
 {
+<<<<<<< HEAD
 	gsm.net_state = (enum network_state)atoi(argv[1]);
 
 	switch (gsm.net_state) {
+=======
+	modem.net_state = (enum network_state)atoi(argv[1]);
+
+	switch (modem.net_state) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case GSM_NET_NOT_REGISTERED:
 		LOG_DBG("Network %s.", "not registered");
 		break;
@@ -383,6 +478,7 @@ MODEM_CMD_DEFINE(on_cmd_net_reg_sts)
 MODEM_CMD_DEFINE(on_cmd_atcmdinfo_cereg)
 {
 	if (argc >= 4) {
+<<<<<<< HEAD
 		gsm.context.data_lac = unquoted_atoi(argv[2], 16);
 		gsm.context.data_cellid = unquoted_atoi(argv[3], 16);
 		LOG_INF("lac: %u, cellid: %u",
@@ -393,6 +489,18 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_cereg)
 	if (argc >= 5) {
 		gsm.context.data_act = unquoted_atoi(argv[4], 10);
 		LOG_INF("act: %u", gsm.context.data_act);
+=======
+		modem.context.data_lac = unquoted_atoi(argv[2], 16);
+		modem.context.data_cellid = unquoted_atoi(argv[3], 16);
+		LOG_INF("lac: %u, cellid: %u",
+			modem.context.data_lac,
+			modem.context.data_cellid);
+	}
+
+	if (argc >= 5) {
+		modem.context.data_act = unquoted_atoi(argv[4], 10);
+		LOG_INF("act: %u", modem.context.data_act);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -436,6 +544,7 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_rssi_cesq)
 	rxlev = ATOI(argv[0], 0, "rxlev");
 
 	if ((rsrp >= 0) && (rsrp <= 97)) {
+<<<<<<< HEAD
 		gsm.minfo.mdm_rssi = -140 + (rsrp - 1);
 		LOG_DBG("RSRP: %d", gsm.minfo.mdm_rssi);
 	} else if ((rscp >= 0) && (rscp <= 96)) {
@@ -446,6 +555,18 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_rssi_cesq)
 		LOG_DBG("RSSI: %d", gsm.minfo.mdm_rssi);
 	} else {
 		gsm.minfo.mdm_rssi = GSM_RSSI_INVALID;
+=======
+		modem.minfo.mdm_rssi = -140 + (rsrp - 1);
+		LOG_DBG("RSRP: %d", modem.minfo.mdm_rssi);
+	} else if ((rscp >= 0) && (rscp <= 96)) {
+		modem.minfo.mdm_rssi = -120 + (rscp - 1);
+		LOG_DBG("RSCP: %d", modem.minfo.mdm_rssi);
+	} else if ((rxlev >= 0) && (rxlev <= 63)) {
+		modem.minfo.mdm_rssi = -110 + (rxlev - 1);
+		LOG_DBG("RSSI: %d", modem.minfo.mdm_rssi);
+	} else {
+		modem.minfo.mdm_rssi = GSM_RSSI_INVALID;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("RSRP/RSCP/RSSI not known");
 	}
 
@@ -465,7 +586,11 @@ MODEM_CMD_DEFINE(on_cmd_atcmdinfo_rssi_csq)
 			rssi = GSM_RSSI_INVALID;
 		}
 
+<<<<<<< HEAD
 		gsm.minfo.mdm_rssi = rssi;
+=======
+		modem.minfo.mdm_rssi = rssi;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("RSSI: %d", rssi);
 	}
 
@@ -614,16 +739,22 @@ static struct net_if *ppp_net_if(void)
 
 static void set_ppp_carrier_on(struct gsm_modem *gsm)
 {
+<<<<<<< HEAD
 	static const struct ppp_api *api;
 	const struct device *ppp_dev = device_get_binding(CONFIG_NET_PPP_DRV_NAME);
 	struct net_if *iface = gsm->iface;
 	int ret;
+=======
+	const struct device *ppp_dev = device_get_binding(CONFIG_NET_PPP_DRV_NAME);
+	struct net_if *iface = gsm->iface;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (ppp_dev == NULL) {
 		LOG_ERR("Cannot find PPP %s!", CONFIG_NET_PPP_DRV_NAME);
 		return;
 	}
 
+<<<<<<< HEAD
 	if (api == NULL) {
 		api = (const struct ppp_api *)ppp_dev->api;
 
@@ -639,6 +770,9 @@ static void set_ppp_carrier_on(struct gsm_modem *gsm)
 			LOG_ERR("ppp l2 enable returned %d", ret);
 		}
 	}
+=======
+	net_if_up(iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void query_rssi(struct gsm_modem *gsm, bool lock)
@@ -1195,7 +1329,11 @@ void gsm_ppp_stop(const struct device *dev)
 
 	/* wait for the interface to be properly down */
 	if (net_if_is_up(iface)) {
+<<<<<<< HEAD
 		(void)(net_if_l2(iface)->enable(iface, false));
+=======
+		net_if_down(ppp_net_if());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		(void)k_sem_take(&gsm->sem_if_down, K_FOREVER);
 	}
 
@@ -1250,14 +1388,22 @@ static void gsm_mgmt_event_handler(struct net_mgmt_event_callback *cb,
 	}
 
 	/* Right now we only support 1 GSM instance */
+<<<<<<< HEAD
 	if (iface != gsm.iface) {
+=======
+	if (iface != modem.iface) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 
 	if (mgmt_event == NET_EVENT_IF_DOWN) {
 		LOG_INF("GSM network interface down");
 		/* raise semaphore to indicate the interface is down */
+<<<<<<< HEAD
 		k_sem_give(&gsm.sem_if_down);
+=======
+		k_sem_give(&modem.sem_if_down);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 }
@@ -1370,5 +1516,9 @@ static int gsm_init(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 DEVICE_DT_DEFINE(DT_DRV_INST(0), gsm_init, NULL, &gsm, NULL,
+=======
+DEVICE_DT_DEFINE(DT_DRV_INST(0), gsm_init, NULL, &modem, NULL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		 POST_KERNEL, CONFIG_MODEM_GSM_INIT_PRIORITY, NULL);

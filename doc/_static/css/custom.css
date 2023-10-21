@@ -544,6 +544,25 @@ a.internal:visited code.literal {
     color: var(--admonition-tip-title-color);
 }
 
+<<<<<<< HEAD
+=======
+/* Admonition tweaks - sphinx_togglebutton */
+
+.rst-content .admonition.toggle {
+    overflow: visible;
+}
+
+.rst-content .admonition.toggle button {
+    display: inline-flex;
+    color: var(--admonition-note-title-color);
+}
+
+.rst-content .admonition.toggle .tb-icon {
+    height: 1em;
+    width: 1em;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Keyboard shortcuts tweaks */
 kbd, .kbd,
 .rst-content :not(dl.option-list) > :not(dt):not(kbd):not(.kbd) > kbd,

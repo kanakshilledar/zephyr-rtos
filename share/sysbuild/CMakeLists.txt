@@ -24,6 +24,7 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE} COMPONENTS ${zephyr_modules
 
 project(sysbuild LANGUAGES)
 
+<<<<<<< HEAD
 # Global list of images enabled in this multi image build system.
 set(IMAGES)
 
@@ -87,6 +88,19 @@ endwhile()
 sysbuild_module_call(PRE_CMAKE MODULES ${SYSBUILD_MODULE_NAMES} IMAGES ${IMAGES})
 foreach(image ${IMAGES})
   include(image_config.cmake)
+=======
+get_filename_component(APP_DIR  ${APP_DIR} ABSOLUTE)
+get_filename_component(app_name ${APP_DIR} NAME)
+set(DEFAULT_IMAGE "${app_name}")
+
+# This is where all Zephyr applications are added to the multi-image build.
+sysbuild_add_subdirectory(images)
+
+get_property(IMAGES GLOBAL PROPERTY sysbuild_images)
+sysbuild_module_call(PRE_CMAKE MODULES ${SYSBUILD_MODULE_NAMES} IMAGES ${IMAGES})
+sysbuild_images_order(IMAGES_CONFIGURATION_ORDER CONFIGURE IMAGES ${IMAGES})
+foreach(image ${IMAGES_CONFIGURATION_ORDER})
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   ExternalZephyrProject_Cmake(APPLICATION ${image})
 endforeach()
 sysbuild_module_call(POST_CMAKE MODULES ${SYSBUILD_MODULE_NAMES} IMAGES ${IMAGES})

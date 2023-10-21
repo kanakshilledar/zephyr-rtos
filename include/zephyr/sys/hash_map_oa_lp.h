@@ -6,6 +6,10 @@
 
 /**
  * @file
+<<<<<<< HEAD
+=======
+ * @ingroup hashmap_implementations
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Open-Addressing / Linear Probe Hashmap Implementation
  *
  * @note Enable with @kconfig{CONFIG_SYS_HASH_MAP_OA_LP}

@@ -9,6 +9,10 @@
 #include <zephyr/drivers/adc/ads114s0x.h>
 #include <zephyr/drivers/spi.h>
 #include <zephyr/drivers/gpio.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/adc/ads114s0x_adc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/__assert.h>
@@ -16,6 +20,11 @@
 #include <zephyr/sys/util.h>
 
 #define ADC_CONTEXT_USES_KERNEL_TIMER 1
+<<<<<<< HEAD
+=======
+#define ADC_CONTEXT_WAIT_FOR_COMPLETION_TIMEOUT                                                    \
+	K_MSEC(CONFIG_ADC_ADS114S0X_WAIT_FOR_COMPLETION_TIMEOUT_MS)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "adc_context.h"
 
 LOG_MODULE_REGISTER(ads114s0x, CONFIG_ADC_LOG_LEVEL);
@@ -594,6 +603,11 @@ static int ads114s0x_channel_setup(const struct device *dev,
 	int result;
 	enum ads114s0x_register register_addresses[6];
 	uint8_t values[ARRAY_SIZE(register_addresses)];
+<<<<<<< HEAD
+=======
+	uint16_t acquisition_time_value = ADC_ACQ_TIME_VALUE(channel_cfg->acquisition_time);
+	uint16_t acquisition_time_unit = ADC_ACQ_TIME_UNIT(channel_cfg->acquisition_time);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ADS114S0X_REGISTER_INPMUX_SET_DEFAULTS(gain);
 	ADS114S0X_REGISTER_REF_SET_DEFAULTS(reference_control);
@@ -607,6 +621,26 @@ static int ads114s0x_channel_setup(const struct device *dev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+=======
+	/* The ADS114 uses samples per seconds units with the lowest being 2.5SPS
+	 * and with acquisition_time only having 14b for time, this will not fit
+	 * within here for microsecond units. Use Tick units and allow the user to
+	 * specify the ODR directly.
+	 */
+	if (channel_cfg->acquisition_time != ADC_ACQ_TIME_DEFAULT &&
+	    acquisition_time_unit != ADC_ACQ_TIME_TICKS) {
+		LOG_ERR("invalid acquisition time %i", channel_cfg->acquisition_time);
+		return -EINVAL;
+	}
+
+	if (channel_cfg->acquisition_time == ADC_ACQ_TIME_DEFAULT) {
+		ADS114S0X_REGISTER_DATARATE_DR_SET(data_rate, ADS114S0X_CONFIG_DR_20);
+	} else {
+		ADS114S0X_REGISTER_DATARATE_DR_SET(data_rate, acquisition_time_value);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	switch (channel_cfg->reference) {
 	case ADC_REF_INTERNAL:
 		/* disable negative reference buffer */
@@ -922,7 +956,11 @@ static int ads114s0x_wait_data_ready(const struct device *dev)
 {
 	struct ads114s0x_data *data = dev->data;
 
+<<<<<<< HEAD
 	return k_sem_take(&data->data_ready_signal, K_FOREVER);
+=======
+	return k_sem_take(&data->data_ready_signal, ADC_CONTEXT_WAIT_FOR_COMPLETION_TIMEOUT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int ads114s0x_read_sample(const struct device *dev, uint16_t *buffer)

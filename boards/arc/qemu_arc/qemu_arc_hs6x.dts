@@ -10,7 +10,11 @@
 
 / {
 	model = "QEMU ARC HS";
+<<<<<<< HEAD
 	compatible = "qemu,archs";
+=======
+	compatible = "snps,qemu-archs";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	cpus {
 		#address-cells = <1>;

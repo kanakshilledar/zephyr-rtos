@@ -9,7 +9,11 @@
 
 #include <limits.h>
 
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/timer/system_timer.h>
 #include <zephyr/irq.h>
 #include <zephyr/sys_clock.h>

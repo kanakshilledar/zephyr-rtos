@@ -14,6 +14,11 @@
  */
 
 #include <errno.h>
+<<<<<<< HEAD
+=======
+#include <string.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/posix/fcntl.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/fdtable.h>
@@ -41,17 +46,35 @@ static struct fd_entry fdtable[CONFIG_POSIX_MAX_FDS] = {
 	{
 		/* STDIN */
 		.vtable = &stdinout_fd_op_vtable,
+<<<<<<< HEAD
 		.refcount = ATOMIC_INIT(1)
+=======
+		.refcount = ATOMIC_INIT(1),
+		.lock = Z_MUTEX_INITIALIZER(fdtable[0].lock),
+		.cond = Z_CONDVAR_INITIALIZER(fdtable[0].cond),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	},
 	{
 		/* STDOUT */
 		.vtable = &stdinout_fd_op_vtable,
+<<<<<<< HEAD
 		.refcount = ATOMIC_INIT(1)
+=======
+		.refcount = ATOMIC_INIT(1),
+		.lock = Z_MUTEX_INITIALIZER(fdtable[1].lock),
+		.cond = Z_CONDVAR_INITIALIZER(fdtable[1].cond),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	},
 	{
 		/* STDERR */
 		.vtable = &stdinout_fd_op_vtable,
+<<<<<<< HEAD
 		.refcount = ATOMIC_INIT(1)
+=======
+		.refcount = ATOMIC_INIT(1),
+		.lock = Z_MUTEX_INITIALIZER(fdtable[2].lock),
+		.cond = Z_CONDVAR_INITIALIZER(fdtable[2].cond),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	},
 #else
 	{
@@ -124,6 +147,33 @@ static int _check_fd(int fd)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ZTEST
+bool fdtable_fd_is_initialized(int fd)
+{
+	struct k_mutex ref_lock;
+	struct k_condvar ref_cond;
+
+	if (fd < 0 || fd >= ARRAY_SIZE(fdtable)) {
+		return false;
+	}
+
+	ref_lock = (struct k_mutex)Z_MUTEX_INITIALIZER(fdtable[fd].lock);
+	if (memcmp(&ref_lock, &fdtable[fd].lock, sizeof(ref_lock)) != 0) {
+		return false;
+	}
+
+	ref_cond = (struct k_condvar)Z_CONDVAR_INITIALIZER(fdtable[fd].cond);
+	if (memcmp(&ref_cond, &fdtable[fd].cond, sizeof(ref_cond)) != 0) {
+		return false;
+	}
+
+	return true;
+}
+#endif /* CONFIG_ZTEST */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void *z_get_fd_obj(int fd, const struct fd_op_vtable *vtable, int err)
 {
 	struct fd_entry *entry;

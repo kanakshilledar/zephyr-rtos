@@ -35,7 +35,11 @@ extern "C" {
 #include <fsl_common.h>
 #include <zephyr/device.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* !_ASMLANGUAGE */
 

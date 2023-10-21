@@ -50,6 +50,7 @@
 				reg = <0x2>;
 			};
 
+<<<<<<< HEAD
 			lp503x@3 {
 				compatible = "ti,lp503x";
 				reg = <0x3>;
@@ -69,6 +70,62 @@
 				compatible = "ti,tlc59108";
 				reg = <0x6>;
 			};
+=======
+			lp5009@3 {
+				compatible = "ti,lp5009";
+				reg = <0x3>;
+			};
+
+			lp5012@4 {
+				compatible = "ti,lp5012";
+				reg = <0x4>;
+			};
+
+			lp5018@5 {
+				compatible = "ti,lp5018";
+				reg = <0x5>;
+			};
+
+			lp5024@6 {
+				compatible = "ti,lp5024";
+				reg = <0x6>;
+			};
+
+			lp5030@7 {
+				compatible = "ti,lp5030";
+				reg = <0x7>;
+			};
+
+			lp5036@8 {
+				compatible = "ti,lp5036";
+				reg = <0x8>;
+			};
+
+			lp5562@9 {
+				compatible = "ti,lp5562";
+				reg = <0x9>;
+			};
+
+			lp5569@a {
+				compatible = "ti,lp5569";
+				reg = <0xa>;
+			};
+
+			pca9633@b {
+				compatible = "nxp,pca9633";
+				reg = <0xb>;
+			};
+
+			tlc59108@c {
+				compatible = "ti,tlc59108";
+				reg = <0xc>;
+			};
+
+			ncp5623@d {
+				compatible = "onnn,ncp5623";
+				reg = <0xd>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

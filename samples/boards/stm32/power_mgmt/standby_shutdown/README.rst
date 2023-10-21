@@ -30,7 +30,11 @@ Building and Running
 Build and flash standby_shutdown as follows, changing ``nucleo_L476RG`` for your board:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/samples/boards/stm32/power_mgmt/standby_shutdown
+=======
+   :zephyr-app: samples/boards/stm32/power_mgmt/standby_shutdown
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: nucleo_L476RG
    :goals: build flash
    :compact:

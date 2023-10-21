@@ -270,8 +270,19 @@ static int send_response(struct net_context *ctx,
 	if (IS_ENABLED(CONFIG_NET_IPV4) && qtype == DNS_RR_TYPE_A) {
 		const struct in_addr *addr;
 
+<<<<<<< HEAD
 		addr = net_if_ipv4_select_src_addr(iface,
 			family == AF_INET ? (struct in_addr *)src_addr : NULL);
+=======
+		if (family == AF_INET) {
+			addr = net_if_ipv4_select_src_addr(iface, (struct in_addr *)src_addr);
+		} else {
+			struct sockaddr_in tmp_addr;
+
+			create_ipv4_addr(&tmp_addr);
+			addr = net_if_ipv4_select_src_addr(iface, &tmp_addr.sin_addr);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		ret = create_answer(ctx, query, qtype, sizeof(struct in_addr), (uint8_t *)addr);
 		if (ret != 0) {
@@ -280,8 +291,19 @@ static int send_response(struct net_context *ctx,
 	} else if (IS_ENABLED(CONFIG_NET_IPV6) && qtype == DNS_RR_TYPE_AAAA) {
 		const struct in6_addr *addr;
 
+<<<<<<< HEAD
 		addr = net_if_ipv6_select_src_addr(iface,
 			family == AF_INET6 ? (struct in6_addr *)src_addr : NULL);
+=======
+		if (family == AF_INET6) {
+			addr = net_if_ipv6_select_src_addr(iface, (struct in6_addr *)src_addr);
+		} else {
+			struct sockaddr_in6 tmp_addr;
+
+			create_ipv6_addr(&tmp_addr);
+			addr = net_if_ipv6_select_src_addr(iface, &tmp_addr.sin6_addr);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		ret = create_answer(ctx, query, qtype, sizeof(struct in6_addr), (uint8_t *)addr);
 		if (ret != 0) {
@@ -322,7 +344,10 @@ static void send_sd_response(struct net_context *ctx,
 			     struct net_buf *result)
 {
 	int ret;
+<<<<<<< HEAD
 	const struct dns_sd_rec *record;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* filter must be zero-initialized for "wildcard" port */
 	struct dns_sd_rec filter = {0};
 	struct sockaddr dst;
@@ -354,9 +379,12 @@ static void send_sd_response(struct net_context *ctx,
 	label[2] = proto_buf;
 	label[3] = domain_buf;
 
+<<<<<<< HEAD
 	/* This actually is used but the compiler doesn't see that */
 	ARG_UNUSED(record);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret = setup_dst_addr(ctx, family, &dst, &dst_len);
 	if (ret < 0) {
 		NET_DBG("unable to set up the response address");
@@ -365,14 +393,36 @@ static void send_sd_response(struct net_context *ctx,
 
 	if (IS_ENABLED(CONFIG_NET_IPV4)) {
 		/* Look up the local IPv4 address */
+<<<<<<< HEAD
 		addr4 = net_if_ipv4_select_src_addr(iface,
 			family == AF_INET ? (struct in_addr *)src_addr : NULL);
+=======
+		if (family == AF_INET) {
+			addr4 = net_if_ipv4_select_src_addr(iface, (struct in_addr *)src_addr);
+		} else {
+			struct sockaddr_in tmp_addr;
+
+			create_ipv4_addr(&tmp_addr);
+			addr4 = net_if_ipv4_select_src_addr(iface, &tmp_addr.sin_addr);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (IS_ENABLED(CONFIG_NET_IPV6)) {
 		/* Look up the local IPv6 address */
+<<<<<<< HEAD
 		addr6 = net_if_ipv6_select_src_addr(iface,
 			family == AF_INET6 ? (struct in6_addr *)src_addr : NULL);
+=======
+		if (family == AF_INET6) {
+			addr6 = net_if_ipv6_select_src_addr(iface, (struct in6_addr *)src_addr);
+		} else {
+			struct sockaddr_in6 tmp_addr;
+
+			create_ipv6_addr(&tmp_addr);
+			addr6 = net_if_ipv6_select_src_addr(iface, &tmp_addr.sin6_addr);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	ret = dns_sd_query_extract(dns_msg->msg,

@@ -11,7 +11,11 @@
 
 / {
 	model = "Laird Connectivity BL5340 (nRF5340) Network";
+<<<<<<< HEAD
 	compatible = "lairdconnectivity,bl5340-dvk-cpunet";
+=======
+	compatible = "lairdconnect,bl5340-dvk-cpunet";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	chosen {
 		zephyr,console = &uart0;

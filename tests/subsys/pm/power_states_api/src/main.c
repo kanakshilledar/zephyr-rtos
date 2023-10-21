@@ -21,11 +21,19 @@ static enum pm_state wrong_states[] = {PM_STATE_SUSPEND_TO_DISK,
 ZTEST(power_states_1cpu, test_power_states)
 {
 	enum pm_state dts_states[] =
+<<<<<<< HEAD
 		PM_STATE_LIST_FROM_DT_CPU(DT_NODELABEL(power_states));
 	struct pm_state_info dts_infos[] =
 		PM_STATE_INFO_LIST_FROM_DT_CPU(DT_NODELABEL(power_states));
 	uint32_t dts_states_len =
 		DT_NUM_CPU_POWER_STATES(DT_NODELABEL(power_states));
+=======
+		PM_STATE_LIST_FROM_DT_CPU(DT_NODELABEL(cpu0));
+	struct pm_state_info dts_infos[] =
+		PM_STATE_INFO_LIST_FROM_DT_CPU(DT_NODELABEL(cpu0));
+	uint32_t dts_states_len =
+		DT_NUM_CPU_POWER_STATES(DT_NODELABEL(cpu0));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	zassert_true(ARRAY_SIZE(states) == dts_states_len,
 		     "Invalid number of pm states");

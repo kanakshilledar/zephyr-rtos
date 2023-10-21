@@ -38,11 +38,19 @@ struct bt_pub_key_cb {
  *  Compare the Public key to the Bluetooth specification defined debug public
  *  key.
  *
+<<<<<<< HEAD
  *  @param pub_key The public key to compare.
  *
  *  @return True if the public key is the debug public key.
  */
 bool bt_pub_key_is_debug(uint8_t *pub_key);
+=======
+ *  @param cmp_pub_key The public key to compare.
+ *
+ *  @return True if the public key is the debug public key.
+ */
+bool bt_pub_key_is_debug(uint8_t *cmp_pub_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*  @brief Generate a new Public Key.
  *

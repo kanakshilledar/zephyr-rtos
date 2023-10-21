@@ -31,6 +31,7 @@
 #define NCT38XX_REG_ALERT_VENDOR_DEFINDED_ALERT      15
 #define NCT38XX_REG_ALERT_MASK_VENDOR_DEFINDED_ALERT 15
 
+<<<<<<< HEAD
 /* Driver config */
 struct gpio_nct38xx_config {
 	/* I2C device */
@@ -135,6 +136,8 @@ static inline int nct38xx_reg_update(const struct device *dev, uint8_t reg_addr,
 	return nct38xx_reg_write_byte(dev, reg_addr, new_val);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Dispatch GPIO port ISR
  *

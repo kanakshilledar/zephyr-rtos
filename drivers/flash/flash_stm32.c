@@ -45,6 +45,18 @@ static const struct flash_parameters flash_stm32_parameters = {
 
 static int flash_stm32_write_protection(const struct device *dev, bool enable);
 
+<<<<<<< HEAD
+=======
+bool __weak flash_stm32_valid_range(const struct device *dev, off_t offset,
+				    uint32_t len, bool write)
+{
+	if (write && !flash_stm32_valid_write(offset, len)) {
+		return false;
+	}
+	return flash_stm32_range_exists(dev, offset, len);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int __weak flash_stm32_check_configuration(void)
 {
 	return 0;
@@ -269,8 +281,12 @@ static int flash_stm32_write_protection(const struct device *dev, bool enable)
 			regs->NSKEYR = FLASH_KEY2;
 		}
 	}
+<<<<<<< HEAD
 #else	/* FLASH_SECURITY_SEC | FLASH_SECURITY_NA */
 #if defined(FLASH_CR_LOCK)
+=======
+#elif defined(FLASH_CR_LOCK)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (enable) {
 		regs->CR |= FLASH_CR_LOCK;
 	} else {
@@ -296,7 +312,10 @@ static int flash_stm32_write_protection(const struct device *dev, bool enable)
 			rc = -EIO;
 		}
 	}
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* FLASH_SECURITY_NS */
 
 	if (enable) {
@@ -357,6 +376,16 @@ int flash_stm32_option_bytes_lock(const struct device *dev, bool enable)
 		regs->OPTKEYR = FLASH_OPTKEY1;
 		regs->OPTKEYR = FLASH_OPTKEY2;
 	}
+<<<<<<< HEAD
+=======
+#elif defined(FLASH_NSCR1_OPTLOCK) /* WBA */
+	if (enable) {
+		regs->NSCR1 |= FLASH_NSCR1_OPTLOCK;
+	} else if (regs->NSCR1 & FLASH_NSCR1_OPTLOCK) {
+		regs->OPTKEYR = FLASH_OPTKEY1;
+		regs->OPTKEYR = FLASH_OPTKEY2;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	/* Lock CR/PECR/NSCR register if needed. */
 	if (enable) {

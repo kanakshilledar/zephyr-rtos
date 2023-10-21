@@ -8,13 +8,24 @@ common:
     - littlefs
 tests:
   filesystem.multifs:
+<<<<<<< HEAD
+=======
+    extra_args:
+      - EXTRA_DTC_OVERLAY_FILE="ramdisk.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow:
       - native_posix
       - qemu_x86
     integration_platforms:
       - native_posix
   filesystem.fs_shell:
+<<<<<<< HEAD
     extra_args: CONF_FILE="prj_fs_shell.conf"
+=======
+    extra_args:
+      - CONF_FILE="prj_fs_shell.conf"
+      - EXTRA_DTC_OVERLAY_FILE="ramdisk.overlay"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow:
       - native_posix
       - qemu_x86

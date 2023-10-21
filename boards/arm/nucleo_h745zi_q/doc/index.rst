@@ -240,7 +240,11 @@ You should see the following message on the console:
 Similarly, you can build and flash samples on the M4 target. For this, please
 take care of the resource sharing (UART port used for console for instance).
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application on M4 core.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application on M4 core.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky

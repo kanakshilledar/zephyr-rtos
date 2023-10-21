@@ -26,8 +26,11 @@ struct k_pipe *test_pipes[] = {&PIPE_NOBUFF, &PIPE_SMALLBUFF, &PIPE_BIGBUFF};
 char sline[SLINE_LEN + 1];
 const char newline[] = "\n";
 
+<<<<<<< HEAD
 FILE *output_file;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Time in timer cycles necessary to read time.
  * Used for correction in time measurements.
@@ -72,6 +75,7 @@ int kbhit(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 
 /**
  *
@@ -92,6 +96,8 @@ void init_output(int *continuously, int *autorun)
 	output_file = stdout;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  *
  * @brief Close output for the test
@@ -113,6 +119,7 @@ void output_close(void)
  */
 int main(void)
 {
+<<<<<<< HEAD
 	int autorun = 0, continuously = 0;
 
 	init_output(&continuously, &autorun);
@@ -125,6 +132,18 @@ int main(void)
 					 "M E A S U R E M E N T S  |  nsec    |\n",
 					 output_file);
 		PRINT_STRING(dashline, output_file);
+=======
+	int continuously = 0;
+
+	bench_test_init();
+
+	PRINT_STRING(newline);
+	do {
+		PRINT_STRING(dashline);
+		PRINT_STRING("|          S I M P L E   S E R V I C E    "
+			     "M E A S U R E M E N T S  |  nsec    |\n");
+		PRINT_STRING(dashline);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		queue_test();
 		sema_test();
 		mutex_test();
@@ -132,10 +151,16 @@ int main(void)
 		mailbox_test();
 		pipe_test();
 		PRINT_STRING("|         END OF TESTS                     "
+<<<<<<< HEAD
 					 "                                   |\n",
 					 output_file);
 		PRINT_STRING(dashline, output_file);
 		PRINT_STRING("PROJECT EXECUTION SUCCESSFUL\n", output_file);
+=======
+			     "                                   |\n");
+		PRINT_STRING(dashline);
+		PRINT_STRING("PROJECT EXECUTION SUCCESSFUL\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		TC_PRINT_RUNID;
 	} while (continuously && !kbhit());
 

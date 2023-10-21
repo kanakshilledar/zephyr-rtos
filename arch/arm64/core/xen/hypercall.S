@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 /*
  * Copyright (c) 2021 EPAM Systems
  *
  * SPDX-License-Identifier: Apache-2.0
+=======
+/* SPDX-License-Identifier: Apache-2.0 */
+/*
+ * Copyright (c) 2021-2023 EPAM Systems
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 
 #include <zephyr/toolchain.h>
@@ -24,3 +30,10 @@ HYPERCALL(sched_op);
 HYPERCALL(event_channel_op);
 HYPERCALL(hvm_op);
 HYPERCALL(memory_op);
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_XEN_DOM0
+HYPERCALL(domctl);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

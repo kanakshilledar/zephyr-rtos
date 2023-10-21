@@ -17,6 +17,10 @@ LOG_MODULE_REGISTER(net_icmpv6, CONFIG_NET_ICMPV6_LOG_LEVEL);
 #include <zephyr/net/net_core.h>
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/net/net_if.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/icmp.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "net_private.h"
 #include "icmpv6.h"
 #include "ipv6.h"
@@ -24,8 +28,11 @@ LOG_MODULE_REGISTER(net_icmpv6, CONFIG_NET_ICMPV6_LOG_LEVEL);
 
 #define PKT_WAIT_TIME K_SECONDS(1)
 
+<<<<<<< HEAD
 static sys_slist_t handlers;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 const char *net_icmpv6_type2str(int icmpv6_type)
 {
 	switch (icmpv6_type) {
@@ -58,6 +65,7 @@ const char *net_icmpv6_type2str(int icmpv6_type)
 	return "?";
 }
 
+<<<<<<< HEAD
 void net_icmpv6_register_handler(struct net_icmpv6_handler *handler)
 {
 	sys_slist_prepend(&handlers, &handler->node);
@@ -68,6 +76,8 @@ void net_icmpv6_unregister_handler(struct net_icmpv6_handler *handler)
 	sys_slist_find_and_remove(&handlers, &handler->node);
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int net_icmpv6_finalize(struct net_pkt *pkt)
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(icmp_access,
@@ -105,6 +115,7 @@ int net_icmpv6_create(struct net_pkt *pkt, uint8_t icmp_type, uint8_t icmp_code)
 	return net_pkt_set_data(pkt, &icmp_access);
 }
 
+<<<<<<< HEAD
 static
 enum net_verdict icmpv6_handle_echo_request(struct net_pkt *pkt,
 					    struct net_ipv6_hdr *ip_hdr,
@@ -114,6 +125,20 @@ enum net_verdict icmpv6_handle_echo_request(struct net_pkt *pkt,
 	const struct in6_addr *src;
 	int16_t payload_len;
 
+=======
+static int icmpv6_handle_echo_request(struct net_icmp_ctx *ctx,
+				      struct net_pkt *pkt,
+				      struct net_icmp_ip_hdr *hdr,
+				      struct net_icmp_hdr *icmp_hdr,
+				      void *user_data)
+{
+	struct net_pkt *reply = NULL;
+	struct net_ipv6_hdr *ip_hdr = hdr->ipv6;
+	const struct in6_addr *src;
+	int16_t payload_len;
+
+	ARG_UNUSED(user_data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ARG_UNUSED(icmp_hdr);
 
 	NET_DBG("Received Echo Request from %s to %s",
@@ -176,9 +201,13 @@ enum net_verdict icmpv6_handle_echo_request(struct net_pkt *pkt,
 
 	net_stats_update_icmp_sent(net_pkt_iface(reply));
 
+<<<<<<< HEAD
 	net_pkt_unref(pkt);
 
 	return NET_OK;
+=======
+	return 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 drop:
 	if (reply) {
@@ -187,7 +216,11 @@ drop:
 
 	net_stats_update_icmp_drop(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	return NET_DROP;
+=======
+	return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int net_icmpv6_send_error(struct net_pkt *orig, uint8_t type, uint8_t code,
@@ -217,7 +250,11 @@ int net_icmpv6_send_error(struct net_pkt *orig, uint8_t type, uint8_t code,
 
 		icmp_hdr = (struct net_icmp_hdr *)net_pkt_get_data(
 							orig, &icmpv6_access);
+<<<<<<< HEAD
 		if (!icmp_hdr || icmp_hdr->code < 128) {
+=======
+		if (!icmp_hdr || icmp_hdr->type < 128) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* We must not send ICMP errors back */
 			err = -EINVAL;
 			goto drop_no_pkt;
@@ -336,6 +373,7 @@ drop_no_pkt:
 	return err;
 }
 
+<<<<<<< HEAD
 int net_icmpv6_send_echo_request(struct net_if *iface,
 				 struct in6_addr *dst,
 				 uint16_t identifier,
@@ -422,13 +460,19 @@ drop:
 	return ret;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum net_verdict net_icmpv6_input(struct net_pkt *pkt,
 				  struct net_ipv6_hdr *ip_hdr)
 {
 	NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(icmp_access,
 					      struct net_icmp_hdr);
 	struct net_icmp_hdr *icmp_hdr;
+<<<<<<< HEAD
 	struct net_icmpv6_handler *cb;
+=======
+	int ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	icmp_hdr = (struct net_icmp_hdr *)net_pkt_get_data(pkt, &icmp_access);
 	if (!icmp_hdr) {
@@ -452,18 +496,31 @@ enum net_verdict net_icmpv6_input(struct net_pkt *pkt,
 
 	net_stats_update_icmp_recv(net_pkt_iface(pkt));
 
+<<<<<<< HEAD
 	SYS_SLIST_FOR_EACH_CONTAINER(&handlers, cb, node) {
 		if (cb->type == icmp_hdr->type &&
 		    (cb->code == icmp_hdr->code || cb->code == 0U)) {
 			return cb->handler(pkt, ip_hdr, icmp_hdr);
 		}
 	}
+=======
+	ret = net_icmp_call_ipv6_handlers(pkt, ip_hdr, icmp_hdr);
+	if (ret < 0) {
+		NET_ERR("ICMPv6 handling failure (%d)", ret);
+	}
+
+	net_pkt_unref(pkt);
+
+	return NET_OK;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 drop:
 	net_stats_update_icmp_drop(net_pkt_iface(pkt));
 
 	return NET_DROP;
 }
 
+<<<<<<< HEAD
 static struct net_icmpv6_handler echo_request_handler = {
 	.type = NET_ICMPV6_ECHO_REQUEST,
 	.code = 0,
@@ -473,4 +530,16 @@ static struct net_icmpv6_handler echo_request_handler = {
 void net_icmpv6_init(void)
 {
 	net_icmpv6_register_handler(&echo_request_handler);
+=======
+void net_icmpv6_init(void)
+{
+	static struct net_icmp_ctx ctx;
+	int ret;
+
+	ret = net_icmp_init_ctx(&ctx, NET_ICMPV6_ECHO_REQUEST, 0, icmpv6_handle_echo_request);
+	if (ret < 0) {
+		NET_ERR("Cannot register %s handler (%d)", STRINGIFY(NET_ICMPV6_ECHO_REQUEST),
+			ret);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }

@@ -1,5 +1,10 @@
 common:
+<<<<<<< HEAD
   tags: tfm
+=======
+  tags:
+    - trusted-firmware-m
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   platform_allow:
     - mps2_an521_ns
     - v2m_musca_s1_ns
@@ -22,4 +27,10 @@ sample:
 
 tests:
   sample.tfm.secure_partition:
+<<<<<<< HEAD
     tags: tfm
+=======
+    tags:
+      - trusted-firmware-m
+      - mcuboot
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

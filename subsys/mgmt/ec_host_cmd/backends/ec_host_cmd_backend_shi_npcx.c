@@ -349,7 +349,11 @@ static void shi_npcx_handle_host_package(const struct device *dev)
 	data->out_msg[0] = EC_SHI_FRAME_START;
 
 	/* Wake-up the HC handler thread */
+<<<<<<< HEAD
 	k_sem_give(&data->rx_ctx->handler_owns);
+=======
+	ec_host_cmd_rx_notify();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int shi_npcx_host_request_expected_size(const struct ec_host_cmd_request_header *r)
@@ -687,7 +691,13 @@ static void shi_npcx_reset_prepare(const struct device *dev)
 	data->tx_msg = data->out_msg;
 	data->rx_buf = inst->IBUF;
 	data->tx_buf = inst->OBUF;
+<<<<<<< HEAD
 	data->rx_ctx->len = 0;
+=======
+	if (data->rx_ctx) {
+		data->rx_ctx->len = 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	data->sz_sending = 0;
 	data->sz_request = 0;
 	data->sz_response = 0;

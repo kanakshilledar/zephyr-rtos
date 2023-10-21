@@ -184,7 +184,11 @@ Additional information about building applications can be found in the
 Build Blinky
 ============
 
+<<<<<<< HEAD
 Let's build the :ref:`blinky-sample` sample application.
+=======
+Let's build the :zephyr:code-sample:`blinky` sample application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Zephyr applications are built to run on specific hardware, called a
 "board"\ [#board_misnomer]_. We'll use the Phytec :ref:`reel_board

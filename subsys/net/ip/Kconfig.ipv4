@@ -82,6 +82,17 @@ config NET_DHCPV4_OPTION_CALLBACKS
 	  can be added. These can be used to support otherwise
 	  DHCP options not used by the rest of the system.
 
+<<<<<<< HEAD
+=======
+config NET_DHCPV4_ACCEPT_UNICAST
+	bool "Accept unicast DHCPv4 traffic"
+	depends on NET_DHCPV4
+	default y
+	help
+	  If set, the network stack will accept unicast DHCPv4 responses from
+	  servers, before the assigned address is configured on the interface.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config NET_IPV4_AUTO
 	bool "IPv4 autoconfiguration [EXPERIMENTAL]"
 	depends on NET_ARP

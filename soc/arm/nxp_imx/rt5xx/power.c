@@ -16,8 +16,11 @@ LOG_MODULE_DECLARE(soc, CONFIG_SOC_LOG_LEVEL);
 #define EXCLUDE_FROM_DEEPSLEEP ((const uint32_t[]) \
 					DT_PROP_OR(NODE_ID, deep_sleep_config, {}))
 
+<<<<<<< HEAD
 #define EXCLUDE_FROM_DEEP_POWERDOWN ((const uint32_t[]){0, 0, 0, 0})
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static uint32_t isp_pin[3];
 
 /* System clock frequency. */
@@ -45,7 +48,11 @@ __ramfunc void restore_deepsleep_pin_config(void)
 }
 
 /* Invoke Low Power/System Off specific Tasks */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -71,10 +78,13 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		POWER_EnterDeepSleep(EXCLUDE_FROM_DEEPSLEEP);
 		restore_deepsleep_pin_config();
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		set_deepsleep_pin_config();
 		POWER_EnterDeepPowerDown(EXCLUDE_FROM_DEEP_POWERDOWN);
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power state %u", state);
 		break;
@@ -82,7 +92,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(state);
 	ARG_UNUSED(substate_id);

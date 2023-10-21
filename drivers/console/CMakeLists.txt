@@ -1,5 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header_ifdef(
+  CONFIG_UART_MUX
+  ${ZEPHYR_BASE}/include/zephyr/drivers/console/uart_mux.h
+)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library()
 
 zephyr_library_sources_ifdef(CONFIG_GSM_MUX gsm_mux.c)

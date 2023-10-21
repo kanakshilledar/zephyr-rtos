@@ -76,3 +76,11 @@ properties:
     description: |
       Chip select hold time setting, see TRF for SOC for details of
       timing applied.
+<<<<<<< HEAD
+=======
+
+  line-idle-low:
+    type: boolean
+    description: |
+      Default MISO and MOSI pins GPIO level when idle. Defaults to high by default.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

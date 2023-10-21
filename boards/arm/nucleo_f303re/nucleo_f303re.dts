@@ -8,6 +8,11 @@
 #include <st/f3/stm32f303Xe.dtsi>
 #include <st/f3/stm32f303r(d-e)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include "st_morpho_connector.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32F303RE-NUCLEO board";
@@ -21,7 +26,11 @@
 		zephyr,canbus = &can1;
 	};
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_2: led_2 {
 			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
@@ -34,6 +43,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

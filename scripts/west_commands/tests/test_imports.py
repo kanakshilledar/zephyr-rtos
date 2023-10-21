@@ -27,9 +27,17 @@ def test_runner_imports():
                     'intel_adsp',
                     'intel_cyclonev',
                     'jlink',
+<<<<<<< HEAD
                     'mdb-nsim',
                     'mdb-hw',
                     'misc-flasher',
+=======
+                    'linkserver',
+                    'mdb-nsim',
+                    'mdb-hw',
+                    'misc-flasher',
+                    'native_gdb',
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                     'nios2',
                     'nrfjprog',
                     'nrfutil',

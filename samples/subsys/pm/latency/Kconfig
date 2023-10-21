@@ -8,3 +8,12 @@ endmenu
 module = APP
 module-str = Application
 source "subsys/logging/Kconfig.template.log_config"
+<<<<<<< HEAD
+=======
+
+
+config APP_PROVIDE_PM_HOOKS
+	bool "Application provides PM hooks"
+	default y
+	select HAS_PM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

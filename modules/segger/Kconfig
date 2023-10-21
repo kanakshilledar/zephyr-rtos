@@ -12,6 +12,10 @@ config HAS_SEGGER_RTT
 config USE_SEGGER_RTT
 	bool "SEGGER RTT libraries."
 	depends on HAS_SEGGER_RTT
+<<<<<<< HEAD
+=======
+	select STM32_ENABLE_DEBUG_SLEEP_STOP if SOC_FAMILY_STM32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable Segger J-Link RTT libraries for platforms that support it.
 	  Selection of this option enables use of RTT for various subsystems.
@@ -38,6 +42,10 @@ config SEGGER_RTT_BUFFER_SIZE_UP
 
 config SEGGER_RTT_BUFFER_SIZE_DOWN
 	int "Size of the buffer for terminal input of target, from host"
+<<<<<<< HEAD
+=======
+	default 32 if SHELL_BACKEND_RTT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 16
 
 config SEGGER_RTT_PRINTF_BUFFER_SIZE

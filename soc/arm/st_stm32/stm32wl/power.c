@@ -28,7 +28,11 @@ LOG_MODULE_DECLARE(soc, CONFIG_SOC_LOG_LEVEL);
 #endif
 
 /* Invoke Low Power/System Off specific Tasks */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	switch (state) {
 	case PM_STATE_SUSPEND_TO_IDLE:
@@ -51,6 +55,7 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		LL_LPM_EnableDeepSleep();
 		k_cpu_idle();
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		LL_PWR_ClearFlag_WU();
 		switch (substate_id) {
@@ -67,6 +72,8 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		LL_LPM_EnableDeepSleep();
 		k_cpu_idle();
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power state %u", state);
 		break;
@@ -74,7 +81,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -85,9 +96,12 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 		/* need to restore the clock */
 		stm32_clock_control_init(NULL);
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		/* Nothing to do. */
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power substate-id %u", state);
 		break;
@@ -104,12 +118,15 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 /* Initialize STM32 Power */
 static int stm32_power_init(void)
 {
+<<<<<<< HEAD
 
 #ifdef CONFIG_DEBUG
 	/* Enable the Debug Module during STOP mode */
 	LL_DBGMCU_EnableDBGStopMode();
 #endif /* CONFIG_DEBUG */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

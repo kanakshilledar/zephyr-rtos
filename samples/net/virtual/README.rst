@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _virtual_network_interface-sample:
 
 Virtual Network Interface Application
 #####################################
+=======
+.. zephyr:code-sample:: virtual-network-interface
+   :name: Virtual network interface
+   :relevant-api: virtual virtual_mgmt
+
+   Create a sample virtual network interface.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -9,11 +17,22 @@ Overview
 This sample application creates a sample virtual network interface for
 demonstrative purposes, it does not do anything useful here.
 There are total 4 network interfaces.
+<<<<<<< HEAD
 Ethernet network interface is providing the real network interface and
 all the virtual interfaces are running on top of it.
 On top of Ethernet interface there are two virtual network interfaces,
 one provides only IPv6 tunnel, and the other only IPv4. These two tunnels
 are provided by IPIP tunnel.
+=======
+
+Ethernet network interface is providing the real network interface and
+all the virtual interfaces are running on top of it.
+
+On top of Ethernet interface there are two virtual network interfaces,
+one provides only IPv6 tunnel, and the other only IPv4. These two tunnels
+are provided by IPIP tunnel.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 The sample provides tunnel interface which runs on top of the IPv6 tunnel.
 
 The source code for this sample application can be found at:

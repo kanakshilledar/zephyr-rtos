@@ -3,15 +3,32 @@ common:
     - native_posix
 
 tests:
+<<<<<<< HEAD
   logging.log_output:
+=======
+  logging.output:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_output
       - logging
     extra_configs:
       - CONFIG_LOG_TIMESTAMP_64BIT=n
+<<<<<<< HEAD
   logging.log_output_ts64:
+=======
+  logging.output.ts64:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_output
       - logging
     extra_configs:
       - CONFIG_LOG_TIMESTAMP_64BIT=y
+<<<<<<< HEAD
+=======
+  logging.output.thread_id:
+    tags:
+      - log_output
+      - logging
+    extra_configs:
+      - CONFIG_LOG_THREAD_ID_PREFIX=y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

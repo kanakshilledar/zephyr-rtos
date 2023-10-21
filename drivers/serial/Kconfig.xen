@@ -1,6 +1,10 @@
 # Xen hypervisor console via UART setup
 #
+<<<<<<< HEAD
 # Copyright (c) 2021 EPAM Systems
+=======
+# Copyright (c) 2021-2023 EPAM Systems
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -10,12 +14,17 @@ config UART_XEN_HVC
 	depends on DT_HAS_XEN_HVC_UART_ENABLED
 	select SERIAL_HAS_DRIVER
 	select SERIAL_SUPPORT_INTERRUPT
+<<<<<<< HEAD
 	depends on !XEN_INITIAL_DOMAIN
+=======
+	depends on XEN && !XEN_DOM0 && !XEN_DOM0LESS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable Xen ring buffer based hypervisor console driver. Used
 	  for Zephyr as unprivileged domain.
 
 config UART_XEN_HVC_CONSOLEIO
+<<<<<<< HEAD
 	bool "Xen hypervisor Dom0 console UART driver"
 	select SERIAL_HAS_DRIVER
 	depends on BOARD_XENVM
@@ -24,6 +33,18 @@ config UART_XEN_HVC_CONSOLEIO
 	help
 	  Enable Xen hypervisor console driver. Used for Zephyr as
 	  privileged domain (Dom0).
+=======
+	bool "Xen hypervisor consoleio UART driver"
+	select SERIAL_HAS_DRIVER
+	depends on XEN_DOM0 || XEN_DOM0LESS
+	default y
+	help
+	  Enable Xen hypervisor console driver. Used for Zephyr as
+	  privileged domain (Dom0) or for Zephyr DomU in Dom0less
+	  configuration. Dom0less configuration does not have
+	  privileged domain. Thus, there is no console daemon and Xen
+	  manages all domain outputs through the consoleio interface.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config XEN_HVC_INIT_PRIORITY
 	int "Xen hypervisor console init priority"
@@ -35,7 +56,10 @@ config XEN_HVC_INIT_PRIORITY
 
 config XEN_EARLY_CONSOLEIO
 	bool "Early printk/stdout through console_io Xen interface"
+<<<<<<< HEAD
 	depends on BOARD_XENVM
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	depends on UART_XEN_HVC
 	help
 	  Enable setting of console_io symbol hook for stdout and printk.

@@ -11,7 +11,11 @@
 
 / {
 	model = "IT82XX2 EV-Board";
+<<<<<<< HEAD
 	compatible = "riscv,it82xx2-evb";
+=======
+	compatible = "ite,it82xx2-evb";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	aliases {
 		i2c-0 = &i2c0;
@@ -108,13 +112,21 @@
 &uart1 {
 	status = "okay";
 	current-speed = <115200>;
+<<<<<<< HEAD
 	clock-frequency = <1804800>;
+=======
+	clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &uart2 {
 	status = "okay";
 	current-speed = <460800>;
+<<<<<<< HEAD
 	clock-frequency = <1804800>;
+=======
+	clock-frequency = <1843200>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &ite_uart1_wrapper {

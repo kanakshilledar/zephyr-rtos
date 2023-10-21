@@ -267,7 +267,11 @@ static int lldp_start(struct net_if *iface, uint32_t mgmt_event)
 enum net_verdict net_lldp_recv(struct net_if *iface, struct net_pkt *pkt)
 {
 	struct ethernet_context *ctx;
+<<<<<<< HEAD
 	net_lldp_recv_cb_t cb;
+=======
+	net_lldp_recv_cb_t recv_cb;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret;
 
 	ret = lldp_check_iface(iface);
@@ -282,15 +286,25 @@ enum net_verdict net_lldp_recv(struct net_if *iface, struct net_pkt *pkt)
 		return NET_DROP;
 	}
 
+<<<<<<< HEAD
 	cb = ctx->lldp[ret].cb;
 	if (cb) {
 		return cb(iface, pkt);
+=======
+	recv_cb = ctx->lldp[ret].cb;
+	if (recv_cb) {
+		return recv_cb(iface, pkt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return NET_DROP;
 }
 
+<<<<<<< HEAD
 int net_lldp_register_callback(struct net_if *iface, net_lldp_recv_cb_t cb)
+=======
+int net_lldp_register_callback(struct net_if *iface, net_lldp_recv_cb_t recv_cb)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct ethernet_context *ctx;
 	int ret;
@@ -307,12 +321,20 @@ int net_lldp_register_callback(struct net_if *iface, net_lldp_recv_cb_t cb)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ctx->lldp[ret].cb = cb;
+=======
+	ctx->lldp[ret].cb = recv_cb;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static void iface_event_handler(struct net_mgmt_event_callback *cb,
+=======
+static void iface_event_handler(struct net_mgmt_event_callback *evt_cb,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				uint32_t mgmt_event, struct net_if *iface)
 {
 	lldp_start(iface, mgmt_event);

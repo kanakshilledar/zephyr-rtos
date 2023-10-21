@@ -28,12 +28,21 @@ static int settings_direct_loader(const char *key, size_t len,
 	/* Handle the subtree if it is an exact key match. */
 	if (settings_name_next(key, NULL) == 0) {
 		size_t bytes_written = 0;
+<<<<<<< HEAD
 		ssize_t len = read_cb(cb_arg, &bytes_written,
 				      sizeof(bytes_written));
 
 		if (len != sizeof(ctx->bytes_written)) {
 			LOG_ERR("Unable to read bytes_written from storage");
 			return len;
+=======
+		ssize_t cb_len = read_cb(cb_arg, &bytes_written,
+				      sizeof(bytes_written));
+
+		if (cb_len != sizeof(ctx->bytes_written)) {
+			LOG_ERR("Unable to read bytes_written from storage");
+			return cb_len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Check that loaded progress is not outdated. */

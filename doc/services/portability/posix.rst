@@ -59,6 +59,10 @@ as POSIX.1-2017).
     POSIX_FILE_LOCKING,
     POSIX_SIGNALS,
     POSIX_SINGLE_PROCESS,
+<<<<<<< HEAD
+=======
+    POSIX_SPIN_LOCKS,yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     POSIX_THREADS_BASE,yes
     XSI_THREAD_MUTEX_EXT,yes
     XSI_THREADS_EXT,yes
@@ -84,25 +88,45 @@ Zephyr.
    :widths: 50,10
 
     _POSIX_BARRIERS,yes
+<<<<<<< HEAD
     _POSIX_CLOCK_SELECTION,
     _POSIX_FSYNC,
     _POSIX_MEMLOCK,
     _POSIX_MEMLOCK_RANGE,
     _POSIX_MONOTONIC_CLOCK,
+=======
+    _POSIX_CLOCK_SELECTION,yes
+    _POSIX_FSYNC,
+    _POSIX_MEMLOCK,
+    _POSIX_MEMLOCK_RANGE,
+    _POSIX_MONOTONIC_CLOCK,yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     _POSIX_NO_TRUNC,
     _POSIX_REALTIME_SIGNALS,
     _POSIX_SEMAPHORES,yes
     _POSIX_SHARED_MEMORY_OBJECTS,
+<<<<<<< HEAD
+=======
+    _POSIX_SPIN_LOCKS,yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     _POSIX_SYNCHRONIZED_IO,
     _POSIX_THREAD_ATTR_STACKADDR,yes
     _POSIX_THREAD_ATTR_STACKSIZE,yes
     _POSIX_THREAD_CPUTIME,
+<<<<<<< HEAD
     _POSIX_THREAD_PRIO_INHERIT,yes
+=======
+    _POSIX_THREAD_PRIO_INHERIT,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     _POSIX_THREAD_PRIO_PROTECT,
     _POSIX_THREAD_PRIORITY_SCHEDULING,yes
     _POSIX_THREAD_SPORADIC_SERVER,
     _POSIX_TIMEOUTS,
+<<<<<<< HEAD
     _POSIX_TIMERS,
+=======
+    _POSIX_TIMERS,yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     _POSIX2_C_DEV,
     _POSIX2_SW_DEV,
 
@@ -138,10 +162,17 @@ multiple processes.
     pthread_barrier_destroy(),yes
     pthread_barrier_init(),yes
     pthread_barrier_wait(),yes
+<<<<<<< HEAD
     pthread_barrierattr_destroy(),
     pthread_barrierattr_getpshared(),
     pthread_barrierattr_init(),
     pthread_barrierattr_setpshared(),
+=======
+    pthread_barrierattr_destroy(),yes
+    pthread_barrierattr_getpshared(),yes
+    pthread_barrierattr_init(),yes
+    pthread_barrierattr_setpshared(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     pthread_cancel(),yes
     pthread_cleanup_pop(),
     pthread_cleanup_push(),
@@ -151,11 +182,19 @@ multiple processes.
     pthread_cond_signal(),yes
     pthread_cond_timedwait(),yes
     pthread_cond_wait(),yes
+<<<<<<< HEAD
     pthread_condattr_destroy(),
     pthread_condattr_init(),
     pthread_create(),yes
     pthread_detach(),yes
     pthread_equal(),
+=======
+    pthread_condattr_destroy(),yes
+    pthread_condattr_init(),yes
+    pthread_create(),yes
+    pthread_detach(),yes
+    pthread_equal(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     pthread_exit(),yes
     pthread_getspecific(),yes
     pthread_join(),yes
@@ -167,8 +206,13 @@ multiple processes.
     pthread_mutex_lock(),yes
     pthread_mutex_trylock(),yes
     pthread_mutex_unlock(),yes
+<<<<<<< HEAD
     pthread_mutexattr_destroy(),
     pthread_mutexattr_init(),
+=======
+    pthread_mutexattr_destroy(),yes
+    pthread_mutexattr_init(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     pthread_once(),yes
     pthread_self(),yes
     pthread_setcancelstate(),yes
@@ -353,7 +397,11 @@ process applications.
     getenv(),
     setenv(),
     sysconf(),
+<<<<<<< HEAD
     uname(),
+=======
+    uname(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     unsetenv()
 
 
@@ -374,16 +422,39 @@ required for error and event handling.
     pause(),
     raise(),
     sigaction(),
+<<<<<<< HEAD
     igaddset(),
     sigdelset(),
     sigemptyset(),
     sigfillset(),
     igismember(),
+=======
+    sigaddset(),yes
+    sigdelset(),yes
+    sigemptyset(),yes
+    sigfillset(),yes
+    sigismember(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     signal(),
     sigpending(),
     sigprocmask(),
     igsuspend(),
+<<<<<<< HEAD
     sigwait()
+=======
+    sigwait(),
+    strsignal(),yes
+
+.. csv-table:: POSIX_SPIN_LOCKS
+   :header: API, Supported
+   :widths: 50,10
+
+    pthread_spin_destroy(),yes
+    pthread_spin_init(),yes
+    pthread_spin_lock(),yes
+    pthread_spin_trylock(),yes
+    pthread_spin_unlock(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 POSIX_DEVICE_IO
@@ -430,7 +501,11 @@ POSIX_DEVICE_IO
     read(),yes
     scanf(),
     setbuf(),
+<<<<<<< HEAD
     etvbuf(),
+=======
+    setvbuf(),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     stderr,yes
     stdin,yes
     stdout,yes
@@ -440,3 +515,34 @@ POSIX_DEVICE_IO
     vprintf(),yes
     vscanf(),
     write(),yes
+<<<<<<< HEAD
+=======
+
+POSIX_TIMERS
+++++++++++++
+
+.. csv-table:: POSIX_TIMERS
+   :header: API, Supported
+   :widths: 50,10
+
+    clock_getres(),
+    clock_gettime(),yes
+    clock_settime(),yes
+    nanosleep(),yes
+    timer_create(),yes
+    timer_delete(),yes
+    timer_gettime(),yes
+    timer_getoverrun(),yes
+    timer_settime(),yes
+
+POSIX_CLOCK_SELECTION
++++++++++++++++++++++
+
+.. csv-table:: POSIX_CLOCK_SELECTION
+   :header: API, Supported
+   :widths: 50,10
+
+    pthread_condattr_getclock(),yes
+    pthread_condattr_setclock(),yes
+    clock_nanosleep(),yes
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

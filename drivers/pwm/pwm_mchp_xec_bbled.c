@@ -18,6 +18,10 @@
 #endif
 #include <zephyr/drivers/pinctrl.h>
 #include <zephyr/logging/log.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/pm/device.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <soc.h>
 
@@ -104,6 +108,10 @@ LOG_MODULE_REGISTER(pwmbbled_mchp_xec, CONFIG_PWM_LOG_LEVEL);
 #define XEC_PWM_BBLED_CLKSEL_1		XEC_PWM_BBLED_CLKSEL_PCR_SLOW
 #define XEC_PWM_BBLED_CLKSEL_2		XEC_PWM_BBLED_CLKSEL_AHB_48M
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct bbled_regs {
 	volatile uint32_t config;
 	volatile uint32_t limits;
@@ -118,12 +126,24 @@ struct bbled_regs {
 
 struct pwm_bbled_xec_config {
 	struct bbled_regs * const regs;
+<<<<<<< HEAD
+=======
+	const struct pinctrl_dev_config *pcfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t girq;
 	uint8_t girq_pos;
 	uint8_t pcr_idx;
 	uint8_t pcr_pos;
 	uint8_t clk_sel;
+<<<<<<< HEAD
 	const struct pinctrl_dev_config *pcfg;
+=======
+	bool enable_low_power_32K;
+};
+
+struct bbled_xec_data {
+	uint32_t config;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* Compute BBLED PWM delay factor to produce requested frequency.
@@ -318,6 +338,66 @@ static int pwm_bbled_xec_get_cycles_per_sec(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_PM_DEVICE
+static int pwm_bbled_xec_pm_action(const struct device *dev, enum pm_device_action action)
+{
+	const struct pwm_bbled_xec_config *const devcfg = dev->config;
+	struct bbled_regs * const regs = devcfg->regs;
+	struct bbled_xec_data * const data = dev->data;
+	int ret = 0;
+
+	/* 32K core clock is not gated by PCR in sleep, so BBLED can blink the LED even
+	 * in sleep, if it is configured to use 32K clock. If we want to control it
+	 * we shall use flag "enable_low_power_32K".
+	 * This flag dont have effect on 48M clock. Since it is gated by PCR in sleep, BBLED
+	 * will not get clock during sleep.
+	 */
+	if ((!devcfg->enable_low_power_32K) &&
+			(!(regs->config & BIT(XEC_PWM_BBLED_CFG_CLK_SRC_48M_POS)))) {
+		return ret;
+	}
+
+	switch (action) {
+	case PM_DEVICE_ACTION_RESUME:
+		ret = pinctrl_apply_state(devcfg->pcfg, PINCTRL_STATE_DEFAULT);
+		if (ret != 0) {
+			LOG_ERR("XEC BBLED pinctrl setup failed (%d)", ret);
+		}
+
+		/* Turn on BBLED only if it is ON before sleep */
+		if ((data->config & XEC_PWM_BBLED_CFG_MODE_MSK) != XEC_PWM_BBLED_CFG_MODE_OFF) {
+
+			regs->config |= (data->config & XEC_PWM_BBLED_CFG_MODE_MSK);
+			regs->config |= BIT(XEC_PWM_BBLED_CFG_EN_UPDATE_POS);
+
+			data->config = XEC_PWM_BBLED_CFG_MODE_OFF;
+		}
+	break;
+	case PM_DEVICE_ACTION_SUSPEND:
+		if ((regs->config & XEC_PWM_BBLED_CFG_MODE_MSK) != XEC_PWM_BBLED_CFG_MODE_OFF) {
+			/* Do copy first, then clear mode. */
+			data->config = regs->config;
+
+			regs->config &= ~(XEC_PWM_BBLED_CFG_MODE_MSK);
+		}
+
+		ret = pinctrl_apply_state(devcfg->pcfg, PINCTRL_STATE_SLEEP);
+		/* pinctrl-1 does not exist. */
+		if (ret == -ENOENT) {
+			ret = 0;
+		}
+	break;
+	default:
+	ret = -ENOTSUP;
+	}
+	return ret;
+}
+#endif /* CONFIG_PM_DEVICE */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static const struct pwm_driver_api pwm_bbled_xec_driver_api = {
 	.set_cycles = pwm_bbled_xec_set_cycles,
 	.get_cycles_per_sec = pwm_bbled_xec_get_cycles_per_sec,
@@ -355,19 +435,37 @@ static int pwm_bbled_xec_init(const struct device *dev)
 		.girq_pos = (uint8_t)(DT_INST_PROP_BY_IDX(0, girqs, 1)),	\
 		.pcr_idx = (uint8_t)DT_INST_PROP_BY_IDX(inst, pcrs, 0),		\
 		.pcr_pos = (uint8_t)DT_INST_PROP_BY_IDX(inst, pcrs, 1),		\
+<<<<<<< HEAD
 		.clk_sel = UTIL_CAT(XEC_PWM_BBLED_CLKSEL_, XEC_PWM_BBLED_CLKSEL(n)),	\
+=======
+		.clk_sel = UTIL_CAT(XEC_PWM_BBLED_CLKSEL_, XEC_PWM_BBLED_CLKSEL(inst)),	\
+		.enable_low_power_32K = DT_INST_PROP(inst, enable_low_power_32k),\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(inst),			\
 	};
 
 #define XEC_PWM_BBLED_DEVICE_INIT(index)				\
 									\
+<<<<<<< HEAD
+=======
+	static struct bbled_xec_data bbled_xec_data_##index;	\
+									\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	PINCTRL_DT_INST_DEFINE(index);					\
 									\
 	XEC_PWM_BBLED_CONFIG(index);					\
 									\
+<<<<<<< HEAD
 	DEVICE_DT_INST_DEFINE(index, &pwm_bbled_xec_init,		\
 			      NULL,					\
 			      NULL,					\
+=======
+	PM_DEVICE_DT_INST_DEFINE(index, pwm_bbled_xec_pm_action);	\
+									\
+	DEVICE_DT_INST_DEFINE(index, &pwm_bbled_xec_init,		\
+			      PM_DEVICE_DT_INST_GET(index),		\
+			      &bbled_xec_data_##index,			\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      &pwm_bbled_xec_config_##index, POST_KERNEL,	\
 			      CONFIG_PWM_INIT_PRIORITY,			\
 			      &pwm_bbled_xec_driver_api);

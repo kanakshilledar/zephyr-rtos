@@ -8,6 +8,10 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(pcie, LOG_LEVEL_ERR);
 
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/sys/check.h>
@@ -15,6 +19,13 @@ LOG_MODULE_REGISTER(pcie, LOG_LEVEL_ERR);
 #include <zephyr/drivers/pcie/pcie.h>
 #include <zephyr/sys/iterable_sections.h>
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ACPI
+#include <zephyr/acpi/acpi.h>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if CONFIG_PCIE_MSI
 #include <zephyr/drivers/pcie/msi.h>
 #endif
@@ -285,7 +296,17 @@ unsigned int pcie_alloc_irq(pcie_bdf_t bdf)
 	if (irq == PCIE_CONF_INTR_IRQ_NONE ||
 	    irq >= CONFIG_MAX_IRQ_LINES ||
 	    arch_irq_is_used(irq)) {
+<<<<<<< HEAD
 		irq = arch_irq_allocate();
+=======
+
+#ifdef CONFIG_PCIE_PRT
+		irq = acpi_legacy_irq_get(bdf);
+#else
+		irq = arch_irq_allocate();
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (irq == UINT_MAX) {
 			return PCIE_CONF_INTR_IRQ_NONE;
 		}
@@ -547,4 +568,8 @@ static int pcie_init(void)
 #define PCIE_SYS_INIT_LEVEL	PRE_KERNEL_1
 #endif
 
+<<<<<<< HEAD
 SYS_INIT(pcie_init, PCIE_SYS_INIT_LEVEL, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+SYS_INIT(pcie_init, PCIE_SYS_INIT_LEVEL, CONFIG_PCIE_INIT_PRIORITY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

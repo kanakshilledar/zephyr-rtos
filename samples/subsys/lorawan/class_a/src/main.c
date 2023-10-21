@@ -29,11 +29,19 @@ char data[] = {'h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd'};
 
 static void dl_callback(uint8_t port, bool data_pending,
 			int16_t rssi, int8_t snr,
+<<<<<<< HEAD
 			uint8_t len, const uint8_t *data)
 {
 	LOG_INF("Port %d, Pending %d, RSSI %ddB, SNR %ddBm", port, data_pending, rssi, snr);
 	if (data) {
 		LOG_HEXDUMP_INF(data, len, "Payload: ");
+=======
+			uint8_t len, const uint8_t *hex_data)
+{
+	LOG_INF("Port %d, Pending %d, RSSI %ddB, SNR %ddBm", port, data_pending, rssi, snr);
+	if (hex_data) {
+		LOG_HEXDUMP_INF(hex_data, len, "Payload: ");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -90,6 +98,10 @@ int main(void)
 	join_cfg.otaa.join_eui = join_eui;
 	join_cfg.otaa.app_key = app_key;
 	join_cfg.otaa.nwk_key = app_key;
+<<<<<<< HEAD
+=======
+	join_cfg.otaa.dev_nonce = 0u;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	LOG_INF("Joining network over OTAA");
 	ret = lorawan_join(&join_cfg);

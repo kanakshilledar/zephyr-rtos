@@ -2,10 +2,22 @@ identifier: gr716a_mini
 name: GR716-MINI Development Board
 type: mcu
 simulation: tsim
+<<<<<<< HEAD
 simulation_exec: tsim
+=======
+simulation_exec: tsim-leon3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 arch: sparc
 toolchain:
   - zephyr
   - xtools
 supported:
   - netif
+<<<<<<< HEAD
+=======
+testing:
+  ignore_tags:
+    - net
+    - bluetooth
+vendor: gaisler
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

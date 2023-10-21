@@ -217,6 +217,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _Nucleo L432KC website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-l432kc.html
 
 .. _STM32 Nucleo-32 board User Manual:
@@ -227,3 +228,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32L432 reference manual:
    http://www.st.com/resource/en/reference_manual/dm00151940.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
+
+.. _STM32 Nucleo-32 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00231744.pdf
+
+.. _STM32L432KC on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32l432kc.html
+
+.. _STM32L432 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00151940.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

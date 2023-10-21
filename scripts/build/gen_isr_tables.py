@@ -27,6 +27,11 @@ FIRST_LVL_INTERRUPTS = 0x000000FF
 SECND_LVL_INTERRUPTS = 0x0000FF00
 THIRD_LVL_INTERRUPTS = 0x00FF0000
 
+<<<<<<< HEAD
+=======
+INTERRUPT_BITS = [8, 8, 8]
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 def debug(text):
     if args.debug:
         sys.stdout.write(os.path.basename(sys.argv[0]) + ": " + text + "\n")
@@ -175,11 +180,44 @@ source_header = """
 typedef void (* ISR)(const void *);
 """
 
+<<<<<<< HEAD
 def write_source_file(fp, vt, swt, intlist, syms):
+=======
+def write_shared_table(fp, shared, nv):
+    fp.write("struct z_shared_isr_table_entry __shared_sw_isr_table"
+            " z_shared_sw_isr_table[%d] = {\n" % nv)
+
+    for i in range(nv):
+        client_num = shared[i][1]
+        client_list = shared[i][0]
+
+        if not client_num:
+            fp.write("\t{ },\n")
+        else:
+            fp.write(f"\t{{ .client_num = {client_num}, .clients = {{ ")
+            for j in range(0, client_num):
+                routine = client_list[j][1]
+                arg = client_list[j][0]
+
+                fp.write(f"{{ .isr = (ISR){ hex(routine) if isinstance(routine, int) else routine }, "
+                        f".arg = (const void *){hex(arg)} }},")
+
+            fp.write(" },\n},\n")
+
+    fp.write("};\n")
+
+def write_source_file(fp, vt, swt, intlist, syms, shared):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     fp.write(source_header)
 
     nv = intlist["num_vectors"]
 
+<<<<<<< HEAD
+=======
+    if "CONFIG_SHARED_INTERRUPTS" in syms:
+        write_shared_table(fp, shared, nv)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     if vt:
         if "CONFIG_IRQ_VECTOR_TABLE_JUMP_BY_ADDRESS" in syms:
             write_address_irq_vector_table(fp, vt, nv)
@@ -198,7 +236,15 @@ def write_source_file(fp, vt, swt, intlist, syms):
     level3_offset = syms.get("CONFIG_3RD_LVL_ISR_TBL_OFFSET")
 
     for i in range(nv):
+<<<<<<< HEAD
         param, func = swt[i]
+=======
+        param = "{0:#x}".format(swt[i][0])
+        func = swt[i][1]
+
+        if isinstance (func, str) and "z_shared_isr" in func:
+            param = "&z_shared_sw_isr_table[{0}]".format(i)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if isinstance(func, int):
             func_as_string = "{0:#x}".format(func)
         else:
@@ -211,7 +257,11 @@ def write_source_file(fp, vt, swt, intlist, syms):
             fp.write("\t/* Level 3 interrupts start here (offset: {}) */\n".
                      format(level3_offset))
 
+<<<<<<< HEAD
         fp.write("\t{{(const void *){0:#x}, (ISR){1}}},\n".format(param, func_as_string))
+=======
+        fp.write("\t{{(const void *){0}, (ISR){1}}},\n".format(param, func_as_string))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     fp.write("};\n")
 
 def get_symbols(obj):
@@ -230,6 +280,27 @@ def getindex(irq, irq_aggregator_pos):
               format(irq, irq_aggregator_pos) +
               " Recheck interrupt configuration.")
 
+<<<<<<< HEAD
+=======
+def bit_mask(bits):
+    mask = 0
+    for _ in range(0, bits):
+        mask = (mask << 1) | 1
+    return mask
+
+def update_masks():
+    global FIRST_LVL_INTERRUPTS
+    global SECND_LVL_INTERRUPTS
+    global THIRD_LVL_INTERRUPTS
+
+    if sum(INTERRUPT_BITS) > 32:
+        raise ValueError("Too many interrupt bits")
+
+    FIRST_LVL_INTERRUPTS = bit_mask(INTERRUPT_BITS[0])
+    SECND_LVL_INTERRUPTS = bit_mask(INTERRUPT_BITS[1]) << INTERRUPT_BITS[0]
+    THIRD_LVL_INTERRUPTS = bit_mask(INTERRUPT_BITS[2]) << INTERRUPT_BITS[0] + INTERRUPT_BITS[2]
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 def main():
     parse_args()
 
@@ -240,6 +311,14 @@ def main():
     if "CONFIG_MULTI_LEVEL_INTERRUPTS" in syms:
         max_irq_per = syms["CONFIG_MAX_IRQ_PER_AGGREGATOR"]
 
+<<<<<<< HEAD
+=======
+        INTERRUPT_BITS[0] = syms["CONFIG_1ST_LEVEL_INTERRUPT_BITS"]
+        INTERRUPT_BITS[1] = syms["CONFIG_2ND_LEVEL_INTERRUPT_BITS"]
+        INTERRUPT_BITS[2] = syms["CONFIG_3RD_LEVEL_INTERRUPT_BITS"]
+        update_masks()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if "CONFIG_2ND_LEVEL_INTERRUPTS" in syms:
             num_aggregators = syms["CONFIG_NUM_2ND_LEVEL_AGGREGATORS"]
             irq2_baseoffset = syms["CONFIG_2ND_LVL_ISR_TBL_OFFSET"]
@@ -266,6 +345,10 @@ def main():
         raise ValueError('nvec is too large, check endianness.')
 
     swt_spurious_handler = "((uintptr_t)&z_irq_spurious)"
+<<<<<<< HEAD
+=======
+    swt_shared_handler = "((uintptr_t)&z_shared_isr)"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     vt_spurious_handler = "z_irq_spurious"
     vt_irq_handler = "_isr_wrapper"
 
@@ -283,6 +366,10 @@ def main():
         # Default to spurious interrupt handler. Configured interrupts
         # will replace these entries.
         swt = [(0, swt_spurious_handler) for i in range(nvec)]
+<<<<<<< HEAD
+=======
+        shared = [([], 0) for i in range(nvec)]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     else:
         if args.vector_table:
             vt = [vt_spurious_handler for i in range(nvec)]
@@ -311,8 +398,13 @@ def main():
             else:
                 # Figure out third level interrupt position
                 debug('IRQ = ' + hex(irq))
+<<<<<<< HEAD
                 irq3 = (irq & THIRD_LVL_INTERRUPTS) >> 16
                 irq2 = (irq & SECND_LVL_INTERRUPTS) >> 8
+=======
+                irq3 = (irq & THIRD_LVL_INTERRUPTS) >> INTERRUPT_BITS[0] + INTERRUPT_BITS[1]
+                irq2 = (irq & SECND_LVL_INTERRUPTS) >> INTERRUPT_BITS[0]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 irq1 = irq & FIRST_LVL_INTERRUPTS
 
                 if irq3:
@@ -344,6 +436,7 @@ def main():
             if not 0 <= table_index < len(swt):
                 error("IRQ %d (offset=%d) exceeds the maximum of %d" %
                       (table_index, offset, len(swt) - 1))
+<<<<<<< HEAD
             if swt[table_index] != (0, swt_spurious_handler):
                 error(f"multiple registrations at table_index {table_index} for irq {irq} (0x{irq:x})"
                       + f"\nExisting handler 0x{swt[table_index][1]:x}, new handler 0x{func:x}"
@@ -354,6 +447,39 @@ def main():
 
     with open(args.output_source, "w") as fp:
         write_source_file(fp, vt, swt, intlist, syms)
+=======
+            if "CONFIG_SHARED_INTERRUPTS" in syms:
+                if swt[table_index] != (0, swt_spurious_handler):
+                    # check client limit
+                    if syms["CONFIG_SHARED_IRQ_MAX_NUM_CLIENTS"] == shared[table_index][1]:
+                        error(f"Reached shared interrupt client limit. Maybe increase"
+                              + f" CONFIG_SHARED_IRQ_MAX_NUM_CLIENTS?")
+                    lst = shared[table_index][0]
+                    delta_size = 1
+                    if not shared[table_index][1]:
+                        lst.append(swt[table_index])
+			# note: the argument will be fixed when writing the ISR table
+			# to isr_table.c
+                        swt[table_index] = (0, swt_shared_handler)
+                        delta_size += 1
+                    if (param, func) in lst:
+                        error("Attempting to register the same ISR/arg pair twice.")
+                    lst.append((param, func))
+                    shared[table_index] = (lst, shared[table_index][1] + delta_size)
+                else:
+                    swt[table_index] = (param, func)
+            else:
+                if swt[table_index] != (0, swt_spurious_handler):
+                    error(f"multiple registrations at table_index {table_index} for irq {irq} (0x{irq:x})"
+                          + f"\nExisting handler 0x{swt[table_index][1]:x}, new handler 0x{func:x}"
+                          + "\nHas IRQ_CONNECT or IRQ_DIRECT_CONNECT accidentally been invoked on the same irq multiple times?"
+                    )
+                else:
+                    swt[table_index] = (param, func)
+
+    with open(args.output_source, "w") as fp:
+        write_source_file(fp, vt, swt, intlist, syms, shared)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if __name__ == "__main__":
     main()

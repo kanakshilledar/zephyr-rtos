@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 .. _adc-sample:
 
 Analog-to-Digital Converter (ADC)
 #################################
+=======
+.. zephyr:code-sample:: adc
+   :name: Analog-to-Digital Converter (ADC)
+   :relevant-api: adc_interface
+
+   Read analog inputs from ADC channels.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample demonstrates how to use the ADC driver API.
+=======
+This sample demonstrates how to use the :ref:`ADC driver API <adc_api>`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Depending on the target board, it reads ADC samples from one or more channels
 and prints the readings on the console. If voltage of the used reference can

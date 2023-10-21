@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _minimal_sample:
 
 Minimal footprint
 #################
+=======
+.. zephyr:code-sample:: minimal
+   :name: Minimal footprint
+
+   Measure Zephyr's minimal ROM footprint in different configurations.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

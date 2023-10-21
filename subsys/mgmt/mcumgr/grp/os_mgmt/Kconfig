@@ -48,6 +48,10 @@ endif
 
 config MCUMGR_GRP_OS_TASKSTAT
 	bool "Support for taskstat command"
+<<<<<<< HEAD
+=======
+	select MCUMGR_SMP_CBOR_MIN_ENCODING_LEVEL_3 if ZCBOR_CANONICAL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	depends on THREAD_MONITOR
 
 if MCUMGR_GRP_OS_TASKSTAT
@@ -172,6 +176,19 @@ config MCUMGR_GRP_OS_INFO_BUILD_DATE_TIME
 
 endif
 
+<<<<<<< HEAD
+=======
+if BOOTLOADER_MCUBOOT
+
+config MCUMGR_GRP_OS_BOOTLOADER_INFO
+	bool "Bootloader information"
+	help
+	  Allows to query MCUmgr about bootloader used by device and various bootloader
+	  parameters.
+
+endif # BOOTLOADER_MCUBOOT
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 module = MCUMGR_GRP_OS
 module-str = mcumgr_grp_os
 source "subsys/logging/Kconfig.template.log_config"

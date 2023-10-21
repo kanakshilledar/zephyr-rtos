@@ -179,6 +179,7 @@
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 #endif /* !CONFIG_BT_CTLR_RADIO_ENABLE_FAST */
 
+<<<<<<< HEAD
 #if !defined(CONFIG_BT_CTLR_TIFS_HW)
 #if defined(CONFIG_BT_CTLR_SW_SWITCH_SINGLE_TIMER)
 #undef EVENT_TIMER_ID
@@ -192,6 +193,8 @@
 
 #endif /* !CONFIG_BT_CTLR_TIFS_HW */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline void hal_radio_reset(void)
 {
 	/* TODO: Add any required setup for each radio event

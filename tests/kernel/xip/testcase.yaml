@@ -7,3 +7,16 @@ tests:
     integration_platforms:
       - qemu_arc_em
       - qemu_x86_xip
+<<<<<<< HEAD
+=======
+  arch.common.xip.minimallibc:
+    filter: CONFIG_XIP and CONFIG_MINIMAL_LIBC_SUPPORTED
+    tags:
+      - kernel
+      - xip
+    integration_platforms:
+      - qemu_arc_em
+      - qemu_x86_xip
+    extra_configs:
+      - CONFIG_MINIMAL_LIBC=y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

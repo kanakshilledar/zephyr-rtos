@@ -190,7 +190,11 @@ static inline void usbd_class_resumed(struct usbd_class_node *const node)
 }
 
 /**
+<<<<<<< HEAD
  * @brief Class associated configuration activ handler
+=======
+ * @brief Class associated configuration active handler
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @note The execution of the handler must not block.
  *

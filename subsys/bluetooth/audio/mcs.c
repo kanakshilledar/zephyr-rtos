@@ -1348,7 +1348,11 @@ int bt_mcs_init(struct bt_ots_cb *ots_cbs)
 	mcs = (struct bt_gatt_service)BT_GATT_SERVICE(svc_attrs);
 
 #ifdef CONFIG_BT_OTS
+<<<<<<< HEAD
 	struct bt_ots_init ots_init;
+=======
+	struct bt_ots_init_param ots_init;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ots = bt_ots_free_instance_get();
 	if (!ots) {

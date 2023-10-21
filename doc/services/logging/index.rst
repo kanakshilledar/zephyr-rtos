@@ -734,7 +734,12 @@ hexadecimal characters
 (e.g. when ``CONFIG_LOG_BACKEND_UART_OUTPUT_DICTIONARY_HEX=y``). This tells
 the parser to convert the hexadecimal characters to binary before parsing.
 
+<<<<<<< HEAD
 Please refer to :ref:`logging_dictionary_sample` on how to use the log parser.
+=======
+Please refer to the :zephyr:code-sample:`logging-dictionary` sample to learn more on how to use
+the log parser.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 Recommendations

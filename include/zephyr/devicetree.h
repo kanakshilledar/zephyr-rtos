@@ -18,6 +18,13 @@
 
 #include <devicetree_generated.h>
 
+<<<<<<< HEAD
+=======
+#if !defined(_LINKER) && !defined(_ASMLANGUAGE)
+#include <stdint.h>
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/util.h>
 
 /**
@@ -2220,6 +2227,21 @@
 #define DT_REG_ADDR(node_id) DT_REG_ADDR_BY_IDX(node_id, 0)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief 64-bit version of DT_REG_ADDR()
+ *
+ * This macro version adds the appropriate suffix for 64-bit unsigned
+ * integer literals.
+ * Note that this macro is equivalent to DT_REG_ADDR() in linker/ASM context.
+ *
+ * @param node_id node identifier
+ * @return node's register block address
+ */
+#define DT_REG_ADDR_U64(node_id) DT_U64_C(DT_REG_ADDR(node_id))
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Get a node's (only) register block size
  *
  * Equivalent to DT_REG_SIZE_BY_IDX(node_id, 0).
@@ -2238,6 +2260,24 @@
 	DT_CAT4(node_id, _REG_NAME_, name, _VAL_ADDRESS)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief 64-bit version of DT_REG_ADDR_BY_NAME()
+ *
+ * This macro version adds the appropriate suffix for 64-bit unsigned
+ * integer literals.
+ * Note that this macro is equivalent to DT_REG_ADDR_BY_NAME() in
+ * linker/ASM context.
+ *
+ * @param node_id node identifier
+ * @param name lowercase-and-underscores register specifier name
+ * @return address of the register block specified by name
+ */
+#define DT_REG_ADDR_BY_NAME_U64(node_id, name) \
+	DT_U64_C(DT_REG_ADDR_BY_NAME(node_id, name))
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Get a register block's size by name
  * @param node_id node identifier
  * @param name lowercase-and-underscores register specifier name
@@ -2440,6 +2480,23 @@
 #define DT_FOREACH_NODE(fn) DT_FOREACH_HELPER(fn)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Invokes @p fn for every node in the tree with multiple arguments.
+ *
+ * The macro @p fn takes multiple arguments. The first should be the node
+ * identifier for the node. The remaining are passed-in by the caller.
+ *
+ * The macro is expanded once for each node in the tree. The order that nodes
+ * are visited in is not specified.
+ *
+ * @param fn macro to invoke
+ * @param ... variable number of arguments to pass to @p fn
+ */
+#define DT_FOREACH_NODE_VARGS(fn, ...) DT_FOREACH_VARGS_HELPER(fn, __VA_ARGS__)
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Invokes @p fn for every status `okay` node in the tree.
  *
  * The macro @p fn must take one parameter, which will be a node
@@ -2453,6 +2510,25 @@
 #define DT_FOREACH_STATUS_OKAY_NODE(fn) DT_FOREACH_OKAY_HELPER(fn)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief Invokes @p fn for every status `okay` node in the tree with multiple
+ *        arguments.
+ *
+ * The macro @p fn takes multiple arguments. The first should be the node
+ * identifier for the node. The remaining are passed-in by the caller.
+ *
+ * The macro is expanded once for each node in the tree with status `okay` (as
+ * usual, a missing status property is treated as status `okay`). The order
+ * that nodes are visited in is not specified.
+ *
+ * @param fn macro to invoke
+ * @param ... variable number of arguments to pass to @p fn
+ */
+#define DT_FOREACH_STATUS_OKAY_NODE_VARGS(fn, ...) DT_FOREACH_OKAY_VARGS_HELPER(fn, __VA_ARGS__)
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Invokes @p fn for each child of @p node_id
  *
  * The macro @p fn must take one parameter, which will be the node
@@ -2736,7 +2812,10 @@
  *
  * @code{.c}
  *     struct gpio_dt_spec specs[] = {
+<<<<<<< HEAD
  *     struct gpio_dt_spec specs[] = {
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *             GPIO_DT_SPEC_GET_BY_IDX(DT_NODELABEL(n), my_gpios, 0),
  *             GPIO_DT_SPEC_GET_BY_IDX(DT_NODELABEL(n), my_gpios, 1)
  *     };
@@ -3682,6 +3761,24 @@
 	DT_REG_ADDR_BY_NAME(DT_DRV_INST(inst), name)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief 64-bit version of DT_INST_REG_ADDR_BY_NAME()
+ *
+ * This macro version adds the appropriate suffix for 64-bit unsigned
+ * integer literals.
+ * Note that this macro is equivalent to DT_INST_REG_ADDR_BY_NAME() in
+ * linker/ASM context.
+ *
+ * @param inst instance number
+ * @param name lowercase-and-underscores register specifier name
+ * @return address of the register block with the given @p name
+ */
+#define DT_INST_REG_ADDR_BY_NAME_U64(inst, name) \
+	DT_U64_C(DT_INST_REG_ADDR_BY_NAME(inst, name))
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Get a `DT_DRV_COMPAT`'s register block size by name
  * @param inst instance number
  * @param name lowercase-and-underscores register specifier name
@@ -3698,6 +3795,22 @@
 #define DT_INST_REG_ADDR(inst) DT_INST_REG_ADDR_BY_IDX(inst, 0)
 
 /**
+<<<<<<< HEAD
+=======
+ * @brief 64-bit version of DT_INST_REG_ADDR()
+ *
+ * This macro version adds the appropriate suffix for 64-bit unsigned
+ * integer literals.
+ * Note that this macro is equivalent to DT_INST_REG_ADDR() in
+ * linker/ASM context.
+ *
+ * @param inst instance number
+ * @return instance's register block address
+ */
+#define DT_INST_REG_ADDR_U64(inst) DT_U64_C(DT_INST_REG_ADDR(inst))
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Get a `DT_DRV_COMPAT`'s (only) register block size
  * @param inst instance number
  * @return instance's register block size
@@ -3799,6 +3912,42 @@
 #define DT_INST_STRING_UNQUOTED_OR(inst, name, default_value) \
 	DT_STRING_UNQUOTED_OR(DT_DRV_INST(inst), name, default_value)
 
+<<<<<<< HEAD
+=======
+/*
+ * @brief Test if any enabled node with the given compatible is on
+ *        the given bus type
+ *
+ * This is like DT_ANY_INST_ON_BUS_STATUS_OKAY(), except it can also
+ * be useful for handling multiple compatibles in single source file.
+ *
+ * Example devicetree overlay:
+ *
+ * @code{.dts}
+ *     &i2c0 {
+ *            temp: temperature-sensor@76 {
+ *                     compatible = "vnd,some-sensor";
+ *                     reg = <0x76>;
+ *            };
+ *     };
+ * @endcode
+ *
+ * Example usage, assuming `i2c0` is an I2C bus controller node, and
+ * therefore `temp` is on an I2C bus:
+ *
+ * @code{.c}
+ *     DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(vnd_some_sensor, i2c) // 1
+ * @endcode
+ *
+ * @param compat lowercase-and-underscores compatible, without quotes
+ * @param bus a binding's bus type as a C token, lowercased and without quotes
+ * @return 1 if any enabled node with that compatible is on that bus type,
+ *         0 otherwise
+ */
+#define DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(compat, bus) \
+	IS_ENABLED(UTIL_CAT(DT_CAT(DT_COMPAT_, compat), _BUS_##bus))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Test if any `DT_DRV_COMPAT` node is on a bus of a given type
  *        and has status okay
@@ -3832,7 +3981,11 @@
  *         0 otherwise
  */
 #define DT_ANY_INST_ON_BUS_STATUS_OKAY(bus) \
+<<<<<<< HEAD
 	DT_COMPAT_ON_BUS_INTERNAL(DT_DRV_COMPAT, bus)
+=======
+	DT_HAS_COMPAT_ON_BUS_STATUS_OKAY(DT_DRV_COMPAT, bus)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Check if any `DT_DRV_COMPAT` node with status `okay` has a given
@@ -4164,14 +4317,30 @@
 /** @brief Helper for DT_NODE_HAS_STATUS */
 #define DT_NODE_HAS_STATUS_INTERNAL(node_id, status) \
 	IS_ENABLED(DT_CAT3(node_id, _STATUS_, status))
+<<<<<<< HEAD
 /** @brief Helper for test cases and DT_ANY_INST_ON_BUS_STATUS_OKAY() */
 #define DT_COMPAT_ON_BUS_INTERNAL(compat, bus) \
 	IS_ENABLED(UTIL_CAT(DT_CAT(DT_COMPAT_, compat), _BUS_##bus))
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Helper macro to OR multiple has property checks in a loop macro */
 #define DT_INST_NODE_HAS_PROP_AND_OR(inst, prop) \
 	DT_INST_NODE_HAS_PROP(inst, prop) ||
 
+<<<<<<< HEAD
+=======
+/**
+ * @def DT_U64_C
+ * @brief Macro to add ULL postfix to the devicetree address constants
+ */
+#if defined(_LINKER) || defined(_ASMLANGUAGE)
+#define DT_U64_C(_v) (_v)
+#else
+#define DT_U64_C(_v) UINT64_C(_v)
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @endcond */
 
 /* have these last so they have access to all previously defined macros */

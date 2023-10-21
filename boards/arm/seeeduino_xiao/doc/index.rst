@@ -33,6 +33,11 @@ features:
 +===========+============+==========================================+
 | DMA       | on-chip    | Direct memory access                     |
 +-----------+------------+------------------------------------------+
+<<<<<<< HEAD
+=======
+| DAC       | on-chip    | Digital to analogue converter            |
++-----------+------------+------------------------------------------+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 | Flash     | on-chip    | Can be used with LittleFS to store files |
 +-----------+------------+------------------------------------------+
 | GPIO      | on-chip    | I/O ports                                |
@@ -97,9 +102,21 @@ USB Device Port
 
 The SAMD21 MCU has a USB device port that can be used to communicate
 with a host PC.  See the :ref:`usb-samples` sample applications for
+<<<<<<< HEAD
 more, such as the :ref:`usb_cdc-acm` sample which sets up a virtual
 serial port that echos characters back to the host PC.
 
+=======
+more, such as the :zephyr:code-sample:`usb-cdc-acm` sample which sets up a virtual
+serial port that echos characters back to the host PC.
+
+DAC
+===
+
+The SAMD21 MCU has a single channel DAC with 10 bits of resolution. On
+the XIAO, the DAC is available on pin 0.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Programming and Debugging
 *************************
 

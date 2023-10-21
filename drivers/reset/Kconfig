@@ -18,7 +18,11 @@ if RESET
 
 config RESET_INIT_PRIORITY
 	int "Reset Controller driver init priority"
+<<<<<<< HEAD
 	default 40
+=======
+	default 35
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  This option controls the priority of the reset controller device
 	  initialization. Higher priority ensures that the device is
@@ -31,5 +35,10 @@ rsource "Kconfig.rpi_pico"
 rsource "Kconfig.gd32"
 rsource "Kconfig.aspeed"
 rsource "Kconfig.stm32"
+<<<<<<< HEAD
+=======
+rsource "Kconfig.numaker"
+rsource "Kconfig.intel_socfpga"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endif # RESET

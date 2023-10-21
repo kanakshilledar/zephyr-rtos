@@ -8,8 +8,12 @@
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/fpu.h>
+=======
+#include <zephyr/arch/arm/cortex_m/fpu.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <tfm_ns_interface.h>
 
@@ -74,7 +78,11 @@ int32_t tfm_ns_interface_dispatch(veneer_fn fn,
 	return result;
 }
 
+<<<<<<< HEAD
 enum tfm_status_e tfm_ns_interface_init(void)
+=======
+uint32_t tfm_ns_interface_init(void)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/*
 	 * The static K_MUTEX_DEFINE handles mutex initialization,

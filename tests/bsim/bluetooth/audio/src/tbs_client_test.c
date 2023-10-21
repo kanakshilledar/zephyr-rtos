@@ -490,7 +490,11 @@ static void test_main(void)
 
 	WAIT_FOR_COND(is_connected);
 
+<<<<<<< HEAD
 	tbs_client_err = bt_tbs_client_discover(default_conn, true);
+=======
+	tbs_client_err = bt_tbs_client_discover(default_conn);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (tbs_client_err) {
 		FAIL("Failed to discover TBS_CLIENT for connection %d", tbs_client_err);
 	}

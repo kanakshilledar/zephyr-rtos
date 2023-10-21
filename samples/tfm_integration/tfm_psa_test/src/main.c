@@ -9,7 +9,10 @@
 /* Run the PSA test suite */
 void psa_test(void);
 
+<<<<<<< HEAD
 __attribute__((noreturn))
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int main(void)
 {
 #ifdef CONFIG_TFM_PSA_TEST_NONE

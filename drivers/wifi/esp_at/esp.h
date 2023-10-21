@@ -264,6 +264,10 @@ struct esp_data {
 	struct k_sem sem_tx_ready;
 	struct k_sem sem_response;
 	struct k_sem sem_if_ready;
+<<<<<<< HEAD
+=======
+	struct k_sem sem_if_up;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 int esp_offload_init(struct net_if *iface);
@@ -343,7 +347,11 @@ static inline atomic_val_t esp_socket_flags(struct esp_socket *sock)
 
 static inline struct esp_data *esp_socket_to_dev(struct esp_socket *sock)
 {
+<<<<<<< HEAD
 	return CONTAINER_OF(sock - sock->idx, struct esp_data, sockets);
+=======
+	return CONTAINER_OF(sock - sock->idx, struct esp_data, sockets[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void __esp_socket_work_submit(struct esp_socket *sock,

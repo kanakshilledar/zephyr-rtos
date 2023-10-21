@@ -5,8 +5,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include "zephyr/types.h"
 #include "zephyr/ztest.h"
+=======
+#include <zephyr/types.h>
+#include <zephyr/ztest.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdlib.h>
 
 #include <zephyr/bluetooth/hci.h>

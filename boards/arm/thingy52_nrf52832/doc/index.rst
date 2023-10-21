@@ -362,7 +362,11 @@ debugger. A development board with a Debug out connector such as the
 Testing board features
 **********************
 
+<<<<<<< HEAD
 The green lightwell LED can be tested with the :ref:`blinky-sample` example.
+=======
+The green lightwell LED can be tested with the :zephyr:code-sample:`blinky` example.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky

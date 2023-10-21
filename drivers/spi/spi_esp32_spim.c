@@ -16,7 +16,11 @@ LOG_MODULE_REGISTER(esp32_spi, CONFIG_SPI_LOG_LEVEL);
 #include <soc.h>
 #include <soc/soc_memory_types.h>
 #include <zephyr/drivers/spi.h>
+<<<<<<< HEAD
 #ifndef CONFIG_SOC_ESP32C3
+=======
+#ifndef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/interrupt_controller/intc_esp32.h>
 #else
 #include <zephyr/drivers/interrupt_controller/intc_esp32c3.h>
@@ -29,7 +33,11 @@ LOG_MODULE_REGISTER(esp32_spi, CONFIG_SPI_LOG_LEVEL);
 #include "spi_context.h"
 #include "spi_esp32_spim.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32C3
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define ISR_HANDLER isr_handler_t
 #else
 #define ISR_HANDLER intr_handler_t
@@ -180,11 +188,19 @@ static int spi_esp32_init_dma(const struct device *dev)
 #else
 	channel_offset = 1;
 #endif /* SOC_GDMA_SUPPORTED */
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32
 	/*Connect SPI and DMA*/
 	DPORT_SET_PERI_REG_BITS(DPORT_SPI_DMA_CHAN_SEL_REG, 3, cfg->dma_host + 1,
 				((cfg->dma_host + 1) * 2));
 #endif /* CONFIG_SOC_ESP32 */
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32
+	/*Connect SPI and DMA*/
+	DPORT_SET_PERI_REG_BITS(DPORT_SPI_DMA_CHAN_SEL_REG, 3, cfg->dma_host + 1,
+				((cfg->dma_host + 1) * 2));
+#endif /* CONFIG_SOC_SERIES_ESP32 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	data->hal_config.dma_in = (spi_dma_dev_t *)cfg->spi;
 	data->hal_config.dma_out = (spi_dma_dev_t *)cfg->spi;
@@ -265,6 +281,10 @@ static int IRAM_ATTR spi_esp32_configure(const struct device *dev,
 	struct spi_context *ctx = &data->ctx;
 	spi_hal_context_t *hal = &data->hal;
 	spi_hal_dev_config_t *hal_dev = &data->dev_config;
+<<<<<<< HEAD
+=======
+	spi_dev_t *hw = hal->hw;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int freq;
 
 	if (spi_context_configured(ctx, spi_cfg)) {
@@ -330,11 +350,18 @@ static int IRAM_ATTR spi_esp32_configure(const struct device *dev,
 
 	/* SPI mode */
 	hal_dev->mode = 0;
+<<<<<<< HEAD
 	if (SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPOL) {
 		hal_dev->mode = BIT(0);
 	}
 
 	if (SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPHA) {
+=======
+	if (SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPHA) {
+		hal_dev->mode = BIT(0);
+	}
+	if (SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPOL) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		hal_dev->mode |= BIT(1);
 	}
 
@@ -347,11 +374,29 @@ static int IRAM_ATTR spi_esp32_configure(const struct device *dev,
 
 	spi_hal_setup_device(hal, hal_dev);
 
+<<<<<<< HEAD
+=======
+	/* Workaround to handle default state of MISO and MOSI lines */
+#ifndef CONFIG_SOC_SERIES_ESP32
+	if (cfg->line_idle_low) {
+		hw->ctrl.d_pol = 0;
+		hw->ctrl.q_pol = 0;
+	} else {
+		hw->ctrl.d_pol = 1;
+		hw->ctrl.q_pol = 1;
+	}
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * Workaround for ESP32S3 and ESP32C3 SoC. This dummy transaction is needed to sync CLK and
 	 * software controlled CS when SPI is in mode 3
 	 */
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_ESP32S3) || defined(CONFIG_SOC_ESP32C3)
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32S3) || defined(CONFIG_SOC_SERIES_ESP32C3)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ctx->num_cs_gpios && (hal_dev->mode & (SPI_MODE_CPOL | SPI_MODE_CPHA))) {
 		spi_esp32_transfer(dev);
 	}
@@ -463,7 +508,11 @@ static const struct spi_driver_api spi_api = {
 	.release = spi_esp32_release
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define GET_AS_CS(idx) .as_cs = DT_INST_PROP(idx, clk_as_cs),
 #else
 #define GET_AS_CS(idx)
@@ -505,6 +554,10 @@ static const struct spi_driver_api spi_api = {
 		.dma_host = DT_INST_PROP(idx, dma_host),	\
 		.cs_setup = DT_INST_PROP_OR(idx, cs_setup_time, 0), \
 		.cs_hold = DT_INST_PROP_OR(idx, cs_hold_time, 0), \
+<<<<<<< HEAD
+=======
+		.line_idle_low = DT_INST_PROP(idx, line_idle_low), \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};	\
 		\
 	DEVICE_DT_INST_DEFINE(idx, &spi_esp32_init,	\

@@ -8,6 +8,10 @@
 /dts-v1/;
 #include <nordic/nrf52832_qfaa.dtsi>
 #include "nrf52dk_nrf52832-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Nordic nRF52 DK NRF52832";
@@ -56,18 +60,34 @@
 		button0: button_0 {
 			gpios = <&gpio0 13 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button1: button_1 {
 			gpios = <&gpio0 14 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button2: button_2 {
 			gpios = <&gpio0 15 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 2";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_2>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button3: button_3 {
 			gpios = <&gpio0 16 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 3";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -133,6 +153,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };

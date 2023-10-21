@@ -23,11 +23,22 @@ void test_uart_configure(void);
 void test_uart_config_get(void);
 void test_uart_poll_out(void);
 void test_uart_poll_in(void);
+<<<<<<< HEAD
+=======
+#if CONFIG_UART_WIDE_DATA
+void test_uart_configure_wide(void);
+void test_uart_config_get_wide(void);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if CONFIG_UART_INTERRUPT_DRIVEN
 void test_uart_fifo_fill(void);
 void test_uart_fifo_read(void);
 void test_uart_pending(void);
 #endif
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #endif /* __TEST_UART_H__ */

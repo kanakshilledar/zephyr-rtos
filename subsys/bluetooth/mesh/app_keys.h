@@ -23,7 +23,11 @@ void bt_mesh_app_keys_reset(void);
  *  @return 0 on success, or (negative) error code on failure.
  */
 int bt_mesh_app_key_set(uint16_t app_idx, uint16_t net_idx,
+<<<<<<< HEAD
 			const uint8_t old_key[16], const uint8_t new_key[16]);
+=======
+			const struct bt_mesh_key *old_key, const struct bt_mesh_key *new_key);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Resolve the message encryption keys, given a message context.
  *
@@ -41,7 +45,11 @@ int bt_mesh_app_key_set(uint16_t app_idx, uint16_t net_idx,
  */
 int bt_mesh_keys_resolve(struct bt_mesh_msg_ctx *ctx,
 			 struct bt_mesh_subnet **sub,
+<<<<<<< HEAD
 			 const uint8_t **app_key, uint8_t *aid);
+=======
+			 const struct bt_mesh_key **app_key, uint8_t *aid);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /** @brief Iterate through all matching application keys and call @c cb on each.
  *
@@ -56,7 +64,11 @@ int bt_mesh_keys_resolve(struct bt_mesh_msg_ctx *ctx,
 uint16_t bt_mesh_app_key_find(bool dev_key, uint8_t aid,
 			      struct bt_mesh_net_rx *rx,
 			      int (*cb)(struct bt_mesh_net_rx *rx,
+<<<<<<< HEAD
 					const uint8_t key[16], void *cb_data),
+=======
+					const struct bt_mesh_key *key, void *cb_data),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      void *cb_data);
 
 /** @brief Store pending application keys in persistent storage. */

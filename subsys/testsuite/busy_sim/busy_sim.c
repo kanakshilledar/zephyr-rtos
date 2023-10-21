@@ -8,7 +8,11 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/busy_sim.h>
 #include <zephyr/sys/ring_buffer.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BUFFER_SIZE 32
 
@@ -22,7 +26,11 @@ struct busy_sim_data {
 	busy_sim_cb_t cb;
 };
 
+<<<<<<< HEAD
 static struct k_work work;
+=======
+static struct k_work sim_work;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct ring_buf rnd_rbuf;
 static uint8_t rnd_buf[BUFFER_SIZE];
 
@@ -84,7 +92,11 @@ static uint32_t get_timeout(bool idle)
 				   (uint8_t *)&rand_val,
 				   sizeof(rand_val));
 		if (len < sizeof(rand_val)) {
+<<<<<<< HEAD
 			k_work_submit(&work);
+=======
+			k_work_submit(&sim_work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			rand_val = 0;
 		}
 	}
@@ -141,7 +153,11 @@ void busy_sim_start(uint32_t active_avg, uint32_t active_delta,
 	data->idle_delta = idle_delta;
 
 	if (!IS_ENABLED(CONFIG_XOSHIRO_RANDOM_GENERATOR)) {
+<<<<<<< HEAD
 		err = k_work_submit(&work);
+=======
+		err = k_work_submit(&sim_work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		__ASSERT_NO_MSG(err >= 0);
 	}
 
@@ -159,7 +175,11 @@ void busy_sim_stop(void)
 	const struct busy_sim_config *config = busy_sim_dev->config;
 
 	if (!IS_ENABLED(CONFIG_XOSHIRO_RANDOM_GENERATOR)) {
+<<<<<<< HEAD
 		k_work_cancel(&work);
+=======
+		k_work_cancel(&sim_work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	err = counter_stop(config->counter);
@@ -172,7 +192,11 @@ static int busy_sim_init(const struct device *dev)
 	const struct busy_sim_config *config = dev->config;
 	struct busy_sim_data *data = dev->data;
 
+<<<<<<< HEAD
 	if ((config->pin_spec.port && !device_is_ready(config->pin_spec.port)) ||
+=======
+	if ((config->pin_spec.port && !gpio_is_ready_dt(&config->pin_spec)) ||
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	    !device_is_ready(config->counter) ||
 	    (!IS_ENABLED(CONFIG_XOSHIRO_RANDOM_GENERATOR) &&
 	    !device_is_ready(config->entropy))) {
@@ -191,7 +215,11 @@ static int busy_sim_init(const struct device *dev)
 	}
 
 	if (!IS_ENABLED(CONFIG_XOSHIRO_RANDOM_GENERATOR)) {
+<<<<<<< HEAD
 		k_work_init(&work, rng_pool_work_handler);
+=======
+		k_work_init(&sim_work, rng_pool_work_handler);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ring_buf_init(&rnd_rbuf, BUFFER_SIZE, rnd_buf);
 	}
 
@@ -204,5 +232,9 @@ static int busy_sim_init(const struct device *dev)
 
 DEVICE_DT_DEFINE(DT_BUSY_SIM, busy_sim_init, NULL,
 	      &sim_data, &sim_config,
+<<<<<<< HEAD
 	      APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY,
+=======
+	      POST_KERNEL, CONFIG_APPLICATION_INIT_PRIORITY,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	      NULL);

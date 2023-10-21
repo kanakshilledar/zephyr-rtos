@@ -16,7 +16,11 @@ LOG_MODULE_REGISTER(net_txtime_sample, LOG_LEVEL_DBG);
 
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/net/socket.h>
 #include <zephyr/net/ethernet.h>
@@ -47,7 +51,11 @@ struct app_data {
 	int sock;
 };
 
+<<<<<<< HEAD
 static struct app_data data = {
+=======
+static struct app_data peer_data = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.sock = -1,
 };
 
@@ -153,15 +161,23 @@ static void tx(struct app_data *data)
 		struct cmsghdr hdr;
 		unsigned char  buf[CMSG_SPACE(sizeof(uint64_t))];
 	} cmsgbuf;
+<<<<<<< HEAD
 	uint64_t txtime, delay, interval;
+=======
+	net_time_t txtime, delay, interval;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int ret;
 	int print_offset;
 
 	print_offset = IS_ENABLED(CONFIG_NET_SAMPLE_PACKET_SOCKET) ?
 		sizeof(struct net_eth_hdr) : 0;
 
+<<<<<<< HEAD
 	interval = CONFIG_NET_SAMPLE_PACKET_INTERVAL * NSEC_PER_USEC *
 							USEC_PER_MSEC;
+=======
+	interval = CONFIG_NET_SAMPLE_PACKET_INTERVAL * NSEC_PER_MSEC;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	delay = CONFIG_NET_SAMPLE_PACKET_TXTIME * NSEC_PER_USEC;
 
 	io_vector[0].iov_base = (void *)txtime_str;
@@ -182,6 +198,7 @@ static void tx(struct app_data *data)
 	LOG_DBG("Sending network packets with SO_TXTIME");
 
 	ptp_clock_get(data->clk, &time);
+<<<<<<< HEAD
 	txtime = (time.second * NSEC_PER_SEC) + time.nanosecond;
 
 	snprintk(txtime_str + print_offset,
@@ -190,6 +207,16 @@ static void tx(struct app_data *data)
 
 	while (1) {
 		*(uint64_t *)CMSG_DATA(cmsg) = txtime + delay;
+=======
+	txtime = net_ptp_time_to_ns(&time);
+
+	snprintk(txtime_str + print_offset,
+		 sizeof(txtime_str) - print_offset, "%"PRIx64, (uint64_t)txtime);
+	io_vector[0].iov_len = sizeof(txtime_str);
+
+	while (1) {
+		*(net_time_t *)CMSG_DATA(cmsg) = txtime + delay;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		ret = sendmsg(data->sock, &msg, 0);
 		if (ret < 0) {
@@ -202,7 +229,11 @@ static void tx(struct app_data *data)
 
 		txtime += interval;
 		snprintk(txtime_str + print_offset,
+<<<<<<< HEAD
 			 sizeof(txtime_str) - print_offset, "%"PRIx64, txtime);
+=======
+			 sizeof(txtime_str) - print_offset, "%"PRIx64, (uint64_t)txtime);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		k_sleep(K_NSEC(interval));
 	}
@@ -348,12 +379,17 @@ static int get_peer_address(struct net_if **iface, char *addr_str,
 
 	ret = net_ipaddr_parse(CONFIG_NET_SAMPLE_PEER,
 			       strlen(CONFIG_NET_SAMPLE_PEER),
+<<<<<<< HEAD
 			       &data.peer);
+=======
+			       &peer_data.peer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (!ret) {
 		LOG_ERR("Cannot parse '%s'", CONFIG_NET_SAMPLE_PEER);
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (net_sin(&data.peer)->sin_port == 0) {
 		net_sin(&data.peer)->sin_port = htons(4242);
 	}
@@ -377,6 +413,31 @@ static int get_peer_address(struct net_if **iface, char *addr_str,
 			      &net_sin(&data.peer)->sin_addr, addr_str,
 			      addr_str_len);
 		data.peer_addr_len = sizeof(struct sockaddr_in);
+=======
+	if (net_sin(&peer_data.peer)->sin_port == 0) {
+		net_sin(&peer_data.peer)->sin_port = htons(4242);
+	}
+
+	if (IS_ENABLED(CONFIG_NET_IPV6) &&
+					peer_data.peer.sa_family == AF_INET6) {
+		*iface = net_if_ipv6_select_src_iface(
+					&net_sin6(&peer_data.peer)->sin6_addr);
+
+		net_addr_ntop(peer_data.peer.sa_family,
+			      &net_sin6(&peer_data.peer)->sin6_addr, addr_str,
+			      addr_str_len);
+		peer_data.peer_addr_len = sizeof(struct sockaddr_in6);
+
+	} else if (IS_ENABLED(CONFIG_NET_IPV4) &&
+					peer_data.peer.sa_family == AF_INET) {
+		*iface = net_if_ipv4_select_src_iface(
+					&net_sin(&peer_data.peer)->sin_addr);
+
+		net_addr_ntop(peer_data.peer.sa_family,
+			      &net_sin(&peer_data.peer)->sin_addr, addr_str,
+			      addr_str_len);
+		peer_data.peer_addr_len = sizeof(struct sockaddr_in);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -497,7 +558,11 @@ static int cmd_sample_quit(const struct shell *sh,
 
 	quit();
 
+<<<<<<< HEAD
 	conn_mgr_resend_status();
+=======
+	conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -535,7 +600,11 @@ int main(void)
 			net_mgmt_add_event_callback(&dhcpv4_cb);
 		}
 
+<<<<<<< HEAD
 		conn_mgr_resend_status();
+=======
+		conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* The VLAN in this example is created for demonstration purposes.
@@ -556,11 +625,19 @@ int main(void)
 			return 0;
 		}
 	} else {
+<<<<<<< HEAD
 		struct sockaddr_ll *addr = (struct sockaddr_ll *)&data.peer;
 
 		addr->sll_ifindex = net_if_get_by_iface(net_if_get_default());
 		addr->sll_family = AF_PACKET;
 		data.peer_addr_len = sizeof(struct sockaddr_ll);
+=======
+		struct sockaddr_ll *addr = (struct sockaddr_ll *)&peer_data.peer;
+
+		addr->sll_ifindex = net_if_get_by_iface(net_if_get_default());
+		addr->sll_family = AF_PACKET;
+		peer_data.peer_addr_len = sizeof(struct sockaddr_ll);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		iface = net_if_get_by_index(addr->sll_ifindex);
 	}
 
@@ -582,8 +659,13 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	data.clk = net_eth_get_ptp_clock_by_index(if_index);
 	if (!data.clk) {
+=======
+	peer_data.clk = net_eth_get_ptp_clock_by_index(if_index);
+	if (!peer_data.clk) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Interface %p does not support %s", iface,
 			"PTP clock");
 		return 0;
@@ -603,25 +685,43 @@ int main(void)
 		LOG_INF("Socket SO_TXTIME sample to %s port %d using "
 			"interface %d (%p) and PTP clock %p",
 			addr_str,
+<<<<<<< HEAD
 			ntohs(net_sin(&data.peer)->sin_port),
 			if_index, iface, data.clk);
+=======
+			ntohs(net_sin(&peer_data.peer)->sin_port),
+			if_index, iface, peer_data.clk);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (IS_ENABLED(CONFIG_NET_SAMPLE_PACKET_SOCKET)) {
 		LOG_INF("Socket SO_TXTIME sample using AF_PACKET and "
 			"interface %d (%p) and PTP clock %p",
+<<<<<<< HEAD
 			if_index, iface, data.clk);
 	}
 
 	data.sock = create_socket(iface, &data.peer);
 	if (data.sock < 0) {
 		LOG_ERR("Cannot create socket (%d)", data.sock);
+=======
+			if_index, iface, peer_data.clk);
+	}
+
+	peer_data.sock = create_socket(iface, &peer_data.peer);
+	if (peer_data.sock < 0) {
+		LOG_ERR("Cannot create socket (%d)", peer_data.sock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return 0;
 	}
 
 	tx_tid = k_thread_create(&tx_thread, tx_stack,
 				 K_THREAD_STACK_SIZEOF(tx_stack),
+<<<<<<< HEAD
 				 (k_thread_entry_t)tx, &data,
+=======
+				 (k_thread_entry_t)tx, &peer_data,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				 NULL, NULL, THREAD_PRIORITY, 0,
 				 K_FOREVER);
 	if (!tx_tid) {
@@ -633,7 +733,11 @@ int main(void)
 
 	rx_tid = k_thread_create(&rx_thread, rx_stack,
 				 K_THREAD_STACK_SIZEOF(rx_stack),
+<<<<<<< HEAD
 				 (k_thread_entry_t)rx, &data,
+=======
+				 (k_thread_entry_t)rx, &peer_data,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				 NULL, NULL, THREAD_PRIORITY, 0,
 				 K_FOREVER);
 	if (!rx_tid) {
@@ -653,8 +757,13 @@ int main(void)
 	k_thread_abort(tx_tid);
 	k_thread_abort(rx_tid);
 
+<<<<<<< HEAD
 	if (data.sock >= 0) {
 		(void)close(data.sock);
+=======
+	if (peer_data.sock >= 0) {
+		(void)close(peer_data.sock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	return 0;
 }

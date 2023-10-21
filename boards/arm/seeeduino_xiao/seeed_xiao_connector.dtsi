@@ -29,3 +29,7 @@
 xiao_spi: &sercom0 {};
 xiao_i2c: &sercom2 {};
 xiao_serial: &sercom4 {};
+<<<<<<< HEAD
+=======
+xiao_dac: &dac0 {};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -33,7 +33,11 @@ static inline int z_vrfy_i2s_configure(const struct device *dev,
 	/* Ensure that the k_mem_slab's slabs are large enough for the
 	 * specified block size
 	 */
+<<<<<<< HEAD
 	if (config.block_size > config.mem_slab->block_size) {
+=======
+	if (config.block_size > config.mem_slab->info.block_size) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto out;
 	}
 
@@ -66,7 +70,11 @@ static inline int z_vrfy_i2s_buf_read(const struct device *dev,
 		copy_success = z_user_to_copy((void *)buf, mem_block,
 					      data_size);
 
+<<<<<<< HEAD
 		k_mem_slab_free(rx_cfg->mem_slab, &mem_block);
+=======
+		k_mem_slab_free(rx_cfg->mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		Z_OOPS(copy_success);
 		Z_OOPS(z_user_to_copy((void *)size, &data_size,
 				      sizeof(data_size)));
@@ -100,13 +108,21 @@ static inline int z_vrfy_i2s_buf_write(const struct device *dev,
 
 	ret = z_user_from_copy(mem_block, (void *)buf, size);
 	if (ret) {
+<<<<<<< HEAD
 		k_mem_slab_free(tx_cfg->mem_slab, &mem_block);
+=======
+		k_mem_slab_free(tx_cfg->mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		Z_OOPS(ret);
 	}
 
 	ret = i2s_write((const struct device *)dev, mem_block, size);
 	if (ret != 0) {
+<<<<<<< HEAD
 		k_mem_slab_free(tx_cfg->mem_slab, &mem_block);
+=======
+		k_mem_slab_free(tx_cfg->mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return ret;

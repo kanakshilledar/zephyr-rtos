@@ -16,19 +16,32 @@ comment "Optional modules. Make sure they're installed, via the project manifest
 
 source "modules/Kconfig.altera"
 source "modules/Kconfig.atmel"
+<<<<<<< HEAD
 source "modules/Kconfig.cmsis"
+=======
+source "modules/Kconfig.chre"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "modules/Kconfig.cypress"
 source "modules/Kconfig.eos_s3"
 source "modules/Kconfig.esp32"
 source "modules/Kconfig.imx"
 source "modules/Kconfig.infineon"
 source "modules/Kconfig.libmetal"
+<<<<<<< HEAD
 source "modules/Kconfig.lvgl"
+=======
+source "modules/lvgl/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "modules/Kconfig.mcux"
 source "modules/Kconfig.microchip"
 source "modules/Kconfig.nuvoton"
 source "modules/Kconfig.open-amp"
+<<<<<<< HEAD
 source "modules/Kconfig.s32"
+=======
+source "modules/Kconfig.picolibc"
+source "modules/Kconfig.nxp_s32"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "modules/Kconfig.silabs"
 source "modules/Kconfig.simplelink"
 source "modules/Kconfig.sof"
@@ -43,6 +56,10 @@ source "modules/Kconfig.wurthelektronik"
 source "modules/Kconfig.xtensa"
 source "modules/zcbor/Kconfig"
 source "modules/Kconfig.mcuboot"
+<<<<<<< HEAD
+=======
+source "modules/Kconfig.intel"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 comment "Unavailable modules, please install those via the project manifest."
 
@@ -102,6 +119,21 @@ comment "THRIFT module not available."
 comment "Segger module not available."
 	depends on !ZEPHYR_SEGGER_MODULE
 
+<<<<<<< HEAD
+=======
+comment "LVGL module not available."
+	depends on !ZEPHYR_LVGL_MODULE
+
+comment "cmsis module not available."
+	depends on !ZEPHYR_CMSIS_MODULE
+
+comment "cmsis-dsp module not available."
+	depends on !ZEPHYR_CMSIS_DSP_MODULE
+
+comment "cmsis-nn module not available."
+	depends on !ZEPHYR_CMSIS_NN_MODULE
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # This ensures that symbols are available in Kconfig for dependency checking
 # and referencing, while keeping the settings themselves unavailable when the
 # modules are not present in the workspace

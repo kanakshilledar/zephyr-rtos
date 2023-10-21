@@ -23,7 +23,11 @@ description: |
 
 compatible: "nordic,nrf-twim"
 
+<<<<<<< HEAD
 include: nordic,nrf-twi-common.yaml
+=======
+include: ["nordic,nrf-twi-common.yaml", "memory-region.yaml"]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 properties:
   zephyr,concat-buf-size:

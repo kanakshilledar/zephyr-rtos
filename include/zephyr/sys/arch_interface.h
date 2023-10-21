@@ -324,6 +324,27 @@ int arch_irq_connect_dynamic(unsigned int irq, unsigned int priority,
 			     const void *parameter, uint32_t flags);
 
 /**
+<<<<<<< HEAD
+=======
+ * Arch-specific hook to dynamically uninstall a shared interrupt.
+ * If the interrupt is not being shared, then the associated
+ * _sw_isr_table entry will be replaced by (NULL, z_irq_spurious)
+ * (default entry).
+ *
+ * @param irq IRQ line number
+ * @param priority Interrupt priority
+ * @param routine Interrupt service routine
+ * @param parameter ISR parameter
+ * @param flags Arch-specific IRQ configuration flag
+ *
+ * @return 0 in case of success, negative value otherwise
+ */
+int arch_irq_disconnect_dynamic(unsigned int irq, unsigned int priority,
+				void (*routine)(const void *parameter),
+				const void *parameter, uint32_t flags);
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @def ARCH_IRQ_CONNECT(irq, pri, isr, arg, flags)
  *
  * @see IRQ_CONNECT()
@@ -512,7 +533,11 @@ static inline unsigned int arch_num_cpus(void);
  * should be enabled when invoking the system call marshallers from the
  * dispatch table. Thread preemption may occur when handling system calls.
  *
+<<<<<<< HEAD
  * Call ids are untrusted and must be bounds-checked, as the value is used to
+=======
+ * Call IDs are untrusted and must be bounds-checked, as the value is used to
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * index the system call dispatch table, containing function pointers to the
  * specific system call code.
  *
@@ -623,7 +648,11 @@ static inline uintptr_t arch_syscall_invoke6(uintptr_t arg1, uintptr_t arg2,
 /**
  * Indicate whether we are currently running in user mode
  *
+<<<<<<< HEAD
  * @return true if the CPU is currently running with user permissions
+=======
+ * @return True if the CPU is currently running with user permissions
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 static inline bool arch_is_user_context(void);
 
@@ -750,11 +779,19 @@ int arch_mem_domain_partition_add(struct k_mem_domain *domain,
  * if the supplied memory buffer spans multiple enabled memory management
  * regions (even if all such regions permit user access).
  *
+<<<<<<< HEAD
  * @warning 0 size buffer has undefined behavior.
  *
  * @param addr start address of the buffer
  * @param size the size of the buffer
  * @param write If nonzero, additionally check if the area is writable.
+=======
+ * @warning Buffer of size zero (0) has undefined behavior.
+ *
+ * @param addr start address of the buffer
+ * @param size the size of the buffer
+ * @param write If non-zero, additionally check if the area is writable.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *	  Otherwise, just check if the memory can be read.
  *
  * @return nonzero if the permissions don't match.
@@ -769,10 +806,19 @@ int arch_buffer_validate(void *addr, size_t size, int write);
  * This call returns the optimal virtual address alignment in order to permit
  * such optimization in the following MMU mapping call.
  *
+<<<<<<< HEAD
  * @param[in] phys Physical address of region to be mapped, aligned to MMU_PAGE_SIZE
  * @param[in] size Size of region to be mapped, aligned to MMU_PAGE_SIZE
  *
  * @retval alignment to apply on the virtual address of this region
+=======
+ * @param[in] phys Physical address of region to be mapped,
+ *                 aligned to @kconfig{CONFIG_MMU_PAGE_SIZE}
+ * @param[in] size Size of region to be mapped,
+ *                 aligned to @kconfig{CONFIG_MMU_PAGE_SIZE}
+ *
+ * @return Alignment to apply on the virtual address of this region
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 size_t arch_virt_region_align(uintptr_t phys, size_t size);
 
@@ -816,9 +862,15 @@ FUNC_NORETURN void arch_syscall_oops(void *ssf);
 /**
  * @brief Safely take the length of a potentially bad string
  *
+<<<<<<< HEAD
  * This must not fault, instead the err parameter must have -1 written to it.
  * This function otherwise should work exactly like libc strnlen(). On success
  * *err should be set to 0.
+=======
+ * This must not fault, instead the @p err parameter must have -1 written to it.
+ * This function otherwise should work exactly like libc strnlen(). On success
+ * @p err should be set to 0.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param s String to measure
  * @param maxsize Max length of the string
@@ -880,6 +932,7 @@ static inline bool arch_mem_coherent(void *ptr)
  * is not sufficient on many architectures and coordination with the
  * arch_switch() implementation is likely required.
  *
+<<<<<<< HEAD
  * @arg old_thread The old thread to be flushed before being allowed
  *                 to run on other CPUs.
  * @arg old_switch_handle The switch handle to be stored into
@@ -889,6 +942,17 @@ static inline bool arch_mem_coherent(void *ptr)
  *                        (because the arch_switch() has not saved it
  *                        yet).
  * @arg new_thread The new thread to be invalidated before it runs locally.
+=======
+ * @param old_thread The old thread to be flushed before being allowed
+ *                   to run on other CPUs.
+ * @param old_switch_handle The switch handle to be stored into
+ *                          old_thread (it will not be valid until the
+ *                          cache is flushed so is not present yet).
+ *                          This will be NULL if inside z_swap()
+ *                          (because the arch_switch() has not saved it
+ *                          yet).
+ * @param new_thread The new thread to be invalidated before it runs locally.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 #ifndef CONFIG_KERNEL_COHERENCE
 static inline void arch_cohere_stacks(struct k_thread *old_thread,

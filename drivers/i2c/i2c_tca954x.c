@@ -112,7 +112,11 @@ static int tca954x_root_init(const struct device *dev)
 
 	/* If the RESET line is available, configure it. */
 	if (config->reset_gpios.port) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->reset_gpios.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->reset_gpios)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("%s is not ready",
 				config->reset_gpios.port->name);
 			return -ENODEV;
@@ -156,6 +160,12 @@ const struct i2c_driver_api tca954x_api_funcs = {
 	.transfer = tca954x_transfer,
 };
 
+<<<<<<< HEAD
+=======
+BUILD_ASSERT(CONFIG_I2C_TCA954X_CHANNEL_INIT_PRIO > CONFIG_I2C_TCA954X_ROOT_INIT_PRIO,
+	     "I2C multiplexer channels must be initialized after their root");
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define TCA954x_CHILD_DEFINE(node_id, n)				    \
 	static const struct tca954x_channel_config			    \
 		tca##n##a_down_config_##node_id = {			    \

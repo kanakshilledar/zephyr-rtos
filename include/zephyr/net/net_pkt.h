@@ -29,6 +29,10 @@
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/net_if.h>
 #include <zephyr/net/net_context.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/net_time.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/ethernet_vlan.h>
 #include <zephyr/net/ptp_time.h>
 
@@ -94,10 +98,31 @@ struct net_pkt {
 	struct net_if *orig_iface; /* Original network interface */
 #endif
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_PKT_TIMESTAMP)
 	/**
 	 * Timestamp if available.
 	 * For IEEE 802.15.4 packets this refers to the first symbol of the MAC Header.
+=======
+#if defined(CONFIG_NET_PKT_TIMESTAMP) || defined(CONFIG_NET_PKT_TXTIME)
+	/**
+	 * TX or RX timestamp if available
+	 *
+	 * For packets that have been sent over the medium, the timestamp refers
+	 * to the time the message timestamp point was encountered at the
+	 * reference plane.
+	 *
+	 * Unsent packages can be scheduled by setting the timestamp to a future
+	 * point in time.
+	 *
+	 * All timestamps refer to the network subsystem's local clock.
+	 *
+	 * See @ref net_ptp_time for definitions of local clock, message
+	 * timestamp point and reference plane. See @ref net_time_t for
+	 * semantics of the network reference clock.
+	 *
+	 * TODO: Replace with net_time_t to decouple from PTP.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 */
 	struct net_ptp_time timestamp;
 #endif
@@ -123,11 +148,14 @@ struct net_pkt {
 	};
 #endif /* CONFIG_NET_PKT_RXTIME_STATS || CONFIG_NET_PKT_TXTIME_STATS */
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_PKT_TXTIME)
 	/** Network packet TX time in the future (in nanoseconds) */
 	uint64_t txtime;
 #endif /* CONFIG_NET_PKT_TXTIME */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** Reference counter */
 	atomic_t atomic_ref;
 
@@ -141,6 +169,7 @@ struct net_pkt {
 #endif
 
 	uint8_t overwrite : 1;	 /* Is packet content being overwritten? */
+<<<<<<< HEAD
 	uint8_t sent_or_eof : 1; /* For outgoing packet: is this sent or not
 				  * For incoming packet of a socket: last
 				  * packet before EOF
@@ -151,6 +180,9 @@ struct net_pkt {
 				  * the driver yet.
 				  * Used only if defined(CONFIG_NET_TCP)
 				  */
+=======
+	uint8_t eof : 1;	 /* Last packet before EOF */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t ptp_pkt : 1;	 /* For outgoing packet: is this packet
 				  * a L2 PTP packet.
 				  * Used only if defined (CONFIG_NET_L2_PTP)
@@ -445,6 +477,7 @@ static inline void net_pkt_set_ip_ecn(struct net_pkt *pkt, uint8_t ecn)
 #endif
 }
 
+<<<<<<< HEAD
 static inline uint8_t net_pkt_sent(struct net_pkt *pkt)
 {
 	return pkt->sent_or_eof;
@@ -465,6 +498,8 @@ static inline void net_pkt_set_queued(struct net_pkt *pkt, bool send)
 	pkt->pkt_queued = send;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline uint8_t net_pkt_tcp_1st_msg(struct net_pkt *pkt)
 {
 #if defined(CONFIG_NET_TCP)
@@ -484,14 +519,21 @@ static inline void net_pkt_set_tcp_1st_msg(struct net_pkt *pkt, bool is_1st)
 #endif
 }
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_SOCKETS)
 static inline uint8_t net_pkt_eof(struct net_pkt *pkt)
 {
 	return pkt->sent_or_eof;
+=======
+static inline uint8_t net_pkt_eof(struct net_pkt *pkt)
+{
+	return pkt->eof;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void net_pkt_set_eof(struct net_pkt *pkt, bool eof)
 {
+<<<<<<< HEAD
 	pkt->sent_or_eof = eof;
 }
 #endif
@@ -500,18 +542,29 @@ static inline void net_pkt_set_eof(struct net_pkt *pkt, bool eof)
 static inline bool net_pkt_forwarding(struct net_pkt *pkt)
 {
 	return pkt->forwarding;
+=======
+	pkt->eof = eof;
+}
+
+static inline bool net_pkt_forwarding(struct net_pkt *pkt)
+{
+	return !!(pkt->forwarding);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void net_pkt_set_forwarding(struct net_pkt *pkt, bool forward)
 {
 	pkt->forwarding = forward;
 }
+<<<<<<< HEAD
 #else
 static inline bool net_pkt_forwarding(struct net_pkt *pkt)
 {
 	return false;
 }
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_NET_IPV4)
 static inline uint8_t net_pkt_ipv4_ttl(struct net_pkt *pkt)
@@ -943,7 +996,11 @@ static inline void net_pkt_set_vlan_tci(struct net_pkt *pkt, uint16_t tci)
 }
 #endif
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_PKT_TIMESTAMP)
+=======
+#if defined(CONFIG_NET_PKT_TIMESTAMP) || defined(CONFIG_NET_PKT_TXTIME)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline struct net_ptp_time *net_pkt_timestamp(struct net_pkt *pkt)
 {
 	return &pkt->timestamp;
@@ -955,6 +1012,19 @@ static inline void net_pkt_set_timestamp(struct net_pkt *pkt,
 	pkt->timestamp.second = timestamp->second;
 	pkt->timestamp.nanosecond = timestamp->nanosecond;
 }
+<<<<<<< HEAD
+=======
+
+static inline net_time_t net_pkt_timestamp_ns(struct net_pkt *pkt)
+{
+	return net_ptp_time_to_ns(&pkt->timestamp);
+}
+
+static inline void net_pkt_set_timestamp_ns(struct net_pkt *pkt, net_time_t timestamp)
+{
+	pkt->timestamp = ns_to_net_ptp_time(timestamp);
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 static inline struct net_ptp_time *net_pkt_timestamp(struct net_pkt *pkt)
 {
@@ -969,7 +1039,24 @@ static inline void net_pkt_set_timestamp(struct net_pkt *pkt,
 	ARG_UNUSED(pkt);
 	ARG_UNUSED(timestamp);
 }
+<<<<<<< HEAD
 #endif /* CONFIG_NET_PKT_TIMESTAMP */
+=======
+
+static inline net_time_t net_pkt_timestamp_ns(struct net_pkt *pkt)
+{
+	ARG_UNUSED(pkt);
+
+	return 0;
+}
+
+static inline void net_pkt_set_timestamp_ns(struct net_pkt *pkt, net_time_t timestamp)
+{
+	ARG_UNUSED(pkt);
+	ARG_UNUSED(timestamp);
+}
+#endif /* CONFIG_NET_PKT_TIMESTAMP || CONFIG_NET_PKT_TXTIME */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_NET_PKT_RXTIME_STATS) || defined(CONFIG_NET_PKT_TXTIME_STATS)
 static inline uint32_t net_pkt_create_time(struct net_pkt *pkt)
@@ -998,6 +1085,7 @@ static inline void net_pkt_set_create_time(struct net_pkt *pkt,
 }
 #endif /* CONFIG_NET_PKT_RXTIME_STATS || CONFIG_NET_PKT_TXTIME_STATS */
 
+<<<<<<< HEAD
 #if defined(CONFIG_NET_PKT_TXTIME)
 static inline uint64_t net_pkt_txtime(struct net_pkt *pkt)
 {
@@ -1022,6 +1110,36 @@ static inline void net_pkt_set_txtime(struct net_pkt *pkt, uint64_t txtime)
 	ARG_UNUSED(txtime);
 }
 #endif /* CONFIG_NET_PKT_TXTIME */
+=======
+/**
+ * @deprecated Use @ref net_pkt_timestamp or @ref net_pkt_timestamp_ns instead.
+ */
+static inline uint64_t net_pkt_txtime(struct net_pkt *pkt)
+{
+#if defined(CONFIG_NET_PKT_TXTIME)
+	return pkt->timestamp.second * NSEC_PER_SEC + pkt->timestamp.nanosecond;
+#else
+	ARG_UNUSED(pkt);
+
+	return 0;
+#endif /* CONFIG_NET_PKT_TXTIME */
+}
+
+/**
+ * @deprecated Use @ref net_pkt_set_timestamp or @ref net_pkt_set_timestamp_ns
+ * instead.
+ */
+static inline void net_pkt_set_txtime(struct net_pkt *pkt, uint64_t txtime)
+{
+#if defined(CONFIG_NET_PKT_TXTIME)
+	pkt->timestamp.second = txtime / NSEC_PER_SEC;
+	pkt->timestamp.nanosecond = txtime % NSEC_PER_SEC;
+#else
+	ARG_UNUSED(pkt);
+	ARG_UNUSED(txtime);
+#endif /* CONFIG_NET_PKT_TXTIME */
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_NET_PKT_TXTIME_STATS_DETAIL) || \
 	defined(CONFIG_NET_PKT_RXTIME_STATS_DETAIL)
@@ -1142,7 +1260,11 @@ static inline void net_pkt_set_ll_proto_type(struct net_pkt *pkt, uint16_t type)
 #if defined(CONFIG_NET_IPV4_AUTO)
 static inline bool net_pkt_ipv4_auto(struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	return pkt->ipv4_auto_arp_msg;
+=======
+	return !!(pkt->ipv4_auto_arp_msg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void net_pkt_set_ipv4_auto(struct net_pkt *pkt,
@@ -1169,7 +1291,11 @@ static inline void net_pkt_set_ipv4_auto(struct net_pkt *pkt,
 #if defined(CONFIG_NET_LLDP)
 static inline bool net_pkt_is_lldp(struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	return pkt->lldp_pkt;
+=======
+	return !!(pkt->lldp_pkt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void net_pkt_set_lldp(struct net_pkt *pkt, bool is_lldp)
@@ -1194,7 +1320,11 @@ static inline void net_pkt_set_lldp(struct net_pkt *pkt, bool is_lldp)
 #if defined(CONFIG_NET_L2_PPP)
 static inline bool net_pkt_is_ppp(struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	return pkt->ppp_msg;
+=======
+	return !!(pkt->ppp_msg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline void net_pkt_set_ppp(struct net_pkt *pkt,
@@ -1249,7 +1379,11 @@ static inline void net_pkt_set_overwrite(struct net_pkt *pkt, bool overwrite)
 
 static inline bool net_pkt_is_being_overwritten(struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	return pkt->overwrite;
+=======
+	return !!(pkt->overwrite);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #ifdef CONFIG_NET_PKT_FILTER
@@ -1275,6 +1409,40 @@ static inline bool net_pkt_filter_recv_ok(struct net_pkt *pkt)
 
 #endif /* CONFIG_NET_PKT_FILTER */
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_NET_PKT_FILTER) && \
+	(defined(CONFIG_NET_PKT_FILTER_IPV4_HOOK) || defined(CONFIG_NET_PKT_FILTER_IPV6_HOOK))
+
+bool net_pkt_filter_ip_recv_ok(struct net_pkt *pkt);
+
+#else
+
+static inline bool net_pkt_filter_ip_recv_ok(struct net_pkt *pkt)
+{
+	ARG_UNUSED(pkt);
+
+	return true;
+}
+
+#endif /* CONFIG_NET_PKT_FILTER_IPV4_HOOK || CONFIG_NET_PKT_FILTER_IPV6_HOOK */
+
+#if defined(CONFIG_NET_PKT_FILTER) && defined(CONFIG_NET_PKT_FILTER_LOCAL_IN_HOOK)
+
+bool net_pkt_filter_local_in_recv_ok(struct net_pkt *pkt);
+
+#else
+
+static inline bool net_pkt_filter_local_in_recv_ok(struct net_pkt *pkt)
+{
+	ARG_UNUSED(pkt);
+
+	return true;
+}
+
+#endif /* CONFIG_NET_PKT_FILTER && CONFIG_NET_PKT_FILTER_LOCAL_IN_HOOK */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* @endcond */
 
 /**
@@ -1282,10 +1450,17 @@ static inline bool net_pkt_filter_recv_ok(struct net_pkt *pkt)
  *
  * A net_pkt slab is used to store meta-information about
  * network packets. It must be coupled with a data fragment pool
+<<<<<<< HEAD
  * (:c:macro:`NET_PKT_DATA_POOL_DEFINE`) used to store the actual
  * packet data. The macro can be used by an application to define
  * additional custom per-context TX packet slabs (see
  * :c:func:`net_context_setup_pools`).
+=======
+ * (@ref NET_PKT_DATA_POOL_DEFINE) used to store the actual
+ * packet data. The macro can be used by an application to define
+ * additional custom per-context TX packet slabs (see
+ * net_context_setup_pools()).
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param name Name of the slab.
  * @param count Number of net_pkt in this slab.
@@ -1301,10 +1476,17 @@ static inline bool net_pkt_filter_recv_ok(struct net_pkt *pkt)
  *
  * A net_buf pool is used to store actual data for
  * network packets. It must be coupled with a net_pkt slab
+<<<<<<< HEAD
  * (:c:macro:`NET_PKT_SLAB_DEFINE`) used to store the packet
  * meta-information. The macro can be used by an application to
  * define additional custom per-context TX packet pools (see
  * :c:func:`net_context_setup_pools`).
+=======
+ * (@ref NET_PKT_SLAB_DEFINE) used to store the packet
+ * meta-information. The macro can be used by an application to
+ * define additional custom per-context TX packet pools (see
+ * net_context_setup_pools()).
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param name Name of the pool.
  * @param count Number of net_buf in this pool.
@@ -2195,8 +2377,13 @@ struct net_pkt_data_access {
  * @brief Get data from a network packet in a contiguous way
  *
  * @details net_pkt's cursor should be properly initialized and,
+<<<<<<< HEAD
  *          if needed, positioned using net_pkt_skip.
  *          Cursor position will be updated after the operation.
+=======
+ *          if needed, positioned using net_pkt_skip. Unlike other functions,
+ *          cursor position will not be updated after the operation.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param pkt    The network packet from where to get the data.
  * @param access A pointer to a valid net_pkt_data_access describing the

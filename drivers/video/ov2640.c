@@ -1043,7 +1043,11 @@ static int ov2640_init_0(const struct device *dev)
 	}
 
 #if DT_INST_NODE_HAS_PROP(0, reset_gpios)
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->reset_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: device %s is not ready", dev->name,
 				cfg->reset_gpio.port->name);
 		return -ENODEV;

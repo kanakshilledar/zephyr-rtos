@@ -1,5 +1,6 @@
 # Each line should contain the regular expression of a known Sphinx warning
 # that should be filtered out
+<<<<<<< HEAD
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: dma_config'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: flash_img_check'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: zsock_fd_set'.*
@@ -7,12 +8,34 @@
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: fs_statvfs'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*dmic_trigger.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: uint16_t id'.*
+=======
+
+# Function and (enum or struct) name
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: flash_img_check'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: fs_statvfs'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: .*dmic_trigger.*'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: dma_config'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: net_if_mcast_monitor'.*
+
+# Struct and typedef name
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: zsock_fd_set'.*
+
+# Function and extern function
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*net_if_ipv4_addr_mask_cmp.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*net_if_ipv4_is_addr_bcast.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*net_if_ipv4_addr_lookup.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*net_if_ipv6_addr_lookup.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*net_if_ipv6_maddr_lookup.*'.*
+<<<<<<< HEAD
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct in_addr.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct in6_addr.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct net_if.*'.*
 .*Duplicate C declaration.*\n.*'\.\. c:struct:: bt_ots_init'.*
+=======
+
+# Common field names
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct in_addr.*'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct in6_addr.*'.*
+.*Duplicate C declaration.*\n.*'\.\. c:.*:: .*struct net_if.*'.*
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

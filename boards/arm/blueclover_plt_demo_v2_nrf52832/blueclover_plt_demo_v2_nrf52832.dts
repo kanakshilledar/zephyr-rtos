@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <nordic/nrf52832_qfaa.dtsi>
 #include "blueclover_plt_demo_v2_nrf52832-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "Blue Clover PLT Demo Board V2";
@@ -28,10 +32,18 @@
 		button0: button_0 {
 			gpios = <&gpio0 26 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 0";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button1: button_1 {
 			gpios = <&gpio0 21 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -45,6 +57,13 @@
 	};
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status ="okay";
 };

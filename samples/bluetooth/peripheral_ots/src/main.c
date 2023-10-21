@@ -223,7 +223,11 @@ static int ots_init(void)
 	int err;
 	struct bt_ots *ots;
 	struct object_creation_data obj_data;
+<<<<<<< HEAD
 	struct bt_ots_init ots_init;
+=======
+	struct bt_ots_init_param ots_init;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct bt_ots_obj_add_param param;
 	const char * const first_object_name = "first_object.txt";
 	const char * const second_object_name = "second_object.gif";

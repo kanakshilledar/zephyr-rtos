@@ -247,5 +247,16 @@ ZTEST(rtio_spsc, test_spsc_throughput)
 		 THROUGHPUT_ITERS, ns/THROUGHPUT_ITERS);
 }
 
+<<<<<<< HEAD
 
 ZTEST_SUITE(rtio_spsc, NULL, NULL, NULL, NULL, NULL);
+=======
+static void rtio_spsc_before(void *data)
+{
+	ARG_UNUSED(data);
+
+	rtio_spsc_reset(&spsc);
+}
+
+ZTEST_SUITE(rtio_spsc, NULL, NULL, rtio_spsc_before, NULL, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

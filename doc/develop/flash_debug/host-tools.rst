@@ -14,7 +14,10 @@ more information on these commands.
 
 .. _atmel_sam_ba_bootloader:
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 SAM Boot Assistant (SAM-BA)
 ***************************
 
@@ -182,12 +185,20 @@ As a quick reference, see these three board documentation pages:
   - :ref:`arduino_nano_33_iot` (Arduino bootloader)
   - :ref:`arduino_nano_33_ble` (Arduino legacy bootloader)
 
+<<<<<<< HEAD
 .. _jlink-debug-host-tools:
 
 Enabling BOSSAC on Windows Native [Experimental]
 ------------------------------------------------
 Zephyr SDK´s bossac is only currenty support on Linux and macOS. Windows support
 can be achieved by using the bossac version from `BOSSA oficial releases`_.
+=======
+Enabling BOSSAC on Windows Native [Experimental]
+------------------------------------------------
+
+Zephyr SDK´s bossac is currently supported on Linux and macOS only. Windows support
+can be achieved by using the bossac version from `BOSSA official releases`_.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 After installing using default options, the :file:`bossac.exe` must be added to
 Windows PATH. A specific bossac executable can be used by passing the
 ``--bossac`` option, as follows:
@@ -200,6 +211,65 @@ Windows PATH. A specific bossac executable can be used by passing the
 
    WSL is not currently supported.
 
+<<<<<<< HEAD
+=======
+
+.. _linkserver-debug-host-tools:
+
+LinkServer Debug  Host Tools
+****************************
+
+Linkserver is a utility for launching and managing GDB servers for NXP debug probes,
+which also provides a command-line target flash programming capabilities.
+Linkserver can be used with the `NXP MCUXpresso for Visual Studio Code`_ implementation,
+with custom debug configurations based on GNU tools or as part of a headless solution
+for continuous integration and test. LinkServer can be used with MCU-Link, LPC-Link2,
+LPC11U35-based and OpenSDA based standalone or on-board debug probes from NXP.
+
+NXP recommends installing LinkServer by using NXP's `MCUXpresso Installer`_.
+This method will also install the tools supporting the debug probes below,
+including NXP's MCU-Link and LPCScrypt tools.
+
+LinkServer is compatible with the following debug probes:
+
+- :ref:`lpclink2-cmsis-onboard-debug-probe`
+- :ref:`mcu-link-cmsis-onboard-debug-probe`
+- :ref:`opensda-daplink-onboard-debug-probe`
+
+Supported west commands:
+
+1. flash
+#. debug
+#. debugserver
+#. attach
+
+Notes:
+
+
+1. Probes can be listed with LinkServer:
+
+.. code-block:: console
+
+   LinkServer probes
+
+2. With multiple debug probes attached to the host, use the
+LinkServer west runner   ``--probe`` option to pass the probe index.
+
+.. code-block:: console
+
+   west flash --runner=linkserver --probe=3
+
+3. Device-specific settings can be overridden with the west runner for LinkServer with
+   the option '--override'. May be used multiple times. The format is dictated
+   by LinkServer, e.g.:
+
+.. code-block:: console
+
+   west flash --runner=linkserver --override /device/memory/5/flash-driver=MIMXRT500_SFDP_MXIC_OSPI_S.cfx
+
+.. _jlink-debug-host-tools:
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 J-Link Debug Host Tools
 ***********************
 
@@ -215,6 +285,10 @@ These debug host tools are compatible with the following debug probes:
 
 - :ref:`lpclink2-jlink-onboard-debug-probe`
 - :ref:`opensda-jlink-onboard-debug-probe`
+<<<<<<< HEAD
+=======
+- :ref:`mcu-link-jlink-onboard-debug-probe`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 - :ref:`jlink-external-debug-probe`
 - :ref:`stlink-v21-onboard-debug-probe`
 
@@ -353,5 +427,16 @@ To enable Zephyr RTOS awareness follow the steps described in
 .. _Lauterbach TRACE32 Zephyr OS Awareness Manual:
 	https://www2.lauterbach.com/pdf/rtos_zephyr.pdf
 
+<<<<<<< HEAD
 .. _BOSSA oficial releases:
 	https://github.com/shumatech/BOSSA/releases
+=======
+.. _BOSSA official releases:
+	https://github.com/shumatech/BOSSA/releases
+
+.. _NXP MCUXpresso for Visual Studio Code:
+	https://www.nxp.com/design/software/development-software/mcuxpresso-software-and-tools-/mcuxpresso-for-visual-studio-code:MCUXPRESSO-VSC
+
+.. _MCUXpresso Installer:
+	https://www.nxp.com/lgfiles/updates/mcuxpresso/MCUXpressoInstaller.exe
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

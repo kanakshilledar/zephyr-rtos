@@ -16,7 +16,11 @@ LOG_MODULE_DECLARE(net_echo_client_sample, LOG_LEVEL_DBG);
 
 #include <zephyr/net/socket.h>
 #include <zephyr/net/tls_credentials.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include "common.h"
 #include "ca_certificate.h"

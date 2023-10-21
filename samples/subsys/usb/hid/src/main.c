@@ -138,6 +138,7 @@ int main(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	LOG_INF("Starting application");
 
 	ret = usb_enable(status_cb);
@@ -152,6 +153,8 @@ int main(void)
 
 static int composite_pre_init(void)
 {
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	hdev = device_get_binding("HID_0");
 	if (hdev == NULL) {
 		LOG_ERR("Cannot get USB HID Device");
@@ -170,7 +173,27 @@ static int composite_pre_init(void)
 		LOG_WRN("Failed to set Protocol Code");
 	}
 
+<<<<<<< HEAD
 	return usb_hid_init(hdev);
 }
 
 SYS_INIT(composite_pre_init, APPLICATION, CONFIG_KERNEL_INIT_PRIORITY_DEVICE);
+=======
+	ret = usb_hid_init(hdev);
+	if (ret != 0) {
+		return ret;
+	}
+
+	LOG_INF("Starting application");
+
+	ret = usb_enable(status_cb);
+	if (ret != 0) {
+		LOG_ERR("Failed to enable USB");
+		return ret;
+	}
+
+	k_work_init(&report_send, send_report);
+
+	return 0;
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

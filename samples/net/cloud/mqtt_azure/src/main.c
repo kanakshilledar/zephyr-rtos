@@ -12,7 +12,11 @@ LOG_MODULE_REGISTER(mqtt_azure, LOG_LEVEL_DBG);
 #include <zephyr/net/mqtt.h>
 
 #include <zephyr/sys/printk.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <string.h>
 #include <errno.h>
 
@@ -60,11 +64,19 @@ static K_SEM_DEFINE(mqtt_start, 0, 1);
 #define TLS_SNI_HOSTNAME CONFIG_SAMPLE_CLOUD_AZURE_HOSTNAME
 #define APP_CA_CERT_TAG 1
 
+<<<<<<< HEAD
 static sec_tag_t m_sec_tags[] = {
 	APP_CA_CERT_TAG,
 };
 
 static uint8_t topic[] = "devices/" MQTT_CLIENTID "/messages/devicebound/#";
+=======
+static const sec_tag_t m_sec_tags[] = {
+	APP_CA_CERT_TAG,
+};
+
+static uint8_t devbound_topic[] = "devices/" MQTT_CLIENTID "/messages/devicebound/#";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct mqtt_topic subs_topic;
 static struct mqtt_subscription_list subs_list;
 
@@ -274,27 +286,45 @@ static void subscribe(struct mqtt_client *client)
 	int err;
 
 	/* subscribe */
+<<<<<<< HEAD
 	subs_topic.topic.utf8 = topic;
 	subs_topic.topic.size = strlen(topic);
+=======
+	subs_topic.topic.utf8 = devbound_topic;
+	subs_topic.topic.size = strlen(devbound_topic);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	subs_list.list = &subs_topic;
 	subs_list.list_count = 1U;
 	subs_list.message_id = 1U;
 
 	err = mqtt_subscribe(client, &subs_list);
 	if (err) {
+<<<<<<< HEAD
 		LOG_ERR("Failed on topic %s", topic);
+=======
+		LOG_ERR("Failed on topic %s", devbound_topic);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 static int publish(struct mqtt_client *client, enum mqtt_qos qos)
 {
 	char payload[] = "{id=123}";
+<<<<<<< HEAD
 	char topic[] = "devices/" MQTT_CLIENTID "/messages/events/";
 	uint8_t len = strlen(topic);
 	struct mqtt_publish_param param;
 
 	param.message.topic.qos = qos;
 	param.message.topic.topic.utf8 = (uint8_t *)topic;
+=======
+	char evt_topic[] = "devices/" MQTT_CLIENTID "/messages/events/";
+	uint8_t len = strlen(evt_topic);
+	struct mqtt_publish_param param;
+
+	param.message.topic.qos = qos;
+	param.message.topic.topic.utf8 = (uint8_t *)evt_topic;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	param.message.topic.topic.size = len;
 	param.message.payload.data = payload;
 	param.message.payload.len = strlen(payload);

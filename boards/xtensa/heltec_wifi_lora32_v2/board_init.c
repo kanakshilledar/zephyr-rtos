@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/drivers/gpio.h>
+=======
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define VEXT_PIN  DT_GPIO_PIN(DT_NODELABEL(vext), gpios)
 #define OLED_RST  DT_GPIO_PIN(DT_NODELABEL(oledrst), gpios)

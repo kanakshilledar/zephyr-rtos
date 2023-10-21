@@ -11,7 +11,11 @@
 
 #if defined(CONFIG_BARRIER_OPERATIONS_ARCH)
 # if defined(CONFIG_ARM)
+<<<<<<< HEAD
 # include <zephyr/arch/arm/aarch32/barrier.h>
+=======
+# include <zephyr/arch/arm/barrier.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # elif defined(CONFIG_ARM64)
 # include <zephyr/arch/arm64/barrier.h>
 # endif

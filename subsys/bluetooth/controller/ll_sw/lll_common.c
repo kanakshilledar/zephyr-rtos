@@ -38,6 +38,11 @@ int lll_prepare(lll_is_abort_cb_t is_abort_cb, lll_abort_cb_t abort_cb,
 		lll_prepare_cb_t prepare_cb, int8_t event_prio,
 		struct lll_prepare_param *prepare_param)
 {
+<<<<<<< HEAD
+=======
+	int err;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CTLR_JIT_SCHEDULING)
 	int prio = event_prio;
 	struct lll_hdr *hdr = prepare_param->param;
@@ -60,13 +65,20 @@ int lll_prepare(lll_is_abort_cb_t is_abort_cb, lll_abort_cb_t abort_cb,
 	prepare_param->prio = prio;
 #endif /* CONFIG_BT_CTLR_JIT_SCHEDULING */
 
+<<<<<<< HEAD
 	return lll_prepare_resolve(is_abort_cb, abort_cb, prepare_cb,
 				   prepare_param, 0, 0);
+=======
+	err = lll_prepare_resolve(is_abort_cb, abort_cb, prepare_cb, prepare_param, 0U, 0U);
+
+	return err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void lll_resume(void *param)
 {
 	struct lll_event *next;
+<<<<<<< HEAD
 	int ret;
 
 	next = param;
@@ -74,6 +86,14 @@ void lll_resume(void *param)
 				  next->prepare_cb, &next->prepare_param,
 				  next->is_resume, 1);
 	LL_ASSERT(!ret || ret == -EINPROGRESS);
+=======
+	int err;
+
+	next = param;
+	err = lll_prepare_resolve(next->is_abort_cb, next->abort_cb, next->prepare_cb,
+				  &next->prepare_param, next->is_resume, 1U);
+	LL_ASSERT(!err || err == -EINPROGRESS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_BT_CTLR_JIT_SCHEDULING)

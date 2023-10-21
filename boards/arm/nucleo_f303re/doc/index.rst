@@ -147,6 +147,7 @@ This interface is supported by the openocd version included in Zephyr SDK.
 
 
 .. _Nucleo F303RE website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f303re.html
 
 .. _STM32 Nucleo-64 board User Manual:
@@ -154,9 +155,22 @@ This interface is supported by the openocd version included in Zephyr SDK.
 
 .. _STM32F303RE on www.st.com:
    http://www.st.com/en/microcontrollers/stm32f303re.html
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f303re.html
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+
+.. _STM32F303RE on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f303re.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _STM32F303RE reference manual:
    https://www.st.com/resource/en/reference_manual/dm00043574.pdf
 
 .. _STM32F303RE datasheet:
+<<<<<<< HEAD
    http://www.st.com/resource/en/datasheet/stm32f303re.pdf
+=======
+   https://www.st.com/resource/en/datasheet/stm32f303re.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

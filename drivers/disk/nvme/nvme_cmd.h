@@ -197,7 +197,11 @@ enum nvme_path_related_status_code {
 	NVME_SC_ASYMMETRIC_ACCESS_TRANSITION	= 0x03,
 	NVME_SC_CONTROLLER_PATHING_ERROR	= 0x60,
 	NVME_SC_HOST_PATHING_ERROR		= 0x70,
+<<<<<<< HEAD
 	NVME_SC_COMMAND_ABOTHED_BY_HOST		= 0x71,
+=======
+	NVME_SC_COMMAND_ABORTED_BY_HOST		= 0x71,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /* admin opcodes */
@@ -306,6 +310,7 @@ enum nvme_feature {
 #define CACHE_LINE_SIZE				CONFIG_DCACHE_LINE_SIZE
 #endif
 
+<<<<<<< HEAD
 /* Assuming page size it always 4Kib
  * ToDo: define it accorditng to CONFIG_MMU_PAGE_SIZE
  */
@@ -316,6 +321,16 @@ enum nvme_feature {
 struct nvme_prp_list {
 	uintptr_t prp[CONFIG_MMU_PAGE_SIZE / sizeof(uintptr_t)]
 						__aligned(0x1000);
+=======
+#define NVME_PBAO_MASK (CONFIG_MMU_PAGE_SIZE - 1)
+
+#define NVME_PRP_NEXT_PAGE(_addr)				\
+	((_addr & ~NVME_PBAO_MASK) + CONFIG_MMU_PAGE_SIZE)
+
+struct nvme_prp_list {
+	uintptr_t prp[CONFIG_MMU_PAGE_SIZE / sizeof(uintptr_t)]
+						__aligned(CONFIG_MMU_PAGE_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sys_dnode_t node;
 };
 
@@ -377,6 +392,15 @@ void nvme_cmd_init(void);
 
 void nvme_completion_poll_cb(void *arg, const struct nvme_completion *cpl);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NVME_LOG_LEVEL_DBG
+void nvme_completion_print(const struct nvme_completion *cpl);
+#else
+#define nvme_completion_print(...)
+#endif /* CONFIG_NVME_LOG_LEVEL_DBG */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void nvme_cmd_request_free(struct nvme_request *request);
 
 struct nvme_request *nvme_cmd_request_alloc(void);

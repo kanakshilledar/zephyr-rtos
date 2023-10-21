@@ -8,7 +8,11 @@
 
 #define MY_PORT 4242
 #if defined(CONFIG_NET_SOCKETS_SOCKOPT_TLS) || defined(CONFIG_NET_TCP) || \
+<<<<<<< HEAD
 	defined(CONFIG_COVERAGE)
+=======
+	defined(CONFIG_COVERAGE_GCOV)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STACK_SIZE 4096
 #else
 #define STACK_SIZE 2048

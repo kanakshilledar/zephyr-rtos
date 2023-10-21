@@ -470,6 +470,7 @@ ZTEST(net_content_plain_text_nodata, test_get_bool_nodata)
 	zassert_equal(ret, -ENODATA, "Invalid error code returned");
 }
 
+<<<<<<< HEAD
 ZTEST(net_content_plain_text, test_get_opaque)
 {
 	int ret;
@@ -501,6 +502,8 @@ ZTEST(net_content_plain_text_nodata, test_get_opaque_nodata)
 	zassert_equal(ret, 0, "Invalid error code returned");
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(net_content_plain_text, test_get_objlnk)
 {
 	int ret;

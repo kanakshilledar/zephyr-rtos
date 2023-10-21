@@ -104,8 +104,15 @@ static int gpio_cat1_configure(const struct device *dev,
 		break;
 
 	case GPIO_DISCONNECTED:
+<<<<<<< HEAD
 		cyhal_gpio_free(gpio_pin);
 		return 0;
+=======
+		/* Handle this after calling cyhal_gpio_init(), otherwise it will cause an assert
+		 * from HAL for freeing an uninitialized pin
+		 */
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	default:
 		return -ENOTSUP;
@@ -121,7 +128,16 @@ static int gpio_cat1_configure(const struct device *dev,
 		status = cyhal_gpio_init(gpio_pin, gpio_dir, gpio_mode, pin_val);
 	}
 
+<<<<<<< HEAD
 	return (status == CY_RSLT_SUCCESS) ? 0 : -EIO;
+=======
+	if (flags & GPIO_DISCONNECTED) {
+		cyhal_gpio_free(gpio_pin);
+	}
+
+	return (status == CY_RSLT_SUCCESS) ? 0 : -EIO;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int gpio_cat1_port_get_raw(const struct device *dev,

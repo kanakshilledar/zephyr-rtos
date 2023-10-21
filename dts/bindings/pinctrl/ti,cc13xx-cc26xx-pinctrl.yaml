@@ -26,8 +26,15 @@ description: |
     - bias-pull-up: Enable pull-up resistor.
     - drive-open-drain: Output driver is open-drain.
     - drive-open-drain: Output driver is open-source.
+<<<<<<< HEAD
     - input-enable: enable input.
     - input-schmitt-enable: enable input schmitt circuit.
+=======
+    - drive-strength: Minimum current that can be sourced from the pin.
+    - input-enable: enable input.
+    - input-schmitt-enable: enable input schmitt circuit.
+    - ti,input-edge-detect: enable and configure edge detection interrupts
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     An example for CC13XX family, include the chip level pinctrl
     DTSI file in the board level DTS:
@@ -57,6 +64,30 @@ description: |
         };
       };
 
+<<<<<<< HEAD
+=======
+    To configure an input pin with edge detection (e.g. to count pulses):
+
+      &pinctrl {
+        gpt0_edge_counter: gpt0_edge_counter {
+          pinmux = <15 IOC_PORT_MCU_PORT_EVENT0>;
+          input-enable;
+          bias-pull-up;
+          ti,input-edge-detect = <IOC_RISING_EDGE>;
+        };
+      };
+
+    To configure an output pin (e.g. for PWM output):
+
+      &pinctrl {
+        gpt0_pwm: gpt0_pwm {
+          pinmux = <16 IOC_PORT_MCU_PORT_EVENT1>;
+          bias-disable;
+          drive-strength = <8>; /* in mA */
+        };
+      };
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 compatible: "ti,cc13xx-cc26xx-pinctrl"
 
 include: base.yaml
@@ -78,6 +109,10 @@ child-binding:
         - bias-pull-up
         - drive-open-drain
         - drive-open-source
+<<<<<<< HEAD
+=======
+        - drive-strength
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         - input-enable
         - input-schmitt-enable
 
@@ -87,3 +122,29 @@ child-binding:
       type: array
       description: |
         CC13XX/CC26XX pin's configuration (IO pin, IO function).
+<<<<<<< HEAD
+=======
+
+    drive-strength:
+      enum:
+        - 2
+        - 4
+        - 8
+      default: 2
+      description: |
+        The drive strength controls the minimum output driver strength of an I/O pin
+        configured as an output.
+          2: min 2 mA (SoC default)
+          4: min 4 mA
+          8: min 8 mA for for double drive strength IOs, min 4 mA for normal IOs
+
+    ti,input-edge-detect:
+      type: int
+      default: 0 # no edge detection
+      description: |
+        Enables or disables the edge detection interrupt and configures it:
+          IOC_NO_EDGE: No edge detection (SoC default)
+          IOC_FALLING_EDGE: Edge detection on falling edge
+          IOC_RISING_EDGE: Edge detection on rising edge
+          IOC_BOTH_EDGES: Edge detection on both edges
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

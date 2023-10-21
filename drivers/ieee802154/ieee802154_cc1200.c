@@ -27,7 +27,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 #include <zephyr/sys/byteorder.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/drivers/spi.h>
 #include <zephyr/drivers/gpio.h>
@@ -427,6 +431,7 @@ static inline bool read_rxfifo_content(const struct device *dev,
 
 static inline bool verify_crc(const struct device *dev, struct net_pkt *pkt)
 {
+<<<<<<< HEAD
 	uint8_t fcs[2];
 
 	if (!read_rxfifo(dev, fcs, 2)) {
@@ -439,6 +444,23 @@ static inline bool verify_crc(const struct device *dev, struct net_pkt *pkt)
 
 	net_pkt_set_ieee802154_rssi(pkt, fcs[0]);
 	net_pkt_set_ieee802154_lqi(pkt, fcs[1] & CC1200_FCS_LQI_MASK);
+=======
+	uint8_t status[2];
+	int8_t rssi;
+
+	if (!read_rxfifo(dev, status, 2)) {
+		return false;
+	}
+
+	if (!(status[1] & CC1200_FCS_CRC_OK)) {
+		return false;
+	}
+
+	rssi = (int8_t) status[0];
+	net_pkt_set_ieee802154_rssi_dbm(
+		pkt, rssi == CC1200_INVALID_RSSI ? IEEE802154_MAC_RSSI_DBM_UNDEFINED : rssi);
+	net_pkt_set_ieee802154_lqi(pkt, status[1] & CC1200_FCS_LQI_MASK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return true;
 }
@@ -483,7 +505,11 @@ static void cc1200_rx(void *arg)
 			goto out;
 		}
 
+<<<<<<< HEAD
 		if (ieee802154_radio_handle_ack(cc1200->iface, pkt) == NET_OK) {
+=======
+		if (ieee802154_handle_ack(cc1200->iface, pkt) == NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_DBG("ACK packet handled");
 			goto out;
 		}
@@ -516,7 +542,11 @@ out:
  *******************/
 static enum ieee802154_hw_caps cc1200_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	return IEEE802154_HW_FCS | IEEE802154_HW_SUB_GHZ;
+=======
+	return IEEE802154_HW_FCS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int cc1200_cca(const struct device *dev)
@@ -540,6 +570,18 @@ static int cc1200_cca(const struct device *dev)
 static int cc1200_set_channel(const struct device *dev, uint16_t channel)
 {
 	struct cc1200_context *cc1200 = dev->data;
+<<<<<<< HEAD
+=======
+	uint32_t freq;
+
+	/* As SUN FSK provides a host of configurations with extremely different
+	 * channel counts it doesn't make sense to validate (aka -EINVAL) a
+	 * global upper limit on the number of supported channels on this page.
+	 */
+	if (channel > IEEE802154_CC1200_CHANNEL_LIMIT) {
+		return -ENOTSUP;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Unlike usual 15.4 chips, cc1200 is closer to a bare metal radio modem
 	 * and thus does not provide any means to select a channel directly, but
@@ -549,6 +591,7 @@ static int cc1200_set_channel(const struct device *dev, uint16_t channel)
 	 * See rf_evaluate_freq_setting() above.
 	 */
 
+<<<<<<< HEAD
 	if (atomic_get(&cc1200->rx) == 0) {
 		uint32_t freq = rf_evaluate_freq_setting(dev, channel);
 
@@ -557,6 +600,18 @@ static int cc1200_set_channel(const struct device *dev, uint16_t channel)
 			LOG_ERR("Could not set channel %u", channel);
 			return -EIO;
 		}
+=======
+	if (atomic_get(&cc1200->rx) != 0) {
+		return -EIO;
+	}
+
+	freq = rf_evaluate_freq_setting(dev, channel);
+
+	if (!write_reg_freq(dev, freq) ||
+		rf_calibrate(dev)) {
+		LOG_ERR("Could not set channel %u", channel);
+		return -EIO;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -689,11 +744,27 @@ static int cc1200_stop(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static uint16_t cc1200_get_channel_count(const struct device *dev)
 {
 	struct cc1200_context *cc1200 = dev->data;
 
 	return cc1200->rf_settings->channel_limit;
+=======
+/* driver-allocated attribute memory - constant across all driver instances as
+ * this driver's channel range is configured via a global KConfig setting.
+ */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 0, IEEE802154_CC1200_CHANNEL_LIMIT);
+
+static int cc1200_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			   struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_NINE_SUN_PREDEFINED,
+		&drv_attr.phy_supported_channels, value);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /******************
@@ -737,7 +808,11 @@ static int cc1200_init(const struct device *dev)
 	k_sem_init(&cc1200->tx_sync, 0, 1);
 
 	/* Configure GPIOs */
+<<<<<<< HEAD
 	if (!device_is_ready(config->interrupt.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->interrupt)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO port %s is not ready",
 			config->interrupt.port->name);
 		return -ENODEV;
@@ -798,7 +873,11 @@ static struct ieee802154_radio_api cc1200_radio_api = {
 	.tx			= cc1200_tx,
 	.start			= cc1200_start,
 	.stop			= cc1200_stop,
+<<<<<<< HEAD
 	.get_subg_channel_count = cc1200_get_channel_count,
+=======
+	.attr_get		= cc1200_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 NET_DEVICE_DT_INST_DEFINE(0, cc1200_init, NULL, &cc1200_context_data,

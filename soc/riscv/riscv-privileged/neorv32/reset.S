@@ -16,7 +16,11 @@ SECTION_FUNC(reset, __reset)
 	/* Zerorize zero register */
 	lui x0, 0
 
+<<<<<<< HEAD
 	/* Disable insterrupts */
+=======
+	/* Disable interrupts */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	csrw mstatus, x0
 	csrw mie, x0
 
@@ -26,7 +30,11 @@ SECTION_FUNC(reset, __reset)
 #endif /* CONFIG_USERSPACE */
 
 	/* Allow mcycle and minstret counters to increment */
+<<<<<<< HEAD
 	li x11, ~5
+=======
+	li x11, ~2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	csrw mcountinhibit, x11
 
 	/* Zerorize counters */

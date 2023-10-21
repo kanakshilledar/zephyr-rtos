@@ -27,7 +27,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
 #include <zephyr/sys/byteorder.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/debug/stack.h>
 
 #include <zephyr/drivers/gpio.h>
@@ -483,6 +487,7 @@ static inline int mcr20a_set_sequence(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline uint32_t mcr20a_get_rssi(uint32_t lqi)
 {
 	/* Get rssi (Received Signal Strength Indicator, unit is dBm)
@@ -500,6 +505,35 @@ static inline uint32_t mcr20a_get_rssi(uint32_t lqi)
 	uint32_t b = (uint32_t)(65536 / 2.84);
 
 	return (a - (b * lqi)) >> 16;
+=======
+#define DIV_ROUND_CLOSEST_WITH_OPPOSITE_SIGNS(n, d) (((n) - (d)/2)/(d))
+
+static inline int16_t mcr20a_get_rssi(uint8_t lqi)
+{
+	/* Calculate the RSSI (Received Signal Strength Indicator)
+	 * in dBm from the LQI (Link Quality Indicator) value.
+	 *
+	 * There are two different equations for the RF value (which
+	 * we use as the RSSI value) in the reference manuals:
+	 *
+	 * RF = (LQI – 286.6) / 2.69333 (MKW2xD Reference Manual)
+	 * RF = (LQI – 295.4) / 2.84 (MCR20A Reference Manual)
+	 *
+	 * The second is derived from empiric values (see Figure 3-10)
+	 * so we use that one.
+	 *
+	 * Since we want to avoid floating point computation and
+	 * the result needs to be rounded to a signed integer value
+	 * anyways, we take the numerator and denominator times 100
+	 * each and round the end result of the division:
+	 * RF = (LQI – 295.4) / 2.84
+	 *    = (100 * (LQI – 295.4)) / (100 * 2.84)
+	 *    = (100 * LQI – 29540) / 284
+	 */
+	int16_t numerator = ((int16_t)100 * lqi) - 29540; /* always negative */
+
+	return DIV_ROUND_CLOSEST_WITH_OPPOSITE_SIGNS(numerator, 284);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline uint8_t *get_mac(const struct device *dev)
@@ -554,6 +588,11 @@ static inline void mcr20a_rx(const struct device *dev, uint8_t len)
 	struct mcr20a_context *mcr20a = dev->data;
 	struct net_pkt *pkt = NULL;
 	uint8_t pkt_len;
+<<<<<<< HEAD
+=======
+	uint16_t rssi;
+	uint8_t lqi;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	pkt_len = len - MCR20A_FCS_LENGTH;
 
@@ -569,11 +608,17 @@ static inline void mcr20a_rx(const struct device *dev, uint8_t len)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (ieee802154_radio_handle_ack(mcr20a->iface, pkt) == NET_OK) {
+=======
+	/* TODO: ieee802154_handle_ack() expects an ACK package. */
+	if (ieee802154_handle_ack(mcr20a->iface, pkt) == NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("ACK packet handled");
 		goto out;
 	}
 
+<<<<<<< HEAD
 	net_pkt_set_ieee802154_lqi(pkt, read_reg_lqi_value(dev));
 	net_pkt_set_ieee802154_rssi(pkt, mcr20a_get_rssi(
 					    net_pkt_ieee802154_lqi(pkt)));
@@ -581,6 +626,15 @@ static inline void mcr20a_rx(const struct device *dev, uint8_t len)
 	LOG_DBG("Caught a packet (%u) (LQI: %u, RSSI: %u)",
 		    pkt_len, net_pkt_ieee802154_lqi(pkt),
 		    net_pkt_ieee802154_rssi(pkt));
+=======
+	lqi = read_reg_lqi_value(dev);
+	net_pkt_set_ieee802154_lqi(pkt, lqi);
+
+	rssi = mcr20a_get_rssi(lqi);
+	net_pkt_set_ieee802154_rssi_dbm(pkt, rssi);
+
+	LOG_DBG("Caught a packet (%u) (LQI: %u, RSSI: %d)", pkt_len, lqi, rssi);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (net_recv_data(mcr20a->iface, pkt) < 0) {
 		LOG_DBG("Packet dropped by NET stack");
@@ -841,10 +895,15 @@ static int mcr20a_set_cca_mode(const struct device *dev, uint8_t mode)
 
 static enum ieee802154_hw_caps mcr20a_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	return IEEE802154_HW_FCS |
 		IEEE802154_HW_2_4_GHZ |
 		IEEE802154_HW_TX_RX_ACK |
 		IEEE802154_HW_FILTER;
+=======
+	return IEEE802154_HW_FCS | IEEE802154_HW_TX_RX_ACK |
+	       IEEE802154_HW_RX_TX_ACK | IEEE802154_HW_FILTER;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Note: CCA before TX is enabled by default */
@@ -905,7 +964,11 @@ static int mcr20a_set_channel(const struct device *dev, uint16_t channel)
 
 	if (channel < 11 || channel > 26) {
 		LOG_ERR("Unsupported channel %u", channel);
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return channel < 11 ? -ENOTSUP : -EINVAL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_mutex_lock(&mcr20a->phy_mutex, K_FOREVER);
@@ -1254,6 +1317,22 @@ error:
 	return -EIO;
 }
 
+<<<<<<< HEAD
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+IEEE802154_DEFINE_PHY_SUPPORTED_CHANNELS(drv_attr, 11, 26);
+
+static int mcr20a_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			   struct ieee802154_attr_value *value)
+{
+	ARG_UNUSED(dev);
+
+	return ieee802154_attr_get_channel_page_and_range(
+		attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_ZERO_OQPSK_2450_BPSK_868_915,
+		&drv_attr.phy_supported_channels, value);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int mcr20a_update_overwrites(const struct device *dev)
 {
 	if (!write_reg_overwrite_ver(dev, overwrites_direct[0].data)) {
@@ -1346,7 +1425,11 @@ static inline int configure_gpios(const struct device *dev)
 	const struct mcr20a_config *config = dev->config;
 
 	/* setup gpio for the modem interrupt */
+<<<<<<< HEAD
 	if (!device_is_ready(config->irq_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("IRQ GPIO device not ready");
 		return -ENODEV;
 	}
@@ -1355,7 +1438,11 @@ static inline int configure_gpios(const struct device *dev)
 
 	if (!PART_OF_KW2XD_SIP) {
 		/* setup gpio for the modems reset */
+<<<<<<< HEAD
 		if (!device_is_ready(config->reset_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Reset GPIO device not ready");
 			return -EINVAL;
 		}
@@ -1436,6 +1523,10 @@ static struct ieee802154_radio_api mcr20a_radio_api = {
 	.start			= mcr20a_start,
 	.stop			= mcr20a_stop,
 	.tx			= mcr20a_tx,
+<<<<<<< HEAD
+=======
+	.attr_get		= mcr20a_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #if defined(CONFIG_IEEE802154_RAW_MODE)

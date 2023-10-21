@@ -90,23 +90,40 @@ int start_slave_port_packet_socket(struct net_if *iface,
 	return 0;
 }
 
+<<<<<<< HEAD
 struct ud ifaces;
+=======
+struct ud user_data_ifaces;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int init_dsa_ports(void)
 {
 	uint8_t tbl_buf[8];
 
+<<<<<<< HEAD
 	/* Initialize interfaces - read them to ifaces */
 	(void)memset(&ifaces, 0, sizeof(ifaces));
 	net_if_foreach(iface_cb, &ifaces);
+=======
+	/* Initialize interfaces - read them to user_data_ifaces */
+	(void)memset(&user_data_ifaces, 0, sizeof(user_data_ifaces));
+	net_if_foreach(iface_cb, &user_data_ifaces);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/*
 	 * Set static table to forward LLDP protocol packets
 	 * to master port.
 	 */
+<<<<<<< HEAD
 	dsa_switch_set_mac_table_entry(ifaces.lan[0],
 					      &eth_filter_l2_addr_base[0][0],
 					      BIT(4), 0, 0);
 	dsa_switch_get_mac_table_entry(ifaces.lan[0], tbl_buf, 0);
+=======
+	dsa_switch_set_mac_table_entry(user_data_ifaces.lan[0],
+					      &eth_filter_l2_addr_base[0][0],
+					      BIT(4), 0, 0);
+	dsa_switch_get_mac_table_entry(user_data_ifaces.lan[0], tbl_buf, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	LOG_INF("DSA static MAC address table entry [%d]:", 0);
 	LOG_INF("0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x",

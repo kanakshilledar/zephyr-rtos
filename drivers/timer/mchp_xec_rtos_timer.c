@@ -6,13 +6,21 @@
 
 #define DT_DRV_COMPAT microchip_xec_rtos_timer
 
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/devicetree.h>
 #include <soc.h>
 #include <zephyr/drivers/timer/system_timer.h>
 #include <zephyr/sys_clock.h>
 #include <zephyr/spinlock.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/irq.h>
 
 BUILD_ASSERT(!IS_ENABLED(CONFIG_SMP), "XEC RTOS timer doesn't support SMP");

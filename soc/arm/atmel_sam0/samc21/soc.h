@@ -52,6 +52,11 @@
 
 #endif /* _ASMLANGUAGE */
 
+<<<<<<< HEAD
+=======
+#define ADC_SAM0_REFERENCE_ENABLE_PROTECTED
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "adc_fixup_sam0.h"
 #include "../common/soc_port.h"
 #include "../common/atmel_sam0_dt.h"

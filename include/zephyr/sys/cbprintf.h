@@ -145,7 +145,11 @@ extern "C" {
 BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
 
 
+<<<<<<< HEAD
 /**@defgroup CBPRINTF_PACKAGE_FLAGS Package flags.
+=======
+/**@defgroup CBPRINTF_PACKAGE_FLAGS Package flags
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 
@@ -155,7 +159,11 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
  */
 #define CBPRINTF_PACKAGE_CONST_CHAR_RO BIT(0)
 
+<<<<<<< HEAD
 /** @brief Append locations (within the package) of read-only string pointers.`*/
+=======
+/** @brief Append locations (within the package) of read-only string pointers. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CBPRINTF_PACKAGE_ADD_RO_STR_POS BIT(1)
 
 /** @brief Append locations (within the package) of read-write string pointers.
@@ -202,7 +210,12 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
 
 /**@} */
 
+<<<<<<< HEAD
 /**@defgroup CBPRINTF_PACKAGE_CONVERT_FLAGS Package flags.
+=======
+/**
+ * @defgroup CBPRINTF_PACKAGE_CONVERT_FLAGS Package convert flags
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 
@@ -215,6 +228,10 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
  * are also checked and if determined to be read-only they are also copied.
  */
 #define CBPRINTF_PACKAGE_CONVERT_RO_STR BIT(0)
+<<<<<<< HEAD
+=======
+/** @deprecated Use @ref CBPRINTF_PACKAGE_CONVERT_RO_STR instead. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CBPRINTF_PACKAGE_COPY_RO_STR CBPRINTF_PACKAGE_CONVERT_RO_STR __DEPRECATED_MACRO
 
 /** @brief Append read-write strings from source package to destination package.
@@ -228,6 +245,10 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
  * package if @ref CBPRINTF_PACKAGE_CONVERT_KEEP_RO_STR is set.
  */
 #define CBPRINTF_PACKAGE_CONVERT_RW_STR BIT(1)
+<<<<<<< HEAD
+=======
+/** @deprecated Use @ref CBPRINTF_PACKAGE_CONVERT_RW_STR instead. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CBPRINTF_PACKAGE_COPY_RW_STR CBPRINTF_PACKAGE_CONVERT_RW_STR __DEPRECATED_MACRO
 
 /** @brief Keep read-only location indexes in the package.
@@ -236,6 +257,10 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
  * not set they are discarded.
  */
 #define CBPRINTF_PACKAGE_CONVERT_KEEP_RO_STR BIT(2)
+<<<<<<< HEAD
+=======
+/** @deprecated Use @ref CBPRINTF_PACKAGE_CONVERT_KEEP_RO_STR instead. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define CBPRINTF_PACKAGE_COPY_KEEP_RO_STR CBPRINTF_PACKAGE_CONVERT_KEEP_RO_STR __DEPRECATED_MACRO
 
 /** @brief Check format string if %p argument was treated as %s in the package.
@@ -259,7 +284,12 @@ BUILD_ASSERT(Z_IS_POW2(CBPRINTF_PACKAGE_ALIGNMENT));
 
 /**@} */
 
+<<<<<<< HEAD
 /**@defgroup Z_CBVPRINTF_PROCESS_FLAGS cbvprintf processing flags.
+=======
+/**
+ * @defgroup Z_CBVPRINTF_PROCESS_FLAGS cbvprintf processing flags.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @{
  */
 

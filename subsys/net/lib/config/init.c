@@ -16,10 +16,18 @@ LOG_MODULE_REGISTER(net_config, CONFIG_NET_CONFIG_LOG_LEVEL);
 #include <stdlib.h>
 
 #include <zephyr/logging/log_backend.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/ethernet.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_core.h>
 #include <zephyr/net/net_ip.h>
 #include <zephyr/net/net_if.h>
 #include <zephyr/net/dhcpv4.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/dhcpv6.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/dns_resolve.h>
 
@@ -111,6 +119,25 @@ static void setup_dhcpv4(struct net_if *iface)
 #define setup_dhcpv4(...)
 #endif /* CONFIG_NET_DHCPV4 */
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_NET_VLAN) && (CONFIG_NET_CONFIG_MY_VLAN_ID > 0)
+
+static void setup_vlan(struct net_if *iface)
+{
+	int ret = net_eth_vlan_enable(iface, CONFIG_NET_CONFIG_MY_VLAN_ID);
+
+	if (ret < 0) {
+		NET_ERR("Network interface %d (%p): cannot set VLAN tag (%d)",
+			net_if_get_by_iface(iface), iface, ret);
+	}
+}
+
+#else
+#define setup_vlan(...)
+#endif /* CONFIG_NET_VLAN && (CONFIG_NET_CONFIG_MY_VLAN_ID > 0) */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_NET_NATIVE_IPV4) && !defined(CONFIG_NET_DHCPV4) && \
 	!defined(CONFIG_NET_CONFIG_MY_IPV4_ADDR)
 #error "You need to define an IPv4 address or enable DHCPv4!"
@@ -186,8 +213,31 @@ static void setup_ipv4(struct net_if *iface)
 #endif /* CONFIG_NET_IPV4 && !CONFIG_NET_DHCPV4 */
 
 #if defined(CONFIG_NET_NATIVE_IPV6)
+<<<<<<< HEAD
 #if !defined(CONFIG_NET_CONFIG_MY_IPV6_ADDR)
 #error "You need to define an IPv6 address!"
+=======
+
+#if defined(CONFIG_NET_DHCPV6)
+static void setup_dhcpv6(struct net_if *iface)
+{
+	struct net_dhcpv6_params params = {
+		.request_addr = IS_ENABLED(CONFIG_NET_CONFIG_DHCPV6_REQUEST_ADDR),
+		.request_prefix = IS_ENABLED(CONFIG_NET_CONFIG_DHCPV6_REQUEST_PREFIX),
+	};
+
+	NET_INFO("Running dhcpv6 client...");
+
+	net_dhcpv6_start(iface, &params);
+}
+#else /* CONFIG_NET_DHCPV6 */
+#define setup_dhcpv6(...)
+#endif /* CONFIG_NET_DHCPV6 */
+
+#if !defined(CONFIG_NET_CONFIG_DHCPV6_REQUEST_ADDR) && \
+	!defined(CONFIG_NET_CONFIG_MY_IPV6_ADDR)
+#error "You need to define an IPv6 address or enable DHCPv6!"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 static struct net_mgmt_event_callback mgmt6_cb;
@@ -232,6 +282,24 @@ static void ipv6_event_handler(struct net_mgmt_event_callback *cb,
 #if CONFIG_NET_CONFIG_LOG_LEVEL >= LOG_LEVEL_INF
 		NET_INFO("IPv6 address: %s",
 			 net_addr_ntop(AF_INET6, &laddr, hr_addr, NET_IPV6_ADDR_LEN));
+<<<<<<< HEAD
+=======
+
+		if (ifaddr->addr_type == NET_ADDR_DHCP) {
+			char remaining_str[] = "infinite";
+			uint32_t remaining;
+
+			remaining = net_timeout_remaining(&ifaddr->lifetime,
+							  k_uptime_get_32());
+
+			if (!ifaddr->is_infinite) {
+				snprintk(remaining_str, sizeof(remaining_str),
+					 "%u", remaining);
+			}
+
+			NET_INFO("Lifetime: %s seconds", remaining_str);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 		services_notify_ready(NET_CONFIG_NEED_IPV6);
@@ -247,6 +315,12 @@ static void setup_ipv6(struct net_if *iface, uint32_t flags)
 	struct net_if_addr *ifaddr;
 	uint32_t mask = NET_EVENT_IPV6_DAD_SUCCEED;
 
+<<<<<<< HEAD
+=======
+	net_mgmt_init_event_callback(&mgmt6_cb, ipv6_event_handler, mask);
+	net_mgmt_add_event_callback(&mgmt6_cb);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (sizeof(CONFIG_NET_CONFIG_MY_IPV6_ADDR) == 1) {
 		/* Empty address, skip setting ANY address in this case */
 		goto exit;
@@ -262,9 +336,12 @@ static void setup_ipv6(struct net_if *iface, uint32_t flags)
 		mask |= NET_EVENT_IPV6_ROUTER_ADD;
 	}
 
+<<<<<<< HEAD
 	net_mgmt_init_event_callback(&mgmt6_cb, ipv6_event_handler, mask);
 	net_mgmt_add_event_callback(&mgmt6_cb);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * check for CMD_ADDR_ADD bit here, NET_EVENT_IPV6_ADDR_ADD is
 	 * a combination of _NET_EVENT_IPV6_BASE | NET_EVENT_IPV6_CMD_ADDR_ADD
@@ -293,6 +370,10 @@ exit:
 
 #else
 #define setup_ipv6(...)
+<<<<<<< HEAD
+=======
+#define setup_dhcpv6(...)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_NET_IPV6 */
 
 #if defined(CONFIG_NET_NATIVE)
@@ -350,6 +431,17 @@ int net_config_init_by_iface(struct net_if *iface, const char *app_info,
 		iface = net_if_get_default();
 	}
 
+<<<<<<< HEAD
+=======
+	if (!iface) {
+		return -ENOENT;
+	}
+
+	if (net_if_flag_is_set(iface, NET_IF_NO_AUTO_START)) {
+		return -ENETDOWN;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (timeout < 0) {
 		count = -1;
 	} else if (timeout == 0) {
@@ -379,9 +471,17 @@ int net_config_init_by_iface(struct net_if *iface, const char *app_info,
 #endif
 	}
 
+<<<<<<< HEAD
 	setup_ipv4(iface);
 	setup_dhcpv4(iface);
 	setup_ipv6(iface, flags);
+=======
+	setup_vlan(iface);
+	setup_ipv4(iface);
+	setup_dhcpv4(iface);
+	setup_ipv6(iface, flags);
+	setup_dhcpv6(iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Network interface did not come up. */
 	if (timeout > 0 && count < 0) {
@@ -435,7 +535,11 @@ int net_config_init_app(const struct device *dev, const char *app_info)
 		}
 	}
 
+<<<<<<< HEAD
 	ret = z_net_config_ieee802154_setup();
+=======
+	ret = z_net_config_ieee802154_setup(iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret < 0) {
 		NET_ERR("Cannot setup IEEE 802.15.4 interface (%d)", ret);
 	}
@@ -448,6 +552,20 @@ int net_config_init_app(const struct device *dev, const char *app_info)
 	}
 #endif
 
+<<<<<<< HEAD
+=======
+	/* Only try to use a network interface that is auto started */
+	if (iface == NULL) {
+		net_if_foreach(iface_find_cb, &iface);
+	}
+
+	if (!iface) {
+		NET_WARN("No auto-started network interface - "
+			 "network-bound app initialization skipped.");
+		return 0;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (IS_ENABLED(CONFIG_NET_CONFIG_NEED_IPV6)) {
 		flags |= NET_CONFIG_NEED_IPV6;
 	}
@@ -460,11 +578,14 @@ int net_config_init_app(const struct device *dev, const char *app_info)
 		flags |= NET_CONFIG_NEED_IPV4;
 	}
 
+<<<<<<< HEAD
 	/* Only try to use a network interface that is auto started */
 	if (iface == NULL) {
 		net_if_foreach(iface_find_cb, &iface);
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Initialize the application automatically if needed */
 	ret = net_config_init_by_iface(iface, app_info, flags,
 				CONFIG_NET_CONFIG_INIT_TIMEOUT * MSEC_PER_SEC);

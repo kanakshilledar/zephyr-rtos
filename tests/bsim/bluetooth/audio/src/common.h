@@ -41,6 +41,14 @@
 	while (!(bool)atomic_get(&flag)) { \
 		(void)k_sleep(K_MSEC(1)); \
 	}
+<<<<<<< HEAD
+=======
+#define WAIT_FOR_UNSET_FLAG(flag) \
+	while (atomic_get(&flag) != (atomic_t)false) { \
+		(void)k_sleep(K_MSEC(1)); \
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define FAIL(...) \
 	do { \
@@ -55,13 +63,25 @@
 	} while (0)
 
 #define AD_SIZE 1
+<<<<<<< HEAD
+=======
+
+#define INVALID_BROADCAST_ID (BT_AUDIO_BROADCAST_ID_MAX + 1)
+#define SYNC_RETRY_COUNT     6 /* similar to retries for connections */
+#define PA_SYNC_SKIP         5
+
+extern struct bt_le_scan_cb common_scan_cb;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 extern const struct bt_data ad[AD_SIZE];
 extern struct bt_conn *default_conn;
 extern atomic_t flag_connected;
 extern atomic_t flag_conn_updated;
 
+<<<<<<< HEAD
 void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
 		  struct net_buf_simple *ad);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void disconnected(struct bt_conn *conn, uint8_t reason);
 void test_tick(bs_time_t HW_device_time);
 void test_init(void);

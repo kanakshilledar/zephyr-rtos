@@ -8,6 +8,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/arch/cpu.h>
 #include <zephyr/linker/linker-defs.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/arch/riscv/csr.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifndef CONFIG_ASSERT
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
@@ -16,14 +20,22 @@ LOG_MODULE_REGISTER(pma_init, LOG_LEVEL);
 #endif
 
 /* Programmable PMA mechanism is supported */
+<<<<<<< HEAD
 #define MMSC_CFG_PPMA		(1 << 30)
+=======
+#define MMSC_CFG_PPMA		BIT(30)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * PMA Configuration (PMACFG) bitfields
  */
 
 /* ETYPE: Entry address matching mode */
+<<<<<<< HEAD
 #define PMACFG_ETYPE_MASK	3
+=======
+#define PMACFG_ETYPE_MASK	BIT_MASK(2)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define PMACFG_ETYPE_OFF	0
 #define PMACFG_ETYPE_TOR	1
 #define PMACFG_ETYPE_NA4	2
@@ -41,9 +53,13 @@ LOG_MODULE_REGISTER(pma_init, LOG_LEVEL);
 
 /* The base address is aligned to size */
 #define NAPOT_BASE(start, size)		TO_PMA_ADDR((start) & ~((size) - 1))
+<<<<<<< HEAD
 /* The encoding of size is 0b01...1
  * (change the leading bit of bitmask to 0)
  */
+=======
+/* The encoding of size is 0b01...1, (change the leading bit of bitmask to 0) */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define NAPOT_SIZE(size)		TO_PMA_ADDR(((size) - 1) >> 1)
 
 #define NA4_ENCODING(start)		TO_PMA_ADDR(start)
@@ -58,12 +74,15 @@ LOG_MODULE_REGISTER(pma_init, LOG_LEVEL);
 #endif
 #define PMACFG_SHIFT(index)		((index % RV_REGSIZE) * 8)
 
+<<<<<<< HEAD
 /* Wrappers of inline assembly */
 #define read_csr(var, csr) \
 	({ __asm__ volatile ("csrr %0, %1" : "=r" (var) : "i" (csr)); })
 #define write_csr(csr, val) \
 	({ __asm__ volatile ("csrw %0, %1" :: "i" (csr), "r" (val)); })
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct pma_region_attr {
 	/* Attributes belonging to pmacfg{i} */
 	uint8_t pmacfg;
@@ -80,6 +99,7 @@ struct pma_region {
  */
 static void write_pmaaddr_csr(const uint32_t index, unsigned long value)
 {
+<<<<<<< HEAD
 	switch (index) {
 	case 0:
 		write_csr(NDS_PMAADDR0,  value); break;
@@ -113,20 +133,34 @@ static void write_pmaaddr_csr(const uint32_t index, unsigned long value)
 		write_csr(NDS_PMAADDR14, value); break;
 	case 15:
 		write_csr(NDS_PMAADDR15, value); break;
+=======
+	#define SWITCH_CASE_PMAADDR_WRITE(x)		\
+		case (x):				\
+		csr_write(NDS_PMAADDR##x,  value); break;
+
+	switch (index) {
+	FOR_EACH(SWITCH_CASE_PMAADDR_WRITE, (;), 0, 1, 2, 3, 4, 5, 6, 7,
+	8, 9, 10, 11, 12, 13, 14, 15);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 /*
  * Write value to pma{i}cfg entry which are packed into CSRs pmacfg{j}
  */
+<<<<<<< HEAD
 static void write_pmacfg_entry(const uint32_t entry_index,
 	uint8_t entry_value)
+=======
+static void write_pmacfg_entry(const uint32_t entry_index, uint8_t entry_value)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* 1-byte pma{i}cfg entries are packed into XLEN-byte CSRs pmacfg{j} */
 	uint32_t index = PMACFG_NUM(entry_index);
 	uint8_t shift = PMACFG_SHIFT(entry_index);
 	unsigned long pmacfg = 0;
 
+<<<<<<< HEAD
 	switch (index) {
 	case 0:
 		read_csr(pmacfg, NDS_PMACFG0); break;
@@ -136,6 +170,14 @@ static void write_pmacfg_entry(const uint32_t entry_index,
 		read_csr(pmacfg, NDS_PMACFG2); break;
 	case 3:
 		read_csr(pmacfg, NDS_PMACFG3); break;
+=======
+	#define SWITCH_CASE_PMACFG_READ(x)		\
+		case (x):				\
+		pmacfg = csr_read(NDS_PMACFG##x); break;
+
+	switch (index) {
+	FOR_EACH(SWITCH_CASE_PMACFG_READ, (;), 0, 1, 2, 3);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* clear old value in pmacfg entry */
@@ -143,6 +185,7 @@ static void write_pmacfg_entry(const uint32_t entry_index,
 	/* set new value to pmacfg entry value */
 	pmacfg |= entry_value << shift;
 
+<<<<<<< HEAD
 	switch (index) {
 	case 0:
 		write_csr(NDS_PMACFG0, pmacfg); break;
@@ -152,6 +195,14 @@ static void write_pmacfg_entry(const uint32_t entry_index,
 		write_csr(NDS_PMACFG2, pmacfg); break;
 	case 3:
 		write_csr(NDS_PMACFG3, pmacfg); break;
+=======
+	#define SWITCH_CASE_PMACFG_WRITE(x)		\
+		case (x):				\
+		csr_write(NDS_PMACFG##x, pmacfg); break;
+
+	switch (index) {
+	FOR_EACH(SWITCH_CASE_PMACFG_WRITE, (;), 0, 1, 2, 3);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -185,6 +236,7 @@ static void region_init(const uint32_t index,
  */
 static int pma_region_is_valid(const struct pma_region *region)
 {
+<<<<<<< HEAD
 	/* Region size must be power-of-two,
 	 * and greater or equal to the minimum
 	 * PMA region size. Start address of the
@@ -198,6 +250,20 @@ static int pma_region_is_valid(const struct pma_region *region)
 		((region->start & (region->size - 1)) == 0U);
 
 	if (!region_is_valid) {
+=======
+	/* Region size must greater or equal to the minimum PMA region size */
+	if (region->size < CONFIG_SOC_ANDES_V5_PMA_REGION_MIN_ALIGN_AND_SIZE) {
+		return -EINVAL;
+	}
+
+	/* Region size must be power-of-two */
+	if (region->size & (region->size - 1)) {
+		return -EINVAL;
+	}
+
+	/* Start address of the region must align with size */
+	if (region->start & (region->size - 1)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return -EINVAL;
 	}
 
@@ -213,11 +279,21 @@ static void configure_nocache_region(void)
 		.attr = {PMACFG_MTYPE_MEMORY_NOCACHE_BUFFERABLE},
 	};
 
+<<<<<<< HEAD
 	if (nocache_region.size != 0) {
 		if (pma_region_is_valid(&nocache_region) == -EINVAL) {
 			__ASSERT(0, "Configuring PMA region of nocache region failed\n");
 		}
 
+=======
+	if (pma_region_is_valid(&nocache_region)) {
+		/* Skip PMA configuration if nocache region size is 0 */
+		if (nocache_region.size != 0) {
+			__ASSERT(0, "Configuring PMA region of nocache region "
+				    "failed\n");
+		}
+	} else {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Initialize nocache region at PMA region 0 */
 		region_init(0, &nocache_region);
 	}
@@ -242,7 +318,11 @@ static int pma_init(void)
 {
 	unsigned long mmsc_cfg;
 
+<<<<<<< HEAD
 	__asm__ volatile ("csrr %0, %1" : "=r" (mmsc_cfg) : "i" (NDS_MMSC_CFG));
+=======
+	mmsc_cfg = csr_read(NDS_MMSC_CFG);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (!(mmsc_cfg & MMSC_CFG_PPMA)) {
 		/* This CPU doesn't support PMA */
@@ -250,7 +330,12 @@ static int pma_init(void)
 		__ASSERT(0, "CPU doesn't support PMA. "
 			    "Please disable CONFIG_SOC_ANDES_V5_PMA\n");
 #ifndef CONFIG_ASSERT
+<<<<<<< HEAD
 		LOG_ERR("CPU doesn't support PMA. Please disable CONFIG_SOC_ANDES_V5_PMA");
+=======
+		LOG_ERR("CPU doesn't support PMA. "
+			"Please disable CONFIG_SOC_ANDES_V5_PMA");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 		return -ENODEV;
 	}
@@ -260,5 +345,9 @@ static int pma_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 SYS_INIT(pma_init, PRE_KERNEL_2,
 	CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+SYS_INIT(pma_init, PRE_KERNEL_2, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -133,7 +133,12 @@ class Sign(Forceable):
         group.add_argument('-D', '--tool-data', default=None,
                            help='''path to a tool-specific data/configuration directory, if needed''')
         group.add_argument('--if-tool-available', action='store_true',
+<<<<<<< HEAD
                            help='''Do not fail if rimage is missing, just warn.''')
+=======
+                           help='''Do not fail if the rimage tool is not found or the rimage signing
+schema (rimage "target") is not defined in board.cmake.''')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         group.add_argument('tool_args', nargs='*', metavar='tool_opt',
                            help='extra option(s) to pass to the signing tool')
 
@@ -425,6 +430,7 @@ class RimageSigner(Signer):
         b = pathlib.Path(build_dir)
         cache = CMakeCache.from_build_dir(build_dir)
 
+<<<<<<< HEAD
         # warning: RIMAGE_TARGET is a duplicate of CONFIG_RIMAGE_SIGNING_SCHEMA
         target = cache.get('RIMAGE_TARGET')
         if not target:
@@ -441,6 +447,35 @@ class RimageSigner(Signer):
             out_bin = str(b / 'zephyr' / 'zephyr.ri')
             out_xman = str(b / 'zephyr' / 'zephyr.ri.xman')
             out_tmp = str(b / 'zephyr' / 'zephyr.rix')
+=======
+        # Warning: RIMAGE_TARGET in Zephyr is a duplicate of
+        # CONFIG_RIMAGE_SIGNING_SCHEMA in SOF.
+        target = cache.get('RIMAGE_TARGET')
+
+        if not target:
+            msg = 'rimage target not defined in board.cmake'
+            if args.if_tool_available:
+                log.inf(msg)
+                sys.exit(0)
+            else:
+                log.die(msg)
+
+        kernel_name = build_conf.get('CONFIG_KERNEL_BIN_NAME', 'zephyr')
+
+        # TODO: make this a new sign.py --bootloader option.
+        if target in ('imx8', 'imx8m'):
+            bootloader = None
+            kernel = str(b / 'zephyr' / f'{kernel_name}.elf')
+            out_bin = str(b / 'zephyr' / f'{kernel_name}.ri')
+            out_xman = str(b / 'zephyr' / f'{kernel_name}.ri.xman')
+            out_tmp = str(b / 'zephyr' / f'{kernel_name}.rix')
+        else:
+            bootloader = str(b / 'zephyr' / 'boot.mod')
+            kernel = str(b / 'zephyr' / 'main.mod')
+            out_bin = str(b / 'zephyr' / f'{kernel_name}.ri')
+            out_xman = str(b / 'zephyr' / f'{kernel_name}.ri.xman')
+            out_tmp = str(b / 'zephyr' / f'{kernel_name}.rix')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         # Clean any stale output. This is especially important when using --if-tool-available
         # (but not just)
@@ -516,13 +551,22 @@ class RimageSigner(Signer):
         if not args.quiet and args.verbose:
             sign_base += ['-v'] * args.verbose
 
+<<<<<<< HEAD
         components = [ ] if (target in ('imx8', 'imx8m')) else [ bootloader ]
+=======
+        components = [ ] if bootloader is None else [ bootloader ]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         components += [ kernel ]
 
         sign_config_extra_args = config_get_words(command.config, 'rimage.extra-args', [])
 
         if '-k' not in sign_config_extra_args + args.tool_args:
+<<<<<<< HEAD
             cmake_default_key = cache.get('RIMAGE_SIGN_KEY')
+=======
+            # rimage requires a key argument even when it does not sign
+            cmake_default_key = cache.get('RIMAGE_SIGN_KEY', 'key placeholder from sign.py')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             extra_ri_args += [ '-k', str(sof_src_dir / 'keys' / cmake_default_key) ]
 
         if '-c' not in sign_config_extra_args + args.tool_args:

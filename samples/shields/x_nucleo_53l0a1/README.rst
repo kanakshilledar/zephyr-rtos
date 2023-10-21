@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _x-nucleo-53l0a1-sample:
 
 X-NUCLEO-53L0A1 ranging and gesture detection sensor expansion board
 #####################################################################
+=======
+.. zephyr:code-sample:: x-nucleo-53l0a1
+   :name: X-NUCLEO-53L0A1 shield
+   :relevant-api: sensor_interface gpio_interface
+
+   Interact with the 7-segment display and VL53L0X ranging sensor of an X-NUCLEO-53L0A1 shield.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

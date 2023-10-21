@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _wpanusb-sample:
 
 wpanusb sample
 ##############
+=======
+.. zephyr:code-sample:: wpan-usb
+   :name: 802.15.4 USB
+   :relevant-api: ieee802154 _usb_device_core_api
+
+   Implement a device that exposes an IEEE 802.15.4 radio over USB.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -81,7 +81,11 @@ ZTEST(intel_adsp_hda, test_hda_host_in_smoke)
 	hda_dump_regs(HOST_IN, HDA_REGBLOCK_SIZE, STREAM_ID, "dsp set_buffer");
 	zassert_ok(res, "Expected set buffer to succeed");
 
+<<<<<<< HEAD
 	intel_adsp_hda_enable(HDA_HOST_IN_BASE, HDA_REGBLOCK_SIZE, STREAM_ID);
+=======
+	intel_adsp_hda_enable(HDA_HOST_IN_BASE, HDA_REGBLOCK_SIZE, STREAM_ID, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	hda_dump_regs(HOST_IN, HDA_REGBLOCK_SIZE, STREAM_ID, "dsp enable");
 
 	hda_ipc_msg(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_HDA_START, STREAM_ID, IPC_TIMEOUT);
@@ -148,7 +152,11 @@ ZTEST(intel_adsp_hda, test_hda_host_out_smoke)
 	hda_ipc_msg(INTEL_ADSP_IPC_HOST_DEV, IPCCMD_HDA_START, (STREAM_ID + 7), IPC_TIMEOUT);
 	hda_dump_regs(HOST_OUT, HDA_REGBLOCK_SIZE, STREAM_ID, "host start");
 
+<<<<<<< HEAD
 	intel_adsp_hda_enable(HDA_HOST_OUT_BASE, HDA_REGBLOCK_SIZE, STREAM_ID);
+=======
+	intel_adsp_hda_enable(HDA_HOST_OUT_BASE, HDA_REGBLOCK_SIZE, STREAM_ID, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	hda_dump_regs(HOST_OUT, HDA_REGBLOCK_SIZE, STREAM_ID, "dsp enable");
 
 	for (uint32_t i = 0; i < TRANSFER_COUNT; i++) {

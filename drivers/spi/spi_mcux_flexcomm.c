@@ -590,6 +590,10 @@ static int transceive_dma(const struct device *dev,
 	SPI_Type *base = config->base;
 	int ret;
 	uint32_t word_size;
+<<<<<<< HEAD
+=======
+	uint16_t data_size;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	spi_context_lock(&data->ctx, asynchronous, cb, userdata, spi_cfg);
 
@@ -604,12 +608,27 @@ static int transceive_dma(const struct device *dev,
 
 	word_size = SPI_WORD_SIZE_GET(spi_cfg->operation);
 
+<<<<<<< HEAD
 	data->dma_rx.dma_cfg.dest_data_size = (word_size > 8) ?
 				(sizeof(uint16_t)) : (sizeof(uint8_t));
 	data->dma_tx.dma_cfg.dest_data_size = data->dma_rx.dma_cfg.dest_data_size;
 
 	while (data->ctx.rx_len > 0 || data->ctx.tx_len > 0) {
 		size_t dma_len;
+=======
+	data_size = (word_size > 8) ? (sizeof(uint16_t)) : (sizeof(uint8_t));
+	data->dma_rx.dma_cfg.source_data_size = data_size;
+	data->dma_rx.dma_cfg.dest_data_size = data_size;
+	data->dma_tx.dma_cfg.source_data_size = data_size;
+	data->dma_tx.dma_cfg.dest_data_size = data_size;
+
+	while (data->ctx.rx_len > 0 || data->ctx.tx_len > 0) {
+		size_t dma_len;
+
+		/* last is used to deassert chip select if this
+		 * is the last transfer in the set.
+		 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		bool last = false;
 
 		if (data->ctx.rx_len == 0) {
@@ -626,6 +645,37 @@ static int transceive_dma(const struct device *dev,
 			last = false;
 		}
 
+<<<<<<< HEAD
+=======
+		/* at this point, last just means whether or not
+		 * this transfer will completely cover
+		 * the current tx/rx buffer in data->ctx
+		 * or require additional transfers because the
+		 * the two buffers are not the same size.
+		 *
+		 * if it covers the current ctx tx/rx buffers, then
+		 * we'll move to the next pair of buffers (if any)
+		 * after the transfer, but if there are
+		 * no more buffer pairs, then this is the last
+		 * transfer in the set and we need to deassert CS.
+		 */
+		if (last) {
+			/* this dma transfer should cover
+			 * the entire current data->ctx set
+			 * of buffers. if there are more
+			 * buffers in the set, then we don't
+			 * want to deassert CS.
+			 */
+			if ((data->ctx.tx_count > 1) ||
+			    (data->ctx.rx_count > 1)) {
+				/* more buffers to transfer so
+				 * this isn't last
+				 */
+				last = false;
+			}
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		data->status_flags = 0;
 
 		ret = spi_mcux_dma_move_buffers(dev, dma_len, spi_cfg, last);
@@ -798,7 +848,10 @@ static void spi_mcux_config_func_##id(const struct device *dev) \
 		.dma_cfg = {					\
 			.channel_direction = MEMORY_TO_PERIPHERAL,	\
 			.dma_callback = spi_mcux_dma_callback,		\
+<<<<<<< HEAD
 			.source_data_size = 1,				\
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.block_count = 2,		\
 		}							\
 	},								\
@@ -809,7 +862,10 @@ static void spi_mcux_config_func_##id(const struct device *dev) \
 		.dma_cfg = {				\
 			.channel_direction = PERIPHERAL_TO_MEMORY,	\
 			.dma_callback = spi_mcux_dma_callback,		\
+<<<<<<< HEAD
 			.source_data_size = 1,				\
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			.block_count = 1,		\
 		}							\
 	}

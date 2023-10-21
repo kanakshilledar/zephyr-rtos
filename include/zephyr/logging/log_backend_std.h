@@ -33,6 +33,13 @@ static inline uint32_t log_backend_std_get_flags(void)
 		flags |= LOG_OUTPUT_FLAG_FORMAT_TIMESTAMP;
 	}
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_LOG_THREAD_ID_PREFIX)) {
+		flags |= LOG_OUTPUT_FLAG_THREAD;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return flags;
 }
 

@@ -446,13 +446,27 @@ static void uart_console_isr(const struct device *unused, void *user_data)
 	ARG_UNUSED(user_data);
 	static uint8_t last_char = '\0';
 
+<<<<<<< HEAD
 	while (uart_irq_update(uart_console_dev) &&
 	       uart_irq_is_pending(uart_console_dev)) {
+=======
+	while (uart_irq_update(uart_console_dev) > 0 &&
+	       uart_irq_is_pending(uart_console_dev) > 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		static struct console_input *cmd;
 		uint8_t byte;
 		int rx;
 
+<<<<<<< HEAD
 		if (!uart_irq_rx_ready(uart_console_dev)) {
+=======
+		rx = uart_irq_rx_ready(uart_console_dev);
+		if (rx < 0) {
+			return;
+		}
+
+		if (rx == 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			continue;
 		}
 
@@ -561,7 +575,11 @@ static void console_input_init(void)
 	uart_irq_callback_set(uart_console_dev, uart_console_isr);
 
 	/* Drain the fifo */
+<<<<<<< HEAD
 	while (uart_irq_rx_ready(uart_console_dev)) {
+=======
+	while (uart_irq_rx_ready(uart_console_dev) > 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uart_fifo_read(uart_console_dev, &c, 1);
 	}
 

@@ -8,7 +8,11 @@
 #include <zephyr/sys/util.h>
 #include <string.h>
 #include <zephyr/ztress.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log.h>
 #include <zephyr/logging/log_ctrl.h>
 #include <zephyr/logging/log_backend.h>

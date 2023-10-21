@@ -10,3 +10,13 @@ config FT800
 	select SPI
 	help
 	  Enable driver for FT800 controller.
+<<<<<<< HEAD
+=======
+
+config FT800_INIT_PRIORITY
+	int "FT800 init priority"
+	default 90
+	depends on FT800
+	help
+	  FT800 driver initialization priority in POST_KERNEL.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -43,10 +43,23 @@ static void data_received(const struct device *dev,
 static void feature_update(const struct device *dev,
 			   const struct usb_audio_fu_evt *evt)
 {
+<<<<<<< HEAD
+=======
+	int16_t volume = 0;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("Control selector %d for channel %d updated",
 		evt->cs, evt->channel);
 	switch (evt->cs) {
 	case USB_AUDIO_FU_MUTE_CONTROL:
+<<<<<<< HEAD
+=======
+		break;
+	case USB_AUDIO_FU_VOLUME_CONTROL:
+		volume = *((int16_t *)(evt->val));
+		LOG_INF("set volume: %d", volume);
+		break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		break;
 	}

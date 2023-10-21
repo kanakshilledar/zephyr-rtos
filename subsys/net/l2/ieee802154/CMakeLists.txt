@@ -9,6 +9,10 @@ zephyr_library_compile_definitions_ifdef(
 zephyr_library_sources(
   ieee802154.c
   ieee802154_frame.c
+<<<<<<< HEAD
+=======
+  ieee802154_utils.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   )
 
 zephyr_library_sources_ifdef(

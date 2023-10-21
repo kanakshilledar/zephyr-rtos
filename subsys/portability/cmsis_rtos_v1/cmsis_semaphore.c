@@ -116,7 +116,11 @@ osStatus osSemaphoreDelete(osSemaphoreId semaphore_id)
 	 * could not be deleted) is not supported in Zephyr.
 	 */
 
+<<<<<<< HEAD
 	k_mem_slab_free(&cmsis_semaphore_slab, (void *) &semaphore);
+=======
+	k_mem_slab_free(&cmsis_semaphore_slab, (void *)semaphore);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return osOK;
 }

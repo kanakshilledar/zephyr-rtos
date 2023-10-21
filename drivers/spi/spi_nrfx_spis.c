@@ -6,6 +6,10 @@
 
 #include <zephyr/drivers/spi.h>
 #include <zephyr/drivers/pinctrl.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/gpio.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <nrfx_spis.h>
 
@@ -17,6 +21,12 @@ LOG_MODULE_REGISTER(spi_nrfx_spis, CONFIG_SPI_LOG_LEVEL);
 
 struct spi_nrfx_data {
 	struct spi_context ctx;
+<<<<<<< HEAD
+=======
+	const struct device *dev;
+	struct k_sem wake_sem;
+	struct gpio_callback wake_cb_data;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 struct spi_nrfx_config {
@@ -25,6 +35,10 @@ struct spi_nrfx_config {
 	void (*irq_connect)(void);
 	uint16_t max_buf_len;
 	const struct pinctrl_dev_config *pcfg;
+<<<<<<< HEAD
+=======
+	struct gpio_dt_spec wake_gpio;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static inline nrf_spis_mode_t get_nrf_spis_mode(uint16_t operation)
@@ -105,6 +119,7 @@ static int configure(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void prepare_for_transfer(const struct device *dev,
 				 const uint8_t *tx_buf, size_t tx_buf_len,
 				 uint8_t *rx_buf, size_t rx_buf_len)
@@ -112,11 +127,20 @@ static void prepare_for_transfer(const struct device *dev,
 	struct spi_nrfx_data *dev_data = dev->data;
 	const struct spi_nrfx_config *dev_config = dev->config;
 	int status;
+=======
+static int prepare_for_transfer(const struct device *dev,
+				const uint8_t *tx_buf, size_t tx_buf_len,
+				uint8_t *rx_buf, size_t rx_buf_len)
+{
+	const struct spi_nrfx_config *dev_config = dev->config;
+	nrfx_err_t result;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (tx_buf_len > dev_config->max_buf_len ||
 	    rx_buf_len > dev_config->max_buf_len) {
 		LOG_ERR("Invalid buffer sizes: Tx %d/Rx %d",
 			tx_buf_len, rx_buf_len);
+<<<<<<< HEAD
 		status = -EINVAL;
 	} else {
 		nrfx_err_t result;
@@ -134,6 +158,46 @@ static void prepare_for_transfer(const struct device *dev,
 	spi_context_complete(&dev_data->ctx, dev, status);
 }
 
+=======
+		return -EINVAL;
+	}
+
+	result = nrfx_spis_buffers_set(&dev_config->spis,
+				       tx_buf, tx_buf_len,
+				       rx_buf, rx_buf_len);
+	if (result != NRFX_SUCCESS) {
+		return -EIO;
+	}
+
+	return 0;
+}
+
+static void wake_callback(const struct device *dev, struct gpio_callback *cb,
+			  uint32_t pins)
+{
+	struct spi_nrfx_data *dev_data =
+		CONTAINER_OF(cb, struct spi_nrfx_data, wake_cb_data);
+	const struct spi_nrfx_config *dev_config = dev_data->dev->config;
+
+	(void)gpio_pin_interrupt_configure_dt(&dev_config->wake_gpio,
+					      GPIO_INT_DISABLE);
+	k_sem_give(&dev_data->wake_sem);
+}
+
+static void wait_for_wake(struct spi_nrfx_data *dev_data,
+			  const struct spi_nrfx_config *dev_config)
+{
+	/* If the WAKE line is low, wait until it goes high - this is a signal
+	 * from the master that it wants to perform a transfer.
+	 */
+	if (gpio_pin_get_raw(dev_config->wake_gpio.port,
+			     dev_config->wake_gpio.pin) == 0) {
+		(void)gpio_pin_interrupt_configure_dt(&dev_config->wake_gpio,
+						      GPIO_INT_LEVEL_HIGH);
+		(void)k_sem_take(&dev_data->wake_sem, K_FOREVER);
+	}
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int transceive(const struct device *dev,
 		      const struct spi_config *spi_cfg,
@@ -144,6 +208,12 @@ static int transceive(const struct device *dev,
 		      void *userdata)
 {
 	struct spi_nrfx_data *dev_data = dev->data;
+<<<<<<< HEAD
+=======
+	const struct spi_nrfx_config *dev_config = dev->config;
+	const struct spi_buf *tx_buf = tx_bufs ? tx_bufs->buffers : NULL;
+	const struct spi_buf *rx_buf = rx_bufs ? rx_bufs->buffers : NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int error;
 
 	spi_context_lock(&dev_data->ctx, asynchronous, cb, userdata, spi_cfg);
@@ -155,6 +225,7 @@ static int transceive(const struct device *dev,
 		   (rx_bufs && rx_bufs->count > 1)) {
 		LOG_ERR("Scattered buffers are not supported");
 		error = -ENOTSUP;
+<<<<<<< HEAD
 	} else if (tx_bufs && tx_bufs->buffers[0].len &&
 		   !nrfx_is_in_ram(tx_bufs->buffers[0].buf)) {
 		LOG_ERR("Only buffers located in RAM are supported");
@@ -167,6 +238,47 @@ static int transceive(const struct device *dev,
 				     rx_bufs ? rx_bufs->buffers[0].len : 0);
 
 		error = spi_context_wait_for_completion(&dev_data->ctx);
+=======
+	} else if (tx_buf && tx_buf->len && !nrfx_is_in_ram(tx_buf->buf)) {
+		LOG_ERR("Only buffers located in RAM are supported");
+		error = -ENOTSUP;
+	} else {
+		if (dev_config->wake_gpio.port) {
+			wait_for_wake(dev_data, dev_config);
+
+			nrf_spis_enable(dev_config->spis.p_reg);
+		}
+
+		error = prepare_for_transfer(dev,
+					     tx_buf ? tx_buf->buf : NULL,
+					     tx_buf ? tx_buf->len : 0,
+					     rx_buf ? rx_buf->buf : NULL,
+					     rx_buf ? rx_buf->len : 0);
+		if (error == 0) {
+			if (dev_config->wake_gpio.port) {
+				/* Set the WAKE line low (tie it to ground)
+				 * to signal readiness to handle the transfer.
+				 */
+				gpio_pin_set_raw(dev_config->wake_gpio.port,
+						 dev_config->wake_gpio.pin,
+						 0);
+				/* Set the WAKE line back high (i.e. disconnect
+				 * output for its pin since it's configured in
+				 * open drain mode) so that it can be controlled
+				 * by the other side again.
+				 */
+				gpio_pin_set_raw(dev_config->wake_gpio.port,
+						 dev_config->wake_gpio.pin,
+						 1);
+			}
+
+			error = spi_context_wait_for_completion(&dev_data->ctx);
+		}
+
+		if (dev_config->wake_gpio.port) {
+			nrf_spis_disable(dev_config->spis.p_reg);
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	spi_context_release(&dev_data->ctx, error);
@@ -219,10 +331,17 @@ static const struct spi_driver_api spi_nrfx_driver_api = {
 static void event_handler(const nrfx_spis_evt_t *p_event, void *p_context)
 {
 	struct spi_nrfx_data *dev_data = p_context;
+<<<<<<< HEAD
 	struct device *dev = CONTAINER_OF(dev_data, struct device, data);
 
 	if (p_event->evt_type == NRFX_SPIS_XFER_DONE) {
 		spi_context_complete(&dev_data->ctx, dev, p_event->rx_amount);
+=======
+
+	if (p_event->evt_type == NRFX_SPIS_XFER_DONE) {
+		spi_context_complete(&dev_data->ctx, dev_data->dev,
+				     p_event->rx_amount);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
@@ -249,6 +368,45 @@ static int spi_nrfx_init(const struct device *dev)
 		return -EBUSY;
 	}
 
+<<<<<<< HEAD
+=======
+	if (dev_config->wake_gpio.port) {
+		if (!gpio_is_ready_dt(&dev_config->wake_gpio)) {
+			return -ENODEV;
+		}
+
+		/* In open drain mode, the output is disconnected when set to
+		 * the high state, so the following will effectively configure
+		 * the pin as an input only.
+		 */
+		err = gpio_pin_configure_dt(&dev_config->wake_gpio,
+					    GPIO_INPUT |
+					    GPIO_OUTPUT_HIGH |
+					    GPIO_OPEN_DRAIN);
+		if (err < 0) {
+			return err;
+		}
+
+		gpio_init_callback(&dev_data->wake_cb_data, wake_callback,
+				   BIT(dev_config->wake_gpio.pin));
+		err = gpio_add_callback(dev_config->wake_gpio.port,
+					&dev_data->wake_cb_data);
+		if (err < 0) {
+			return err;
+		}
+
+		/* When the WAKE line is used, the SPIS peripheral is enabled
+		 * only after the master signals that it wants to perform a
+		 * transfer and it is disabled right after the transfer is done.
+		 * Waiting for the WAKE line to go high, what can be done using
+		 * the GPIO PORT event, instead of just waiting for the transfer
+		 * with the SPIS peripheral enabled, significantly reduces idle
+		 * power consumption.
+		 */
+		nrf_spis_disable(dev_config->spis.p_reg);
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	spi_context_unlock_unconditionally(&dev_data->ctx);
 
 	return 0;
@@ -273,6 +431,12 @@ static int spi_nrfx_init(const struct device *dev)
 	static struct spi_nrfx_data spi_##idx##_data = {		       \
 		SPI_CONTEXT_INIT_LOCK(spi_##idx##_data, ctx),		       \
 		SPI_CONTEXT_INIT_SYNC(spi_##idx##_data, ctx),		       \
+<<<<<<< HEAD
+=======
+		.dev  = DEVICE_DT_GET(SPIS(idx)),			       \
+		.wake_sem = Z_SEM_INITIALIZER(				       \
+			spi_##idx##_data.wake_sem, 0, 1),		       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};								       \
 	PINCTRL_DT_DEFINE(SPIS(idx));					       \
 	static const struct spi_nrfx_config spi_##idx##z_config = {	       \
@@ -291,7 +455,15 @@ static int spi_nrfx_init(const struct device *dev)
 		.irq_connect = irq_connect##idx,			       \
 		.pcfg = PINCTRL_DT_DEV_CONFIG_GET(SPIS(idx)),		       \
 		.max_buf_len = BIT_MASK(SPIS_PROP(idx, easydma_maxcnt_bits)),  \
+<<<<<<< HEAD
 	};								       \
+=======
+		.wake_gpio = GPIO_DT_SPEC_GET_OR(SPIS(idx), wake_gpios, {0}),  \
+	};								       \
+	BUILD_ASSERT(!DT_NODE_HAS_PROP(SPIS(idx), wake_gpios) ||	       \
+		     !(DT_GPIO_FLAGS(SPIS(idx), wake_gpios) & GPIO_ACTIVE_LOW),\
+		     "WAKE line must be configured as active high");	       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	DEVICE_DT_DEFINE(SPIS(idx),					       \
 			    spi_nrfx_init,				       \
 			    NULL,					       \
@@ -301,6 +473,7 @@ static int spi_nrfx_init(const struct device *dev)
 			    CONFIG_SPI_INIT_PRIORITY,			       \
 			    &spi_nrfx_driver_api)
 
+<<<<<<< HEAD
 #ifdef CONFIG_SPI_0_NRF_SPIS
 SPI_NRFX_SPIS_DEFINE(0);
 #endif
@@ -314,5 +487,20 @@ SPI_NRFX_SPIS_DEFINE(2);
 #endif
 
 #ifdef CONFIG_SPI_3_NRF_SPIS
+=======
+#ifdef CONFIG_HAS_HW_NRF_SPIS0
+SPI_NRFX_SPIS_DEFINE(0);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIS1
+SPI_NRFX_SPIS_DEFINE(1);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIS2
+SPI_NRFX_SPIS_DEFINE(2);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_SPIS3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 SPI_NRFX_SPIS_DEFINE(3);
 #endif

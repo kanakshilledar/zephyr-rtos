@@ -24,8 +24,13 @@ class BodyMinLineCount(CommitRule):
     # A rule MUST have an *unique* id, we recommend starting with UC (for User-defined Commit-rule).
     id = "UC6"
 
+<<<<<<< HEAD
     # A rule MAY have an option_spec if its behavior should be configurable.
     options_spec = [IntOption('min-line-count', 2, "Minimum body line count excluding Signed-off-by")]
+=======
+    # A rule MAY have an options_spec if its behavior should be configurable.
+    options_spec = [IntOption('min-line-count', 1, "Minimum body line count excluding Signed-off-by")]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def validate(self, commit):
         filtered = [x for x in commit.message.body if not x.lower().startswith("signed-off-by") and x != '']
@@ -42,8 +47,13 @@ class BodyMaxLineCount(CommitRule):
     # A rule MUST have an *unique* id, we recommend starting with UC (for User-defined Commit-rule).
     id = "UC1"
 
+<<<<<<< HEAD
     # A rule MAY have an option_spec if its behavior should be configurable.
     options_spec = [IntOption('max-line-count', 3, "Maximum body line count")]
+=======
+    # A rule MAY have an options_spec if its behavior should be configurable.
+    options_spec = [IntOption('max-line-count', 200, "Maximum body line count")]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     def validate(self, commit):
         line_count = len(commit.message.body)
@@ -78,7 +88,11 @@ class TitleMaxLengthRevert(LineRule):
     name = "title-max-length-no-revert"
     id = "UC5"
     target = CommitMessageTitle
+<<<<<<< HEAD
     options_spec = [IntOption('line-length', 72, "Max line length")]
+=======
+    options_spec = [IntOption('line-length', 75, "Max line length")]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     violation_message = "Commit title exceeds max length ({0}>{1})"
 
     def validate(self, line, _commit):
@@ -103,13 +117,21 @@ class MaxLineLengthExceptions(LineRule):
     name = "max-line-length-with-exceptions"
     id = "UC4"
     target = CommitMessageBody
+<<<<<<< HEAD
     options_spec = [IntOption('line-length', 80, "Max line length")]
+=======
+    options_spec = [IntOption('line-length', 75, "Max line length")]
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     violation_message = "Commit message body line exceeds max length ({0}>{1})"
 
     def validate(self, line, _commit):
         max_length = self.options['line-length'].value
         urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', line)
+<<<<<<< HEAD
         if line.startswith('Signed-off-by'):
+=======
+        if line.lower().startswith('signed-off-by') or line.lower().startswith('co-authored-by'):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return
 
         if urls:

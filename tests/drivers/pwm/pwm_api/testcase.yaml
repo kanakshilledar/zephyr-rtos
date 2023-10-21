@@ -6,4 +6,8 @@ tests:
       - userspace
     filter: dt_alias_exists("pwm-0") or dt_alias_exists("pwm-1") or dt_alias_exists("pwm-2")
       or dt_alias_exists("pwm-3") or dt_compat_enabled("st,stm32-pwm")
+<<<<<<< HEAD
+=======
+      or dt_compat_enabled("intel,blinky-pwm")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     depends_on: pwm

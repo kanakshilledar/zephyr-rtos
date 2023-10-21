@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright (c) 2022 Google Inc
  *
@@ -161,3 +162,6 @@ ZTEST(expect, test_fail_expect_between_inclusive)
 	zexpect_between_inclusive(5, 0, 4);
 	zexpect_between_inclusive(5, 6, 10);
 }
+=======
+#include "main.c"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

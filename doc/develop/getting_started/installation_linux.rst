@@ -228,6 +228,7 @@ The Zephyr SDK supports the following target architectures:
 Follow these steps to install the Zephyr SDK:
 
 #. Download and verify the `Zephyr SDK bundle
+<<<<<<< HEAD
    <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.1>`_:
 
    .. code-block:: bash
@@ -236,6 +237,16 @@ Follow these steps to install the Zephyr SDK:
       wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.1/sha256.sum | shasum --check --ignore-missing
 
    You can change ``0.16.1`` to another version if needed; the `Zephyr SDK
+=======
+   <https://github.com/zephyrproject-rtos/sdk-ng/releases/tag/v0.16.3>`_:
+
+   .. code-block:: bash
+
+      wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/zephyr-sdk-0.16.3_linux-x86_64.tar.xz
+      wget -O - https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.16.3/sha256.sum | shasum --check --ignore-missing
+
+   You can change ``0.16.3`` to another version if needed; the `Zephyr SDK
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    Releases`_ page contains all available SDK releases.
 
    If your host architecture is 64-bit ARM (for example, Raspberry Pi), replace
@@ -246,13 +257,21 @@ Follow these steps to install the Zephyr SDK:
    .. code-block:: bash
 
       cd <sdk download directory>
+<<<<<<< HEAD
       tar xvf zephyr-sdk-0.16.1_linux-x86_64.tar.xz
+=======
+      tar xvf zephyr-sdk-0.16.3_linux-x86_64.tar.xz
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #. Run the Zephyr SDK bundle setup script:
 
    .. code-block:: bash
 
+<<<<<<< HEAD
       cd zephyr-sdk-0.16.1
+=======
+      cd zephyr-sdk-0.16.3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       ./setup.sh
 
    If this fails, make sure Zephyr's dependencies were installed as described
@@ -271,9 +290,15 @@ If you relocate the SDK directory, you need to re-run the setup script.
    * ``/opt``
    * ``/usr/local``
 
+<<<<<<< HEAD
    The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.1`` directory and, when
    extracted under ``$HOME``, the resulting installation path will be
    ``$HOME/zephyr-sdk-0.16.1``.
+=======
+   The Zephyr SDK bundle archive contains the ``zephyr-sdk-0.16.3`` directory and, when
+   extracted under ``$HOME``, the resulting installation path will be
+   ``$HOME/zephyr-sdk-0.16.3``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
    If you install the Zephyr SDK outside any of these locations, you must
    register the Zephyr SDK in the CMake package registry by running the setup

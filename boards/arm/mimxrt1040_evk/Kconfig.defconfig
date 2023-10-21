@@ -10,4 +10,13 @@ choice CODE_LOCATION
 	default CODE_FLEXSPI
 endchoice
 
+<<<<<<< HEAD
+=======
+config DEVICE_CONFIGURATION_DATA
+	default y
+
+config NXP_IMX_EXTERNAL_SDRAM
+	default y
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # BOARD_MIMXRT1040_EVK

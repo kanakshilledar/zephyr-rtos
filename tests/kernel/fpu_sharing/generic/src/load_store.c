@@ -44,12 +44,21 @@
 #else
 #include "float_regs_x86_other.h"
 #endif /* __GNUC__ */
+<<<<<<< HEAD
 #elif defined(CONFIG_ARMV7_M_ARMV8_M_FP) || defined(CONFIG_ARMV7_R_FP)
+=======
+#elif defined(CONFIG_ARM)
+#if defined(CONFIG_ARMV7_M_ARMV8_M_FP) || defined(CONFIG_ARMV7_R_FP) || defined(CONFIG_CPU_HAS_VFP)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(__GNUC__)
 #include "float_regs_arm_gcc.h"
 #else
 #include "float_regs_arm_other.h"
 #endif /* __GNUC__ */
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #elif defined(CONFIG_ARM64)
 #if defined(__GNUC__)
 #include "float_regs_arm64_gcc.h"

@@ -21,6 +21,14 @@ except ImportError:
 
 log = logging.getLogger("scl")
 
+<<<<<<< HEAD
+=======
+
+class EmptyYamlFileException(Exception):
+    pass
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #
 #
 def yaml_load(filename):
@@ -36,7 +44,11 @@ def yaml_load(filename):
     :return: dictionary representing the YAML document
     """
     try:
+<<<<<<< HEAD
         with open(filename, 'r') as f:
+=======
+        with open(filename, 'r', encoding='utf-8') as f:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
             return yaml.load(f, Loader=SafeLoader)
     except yaml.scanner.ScannerError as e:	# For errors parsing schema.yaml
         mark = e.problem_mark
@@ -78,5 +90,10 @@ def yaml_load_verify(filename, schema):
     """
     # 'document.yaml' contains a single YAML document.
     y = yaml_load(filename)
+<<<<<<< HEAD
+=======
+    if not y:
+        raise EmptyYamlFileException('No data in YAML file: %s' % filename)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     _yaml_validate(y, schema)
     return y

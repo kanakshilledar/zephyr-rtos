@@ -15,7 +15,11 @@
 
 #include <zephyr/toolchain.h>
 #include <ksched.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/init.h>
 #include <zephyr/syscall_handler.h>
 #include <kernel_internal.h>
@@ -31,6 +35,13 @@ static int pipe_get_internal(k_spinlock_key_t key, struct k_pipe *pipe,
 			     void *data, size_t bytes_to_read,
 			     size_t *bytes_read, size_t min_xfer,
 			     k_timeout_t timeout);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_PIPE
+static struct k_obj_type obj_type_pipe;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 void k_pipe_init(struct k_pipe *pipe, unsigned char *buffer, size_t size)
 {
@@ -50,6 +61,13 @@ void k_pipe_init(struct k_pipe *pipe, unsigned char *buffer, size_t size)
 	sys_dlist_init(&pipe->poll_events);
 #endif
 	z_object_init(pipe);
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_PIPE
+	k_obj_core_init_and_link(K_OBJ_CORE(pipe), &obj_type_pipe);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int z_impl_k_pipe_alloc_init(struct k_pipe *pipe, size_t size)
@@ -801,3 +819,27 @@ size_t z_vrfy_k_pipe_write_avail(struct k_pipe *pipe)
 }
 #include <syscalls/k_pipe_write_avail_mrsh.c>
 #endif
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_PIPE
+static int init_pipe_obj_core_list(void)
+{
+	/* Initialize pipe object type */
+
+	z_obj_type_init(&obj_type_pipe, K_OBJ_TYPE_PIPE_ID,
+			offsetof(struct k_pipe, obj_core));
+
+	/* Initialize and link statically defined pipes */
+
+	STRUCT_SECTION_FOREACH(k_pipe, pipe) {
+		k_obj_core_init_and_link(K_OBJ_CORE(pipe), &obj_type_pipe);
+	}
+
+	return 0;
+}
+
+SYS_INIT(init_pipe_obj_core_list, PRE_KERNEL_1,
+	 CONFIG_KERNEL_INIT_PRIORITY_OBJECTS);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

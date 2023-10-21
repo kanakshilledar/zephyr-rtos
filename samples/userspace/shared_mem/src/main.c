@@ -200,7 +200,11 @@ int main(void)
 
 /*
  * The enc thread.
+<<<<<<< HEAD
  * Function: initialize the the simulation of the wheels.
+=======
+ * Function: initialize the simulation of the wheels.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * Copy memory from pt thread and encrypt to a local buffer
  * then copy to the ct thread.
  */

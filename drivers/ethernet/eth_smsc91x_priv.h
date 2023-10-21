@@ -25,6 +25,10 @@
 
 /* Bank 0, Offset 0x4: Receive Control Register */
 #define RCR	      0x4
+<<<<<<< HEAD
+=======
+#define RCR_PRMS      0x0002 /* Promiscuous mode */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define RCR_RXEN      0x0100 /* Enable/disable receiver */
 #define RCR_STRIP_CRC 0x0200 /* Strip CRC from RX packets */
 #define RCR_SOFT_RST  0x8000 /* Software reset */

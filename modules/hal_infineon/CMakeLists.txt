@@ -18,6 +18,12 @@ if (CONFIG_SOC_FAMILY_INFINEON_CAT1A OR CONFIG_SOC_FAMILY_PSOC6)
 
   ## Add mtb-pdl-cat1 sources for CAT1 devices
   add_subdirectory(mtb-pdl-cat1)
+<<<<<<< HEAD
+=======
+
+  ## Add mtb-templates-cat1 sources for CAT1 devices
+  add_subdirectory(mtb-template-cat1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif()
 
 if (CONFIG_SOC_FAMILY_INFINEON_CAT1A)

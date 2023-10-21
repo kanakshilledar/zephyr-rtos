@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _lwm2m-client-sample:
 
 LwM2M client
 ############
+=======
+.. zephyr:code-sample:: lwm2m-client
+   :name: LwM2M client
+   :relevant-api: lwm2m_api
+
+   Implement a LwM2M client that connects to a LwM2M server.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -34,6 +42,7 @@ Building and Running
 There are configuration files for various setups in the
 samples/net/lwm2m_client directory:
 
+<<<<<<< HEAD
 - :file:`prj.conf`
   This is the standard default config.
 
@@ -51,6 +60,30 @@ samples/net/lwm2m_client directory:
 
 - :file:`overlay-queue.conf`
   This overlay config can be added to enable LWM2M Queue Mode support.
+=======
+.. list-table::
+
+    * - :file:`prj.conf`
+      - This is the standard default config.
+
+    * - :file:`overlay-bootstrap.conf`
+      - This overlay config can be added to enable LWM2M Bootstrap support.
+
+    * - :file:`overlay-ot.conf`
+      - This overlay config can be added for OpenThread support.
+
+    * - :file:`overlay-dtls.conf`
+      - This overlay config can be added for DTLS support via MBEDTLS.
+
+    * - :file:`overlay-bt.conf`
+      - This overlay config can be added to enable Bluetooth networking support.
+
+    * - :file:`overlay-queue.conf`
+      - This overlay config can be added to enable LWM2M Queue Mode support.
+
+    * - :file:`overlay-tickless.conf`
+      - This overlay config can be used to stop LwM2M engine for periodically interrupting socket polls. It can have significant effect on power usage on certain devices.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Build the lwm2m-client sample application like this:
 

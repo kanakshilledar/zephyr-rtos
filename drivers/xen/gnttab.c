@@ -28,17 +28,35 @@
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/sys/device_mmio.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(xen_gnttab);
 
 /* Timeout for grant table ops retrying */
 #define GOP_RETRY_DELAY 200
 
+<<<<<<< HEAD
 /* NR_GRANT_FRAMES must be less than or equal to that configured in Xen */
 #define NR_GRANT_FRAMES			1
 #define NR_GRANT_ENTRIES \
 	(NR_GRANT_FRAMES * XEN_PAGE_SIZE / sizeof(grant_entry_v1_t))
 
+=======
+#define GNTTAB_SIZE DT_REG_SIZE_BY_IDX(DT_INST(0, xen_xen), 0)
+BUILD_ASSERT(!(GNTTAB_SIZE % XEN_PAGE_SIZE), "Size of gnttab have to be aligned on XEN_PAGE_SIZE");
+
+/* NR_GRANT_FRAMES must be less than or equal to that configured in Xen */
+#define NR_GRANT_FRAMES (GNTTAB_SIZE / XEN_PAGE_SIZE)
+#define NR_GRANT_ENTRIES \
+	(NR_GRANT_FRAMES * XEN_PAGE_SIZE / sizeof(grant_entry_v1_t))
+
+BUILD_ASSERT(GNTTAB_SIZE <= CONFIG_KERNEL_VM_SIZE);
+DEVICE_MMIO_TOPLEVEL_STATIC(grant_tables, DT_INST(0, xen_xen));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct gnttab {
 	struct k_sem sem;
 	grant_entry_v1_t *table;
@@ -307,15 +325,22 @@ static int gnttab_init(void)
 		put_free_entry(gref);
 	}
 
+<<<<<<< HEAD
 	gnttab.table = (grant_entry_v1_t *)
 			DT_REG_ADDR_BY_IDX(DT_INST(0, xen_xen), 0);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	for (i = 0; i < NR_GRANT_FRAMES; i++) {
 		xatp.domid = DOMID_SELF;
 		xatp.size = 0;
 		xatp.space = XENMAPSPACE_grant_table;
 		xatp.idx = i;
+<<<<<<< HEAD
 		xatp.gpfn = xen_virt_to_gfn(gnttab.table) + i;
+=======
+		xatp.gpfn = xen_virt_to_gfn(Z_TOPLEVEL_ROM_NAME(grant_tables).phys_addr) + i;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rc = HYPERVISOR_memory_op(XENMEM_add_to_physmap, &xatp);
 		__ASSERT(!rc, "add_to_physmap failed; status = %d\n", rc);
 	}
@@ -327,6 +352,12 @@ static int gnttab_init(void)
 	__ASSERT((!rc) && (!setup.status), "Table setup failed; status = %s\n",
 		gnttabop_error(setup.status));
 
+<<<<<<< HEAD
+=======
+	DEVICE_MMIO_TOPLEVEL_MAP(grant_tables, K_MEM_CACHE_WB | K_MEM_PERM_RW);
+	gnttab.table = (grant_entry_v1_t *)DEVICE_MMIO_TOPLEVEL_GET(grant_tables);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("%s: grant table mapped\n", __func__);
 
 	return 0;

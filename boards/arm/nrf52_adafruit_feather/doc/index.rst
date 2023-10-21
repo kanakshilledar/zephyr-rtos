@@ -166,11 +166,19 @@ Testing the LEDs and buttons on the nRF52 Adafruit Feather
 There are several samples that allow you to test that the buttons (switches) and LEDs on
 the board are working properly with Zephyr:
 
+<<<<<<< HEAD
 - :ref:`blinky-sample`
 - :ref:`button-sample`
 - :ref:`fade-led-sample`
 - :ref:`blink-led-sample`
 - :ref:`96b_carbon_multi_thread_blinky`
+=======
+- :zephyr:code-sample:`blinky`
+- :zephyr:code-sample:`button`
+- :zephyr:code-sample:`fade-led`
+- :zephyr:code-sample:`pwm-blinky`
+- :zephyr:code-sample:`multi-thread-blinky`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 You can build and flash the examples to make sure Zephyr is running correctly on
 your board. The button and LED definitions can be found in

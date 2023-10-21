@@ -54,7 +54,11 @@ ZTEST(test_log_output, test_no_flags)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 0, NULL, SNAME, LOG_LEVEL_INF, package, NULL, 0, 0);
+=======
+	log_output_process(&log_output, 0, NULL, SNAME, NULL, LOG_LEVEL_INF, package, NULL, 0, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	mock_buffer[mock_len] = '\0';
 	zassert_equal(strcmp(exp_str, mock_buffer), 0);
@@ -69,7 +73,11 @@ ZTEST(test_log_output, test_raw)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 0, NULL, SNAME, LOG_LEVEL_INTERNAL_RAW_STRING,
+=======
+	log_output_process(&log_output, 0, NULL, SNAME, NULL, LOG_LEVEL_INTERNAL_RAW_STRING,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   package, NULL, 0, 0);
 
 	mock_buffer[mock_len] = '\0';
@@ -85,7 +93,11 @@ ZTEST(test_log_output, test_no_flags_dname)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 0, DNAME, SNAME, LOG_LEVEL_INF, package, NULL, 0, 0);
+=======
+	log_output_process(&log_output, 0, DNAME, SNAME, NULL, LOG_LEVEL_INF, package, NULL, 0, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	mock_buffer[mock_len] = '\0';
 	zassert_equal(strcmp(exp_str, mock_buffer), 0);
@@ -101,7 +113,11 @@ ZTEST(test_log_output, test_level_flag)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 0, DNAME, SNAME, LOG_LEVEL_INF,
+=======
+	log_output_process(&log_output, 0, DNAME, SNAME, NULL, LOG_LEVEL_INF,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   package, NULL, 0, flags);
 
 	mock_buffer[mock_len] = '\0';
@@ -120,7 +136,11 @@ ZTEST(test_log_output, test_ts_flag)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 0, DNAME, SNAME, LOG_LEVEL_INF,
+=======
+	log_output_process(&log_output, 0, DNAME, SNAME, NULL, LOG_LEVEL_INF,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   package, NULL, 0, flags);
 
 	mock_buffer[mock_len] = '\0';
@@ -140,7 +160,11 @@ ZTEST(test_log_output, test_format_ts)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 1000000, DNAME, SNAME, LOG_LEVEL_INF,
+=======
+	log_output_process(&log_output, 1000000, DNAME, SNAME, NULL, LOG_LEVEL_INF,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   package, NULL, 0, flags);
 
 	mock_buffer[mock_len] = '\0';
@@ -178,7 +202,11 @@ ZTEST(test_log_output, test_levels)
 	for (int i = 0; i < ARRAY_SIZE(exp_strs); i++) {
 		reset_mock_buffer();
 
+<<<<<<< HEAD
 		log_output_process(&log_output, 0, NULL, SNAME, levels[i],
+=======
+		log_output_process(&log_output, 0, NULL, SNAME, NULL, levels[i],
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				   package, NULL, 0, flags);
 
 		mock_buffer[mock_len] = '\0';
@@ -210,7 +238,11 @@ ZTEST(test_log_output, test_colors)
 	for (int i = 0; i < ARRAY_SIZE(exp_strs); i++) {
 		reset_mock_buffer();
 
+<<<<<<< HEAD
 		log_output_process(&log_output, 0, NULL, SNAME, levels[i],
+=======
+		log_output_process(&log_output, 0, NULL, SNAME, NULL, levels[i],
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				   package, NULL, 0, flags);
 
 		mock_buffer[mock_len] = '\0';
@@ -218,6 +250,38 @@ ZTEST(test_log_output, test_colors)
 	}
 }
 
+<<<<<<< HEAD
+=======
+ZTEST(test_log_output, test_thread_id)
+{
+	if (!IS_ENABLED(CONFIG_LOG_THREAD_ID_PREFIX)) {
+		return;
+	}
+
+	char exp_str[256];
+	char package[256];
+
+	if (IS_ENABLED(CONFIG_THREAD_NAME)) {
+		sprintf(exp_str, "<err> [%s] src: Test\r\n", k_thread_name_get(k_current_get()));
+	} else {
+		sprintf(exp_str, "<err> [%p] src: Test\r\n", k_current_get());
+	}
+
+	uint32_t flags = LOG_OUTPUT_FLAG_LEVEL | LOG_OUTPUT_FLAG_THREAD;
+	int err;
+
+	err = cbprintf_package(package, sizeof(package), 0, "Test");
+	zassert_true(err > 0);
+
+	log_output_process(&log_output, 0, NULL, SNAME, k_current_get(), 1,
+			   package, NULL, 0, flags);
+
+	mock_buffer[mock_len] = '\0';
+	printk("%s", mock_buffer);
+	zassert_equal(strcmp(exp_str, mock_buffer), 0);
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static void before(void *notused)
 {
 	reset_mock_buffer();

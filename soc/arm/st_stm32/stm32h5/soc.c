@@ -14,12 +14,19 @@
 #include <stm32_ll_bus.h>
 #include <stm32_ll_pwr.h>
 #include <stm32_ll_icache.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/arch/arm/aarch32/nmi.h>
 #include <zephyr/irq.h>
 #include <zephyr/logging/log.h>
 
+=======
+#include <zephyr/logging/log.h>
+
+#include <cmsis_core.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define LOG_LEVEL CONFIG_SOC_LOG_LEVEL
 LOG_MODULE_REGISTER(soc);
 
@@ -33,6 +40,7 @@ LOG_MODULE_REGISTER(soc);
  */
 static int stm32h5_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
@@ -45,6 +53,8 @@ static int stm32h5_init(void)
 
 	irq_unlock(key);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Enable instruction cache in 1-way (direct mapped cache) */
 	LL_ICACHE_SetMode(LL_ICACHE_1WAY);
 	LL_ICACHE_Enable();

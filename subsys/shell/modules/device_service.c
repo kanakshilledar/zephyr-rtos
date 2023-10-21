@@ -27,6 +27,11 @@ static const char *get_device_name(const struct device *dev,
 
 	return name;
 }
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_DEVICE_DEPS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct cmd_device_list_visitor_context {
 	const struct shell *sh;
 	char *buf;
@@ -43,6 +48,10 @@ static int cmd_device_list_visitor(const struct device *dev,
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+#endif /* CONFIG_DEVICE_DEPS */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int cmd_device_list(const struct shell *sh,
 			   size_t argc, char **argv)
@@ -77,6 +86,10 @@ static int cmd_device_list(const struct shell *sh,
 		}
 
 		shell_fprintf(sh, SHELL_NORMAL, " (%s)\n", state);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEVICE_DEPS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!k_is_user_context()) {
 			struct cmd_device_list_visitor_context ctx = {
 				.sh = sh,
@@ -86,6 +99,10 @@ static int cmd_device_list(const struct shell *sh,
 
 			(void)device_required_foreach(dev, cmd_device_list_visitor, &ctx);
 		}
+<<<<<<< HEAD
+=======
+#endif /* CONFIG_DEVICE_DEPS */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;

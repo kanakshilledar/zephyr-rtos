@@ -106,6 +106,12 @@ set_compiler_property(PROPERTY debug)
 # Flags to save temporary object files
 set_compiler_property(PROPERTY save_temps)
 
+<<<<<<< HEAD
+=======
+# Flag to specify linker script
+set_compiler_property(PROPERTY linker_script)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 set_compiler_property(PROPERTY no_common)
 
 # Flags for imacros. The specific header must be appended by user.
@@ -127,3 +133,9 @@ set_compiler_property(PROPERTY no_position_independent)
 # gen_kobject_list.py is does not understand it and end up identifying objects as if
 # they had the same address.
 set_compiler_property(PROPERTY no_global_merge)
+<<<<<<< HEAD
+=======
+
+# Compiler flag for warning about shadow variables
+set_compiler_property(PROPERTY warning_shadow_variables)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

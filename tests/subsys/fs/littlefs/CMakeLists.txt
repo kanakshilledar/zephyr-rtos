@@ -14,5 +14,15 @@ target_compile_definitions(app PRIVATE
 )
 target_sources(app PRIVATE
   ${app_sources}
+<<<<<<< HEAD
   ../common/test_fs_open_flags.c
   ../common/test_fs_mkfs.c)
+=======
+  ../common/test_fs_util.c
+  ../common/test_fs_open_flags.c
+  ../common/test_fs_dirops.c
+  ../common/test_fs_basic.c
+  ../common/test_fs_mount_flags.c
+  ../common/test_fs_mkfs.c
+)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

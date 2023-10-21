@@ -1,6 +1,10 @@
 /*
  * Copyright (c) 2017 Google LLC.
  * Copyright (c) 2023 Ionut Catalin Pavel <iocapa@iocapa.com>
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Gerson Fernando Budke <nandojve@gmail.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -21,13 +25,20 @@
  * GCLK Gen 3 -> ADC @ 8 MHz
  */
 
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 
 #include <soc.h>
+<<<<<<< HEAD
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * Fix different naming conventions for SAMD20
@@ -255,6 +266,7 @@ static inline void osc8m_disable(void)
 }
 #endif
 
+<<<<<<< HEAD
 static int atmel_samd_init(void)
 {
 	uint32_t key;
@@ -262,6 +274,10 @@ static int atmel_samd_init(void)
 
 	key = irq_lock();
 
+=======
+void z_arm_platform_init(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	osc8m_init();
 	osc32k_init();
 	xosc_init();
@@ -271,6 +287,7 @@ static int atmel_samd_init(void)
 	gclk_main_configure();
 	gclk_adc_configure();
 	osc8m_disable();
+<<<<<<< HEAD
 
 	/* Install default handler that simply resets the CPU
 	 * if configured in the kernel, NOP otherwise
@@ -283,3 +300,6 @@ static int atmel_samd_init(void)
 }
 
 SYS_INIT(atmel_samd_init, PRE_KERNEL_1, 0);
+=======
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

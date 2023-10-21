@@ -186,7 +186,11 @@ static int mcux_igpio_configure(const struct device *dev,
 	}
 #endif /* CONFIG_SOC_SERIES_IMX_RT10XX */
 
+<<<<<<< HEAD
 	memcpy(&pin_cfg.pinmux, &config->pin_muxes[cfg_idx], sizeof(pin_cfg));
+=======
+	memcpy(&pin_cfg.pinmux, &config->pin_muxes[cfg_idx], sizeof(pin_cfg.pinmux));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* cfg register will be set by pinctrl_configure_pins */
 	pin_cfg.pin_ctrl_flags = reg;
 	pinctrl_configure_pins(&pin_cfg, 1, PINCTRL_REG_NONE);

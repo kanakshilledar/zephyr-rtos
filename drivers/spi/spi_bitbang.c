@@ -261,7 +261,11 @@ int spi_bitbang_init(const struct device *dev)
 	struct spi_bitbang_data *data = dev->data;
 	int rc;
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->clk_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->clk_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO port for clk pin is not ready");
 		return -ENODEV;
 	}
@@ -272,7 +276,11 @@ int spi_bitbang_init(const struct device *dev)
 	}
 
 	if (config->mosi_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->mosi_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->mosi_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("GPIO port for mosi pin is not ready");
 			return -ENODEV;
 		}
@@ -285,7 +293,11 @@ int spi_bitbang_init(const struct device *dev)
 	}
 
 	if (config->miso_gpio.port != NULL) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->miso_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->miso_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("GPIO port for miso pin is not ready");
 			return -ENODEV;
 		}

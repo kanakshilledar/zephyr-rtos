@@ -72,7 +72,11 @@ static struct osdp_cmd *cp_cmd_alloc(struct osdp_pd *pd)
 
 static void cp_cmd_free(struct osdp_pd *pd, struct osdp_cmd *cmd)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(&pd->cmd.slab, (void **)&cmd);
+=======
+	k_mem_slab_free(&pd->cmd.slab, (void *)cmd);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void cp_cmd_enqueue(struct osdp_pd *pd, struct osdp_cmd *cmd)

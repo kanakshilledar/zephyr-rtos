@@ -27,6 +27,10 @@
 	};
 };
 
+<<<<<<< HEAD
 xiao_spi: &spi0 {};
+=======
+xiao_spi: &spi2 {};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 xiao_i2c: &i2c1 {};
 xiao_serial: &uart0 {};

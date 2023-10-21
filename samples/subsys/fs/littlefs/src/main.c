@@ -273,7 +273,11 @@ static struct fs_mount_t lfs_storage_mnt = {
 };
 #endif /* PARTITION_NODE */
 
+<<<<<<< HEAD
 	struct fs_mount_t *mp =
+=======
+	struct fs_mount_t *mountpoint =
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if DT_NODE_EXISTS(PARTITION_NODE)
 		&FS_FSTAB_ENTRY(PARTITION_NODE)
 #else
@@ -309,18 +313,39 @@ static int littlefs_mount(struct fs_mount_t *mp)
 #endif /* CONFIG_APP_LITTLEFS_STORAGE_FLASH */
 
 #ifdef CONFIG_APP_LITTLEFS_STORAGE_BLK_SDMMC
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_DISK_DRIVER_SDMMC)
+#define DISK_NAME CONFIG_SDMMC_VOLUME_NAME
+#elif IS_ENABLED(CONFIG_DISK_DRIVER_MMC)
+#define DISK_NAME CONFIG_MMC_VOLUME_NAME
+#else
+#error "No disk device defined, is your board supported?"
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct fs_littlefs lfsfs;
 static struct fs_mount_t __mp = {
 	.type = FS_LITTLEFS,
 	.fs_data = &lfsfs,
 	.flags = FS_MOUNT_FLAG_USE_DISK_ACCESS,
 };
+<<<<<<< HEAD
 struct fs_mount_t *mp = &__mp;
 
 static int littlefs_mount(struct fs_mount_t *mp)
 {
 	static const char *disk_mount_pt = "/"CONFIG_SDMMC_VOLUME_NAME":";
 	static const char *disk_pdrv = CONFIG_SDMMC_VOLUME_NAME;
+=======
+struct fs_mount_t *mountpoint = &__mp;
+
+static int littlefs_mount(struct fs_mount_t *mp)
+{
+	static const char *disk_mount_pt = "/"DISK_NAME":";
+	static const char *disk_pdrv = DISK_NAME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	mp->storage_dev = (void *)disk_pdrv;
 	mp->mnt_point = disk_mount_pt;
@@ -338,15 +363,26 @@ int main(void)
 
 	LOG_PRINTK("Sample program to r/w files on littlefs\n");
 
+<<<<<<< HEAD
 	rc = littlefs_mount(mp);
+=======
+	rc = littlefs_mount(mountpoint);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (rc < 0) {
 		return 0;
 	}
 
+<<<<<<< HEAD
 	snprintf(fname1, sizeof(fname1), "%s/boot_count", mp->mnt_point);
 	snprintf(fname2, sizeof(fname2), "%s/pattern.bin", mp->mnt_point);
 
 	rc = fs_statvfs(mp->mnt_point, &sbuf);
+=======
+	snprintf(fname1, sizeof(fname1), "%s/boot_count", mountpoint->mnt_point);
+	snprintf(fname2, sizeof(fname2), "%s/pattern.bin", mountpoint->mnt_point);
+
+	rc = fs_statvfs(mountpoint->mnt_point, &sbuf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (rc < 0) {
 		LOG_PRINTK("FAIL: statvfs: %d\n", rc);
 		goto out;
@@ -354,6 +390,7 @@ int main(void)
 
 	LOG_PRINTK("%s: bsize = %lu ; frsize = %lu ;"
 		   " blocks = %lu ; bfree = %lu\n",
+<<<<<<< HEAD
 		   mp->mnt_point,
 		   sbuf.f_bsize, sbuf.f_frsize,
 		   sbuf.f_blocks, sbuf.f_bfree);
@@ -361,6 +398,15 @@ int main(void)
 	rc = lsdir(mp->mnt_point);
 	if (rc < 0) {
 		LOG_PRINTK("FAIL: lsdir %s: %d\n", mp->mnt_point, rc);
+=======
+		   mountpoint->mnt_point,
+		   sbuf.f_bsize, sbuf.f_frsize,
+		   sbuf.f_blocks, sbuf.f_bfree);
+
+	rc = lsdir(mountpoint->mnt_point);
+	if (rc < 0) {
+		LOG_PRINTK("FAIL: lsdir %s: %d\n", mountpoint->mnt_point, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto out;
 	}
 
@@ -375,7 +421,12 @@ int main(void)
 	}
 
 out:
+<<<<<<< HEAD
 	rc = fs_unmount(mp);
 	LOG_PRINTK("%s unmount: %d\n", mp->mnt_point, rc);
+=======
+	rc = fs_unmount(mountpoint);
+	LOG_PRINTK("%s unmount: %d\n", mountpoint->mnt_point, rc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

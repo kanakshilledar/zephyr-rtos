@@ -9,10 +9,13 @@
 
 #include <xtensa/hal.h>
 
+<<<<<<< HEAD
 /* Macros for data cache operations */
 #define SOC_DCACHE_FLUSH(addr, size)		\
 	sys_cache_data_flush_range((addr), (size))
 #define SOC_DCACHE_INVALIDATE(addr, size)	\
 	sys_cache_data_invd_range((addr), (size))
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif

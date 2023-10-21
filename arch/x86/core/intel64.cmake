@@ -17,5 +17,9 @@ zephyr_library_sources(
 )
 
 zephyr_library_sources_ifdef(CONFIG_USERSPACE	intel64/userspace.S)
+<<<<<<< HEAD
 
+=======
+zephyr_library_sources_ifdef(CONFIG_THREAD_LOCAL_STORAGE	intel64/tls.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_DEBUG_COREDUMP	intel64/coredump.c)

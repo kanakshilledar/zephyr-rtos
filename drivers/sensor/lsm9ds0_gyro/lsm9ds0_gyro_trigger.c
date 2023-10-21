@@ -109,7 +109,11 @@ int lsm9ds0_gyro_init_interrupt(const struct device *dev)
 			(k_thread_entry_t)lsm9ds0_gyro_thread_main,
 			(void *)dev, NULL, NULL, K_PRIO_COOP(10), 0, K_NO_WAIT);
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("GPIO device not ready");
 		return -ENODEV;
 	}

@@ -12,6 +12,10 @@ Kernel
    memory_management/index.rst
    data_structures/index.rst
    timing_functions/index.rst
+<<<<<<< HEAD
+=======
+   object_cores/index.rst
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    timeutil.rst
    util/index.rst
    iterable_sections/index.rst

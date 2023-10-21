@@ -45,6 +45,10 @@ Here are the files in a simple Zephyr application:
    ├── CMakeLists.txt
    ├── app.overlay
    ├── prj.conf
+<<<<<<< HEAD
+=======
+   ├── VERSION
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    └── src
        └── main.c
 
@@ -77,6 +81,15 @@ These contents are:
 
   See :ref:`application-kconfig` below for more information.
 
+<<<<<<< HEAD
+=======
+* **VERSION**: A text file that contains several version information fields.
+  These fields let you manage the lifecycle of the application and automate
+  providing the application version when signing application images.
+
+  See :ref:`app-version-details` for more information about this file and how to use it.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * **main.c**: A source code file. Applications typically contain source files
   written in C, C++, or assembly language. The Zephyr convention is to place
   them in a subdirectory of :file:`<app>` named :file:`src`.
@@ -190,11 +203,25 @@ following example, ``app`` is a Zephyr freestanding application:
         └── src/
             └── main.c
 
+<<<<<<< HEAD
 Creating an Application
 ***********************
 
 example-application
 ===================
+=======
+.. _zephyr-creating-app:
+
+Creating an Application
+***********************
+
+In Zephyr, you can either use a reference workspace application or create your application by hand.
+
+.. _zephyr-creating-app-from-example:
+
+Using a Reference Workspace Application
+=======================================
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The `example-application`_ Git repository contains a reference :ref:`workspace
 application <zephyr-workspace-app>`. It is recommended to use it as a reference
@@ -210,7 +237,11 @@ commonly-used features, such as:
 - A custom west :ref:`extension command <west-extensions>`
 
 Basic example-application Usage
+<<<<<<< HEAD
 ===============================
+=======
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The easiest way to get started with the example-application repository within
 an existing Zephyr workspace is to follow these steps:
@@ -226,7 +257,11 @@ you are using an existing Zephyr workspace, you can use ``west build`` or any
 other west commands to build, flash, and debug.
 
 Advanced example-application Usage
+<<<<<<< HEAD
 ==================================
+=======
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 You can also use the example-application repository as a starting point for
 building your own customized Zephyr-based software distribution. This lets you
@@ -283,6 +318,11 @@ From now on, you can collaborate on the shared software by pushing changes to
 the repositories you are using and updating :file:`my-manifest-repo/west.yml`
 as needed to add and remove repositories, or change their contents.
 
+<<<<<<< HEAD
+=======
+.. _zephyr-creating-app-by-hand:
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Creating an Application by Hand
 ===============================
 
@@ -416,7 +456,11 @@ should know about.
 
 * :makevar:`SHIELD`: see :ref:`shields`
 
+<<<<<<< HEAD
 * :makevar:`ZEPHYR_MODULES`: A CMake list containing absolute paths of
+=======
+* :makevar:`ZEPHYR_MODULES`: A `CMake list`_ containing absolute paths of
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   additional directories with source code, Kconfig, etc. that should be used in
   the application build. See :ref:`modules` for details. If you set this
   variable, it must be a complete list of all modules to use, as the build
@@ -430,6 +474,11 @@ should know about.
    You can use a :ref:`cmake_build_config_package` to share common settings for
    these variables.
 
+<<<<<<< HEAD
+=======
+.. _zephyr-app-cmakelists:
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Application CMakeLists.txt
 **************************
 
@@ -564,6 +613,11 @@ For example:
       ${PROJECT_BINARY_DIR}/${KERNEL_HEX_NAME}
       ${app_provision_hex})
 
+<<<<<<< HEAD
+=======
+.. _zephyr-app-cmakecache:
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 CMakeCache.txt
 **************
 
@@ -1035,6 +1089,7 @@ again.
    target name, for example ``west build -t run_qemu`` or ``ninja run_qemu``
    for QEMU.
 
+<<<<<<< HEAD
 .. _application_debugging:
 
 Application Debugging
@@ -1198,6 +1253,8 @@ when running the application directly within :command:`gdb`.
    but nothing will appear to happen. Check the console output as described
    above.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _custom_board_definition:
 
 Custom Board, Devicetree and SOC Definitions
@@ -1430,6 +1487,7 @@ Cache variable:
    :goals: build
    :compact:
 
+<<<<<<< HEAD
 
 
 Debug with Eclipse
@@ -1562,4 +1620,9 @@ CONFIG_DEBUG_THREAD_INFO=y in your application.
 .. _CMake list: https://cmake.org/cmake/help/latest/manual/cmake-language.7.html#lists
 .. _add_subdirectory(): https://cmake.org/cmake/help/latest/command/add_subdirectory.html
 .. _using Chocolatey: https://chocolatey.org/packages/RapidEE
+=======
+.. _CMake: https://www.cmake.org
+.. _CMake introduction: https://cmake.org/cmake/help/latest/manual/cmake.1.html#description
+.. _CMake list: https://cmake.org/cmake/help/latest/manual/cmake-language.7.html#lists
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 .. _example-application: https://github.com/zephyrproject-rtos/example-application

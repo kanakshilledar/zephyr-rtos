@@ -1,9 +1,17 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/drivers/clock_control.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/pinctrl.h>
 #include "spi_nxp_s32.h"
 
@@ -273,12 +281,26 @@ static int spi_nxp_s32_configure(const struct device *dev,
 	uint8_t frame_size;
 
 	struct spi_nxp_s32_baudrate_param best_baud = {0};
+<<<<<<< HEAD
+=======
+	uint32_t clock_rate;
+	int err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (spi_context_configured(&data->ctx, spi_cfg)) {
 		/* This configuration is already in use */
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+	err = clock_control_get_rate(config->clock_dev, config->clock_subsys, &clock_rate);
+	if (err) {
+		LOG_ERR("Failed to get clock frequency");
+		return err;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	clk_phase	= !!(SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPHA);
 	clk_polarity	= !!(SPI_MODE_GET(spi_cfg->operation) & SPI_MODE_CPOL);
 
@@ -325,7 +347,11 @@ static int spi_nxp_s32_configure(const struct device *dev,
 		return -ENOTSUP;
 	}
 
+<<<<<<< HEAD
 	if (cs_active_high && (spi_cfg->cs == NULL)) {
+=======
+	if (cs_active_high && !spi_cs_is_gpio(spi_cfg)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("For CS has active state is high, a GPIO pin must be used to"
 			" control CS line instead");
 		return -ENOTSUP;
@@ -340,7 +366,11 @@ static int spi_nxp_s32_configure(const struct device *dev,
 			return -ENOTSUP;
 		}
 
+<<<<<<< HEAD
 		spi_nxp_s32_getbestfreq(config->clock_frequency, spi_cfg->frequency, &best_baud);
+=======
+		spi_nxp_s32_getbestfreq(clock_rate, spi_cfg->frequency, &best_baud);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		data->transfer_cfg.Ctar &= ~(SPI_CTAR_BR_MASK | SPI_CTAR_PBR_MASK);
 		data->transfer_cfg.Ctar |= SPI_CTAR_BR(best_baud.scaler) |
@@ -348,7 +378,11 @@ static int spi_nxp_s32_configure(const struct device *dev,
 
 		data->transfer_cfg.PushrCmd &= ~((SPI_PUSHR_CONT_MASK | SPI_PUSHR_PCS_MASK) >> 16U);
 
+<<<<<<< HEAD
 		if (spi_cfg->cs == NULL) {
+=======
+		if (!spi_cs_is_gpio(spi_cfg)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Use inner CS signal from SPI module */
 			data->transfer_cfg.PushrCmd |= hold_cs << 15U;
 			data->transfer_cfg.PushrCmd |= (1U << spi_cfg->slave);
@@ -486,12 +520,36 @@ static int spi_nxp_s32_init(const struct device *dev)
 {
 	const struct spi_nxp_s32_config *config = dev->config;
 	struct spi_nxp_s32_data *data = dev->data;
+<<<<<<< HEAD
 
+=======
+	uint32_t clock_rate;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t scaler, prescaler;
 
 	uint32_t ctar = 0;
 	int ret = 0;
 
+<<<<<<< HEAD
+=======
+	if (!device_is_ready(config->clock_dev)) {
+		LOG_ERR("Clock control device not ready");
+		return -ENODEV;
+	}
+
+	ret = clock_control_on(config->clock_dev, config->clock_subsys);
+	if (ret) {
+		LOG_ERR("Failed to enable clock");
+		return ret;
+	}
+
+	ret = clock_control_get_rate(config->clock_dev, config->clock_subsys, &clock_rate);
+	if (ret) {
+		LOG_ERR("Failed to get clock frequency");
+		return ret;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret = pinctrl_apply_state(config->pincfg, PINCTRL_STATE_DEFAULT);
 	if (ret < 0) {
 		return ret;
@@ -513,6 +571,7 @@ static int spi_nxp_s32_init(const struct device *dev)
 	 * Update the delay timings configuration that are
 	 * applied for all inner CS signals of SPI module.
 	 */
+<<<<<<< HEAD
 	spi_nxp_s32_getbestdelay(config->clock_frequency,
 					config->sck_cs_delay, &scaler, &prescaler);
 
@@ -525,6 +584,17 @@ static int spi_nxp_s32_init(const struct device *dev)
 
 	spi_nxp_s32_getbestdelay(config->clock_frequency,
 					config->cs_cs_delay, &scaler, &prescaler);
+=======
+	spi_nxp_s32_getbestdelay(clock_rate, config->sck_cs_delay, &scaler, &prescaler);
+
+	ctar |= SPI_CTAR_ASC(scaler) | SPI_CTAR_PASC(prescaler);
+
+	spi_nxp_s32_getbestdelay(clock_rate, config->cs_sck_delay, &scaler, &prescaler);
+
+	ctar |= SPI_CTAR_CSSCK(scaler) | SPI_CTAR_PCSSCK(prescaler);
+
+	spi_nxp_s32_getbestdelay(clock_rate, config->cs_cs_delay, &scaler, &prescaler);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ctar |= SPI_CTAR_DT(scaler) | SPI_CTAR_PDT(prescaler);
 
@@ -654,7 +724,13 @@ static const struct spi_driver_api spi_nxp_s32_driver_api = {
 	static const struct spi_nxp_s32_config spi_nxp_s32_config_##n = {		\
 		.instance     = n,							\
 		.num_cs	      = SPI_NXP_S32_NUM_CS(n),					\
+<<<<<<< HEAD
 		.clock_frequency = DT_PROP(SPI_NXP_S32_NODE(n), clock_frequency),	\
+=======
+		.clock_dev    = DEVICE_DT_GET(DT_CLOCKS_CTLR(SPI_NXP_S32_NODE(n))),	\
+		.clock_subsys = (clock_control_subsys_t)				\
+				DT_CLOCKS_CELL(SPI_NXP_S32_NODE(n), name),		\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.sck_cs_delay = DT_PROP_OR(SPI_NXP_S32_NODE(n), spi_sck_cs_delay, 0U),	\
 		.cs_sck_delay = DT_PROP_OR(SPI_NXP_S32_NODE(n), spi_cs_sck_delay, 0U),	\
 		.cs_cs_delay  = DT_PROP_OR(SPI_NXP_S32_NODE(n), spi_cs_cs_delay, 0U),	\

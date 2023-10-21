@@ -22,6 +22,18 @@ menuconfig WIFI_ESP32
 
 if WIFI_ESP32
 
+<<<<<<< HEAD
+=======
+config NET_TCP_WORKQ_STACK_SIZE
+	default 2048
+
+config NET_RX_STACK_SIZE
+	default 2048
+
+config NET_MGMT_EVENT_STACK_SIZE
+	default 2048
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config ESP32_WIFI_STA_AUTO_DHCPV4
 	bool "Automatically starts DHCP4 negotiation"
 	depends on NET_DHCPV4

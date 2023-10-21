@@ -11,8 +11,11 @@
 
 LOG_MODULE_REGISTER(wdt_tco, CONFIG_WDT_LOG_LEVEL);
 
+<<<<<<< HEAD
 #define TCO_WDT_NODE           DT_NODELABEL(tco_wdt)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define BASE(d)                ((struct tco_config *)(d)->config)->base
 
 #define TCO_RLD(d)             (BASE(d) + 0x00) /* TCO Timer Reload/Curr. Value */
@@ -267,9 +270,18 @@ static struct tco_data wdt_data = {
 };
 
 static const struct tco_config wdt_config = {
+<<<<<<< HEAD
 	.base = DT_REG_ADDR(TCO_WDT_NODE),
 };
 
 DEVICE_DT_DEFINE(TCO_WDT_NODE, wdt_init, NULL, &wdt_data, &wdt_config,
 		 POST_KERNEL, CONFIG_KERNEL_INIT_PRIORITY_DEVICE,
 		 &tco_driver_api);
+=======
+	.base = DT_INST_REG_ADDR(0),
+};
+
+DEVICE_DT_INST_DEFINE(0, wdt_init, NULL, &wdt_data, &wdt_config,
+		      POST_KERNEL, CONFIG_KERNEL_INIT_PRIORITY_DEVICE,
+		      &tco_driver_api);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

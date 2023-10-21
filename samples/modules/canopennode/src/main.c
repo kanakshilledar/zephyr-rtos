@@ -64,7 +64,11 @@ static void config_leds(CO_NMT_t *nmt)
 
 	if (!led_green_gpio.port) {
 		LOG_INF("Green LED not available");
+<<<<<<< HEAD
 	} else if (!device_is_ready(led_green_gpio.port)) {
+=======
+	} else if (!gpio_is_ready_dt(&led_green_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Green LED device not ready");
 		led_green_gpio.port = NULL;
 	} else {
@@ -78,7 +82,11 @@ static void config_leds(CO_NMT_t *nmt)
 
 	if (!led_red_gpio.port) {
 		LOG_INF("Red LED not available");
+<<<<<<< HEAD
 	} else if (!device_is_ready(led_red_gpio.port)) {
+=======
+	} else if (!gpio_is_ready_dt(&led_red_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Red LED device not ready");
 		led_red_gpio.port = NULL;
 	} else {
@@ -159,7 +167,11 @@ static void config_button(void)
 		return;
 	}
 
+<<<<<<< HEAD
 	if (!device_is_ready(button_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&button_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Button device not ready");
 		return;
 	}

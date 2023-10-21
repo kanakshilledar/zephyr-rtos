@@ -23,6 +23,13 @@ void heap_malloc_free(void)
 	uint32_t sum_malloc = 0U;
 	uint32_t sum_free = 0U;
 
+<<<<<<< HEAD
+=======
+	bool  failed = false;
+	char  error_string[80];
+	const char *notes = "";
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timing_start();
 
 	while (count != TEST_COUNT) {
@@ -31,8 +38,15 @@ void heap_malloc_free(void)
 
 		heap_malloc_end_time = timing_counter_get();
 		if (allocated_mem == NULL) {
+<<<<<<< HEAD
 			printk("Failed to alloc memory from heap "
 					"at count %d\n", count);
+=======
+			error_count++;
+			snprintk(error_string, 78,
+				  "alloc memory @ iteration %d", count);
+			notes = error_string;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 		}
 
@@ -47,6 +61,7 @@ void heap_malloc_free(void)
 		count++;
 	}
 
+<<<<<<< HEAD
 	/* if count is 0, it means that there is not enough memory heap
 	 * to do k_malloc at least once, then it's meaningless to
 	 * calculate average time of memory allocation and free.
@@ -60,5 +75,22 @@ void heap_malloc_free(void)
 		PRINT_STATS_AVG("Average time for heap free", sum_free, count);
 	}
 
+=======
+	/*
+	 * If count is 0, it means that there is not enough memory heap
+	 * to do k_malloc at least once. Override the error string.
+	 */
+
+	if (count == 0) {
+		failed = true;
+		notes = "Memory heap too small--increase it.";
+	}
+
+	PRINT_STATS_AVG("Average time for heap malloc", sum_malloc, count,
+			failed, notes);
+	PRINT_STATS_AVG("Average time for heap free", sum_free, count,
+			failed, notes);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	timing_stop();
 }

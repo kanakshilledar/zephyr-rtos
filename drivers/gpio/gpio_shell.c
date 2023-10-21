@@ -157,6 +157,12 @@ static int cmd_gpio_blink(const struct shell *sh,
 		shell_fprintf(sh, SHELL_NORMAL, "Blinking port %s index %d.", argv[1], index);
 		shell_fprintf(sh, SHELL_NORMAL, " Hit any key to exit");
 
+<<<<<<< HEAD
+=======
+		/* dummy read to clear any pending input */
+		(void)sh->iface->api->read(sh->iface, &data, sizeof(data), &count);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		while (true) {
 			(void)sh->iface->api->read(sh->iface, &data, sizeof(data), &count);
 			if (count != 0) {

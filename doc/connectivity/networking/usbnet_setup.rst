@@ -12,7 +12,11 @@ and a Zephyr application running on USB supported devices.
 
 The board is connected to Linux host using USB cable
 and provides an Ethernet interface to the host.
+<<<<<<< HEAD
 The :ref:`sockets-echo-server-sample` application from the Zephyr source
+=======
+The :zephyr:code-sample:`sockets-echo-server` application from the Zephyr source
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 distribution is run on supported board.  The board is connected to a
 Linux host using a USB cable providing an Ethernet interface to the host.
 

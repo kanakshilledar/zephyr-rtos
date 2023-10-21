@@ -1,4 +1,5 @@
 #
+<<<<<<< HEAD
 # Copyright (c) 2022 Nordic Semiconductor ASA
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -10,3 +11,21 @@ tests:
       - mgmt
       - mcumgr
       - all_options
+=======
+# Copyright (c) 2022-2023 Nordic Semiconductor ASA
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+common:
+  platform_allow: nrf52840dk_nrf52840
+  tags:
+    - mgmt
+    - mcumgr
+    - all_options
+  build_only: true
+tests:
+  mgmt.mcumgr.all.options: {}
+  mgmt.mcumgr.all.options.other:
+    extra_args:
+      - OVERLAY_CONFIG="other-options.conf"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -7,7 +7,12 @@ config GPIO_NCT38XX
 	bool "NCT38XX I2C-based GPIO chip"
 	default y
 	depends on DT_HAS_NUVOTON_NCT38XX_GPIO_PORT_ENABLED
+<<<<<<< HEAD
 	depends on I2C
+=======
+	select I2C
+	select MFD
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable driver for NCT38XX I2C-based GPIO chip.
 
@@ -15,6 +20,7 @@ if GPIO_NCT38XX
 
 config GPIO_NCT38XX_INIT_PRIORITY
 	int "NCT38XX GPIO init priority"
+<<<<<<< HEAD
 	default 30
 	help
 	  Device driver initialization priority. The priority should be lower
@@ -29,13 +35,36 @@ config GPIO_NCT38XX_PORT_INIT_PRIORITY
 
 config GPIO_NCT38XX_INTERRUPT
 	bool "NCT38XX GPIO interrupt"
+=======
+	default 62
+	help
+	  NCT38xx GPIO driver initialization priority. The priority must be lower
+	  than MFD_INIT_PRIORITY.
+
+config GPIO_NCT38XX_PORT_INIT_PRIORITY
+	int "NCT38XX GPIO port init priority"
+	default 64
+	help
+	  NCT38xx GPIO port device driver initialization priority. The priority
+	  must be lower than GPIO_NCT38XX_INIT_PRIORITY device.
+
+config GPIO_NCT38XX_ALERT
+	bool "NCT38XX GPIO interrupt"
+	default y
+	depends on DT_HAS_NUVOTON_NCT38XX_GPIO_ALERT_ENABLED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable interrupt support in NCT38XX driver.
 
 config GPIO_NCT38XX_ALERT_INIT_PRIORITY
 	int "NCT38XX GPIO alert handler init priority"
+<<<<<<< HEAD
 	default 40
 	depends on GPIO_NCT38XX_INTERRUPT
+=======
+	default 64
+	depends on GPIO_NCT38XX_ALERT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  NCT38XX alert handler initialization priority. This initialization
 	  must take place after the alert GPIO device is initialized.

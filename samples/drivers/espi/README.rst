@@ -1,13 +1,26 @@
+<<<<<<< HEAD
 .. _espi-sample:
 
 Enhanced Serial Peripheral Interface
 ####################################
+=======
+.. zephyr:code-sample:: espi
+   :name: Enhanced Serial Peripheral Interface (eSPI)
+   :relevant-api: espi_interface spi_interface
+
+   Use eSPI to connect to a slave device and exchange virtual wire packets.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This sample demonstrates how to use the Enhanced Serial Peripheral Interface
 (eSPI) API.
+=======
+This sample demonstrates how to use the :ref:`Enhanced Serial Peripheral Interface
+(eSPI) API <espi_api>`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 It shows how to configure and select eSPI controller capabilities as part of
 a simple eSPI handshake that includes exchanging virtual wire packets.
 

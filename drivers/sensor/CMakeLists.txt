@@ -1,6 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 add_subdirectory_ifdef(CONFIG_ADC_CMP_NPCX nuvoton_adc_cmp_npcx)
+=======
+add_subdirectory_ifdef(CONFIG_A01NYUB a01nyub)
+add_subdirectory_ifdef(CONFIG_ADC_CMP_NPCX nuvoton_adc_cmp_npcx)
+add_subdirectory_ifdef(CONFIG_ADLTC2990 adltc2990)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_ADT7310 adt7310)
 add_subdirectory_ifdef(CONFIG_ADT7420 adt7420)
 add_subdirectory_ifdef(CONFIG_ADXL345 adxl345)
@@ -18,6 +24,10 @@ add_subdirectory_ifdef(CONFIG_BMC150_MAGN bmc150_magn)
 add_subdirectory_ifdef(CONFIG_BME280 bme280)
 add_subdirectory_ifdef(CONFIG_BME680 bme680)
 add_subdirectory_ifdef(CONFIG_BMG160 bmg160)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_BMI08X bmi08x)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_BMI160 bmi160)
 add_subdirectory_ifdef(CONFIG_BMI270 bmi270)
 add_subdirectory_ifdef(CONFIG_BMI323 bmi323)
@@ -25,17 +35,29 @@ add_subdirectory_ifdef(CONFIG_BMM150 bmm150)
 add_subdirectory_ifdef(CONFIG_BMP388 bmp388)
 add_subdirectory_ifdef(CONFIG_BQ274XX bq274xx)
 add_subdirectory_ifdef(CONFIG_CCS811 ccs811)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_CURRENT_AMP current_amp)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_DHT dht)
 add_subdirectory_ifdef(CONFIG_DPS310 dps310)
 add_subdirectory_ifdef(CONFIG_DS18B20 ds18b20)
 add_subdirectory_ifdef(CONFIG_ENS210 ens210)
 add_subdirectory_ifdef(CONFIG_ESP32_TEMP esp32_temp)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_F75303 f75303)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_FDC2X1X fdc2x1x)
 add_subdirectory_ifdef(CONFIG_FXAS21002 fxas21002)
 add_subdirectory_ifdef(CONFIG_FXOS8700 fxos8700)
 add_subdirectory_ifdef(CONFIG_GROVE_SENSORS grove)
 add_subdirectory_ifdef(CONFIG_GROW_R502A grow_r502a)
 add_subdirectory_ifdef(CONFIG_HAS_STMEMSC stmemsc)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_HM330X hm330x)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_HMC5883L hmc5883l)
 add_subdirectory_ifdef(CONFIG_HP206C hp206c)
 add_subdirectory_ifdef(CONFIG_HTS221 hts221)
@@ -52,6 +74,10 @@ add_subdirectory_ifdef(CONFIG_IIS3DHHC iis3dhhc)
 add_subdirectory_ifdef(CONFIG_INA219 ina219)
 add_subdirectory_ifdef(CONFIG_INA23X ina23x)
 add_subdirectory_ifdef(CONFIG_INA3221 ina3221)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_IST8310 ist8310)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_ISL29035 isl29035)
 add_subdirectory_ifdef(CONFIG_ISM330DHCX ism330dhcx)
 add_subdirectory_ifdef(CONFIG_ITDS wsen_itds)
@@ -93,6 +119,10 @@ add_subdirectory_ifdef(CONFIG_MS5607 ms5607)
 add_subdirectory_ifdef(CONFIG_MS5837 ms5837)
 add_subdirectory_ifdef(CONFIG_NPM1300_CHARGER npm1300_charger)
 add_subdirectory_ifdef(CONFIG_NTC_THERMISTOR ntc_thermistor)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_NXP_TEMPMON nxp_tempmon)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_OPT3001 opt3001)
 add_subdirectory_ifdef(CONFIG_PCNT_ESP32 pcnt_esp32)
 add_subdirectory_ifdef(CONFIG_PMS7003 pms7003)
@@ -120,28 +150,49 @@ add_subdirectory_ifdef(CONFIG_SX9500 sx9500)
 add_subdirectory_ifdef(CONFIG_TACH_IT8XXX2 ite_tach_it8xxx2)
 add_subdirectory_ifdef(CONFIG_TACH_NPCX nuvoton_tach_npcx)
 add_subdirectory_ifdef(CONFIG_TACH_XEC mchp_tach_xec)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_TCN75A tcn75a)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_TCS3400 tcs3400)
 add_subdirectory_ifdef(CONFIG_TEMP_KINETIS nxp_kinetis_temp)
 add_subdirectory_ifdef(CONFIG_TEMP_NRF5 nrf5)
 add_subdirectory_ifdef(CONFIG_TH02 th02)
 add_subdirectory_ifdef(CONFIG_TI_HDC ti_hdc)
 add_subdirectory_ifdef(CONFIG_TI_HDC20XX ti_hdc20xx)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_TMAG5170 tmag5170)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_TMD2620 tmd2620)
 add_subdirectory_ifdef(CONFIG_TMP007 tmp007)
 add_subdirectory_ifdef(CONFIG_TMP108 tmp108)
 add_subdirectory_ifdef(CONFIG_TMP112 tmp112)
 add_subdirectory_ifdef(CONFIG_TMP116 tmp116)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_TSL2540 tsl2540)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_VCMP_IT8XXX2 ite_vcmp_it8xxx2)
 add_subdirectory_ifdef(CONFIG_VCNL4040 vcnl4040)
 add_subdirectory_ifdef(CONFIG_VEML7700 veml7700)
 add_subdirectory_ifdef(CONFIG_VL53L0X vl53l0x)
 add_subdirectory_ifdef(CONFIG_VL53L1X vl53l1x)
+<<<<<<< HEAD
+=======
+add_subdirectory_ifdef(CONFIG_VOLTAGE_DIVIDER voltage_divider)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 add_subdirectory_ifdef(CONFIG_WSEN_HIDS wsen_hids)
 add_subdirectory_ifdef(CONFIG_WSEN_PADS wsen_pads)
 add_subdirectory_ifdef(CONFIG_WSEN_PDUS wsen_pdus)
 add_subdirectory_ifdef(CONFIG_WSEN_TIDS wsen_tids)
 add_subdirectory_ifdef(CONFIG_XMC4XXX_TEMP xmc4xxx_temp)
 
+<<<<<<< HEAD
+=======
+zephyr_syscall_header(${ZEPHYR_BASE}/include/zephyr/drivers/sensor.h)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library()
 zephyr_library_property(ALLOW_EMPTY TRUE)
 

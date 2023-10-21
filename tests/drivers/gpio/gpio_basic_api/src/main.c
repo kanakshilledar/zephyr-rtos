@@ -14,6 +14,11 @@
 #include "device_imx.h"
 #elif defined(CONFIG_BOARD_MIMXRT1050_EVK)
 #include <fsl_iomuxc.h>
+<<<<<<< HEAD
+=======
+#elif defined(CONFIG_BOARD_NRF52_BSIM)
+#include <NRF_GPIO.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 static void board_setup(void)
@@ -87,6 +92,17 @@ static void board_setup(void)
 	zassert_true(device_is_ready(dev), "GPIO dev is not ready");
 	int rc = gpio_add_callback(dev, &gpio_emul_callback);
 	__ASSERT(rc == 0, "gpio_add_callback() failed: %d", rc);
+<<<<<<< HEAD
+=======
+#elif defined(CONFIG_BOARD_NRF52_BSIM)
+	static bool done;
+
+	if (!done) {
+		done = true;
+		/* This functions allows to programmatically short-circuit SOC GPIO pins */
+		nrf_gpio_backend_register_short(1, PIN_OUT, 1, PIN_IN);
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 }
 

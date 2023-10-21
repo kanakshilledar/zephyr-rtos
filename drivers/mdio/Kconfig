@@ -29,6 +29,10 @@ source "drivers/mdio/Kconfig.esp32"
 source "drivers/mdio/Kconfig.sam"
 source "drivers/mdio/Kconfig.nxp_s32"
 source "drivers/mdio/Kconfig.adin2111"
+<<<<<<< HEAD
+=======
+source "drivers/mdio/Kconfig.gpio"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config MDIO_INIT_PRIORITY
 	int "Init priority"

@@ -92,8 +92,11 @@
 #define _DT_SECTION_SIZE(node_id)	UTIL_CAT(_DT_SECTION_PREFIX(node_id), _size)
 #define _DT_SECTION_LOAD(node_id)	UTIL_CAT(_DT_SECTION_PREFIX(node_id), _load_start)
 
+<<<<<<< HEAD
 #define _DT_ATTR(token)			UTIL_CAT(UTIL_CAT(REGION_, token), _ATTR)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Declare a memory region
  *
@@ -138,7 +141,11 @@
  * will result in:
  *
  * @code{.unparsed}
+<<<<<<< HEAD
  *    FOOBAR 0x20010000 (NOLOAD) :
+=======
+ *    FOOBAR (NOLOAD) :
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *    {
  *        __FOOBAR_start = .;
  *        KEEP(*(FOOBAR))
@@ -152,7 +159,11 @@
  * @param node_id devicetree node identifier
  */
 #define _SECTION_DECLARE(node_id)								\
+<<<<<<< HEAD
 	LINKER_DT_NODE_REGION_NAME_TOKEN(node_id) DT_REG_ADDR(node_id) (NOLOAD) :		\
+=======
+	LINKER_DT_NODE_REGION_NAME_TOKEN(node_id) (NOLOAD) :					\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	{											\
 		_DT_SECTION_START(node_id) = .;							\
 		KEEP(*(LINKER_DT_NODE_REGION_NAME_TOKEN(node_id)))				\
@@ -162,6 +173,7 @@
 	_DT_SECTION_SIZE(node_id) = _DT_SECTION_END(node_id) - _DT_SECTION_START(node_id);	\
 	_DT_SECTION_LOAD(node_id) = LOADADDR(LINKER_DT_NODE_REGION_NAME_TOKEN(node_id));
 
+<<<<<<< HEAD
 /**
  * Call the user-provided MPU_FN() macro passing the expected arguments
  */
@@ -191,6 +203,8 @@
 #define _CHECK_APPLY_FN(compat, EXPAND_MPU_FN, ...)					\
 	DT_FOREACH_STATUS_OKAY_VARGS(compat, _CHECK_ATTR_FN, EXPAND_MPU_FN, __VA_ARGS__)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** @endcond */
 
 /**
@@ -211,6 +225,7 @@
 #define LINKER_DT_SECTIONS() \
 	DT_FOREACH_STATUS_OKAY(_DT_COMPATIBLE, _SECTION_DECLARE)
 
+<<<<<<< HEAD
 /**
  * @brief Generate MPU regions from the device tree nodes with compatible
  *        'zephyr,memory-region' and 'zephyr,memory-region-mpu' attribute.
@@ -294,4 +309,6 @@
  */
 #define LINKER_DT_REGION_MPU(mpu_fn) _CHECK_APPLY_FN(_DT_COMPATIBLE, _EXPAND_MPU_FN, mpu_fn)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_LINKER_DEVICETREE_REGIONS_H_ */

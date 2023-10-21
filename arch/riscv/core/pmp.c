@@ -56,7 +56,11 @@ LOG_MODULE_REGISTER(mpu);
 
 #define PMP_NONE 0
 
+<<<<<<< HEAD
 static void print_pmp_entries(unsigned int start, unsigned int end,
+=======
+static void print_pmp_entries(unsigned int pmp_start, unsigned int pmp_end,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      unsigned long *pmp_addr, unsigned long *pmp_cfg,
 			      const char *banner)
 {
@@ -64,7 +68,11 @@ static void print_pmp_entries(unsigned int start, unsigned int end,
 	unsigned int index;
 
 	LOG_DBG("PMP %s:", banner);
+<<<<<<< HEAD
 	for (index = start; index < end; index++) {
+=======
+	for (index = pmp_start; index < pmp_end; index++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		unsigned long start, end, tmp;
 
 		switch (pmp_n_cfg[index] & PMP_A) {
@@ -330,6 +338,20 @@ void z_riscv_pmp_init(void)
 		      (size_t)__rom_region_size,
 		      pmp_addr, pmp_cfg, ARRAY_SIZE(pmp_addr));
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NULL_POINTER_EXCEPTION_DETECTION_PMP
+	/*
+	 * Use a PMP slot to make region (starting at address 0x0) inaccessible
+	 * for detecting null pointer dereferencing.
+	 */
+	set_pmp_entry(&index, PMP_NONE | PMP_L,
+		      0,
+		      CONFIG_NULL_POINTER_EXCEPTION_REGION_SIZE,
+		      pmp_addr, pmp_cfg, ARRAY_SIZE(pmp_addr));
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_PMP_STACK_GUARD
 	/*
 	 * Set the stack guard for this CPU's IRQ stack by making the bottom

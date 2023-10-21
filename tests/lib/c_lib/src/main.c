@@ -15,6 +15,13 @@
  * it guarantee that ALL functionality provided is working correctly.
  */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NEWLIB_LIBC
+#define _POSIX_C_SOURCE 200809
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/sys/__assert.h>
 #include <zephyr/ztest.h>
@@ -35,6 +42,12 @@
 #ifdef CONFIG_PICOLIBC
 #include <unistd.h>
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_NEWLIB_LIBC
+#include <unistd.h>
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define STACK_SIZE (512 + CONFIG_TEST_EXTRA_STACK_SIZE)
 #define LIST_LEN 2
@@ -1083,7 +1096,11 @@ ZTEST(test_c_lib, test_time)
  */
 ZTEST(test_c_lib, test_rand)
 {
+<<<<<<< HEAD
 #ifndef CONFIG_PICOLIBC
+=======
+#ifdef CONFIG_MINIMAL_LIBC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int a;
 
 	a = rand();
@@ -1101,7 +1118,11 @@ ZTEST(test_c_lib, test_rand)
  */
 ZTEST(test_c_lib, test_srand)
 {
+<<<<<<< HEAD
 #ifndef CONFIG_PICOLIBC
+=======
+#ifdef CONFIG_MINIMAL_LIBC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int a;
 
 	srand(0);
@@ -1135,7 +1156,11 @@ ZTEST(test_c_lib, test_srand)
  */
 ZTEST(test_c_lib, test_rand_reproducibility)
 {
+<<<<<<< HEAD
 #ifndef CONFIG_PICOLIBC
+=======
+#ifdef CONFIG_MINIMAL_LIBC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int a;
 	int b;
 	int c;

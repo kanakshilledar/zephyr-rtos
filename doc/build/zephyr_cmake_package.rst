@@ -233,6 +233,7 @@ In case no Zephyr is found which satisfies the version required, as example, the
    find_package(Zephyr 2.z)
    project(app)
 
+<<<<<<< HEAD
 then an error similar to below will be printed::
 
   Could not find a configuration file for package "Zephyr" that is compatible
@@ -242,6 +243,19 @@ then an error similar to below will be printed::
 
     <projects>/zephyr-workspace-2.a/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake, version: 2.a.0
     <projects>/zephyr-workspace-2.b/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake, version: 2.b.0
+=======
+then an error similar to below will be printed:
+
+.. code-block:: none
+
+   Could not find a configuration file for package "Zephyr" that is compatible
+   with requested version "2.z".
+
+   The following configuration files were considered but not accepted:
+
+     <projects>/zephyr-workspace-2.a/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake, version: 2.a.0
+     <projects>/zephyr-workspace-2.b/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake, version: 2.b.0
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 .. note:: It can also be beneficial to specify a version number for Zephyr repository applications
@@ -313,6 +327,7 @@ Such a CMakeLists.txt could look as:
 
 .. _cmake_build_config_package:
 
+<<<<<<< HEAD
 Zephyr Build Configuration CMake package
 ****************************************
 
@@ -332,12 +347,68 @@ other property that can be controlled. It also allows inclusion of additional bo
 
 To provide a Zephyr Build Configuration CMake package, create ``ZephyrBuildConfig.cmake`` and place
 it in a Zephyr workspace top-level folder as:
+=======
+Zephyr Build Configuration CMake packages
+*****************************************
+
+There are two Zephyr Build configuration packages which provide control over the build
+settings in Zephyr in a more generic way. These packages are:
+
+* **ZephyrBuildConfiguration**: Applies to all Zephyr applications in the workspace
+* **ZephyrAppConfiguration**: Applies only to the application you are currently building
+
+They are similar to the per-user :file:`.zephyrrc` file that can be used to set :ref:`env_vars`,
+but they set CMake variables instead. They also allow you to automatically share the build
+configuration among all users through the project repository. They also allow more advanced use
+cases, such as loading of additional CMake boilerplate code.
+
+The Zephyr Build Configuration CMake packages will be loaded in the Zephyr boilerplate code after
+initial properties and ``ZEPHYR_BASE`` has been defined, but before CMake code execution. The
+ZephyrBuildConfiguration is included first and ZephyrAppConfiguration afterwards. That means the
+application-specific package could override the workspace settings, if needed.
+This allows the Zephyr Build Configuration CMake packages to setup or extend properties such as:
+``DTS_ROOT``, ``BOARD_ROOT``, ``TOOLCHAIN_ROOT`` / other toolchain setup, fixed overlays, and any
+other property that can be controlled. It also allows inclusion of additional boilerplate code.
+
+To provide a ZephyrBuildConfiguration or ZephyrAppConfiguration, create
+:file:`ZephyrBuildConfig.cmake` and/or :file:`ZephyrAppConfig.cmake` respectively and place them
+in the appropriate location. The CMake ``find_package`` mechanism will search for these files with
+the steps below. Other default CMake package search paths and hints are disabled and there is no
+version checking implemented for these packages. This also means that these packages cannot be
+installed in the CMake package registry. The search steps are:
+
+1. If ``ZephyrBuildConfiguration_ROOT``, or ``ZephyrAppConfiguration_ROOT`` respectively, is set,
+   search within this prefix path. If a matching file is found, execute this file. If no matching
+   file is found, go to step 2.
+2. Search within ``${ZEPHYR_BASE}/../*``, or ``${APPLICATION_SOURCE_DIR}`` respectively. If a
+   matching file is found, execute this file. If no matching file is found, abort the search.
+
+It is recommended to place the files in the default paths from step 2, but with the
+``<PackageName>_ROOT`` variables you have the flexibility to place them anywhere. This is
+especially necessary for freestanding applications, for which the default path to
+ZephyrBuildConfiguration usually does not work. In this case the ``<PackageName>_ROOT`` variables
+can be set on the CMake command line, **before** ``find_package(Zephyr ...)``, as environment
+variable or from a CMake cache initialization file with the ``-C`` command line option.
+
+.. note:: The ``<PackageName>_ROOT`` variables, as well as the default paths, are just the prefixes
+   to the search path. These prefixes get combined with additional path suffixes, which together
+   form the actual search path. Any combination that honors the
+   `CMake package search procedure`_ is valid and will work.
+
+If you want to completely disable the search for these packages, you can use the special CMake
+``CMAKE_DISABLE_FIND_PACKAGE_<PackageName>`` variable for that. Just set
+``CMAKE_DISABLE_FIND_PACKAGE_ZephyrBuildConfiguration`` or
+``CMAKE_DISABLE_FIND_PACKAGE_ZephyrAppConfiguration`` to ``TRUE`` to disable the package.
+
+An example folder structure could look like this:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. code-block:: none
 
    <projects>/zephyr-workspace
    ├── zephyr
    ├── ...
+<<<<<<< HEAD
    └── zephyr application (can be named anything)
         └── share/zephyrbuild-package/cmake/ZephyrBuildConfig.cmake
 
@@ -353,6 +424,15 @@ Zephyr Build Configuration package.
 	  honoring the `CMake package search`_ algorithm.
 
 A sample ``ZephyrBuildConfig.cmake`` can be seen below.
+=======
+   ├── manifest repo (can be named anything)
+   │    └── cmake/ZephyrBuildConfig.cmake
+   ├── ...
+   └── zephyr application
+        └── share/zephyrapp-package/cmake/ZephyrAppConfig.cmake
+
+A sample :file:`ZephyrBuildConfig.cmake` can be seen below.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. code-block:: cmake
 
@@ -377,6 +457,7 @@ A sample ``ZephyrBuildConfig.cmake`` can be seen below.
        endif()
    endif()
 
+<<<<<<< HEAD
 Zephyr Build Configuration CMake package (Freestanding application)
 *******************************************************************
 
@@ -419,6 +500,8 @@ the CMake variable ``ZephyrBuildConfiguration_ROOT``.
    Zephyr modules can be specified using the same file.
    See Zephyr module :ref:`modules_without_west`.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Zephyr CMake package source code
 ********************************
 
@@ -461,4 +544,8 @@ The following is an overview of the files in these directories:
 .. _CMake package: https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html
 .. _CMake user package registry: https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html#user-package-registry
 .. _CMake package version: https://cmake.org/cmake/help/latest/command/find_package.html#version-selection
+<<<<<<< HEAD
 .. _CMake package search: https://cmake.org/cmake/help/latest/command/find_package.html#search-procedure
+=======
+.. _CMake package search procedure: https://cmake.org/cmake/help/latest/command/find_package.html#search-procedure
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

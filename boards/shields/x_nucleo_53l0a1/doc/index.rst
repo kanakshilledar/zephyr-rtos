@@ -61,7 +61,11 @@ Samples
 The sample :ref:`vl53l0x` demonstrates how to use the ranging sensor VL53L0X
 using the center sensor only.
 
+<<<<<<< HEAD
 The sample :ref:`x-nucleo-53l0a1-sample` demonstrates how to use the three
+=======
+The sample :zephyr:code-sample:`x-nucleo-53l0a1` sample demonstrates how to use the three
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 sensors (soldered + 2 satellites) and the 7 segments display.
 
 Programming

@@ -676,7 +676,11 @@ struct its_driver_api gicv3_its_api = {
 	DEVICE_DT_INST_DEFINE(n, &gicv3_its_init, NULL,			       \
 			      &gicv3_its_data##n,			       \
 			      &gicv3_its_config##n,			       \
+<<<<<<< HEAD
 			      POST_KERNEL,				       \
+=======
+			      PRE_KERNEL_1,				       \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			      CONFIG_INTC_INIT_PRIORITY,		       \
 			      &gicv3_its_api);
 

@@ -1,9 +1,14 @@
 /*
  * Copyright (c) 2019 Roland Ma
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Rahul Arasikere
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <st/f7/stm32f7.dtsi>
 #include <zephyr/dt-bindings/display/panel.h>
 
@@ -91,6 +96,15 @@
 			status = "disabled";
 		};
 
+=======
+#include <st/f7/stm32f765.dtsi>
+#include <zephyr/dt-bindings/display/panel.h>
+
+/ {
+	soc {
+		compatible = "st,stm32f767", "st,stm32f7", "simple-bus";
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ltdc: display-controller@40016800 {
 			compatible = "st,stm32-ltdc";
 			reg = <0x40016800 0x200>;

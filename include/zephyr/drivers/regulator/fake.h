@@ -36,6 +36,11 @@ DECLARE_FAKE_VALUE_FUNC(int, regulator_fake_get_error_flags,
 
 DECLARE_FAKE_VALUE_FUNC(int, regulator_parent_fake_dvs_state_set,
 			const struct device *, regulator_dvs_state_t);
+<<<<<<< HEAD
+=======
+DECLARE_FAKE_VALUE_FUNC(int, regulator_parent_fake_ship_mode,
+			const struct device *);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 }

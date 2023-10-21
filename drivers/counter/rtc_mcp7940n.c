@@ -689,7 +689,11 @@ static int mcp7940n_init(const struct device *dev)
 	/* Configure alarm interrupt gpio */
 	if (cfg->int_gpios.port != NULL) {
 
+<<<<<<< HEAD
 		if (!device_is_ready(cfg->int_gpios.port)) {
+=======
+		if (!gpio_is_ready_dt(&cfg->int_gpios)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Port device %s is not ready",
 				cfg->int_gpios.port->name);
 			rc = -ENODEV;

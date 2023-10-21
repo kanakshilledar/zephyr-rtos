@@ -260,4 +260,8 @@ You can debug an application in the usual way.  Here is an example for the
    https://www.olimex.com/Products/ARM/ST/STM32-P405/resources/STM32-P405_UM.pdf
 
 .. _ST STM32F405RG Datasheet:
+<<<<<<< HEAD
    http://www.st.com/resource/en/reference_manual/dm00031020.pdf
+=======
+   https://www.st.com/resource/en/reference_manual/dm00031020.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -41,13 +41,22 @@ static int hmc5883l_channel_get(const struct device *dev,
 	} else if (chan == SENSOR_CHAN_MAGN_Z) {
 		hmc5883l_convert(val, drv_data->z_sample,
 				 hmc5883l_gain[drv_data->gain_idx]);
+<<<<<<< HEAD
 	} else { /* chan == SENSOR_CHAN_MAGN_XYZ */
+=======
+	} else if (chan == SENSOR_CHAN_MAGN_XYZ) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		hmc5883l_convert(val, drv_data->x_sample,
 				 hmc5883l_gain[drv_data->gain_idx]);
 		hmc5883l_convert(val + 1, drv_data->y_sample,
 				 hmc5883l_gain[drv_data->gain_idx]);
 		hmc5883l_convert(val + 2, drv_data->z_sample,
 				 hmc5883l_gain[drv_data->gain_idx]);
+<<<<<<< HEAD
+=======
+	} else {
+		return -ENOTSUP;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;

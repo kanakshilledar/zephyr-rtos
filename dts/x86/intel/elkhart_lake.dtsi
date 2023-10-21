@@ -16,7 +16,11 @@
 
 		cpu@0 {
 			device_type = "cpu";
+<<<<<<< HEAD
 			compatible = "intel,elkhart_lake";
+=======
+			compatible = "intel,elkhart-lake";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			d-cache-line-size = <64>;
 			reg = <0>;
 		};
@@ -35,9 +39,24 @@
 
 	intc: ioapic@fec00000  {
 		compatible = "intel,ioapic";
+<<<<<<< HEAD
 		reg = <0xfec00000 0x1000>;
 		interrupt-controller;
 		#interrupt-cells = <3>;
+=======
+		#address-cells = <1>;
+		#interrupt-cells = <3>;
+		reg = <0xfec00000 0x1000>;
+		interrupt-controller;
+	};
+
+	intc_loapic: loapic@fee00000  {
+		compatible = "intel,loapic";
+		reg = <0xfee00000 0x1000>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		#address-cells = <1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	pcie0: pcie0 {
@@ -195,7 +214,11 @@
 			#size-cells = <0>;
 			vendor-id = <0x8086>;
 			device-id = <0x4b23>;
+<<<<<<< HEAD
 			interrupts = <16 IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
+=======
+			interrupts = <PCIE_IRQ_DETECT IRQ_TYPE_LOWEST_LEVEL_LOW 3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupt-parent = <&intc>;
 
 			status = "okay";
@@ -689,6 +712,16 @@
 			status = "okay";
 		};
 
+<<<<<<< HEAD
+=======
+		tco_wdt: tco_wdt@400 {
+			compatible = "intel,tco-wdt";
+			reg = <0x0400 0x20>;
+
+			status = "disabled";
+		};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		rtc: counter: rtc@70 {
 			compatible = "motorola,mc146818";
 			reg = <0x70 0x0D 0x71 0x0D>;

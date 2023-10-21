@@ -109,8 +109,13 @@
  *
  * Integer value.
  * Supported values:
+<<<<<<< HEAD
  * - RC   = 1
  * - XTAL = 2
+=======
+ * - RC    = 1
+ * - XTAL  = 2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 #ifndef NRFX_CLOCK_CONFIG_LF_SRC
 #define NRFX_CLOCK_CONFIG_LF_SRC 2
@@ -278,7 +283,11 @@
  * Integer value. Minimum: 0 Maximum: 7
  */
 #ifndef NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY
+<<<<<<< HEAD
 #define NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY 3
+=======
+#define NRFX_GPIOTE_DEFAULT_CONFIG_IRQ_PRIORITY NRFX_DEFAULT_IRQ_PRIORITY
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 /**

@@ -412,7 +412,11 @@ static int gpio_pca953x_init(const struct device *dev)
 	}
 
 	if (cfg->interrupt_enabled) {
+<<<<<<< HEAD
 		if (!device_is_ready(cfg->gpio_int.port)) {
+=======
+		if (!gpio_is_ready_dt(&cfg->gpio_int)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Cannot get pointer to gpio interrupt device");
 			rc = -EINVAL;
 			goto out;

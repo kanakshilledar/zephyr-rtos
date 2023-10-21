@@ -122,8 +122,13 @@ In terminal #3, type:
 Step 4 - Start Zephyr instances
 ===============================
 
+<<<<<<< HEAD
 In this example we start :ref:`sockets-echo-server-sample` and
 :ref:`sockets-echo-client-sample` applications. You can use other applications
+=======
+In this example we start :zephyr:code-sample:`sockets-echo-server` and
+:zephyr:code-sample:`sockets-echo-client` sample applications. You can use other applications
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 too as needed.
 
 In terminal #4, if you are using QEMU, type this:

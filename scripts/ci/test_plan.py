@@ -14,6 +14,10 @@ import logging
 import sys
 from pathlib import Path
 from git import Repo
+<<<<<<< HEAD
+=======
+from west.manifest import Manifest
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if "ZEPHYR_BASE" not in os.environ:
     exit("$ZEPHYR_BASE environment variable undefined.")
@@ -96,6 +100,10 @@ class Filters:
         self.default_run = False
 
     def process(self):
+<<<<<<< HEAD
+=======
+        self.find_modules()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         self.find_tags()
         self.find_tests()
         if not self.platforms:
@@ -122,6 +130,51 @@ class Filters:
         if os.path.exists(fname):
             os.remove(fname)
 
+<<<<<<< HEAD
+=======
+    def find_modules(self):
+        if 'west.yml' in self.modified_files:
+            print(f"Manifest file 'west.yml' changed")
+            print("=========")
+            old_manifest_content = repo.git.show(f"{args.commits[:-2]}:west.yml")
+            with open("west_old.yml", "w") as manifest:
+                manifest.write(old_manifest_content)
+            old_manifest = Manifest.from_file("west_old.yml")
+            new_manifest = Manifest.from_file("west.yml")
+            old_projs = set((p.name, p.revision) for p in old_manifest.projects)
+            new_projs = set((p.name, p.revision) for p in new_manifest.projects)
+            logging.debug(f'old_projs: {old_projs}')
+            logging.debug(f'new_projs: {new_projs}')
+            # Removed projects
+            rprojs = set(filter(lambda p: p[0] not in list(p[0] for p in new_projs),
+                old_projs - new_projs))
+            # Updated projects
+            uprojs = set(filter(lambda p: p[0] in list(p[0] for p in old_projs),
+                new_projs - old_projs))
+            # Added projects
+            aprojs = new_projs - old_projs - uprojs
+
+            # All projs
+            projs = rprojs | uprojs | aprojs
+            projs_names = [name for name, rev in projs]
+
+            logging.info(f'rprojs: {rprojs}')
+            logging.info(f'uprojs: {uprojs}')
+            logging.info(f'aprojs: {aprojs}')
+            logging.info(f'project: {projs_names}')
+
+            _options = []
+            for p in projs_names:
+                _options.extend(["-t", p ])
+
+            if self.platforms:
+                for platform in self.platforms:
+                    _options.extend(["-p", platform])
+
+            self.get_plan(_options, True)
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     def find_archs(self):
         # we match both arch/<arch>/* and include/arch/<arch> and skip common.
         # Some architectures like riscv require special handling, i.e. riscv
@@ -331,6 +384,10 @@ if __name__ == "__main__":
         print("\n".join(files))
         print("=========")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     f = Filters(files, args.pull_request, args.platform)
     f.process()
 

@@ -16,7 +16,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(flash_encryption, CONFIG_LOG_DEFAULT_LEVEL);
 
+<<<<<<< HEAD
 #if !defined(CONFIG_SOC_ESP32)
+=======
+#if !defined(CONFIG_SOC_SERIES_ESP32)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #error Flash encryption feature is only available for ESP32 SOC yet.
 #endif
 

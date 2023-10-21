@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 zephyr_library()
+<<<<<<< HEAD
+=======
+zephyr_library_property(ALLOW_EMPTY TRUE)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 zephyr_library_sources_ifdef(CONFIG_ETH_GECKO
 	eth_gecko.c
@@ -40,6 +44,11 @@ if(CONFIG_ETH_NXP_S32_NETC)
   zephyr_library_sources_ifdef(CONFIG_DT_HAS_NXP_S32_NETC_VSI_ENABLED	eth_nxp_s32_netc_vsi.c)
 endif()
 
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_ETH_NXP_S32_GMAC	eth_nxp_s32_gmac.c)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_ETH_NATIVE_POSIX)
   set(native_posix_source_files eth_native_posix.c eth_native_posix_adapt.c)
   set_source_files_properties(${native_posix_source_files}

@@ -33,6 +33,12 @@ extern "C" {
  * @typedef entropy_get_entropy_t
  * @brief Callback API to get entropy.
  *
+<<<<<<< HEAD
+=======
+ * @note This call has to be thread safe to satisfy requirements
+ * of the random subsystem.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * See entropy_get_entropy() for argument description
  */
 typedef int (*entropy_get_entropy_t)(const struct device *dev,

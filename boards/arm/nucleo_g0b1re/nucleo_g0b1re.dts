@@ -8,6 +8,10 @@
 #include <st/g0/stm32g0b1Xe.dtsi>
 #include <st/g0/stm32g0b1r(b-c-e)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32G0B1RE-NUCLEO board";
@@ -20,10 +24,17 @@
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &slot0_partition;
+<<<<<<< HEAD
 		zephyr,canbus = &can1;
 	};
 
 	leds {
+=======
+		zephyr,canbus = &fdcan1;
+	};
+
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_1: led_4 {
 			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
@@ -36,6 +47,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -159,6 +174,11 @@ zephyr_udc0: &usb {
 &adc1 {
 	pinctrl-0 = <&adc1_in0_pa0 &adc1_in1_pa1>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 };
 
@@ -172,7 +192,11 @@ zephyr_udc0: &usb {
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
 &can1 {
+=======
+&fdcan1 {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	clocks = <&rcc STM32_CLOCK_BUS_APB1 0x00001000>,
 		 <&rcc STM32_SRC_PLL_Q FDCAN_SEL(1)>;
 	pinctrl-0 = <&fdcan1_rx_pa11 &fdcan1_tx_pa12>;
@@ -209,10 +233,13 @@ zephyr_udc0: &usb {
 	};
 };
 
+<<<<<<< HEAD
 &cpu0 {
 	cpu-power-states = <&stop0 &stop1>;
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &lptim1 {
 	clocks = <&rcc STM32_CLOCK_BUS_APB1 0x80000000>,
 		 <&rcc STM32_SRC_LSI LPTIM1_SEL(1)>;

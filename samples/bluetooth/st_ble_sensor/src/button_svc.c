@@ -28,7 +28,11 @@ int button_init(gpio_callback_handler_t handler)
 {
 	int ret;
 
+<<<<<<< HEAD
 	if (!device_is_ready(button.port)) {
+=======
+	if (!gpio_is_ready_dt(&button)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Error: button GPIO device %s is not ready",
 			button.port->name);
 		return -ENODEV;

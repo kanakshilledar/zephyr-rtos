@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2022 NXP
+=======
+ * Copyright 2022-2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -49,7 +53,12 @@ struct spi_nxp_s32_data {
 struct spi_nxp_s32_config {
 	uint8_t instance;
 	uint8_t num_cs;
+<<<<<<< HEAD
 	uint32_t clock_frequency;
+=======
+	const struct device *clock_dev;
+	clock_control_subsys_t clock_subsys;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t sck_cs_delay;
 	uint32_t cs_sck_delay;
 	uint32_t cs_cs_delay;

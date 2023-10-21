@@ -6,9 +6,17 @@
 menuconfig SSD1306
 	bool "SSD1306 display driver"
 	default y
+<<<<<<< HEAD
 	depends on DT_HAS_SOLOMON_SSD1306FB_ENABLED
 	select I2C if $(dt_compat_on_bus,$(DT_COMPAT_SOLOMON_SSD1306FB),i2c)
 	select SPI if $(dt_compat_on_bus,$(DT_COMPAT_SOLOMON_SSD1306FB),spi)
+=======
+	depends on DT_HAS_SOLOMON_SSD1306FB_ENABLED || DT_HAS_SINOWEALTH_SH1106_ENABLED
+	select I2C if $(dt_compat_on_bus,$(DT_COMPAT_SOLOMON_SSD1306FB),i2c)
+	select SPI if $(dt_compat_on_bus,$(DT_COMPAT_SOLOMON_SSD1306FB),spi)
+	select I2C if $(dt_compat_on_bus,$(DT_COMPAT_SINOWEALTH_SH1106),i2c)
+	select SPI if $(dt_compat_on_bus,$(DT_COMPAT_SINOWEALTH_SH1106),spi)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable driver for SSD1306 display driver.
 
@@ -21,6 +29,7 @@ config SSD1306_DEFAULT_CONTRAST
 	help
 	  SSD1306 default contrast.
 
+<<<<<<< HEAD
 choice SSD1306_CONTROLLER_TYPE
 	prompt "Display controller type"
 	default SSD1306_DEFAULT
@@ -40,4 +49,6 @@ config SSD1306_REVERSE_MODE
 	help
 	  SSD1306 reverse video mode.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # SSD1306

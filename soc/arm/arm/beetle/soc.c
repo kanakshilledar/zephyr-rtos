@@ -17,8 +17,11 @@
 #include <zephyr/init.h>
 #include <soc.h>
 
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -32,6 +35,7 @@
  */
 static int arm_beetle_init(void)
 {
+<<<<<<< HEAD
 	uint32_t key;
 
 
@@ -47,6 +51,11 @@ static int arm_beetle_init(void)
 
 	irq_unlock(key);
 
+=======
+	/* Setup various clocks and wakeup sources */
+	soc_power_init();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

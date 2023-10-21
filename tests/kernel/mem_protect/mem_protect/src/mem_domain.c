@@ -8,8 +8,13 @@
 #include <kernel_internal.h> /* For z_main_thread */
 #include <zephyr/sys/libc-hooks.h> /* for z_libc_partition */
 
+<<<<<<< HEAD
 static struct k_thread child_thread;
 static K_THREAD_STACK_DEFINE(child_stack, 512 + CONFIG_TEST_EXTRA_STACK_SIZE);
+=======
+struct k_thread child_thread;
+K_THREAD_STACK_DEFINE(child_stack, KOBJECT_STACK_SIZE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Special memory domain for test case purposes */
 static struct k_mem_domain test_domain;

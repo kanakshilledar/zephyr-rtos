@@ -109,6 +109,11 @@ static int esp32_wifi_send(const struct device *dev, struct net_pkt *pkt)
 {
 	struct esp32_wifi_runtime *data = dev->data;
 	const int pkt_len = net_pkt_get_len(pkt);
+<<<<<<< HEAD
+=======
+	esp_interface_t ifx =
+		esp32_data.state == ESP32_AP_CONNECTED ? ESP_IF_WIFI_AP : ESP_IF_WIFI_STA;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Read the packet payload */
 	if (net_pkt_read(pkt, data->frame_buf, pkt_len) < 0) {
@@ -116,8 +121,12 @@ static int esp32_wifi_send(const struct device *dev, struct net_pkt *pkt)
 	}
 
 	/* Enqueue packet for transmission */
+<<<<<<< HEAD
 	if (esp_wifi_internal_tx(ESP_IF_WIFI_STA, (void *)data->frame_buf,
 			pkt_len) != ESP_OK) {
+=======
+	if (esp_wifi_internal_tx(ifx, (void *)data->frame_buf, pkt_len) != ESP_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		goto out;
 	}
 
@@ -289,6 +298,10 @@ static void esp_wifi_event_task(void)
 			break;
 		case ESP32_WIFI_EVENT_AP_STOP:
 			esp32_data.state = ESP32_AP_STOPPED;
+<<<<<<< HEAD
+=======
+			net_eth_carrier_off(esp32_wifi_iface);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 		case ESP32_WIFI_EVENT_AP_STACONNECTED:
 			esp32_data.state = ESP32_AP_CONNECTED;
@@ -388,7 +401,13 @@ static int esp32_wifi_connect(const struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int esp32_wifi_scan(const struct device *dev, scan_result_cb_t cb)
+=======
+static int esp32_wifi_scan(const struct device *dev,
+			   struct wifi_scan_params *params,
+			   scan_result_cb_t cb)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct esp32_wifi_runtime *data = dev->data;
 	int ret = 0;
@@ -402,6 +421,14 @@ static int esp32_wifi_scan(const struct device *dev, scan_result_cb_t cb)
 
 	wifi_scan_config_t scan_config = { 0 };
 
+<<<<<<< HEAD
+=======
+	if (params) {
+		/* The enum values are same, so, no conversion needed */
+		scan_config.scan_type = params->scan_type;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ret = esp_wifi_set_mode(ESP32_WIFI_MODE_STA);
 	ret |= esp_wifi_scan_start(&scan_config, false);
 
@@ -423,7 +450,12 @@ static int esp32_wifi_ap_enable(const struct device *dev,
 	wifi_config_t wifi_config = {
 		.ap = {
 			.max_connection = 5,
+<<<<<<< HEAD
 			.channel = params->channel
+=======
+			.channel = params->channel == WIFI_CHANNEL_ANY ?
+				0 : params->channel,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		},
 	};
 
@@ -451,6 +483,11 @@ static int esp32_wifi_ap_enable(const struct device *dev,
 		return -EAGAIN;
 	}
 
+<<<<<<< HEAD
+=======
+	net_eth_carrier_on(esp32_wifi_iface);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 };
 
@@ -547,7 +584,13 @@ static void esp32_wifi_init(struct net_if *iface)
 {
 	const struct device *dev = net_if_get_device(iface);
 	struct esp32_wifi_runtime *dev_data = dev->data;
+<<<<<<< HEAD
 
+=======
+	struct ethernet_context *eth_ctx = net_if_l2_data(iface);
+
+	eth_ctx->eth_if_type = L2_ETH_IF_TYPE_WIFI;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	esp32_wifi_iface = iface;
 	dev_data->state = ESP32_STA_STOPPED;
 
@@ -615,6 +658,7 @@ static int esp32_wifi_dev_init(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct net_wifi_mgmt_offload esp32_api = {
 	.wifi_iface.iface_api.init = esp32_wifi_init,
 	.wifi_iface.send = esp32_wifi_send,
@@ -627,6 +671,24 @@ static const struct net_wifi_mgmt_offload esp32_api = {
 	.ap_enable		   = esp32_wifi_ap_enable,
 	.ap_disable		   = esp32_wifi_ap_disable,
 	.iface_status		   = esp32_wifi_status,
+=======
+static const struct wifi_mgmt_ops esp32_wifi_mgmt = {
+	.scan		   = esp32_wifi_scan,
+	.connect	   = esp32_wifi_connect,
+	.disconnect	   = esp32_wifi_disconnect,
+	.ap_enable	   = esp32_wifi_ap_enable,
+	.ap_disable	   = esp32_wifi_ap_disable,
+	.iface_status	   = esp32_wifi_status,
+#if defined(CONFIG_NET_STATISTICS_WIFI)
+	.get_stats	   = esp32_wifi_stats,
+#endif
+};
+
+static const struct net_wifi_mgmt_offload esp32_api = {
+	.wifi_iface.iface_api.init	  = esp32_wifi_init,
+	.wifi_iface.send = esp32_wifi_send,
+	.wifi_mgmt_api = &esp32_wifi_mgmt,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 NET_DEVICE_DT_INST_DEFINE(0,

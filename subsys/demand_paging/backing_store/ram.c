@@ -105,7 +105,11 @@ void k_mem_paging_backing_store_location_free(uintptr_t location)
 {
 	void *slab = location_to_slab(location);
 
+<<<<<<< HEAD
 	k_mem_slab_free(&backing_slabs, &slab);
+=======
+	k_mem_slab_free(&backing_slabs, slab);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	free_slabs++;
 }
 

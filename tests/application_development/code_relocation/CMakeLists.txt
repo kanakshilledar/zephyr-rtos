@@ -17,7 +17,11 @@ endif()
 # Code relocation feature
 zephyr_code_relocate(FILES src/test_file1.c ${SRAM2_PHDR} LOCATION SRAM2)
 
+<<<<<<< HEAD
 zephyr_code_relocate(FILES src/test_file2.c ${RAM_PHDR} LOCATION RAM)
+=======
+zephyr_code_relocate(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/test_file2.c ${RAM_PHDR} LOCATION RAM)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # Add custom library that we can relocate code for
 add_subdirectory(test_lib)

@@ -10,7 +10,11 @@
 
 #include "test_driver.h"
 
+<<<<<<< HEAD
 static const struct device *dev;
+=======
+static const struct device *test_dev;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct k_thread get_runner_td;
 K_THREAD_STACK_DEFINE(get_runner_stack, 1024);
 
@@ -24,11 +28,19 @@ static void get_runner(void *arg1, void *arg2, void *arg3)
 	ARG_UNUSED(arg3);
 
 	/* make sure we test blocking path (suspend is ongoing) */
+<<<<<<< HEAD
 	ongoing = test_driver_pm_ongoing(dev);
 	zassert_equal(ongoing, true);
 
 	/* usage: 0, +1, resume: yes */
 	ret = pm_device_runtime_get(dev);
+=======
+	ongoing = test_driver_pm_ongoing(test_dev);
+	zassert_equal(ongoing, true);
+
+	/* usage: 0, +1, resume: yes */
+	ret = pm_device_runtime_get(test_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0);
 }
 
@@ -38,6 +50,7 @@ void test_api_setup(void *data)
 	enum pm_device_state state;
 
 	/* check API always returns 0 when runtime PM is disabled */
+<<<<<<< HEAD
 	ret = pm_device_runtime_get(dev);
 	zassert_equal(ret, 0);
 	ret = pm_device_runtime_put(dev);
@@ -54,6 +67,24 @@ void test_api_setup(void *data)
 
 	/* enabling again should succeed (no-op) */
 	ret = pm_device_runtime_enable(dev);
+=======
+	ret = pm_device_runtime_get(test_dev);
+	zassert_equal(ret, 0);
+	ret = pm_device_runtime_put(test_dev);
+	zassert_equal(ret, 0);
+	ret = pm_device_runtime_put_async(test_dev);
+	zassert_equal(ret, 0);
+
+	/* enable runtime PM */
+	ret = pm_device_runtime_enable(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_SUSPENDED);
+
+	/* enabling again should succeed (no-op) */
+	ret = pm_device_runtime_enable(test_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0);
 }
 
@@ -65,6 +96,7 @@ static void test_api_teardown(void *data)
 	/* let test driver finish async PM (in case it was left pending due to
 	 * a failure)
 	 */
+<<<<<<< HEAD
 	if (test_driver_pm_ongoing(dev)) {
 		test_driver_pm_done(dev);
 	}
@@ -74,6 +106,17 @@ static void test_api_teardown(void *data)
 	zassert_equal(ret, 0);
 
 	(void)pm_device_state_get(dev, &state);
+=======
+	if (test_driver_pm_ongoing(test_dev)) {
+		test_driver_pm_done(test_dev);
+	}
+
+	/* disable runtime PM, make sure device is left into active state */
+	ret = pm_device_runtime_disable(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
 }
 
@@ -92,12 +135,17 @@ ZTEST(device_runtime_api, test_api)
 	enum pm_device_state state;
 
 	/* device is initially suspended */
+<<<<<<< HEAD
 	(void)pm_device_state_get(dev, &state);
+=======
+	(void)pm_device_state_get(test_dev, &state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(state, PM_DEVICE_STATE_SUSPENDED);
 
 	/*** get + put ***/
 
 	/* usage: 0, +1, resume: yes */
+<<<<<<< HEAD
 	ret = pm_device_runtime_get(dev);
 	zassert_equal(ret, 0);
 
@@ -124,11 +172,40 @@ ZTEST(device_runtime_api, test_api)
 
 	/* usage: 0, -1, suspend: no (unbalanced call) */
 	ret = pm_device_runtime_put(dev);
+=======
+	ret = pm_device_runtime_get(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
+
+	/* usage: 1, +1, resume: no */
+	ret = pm_device_runtime_get(test_dev);
+	zassert_equal(ret, 0);
+
+	/* usage: 2, -1, suspend: no */
+	ret = pm_device_runtime_put(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
+
+	/* usage: 1, -1, suspend: yes */
+	ret = pm_device_runtime_put(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_SUSPENDED);
+
+	/* usage: 0, -1, suspend: no (unbalanced call) */
+	ret = pm_device_runtime_put(test_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, -EALREADY);
 
 	/*** get + asynchronous put until suspended ***/
 
 	/* usage: 0, +1, resume: yes */
+<<<<<<< HEAD
 	ret = pm_device_runtime_get(dev);
 	zassert_equal(ret, 0);
 
@@ -157,11 +234,42 @@ ZTEST(device_runtime_api, test_api)
 	k_yield();
 
 	(void)pm_device_state_get(dev, &state);
+=======
+	ret = pm_device_runtime_get(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
+
+	test_driver_pm_async(test_dev);
+
+	/* usage: 1, -1, suspend: yes (queued) */
+	ret = pm_device_runtime_put_async(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_SUSPENDING);
+
+	/* usage: 0, -1, suspend: no (unbalanced call) */
+	ret = pm_device_runtime_put(test_dev);
+	zassert_equal(ret, -EALREADY);
+
+	/* usage: 0, -1, suspend: no (unbalanced call) */
+	ret = pm_device_runtime_put_async(test_dev);
+	zassert_equal(ret, -EALREADY);
+
+	/* unblock test driver and let it finish */
+	test_driver_pm_done(test_dev);
+	k_yield();
+
+	(void)pm_device_state_get(test_dev, &state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(state, PM_DEVICE_STATE_SUSPENDED);
 
 	/*** get + asynchronous put + get (while suspend still ongoing) ***/
 
 	/* usage: 0, +1, resume: yes */
+<<<<<<< HEAD
 	ret = pm_device_runtime_get(dev);
 	zassert_equal(ret, 0);
 
@@ -175,6 +283,21 @@ ZTEST(device_runtime_api, test_api)
 	zassert_equal(ret, 0);
 
 	(void)pm_device_state_get(dev, &state);
+=======
+	ret = pm_device_runtime_get(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
+
+	test_driver_pm_async(test_dev);
+
+	/* usage: 1, -1, suspend: yes (queued) */
+	ret = pm_device_runtime_put_async(test_dev);
+	zassert_equal(ret, 0);
+
+	(void)pm_device_state_get(test_dev, &state);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(state, PM_DEVICE_STATE_SUSPENDING);
 
 	/* let suspension start */
@@ -194,6 +317,7 @@ ZTEST(device_runtime_api, test_api)
 	/* let driver suspend to finish and wait until get_runner finishes
 	 * resuming the driver
 	 */
+<<<<<<< HEAD
 	test_driver_pm_done(dev);
 	k_thread_join(&get_runner_td, K_FOREVER);
 
@@ -214,11 +338,37 @@ ZTEST(device_runtime_api, test_api)
 	pm_device_state_unlock(dev);
 
 	ret = pm_device_runtime_enable(dev);
+=======
+	test_driver_pm_done(test_dev);
+	k_thread_join(&get_runner_td, K_FOREVER);
+
+	(void)pm_device_state_get(test_dev, &state);
+	zassert_equal(state, PM_DEVICE_STATE_ACTIVE);
+
+	/* Put operation should fail due the state be locked. */
+	ret = pm_device_runtime_disable(test_dev);
+	zassert_equal(ret, 0);
+
+	pm_device_state_lock(test_dev);
+
+	/* This operation should not succeed.  */
+	ret = pm_device_runtime_enable(test_dev);
+	zassert_equal(ret, -EPERM);
+
+	/* After unlock the state, enable runtime should work. */
+	pm_device_state_unlock(test_dev);
+
+	ret = pm_device_runtime_enable(test_dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(ret, 0);
 }
 
 DEVICE_DEFINE(pm_unsupported_device, "PM Unsupported", NULL, NULL, NULL, NULL,
+<<<<<<< HEAD
 	      APPLICATION, 0, NULL);
+=======
+	      POST_KERNEL, 0, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ZTEST(device_runtime_api, test_unsupported)
 {
@@ -254,8 +404,13 @@ ZTEST(device_runtime_api, test_pm_device_runtime_auto)
 
 void *device_runtime_api_setup(void)
 {
+<<<<<<< HEAD
 	dev = device_get_binding("test_driver");
 	zassert_not_null(dev, NULL);
+=======
+	test_dev = device_get_binding("test_driver");
+	zassert_not_null(test_dev, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return NULL;
 }
 

@@ -28,7 +28,11 @@ LOG_MODULE_DECLARE(soc, CONFIG_SOC_LOG_LEVEL);
 #endif
 
 /* Invoke Low Power/System Off specific Tasks */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -41,12 +45,15 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		LL_LPM_EnableDeepSleep();
 		k_cpu_idle();
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		LL_PWR_ClearFlag_WU();
 		LL_PWR_SetPowerMode(LL_PWR_MODE_STANDBY);
 		LL_LPM_EnableDeepSleep();
 		k_cpu_idle();
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power state %u", state);
 		break;
@@ -54,7 +61,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(substate_id);
 
@@ -67,9 +78,12 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 		/* Restore the clock setup. */
 		stm32_clock_control_init(NULL);
 		break;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		/* Nothing to do. */
 		break;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		LOG_DBG("Unsupported power substate-id %u", state);
 		break;
@@ -89,6 +103,7 @@ static int stm32_power_init(void)
 	/* Enable Power clock */
 	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG
 	/* Enable the Debug Module during STOP mode */
 	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
@@ -96,6 +111,8 @@ static int stm32_power_init(void)
 	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_DBGMCU);
 #endif /* CONFIG_DEBUG */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

@@ -17,7 +17,11 @@ This sample uses the LPS22HB sensor controlled using the I2C interface.
 References
 **********
 
+<<<<<<< HEAD
 - LPS22HB: http://www.st.com/en/mems-and-sensors/lps22hb.html
+=======
+- LPS22HB: https://www.st.com/en/mems-and-sensors/lps22hb.html
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building and Running
 ********************

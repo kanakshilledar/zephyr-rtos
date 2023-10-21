@@ -20,7 +20,11 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/dt-bindings/gpio/espressif-esp32-gpio.h>
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32C3
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/interrupt_controller/intc_esp32c3.h>
 #else
 #include <zephyr/drivers/interrupt_controller/intc_esp32.h>
@@ -33,7 +37,11 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(gpio_esp32, CONFIG_LOG_DEFAULT_LEVEL);
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_ESP32C3
+=======
+#ifdef CONFIG_SOC_SERIES_ESP32C3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* gpio structs in esp32c3 series are different from xtensa ones */
 #define out out.data
 #define in in.data

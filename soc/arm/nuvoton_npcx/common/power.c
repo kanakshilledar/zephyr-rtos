@@ -45,7 +45,11 @@
  * INCLUDE FILES: soc_clock.h
  */
 
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/espi.h>
@@ -199,7 +203,11 @@ static void npcx_power_enter_system_sleep(int slp_mode, int wk_mode)
 }
 
 /* Invoke when enter "Suspend/Low Power" mode. */
+<<<<<<< HEAD
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	if (state != PM_STATE_SUSPEND_TO_IDLE) {
 		LOG_DBG("Unsupported power state %u", state);
@@ -228,7 +236,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle soc specific activity after exiting "Suspend/Low Power" mode. */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	if (state != PM_STATE_SUSPEND_TO_IDLE) {
 		LOG_DBG("Unsupported power state %u", state);

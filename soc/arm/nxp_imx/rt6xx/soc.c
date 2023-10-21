@@ -19,7 +19,11 @@
 #include <zephyr/drivers/uart.h>
 #include <zephyr/linker/sections.h>
 #include <zephyr/arch/cpu.h>
+<<<<<<< HEAD
 #include <aarch32/cortex_m/exc.h>
+=======
+#include <cortex_m/exc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <fsl_power.h>
 #include <fsl_clock.h>
 #include <fsl_common.h>
@@ -298,6 +302,10 @@ static ALWAYS_INLINE void clock_init(void)
 #endif
 
 	DT_FOREACH_STATUS_OKAY(nxp_lpc_ctimer, CTIMER_CLOCK_SETUP)
+<<<<<<< HEAD
+=======
+	DT_FOREACH_STATUS_OKAY(nxp_ctimer_pwm, CTIMER_CLOCK_SETUP)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if (DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(i3c0), nxp_mcux_i3c, okay))
 	CLOCK_AttachClk(kFFRO_to_I3C_CLK);
@@ -352,6 +360,7 @@ void imxrt_usdhc_dat3_pull(bool pullup)
 
 static int nxp_rt600_init(void)
 {
+<<<<<<< HEAD
 
 	/* old interrupt lock level */
 	unsigned int oldLevel;
@@ -368,13 +377,21 @@ static int nxp_rt600_init(void)
 	 */
 	NMI_INIT();
 
+=======
+	/* Initialize clock */
+	clock_init();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifndef CONFIG_IMXRT6XX_CODE_CACHE
 	CACHE64_DisableCache(CACHE64);
 #endif
 
+<<<<<<< HEAD
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

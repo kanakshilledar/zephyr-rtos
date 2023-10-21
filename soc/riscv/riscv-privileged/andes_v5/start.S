@@ -15,6 +15,7 @@ SECTION_FUNC(init, entry)
 	.option push
 	.option norelax
 
+<<<<<<< HEAD
 #ifdef __nds_execit
 	/* Initialize EXECIT table */
 	la t0, _ITB_BASE_
@@ -30,6 +31,28 @@ SECTION_FUNC(init, entry)
 	li t0, (0x3 << 13)
 	csrc NDS_MCACHE_CTL, t0
 	li t0, (1 << 19) | (1 << 13) | (1 << 10) | (1 << 9) | (0x3)
+=======
+#ifdef CONFIG_SOC_ANDES_V5_EXECIT
+	/* Initialize EXECIT table */
+	la t0, _ITB_BASE_
+	csrw NDS_UITB, t0
+#endif
+
+#ifdef CONFIG_ICACHE
+	/* Enable I cache with HW prefetcher. */
+	li t0, (1 << 9) | (1 << 0)
+	csrs NDS_MCACHE_CTL, t0
+#endif
+
+#ifdef CONFIG_DCACHE
+	/*
+	 * Enable D cache with HW prefetcher, D-cache write-around
+	 * (threshold: 4 cache lines), and CM (Coherence Manager).
+	 */
+	li t0, (0x3 << 13)
+	csrc NDS_MCACHE_CTL, t0
+	li t0, (1 << 19) | (1 << 13) | (1 << 10) | (1 << 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	csrs NDS_MCACHE_CTL, t0
 
 	/* Check if CPU support CM or not. */

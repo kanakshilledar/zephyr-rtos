@@ -40,7 +40,11 @@ static int test_callback(int mode)
 	gpio_pin_interrupt_configure(dev, PIN_OUT, GPIO_INT_DISABLE);
 
 	/* 1. set PIN_OUT to logical initial state inactive */
+<<<<<<< HEAD
 	uint32_t out_flags = GPIO_OUTPUT_LOW;
+=======
+	uint32_t out_flags = GPIO_OUTPUT_LOW | PIN_OUT_FLAGS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if ((mode & GPIO_INT_LOW_0) != 0) {
 		out_flags = GPIO_OUTPUT_HIGH | GPIO_ACTIVE_LOW;
@@ -54,7 +58,11 @@ static int test_callback(int mode)
 	}
 
 	/* 2. configure PIN_IN callback and trigger condition */
+<<<<<<< HEAD
 	rc = gpio_pin_configure(dev, PIN_IN, GPIO_INPUT);
+=======
+	rc = gpio_pin_configure(dev, PIN_IN, (GPIO_INPUT | PIN_IN_FLAGS));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (rc != 0) {
 		TC_ERROR("config PIN_IN fail: %d\n", rc);
 		goto err_exit;

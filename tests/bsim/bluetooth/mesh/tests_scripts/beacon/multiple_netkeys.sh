@@ -12,3 +12,12 @@ conf=prj_mesh1d1_conf
 RunTest mesh_beacon_multiple_netkeys_1d1 \
 	beacon_tx_multiple_netkeys \
 	beacon_rx_multiple_netkeys
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest mesh_beacon_multiple_netkeys_psa \
+	beacon_tx_multiple_netkeys \
+	beacon_rx_multiple_netkeys
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

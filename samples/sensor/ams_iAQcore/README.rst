@@ -14,7 +14,11 @@ Building and Running
 ********************
 
 This sample application uses the sensor connected to the i2c stated in the
+<<<<<<< HEAD
 iaq_core.overlay file.
+=======
+app.overlay file.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Flash the binary to a board of choice with a sensor connected.
 This sample can run on every board with i2c.
 For example build for a nucleo_f446re board:

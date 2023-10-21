@@ -15,7 +15,10 @@ else()
     target_sources(app PRIVATE src/main.cpp)
   else()
     target_sources(app PRIVATE src/main.c)
+<<<<<<< HEAD
 
     target_sources_ifdef(CONFIG_USERSPACE app PRIVATE src/main_userspace.c)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   endif()
 endif()

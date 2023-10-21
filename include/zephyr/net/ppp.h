@@ -384,6 +384,7 @@ struct ppp_context {
 	/** PPP startup worker. */
 	struct k_work_delayable startup;
 
+<<<<<<< HEAD
 	/** Carrier ON/OFF handler worker. This is used to create
 	 * network interface UP/DOWN event when PPP L2 driver
 	 * notices carrier ON/OFF situation. We must not create another
@@ -392,6 +393,8 @@ struct ppp_context {
 	 */
 	struct k_work carrier_work;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct {
 		/** Finite state machine for LCP */
 		struct ppp_fsm fsm;
@@ -476,6 +479,12 @@ struct ppp_context {
 	/** Network interface related to this PPP connection */
 	struct net_if *iface;
 
+<<<<<<< HEAD
+=======
+	/** Network management callback structure */
+	struct net_mgmt_event_callback mgmt_evt_cb;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** Current phase of PPP link */
 	enum ppp_phase phase;
 
@@ -488,18 +497,24 @@ struct ppp_context {
 	/** This tells how many network protocols are up */
 	int network_protos_up;
 
+<<<<<<< HEAD
 	/** Is network carrier up */
 	uint16_t is_net_carrier_up : 1;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** Is PPP ready to receive packets */
 	uint16_t is_ready_to_serve : 1;
 
 	/** Is PPP L2 enabled or not */
 	uint16_t is_enabled : 1;
 
+<<<<<<< HEAD
 	/** PPP startup pending */
 	uint16_t is_startup_pending : 1;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/** PPP enable pending */
 	uint16_t is_enable_done : 1;
 
@@ -523,6 +538,7 @@ struct ppp_context {
 };
 
 /**
+<<<<<<< HEAD
  * @brief Inform PPP L2 driver that carrier is detected.
  * This happens when cable is connected etc.
  *
@@ -539,6 +555,8 @@ void net_ppp_carrier_on(struct net_if *iface);
 void net_ppp_carrier_off(struct net_if *iface);
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Initialize PPP L2 stack for a given interface
  *
  * @param iface A valid pointer to a network interface

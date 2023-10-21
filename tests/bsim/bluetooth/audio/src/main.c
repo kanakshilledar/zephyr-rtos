@@ -33,6 +33,13 @@ extern struct bst_test_list *test_ias_install(struct bst_test_list *tests);
 extern struct bst_test_list *test_ias_client_install(struct bst_test_list *tests);
 extern struct bst_test_list *test_tmap_client_install(struct bst_test_list *tests);
 extern struct bst_test_list *test_tmap_server_install(struct bst_test_list *tests);
+<<<<<<< HEAD
+=======
+extern struct bst_test_list *test_pacs_notify_client_install(struct bst_test_list *tests);
+extern struct bst_test_list *test_pacs_notify_server_install(struct bst_test_list *tests);
+extern struct bst_test_list *test_csip_notify_client_install(struct bst_test_list *tests);
+extern struct bst_test_list *test_csip_notify_server_install(struct bst_test_list *tests);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 bst_test_install_t test_installers[] = {
 	test_vcp_install,
@@ -62,6 +69,13 @@ bst_test_install_t test_installers[] = {
 	test_ias_client_install,
 	test_tmap_server_install,
 	test_tmap_client_install,
+<<<<<<< HEAD
+=======
+	test_pacs_notify_client_install,
+	test_pacs_notify_server_install,
+	test_csip_notify_client_install,
+	test_csip_notify_server_install,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	NULL
 };
 

@@ -76,6 +76,10 @@
 			compatible = "ns16550";
 			clock-frequency = <16000000>;
 			reg = <0x80014000 0x100>;
+<<<<<<< HEAD
+=======
+			io-mapped;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <86 0>;
 			interrupt-parent = <&intc>;
 			dlf = <0x01>;
@@ -86,6 +90,10 @@
 			compatible = "ns16550";
 			clock-frequency = <16000000>;
 			reg = <0x80014100 0x100>;
+<<<<<<< HEAD
+=======
+			io-mapped;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <87 0>;
 			interrupt-parent = <&intc>;
 			reg-shift = <2>;
@@ -96,6 +104,10 @@
 			compatible = "ns16550";
 			clock-frequency = <16000000>;
 			reg = <0x80014200 0x1000>;
+<<<<<<< HEAD
+=======
+			io-mapped;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <88 0>;
 			interrupt-parent = <&intc>;
 			reg-shift = <2>;
@@ -106,6 +118,10 @@
 			compatible = "ns16550";
 			clock-frequency = <144000000>;
 			reg = <0x80014300 0x100>;
+<<<<<<< HEAD
+=======
+			io-mapped;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <89 0>;
 			interrupt-parent = <&intc>;
 			reg-shift = <2>;

@@ -346,7 +346,10 @@ static int qmspi_configure(const struct device *dev,
 {
 	const struct spi_qmspi_config *cfg = dev->config;
 	struct spi_qmspi_data *qdata = dev->data;
+<<<<<<< HEAD
 	const struct spi_config *curr_cfg = qdata->ctx.config;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct qmspi_regs *regs = cfg->regs;
 	uint32_t smode;
 	int ret;
@@ -355,6 +358,7 @@ static int qmspi_configure(const struct device *dev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (curr_cfg->frequency != config->frequency) {
 		qmspi_set_frequency(qdata, regs, config->frequency);
 	}
@@ -362,6 +366,13 @@ static int qmspi_configure(const struct device *dev,
 	if (curr_cfg->operation == config->operation) {
 		return 0; /* no change required */
 	}
+=======
+	if (spi_context_configured(&qdata->ctx, config)) {
+		return 0;
+	}
+
+	qmspi_set_frequency(qdata, regs, config->frequency);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* check new configuration */
 	ret = spi_feature_support(config);

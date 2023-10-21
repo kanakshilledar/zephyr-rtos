@@ -7,10 +7,19 @@
 #include "xtensa/corebits.h"
 #include "xtensa_backtrace.h"
 #include <zephyr/sys/printk.h>
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_ESP32)
 #include "soc/soc_memory_layout.h"
 #elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
 #include "debug_helpers.h"
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32)
+#include "soc/soc_memory_layout.h"
+#elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
+#include "debug_helpers.h"
+#elif defined(CONFIG_SOC_XTENSA_DC233C)
+#include "backtrace_helpers.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 static int mask, cause;
 
@@ -34,10 +43,19 @@ static inline uint32_t z_xtensa_cpu_process_stack_pc(uint32_t pc)
 
 static inline bool z_xtensa_stack_ptr_is_sane(uint32_t sp)
 {
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_ESP32)
 	return esp_stack_ptr_is_sane(sp);
 #elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
 	return intel_adsp_ptr_is_sane(sp);
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32)
+	return esp_stack_ptr_is_sane(sp);
+#elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
+	return intel_adsp_ptr_is_sane(sp);
+#elif defined(CONFIG_SOC_XTENSA_DC233C)
+	return xtensa_dc233c_stack_ptr_is_sane(sp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #warning "z_xtensa_stack_ptr_is_sane is not defined for this platform"
 #endif
@@ -45,10 +63,19 @@ static inline bool z_xtensa_stack_ptr_is_sane(uint32_t sp)
 
 static inline bool z_xtensa_ptr_executable(const void *p)
 {
+<<<<<<< HEAD
 #if defined(CONFIG_SOC_ESP32)
 	return esp_ptr_executable(p);
 #elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
 	return intel_adsp_ptr_executable(p);
+=======
+#if defined(CONFIG_SOC_SERIES_ESP32)
+	return esp_ptr_executable(p);
+#elif defined(CONFIG_SOC_FAMILY_INTEL_ADSP)
+	return intel_adsp_ptr_executable(p);
+#elif defined(CONFIG_SOC_XTENSA_DC233C)
+	return xtensa_dc233c_ptr_executable(p);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #warning "z_xtensa_ptr_executable is not defined for this platform"
 #endif

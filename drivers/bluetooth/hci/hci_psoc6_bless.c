@@ -21,7 +21,11 @@
 #include <zephyr/init.h>
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
 #include "zephyr/logging/log.h"
+=======
+#include <zephyr/logging/log.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BT_DBG_ENABLED IS_ENABLED(CONFIG_BT_DEBUG_HCI_DRIVER)
 #define LOG_LEVEL      CONFIG_BT_HCI_DRIVER_LOG_LEVEL

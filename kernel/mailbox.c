@@ -14,10 +14,22 @@
 #include <zephyr/toolchain.h>
 #include <zephyr/linker/sections.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <ksched.h>
 #include <zephyr/wait_q.h>
 #include <zephyr/sys/dlist.h>
 #include <zephyr/init.h>
+=======
+#include <zephyr/sys/dlist.h>
+#include <zephyr/init.h>
+/* private kernel APIs */
+#include <ksched.h>
+#include <wait_q.h>
+
+#ifdef CONFIG_OBJ_CORE_MAILBOX
+static struct k_obj_type  obj_type_mailbox;
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if (CONFIG_NUM_MBOX_ASYNC_MSGS > 0)
 
@@ -90,6 +102,13 @@ void k_mbox_init(struct k_mbox *mbox)
 	z_waitq_init(&mbox->rx_msg_queue);
 	mbox->lock = (struct k_spinlock) {};
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_MAILBOX
+	k_obj_core_init_and_link(K_OBJ_CORE(mbox), &obj_type_mailbox);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	SYS_PORT_TRACING_OBJ_INIT(k_mbox, mbox);
 }
 
@@ -131,6 +150,7 @@ static int mbox_message_match(struct k_mbox_msg *tx_msg,
 
 		/* update data location fields for receiver only */
 		rx_msg->tx_data = tx_msg->tx_data;
+<<<<<<< HEAD
 		rx_msg->tx_block = tx_msg->tx_block;
 		if (rx_msg->tx_data != NULL) {
 			rx_msg->tx_block.data = NULL;
@@ -139,6 +159,8 @@ static int mbox_message_match(struct k_mbox_msg *tx_msg,
 		} else {
 			/* no data */
 		}
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* update syncing thread field for receiver only */
 		rx_msg->_syncing_thread = tx_msg->_syncing_thread;
@@ -152,8 +174,12 @@ static int mbox_message_match(struct k_mbox_msg *tx_msg,
 /**
  * @brief Dispose of received message.
  *
+<<<<<<< HEAD
  * Releases any memory pool block still associated with the message,
  * then notifies the sender that message processing is complete.
+=======
+ * Notifies the sender that message processing is complete.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param rx_msg Pointer to receive message descriptor.
  */
@@ -167,10 +193,13 @@ static void mbox_message_dispose(struct k_mbox_msg *rx_msg)
 		return;
 	}
 
+<<<<<<< HEAD
 	if (rx_msg->tx_block.data != NULL) {
 		rx_msg->tx_block.data = NULL;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* recover sender info */
 	sending_thread = rx_msg->_syncing_thread;
 	rx_msg->_syncing_thread = NULL;
@@ -446,3 +475,28 @@ int k_mbox_get(struct k_mbox *mbox, struct k_mbox_msg *rx_msg, void *buffer,
 
 	return result;
 }
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_MAILBOX
+
+static int init_mailbox_obj_core_list(void)
+{
+	/* Initialize mailbox object type */
+
+	z_obj_type_init(&obj_type_mailbox, K_OBJ_TYPE_MBOX_ID,
+			offsetof(struct k_mbox, obj_core));
+
+	/* Initialize and link satically defined mailboxes */
+
+	STRUCT_SECTION_FOREACH(k_mbox, mbox) {
+		k_obj_core_init_and_link(K_OBJ_CORE(mbox), &obj_type_mailbox);
+	}
+
+	return 0;
+}
+
+SYS_INIT(init_mailbox_obj_core_list, PRE_KERNEL_1,
+	 CONFIG_KERNEL_INIT_PRIORITY_OBJECTS);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

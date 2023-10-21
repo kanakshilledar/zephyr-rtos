@@ -35,5 +35,9 @@ set(ARMFVP_FLAGS
 
   -C bp.vis.disable_visualisation=1
   -C bp.vis.rate_limit-enable=0
+<<<<<<< HEAD
   -C cache_state_modelled=0
+=======
+  -C cache_state_modelled=1
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   )

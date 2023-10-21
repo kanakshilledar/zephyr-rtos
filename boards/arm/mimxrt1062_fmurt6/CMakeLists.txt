@@ -4,12 +4,15 @@
 # Copyright 2023 NXP
 #
 
+<<<<<<< HEAD
 if (CONFIG_DISPLAY)
 message(WARNING "
 CONFIG_DISPLAY: Running this firmware on a board without a display may damage the board
 ")
 endif()
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if(CONFIG_NXP_IMX_RT_BOOT_HEADER)
   zephyr_library()
   if(CONFIG_BOARD_MIMXRT1062_FMURT6)

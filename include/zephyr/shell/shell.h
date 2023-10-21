@@ -93,10 +93,17 @@ typedef void (*shell_dynamic_get)(size_t idx,
  * @brief Shell command descriptor.
  */
 union shell_cmd_entry {
+<<<<<<< HEAD
 	/*!< Pointer to function returning dynamic commands.*/
 	shell_dynamic_get dynamic_get;
 
 	/*!< Pointer to array of static commands. */
+=======
+	/** Pointer to function returning dynamic commands.*/
+	shell_dynamic_get dynamic_get;
+
+	/** Pointer to array of static commands. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	const struct shell_static_entry *entry;
 };
 
@@ -274,12 +281,23 @@ struct shell_static_entry {
  * function body.
  *
  * Example usage:
+<<<<<<< HEAD
  * SHELL_STATIC_SUBCMD_SET_CREATE(
  *	foo,
  *	SHELL_CMD(abc, ...),
  *	SHELL_CMD(def, ...),
  *	SHELL_SUBCMD_SET_END
  * )
+=======
+ * @code{.c}
+ *	SHELL_STATIC_SUBCMD_SET_CREATE(
+ *		foo,
+ *		SHELL_CMD(abc, ...),
+ *		SHELL_CMD(def, ...),
+ *		SHELL_SUBCMD_SET_END
+ *	)
+ * @endcode
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param[in] name	Name of the subcommand set.
  * @param[in] ...	List of commands created with @ref SHELL_CMD_ARG or
@@ -528,10 +546,18 @@ static int UTIL_CAT(UTIL_CAT(cmd_dict_, UTIL_CAT(_handler, _)),		\
  * @param[in] _name	Name of the dictionary subcommand set
  * @param[in] _handler	Command handler common for all dictionary commands.
  *			@see shell_dict_cmd_handler
+<<<<<<< HEAD
  * @param[in] ...	Dictionary pairs: (command_syntax, value). Value will be
  *			passed to the _handler as user data.
  *
  * Example usage:
+=======
+ * @param[in] ...	Dictionary triplets: (command_syntax, value, helper). Value will be
+ *			passed to the _handler as user data.
+ *
+ * Example usage:
+ * @code{.c}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *	static int my_handler(const struct shell *sh,
  *			      size_t argc, char **argv, void *data)
  *	{
@@ -546,6 +572,10 @@ static int UTIL_CAT(UTIL_CAT(cmd_dict_, UTIL_CAT(_handler, _)),		\
  *		(value_2, 2, "value 2"), (value_3, 3, "value 3")
  *	);
  *	SHELL_CMD_REGISTER(dictionary, &sub_dict_cmds, NULL, NULL);
+<<<<<<< HEAD
+=======
+ * @endcode
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 #define SHELL_SUBCMD_DICT_SET_CREATE(_name, _handler, ...)		\
 	FOR_EACH_FIXED_ARG(Z_SHELL_CMD_DICT_HANDLER_CREATE, (),		\
@@ -602,6 +632,10 @@ typedef void (*shell_bypass_cb_t)(const struct shell *sh,
 struct shell_transport;
 
 /**
+<<<<<<< HEAD
+=======
+ * @struct shell_transport_api
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Unified shell transport interface.
  */
 struct shell_transport_api {
@@ -661,8 +695,13 @@ struct shell_transport_api {
 	/**
 	 * @brief Function for reading data from the transport interface.
 	 *
+<<<<<<< HEAD
 	 * @param[in]  p_transport  Pointer to the transfer instance.
 	 * @param[in]  p_data       Pointer to the destination buffer.
+=======
+	 * @param[in]  transport    Pointer to the transfer instance.
+	 * @param[in]  data         Pointer to the destination buffer.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * @param[in]  length       Destination buffer length.
 	 * @param[out] cnt          Pointer to the received bytes counter.
 	 *
@@ -776,6 +815,7 @@ struct shell_ctx {
 	enum shell_state state; /*!< Internal module state.*/
 	enum shell_receive_state receive_state;/*!< Escape sequence indicator.*/
 
+<<<<<<< HEAD
 	/*!< Currently executed command.*/
 	struct shell_static_entry active_cmd;
 
@@ -786,11 +826,27 @@ struct shell_ctx {
 	struct shell_vt100_ctx vt100_ctx;
 
 	/*!< Callback called from shell thread context when unitialization is
+=======
+	/** Currently executed command.*/
+	struct shell_static_entry active_cmd;
+
+	/** New root command. If NULL shell uses default root commands. */
+	const struct shell_static_entry *selected_cmd;
+
+	/** VT100 color and cursor position, terminal width.*/
+	struct shell_vt100_ctx vt100_ctx;
+
+	/** Callback called from shell thread context when unitialization is
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * completed just before aborting shell thread.
 	 */
 	shell_uninit_cb_t uninit_cb;
 
+<<<<<<< HEAD
 	/*!< When bypass is set, all incoming data is passed to the callback. */
+=======
+	/** When bypass is set, all incoming data is passed to the callback. */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	shell_bypass_cb_t bypass;
 
 #if defined CONFIG_SHELL_GETOPT
@@ -803,6 +859,7 @@ struct shell_ctx {
 
 	uint16_t cmd_tmp_buff_len; /*!< Command length in tmp buffer.*/
 
+<<<<<<< HEAD
 	/*!< Command input buffer.*/
 	char cmd_buff[CONFIG_SHELL_CMD_BUFF_SIZE];
 
@@ -810,6 +867,15 @@ struct shell_ctx {
 	char temp_buff[CONFIG_SHELL_CMD_BUFF_SIZE];
 
 	/*!< Printf buffer size.*/
+=======
+	/** Command input buffer.*/
+	char cmd_buff[CONFIG_SHELL_CMD_BUFF_SIZE];
+
+	/** Command temporary buffer.*/
+	char temp_buff[CONFIG_SHELL_CMD_BUFF_SIZE];
+
+	/** Printf buffer size.*/
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	char printf_buff[CONFIG_SHELL_PRINTF_BUFF_SIZE];
 
 	volatile union shell_backend_cfg cfg;
@@ -817,7 +883,11 @@ struct shell_ctx {
 
 	struct k_poll_signal signals[SHELL_SIGNALS];
 
+<<<<<<< HEAD
 	/*!< Events that should be used only internally by shell thread.
+=======
+	/** Events that should be used only internally by shell thread.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * Event for SHELL_SIGNAL_TXDONE is initialized but unused.
 	 */
 	struct k_poll_event events[SHELL_SIGNALS];
@@ -833,8 +903,13 @@ extern const struct log_backend_api log_backend_shell_api;
  * @brief Flags for setting shell output newline sequence.
  */
 enum shell_flag {
+<<<<<<< HEAD
 	SHELL_FLAG_CRLF_DEFAULT	= (1<<0),	/* Do not map CR or LF */
 	SHELL_FLAG_OLF_CRLF	= (1<<1)	/* Map LF to CRLF on output */
+=======
+	SHELL_FLAG_CRLF_DEFAULT	= (1<<0),	/*!< Do not map CR or LF */
+	SHELL_FLAG_OLF_CRLF	= (1<<1)	/*!< Map LF to CRLF on output */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 /**
@@ -1112,7 +1187,11 @@ int shell_prompt_change(const struct shell *sh, const char *prompt);
  */
 void shell_help(const struct shell *sh);
 
+<<<<<<< HEAD
 /* @brief Command's help has been printed */
+=======
+/** @brief Command's help has been printed */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define SHELL_CMD_HELP_PRINTED	(1)
 
 /** @brief Execute command.

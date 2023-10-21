@@ -37,6 +37,12 @@ void z_log_msg_finalize(struct log_msg *msg, const void *source,
 
 	msg->hdr.desc = desc;
 	msg->hdr.source = source;
+<<<<<<< HEAD
+=======
+#if CONFIG_LOG_THREAD_ID_PREFIX
+	msg->hdr.tid = k_is_in_isr() ? NULL : k_current_get();
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	z_log_msg_commit(msg);
 }
 

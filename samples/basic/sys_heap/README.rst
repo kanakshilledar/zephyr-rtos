@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _system_heap:
 
 System heap
 ###########
+=======
+.. zephyr:code-sample:: sys-heap
+   :name: System heap
+
+   Print system heap usage to the console.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

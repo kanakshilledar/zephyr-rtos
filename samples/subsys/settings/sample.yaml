@@ -9,6 +9,10 @@ tests:
       - qemu_x86
       - native_posix
       - native_posix_64
+<<<<<<< HEAD
+=======
+      - mr_canhubk3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - native_posix
     harness: console

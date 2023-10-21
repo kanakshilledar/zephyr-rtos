@@ -7,6 +7,11 @@ The Health Server model provides attention callbacks and node diagnostics for
 :ref:`bluetooth_mesh_models_health_cli` models. It is primarily used to report
 faults in the mesh node and map the mesh nodes to their physical location.
 
+<<<<<<< HEAD
+=======
+If present, the Health Server model must be instantiated on the primary element.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Faults
 ******
 

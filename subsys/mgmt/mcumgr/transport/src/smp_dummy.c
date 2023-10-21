@@ -65,7 +65,11 @@ static struct net_buf *mcumgr_dummy_process_frag(
 
 static struct net_buf *mcumgr_dummy_process_frag_outgoing(
 	struct mcumgr_serial_rx_ctxt *tx_ctxt,
+<<<<<<< HEAD
 	const uint8_t *frag, int frag_len);
+=======
+	const uint8_t *frag, uint16_t frag_len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static int mcumgr_dummy_tx_pkt(const uint8_t *data, int len,
 			       mcumgr_serial_tx_cb cb);
@@ -113,7 +117,11 @@ static void smp_dummy_process_frag(struct uart_mcumgr_rx_buf *rx_buf)
  * used in tests
  */
 static struct net_buf *smp_dummy_process_frag_outgoing(uint8_t *buffer,
+<<<<<<< HEAD
 						       uint8_t buffer_size)
+=======
+						       uint16_t buffer_size)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct net_buf *nb;
 
@@ -226,7 +234,11 @@ static void dummy_mcumgr_free_rx_buf(struct uart_mcumgr_rx_buf *rx_buf)
 	void *block;
 
 	block = rx_buf;
+<<<<<<< HEAD
 	k_mem_slab_free(&dummy_mcumgr_slab, &block);
+=======
+	k_mem_slab_free(&dummy_mcumgr_slab, block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -441,7 +453,11 @@ static struct net_buf *mcumgr_dummy_process_frag(
  */
 static struct net_buf *mcumgr_dummy_process_frag_outgoing(
 	struct mcumgr_serial_rx_ctxt *tx_ctxt,
+<<<<<<< HEAD
 	const uint8_t *frag, int frag_len)
+=======
+	const uint8_t *frag, uint16_t frag_len)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct net_buf *nb;
 	uint16_t crc;

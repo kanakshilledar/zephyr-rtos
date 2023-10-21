@@ -38,3 +38,18 @@
 	status = "okay";
 	current-speed = <115200>;
 };
+<<<<<<< HEAD
+=======
+
+&pcie {
+	eth0: pcie@1,0 {
+		compatible = "intel,e1000";
+		vendor-id = <0x8086>;
+		device-id = <0x100e>;
+		interrupts = <1>;
+		interrupt-parent = <&pcie>;
+		reg = <0x0800 0 0 0 0>;
+		status = "okay";
+	};
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -39,7 +39,11 @@ static inline uint32_t _data(Trng * const trng)
 #endif
 }
 
+<<<<<<< HEAD
 static int entropy_sam_wait_ready(Trng * const trng, uint32_t flags)
+=======
+static int entropy_sam_wait_ready(Trng * const trng)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* According to the reference manual, the generator provides
 	 * one 32-bit random value every 84 peripheral clock cycles.
@@ -56,6 +60,7 @@ static int entropy_sam_wait_ready(Trng * const trng, uint32_t flags)
 		if (timeout-- == 0) {
 			return -ETIMEDOUT;
 		}
+<<<<<<< HEAD
 
 		if ((flags & ENTROPY_BUSYWAIT) == 0U) {
 			/* This internal function is used by both get_entropy,
@@ -67,6 +72,8 @@ static int entropy_sam_wait_ready(Trng * const trng, uint32_t flags)
 			 */
 			k_yield();
 		}
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -74,7 +81,11 @@ static int entropy_sam_wait_ready(Trng * const trng, uint32_t flags)
 
 static int entropy_sam_get_entropy_internal(const struct device *dev,
 					    uint8_t *buffer,
+<<<<<<< HEAD
 					    uint16_t length, uint32_t flags)
+=======
+					    uint16_t length)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct trng_sam_dev_cfg *config = dev->config;
 	Trng *const trng = config->regs;
@@ -84,7 +95,11 @@ static int entropy_sam_get_entropy_internal(const struct device *dev,
 		uint32_t value;
 		int res;
 
+<<<<<<< HEAD
 		res = entropy_sam_wait_ready(trng, flags);
+=======
+		res = entropy_sam_wait_ready(trng);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (res < 0) {
 			return res;
 		}
@@ -103,7 +118,11 @@ static int entropy_sam_get_entropy_internal(const struct device *dev,
 static int entropy_sam_get_entropy(const struct device *dev, uint8_t *buffer,
 				   uint16_t length)
 {
+<<<<<<< HEAD
 	return entropy_sam_get_entropy_internal(dev, buffer, length, 0);
+=======
+	return entropy_sam_get_entropy_internal(dev, buffer, length);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int entropy_sam_get_entropy_isr(const struct device *dev,
@@ -144,7 +163,11 @@ static int entropy_sam_get_entropy_isr(const struct device *dev,
 		/* Allowed to busy-wait */
 		int ret =
 			entropy_sam_get_entropy_internal(dev,
+<<<<<<< HEAD
 				buffer, length, flags);
+=======
+				buffer, length);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		if (ret == 0) {
 			/* Data retrieved successfully. */

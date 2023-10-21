@@ -13,12 +13,23 @@
 
 #include <zephyr/toolchain.h>
 #include <ksched.h>
+<<<<<<< HEAD
 #include <zephyr/wait_q.h>
+=======
+#include <wait_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/check.h>
 #include <zephyr/init.h>
 #include <zephyr/syscall_handler.h>
 #include <kernel_internal.h>
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_OBJ_CORE_STACK
+static struct k_obj_type obj_type_stack;
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void k_stack_init(struct k_stack *stack, stack_data_t *buffer,
 		  uint32_t num_entries)
 {
@@ -29,6 +40,13 @@ void k_stack_init(struct k_stack *stack, stack_data_t *buffer,
 
 	SYS_PORT_TRACING_OBJ_INIT(k_stack, stack);
 	z_object_init(stack);
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_STACK
+	k_obj_core_init_and_link(K_OBJ_CORE(stack), &obj_type_stack);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int32_t z_impl_k_stack_alloc_init(struct k_stack *stack, uint32_t num_entries)
@@ -185,3 +203,27 @@ static inline int z_vrfy_k_stack_pop(struct k_stack *stack,
 }
 #include <syscalls/k_stack_pop_mrsh.c>
 #endif
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_OBJ_CORE_STACK
+static int init_stack_obj_core_list(void)
+{
+	/* Initialize stack object type */
+
+	z_obj_type_init(&obj_type_stack, K_OBJ_TYPE_STACK_ID,
+			offsetof(struct k_stack, obj_core));
+
+	/* Initialize and link statically defined stacks */
+
+	STRUCT_SECTION_FOREACH(k_stack, stack) {
+		k_obj_core_init_and_link(K_OBJ_CORE(stack), &obj_type_stack);
+	}
+
+	return 0;
+}
+
+SYS_INIT(init_stack_obj_core_list, PRE_KERNEL_1,
+	 CONFIG_KERNEL_INIT_PRIORITY_OBJECTS);
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

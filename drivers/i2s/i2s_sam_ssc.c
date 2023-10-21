@@ -277,7 +277,11 @@ static void dma_tx_callback(const struct device *dma_dev, void *user_data,
 	__ASSERT_NO_MSG(stream->mem_block != NULL);
 
 	/* All block data sent */
+<<<<<<< HEAD
 	k_mem_slab_free(stream->cfg.mem_slab, &stream->mem_block);
+=======
+	k_mem_slab_free(stream->cfg.mem_slab, stream->mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	stream->mem_block = NULL;
 
 	/* Stop transmission if there was an error */
@@ -736,7 +740,11 @@ static void rx_stream_disable(struct stream *stream, Ssc *const ssc,
 	ssc->SSC_IDR = SSC_IDR_OVRUN;
 	dma_stop(dev_dma, stream->dma_channel);
 	if (stream->mem_block != NULL) {
+<<<<<<< HEAD
 		k_mem_slab_free(stream->cfg.mem_slab, &stream->mem_block);
+=======
+		k_mem_slab_free(stream->cfg.mem_slab, stream->mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		stream->mem_block = NULL;
 	}
 }
@@ -748,7 +756,11 @@ static void tx_stream_disable(struct stream *stream, Ssc *const ssc,
 	ssc->SSC_IDR = SSC_IDR_TXEMPTY;
 	dma_stop(dev_dma, stream->dma_channel);
 	if (stream->mem_block != NULL) {
+<<<<<<< HEAD
 		k_mem_slab_free(stream->cfg.mem_slab, &stream->mem_block);
+=======
+		k_mem_slab_free(stream->cfg.mem_slab, stream->mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		stream->mem_block = NULL;
 	}
 }
@@ -759,7 +771,11 @@ static void rx_queue_drop(struct stream *stream)
 	void *mem_block;
 
 	while (queue_get(&stream->mem_block_queue, &mem_block, &size) == 0) {
+<<<<<<< HEAD
 		k_mem_slab_free(stream->cfg.mem_slab, &mem_block);
+=======
+		k_mem_slab_free(stream->cfg.mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	k_sem_reset(&stream->sem);
@@ -772,7 +788,11 @@ static void tx_queue_drop(struct stream *stream)
 	unsigned int n = 0U;
 
 	while (queue_get(&stream->mem_block_queue, &mem_block, &size) == 0) {
+<<<<<<< HEAD
 		k_mem_slab_free(stream->cfg.mem_slab, &mem_block);
+=======
+		k_mem_slab_free(stream->cfg.mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		n++;
 	}
 

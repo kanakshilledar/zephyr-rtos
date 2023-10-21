@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _grove-lcd-sample:
 
 Grove LCD
 #########
+=======
+.. zephyr:code-sample:: grove-lcd
+   :name: Grove LCD
+   :relevant-api: grove_display
+
+   Display an incrementing counter and change the backlight color.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -41,7 +49,11 @@ shield interface. For example, it can be run on the FRDM K64F board as
 described below:
 
 .. zephyr-app-commands::
+<<<<<<< HEAD
    :zephyr-app: samples/subsys/display/grove_display
+=======
+   :zephyr-app: samples/drivers/misc/grove_display
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    :board: frdm_k64f
    :goals: flash
    :compact:

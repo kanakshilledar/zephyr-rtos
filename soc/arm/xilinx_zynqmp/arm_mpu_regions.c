@@ -4,7 +4,11 @@
  */
 
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/mpu/arm_mpu.h>
+=======
+#include <zephyr/arch/arm/mpu/arm_mpu.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define MPUTYPE_READ_ONLY \
 	{ \
@@ -44,7 +48,11 @@ static const struct arm_mpu_region mpu_regions[] = {
 
 	MPU_REGION_ENTRY("SRAM_PRIV",
 			0x00000000,
+<<<<<<< HEAD
 			REGION_64M,
+=======
+			REGION_2G,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			MPUTYPE_PRIV_WBWACACHE),
 
 	MPU_REGION_ENTRY("SRAM",

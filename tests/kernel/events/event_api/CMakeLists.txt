@@ -6,3 +6,10 @@ project(events_api)
 
 FILE(GLOB app_sources src/*.c)
 target_sources(app PRIVATE ${app_sources})
+<<<<<<< HEAD
+=======
+
+target_include_directories(app PRIVATE
+  ${ZEPHYR_BASE}/kernel/include
+  )
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -9,6 +9,7 @@ common:
     - native_posix
   filter: not CONFIG_LOG_ALWAYS_RUNTIME
 tests:
+<<<<<<< HEAD
   logging.log_msg:
     extra_configs:
       - CONFIG_CBPRINTF_COMPLETE=y
@@ -18,16 +19,35 @@ tests:
       - CONFIG_LOG_MODE_OVERFLOW=n
 
   logging.log_msg_64b_timestamp:
+=======
+  logging.message:
+    extra_configs:
+      - CONFIG_CBPRINTF_COMPLETE=y
+
+  logging.message.no_overflow:
+    extra_configs:
+      - CONFIG_LOG_MODE_OVERFLOW=n
+
+  logging.message.64b_timestamp:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_CBPRINTF_COMPLETE=y
       - CONFIG_LOG_TIMESTAMP_64BIT=y
 
+<<<<<<< HEAD
   logging.log_msg_fp:
+=======
+  logging.message.fp:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_CBPRINTF_COMPLETE=y
       - CONFIG_CBPRINTF_FP_SUPPORT=y
 
+<<<<<<< HEAD
   logging.log_msg_fp_64b_timestamp:
+=======
+  logging.message.fp_64b_timestamp:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_configs:
       - CONFIG_CBPRINTF_COMPLETE=y
       - CONFIG_CBPRINTF_FP_SUPPORT=y

@@ -2396,6 +2396,11 @@ void test_main(void)
 
 	printk("Bluetooth initialized\n");
 
+<<<<<<< HEAD
+=======
+	bt_le_scan_cb_register(&common_scan_cb);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Initialize MCC  ********************************************/
 	err = do_mcc_init();
 	if (err != 0) {
@@ -2414,7 +2419,11 @@ void test_main(void)
 		printk("\n########### Running iteration #%u\n\n", i);
 
 		UNSET_FLAG(flag_connected);
+<<<<<<< HEAD
 		err = bt_le_scan_start(BT_LE_SCAN_PASSIVE, device_found);
+=======
+		err = bt_le_scan_start(BT_LE_SCAN_PASSIVE, NULL);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err != 0) {
 			FAIL("Failed to start scanning (err %d\n)", err);
 		} else {

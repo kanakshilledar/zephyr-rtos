@@ -21,7 +21,11 @@ int z_impl_i2s_buf_read(const struct device *dev, void *buf, size_t *size)
 		rx_cfg = i2s_config_get((const struct device *)dev, I2S_DIR_RX);
 
 		memcpy(buf, mem_block, *size);
+<<<<<<< HEAD
 		k_mem_slab_free(rx_cfg->mem_slab, &mem_block);
+=======
+		k_mem_slab_free(rx_cfg->mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return ret;
@@ -51,7 +55,11 @@ int z_impl_i2s_buf_write(const struct device *dev, void *buf, size_t size)
 
 	ret = i2s_write((const struct device *)dev, mem_block, size);
 	if (ret != 0) {
+<<<<<<< HEAD
 		k_mem_slab_free(tx_cfg->mem_slab, &mem_block);
+=======
+		k_mem_slab_free(tx_cfg->mem_slab, mem_block);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return ret;

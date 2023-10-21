@@ -17,6 +17,20 @@ bool zbus_iterate_over_channels(bool (*iterator_func)(const struct zbus_channel 
 	return true;
 }
 
+<<<<<<< HEAD
+=======
+bool zbus_iterate_over_channels_with_user_data(
+	bool (*iterator_func)(const struct zbus_channel *chan, void *user_data), void *user_data)
+{
+	STRUCT_SECTION_FOREACH(zbus_channel, chan) {
+		if (!(*iterator_func)(chan, user_data)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 bool zbus_iterate_over_observers(bool (*iterator_func)(const struct zbus_observer *obs))
 {
 	STRUCT_SECTION_FOREACH(zbus_observer, obs) {
@@ -26,3 +40,17 @@ bool zbus_iterate_over_observers(bool (*iterator_func)(const struct zbus_observe
 	}
 	return true;
 }
+<<<<<<< HEAD
+=======
+
+bool zbus_iterate_over_observers_with_user_data(
+	bool (*iterator_func)(const struct zbus_observer *obs, void *user_data), void *user_data)
+{
+	STRUCT_SECTION_FOREACH(zbus_observer, obs) {
+		if (!(*iterator_func)(obs, user_data)) {
+			return false;
+		}
+	}
+	return true;
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

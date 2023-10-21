@@ -8,6 +8,10 @@
 
 #include <nxp/nxp_lpc51u68.dtsi>
 #include "lpcxpresso51u68-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP LPCXPRESSO51U68 board";
@@ -51,14 +55,26 @@
 		btn_wk: button_0 {
 			label = "Wakeup button";
 			gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_WAKEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		isp0_button: button_1 {
 			label = "ISP0 button";
 			gpios = <&gpio0 31 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		isp1_button: button_2 {
 			label = "ISP1 button";
 			gpios = <&gpio0 4 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 };

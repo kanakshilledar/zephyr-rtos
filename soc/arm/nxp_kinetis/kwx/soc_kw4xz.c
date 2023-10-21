@@ -11,7 +11,10 @@
 #include <zephyr/drivers/uart.h>
 #include <fsl_common.h>
 #include <fsl_clock.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define LPUART0SRC_OSCERCLK	(1)
 #define TPMSRC_MCGPLLCLK	(1)
@@ -82,6 +85,7 @@ static ALWAYS_INLINE void clock_init(void)
 
 static int kwx_init(void)
 {
+<<<<<<< HEAD
 
 	unsigned int oldLevel; /* old interrupt lock level */
 
@@ -99,6 +103,11 @@ static int kwx_init(void)
 
 	/* restore interrupt state */
 	irq_unlock(oldLevel);
+=======
+	/* Initialize system clock to 40 MHz */
+	clock_init();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

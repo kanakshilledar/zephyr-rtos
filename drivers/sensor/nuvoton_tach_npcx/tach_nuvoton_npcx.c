@@ -176,7 +176,11 @@ static inline bool tach_npcx_is_captured(const struct device *dev)
 
 	LOG_DBG("port A is captured %d, port b is captured %d",
 		IS_BIT_SET(inst->TECTRL, NPCX_TECTRL_TAPND),
+<<<<<<< HEAD
 		IS_BIT_SET(inst->TECTRL, NPCX_TECTRL_TAPND));
+=======
+		IS_BIT_SET(inst->TECTRL, NPCX_TECTRL_TBPND));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/*
 	 * In mode 5, the flag TAPND or TBPND indicates a input captured on

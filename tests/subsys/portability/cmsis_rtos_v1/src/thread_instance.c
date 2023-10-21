@@ -8,7 +8,11 @@
 #include <zephyr/kernel.h>
 #include <cmsis_os.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_COVERAGE
+=======
+#ifdef CONFIG_COVERAGE_GCOV
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STACKSZ		(512 + CONFIG_TEST_EXTRA_STACK_SIZE)
 #else
 #define STACKSZ		(512U)

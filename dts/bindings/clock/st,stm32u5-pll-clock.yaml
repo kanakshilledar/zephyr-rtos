@@ -71,3 +71,12 @@ properties:
         On PLL1, only division by 1 and even division values are allowed.
         No restrictions for PLL2 and PLL3
         Valid range: 1 - 128
+<<<<<<< HEAD
+=======
+
+  fracn:
+    type: int
+    description: |
+        PLLx FRACN value
+        Valid range: 0 - 8191
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -34,7 +34,11 @@ struct timeval {
 
 #else /* CONFIG_NEWLIB_LIBC */
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_POSIX
+=======
+#if defined(CONFIG_ARCH_POSIX) && defined(CONFIG_EXTERNAL_LIBC)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <bits/types/struct_timeval.h>
 #else
 #include <sys/_timeval.h>

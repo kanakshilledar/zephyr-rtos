@@ -84,7 +84,11 @@ ZTEST(mslab_concept, test_mslab_alloc_wait_prio)
 	/*relinquish CPU for above threads to start */
 	k_msleep(30);
 	/*free one block, expected to unblock thread "tid[1]"*/
+<<<<<<< HEAD
 	k_mem_slab_free(&mslab1, &block[0]);
+=======
+	k_mem_slab_free(&mslab1, block[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*wait for all threads exit*/
 	for (int i = 0; i < THREAD_NUM; i++) {
 		k_sem_take(&sync_sema, K_FOREVER);
@@ -94,8 +98,14 @@ ZTEST(mslab_concept, test_mslab_alloc_wait_prio)
 	for (int i = 0; i < THREAD_NUM; i++) {
 		k_thread_abort(tid[i]);
 	}
+<<<<<<< HEAD
 	k_mem_slab_free(&mslab1, &block_ok);
 	for (int i = 1; i < BLK_NUM; i++) {
 		k_mem_slab_free(&mslab1, &block[i]);
+=======
+	k_mem_slab_free(&mslab1, block_ok);
+	for (int i = 1; i < BLK_NUM; i++) {
+		k_mem_slab_free(&mslab1, block[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }

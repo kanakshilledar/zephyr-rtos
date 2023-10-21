@@ -1,6 +1,13 @@
 tests:
+<<<<<<< HEAD
   drivers.bc12:
     tags:
       - drivers
+=======
+  drivers.usb.bc12:
+    tags:
+      - drivers
+      - usb
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       - bc12
     platform_allow: native_posix

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _socket-can-sample:
 
 Socket CAN
 ##########
+=======
+.. zephyr:code-sample:: socket-can
+   :name: SocketCAN
+   :relevant-api: bsd_sockets socket_can
+
+   Send and receive raw CAN frames using BSD sockets API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

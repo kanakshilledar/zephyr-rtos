@@ -1230,9 +1230,22 @@ static int cmd_media_set_search(const struct shell *sh, size_t argc, char *argv[
 	 */
 
 	struct mpl_search search;
+<<<<<<< HEAD
 	int err;
 
 	search.len = strlen(argv[1]);
+=======
+	size_t len;
+	int err;
+
+	len = strlen(argv[1]);
+	if (len > sizeof(search.search)) {
+		shell_print(sh, "Fail: Invalid argument");
+		return -EINVAL;
+	}
+
+	search.len = len;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memcpy(search.search, argv[1], search.len);
 	LOG_DBG("Search string: %s", argv[1]);
 

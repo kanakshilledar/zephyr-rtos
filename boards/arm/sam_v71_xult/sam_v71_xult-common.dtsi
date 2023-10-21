@@ -8,6 +8,10 @@
  */
 
 #include "sam_v71_xult-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	aliases {
@@ -60,10 +64,18 @@
 		sw0_user_button: button_1 {
 			label = "User Button 0";
 			gpios = <&pioa 9 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		sw1_user_button: button_2 {
 			label = "User Button 1";
 			gpios = <&piob 12 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -233,6 +245,7 @@ zephyr_udc0: &usbhs {
 	pinctrl-names = "default";
 
 	mac-eeprom = <&eeprom>;
+<<<<<<< HEAD
 
 	phy: phy {
 		compatible = "ethernet-phy";
@@ -240,6 +253,9 @@ zephyr_udc0: &usbhs {
 		address = <0>;
 		mdio = <&mdio>;
 	};
+=======
+	phy-handle = <&phy>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &mdio {
@@ -247,6 +263,15 @@ zephyr_udc0: &usbhs {
 
 	pinctrl-0 = <&mdio_default>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+
+	phy: ethernet-phy@0 {
+		compatible = "ethernet-phy";
+		status = "okay";
+		reg = <0>;
+	};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &pwm0 {

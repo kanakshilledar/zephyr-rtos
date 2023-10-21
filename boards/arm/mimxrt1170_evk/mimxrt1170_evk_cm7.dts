@@ -8,7 +8,10 @@
 
 #include <nxp/nxp_rt11xx_cm7.dtsi>
 #include "mimxrt1170_evk.dtsi"
+<<<<<<< HEAD
 #include <zephyr/dt-bindings/display/panel.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP MIMXRT1170-EVK board";
@@ -17,7 +20,10 @@
 	aliases {
 		mipi-dsi = &mipi_dsi;
 		watchdog0 = &wdog1;
+<<<<<<< HEAD
 		kscan0 = &touch_controller;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	chosen {
@@ -30,8 +36,11 @@
 		zephyr,flash-controller = &is25wp128;
 		zephyr,flash = &is25wp128;
 		zephyr,code-partition = &slot0_partition;
+<<<<<<< HEAD
 		zephyr,display = &lcdif;
 		zephyr,keyboard-scan = &touch_controller;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zephyr,cpu1-region = &ocram;
 		zephyr,ipc = &mailbox_a;
 	};
@@ -42,6 +51,7 @@
 		reg = <0x80000000 DT_SIZE_M(64)>;
 	};
 
+<<<<<<< HEAD
 	en_mipi_display: enable-mipi-display {
 		compatible = "regulator-fixed";
 		regulator-name = "en_mipi_display";
@@ -105,6 +115,37 @@
 	};
 };
 
+=======
+	/*
+	 * This node describes the GPIO pins of the MIPI FPC interface,
+	 * J48 on the EVK. This interface is standard to several
+	 * NXP EVKs, and is used with several MIPI displays
+	 * (available as zephyr shields)
+	 */
+	nxp_mipi_connector: mipi-connector {
+		compatible = "gpio-nexus";
+		#gpio-cells = <2>;
+		gpio-map-mask = <0xffffffff 0xffffffc0>;
+		gpio-map-pass-thru = <0 0x3f>;
+		gpio-map =	<0  0 &gpio9 29 0>,	/* Pin 1, LEDK */
+				<21 0 &gpio9 1  0>,	/* Pin 21, RESET */
+				<22 0 &gpio9 4  0>,	/* Pin 22, LPTE */
+				<26 0 &gpio6 4  0>,	/* Pin 26, CTP_I2C SDA */
+				<27 0 &gpio6 5  0>,	/* Pin 27, CTP_I2C SCL */
+				<28 0 &gpio9 0  0>,	/* Pin 28, CTP_RST */
+				<29 0 &gpio2 31 0>,	/* Pin 29, CTP_INT */
+				<32 0 &gpio11 16 0>,	/* Pin 32, PWR_EN */
+				<34 0 &gpio9 29 0>;	/* Pin 34, BL_PWM */
+	};
+};
+
+zephyr_lcdif: &lcdif {};
+
+zephyr_mipi_dsi: &mipi_dsi {
+	dphy-ref-frequency = <24000000>;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &lpuart1 {
 	status = "okay";
 	current-speed = <115200>;
@@ -113,13 +154,18 @@
 &flexcan3 {
 	status = "okay";
 	bus-speed = <125000>;
+<<<<<<< HEAD
 
+=======
+	bus-speed-data = <1000000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	can-transceiver {
 		max-bitrate = <5000000>;
 	};
 };
 
 &lpspi1 {
+<<<<<<< HEAD
 	status = "okay";
 };
 
@@ -134,6 +180,18 @@
 		irq-gpios = <&gpio2 31 GPIO_ACTIVE_HIGH>;
 		reset-gpios = <&gpio9 0  GPIO_ACTIVE_HIGH>;
 	};
+=======
+	dmas = <&edma0 0 36>, <&edma0 1 37>;
+	dma-names = "rx", "tx";
+	status = "okay";
+};
+
+nxp_mipi_i2c: &lpi2c5 {
+	pinctrl-0 = <&pinmux_lpi2c5>;
+	pinctrl-names = "default";
+	#address-cells = <1>;
+	#size-cells = <0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &lpadc0 {

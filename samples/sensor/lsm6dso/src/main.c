@@ -28,7 +28,11 @@ static void fetch_and_display(const struct device *dev)
 	sensor_channel_get(dev, SENSOR_CHAN_ACCEL_Z, &z);
 
 	printf("accel x:%f ms/2 y:%f ms/2 z:%f ms/2\n",
+<<<<<<< HEAD
 			out_ev(&x), out_ev(&y), out_ev(&z));
+=======
+			(double)out_ev(&x), (double)out_ev(&y), (double)out_ev(&z));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* lsm6dso gyro */
 	sensor_sample_fetch_chan(dev, SENSOR_CHAN_GYRO_XYZ);
@@ -37,7 +41,11 @@ static void fetch_and_display(const struct device *dev)
 	sensor_channel_get(dev, SENSOR_CHAN_GYRO_Z, &z);
 
 	printf("gyro x:%f rad/s y:%f rad/s z:%f rad/s\n",
+<<<<<<< HEAD
 			out_ev(&x), out_ev(&y), out_ev(&z));
+=======
+			(double)out_ev(&x), (double)out_ev(&y), (double)out_ev(&z));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	printf("trig_cnt:%d\n\n", trig_cnt);
 }

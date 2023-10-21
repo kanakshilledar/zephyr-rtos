@@ -230,7 +230,22 @@ static void bt_rpmsg_rx(const uint8_t *data, size_t len)
 	if (buf) {
 		LOG_DBG("Calling bt_recv(%p)", buf);
 
+<<<<<<< HEAD
 		bt_recv(buf);
+=======
+		/* The IPC service does not guarantee that the handler thread
+		 * is cooperative. In particular, the OpenAMP implementation is
+		 * preemtible by default. OTOH, the HCI driver interface requires
+		 * that the bt_recv() function is called from a cooperative
+		 * thread.
+		 *
+		 * Calling `k_sched lock()` has the effect of making the current
+		 * thread cooperative.
+		 */
+		k_sched_lock();
+		bt_recv(buf);
+		k_sched_unlock();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		LOG_HEXDUMP_DBG(buf->data, buf->len, "RX buf payload:");
 	}
@@ -288,12 +303,36 @@ static struct ipc_ept_cfg hci_ept_cfg = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+int __weak bt_hci_transport_setup(const struct device *dev)
+{
+	ARG_UNUSED(dev);
+	return 0;
+}
+
+int __weak bt_hci_transport_teardown(const struct device *dev)
+{
+	ARG_UNUSED(dev);
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int bt_rpmsg_open(void)
 {
 	int err;
 	const struct device *hci_ipc_instance =
 		DEVICE_DT_GET(DT_CHOSEN(zephyr_bt_hci_rpmsg_ipc));
 
+<<<<<<< HEAD
+=======
+	err = bt_hci_transport_setup(NULL);
+	if (err) {
+		LOG_ERR("HCI transport setup failed with: %d\n", err);
+		return err;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_DBG("");
 
 	err = ipc_service_open_instance(hci_ipc_instance);
@@ -317,9 +356,52 @@ static int bt_rpmsg_open(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct bt_hci_driver drv = {
 	.name		= "RPMsg",
 	.open		= bt_rpmsg_open,
+=======
+static int bt_rpmsg_close(void)
+{
+	int err;
+
+	if (IS_ENABLED(CONFIG_BT_HCI_HOST)) {
+		err = bt_hci_cmd_send_sync(BT_HCI_OP_RESET, NULL, NULL);
+		if (err) {
+			LOG_ERR("Sending reset command failed with: %d", err);
+			return err;
+		}
+	}
+
+	err = ipc_service_deregister_endpoint(&hci_ept);
+	if (err) {
+		LOG_ERR("Deregistering HCI endpoint failed with: %d", err);
+		return err;
+	}
+
+	const struct device *hci_ipc_instance =
+		DEVICE_DT_GET(DT_CHOSEN(zephyr_bt_hci_rpmsg_ipc));
+
+	err = ipc_service_close_instance(hci_ipc_instance);
+	if (err) {
+		LOG_ERR("Closing IPC service failed with: %d", err);
+		return err;
+	}
+
+	err = bt_hci_transport_teardown(NULL);
+	if (err) {
+		LOG_ERR("HCI transport teardown failed with: %d", err);
+		return err;
+	}
+
+	return 0;
+}
+
+static const struct bt_hci_driver drv = {
+	.name		= "RPMsg",
+	.open		= bt_rpmsg_open,
+	.close		= bt_rpmsg_close,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.send		= bt_rpmsg_send,
 	.bus		= BT_HCI_DRIVER_BUS_IPM,
 #if defined(CONFIG_BT_DRIVER_QUIRK_NO_AUTO_DLE)

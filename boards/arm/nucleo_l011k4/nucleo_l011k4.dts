@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <st/l0/stm32l011X4.dtsi>
 #include <st/l0/stm32l011k(3-4)tx-pinctrl.dtsi>
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32L011K4-NUCLEO board";
@@ -19,7 +23,11 @@
 		zephyr,flash = &flash0;
 	};
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_2: led_2 {
 			gpios = <&gpiob 3 GPIO_ACTIVE_HIGH>;
@@ -32,6 +40,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioa 12 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

@@ -369,7 +369,11 @@ static int uart_cmsdk_apb_irq_rx_ready(const struct device *dev)
 {
 	const struct uart_cmsdk_apb_config *dev_cfg = dev->config;
 
+<<<<<<< HEAD
 	return dev_cfg->uart->state & UART_RX_BF;
+=======
+	return (dev_cfg->uart->state & UART_RX_BF) == UART_RX_BF;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**

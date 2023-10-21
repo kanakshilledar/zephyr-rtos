@@ -295,8 +295,11 @@ extern "C" {
 #define sys_port_trace_k_pipe_get_enter(pipe, timeout)
 #define sys_port_trace_k_pipe_get_blocking(pipe, timeout)
 #define sys_port_trace_k_pipe_get_exit(pipe, timeout, ret)
+<<<<<<< HEAD
 #define sys_port_trace_k_pipe_block_put_enter(pipe, sem)
 #define sys_port_trace_k_pipe_block_put_exit(pipe, sem)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define sys_port_trace_k_heap_init(heap)
 #define sys_port_trace_k_heap_aligned_alloc_enter(heap, timeout)

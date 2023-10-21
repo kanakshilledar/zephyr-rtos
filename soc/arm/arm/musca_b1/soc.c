@@ -4,8 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/init.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <zephyr/linker/linker-defs.h>
 
@@ -46,6 +49,7 @@ uint32_t sse_200_platform_get_cpu_id(void)
 
 	return (uint32_t)*p_cpu_id;
 }
+<<<<<<< HEAD
 
 /**
  * @brief Perform basic hardware initialization at boot.
@@ -65,3 +69,5 @@ static int arm_musca_b1_init(void)
 }
 
 SYS_INIT(arm_musca_b1_init, PRE_KERNEL_1, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

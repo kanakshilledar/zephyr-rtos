@@ -140,7 +140,11 @@ This interface is supported by the openocd version included in the Zephyr SDK.
 Flashing an application to Nucleo L053R8
 ----------------------------------------
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -167,6 +171,7 @@ References
 .. target-notes::
 
 .. _Nucleo L053R8 website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-l053r8.html
 
 .. _STM32L0x3 reference manual:
@@ -174,3 +179,12 @@ References
 
 .. _STM32 Nucleo-64 board User Manual:
    http://www.st.com/resource/en/user_manual/dm00105823.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-l053r8.html
+
+.. _STM32L0x3 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00095744.pdf
+
+.. _STM32 Nucleo-64 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00105823.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

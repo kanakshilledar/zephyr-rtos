@@ -9,6 +9,10 @@
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/drivers/adc.h>
 #include <zephyr/logging/log.h>
+<<<<<<< HEAD
+=======
+#include <stm32_ll_adc.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 LOG_MODULE_REGISTER(stm32_vbat, CONFIG_SENSOR_LOG_LEVEL);
 
@@ -21,6 +25,10 @@ LOG_MODULE_REGISTER(stm32_vbat, CONFIG_SENSOR_LOG_LEVEL);
 struct stm32_vbat_data {
 	const struct device *adc;
 	const struct adc_channel_cfg adc_cfg;
+<<<<<<< HEAD
+=======
+	ADC_TypeDef *adc_base;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct adc_sequence adc_seq;
 	struct k_mutex mutex;
 	int16_t sample_buffer;
@@ -50,6 +58,12 @@ static int stm32_vbat_sample_fetch(const struct device *dev, enum sensor_channel
 		goto unlock;
 	}
 
+<<<<<<< HEAD
+=======
+	LL_ADC_SetCommonPathInternalCh(__LL_ADC_COMMON_INSTANCE(data->adc_base),
+				       LL_ADC_PATH_INTERNAL_VBAT);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rc = adc_read(data->adc, sp);
 	if (rc == 0) {
 		data->raw = data->sample_buffer;
@@ -110,6 +124,10 @@ static int stm32_vbat_init(const struct device *dev)
 #define STM32_VBAT_DEFINE(inst)									\
 	static struct stm32_vbat_data stm32_vbat_dev_data_##inst = {				\
 		.adc = DEVICE_DT_GET(DT_INST_IO_CHANNELS_CTLR(inst)),				\
+<<<<<<< HEAD
+=======
+		.adc_base = (ADC_TypeDef *)DT_REG_ADDR(DT_INST_IO_CHANNELS_CTLR(0)),		\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		.adc_cfg = {									\
 			.gain = ADC_GAIN_1,							\
 			.reference = ADC_REF_INTERNAL,						\

@@ -11,7 +11,11 @@ common:
     - sparc
   filter: not CONFIG_64BIT
 tests:
+<<<<<<< HEAD
   logging.log_switch_format.deferred:
+=======
+  logging.format.switch.deferred:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - mps2_an385
       - qemu_x86
@@ -25,7 +29,11 @@ tests:
     filter: CONFIG_FULL_LIBC_SUPPORTED
     extra_configs:
       - CONFIG_REQUIRES_FULL_LIBC=y
+<<<<<<< HEAD
   logging.log_switch_format.immediate:
+=======
+  logging.format.switch.immediate:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: OVERLAY_CONFIG=overlay_immediate.conf
     integration_platforms:
       - mps2_an385
@@ -33,7 +41,11 @@ tests:
     filter: CONFIG_FULL_LIBC_SUPPORTED
     extra_configs:
       - CONFIG_REQUIRES_FULL_LIBC=y
+<<<<<<< HEAD
   logging.log_switch_format.custom_output:
+=======
+  logging.format.switch.custom_output:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     extra_args: OVERLAY_CONFIG=overlay_custom_output.conf
     integration_platforms:
       - mps2_an385

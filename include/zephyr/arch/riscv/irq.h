@@ -39,13 +39,23 @@ extern void z_riscv_irq_priority_set(unsigned int irq,
 
 #define ARCH_IRQ_CONNECT(irq_p, priority_p, isr_p, isr_param_p, flags_p) \
 { \
+<<<<<<< HEAD
 	Z_ISR_DECLARE(irq_p, 0, isr_p, isr_param_p); \
+=======
+	Z_ISR_DECLARE(irq_p + CONFIG_RISCV_RESERVED_IRQ_ISR_TABLES_OFFSET, \
+		      0, isr_p, isr_param_p); \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	z_riscv_irq_priority_set(irq_p, priority_p, flags_p); \
 }
 
 #define ARCH_IRQ_DIRECT_CONNECT(irq_p, priority_p, isr_p, flags_p) \
 { \
+<<<<<<< HEAD
 	Z_ISR_DECLARE(irq_p, ISR_FLAG_DIRECT, isr_p, NULL); \
+=======
+	Z_ISR_DECLARE(irq_p + CONFIG_RISCV_RESERVED_IRQ_ISR_TABLES_OFFSET, \
+		      ISR_FLAG_DIRECT, isr_p, NULL); \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #define ARCH_ISR_DIRECT_HEADER() arch_isr_direct_header()

@@ -10,3 +10,13 @@ RunTest blob_pst_pull \
 	blob_cli_trans_persistency_pull \
 	blob_srv_trans_persistency_pull \
 	blob_srv_trans_persistency_pull
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest blob_pst_pull_psa \
+	blob_cli_trans_persistency_pull \
+	blob_srv_trans_persistency_pull \
+	blob_srv_trans_persistency_pull
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

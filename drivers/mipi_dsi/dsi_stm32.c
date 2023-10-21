@@ -413,7 +413,11 @@ static int mipi_dsi_stm32_init(const struct device *dev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	reset_line_toggle_dt(&config->reset);
+=======
+	(void)reset_line_toggle_dt(&config->reset);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	ret = mipi_dsi_stm32_host_init(dev);
 	if (ret) {

@@ -44,9 +44,14 @@ MIMXRT595-EVK core output
 
    *** Booting Zephyr OS build zephyr-v3.2.0-1045-g07228f716c78  ***
 
+<<<<<<< HEAD
    mimxrt595_evk_cm33 system off demo
    RTC Alarm set for 10 seconds to wake from soft-off.
    Entering system off
+=======
+   Wake-up alarm set for 10 seconds
+   Powering off
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 OTP Fuse setting to wake from Deep Power Down and reset flash
 #############################################################

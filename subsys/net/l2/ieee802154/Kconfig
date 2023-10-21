@@ -14,6 +14,7 @@ config NET_L2_IEEE802154_MGMT
 	select NET_MGMT
 	select NET_MGMT_EVENT
 
+<<<<<<< HEAD
 # TODO: Selecting PHYs and frequency bands is abstracted by the concept
 #       of channel pages in recent versions of the standard (see
 #       IEEE 802.15.4-2020, 10.1.3).
@@ -30,6 +31,8 @@ config NET_L2_IEEE802154_SUB_GHZ
 	  logic in L2 code for channel management. This option is automatically
 	  selected when relevant device driver is enabled.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 module = NET_L2_IEEE802154
 module-dep = NET_LOG
 module-str = Log level for IEEE 802.15.4
@@ -65,6 +68,7 @@ config NET_DEBUG_L2_IEEE802154_DISPLAY_PACKET_TX
 
 endchoice
 
+<<<<<<< HEAD
 # TODO: For IEEE 802.15.4 compliance, this option will be removed in the future.
 #       Acknowledgment is mandatory if requested by the package's "ACK requested"
 #       flag. Drivers with hardware ACK support and otherwise the L2 layer will
@@ -76,6 +80,11 @@ config NET_L2_IEEE802154_ACK_REPLY
 	  Enable sending of ACK replies when receiving packages that request
 	  ACK. Note that if the HW driver has an AUTOACK feature, this should be
 	  disabled to avoid duplicate ACK packages.
+=======
+config NET_L2_IEEE802154_ACK_REPLY
+	bool
+	select DEPRECATED
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 choice
 	prompt "Device features level support"
@@ -111,9 +120,16 @@ config NET_L2_IEEE802154_FRAGMENT
 	  If IPv6 packets size more than 802.15.4 MTU, packet is fragmented
 	  and reassemble incoming packets according to RFC4944/6282.
 
+<<<<<<< HEAD
 config NET_L2_IEEE802154_FRAGMENT_REASS_CACHE_SIZE
 	int "IEEE 802.15.4 Reassembly cache size"
 	depends on NET_L2_IEEE802154_FRAGMENT
+=======
+if NET_L2_IEEE802154_FRAGMENT
+
+config NET_L2_IEEE802154_FRAGMENT_REASS_CACHE_SIZE
+	int "IEEE 802.15.4 Reassembly cache size"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 1
 	help
 	  Simultaneously reassemble 802.15.4 fragments depending on
@@ -121,7 +137,10 @@ config NET_L2_IEEE802154_FRAGMENT_REASS_CACHE_SIZE
 
 config NET_L2_IEEE802154_REASSEMBLY_TIMEOUT
 	int "IEEE 802.15.4 Reassembly timeout in seconds"
+<<<<<<< HEAD
 	depends on NET_L2_IEEE802154_FRAGMENT
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 5
 	range 1 60
 	help
@@ -129,6 +148,11 @@ config NET_L2_IEEE802154_REASSEMBLY_TIMEOUT
 	  from peer. Reassembly should be finished within a given time.
 	  Otherwise all accumulated fragments are dropped.
 
+<<<<<<< HEAD
+=======
+endif # NET_L2_IEEE802154_FRAGMENT
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config NET_L2_IEEE802154_SECURITY
 	bool "IEEE 802.15.4 security [EXPERIMENTAL]"
 	select EXPERIMENTAL

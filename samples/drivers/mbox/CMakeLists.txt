@@ -10,6 +10,13 @@ set(REMOTE_ZEPHYR_DIR ${CMAKE_CURRENT_BINARY_DIR}/mbox_ipc_remote-prefix/src/mbo
 
 if("${BOARD}" STREQUAL "nrf5340dk_nrf5340_cpuapp")
   set(BOARD_REMOTE "nrf5340dk_nrf5340_cpunet")
+<<<<<<< HEAD
+=======
+elseif("${BOARD}" STREQUAL "adp_xc7k_ae350")
+  set(BOARD_REMOTE "adp_xc7k_ae350")
+elseif("${BOARD}" STREQUAL "mimxrt595_evk_cm33")
+  set(BOARD_REMOTE "nrf5340dk_nrf5340_cpunet")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 else()
   message(FATAL_ERROR "${BOARD} is not supported for this sample")
 endif()

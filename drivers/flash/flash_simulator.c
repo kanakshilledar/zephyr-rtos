@@ -13,12 +13,17 @@
 #include <zephyr/init.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/util.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/stats/stats.h>
 #include <string.h>
 
 #ifdef CONFIG_ARCH_POSIX
 
+<<<<<<< HEAD
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -31,6 +36,11 @@
 #include "cmdline.h"
 #include "soc.h"
 
+=======
+#include "flash_simulator_native.h"
+#include "cmdline.h"
+#include "soc.h"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define DEFAULT_FLASH_FILE_PATH "flash.bin"
 
 #endif /* CONFIG_ARCH_POSIX */
@@ -384,6 +394,7 @@ static const struct flash_driver_api flash_sim_api = {
 
 static int flash_mock_init(const struct device *dev)
 {
+<<<<<<< HEAD
 	struct stat f_stat;
 	int rc;
 
@@ -442,6 +453,24 @@ static int flash_mock_init(const struct device *dev)
 	}
 
 	return 0;
+=======
+	int rc;
+	ARG_UNUSED(dev);
+
+	if (flash_in_ram == false && flash_file_path == NULL) {
+		flash_file_path = DEFAULT_FLASH_FILE_PATH;
+	}
+
+	rc = flash_mock_init_native(flash_in_ram, &mock_flash, FLASH_SIMULATOR_FLASH_SIZE,
+				    &flash_fd, flash_file_path, FLASH_SIMULATOR_ERASE_VALUE,
+				    flash_erase_at_start);
+
+	if (rc < 0) {
+		return -EIO;
+	} else {
+		return 0;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #else
@@ -477,6 +506,7 @@ DEVICE_DT_INST_DEFINE(0, flash_init, NULL,
 
 static void flash_native_posix_cleanup(void)
 {
+<<<<<<< HEAD
 	if (flash_in_ram == true) {
 		if (mock_flash != NULL) {
 			free(mock_flash);
@@ -496,6 +526,11 @@ static void flash_native_posix_cleanup(void)
 		/* We try to remove the file but do not error out if we can't */
 		(void) remove(flash_file_path);
 	}
+=======
+	flash_mock_cleanup_native(flash_in_ram, flash_fd, mock_flash,
+				  FLASH_SIMULATOR_FLASH_SIZE, flash_file_path,
+				  flash_rm_at_exit);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void flash_native_posix_options(void)

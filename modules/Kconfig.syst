@@ -3,7 +3,10 @@
 
 config MIPI_SYST_LIB
 	bool "MIPI SyS-T Library Support"
+<<<<<<< HEAD
 	select REQUIRES_FULL_LIBC
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  This option enables the MIPI SyS-T Library
 
@@ -20,4 +23,14 @@ config MIPI_SYST_RAW_DATA
 	help
 	  This option outputs MIPI SyS-T raw data packet
 
+<<<<<<< HEAD
+=======
+config MIPI_SYST_NO_WHCAR
+	bool
+	default y if MINIMAL_LIBC
+	help
+	  Tell MIPI Sys-T library to not build with
+	  wchar support.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif

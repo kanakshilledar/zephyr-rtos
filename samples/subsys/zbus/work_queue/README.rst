@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _zbus-work-queue-sample:
 
 Workqueue sample
 ################
+=======
+.. zephyr:code-sample:: zbus-work-queue
+   :name: Work queue
+   :relevant-api: zbus_apis
+
+   Use a work queue to process zbus messages in various ways.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

@@ -474,7 +474,11 @@ static int tca6424a_init(const struct device *dev)
 	 * this driver.
 	 */
 	if (drv_cfg->reset_gpio.port) {
+<<<<<<< HEAD
 		if (!device_is_ready(drv_cfg->reset_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&drv_cfg->reset_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("%s is not ready", drv_cfg->reset_gpio.port->name);
 			return -ENODEV;
 		}
@@ -520,7 +524,11 @@ static int tca6424a_init(const struct device *dev)
 
 	/* If the INT line is available, configure the callback for it. */
 	if (drv_cfg->int_gpio.port) {
+<<<<<<< HEAD
 		if (!device_is_ready(drv_cfg->int_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&drv_cfg->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Cannot get pointer to gpio interrupt device "
 				"%s init failed", dev->name);
 			return -EINVAL;

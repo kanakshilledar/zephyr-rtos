@@ -47,6 +47,27 @@ int alloc_unbound_event_channel(domid_t remote_dom)
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_XEN_DOM0
+int alloc_unbound_event_channel_dom0(domid_t dom, domid_t remote_dom)
+{
+	int rc;
+	struct evtchn_alloc_unbound alloc = {
+		.dom = dom,
+		.remote_dom = remote_dom,
+	};
+
+	rc = HYPERVISOR_event_channel_op(EVTCHNOP_alloc_unbound, &alloc);
+	if (rc == 0) {
+		rc = alloc.port;
+	}
+
+	return rc;
+}
+#endif /* CONFIG_XEN_DOM0 */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int bind_interdomain_event_channel(domid_t remote_dom, evtchn_port_t remote_port,
 		evtchn_cb_t cb, void *data)
 {

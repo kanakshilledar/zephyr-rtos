@@ -6,7 +6,12 @@ tests:
   sample.tfm_ipc:
     tags:
       - introduction
+<<<<<<< HEAD
       - tfm
+=======
+      - trusted-firmware-m
+      - mcuboot
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow:
       - mps2_an521_ns
       - nrf5340dk_nrf5340_cpuapp_ns
@@ -29,7 +34,11 @@ tests:
   sample.tfm_ipc.no_bl2:
     tags:
       - introduction
+<<<<<<< HEAD
       - tfm
+=======
+      - trusted-firmware-m
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     platform_allow: mps2_an521_ns
     extra_configs:
       - CONFIG_TFM_BL2=n

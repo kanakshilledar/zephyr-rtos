@@ -361,6 +361,7 @@ ZTEST(context_cpu_idle, test_cpu_idle_atomic)
  */
 ZTEST(context_cpu_idle, test_cpu_idle)
 {
+<<<<<<< HEAD
 /*
  * Fixme: remove the skip code when sleep instruction in
  * nsim_hs_smp is fixed.
@@ -368,6 +369,8 @@ ZTEST(context_cpu_idle, test_cpu_idle)
 #if defined(CONFIG_SOC_NSIM) && defined(CONFIG_SMP)
 	ztest_test_skip();
 #endif
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	_test_kernel_cpu_idle(0);
 }
 

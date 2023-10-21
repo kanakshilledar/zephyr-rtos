@@ -2,6 +2,10 @@
  * Copyright (c) 2015 Intel Corporation
  * Copyright (c) 2018 Nordic Semiconductor
  * Copyright (c) 2019 Centaur Analytics, Inc
+<<<<<<< HEAD
+=======
+ * Copyright 2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -34,6 +38,14 @@
 #elif DT_HAS_COMPAT_STATUS_OKAY(intel_tco_wdt)
 #define WDT_ALLOW_CALLBACK 0
 #define WDT_MAX_WINDOW 3000U
+<<<<<<< HEAD
+=======
+#elif DT_HAS_COMPAT_STATUS_OKAY(nxp_fs26_wdog)
+#define WDT_MAX_WINDOW  1024U
+#define WDT_MIN_WINDOW	320U
+#define WDT_OPT 0
+#define WDG_FEED_INTERVAL (WDT_MIN_WINDOW + ((WDT_MAX_WINDOW - WDT_MIN_WINDOW) / 4))
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifndef WDT_ALLOW_CALLBACK
@@ -52,6 +64,13 @@
 #define WDG_FEED_INTERVAL 50U
 #endif
 
+<<<<<<< HEAD
+=======
+#ifndef WDT_OPT
+#define WDT_OPT WDT_OPT_PAUSE_HALTED_BY_DBG
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if WDT_ALLOW_CALLBACK
 static void wdt_callback(const struct device *wdt_dev, int channel_id)
 {
@@ -111,7 +130,11 @@ int main(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	err = wdt_setup(wdt, WDT_OPT_PAUSE_HALTED_BY_DBG);
+=======
+	err = wdt_setup(wdt, WDT_OPT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err < 0) {
 		printk("Watchdog setup error\n");
 		return 0;

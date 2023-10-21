@@ -142,35 +142,60 @@ void philosopher(void *id, void *unused1, void *unused2)
 	ARG_UNUSED(unused1);
 	ARG_UNUSED(unused2);
 
+<<<<<<< HEAD
 	fork_t fork1;
 	fork_t fork2;
+=======
+	fork_t my_fork1;
+	fork_t my_fork2;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	int my_id = POINTER_TO_INT(id);
 
 	/* Djkstra's solution: always pick up the lowest numbered fork first */
 	if (is_last_philosopher(my_id)) {
+<<<<<<< HEAD
 		fork1 = fork(0);
 		fork2 = fork(my_id);
 	} else {
 		fork1 = fork(my_id);
 		fork2 = fork(my_id + 1);
+=======
+		my_fork1 = fork(0);
+		my_fork2 = fork(my_id);
+	} else {
+		my_fork1 = fork(my_id);
+		my_fork2 = fork(my_id + 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	while (1) {
 		int32_t delay;
 
 		print_phil_state(my_id, "       STARVING       ", 0);
+<<<<<<< HEAD
 		take(fork1);
 		print_phil_state(my_id, "   HOLDING ONE FORK   ", 0);
 		take(fork2);
+=======
+		take(my_fork1);
+		print_phil_state(my_id, "   HOLDING ONE FORK   ", 0);
+		take(my_fork2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		delay = get_random_delay(my_id, 25);
 		print_phil_state(my_id, "  EATING  [ %s%d ms ] ", delay);
 		k_msleep(delay);
 
+<<<<<<< HEAD
 		drop(fork2);
 		print_phil_state(my_id, "   DROPPED ONE FORK   ", 0);
 		drop(fork1);
+=======
+		drop(my_fork2);
+		print_phil_state(my_id, "   DROPPED ONE FORK   ", 0);
+		drop(my_fork1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		delay = get_random_delay(my_id, 25);
 		print_phil_state(my_id, " THINKING [ %s%d ms ] ", delay);

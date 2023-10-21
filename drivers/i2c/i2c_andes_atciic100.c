@@ -44,7 +44,12 @@ static void i2c_atciic100_default_control(const struct device *dev)
 	struct i2c_atciic100_dev_data_t *dev_data = dev->data;
 	uint32_t reg = 0;
 
+<<<<<<< HEAD
 	k_sem_init(&dev_data->i2c_busy_sem, 1, 1);
+=======
+	k_sem_init(&dev_data->bus_lock, 1, 1);
+	k_sem_init(&dev_data->device_sync_sem, 0, 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Reset I2C bus */
 	reg = sys_read32(I2C_CMD(dev));
@@ -140,7 +145,11 @@ static int i2c_atciic100_configure(const struct device *dev,
 	dev_data->driver_state |= I2C_DRV_CFG_PARAM;
 
 unlock:
+<<<<<<< HEAD
 	k_sem_give(&dev_data->i2c_busy_sem);
+=======
+	k_sem_give(&dev_data->bus_lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return ret;
 }
@@ -154,6 +163,11 @@ static int i2c_atciic100_transfer(const struct device *dev,
 	uint8_t burst_write_len = msgs[0].len + msgs[1].len;
 	uint8_t burst_write_buf[I2C_MAX_COUNT + BURST_CMD_COUNT];
 
+<<<<<<< HEAD
+=======
+	k_sem_take(&dev_data->bus_lock, K_FOREVER);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if ((msgs[0].flags == I2C_MSG_WRITE)
 		&& (msgs[1].flags == (I2C_MSG_WRITE | I2C_MSG_STOP))) {
 
@@ -182,10 +196,18 @@ static int i2c_atciic100_transfer(const struct device *dev,
 			ret = i2c_atciic100_controller_receive(dev,
 				addr, msgs[i].buf, msgs[i].len, msgs[i].flags);
 		}
+<<<<<<< HEAD
+=======
+
+		if (ret < 0) {
+			goto exit;
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 exit:
 	/* Wait for transfer complete */
+<<<<<<< HEAD
 	k_sem_take(&dev_data->i2c_busy_sem, K_FOREVER);
 
 	if (dev_data->status.target_ack != 1) {
@@ -194,6 +216,9 @@ exit:
 	}
 	dev_data->status.target_ack = 0;
 	k_sem_give(&dev_data->i2c_busy_sem);
+=======
+	k_sem_give(&dev_data->bus_lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return ret;
 }
 
@@ -213,8 +238,11 @@ static int i2c_atciic100_controller_send(const struct device *dev,
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	k_sem_take(&dev_data->i2c_busy_sem, K_FOREVER);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Disable all I2C interrupts */
 	reg = sys_read32(I2C_INTE(dev));
 	reg &= (~IEN_ALL);
@@ -301,6 +329,15 @@ static int i2c_atciic100_controller_send(const struct device *dev,
 	reg |= (CMD_ISSUE_TRANSACTION);
 	sys_write32(reg, I2C_CMD(dev));
 
+<<<<<<< HEAD
+=======
+	k_sem_take(&dev_data->device_sync_sem, K_FOREVER);
+
+	if (dev_data->status.target_ack != 1) {
+		return -EIO;
+	}
+	dev_data->status.target_ack = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -319,8 +356,11 @@ static int i2c_atciic100_controller_receive(const struct device *dev,
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	k_sem_take(&dev_data->i2c_busy_sem, K_FOREVER);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Disable all I2C interrupts */
 	reg = sys_read32(I2C_INTE(dev));
 	reg &= (~IEN_ALL);
@@ -394,6 +434,14 @@ static int i2c_atciic100_controller_receive(const struct device *dev,
 	reg |= (CMD_ISSUE_TRANSACTION);
 	sys_write32(reg, I2C_CMD(dev));
 
+<<<<<<< HEAD
+=======
+	k_sem_take(&dev_data->device_sync_sem, K_FOREVER);
+	if (dev_data->status.target_ack != 1) {
+		return -EIO;
+	}
+	dev_data->status.target_ack = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -533,6 +581,11 @@ static void i2c_cmpl_handler(const struct device *dev, uint32_t reg_stat)
 			/* Clear & set driver state to controller rx complete */
 			dev_data->driver_state = I2C_DRV_CONTROLLER_RX_CMPL;
 		}
+<<<<<<< HEAD
+=======
+
+		k_sem_give(&dev_data->device_sync_sem);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 #if defined(CONFIG_I2C_TARGET)
@@ -578,7 +631,10 @@ static void i2c_cmpl_handler(const struct device *dev, uint32_t reg_stat)
 	dev_data->status.arbitration_lost = 0;
 #endif
 
+<<<<<<< HEAD
 	k_sem_give(&dev_data->i2c_busy_sem);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #if defined(CONFIG_I2C_TARGET)
@@ -594,7 +650,11 @@ static void andes_i2c_target_event(const struct device *dev,
 	 * A new I2C data transaction(START-ADDRESS-DATA-STOP)
 	 */
 	if (reg_stat & STATUS_ADDR_HIT) {
+<<<<<<< HEAD
 		if (k_sem_take(&dev_data->i2c_busy_sem, K_NO_WAIT) != 0) {
+=======
+		if (k_sem_take(&dev_data->bus_lock, K_NO_WAIT) != 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return;
 		}
 
@@ -637,6 +697,10 @@ static void andes_i2c_target_event(const struct device *dev,
 
 	if (reg_stat & STATUS_CMPL) {
 		i2c_cmpl_handler(dev, reg_stat);
+<<<<<<< HEAD
+=======
+		k_sem_give(&dev_data->bus_lock);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

@@ -172,7 +172,11 @@ Prerequisites:
    to the paths of the OpenOCD binary and its scripts, before
    including the common openocd.board.cmake file:
 
+<<<<<<< HEAD
    .. code-block:: none
+=======
+   .. code-block:: cmake
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
       set(OPENOCD "/usr/local/bin/openocd" CACHE FILEPATH "" FORCE)
       set(OPENOCD_DEFAULT_PATH /usr/local/share/openocd/scripts)
@@ -261,7 +265,11 @@ re-specify the SSID and password.
 To connect to an AP, first run the Zephyr Wi-Fi shell sample application,
 and connect to a known AP with SSID and password.
 
+<<<<<<< HEAD
 See :ref:`wifi_sample`
+=======
+See :zephyr:code-sample:`wifi-shell`
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Once the connection succeeds, the network co-processor keeps the AP identity in
 its persistent memory.  Newly loaded Wi-Fi applications then need not explicitly
@@ -284,7 +292,11 @@ and enabled by:
   keys to the secure flash filesystem, and enabling the TI Trusted
   Root-Certificate Catalog.
 
+<<<<<<< HEAD
 See :ref:`sockets-http-get` and
+=======
+See :zephyr:code-sample:`sockets-http-get` and
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 :zephyr_file:`samples/net/sockets/http_get/boards/cc3220sf_launchxl.conf` for an
 example.
 

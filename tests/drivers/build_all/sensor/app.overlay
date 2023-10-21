@@ -32,6 +32,27 @@
 				zephyr,resolution = <12>;
 			};
 
+<<<<<<< HEAD
+=======
+			channel@1 {
+				reg = <1>;
+				zephyr,gain = "ADC_GAIN_1_6";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+				zephyr,input-positive = <0>;
+				zephyr,resolution = <12>;
+			};
+
+			channel@2 {
+				reg = <2>;
+				zephyr,gain = "ADC_GAIN_1_6";
+				zephyr,reference = "ADC_REF_INTERNAL";
+				zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+				zephyr,input-positive = <0>;
+				zephyr,resolution = <12>;
+			};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			#include "adc.dtsi"
 		};
 
@@ -48,7 +69,11 @@
 		test_i2c: i2c@11112222 {
 			#address-cells = <1>;
 			#size-cells = <0>;
+<<<<<<< HEAD
 			compatible = "vnd,i2c";
+=======
+			compatible = "zephyr,i2c-emul-controller";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0x11112222 0x1000>;
 			status = "okay";
 			clock-frequency = <100000>;
@@ -59,7 +84,11 @@
 		test_spi: spi@33334444 {
 			#address-cells = <1>;
 			#size-cells = <0>;
+<<<<<<< HEAD
 			compatible = "vnd,spi";
+=======
+			compatible = "zephyr,spi-emul-controller";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			reg = <0x33334444 0x1000>;
 			status = "okay";
 			clock-frequency = <2000000>;
@@ -102,6 +131,7 @@
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>,
+<<<<<<< HEAD
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>,
@@ -130,6 +160,9 @@
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>,
 				   <&test_gpio 0 0>;	/* 0x40 */
+=======
+				   <&test_gpio 0 0>;	/* 0x25 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			#include "spi.dtsi"
 		};
@@ -151,6 +184,7 @@
 
 			#include "w1.dtsi"
 		};
+<<<<<<< HEAD
 
 		dht22 {
 			compatible = "aosong,dht";
@@ -158,6 +192,8 @@
 			dio-gpios = <&test_gpio 0 0>;
 			/* dht22; */
 		};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };
 

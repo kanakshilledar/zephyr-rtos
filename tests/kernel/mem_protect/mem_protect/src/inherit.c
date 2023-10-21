@@ -169,7 +169,11 @@ void parent_handler(void *p1, void *p2, void *p3)
  *
  * @ingroup kernel_memprotect_tests
  *
+<<<<<<< HEAD
  * @see z_thread_heap_assign()
+=======
+ * @see k_thread_heap_assign()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  */
 ZTEST(mem_protect, test_inherit_resource_pool)
 {

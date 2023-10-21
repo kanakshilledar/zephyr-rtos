@@ -5,8 +5,14 @@
  */
 /dts-v1/;
 
+<<<<<<< HEAD
 #include <espressif/esp32.dtsi>
 #include "heltec_wifi_lora32_v2-pinctrl.dtsi"
+=======
+#include <espressif/esp32/esp32_d0wd_v3.dtsi>
+#include "heltec_wifi_lora32_v2-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "heltec_wifi_lora32";
@@ -44,6 +50,10 @@
 		button0: button_0 {
 			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "PRG Button";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -111,6 +121,14 @@
 };
 
 &flash0 {
+<<<<<<< HEAD
+=======
+	/* the board is using plain d0wd SoC part without the flash
+	 * so any additional flash size should be defined at the board level
+	 */
+	reg = <0x0 DT_SIZE_M(8)>;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 	partitions {
 		compatible = "fixed-partitions";

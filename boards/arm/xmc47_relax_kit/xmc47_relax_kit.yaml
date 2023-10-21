@@ -9,7 +9,18 @@ supported:
   - adc
   - dma
   - gpio
+<<<<<<< HEAD
   - spi
   - uart
 ram: 352
 flash: 2048
+=======
+  - i2c
+  - spi
+  - uart
+  - arduino_spi
+  - arduino_serial
+ram: 352
+flash: 2048
+vendor: infineon
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

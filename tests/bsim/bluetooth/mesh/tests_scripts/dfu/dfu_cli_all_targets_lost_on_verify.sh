@@ -16,3 +16,15 @@ RunTest dfu_all_tgts_lost_on_verify \
 	dfu_target_fail_on_verify \
 	dfu_target_fail_on_verify \
 	-- -argstest targets=3
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest dfu_all_tgts_lost_on_verify_psa \
+	dfu_cli_all_targets_lost_on_verify \
+	dfu_target_fail_on_verify \
+	dfu_target_fail_on_verify \
+	dfu_target_fail_on_verify \
+	-- -argstest targets=3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

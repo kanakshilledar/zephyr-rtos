@@ -11,6 +11,7 @@ tests:
       regex:
         - "main: HID Device: dev"
         - "main: Starting application"
+<<<<<<< HEAD
   sample.usb.hid_composite:
     depends_on: usb_device
     extra_configs:
@@ -23,6 +24,8 @@ tests:
       regex:
         - "main: HID Device: dev"
         - "main: Starting application"
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   sample.usb.hid.buildonly:
     depends_on: usb_device
     tags: usb

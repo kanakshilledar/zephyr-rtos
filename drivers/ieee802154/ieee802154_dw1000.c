@@ -18,7 +18,11 @@ LOG_MODULE_REGISTER(dw1000, LOG_LEVEL_INF);
 
 #include <zephyr/sys/byteorder.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/debug/stack.h>
 #include <math.h>
 
@@ -46,8 +50,13 @@ LOG_MODULE_REGISTER(dw1000, LOG_LEVEL_INF);
 #define DW1000_RX_ANT_DLY		16450
 
 /* SHR Symbol Duration in ns */
+<<<<<<< HEAD
 #define UWB_PHY_TPSYM_PRF64		1017.63
 #define UWB_PHY_TPSYM_PRF16		993.59
+=======
+#define UWB_PHY_TPSYM_PRF64		IEEE802154_PHY_HRP_UWB_PRF64_TPSYM_SYMBOL_PERIOD_NS
+#define UWB_PHY_TPSYM_PRF16		IEEE802154_PHY_HRP_UWB_PRF16_TPSYM_SYMBOL_PERIOD_NS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define UWB_PHY_NUMOF_SYM_SHR_SFD	8
 
@@ -452,6 +461,7 @@ static inline void dwt_irq_handle_rx(const struct device *dev, uint32_t sys_stat
 
 	if (IS_ENABLED(CONFIG_NET_PKT_TIMESTAMP)) {
 		uint8_t ts_buf[sizeof(uint64_t)] = {0};
+<<<<<<< HEAD
 		struct net_ptp_time timestamp;
 		uint64_t ts_fsec;
 
@@ -460,6 +470,13 @@ static inline void dwt_irq_handle_rx(const struct device *dev, uint32_t sys_stat
 		timestamp.second = (ts_fsec / 1000000) / NSEC_PER_SEC;
 		timestamp.nanosecond = (ts_fsec / 1000000) % NSEC_PER_SEC;
 		net_pkt_set_timestamp(pkt, &timestamp);
+=======
+		uint64_t ts_nsec;
+
+		memcpy(ts_buf, rx_inf_reg.rx_time, DWT_RX_TIME_RX_STAMP_LEN);
+		ts_nsec = (sys_get_le64(ts_buf) * DWT_TS_TIME_UNITS_FS) / 1000000U;
+		net_pkt_set_timestamp_ns(pkt, ts_nsec);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* See 4.7.2 Estimating the receive signal power */
@@ -478,7 +495,11 @@ static inline void dwt_irq_handle_rx(const struct device *dev, uint32_t sys_stat
 #endif
 	}
 
+<<<<<<< HEAD
 	net_pkt_set_ieee802154_rssi(pkt, rx_level);
+=======
+	net_pkt_set_ieee802154_rssi_dbm(pkt, rx_level);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/*
 	 * Workaround for AAT status bit issue,
@@ -491,14 +512,22 @@ static inline void dwt_irq_handle_rx(const struct device *dev, uint32_t sys_stat
 		flags_to_clear |= DWT_SYS_STATUS_AAT;
 	}
 
+<<<<<<< HEAD
 	if (ieee802154_radio_handle_ack(ctx->iface, pkt) == NET_OK) {
+=======
+	if (ieee802154_handle_ack(ctx->iface, pkt) == NET_OK) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("ACK packet handled");
 		goto rx_out_unref_pkt;
 	}
 
 	/* LQI not implemented */
+<<<<<<< HEAD
 	LOG_DBG("Caught a packet (%u) (RSSI: %d)",
 		pkt_len, (int8_t)net_pkt_ieee802154_rssi(pkt));
+=======
+	LOG_DBG("Caught a packet (%u) (RSSI: %d)", pkt_len, rx_level);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_HEXDUMP_DBG(pkt->buffer->data, pkt_len, "RX buffer:");
 
 	if (net_recv_data(ctx->iface, pkt) == NET_OK) {
@@ -625,9 +654,15 @@ static void dwt_gpio_callback(const struct device *dev,
 
 static enum ieee802154_hw_caps dwt_get_capabilities(const struct device *dev)
 {
+<<<<<<< HEAD
 	return IEEE802154_HW_FCS |
 		IEEE802154_HW_2_4_GHZ | /* FIXME: add IEEE802154_HW_UWB_PHY */
 		IEEE802154_HW_FILTER;
+=======
+	/* TODO: Implement HW-supported AUTOACK + frame pending bit handling. */
+	return IEEE802154_HW_FCS | IEEE802154_HW_FILTER |
+	       IEEE802154_HW_TXTIME;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static uint32_t dwt_get_pkt_duration_ns(struct dwt_context *ctx, uint8_t psdu_len)
@@ -684,6 +719,17 @@ static int dwt_set_channel(const struct device *dev, uint16_t channel)
 	struct dwt_context *ctx = dev->data;
 	struct dwt_phy_config *rf_cfg = &ctx->rf_cfg;
 
+<<<<<<< HEAD
+=======
+	if (channel > 15) {
+		return -EINVAL;
+	}
+
+	if (channel == 0 || channel == 6 || channel > 7) {
+		return -ENOTSUP;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	rf_cfg->channel = channel;
 	LOG_INF("Set channel %u", channel);
 
@@ -780,7 +826,10 @@ static int dwt_tx(const struct device *dev, enum ieee802154_tx_mode tx_mode,
 	struct dwt_context *ctx = dev->data;
 	size_t len = frag->len;
 	uint32_t tx_time = 0;
+<<<<<<< HEAD
 	struct net_ptp_time *txts;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint64_t tmp_fs;
 	uint32_t tx_fctrl;
 	uint8_t sys_ctrl = DWT_SYS_CTRL_TXSTRT;
@@ -801,8 +850,12 @@ static int dwt_tx(const struct device *dev, enum ieee802154_tx_mode tx_mode,
 		 * tx_time is the high 32-bit of the 40-bit system
 		 * time value at which to send the message.
 		 */
+<<<<<<< HEAD
 		txts = net_pkt_timestamp(pkt);
 		tmp_fs = txts->second * NSEC_PER_SEC + txts->nanosecond;
+=======
+		tmp_fs = net_pkt_timestamp_ns(pkt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		tmp_fs *= 1000U * 1000U;
 
 		tx_time = (tmp_fs / DWT_TS_TIME_UNITS_FS) >> 8;
@@ -859,7 +912,10 @@ static int dwt_tx(const struct device *dev, enum ieee802154_tx_mode tx_mode,
 
 	if (IS_ENABLED(CONFIG_NET_PKT_TIMESTAMP)) {
 		uint8_t ts_buf[sizeof(uint64_t)] = {0};
+<<<<<<< HEAD
 		struct net_ptp_time timestamp;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		k_sem_take(&ctx->dev_lock, K_FOREVER);
 		dwt_register_read(dev, DWT_TX_TIME_ID,
@@ -872,9 +928,13 @@ static int dwt_tx(const struct device *dev, enum ieee802154_tx_mode tx_mode,
 		k_sem_give(&ctx->dev_lock);
 
 		tmp_fs = sys_get_le64(ts_buf) * DWT_TS_TIME_UNITS_FS;
+<<<<<<< HEAD
 		timestamp.second = (tmp_fs / 1000000) / NSEC_PER_SEC;
 		timestamp.nanosecond = (tmp_fs / 1000000) % NSEC_PER_SEC;
 		net_pkt_set_timestamp(pkt, &timestamp);
+=======
+		net_pkt_set_timestamp_ns(pkt, tmp_fs / 1000000U);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	atomic_clear_bit(&ctx->state, DWT_STATE_TX);
@@ -940,6 +1000,49 @@ static int dwt_configure(const struct device *dev,
 	return -ENOTSUP;
 }
 
+<<<<<<< HEAD
+=======
+/* driver-allocated attribute memory - constant across all driver instances */
+static const struct {
+	const struct ieee802154_phy_channel_range phy_channel_range[2];
+	const struct ieee802154_phy_supported_channels phy_supported_channels;
+} drv_attr = {
+	.phy_channel_range = {
+		{ .from_channel = 1, .to_channel = 5 },
+		{ .from_channel = 7, .to_channel = 7 },
+	},
+	.phy_supported_channels = {
+		.ranges = drv_attr.phy_channel_range,
+		.num_ranges = 2U,
+	},
+};
+
+static int dwt_attr_get(const struct device *dev, enum ieee802154_attr attr,
+			struct ieee802154_attr_value *value)
+{
+	if (ieee802154_attr_get_channel_page_and_range(
+		    attr, IEEE802154_ATTR_PHY_CHANNEL_PAGE_FOUR_HRP_UWB,
+		    &drv_attr.phy_supported_channels, value) == 0) {
+		return 0;
+	}
+
+	switch (attr) {
+	case IEEE802154_ATTR_PHY_HRP_UWB_SUPPORTED_PRFS: {
+		struct dwt_context *ctx = dev->data;
+		struct dwt_phy_config *rf_cfg = &ctx->rf_cfg;
+
+		value->phy_hrp_uwb_supported_nominal_prfs =
+			rf_cfg->prf == DWT_PRF_64M ? IEEE802154_PHY_HRP_UWB_NOMINAL_64_M
+						   : IEEE802154_PHY_HRP_UWB_NOMINAL_16_M;
+		return 0;
+	}
+
+	default:
+		return -ENOENT;
+	}
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /*
  * Note, the DW_RESET pin should not be driven high externally.
  */
@@ -1502,7 +1605,11 @@ static int dw1000_init(const struct device *dev)
 	dwt_set_spi_slow(dev, DWT_SPI_SLOW_FREQ);
 
 	/* Initialize IRQ GPIO */
+<<<<<<< HEAD
 	if (!device_is_ready(hi_cfg->irq_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&hi_cfg->irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("IRQ GPIO device not ready");
 		return -ENODEV;
 	}
@@ -1521,7 +1628,11 @@ static int dw1000_init(const struct device *dev)
 	}
 
 	/* Initialize RESET GPIO */
+<<<<<<< HEAD
 	if (!device_is_ready(hi_cfg->rst_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&hi_cfg->rst_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("Reset GPIO device not ready");
 		return -ENODEV;
 	}
@@ -1633,6 +1744,10 @@ static struct ieee802154_radio_api dwt_radio_api = {
 	.configure		= dwt_configure,
 	.ed_scan		= dwt_ed,
 	.tx			= dwt_tx,
+<<<<<<< HEAD
+=======
+	.attr_get		= dwt_attr_get,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define DWT_PSDU_LENGTH		(127 - DWT_FCS_LENGTH)

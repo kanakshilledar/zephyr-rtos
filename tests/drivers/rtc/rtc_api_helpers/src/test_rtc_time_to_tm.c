@@ -10,6 +10,7 @@
 
 ZTEST(rtc_api_helpers, test_validate_rtc_time_compat_with_tm)
 {
+<<<<<<< HEAD
 	zassert(offsetof(struct rtc_time, tm_sec) == offsetof(struct tm, tm_sec),
 		"Offset of tm_sec in struct rtc_time does not match struct tm");
 
@@ -36,6 +37,34 @@ ZTEST(rtc_api_helpers, test_validate_rtc_time_compat_with_tm)
 
 	zassert(offsetof(struct rtc_time, tm_isdst) == offsetof(struct tm, tm_isdst),
 		"Offset of tm_isdts in struct rtc_time does not match struct tm");
+=======
+	zassert_equal(offsetof(struct rtc_time, tm_sec), offsetof(struct tm, tm_sec),
+		      "Offset of tm_sec in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_min), offsetof(struct tm, tm_min),
+		      "Offset of tm_min in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_hour), offsetof(struct tm, tm_hour),
+		      "Offset of tm_hour in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_mday), offsetof(struct tm, tm_mday),
+		      "Offset of tm_mday in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_mon), offsetof(struct tm, tm_mon),
+		      "Offset of tm_mon in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_year), offsetof(struct tm, tm_year),
+		      "Offset of tm_year in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_wday), offsetof(struct tm, tm_wday),
+		      "Offset of tm_wday in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_yday), offsetof(struct tm, tm_yday),
+		      "Offset of tm_yday in struct rtc_time does not match struct tm");
+
+	zassert_equal(offsetof(struct rtc_time, tm_isdst), offsetof(struct tm, tm_isdst),
+		      "Offset of tm_isdts in struct rtc_time does not match struct tm");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST(rtc_api_helpers, test_validate_rtc_time_to_tm)

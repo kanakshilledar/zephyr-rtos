@@ -136,11 +136,17 @@ static void can_shell_test_bitrate(const char *cmd, uint32_t expected_bitrate,
 				   uint16_t expected_sample_pnt)
 {
 	const struct shell *sh = shell_backend_dummy_get_ptr();
+<<<<<<< HEAD
 	struct can_timing expected;
 	int err;
 
 	expected.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+	struct can_timing expected = { 0 };
+	int err;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = can_calc_timing(fake_can_dev, &expected, expected_bitrate, expected_sample_pnt);
 	zassert_ok(err, "failed to calculate reference timing (err %d)", err);
 
@@ -180,13 +186,20 @@ static void can_shell_test_dbitrate(const char *cmd, uint32_t expected_bitrate,
 				    uint16_t expected_sample_pnt)
 {
 	const struct shell *sh = shell_backend_dummy_get_ptr();
+<<<<<<< HEAD
 	struct can_timing expected;
+=======
+	struct can_timing expected = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	Z_TEST_SKIP_IFNDEF(CONFIG_CAN_FD_MODE);
 
+<<<<<<< HEAD
 	expected.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	err = can_calc_timing_data(fake_can_dev, &expected, expected_bitrate, expected_sample_pnt);
 	zassert_ok(err, "failed to calculate reference timing (err %d)", err);
 

@@ -18,7 +18,11 @@
 
 #ifndef _ASMLANGUAGE
 #include <zephyr/device.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #ifdef CONFIG_GPIO_INTEL

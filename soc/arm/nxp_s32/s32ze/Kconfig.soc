@@ -9,7 +9,11 @@ choice
 
 config SOC_S32Z27_R52
 	bool "SOC_S32Z27_R52"
+<<<<<<< HEAD
 	select HAS_S32_HAL
+=======
+	select HAS_NXP_S32_HAL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 endchoice
 
@@ -26,6 +30,7 @@ config SOC_PART_NUMBER_S32ZE_R52
 	  that you should not set directly. The part number selection choice defines
 	  the default value for this string.
 
+<<<<<<< HEAD
 config INIT_CLOCK_AT_BOOT_TIME
 	bool "Initialize clocks at boot time"
 	default y
@@ -34,6 +39,8 @@ config INIT_CLOCK_AT_BOOT_TIME
 	  driver's configurator, instead of using the default SoC clock configuration
 	  at reset.
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config NXP_S32_RTU_INDEX
 	int
 	range 0 1

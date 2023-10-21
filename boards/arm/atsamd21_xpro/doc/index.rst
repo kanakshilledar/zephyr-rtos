@@ -8,6 +8,7 @@ Overview
 
 The SAM D21 Xplained Pro evaluation kit is ideal for evaluation and
 prototyping with the SAM D21 Cortex®-M0+ processor-based
+<<<<<<< HEAD
 microcontrollers. The kit includes Atmel’s Embedded Debugger (EDBG),
 which provides a full debug interface without the need for additional
 hardware.
@@ -15,6 +16,18 @@ hardware.
 .. image:: img/atsamd21_xpro.jpg
      :align: center
      :alt: ATSAMD21-XPRO
+=======
+microcontrollers. The kit includes Atmel's Embedded Debugger (EDBG),
+which provides a full debug interface without the need for additional
+hardware.
+
+.. figure:: img/atsamd21_xpro.jpg
+    :width: 500px
+    :align: center
+    :alt: ATSAMD21-XPRO
+
+    ATSAMD21-XPRO (Credit: `Microchip Technology`_)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Hardware
 ********
@@ -33,6 +46,7 @@ Supported Features
 The atsamd21_xpro board configuration supports the following hardware
 features:
 
+<<<<<<< HEAD
 +-----------+------------+------------------------------------------+
 | Interface | Controller | Driver/Component                         |
 +===========+============+==========================================+
@@ -56,6 +70,47 @@ features:
 +-----------+------------+------------------------------------------+
 | USB       | on-chip    | Universal Serial Bus device ports        |
 +-----------+------------+------------------------------------------+
+=======
+.. list-table::
+    :header-rows: 1
+
+    * - Interface
+      - Controller
+      - Driver / Component
+    * - NVIC
+      - on-chip
+      - nested vector interrupt controller
+    * - Flash
+      - on-chip
+      - Can be used with LittleFS to store files
+    * - SYSTICK
+      - on-chip
+      - systick
+    * - WDT
+      - on-chip
+      - Watchdog
+    * - ADC
+      - on-chip
+      - Analog to Digital Converter
+    * - GPIO
+      - on-chip
+      - I/O ports
+    * - PWM
+      - on-chip
+      - Pulse Width Modulation
+    * - USART
+      - on-chip
+      - Serial ports
+    * - I2C
+      - on-chip
+      - I2C ports
+    * - SPI
+      - on-chip
+      - Serial Peripheral Interface ports
+    * - USB
+      - on-chip
+      - Universal Serial Bus device ports
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Other hardware features are not currently supported by Zephyr.
 
@@ -173,7 +228,11 @@ References
 
 .. target-notes::
 
+<<<<<<< HEAD
 .. _Microchip website:
+=======
+.. _Microchip Technology:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     http://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO
 
 .. _SAM D21 Family Datasheet:

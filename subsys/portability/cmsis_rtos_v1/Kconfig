@@ -15,7 +15,11 @@ if CMSIS_RTOS_V1
 
 config CMSIS_THREAD_MAX_STACK_SIZE
 	int "Max stack size threads can be allocated in CMSIS RTOS application"
+<<<<<<< HEAD
 	default 4096 if COVERAGE
+=======
+	default 4096 if COVERAGE_GCOV
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 512
 	help
 	  Mention max stack size threads can be allocated in CMSIS RTOS application.

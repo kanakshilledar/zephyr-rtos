@@ -88,12 +88,15 @@ extern void z_arm64_interrupt_init(void);
 	z_arm64_irq_priority_set(irq_p, priority_p, flags_p); \
 }
 
+<<<<<<< HEAD
 #define ARCH_IRQ_DIRECT_CONNECT(irq_p, priority_p, isr_p, flags_p) \
 { \
 	Z_ISR_DECLARE(irq_p, ISR_FLAG_DIRECT, isr_p, NULL); \
 	z_arm64_irq_priority_set(irq_p, priority_p, flags_p); \
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* _ASMLANGUAGE */
 
 #ifdef __cplusplus

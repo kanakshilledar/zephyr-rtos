@@ -19,7 +19,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = < 0x0 >;
+<<<<<<< HEAD
 			riscv,isa = "rv64imac";
+=======
+			riscv,isa = "rv64imac_zicsr_zfencei";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic0: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -33,7 +37,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = < 0x1 >;
+<<<<<<< HEAD
 			riscv,isa = "rv64imafdc";
+=======
+			riscv,isa = "rv64gc";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic1: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -47,7 +55,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = < 0x2 >;
+<<<<<<< HEAD
 			riscv,isa = "rv64imafdc";
+=======
+			riscv,isa = "rv64gc";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic2: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -61,7 +73,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = < 0x3 >;
+<<<<<<< HEAD
 			riscv,isa = "rv64imafdc";
+=======
+			riscv,isa = "rv64gc";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic3: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -75,7 +91,11 @@
 			compatible = "riscv";
 			device_type = "cpu";
 			reg = < 0x4 >;
+<<<<<<< HEAD
 			riscv,isa = "rv64imafdc";
+=======
+			riscv,isa = "rv64gc";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			hlic4: interrupt-controller {
 				compatible = "riscv,cpu-intc";
 				#address-cells = <0>;
@@ -121,10 +141,14 @@
 			interrupt-controller;
 			interrupts-extended = <&hlic0 11
 						&hlic1 11>;
+<<<<<<< HEAD
 			reg = <0x0c000000 0x00002000
 					0x0c002000 0x001fe000
 					0x0c200000 0x3e000000>;
 			reg-names = "prio", "irq_en", "reg";
+=======
+			reg = <0x0c000000 0x04000000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			riscv,max-priority = <7>;
 			riscv,ndev = <187>;
 		};
@@ -233,5 +257,30 @@
 			ngpios = <32>;
 			status = "disabled";
 		};
+<<<<<<< HEAD
+=======
+
+		i2c0: i2c@2010a000 {
+			compatible = "microchip,mpfs-i2c";
+			reg = <0x2010a000 0x1000>;
+			interrupt-parent = <&plic>;
+			interrupts = <58 1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <100000>;
+			status = "disabled";
+		};
+
+		i2c1: i2c@2010b000 {
+			compatible = "microchip,mpfs-i2c";
+			reg = <0x2010b000 0x1000>;
+			interrupt-parent = <&plic>;
+			interrupts = <61 1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <100000>;
+			status = "disabled";
+		};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

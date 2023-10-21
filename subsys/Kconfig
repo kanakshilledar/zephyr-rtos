@@ -6,6 +6,10 @@
 
 menu "Subsystems and OS Services"
 
+<<<<<<< HEAD
+=======
+source "subsys/bindesc/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "subsys/bluetooth/Kconfig"
 source "subsys/canbus/Kconfig"
 source "subsys/console/Kconfig"
@@ -20,10 +24,20 @@ source "subsys/fs/Kconfig"
 source "subsys/input/Kconfig"
 source "subsys/ipc/Kconfig"
 source "subsys/jwt/Kconfig"
+<<<<<<< HEAD
 source "subsys/logging/Kconfig"
 source "subsys/lorawan/Kconfig"
 source "subsys/mgmt/Kconfig"
 source "subsys/modbus/Kconfig"
+=======
+source "subsys/llext/Kconfig"
+source "subsys/logging/Kconfig"
+source "subsys/lorawan/Kconfig"
+source "subsys/mem_mgmt/Kconfig"
+source "subsys/mgmt/Kconfig"
+source "subsys/modbus/Kconfig"
+source "subsys/modem/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "subsys/net/Kconfig"
 source "subsys/pm/Kconfig"
 source "subsys/portability/Kconfig"
@@ -31,6 +45,10 @@ source "subsys/random/Kconfig"
 source "subsys/retention/Kconfig"
 source "subsys/rtio/Kconfig"
 source "subsys/sd/Kconfig"
+<<<<<<< HEAD
+=======
+source "subsys/sensing/Kconfig"
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 source "subsys/settings/Kconfig"
 source "subsys/shell/Kconfig"
 source "subsys/stats/Kconfig"

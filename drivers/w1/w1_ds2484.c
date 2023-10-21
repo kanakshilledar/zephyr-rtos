@@ -116,7 +116,11 @@ static int ds2484_init(const struct device *dev)
 	struct ds2484_data *data = dev->data;
 
 	if (config->slpz_spec.port) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->slpz_spec.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->slpz_spec)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("Port (SLPZ) not ready");
 			return -ENODEV;
 		}

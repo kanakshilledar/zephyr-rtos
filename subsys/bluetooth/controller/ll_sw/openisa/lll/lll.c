@@ -661,7 +661,11 @@ static void ticker_start_next_op_cb(uint32_t status, void *param)
 	LL_ASSERT(status == TICKER_STATUS_SUCCESS);
 }
 
+<<<<<<< HEAD
 static uint32_t preempt_ticker_start(struct lll_event *event,
+=======
+static uint32_t preempt_ticker_start(struct lll_event *evt,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				     ticker_op_func op_cb)
 {
 	struct lll_prepare_param *p;
@@ -671,7 +675,11 @@ static uint32_t preempt_ticker_start(struct lll_event *event,
 	uint32_t ret;
 
 	/* Calc the preempt timeout */
+<<<<<<< HEAD
 	p = &event->prepare_param;
+=======
+	p = &evt->prepare_param;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	ull = HDR_LLL2ULL(p->param);
 	preempt_anchor = p->ticks_at_expire;
 	preempt_to = MAX(ull->ticks_active_to_start,
@@ -688,8 +696,13 @@ static uint32_t preempt_ticker_start(struct lll_event *event,
 			   TICKER_NULL_REMAINDER,
 			   TICKER_NULL_LAZY,
 			   TICKER_NULL_SLOT,
+<<<<<<< HEAD
 			   preempt_ticker_cb, event,
 			   op_cb, event);
+=======
+			   preempt_ticker_cb, evt,
+			   op_cb, evt);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return ret;
 }

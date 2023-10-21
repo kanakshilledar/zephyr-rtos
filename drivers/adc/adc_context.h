@@ -48,6 +48,13 @@ static void adc_context_disable_timer(struct adc_context *ctx);
 static void adc_context_on_complete(struct adc_context *ctx, int status);
 #endif /* ADC_CONTEXT_ENABLE_ON_COMPLETE */
 
+<<<<<<< HEAD
+=======
+#ifndef ADC_CONTEXT_WAIT_FOR_COMPLETION_TIMEOUT
+#define ADC_CONTEXT_WAIT_FOR_COMPLETION_TIMEOUT K_FOREVER
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 struct adc_context {
 	atomic_t sampling_requested;
 #ifdef ADC_CONTEXT_USES_KERNEL_TIMER
@@ -168,7 +175,16 @@ static inline int adc_context_wait_for_completion(struct adc_context *ctx)
 	}
 #endif /* CONFIG_ADC_ASYNC */
 
+<<<<<<< HEAD
 	k_sem_take(&ctx->sync, K_FOREVER);
+=======
+	int status = k_sem_take(&ctx->sync, ADC_CONTEXT_WAIT_FOR_COMPLETION_TIMEOUT);
+
+	if (status != 0) {
+		ctx->status = status;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return ctx->status;
 }
 

@@ -37,6 +37,13 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Experimental
      - 3.4
 
+<<<<<<< HEAD
+=======
+   * - :ref:`blinfo_api`
+     - Experimental
+     - 3.5
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`bluetooth_api`
      - Stable
      - 1.0
@@ -49,10 +56,24 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Unstable
      - 1.10
 
+<<<<<<< HEAD
+=======
+   * - :ref:`conn_mgr_docs`
+     - Experimental
+     - 3.4.0
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`can_api`
      - Stable
      - 1.14
 
+<<<<<<< HEAD
+=======
+   * - :ref:`charger_api`
+     - Experimental
+     - 3.5
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`counter_api`
      - Unstable
      - 1.14
@@ -125,10 +146,13 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Stable
      - 1.11
 
+<<<<<<< HEAD
    * - :ref:`gna_api`
      - Experimental
      - 1.14
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`gpio_api`
      - Stable
      - 1.0
@@ -157,6 +181,21 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Experimental
      - 3.2
 
+<<<<<<< HEAD
+=======
+   * - :ref:`ieee802154_driver_api`
+     - Unstable
+     - 1.0
+
+   * - :ref:`ieee802154_l2_api`
+     - Unstable
+     - 1.0
+
+   * - :ref:`ieee802154_mgmt_api`
+     - Unstable
+     - 1.0
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`input`
      - Experimental
      - 3.4
@@ -181,6 +220,13 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Unstable
      - 1.9
 
+<<<<<<< HEAD
+=======
+   * - :ref:`llext`
+     - Experimental
+     - 3.5
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`logging_api`
      - Stable
      - 1.13
@@ -305,6 +351,13 @@ between major releases are available in the :ref:`zephyr_release_notes`.
      - Experimental
      - 3.1
 
+<<<<<<< HEAD
+=======
+   * - :ref:`tgpio_api`
+     - Experimental
+     - 3.5
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
    * - :ref:`uart_api`
      - Stable
      - 1.0

@@ -176,9 +176,21 @@ static int fuse_fs_access_readdir(const char *path, void *buf,
 		 * directory but FUSE strips the trailing slashes from
 		 * directory names so add it back.
 		 */
+<<<<<<< HEAD
 		char mount_path[PATH_MAX];
 
 		sprintf(mount_path, "%s/", path);
+=======
+		char mount_path[PATH_MAX] = {0};
+		size_t len = strlen(path);
+
+		if (len >= (PATH_MAX - 2)) {
+			return -ENOMEM;
+		}
+
+		memcpy(mount_path, path, len);
+		mount_path[len] = '/';
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		err = fs_opendir(&dir, mount_path);
 	} else {
 		err = fs_opendir(&dir, path);

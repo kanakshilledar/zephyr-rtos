@@ -29,7 +29,11 @@ PM_DEVICE_DT_DEFINE(DT_NODELABEL(test_dev), dev_pm_control);
 DEVICE_DT_DEFINE(DT_NODELABEL(test_dev), dev_init, PM_DEVICE_DT_GET(DT_NODELABEL(test_dev)),
 		 NULL, NULL, POST_KERNEL, 80, NULL);
 
+<<<<<<< HEAD
 ZTEST(device_power_domain, test_demo)
+=======
+ZTEST(device_power_domain, test_device_power_domain)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct device *const reg_0 = DEVICE_DT_GET(DT_NODELABEL(test_reg_0));
 	const struct device *const reg_1 = DEVICE_DT_GET(DT_NODELABEL(test_reg_1));
@@ -40,6 +44,7 @@ ZTEST(device_power_domain, test_demo)
 	/* Initial power state */
 	zassert_true(pm_device_is_powered(reg_0), "");
 	zassert_true(pm_device_is_powered(reg_1), "");
+<<<<<<< HEAD
 	zassert_false(pm_device_is_powered(reg_chained), "");
 	zassert_false(pm_device_is_powered(dev), "");
 
@@ -51,6 +56,19 @@ ZTEST(device_power_domain, test_demo)
 	pm_device_runtime_enable(dev);
 
 	/* State shouldn't have changed */
+=======
+	zassert_true(pm_device_is_powered(reg_chained), "");
+	zassert_true(pm_device_is_powered(dev), "");
+
+	TC_PRINT("Enabling runtime power management on regulators\n");
+
+	pm_device_runtime_enable(dev);
+	pm_device_runtime_enable(reg_chained);
+	pm_device_runtime_enable(reg_1);
+	pm_device_runtime_enable(reg_0);
+
+	/* Power domains should now be suspended */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_true(pm_device_is_powered(reg_0), "");
 	zassert_true(pm_device_is_powered(reg_1), "");
 	zassert_false(pm_device_is_powered(reg_chained), "");

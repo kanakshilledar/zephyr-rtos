@@ -96,6 +96,7 @@ static inline size_t z_cbprintf_cxx_arg_size(float f)
 	return sizeof(double);
 }
 
+<<<<<<< HEAD
 static inline size_t z_cbprintf_cxx_arg_size(void *p)
 {
 	ARG_UNUSED(p);
@@ -107,6 +108,14 @@ template < typename T >
 static inline size_t z_cbprintf_cxx_arg_size(T arg)
 {
 	return sizeof(arg + 0);
+=======
+template < typename T >
+static inline size_t z_cbprintf_cxx_arg_size(T arg)
+{
+	ARG_UNUSED(arg);
+
+	return MAX(sizeof(T), sizeof(int));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* C++ version for storing arguments. */

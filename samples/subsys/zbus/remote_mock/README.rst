@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _zbus-remote-mock-sample:
 
 Remote mock sample
 ##################
+=======
+.. zephyr:code-sample:: zbus-remote-mock
+   :name: Remote mock sample
+   :relevant-api: zbus_apis
+
+   Publish to a zbus instance using UART as a bridge.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

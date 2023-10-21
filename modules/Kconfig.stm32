@@ -40,6 +40,15 @@ config USE_STM32_HAL_COMP
 	  Enable STM32Cube Ultra Low Power Comparator channels (COMP) HAL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_CORDIC
+	bool
+	help
+	  Enable STM32Cube CORDIC co-processor (CORDIC) functions HAL module
+	  driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_CORTEX
 	bool
 	help
@@ -79,6 +88,14 @@ config USE_STM32_HAL_DAC_EX
 	  Enable STM32Cube Extended Digital-to-analog converter (DAC) HAL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_DCACHE
+	bool
+	help
+	  Enable STM32Cube data cache (DCACHE) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_DCMI
 	bool
 	help
@@ -125,6 +142,14 @@ config USE_STM32_HAL_DSI
 	help
 	  Enable STM32Cube Display Serial Interface Host (DSI) HAL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_DTS
+	bool
+	help
+	  Enable STM32Cube Digital temperature sensor (DTS) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_ETH
 	bool
 	help
@@ -202,6 +227,21 @@ config USE_STM32_HAL_GPIO_EX
 	  Enable STM32Cube Extended General-purpose I/Os (GPIO) HAL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_GPU2D
+	bool
+	help
+	  Enable STM32Cube Neo-Chrom graphic processor (GPU2D) HAL module
+	  driver
+
+config USE_STM32_HAL_GTZC
+	bool
+	help
+	  Enable STM32Cube Global TrustZone controller (GTZC) HAL module
+	  driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_HASH
 	bool
 	help
@@ -249,6 +289,20 @@ config USE_STM32_HAL_I2S_EX
 	help
 	  Enable STM32Cube Extended Inter-IC sound (I2S) HAL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_I3C
+	bool
+	help
+	  Enable STM32Cube Improved inter-integrated circuit (I3C) HAL module
+	  driver
+
+config USE_STM32_HAL_ICACHE
+	bool
+	help
+	  Enable STM32Cube Instruction cache (ICACHE) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_IPCC
 	bool
 	help
@@ -290,6 +344,14 @@ config USE_STM32_HAL_LTDC_EX
 	help
 	  Enable STM32Cube Extended LCD-TFT controller (LTDC) HAL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_MDF
+	bool
+	help
+	  Enable STM32Cube Multi-function digital filter (MDF) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_MDIOS
 	bool
 	help
@@ -313,6 +375,14 @@ config USE_STM32_HAL_MMC_EX
 	  Enable STM32Cube Extended MultiMediaCard interface (SDMMC) HAL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_MSP
+	bool
+	help
+	  Enable STM32Cube MCU Support Package (MSP) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_NAND
 	bool
 	help
@@ -339,6 +409,15 @@ config USE_STM32_HAL_OSPI
 	help
 	  Enable STM32Cube Octo-SPI interface (OSPI) HAL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_OTFDEC
+	bool
+	help
+	  Enable STM32Cube On-the-fly decryption engine (OTFDEC) HAL module
+	  driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_PCCARD
 	bool
 	help
@@ -355,6 +434,14 @@ config USE_STM32_HAL_PCD_EX
 	  Enable STM32Cube Extended USB Peripheral Controller (PCD) HAL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_PKA
+	bool
+	help
+	  Enable STM32Cube Public key accelerator (PKA) HAL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_PSSI
 	bool
 	help
@@ -376,6 +463,15 @@ config USE_STM32_HAL_QSPI
 	help
 	  Enable STM32Cube Quad-SPI interface (QSPI) HAL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_HAL_RAMCFG
+	bool
+	help
+	  Enable STM32Cube RAMs configuration controller (RAMCFG) HAL module
+	  driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_HAL_RAMECC
 	bool
 	help
@@ -538,6 +634,15 @@ config USE_STM32_LL_COMP
 	  Enable STM32Cube Ultra Low Power Comparator channels (COMP) LL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_LL_CORDIC
+	bool
+	help
+	  Enable STM32Cube CORDIC co-processor (CORDIC) functions LL module
+	  driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_LL_CRC
 	bool
 	help
@@ -614,12 +719,35 @@ config USE_STM32_LL_I2C
 	  Enable STM32Cube Inter-integrated circuit (I2C) interface LL module
 	  driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_LL_I3C
+	bool
+	help
+	  Enable STM32Cube Improved inter-integrated circuit (I3C) LL module
+	  driver
+
+config USE_STM32_LL_ICACHE
+	bool
+	help
+	  Enable STM32Cube Instruction cache (ICACHE) LL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_LL_IPCC
 	bool
 	help
 	  Enable STM32Cube Inter-Processor communication controller (IPCC) LL
 	  module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_LL_LPGPIO
+	bool
+	help
+	  Enable STM32Cube Low-power general-purpose I/Os (LPGPIO) LL
+	  module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_LL_LPTIM
 	bool
 	help
@@ -642,6 +770,14 @@ config USE_STM32_LL_OPAMP
 	help
 	  Enable STM32Cube Operational amplifiers (OPAMP) LL module driver
 
+<<<<<<< HEAD
+=======
+config USE_STM32_LL_PKA
+	bool
+	help
+	  Enable STM32Cube Public key accelerator (PKA) LL module driver
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config USE_STM32_LL_PWR
 	bool
 	help

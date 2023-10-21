@@ -28,6 +28,10 @@
 #define ARCH_X86_MEMORY_LD
 
 #include <zephyr/devicetree.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/linker/devicetree_regions.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/sys/mem_manage.h>
 
 /* Bounds of physical RAM from DTS */
@@ -88,6 +92,10 @@ MEMORY
      * physical ROM locations
      */
     RAM (wx)        : ORIGIN = KERNEL_BASE_ADDR, LENGTH = KERNEL_RAM_SIZE
+<<<<<<< HEAD
+=======
+    LINKER_DT_REGIONS()
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef CONFIG_X86_64
     /* Special low-memory area for bootstrapping other CPUs from real mode */

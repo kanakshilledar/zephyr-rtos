@@ -6,6 +6,10 @@
 
 #include "arduino_r3_connector.dtsi"
 #include "pmod_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	leds {
@@ -38,31 +42,55 @@
 			label = "Wakeup";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_WAKEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		joy_center: joystick_center {
 			label = "joystick center";
 			gpios = <&gpiok 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_ENTER>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		joy_down: joystick_down {
 			label = "joystick down";
 			gpios = <&gpiok 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_DOWN>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		joy_up: joystick_up {
 			label = "joystick up";
 			gpios = <&gpiok 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_UP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		joy_left: joystick_left {
 			label = "joystick left";
 			gpios = <&gpiok 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_LEFT>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		joy_right: joystick_right {
 			label = "joystick right";
 			gpios = <&gpiok 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 			status = "disabled";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_RIGHT>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

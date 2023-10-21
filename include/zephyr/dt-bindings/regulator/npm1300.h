@@ -20,6 +20,10 @@
 /* Buck modes */
 #define NPM1300_BUCK_MODE_AUTO 0x00U
 #define NPM1300_BUCK_MODE_PWM  0x01U
+<<<<<<< HEAD
+=======
+#define NPM1300_BUCK_MODE_PFM  0x04U
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* LDSW / LDO modes */
 #define NPM1300_LDSW_MODE_LDO  0x02U

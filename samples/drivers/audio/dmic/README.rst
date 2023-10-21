@@ -1,13 +1,26 @@
+<<<<<<< HEAD
 .. _dmic_sample:
 
 DMIC Sample
 ###########
+=======
+.. zephyr:code-sample:: dmic
+   :name: Digital Microphone (DMIC)
+   :relevant-api: audio_dmic_interface
+
+   Perform PDM transfers using different configurations.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
 
+<<<<<<< HEAD
 This is a very simple application intended to show how to use the Audio DMIC
 API and also to be an aid in developing drivers to implement this API.
+=======
+This is a very simple application intended to show how to use the :ref:`Audio DMIC
+API <audio_dmic_api>` and also to be an aid in developing drivers to implement this API.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 It performs two PDM transfers with different configurations (using one channel
 and two channels) but does not in any way process the received audio data.
 

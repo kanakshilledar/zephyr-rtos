@@ -5,7 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 #include <zephyr/device.h>
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <soc.h>
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/nrf_clock_control.h>
@@ -17,15 +21,27 @@
 #include <hal/nrf_rtc.h>
 #include <zephyr/irq.h>
 
+<<<<<<< HEAD
+=======
+#define RTC_PRETICK (IS_ENABLED(CONFIG_SOC_NRF53_RTC_PRETICK) && \
+		     IS_ENABLED(CONFIG_SOC_NRF5340_CPUNET))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define EXT_CHAN_COUNT CONFIG_NRF_RTC_TIMER_USER_CHAN_COUNT
 #define CHAN_COUNT (EXT_CHAN_COUNT + 1)
 
 #define RTC NRF_RTC1
 #define RTC_IRQn NRFX_IRQ_NUMBER_GET(RTC)
 #define RTC_LABEL rtc1
+<<<<<<< HEAD
 #define RTC_CH_COUNT RTC1_CC_NUM
 
 BUILD_ASSERT(CHAN_COUNT <= RTC_CH_COUNT, "Not enough compare channels");
+=======
+#define CHAN_COUNT_MAX (RTC1_CC_NUM - (RTC_PRETICK ? 1 : 0))
+
+BUILD_ASSERT(CHAN_COUNT <= CHAN_COUNT_MAX, "Not enough compare channels");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Ensure that counter driver for RTC1 is not enabled. */
 BUILD_ASSERT(DT_NODE_HAS_STATUS(DT_NODELABEL(RTC_LABEL), disabled),
 	     "Counter for RTC1 must be disabled");
@@ -44,6 +60,11 @@ BUILD_ASSERT(DT_NODE_HAS_STATUS(DT_NODELABEL(RTC_LABEL), disabled),
 #define ANCHOR_RANGE_END (7 * COUNTER_SPAN / 8)
 #define TARGET_TIME_INVALID (UINT64_MAX)
 
+<<<<<<< HEAD
+=======
+extern void rtc_pretick_rtc1_isr_hook(void);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static volatile uint32_t overflow_cnt;
 static volatile uint64_t anchor;
 static uint64_t last_count;
@@ -232,9 +253,26 @@ uint64_t z_nrf_rtc_timer_get_ticks(k_timeout_t t)
  * @param[in] chan A channel for which a new CC value is to be set.
  *
  * @param[in] req_cc Requested CC register value to be set.
+<<<<<<< HEAD
  */
 static void set_alarm(int32_t chan, uint32_t req_cc)
 {
+=======
+ *
+ * @param[in] exact Use @c false to allow CC adjustment if @c req_cc value is
+ *                  close to the current value of the timer.
+ *                  Use @c true to disallow CC adjustment. The function can
+ *                  fail with -EINVAL result if @p req_cc is too close to the
+ *                  current value.
+ *
+ * @retval 0 The requested CC has been set successfully.
+ * @retval -EINVAL The requested CC value could not be reliably set.
+ */
+static int set_alarm(int32_t chan, uint32_t req_cc, bool exact)
+{
+	int ret = 0;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Ensure that the value exposed in this driver API is consistent with
 	 * assumptions of this function.
 	 */
@@ -301,9 +339,22 @@ static void set_alarm(int32_t chan, uint32_t req_cc)
 				now = counter();
 				if (counter_sub(now, req_cc) > COUNTER_HALF_SPAN) {
 					event_clear(chan);
+<<<<<<< HEAD
 				} else {
 					break;
 				}
+=======
+					if (exact) {
+						ret = -EINVAL;
+						break;
+					}
+				} else {
+					break;
+				}
+			} else if (exact) {
+				ret = -EINVAL;
+				break;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 
 			cc_val = now + cc_inc;
@@ -312,11 +363,20 @@ static void set_alarm(int32_t chan, uint32_t req_cc)
 			break;
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	return ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static int compare_set_nolocks(int32_t chan, uint64_t target_time,
 			z_nrf_rtc_timer_compare_handler_t handler,
+<<<<<<< HEAD
 			void *user_data)
+=======
+			void *user_data, bool exact)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	int ret = 0;
 	uint32_t cc_value = absolute_time_to_cc(target_time);
@@ -332,6 +392,7 @@ static int compare_set_nolocks(int32_t chan, uint64_t target_time,
 			/* Target time is valid and is different than currently set.
 			 * Set CC value.
 			 */
+<<<<<<< HEAD
 			set_alarm(chan, cc_value);
 		}
 	} else {
@@ -342,19 +403,43 @@ static int compare_set_nolocks(int32_t chan, uint64_t target_time,
 	cc_data[chan].target_time = target_time;
 	cc_data[chan].callback = handler;
 	cc_data[chan].user_context = user_data;
+=======
+			ret = set_alarm(chan, cc_value, exact);
+		}
+	} else if (!exact) {
+		/* Force ISR handling when exiting from critical section. */
+		atomic_or(&force_isr_mask, BIT(chan));
+	} else {
+		ret = -EINVAL;
+	}
+
+	if (ret == 0) {
+		cc_data[chan].target_time = target_time;
+		cc_data[chan].callback = handler;
+		cc_data[chan].user_context = user_data;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return ret;
 }
 
 static int compare_set(int32_t chan, uint64_t target_time,
 			z_nrf_rtc_timer_compare_handler_t handler,
+<<<<<<< HEAD
 			void *user_data)
+=======
+			void *user_data, bool exact)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	bool key;
 
 	key = compare_int_lock(chan);
 
+<<<<<<< HEAD
 	int ret = compare_set_nolocks(chan, target_time, handler, user_data);
+=======
+	int ret = compare_set_nolocks(chan, target_time, handler, user_data, exact);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	compare_int_unlock(chan, key);
 
@@ -367,7 +452,20 @@ int z_nrf_rtc_timer_set(int32_t chan, uint64_t target_time,
 {
 	__ASSERT_NO_MSG(chan > 0 && chan < CHAN_COUNT);
 
+<<<<<<< HEAD
 	return compare_set(chan, target_time, handler, user_data);
+=======
+	return compare_set(chan, target_time, handler, user_data, false);
+}
+
+int z_nrf_rtc_timer_exact_set(int32_t chan, uint64_t target_time,
+			      z_nrf_rtc_timer_compare_handler_t handler,
+			      void *user_data)
+{
+	__ASSERT_NO_MSG(chan > 0 && chan < CHAN_COUNT);
+
+	return compare_set(chan, target_time, handler, user_data, true);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 void z_nrf_rtc_timer_abort(int32_t chan)
@@ -448,7 +546,11 @@ static void sys_clock_timeout_handler(int32_t chan,
 		 * so it won't get preempted by the interrupt.
 		 */
 		compare_set(chan, last_count + CYC_PER_TICK,
+<<<<<<< HEAD
 					  sys_clock_timeout_handler, NULL);
+=======
+					  sys_clock_timeout_handler, NULL, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	sys_clock_announce(dticks);
@@ -526,6 +628,13 @@ void rtc_nrf_isr(const void *arg)
 {
 	ARG_UNUSED(arg);
 
+<<<<<<< HEAD
+=======
+	if (RTC_PRETICK) {
+		rtc_pretick_rtc1_isr_hook();
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (nrf_rtc_int_enable_check(RTC, NRF_RTC_INT_OVERFLOW_MASK) &&
 	    nrf_rtc_event_check(RTC, NRF_RTC_EVENT_OVERFLOW)) {
 		nrf_rtc_event_clear(RTC, NRF_RTC_EVENT_OVERFLOW);
@@ -644,7 +753,11 @@ void sys_clock_set_timeout(int32_t ticks, bool idle)
 
 	uint64_t target_time = cyc + last_count;
 
+<<<<<<< HEAD
 	compare_set(0, target_time, sys_clock_timeout_handler, NULL);
+=======
+	compare_set(0, target_time, sys_clock_timeout_handler, NULL, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 uint32_t sys_clock_elapsed(void)
@@ -722,7 +835,11 @@ static int sys_clock_driver_init(void)
 	uint32_t initial_timeout = IS_ENABLED(CONFIG_TICKLESS_KERNEL) ?
 		MAX_CYCLES : CYC_PER_TICK;
 
+<<<<<<< HEAD
 	compare_set(0, initial_timeout, sys_clock_timeout_handler, NULL);
+=======
+	compare_set(0, initial_timeout, sys_clock_timeout_handler, NULL, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	z_nrf_clock_control_lf_on(mode);
 

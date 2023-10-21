@@ -10,6 +10,10 @@
 #include <zephyr/sys/util.h>
 #include <stdarg.h>
 #include <zephyr/sys/atomic.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/kernel.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,6 +54,12 @@ extern "C" {
  */
 #define LOG_OUTPUT_FLAG_FORMAT_SYSLOG		BIT(6)
 
+<<<<<<< HEAD
+=======
+/** @brief Flag thread id or name prefix. */
+#define LOG_OUTPUT_FLAG_THREAD			BIT(7)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**@} */
 
 /** @brief Supported backend logging format types for use
@@ -144,6 +154,10 @@ void log_output_msg_process(const struct log_output *log_output,
  * @param timestamp	Timestamp.
  * @param domain	Domain name string. Can be NULL.
  * @param source	Source name string. Can be NULL.
+<<<<<<< HEAD
+=======
+ * @param tid		Thread ID.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param level		Criticality level.
  * @param package	Cbprintf package with a logging message string.
  * @param data		Data passed to hexdump API. Can bu NULL.
@@ -154,6 +168,10 @@ void log_output_process(const struct log_output *log_output,
 			log_timestamp_t timestamp,
 			const char *domain,
 			const char *source,
+<<<<<<< HEAD
+=======
+			const k_tid_t tid,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			uint8_t level,
 			const uint8_t *package,
 			const uint8_t *data,

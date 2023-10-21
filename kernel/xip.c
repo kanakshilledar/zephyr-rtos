@@ -11,7 +11,15 @@
 #include <zephyr/linker/linker-defs.h>
 
 #ifdef CONFIG_STACK_CANARIES
+<<<<<<< HEAD
 extern volatile uintptr_t __stack_chk_guard;
+=======
+#ifdef CONFIG_STACK_CANARIES_TLS
+extern __thread volatile uintptr_t __stack_chk_guard;
+#else
+extern volatile uintptr_t __stack_chk_guard;
+#endif /* CONFIG_STACK_CANARIES_TLS */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_STACK_CANARIES */
 
 /**

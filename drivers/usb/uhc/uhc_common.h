@@ -59,6 +59,7 @@ static inline int uhc_unlock_internal(const struct device *dev)
 }
 
 /**
+<<<<<<< HEAD
  * @brief Checks if the transfer is queued.
  *
  * @param[in] xfer    Pointer to UHC transfer
@@ -107,6 +108,8 @@ static inline void uhc_xfer_setup(struct uhc_transfer *xfer)
 }
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Helper function to return UHC transfer to a higher level.
  *
  * Function to dequeue transfer and send UHC event to a higher level.
@@ -120,6 +123,7 @@ void uhc_xfer_return(const struct device *dev,
 		     const int err);
 
 /**
+<<<<<<< HEAD
  * @brief Helper to move current buffer in the done-FIFO.
  *
  * Helper to move current buffer (probably completed) in the
@@ -143,6 +147,8 @@ static inline int uhc_xfer_done(struct uhc_transfer *xfer)
 }
 
 /**
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Helper to get next transfer to process.
  *
  * This is currently a draft, and simple picks a transfer
@@ -173,14 +179,21 @@ int uhc_xfer_append(const struct device *dev,
  * @param[in] dev    Pointer to device struct of the driver instance
  * @param[in] type   Event type
  * @param[in] status Event status
+<<<<<<< HEAD
  * @param[in] xfer   Pointer to UHC transfer
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @return 0 on success, all other values should be treated as error.
  * @retval -EPERM controller is not initialized
  */
 int uhc_submit_event(const struct device *dev,
 		     const enum uhc_event_type type,
+<<<<<<< HEAD
 		     const int status,
 		     struct uhc_transfer *const xfer);
+=======
+		     const int status);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #endif /* ZEPHYR_INCLUDE_UHC_COMMON_H */

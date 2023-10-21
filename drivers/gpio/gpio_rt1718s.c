@@ -95,7 +95,11 @@ static int rt1718s_init(const struct device *dev)
 	k_sem_init(&data->lock_tcpci, 1, 1);
 
 	if (IS_ENABLED(CONFIG_GPIO_RT1718S_INTERRUPT)) {
+<<<<<<< HEAD
 		if (!device_is_ready(config->irq_gpio.port)) {
+=======
+		if (!gpio_is_ready_dt(&config->irq_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_ERR("%s device not ready", config->irq_gpio.port->name);
 			return -ENODEV;
 		}

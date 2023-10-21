@@ -8,7 +8,11 @@
 
 #include <zephyr/arch/cpu.h>
 #include <zephyr/drivers/uart.h>
+<<<<<<< HEAD
 #include <zephyr/zephyr.h>
+=======
+#include <zephyr/kernel.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 enum csr_parity_val {
 	EVEN_PARITY_VAL,

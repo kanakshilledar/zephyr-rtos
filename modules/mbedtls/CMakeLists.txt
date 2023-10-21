@@ -52,7 +52,10 @@ zephyr_interface_library_named(mbedTLS)
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/cipher.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/cipher_wrap.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/cmac.c
+<<<<<<< HEAD
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/code_share.c
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/ctr_drbg.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/debug.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/des.c
@@ -77,6 +80,10 @@ zephyr_interface_library_named(mbedTLS)
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/mps_reader.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/mps_trace.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/poly1305.c
+<<<<<<< HEAD
+=======
+      ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_util.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/ripemd160.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/rsa_alt_helpers.c
       ${ZEPHYR_CURRENT_MODULE_DIR}/library/rsa.c
@@ -107,7 +114,11 @@ zephyr_interface_library_named(mbedTLS)
 
     zephyr_library_named(mbedTLSCrypto)
 
+<<<<<<< HEAD
     if (MBEDTLS_USE_PSA_CRYPTO)
+=======
+    if (CONFIG_MBEDTLS_PSA_CRYPTO_C)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       list(APPEND crypto_source
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_aead.c
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_cipher.c
@@ -117,7 +128,10 @@ zephyr_interface_library_named(mbedTLS)
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_mac.c
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_rsa.c
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_se.c
+<<<<<<< HEAD
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_slot_management.c
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_storage.c
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_its_file.c
       )
@@ -127,6 +141,10 @@ zephyr_interface_library_named(mbedTLS)
       list(APPEND crypto_source
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto.c
         ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_client.c
+<<<<<<< HEAD
+=======
+        ${ZEPHYR_CURRENT_MODULE_DIR}/library/psa_crypto_slot_management.c
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       )
     endif()
 

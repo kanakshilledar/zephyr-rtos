@@ -16,7 +16,11 @@ LOG_MODULE_REGISTER(net_dumb_http_srv_mt_sample);
 
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/net_event.h>
+<<<<<<< HEAD
 #include <zephyr/net/conn_mgr.h>
+=======
+#include <zephyr/net/conn_mgr_monitor.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define MY_PORT 8080
 
@@ -426,7 +430,11 @@ int main(void)
 					     event_handler, EVENT_MASK);
 		net_mgmt_add_event_callback(&mgmt_cb);
 
+<<<<<<< HEAD
 		conn_mgr_resend_status();
+=======
+		conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (!IS_ENABLED(CONFIG_NET_CONNECTION_MANAGER)) {

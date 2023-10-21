@@ -18,6 +18,58 @@
 
 LOG_MODULE_REGISTER(bt_audio, CONFIG_BT_AUDIO_LOG_LEVEL);
 
+<<<<<<< HEAD
+=======
+int bt_audio_data_parse(const uint8_t ltv[], size_t size,
+			bool (*func)(struct bt_data *data, void *user_data), void *user_data)
+{
+	CHECKIF(ltv == NULL) {
+		LOG_DBG("ltv is NULL");
+
+		return -EINVAL;
+	}
+
+	CHECKIF(func == NULL) {
+		LOG_DBG("func is NULL");
+
+		return -EINVAL;
+	}
+
+	for (size_t i = 0; i < size;) {
+		const uint8_t len = ltv[i];
+		struct bt_data data;
+
+		if (i + len > size || len < sizeof(data.type)) {
+			LOG_DBG("Invalid len %u at i = %zu", len, i);
+
+			return -EINVAL;
+		}
+
+		i++; /* Increment as we have parsed the len field */
+
+		data.type = ltv[i++];
+		data.data_len = len - sizeof(data.type);
+
+		if (data.data_len > 0) {
+			data.data = &ltv[i];
+		} else {
+			data.data = NULL;
+		}
+
+		if (!func(&data, user_data)) {
+			return -ECANCELED;
+		}
+
+		/* Since we are incrementing i by the value_len, we don't need to increment it
+		 * further in the `for` statement
+		 */
+		i += data.data_len;
+	}
+
+	return 0;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CONN)
 
 static uint8_t bt_audio_security_check(const struct bt_conn *conn)
@@ -109,6 +161,7 @@ ssize_t bt_audio_ccc_cfg_write(struct bt_conn *conn, const struct bt_gatt_attr *
 /* Broadcast sink depends on Scan Delegator, so we can just guard it with the Scan Delegator */
 #if defined(CONFIG_BT_BAP_SCAN_DELEGATOR)
 
+<<<<<<< HEAD
 static int decode_codec_ltv(struct net_buf_simple *buf,
 			    struct bt_codec_data *codec_data)
 {
@@ -150,6 +203,8 @@ static int decode_codec_ltv(struct net_buf_simple *buf,
 	return 0;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int decode_bis_data(struct net_buf_simple *buf, struct bt_bap_base_bis_data *bis)
 {
 	uint8_t len;
@@ -177,6 +232,7 @@ static int decode_bis_data(struct net_buf_simple *buf, struct bt_bap_base_bis_da
 	}
 
 	if (len > 0) {
+<<<<<<< HEAD
 		struct net_buf_simple ltv_buf;
 		void *ltv_data;
 
@@ -208,6 +264,26 @@ static int decode_bis_data(struct net_buf_simple *buf, struct bt_bap_base_bis_da
 
 			bis->data_count++;
 		}
+=======
+#if CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE > 0
+		void *ltv_data;
+
+		if (len > sizeof(bis->data)) {
+			LOG_DBG("Cannot store codec config data of length %u", len);
+
+			return -ENOMEM;
+		}
+
+		ltv_data = net_buf_simple_pull_mem(buf, len);
+
+		bis->data_len = len;
+		memcpy(bis->data, ltv_data, len);
+#else  /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE == 0 */
+		LOG_DBG("Cannot store codec config data");
+
+		return -ENOMEM;
+#endif /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -215,12 +291,19 @@ static int decode_bis_data(struct net_buf_simple *buf, struct bt_bap_base_bis_da
 
 static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgroup *subgroup)
 {
+<<<<<<< HEAD
 	struct net_buf_simple ltv_buf;
 	struct bt_codec	*codec;
 	void *ltv_data;
 	uint8_t len;
 
 	codec = &subgroup->codec;
+=======
+	struct bt_audio_codec_cfg *codec_cfg;
+	uint8_t len;
+
+	codec_cfg = &subgroup->codec_cfg;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	subgroup->bis_count = net_buf_simple_pull_u8(buf);
 	if (subgroup->bis_count > ARRAY_SIZE(subgroup->bis_data)) {
@@ -230,9 +313,15 @@ static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgro
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	codec->id = net_buf_simple_pull_u8(buf);
 	codec->cid = net_buf_simple_pull_le16(buf);
 	codec->vid = net_buf_simple_pull_le16(buf);
+=======
+	codec_cfg->id = net_buf_simple_pull_u8(buf);
+	codec_cfg->cid = net_buf_simple_pull_le16(buf);
+	codec_cfg->vid = net_buf_simple_pull_le16(buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* codec configuration data length */
 	len = net_buf_simple_pull_u8(buf);
@@ -242,6 +331,7 @@ static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgro
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 #if CONFIG_BT_CODEC_MAX_DATA_COUNT > 0
 	/* Use an extra net_buf_simple to be able to decode until it
 	 * is empty (len = 0)
@@ -288,6 +378,28 @@ static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgro
 		return -ENOMEM;
 	}
 #endif /* CONFIG_BT_CODEC_MAX_DATA_COUNT */
+=======
+#if CONFIG_BT_AUDIO_CODEC_CFG_MAX_DATA_SIZE > 0
+	void *cfg_ltv_data;
+
+	if (len > sizeof(subgroup->codec_cfg.data)) {
+		LOG_DBG("Cannot store codec config data of length %u", len);
+
+		return -ENOMEM;
+	}
+
+	cfg_ltv_data = net_buf_simple_pull_mem(buf, len);
+
+	subgroup->codec_cfg.data_len = len;
+	memcpy(subgroup->codec_cfg.data, cfg_ltv_data, len);
+#else  /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_DATA_SIZE == 0 */
+	if (len > 0) {
+		LOG_DBG("Cannot store codec config data of length %u", len);
+
+		return -ENOMEM;
+	}
+#endif /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_DATA_SIZE > 0 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* codec metadata length */
 	len = net_buf_simple_pull_u8(buf);
@@ -297,6 +409,7 @@ static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgro
 		return -EMSGSIZE;
 	}
 
+<<<<<<< HEAD
 #if CONFIG_BT_CODEC_MAX_METADATA_COUNT > 0
 	/* Use an extra net_buf_simple to be able to decode until it
 	 * is empty (len = 0)
@@ -331,12 +444,32 @@ static int decode_subgroup(struct net_buf_simple *buf, struct bt_bap_base_subgro
 		codec->meta_count++;
 	}
 #else /* CONFIG_BT_CODEC_MAX_METADATA_COUNT == 0 */
+=======
+#if CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE > 0
+	void *meta_ltv_data;
+
+	if (len > sizeof(subgroup->codec_cfg.meta)) {
+		LOG_DBG("Cannot store codec config meta of length %u", len);
+
+		return -ENOMEM;
+	}
+
+	meta_ltv_data = net_buf_simple_pull_mem(buf, len);
+
+	subgroup->codec_cfg.meta_len = len;
+	memcpy(subgroup->codec_cfg.meta, meta_ltv_data, len);
+#else  /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE == 0 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (len > 0) {
 		LOG_DBG("Cannot store metadata");
 
 		return -ENOMEM;
 	}
+<<<<<<< HEAD
 #endif /* CONFIG_BT_CODEC_MAX_METADATA_COUNT */
+=======
+#endif /* CONFIG_BT_AUDIO_CODEC_CFG_MAX_METADATA_SIZE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (size_t i = 0U; i < subgroup->bis_count; i++) {
 		const int err = decode_bis_data(buf, &subgroup->bis_data[i]);
@@ -418,6 +551,7 @@ int bt_bap_decode_base(struct bt_data *data, struct bt_bap_base *base)
 	return 0;
 }
 #endif /* CONFIG_BT_BAP_SCAN_DELEGATOR */
+<<<<<<< HEAD
 
 ssize_t bt_audio_codec_data_to_buf(const struct bt_codec_data *codec_data, size_t count,
 				   uint8_t *buf, size_t buf_size)
@@ -446,3 +580,5 @@ ssize_t bt_audio_codec_data_to_buf(const struct bt_codec_data *codec_data, size_
 
 	return total_len;
 }
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

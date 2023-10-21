@@ -76,7 +76,11 @@ static inline struct net_nbr *get_nexthop_nbr(struct net_nbr *start, int idx)
 
 static void release_nexthop_route(struct net_route_nexthop *route_nexthop)
 {
+<<<<<<< HEAD
 	struct net_nbr *nbr = CONTAINER_OF(route_nexthop, struct net_nbr, __nbr);
+=======
+	struct net_nbr *nbr = CONTAINER_OF((uint8_t *)route_nexthop, struct net_nbr, __nbr[0]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	net_nbr_unref(nbr);
 }
@@ -411,18 +415,30 @@ struct net_route_entry *net_route_add(struct net_if *iface,
 				     node);
 
 		if (CONFIG_NET_ROUTE_LOG_LEVEL >= LOG_LEVEL_DBG) {
+<<<<<<< HEAD
 			struct in6_addr *tmp;
 			struct net_linkaddr_storage *llstorage;
 
 			tmp = net_route_get_nexthop(route);
 			nbr = net_ipv6_nbr_lookup(iface, tmp);
+=======
+			struct in6_addr *in6_addr_tmp;
+			struct net_linkaddr_storage *llstorage;
+
+			in6_addr_tmp = net_route_get_nexthop(route);
+			nbr = net_ipv6_nbr_lookup(iface, in6_addr_tmp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (nbr) {
 				llstorage = net_nbr_get_lladdr(nbr->idx);
 
 				NET_DBG("Removing the oldest route %s "
 					"via %s [%s]",
 					net_sprint_ipv6_addr(&route->addr),
+<<<<<<< HEAD
 					net_sprint_ipv6_addr(tmp),
+=======
+					net_sprint_ipv6_addr(in6_addr_tmp),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					net_sprint_ll_addr(llstorage->addr,
 							   llstorage->len));
 			}

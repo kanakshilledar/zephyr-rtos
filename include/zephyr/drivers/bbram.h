@@ -223,7 +223,11 @@ static inline int z_impl_bbram_write(const struct device *dev, size_t offset,
 /**
  * @brief Set the emulated BBRAM driver's invalid state
  *
+<<<<<<< HEAD
  * Calling this will affect the emulated behavior of :c:func:`bbram_check_invalid`
+=======
+ * Calling this will affect the emulated behavior of bbram_check_invalid().
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param[in] dev The emulated device to modify
  * @param[in] is_invalid The new invalid state
@@ -234,7 +238,11 @@ int bbram_emul_set_invalid(const struct device *dev, bool is_invalid);
 /**
  * @brief Set the emulated BBRAM driver's standby power state
  *
+<<<<<<< HEAD
  * Calling this will affect the emulated behavior of :c:func:`bbram_check_standby_power`
+=======
+ * Calling this will affect the emulated behavior of bbram_check_standby_power().
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param[in] dev The emulated device to modify
  * @param[in] failure Whether or not standby power failure should be emulated
@@ -245,7 +253,11 @@ int bbram_emul_set_standby_power_state(const struct device *dev, bool failure);
 /**
  * @brief Set the emulated BBRAM driver's  power state
  *
+<<<<<<< HEAD
  * Calling this will affect the emulated behavior of :c:func:`bbram_check_power`
+=======
+ * Calling this will affect the emulated behavior of bbram_check_power().
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @param[in] dev The emulated device to modify
  * @param[in] failure Whether or not a power failure should be emulated

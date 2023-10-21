@@ -34,7 +34,11 @@
 
 struct ina230_data {
 	const struct device *dev;
+<<<<<<< HEAD
 	uint16_t current;
+=======
+	int16_t current;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint16_t bus_voltage;
 	uint16_t power;
 #ifdef CONFIG_INA230_TRIGGER
@@ -50,7 +54,11 @@ struct ina230_config {
 	struct i2c_dt_spec bus;
 	uint16_t config;
 	uint32_t current_lsb;
+<<<<<<< HEAD
 	uint16_t rshunt;
+=======
+	uint16_t cal;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef CONFIG_INA230_TRIGGER
 	bool trig_enabled;
 	uint16_t mask;

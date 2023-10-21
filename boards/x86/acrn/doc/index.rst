@@ -37,7 +37,11 @@ normally would, selecting an appropriate board:
         west build -b acrn_ehl_crb samples/hello_world
 
 In this tutorial, we will use the Intel Elkhart Lake Reference Board
+<<<<<<< HEAD
 (`EHL`_ CRB) since it is one of the suggested platform for this
+=======
+(`EHL`_ CRB) since it is one of the suggested platforms for this
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 type of scenario. Use ``acrn_ehl_crb`` as the target board parameter.
 
 Note the kconfig output in ``build/zephyr/.config``, you will need to
@@ -125,7 +129,11 @@ Configure Zephyr CPUs
 Now you need to configure the CPU environment ACRN presents to the
 guest.  By default Zephyr builds in SMP mode, but ACRN's default
 configuration gives it only one CPU.  Find the value of
+<<<<<<< HEAD
 ``CONFIG_MP_NUM_CPUS`` in the Zephyr .config file give the guest that
+=======
+``CONFIG_MP_MAX_NUM_CPUS`` in the Zephyr .config file give the guest that
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 many CPUs in the ``<cpu_affinity>`` tag.  For example:
 
     .. code-block:: xml
@@ -154,7 +162,11 @@ and Zephyr application will not boot successfully without this change.
 If you plan to run Zephyr with one CPU only, you can skip it.
 
 Since Zephyr is using CPU0 and CPU1, we also have to change
+<<<<<<< HEAD
 VM1's configuration so it runs on CPU2 and CPU3. If your ACRN set up has
+=======
+VM1's configuration so it runs on CPU2 and CPU3. If your ACRN setup has
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 additional VMs, you should change their configurations as well.
 
     .. code-block:: xml

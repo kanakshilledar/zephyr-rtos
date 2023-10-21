@@ -1,9 +1,14 @@
 /*
  * Copyright (c) 2013-2014 Wind River Systems, Inc.
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 Intel Corporation
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
 /**
  * @file
  * @brief Random number generator header file
@@ -83,4 +88,13 @@ __syscall int sys_csrand_get(void *dst, size_t len);
  */
 
 #include <syscalls/rand32.h>
+=======
+#ifndef ZEPHYR_INCLUDE_RANDOM_RAND32_H_
+#define ZEPHYR_INCLUDE_RANDOM_RAND32_H_
+
+#include <zephyr/random/random.h>
+
+#warning "<zephyr/random/rand32.h> is deprecated, include <zephyr/random/random.h> instead"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_INCLUDE_RANDOM_RAND32_H_ */

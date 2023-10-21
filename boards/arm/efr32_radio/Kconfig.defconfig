@@ -8,6 +8,10 @@ if BOARD_EFR32_RADIO
 
 config BOARD
 	default "efr32_radio_brd4104a" if BOARD_EFR32_RADIO_BRD4104A
+<<<<<<< HEAD
+=======
+	default "efr32_radio_brd4170a" if BOARD_EFR32_RADIO_BRD4170A
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default "efr32_radio_brd4250b" if BOARD_EFR32_RADIO_BRD4250B
 	default "efr32_radio_brd4180a" if BOARD_EFR32_RADIO_BRD4180A
 	default "efr32_radio_brd4187c" if BOARD_EFR32_RADIO_BRD4187C
@@ -29,6 +33,17 @@ config LOG_BACKEND_SWO_FREQ_HZ
 	default 875000
 	depends on LOG_BACKEND_SWO
 
+<<<<<<< HEAD
+=======
+if SOC_GECKO_USE_RAIL
+
+config FPU
+	default n if SOC_GECKO_SERIES1
+	default y
+
+endif # SOC_GECKO_USE_RAIL
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if BT
 
 config FPU

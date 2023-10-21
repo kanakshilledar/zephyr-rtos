@@ -129,8 +129,12 @@ static inline bool is_sip_svc_controller(void *ct)
 		return false;
 	}
 
+<<<<<<< HEAD
 	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl)
 	{
+=======
+	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if ((void *)ctrl == ct) {
 			return true;
 		}
@@ -284,7 +288,11 @@ int sip_svc_open(void *ct, uint32_t c_token, k_timeout_t k_timeout)
 	 * transactions are complete.
 	 */
 	for (bool first_iteration = false; get_timer_status(&first_iteration, &timer, k_timeout);
+<<<<<<< HEAD
 	     k_msleep(CONFIG_ARM_SIP_SVC_SUBSYS_ASYNC_POLLING_DELAY)) {
+=======
+	     k_usleep(CONFIG_ARM_SIP_SVC_SUBSYS_ASYNC_POLLING_DELAY)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		ret = k_mutex_lock(&ctrl->data_mutex, K_NO_WAIT);
 		if (ret != 0) {
@@ -320,10 +328,15 @@ int sip_svc_open(void *ct, uint32_t c_token, k_timeout_t k_timeout)
 		 * Acquire open lock, when only one client can transact at
 		 * a time.
 		 */
+<<<<<<< HEAD
 		ret = k_mutex_lock(&ctrl->open_mutex, K_NO_WAIT);
 		if (ret != 0) {
 			LOG_DBG("0x%x didn't get open lock, wait for it to be released, %d",
 				c_token, ret);
+=======
+		if (!atomic_cas(&ctrl->open_lock, SIP_SVC_OPEN_UNLOCKED, SIP_SVC_OPEN_LOCKED)) {
+			LOG_DBG("0x%x didn't get open lock, wait for it to be released", c_token);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			k_mutex_unlock(&ctrl->data_mutex);
 			continue;
 		}
@@ -331,12 +344,20 @@ int sip_svc_open(void *ct, uint32_t c_token, k_timeout_t k_timeout)
 
 		/* Make the client state to be open and stop timer*/
 		ctrl->clients[c_idx].state = SIP_SVC_CLIENT_ST_OPEN;
+<<<<<<< HEAD
 		LOG_INF("%x successfully opened a connection with sip_svc", c_token);
+=======
+		LOG_INF("0x%x successfully opened a connection with sip_svc", c_token);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_mutex_unlock(&ctrl->data_mutex);
 		k_timer_stop(&timer);
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+	k_timer_stop(&timer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LOG_ERR("Timedout at %s for 0x%x", __func__, c_token);
 	return -ETIMEDOUT;
 }
@@ -386,7 +407,11 @@ int sip_svc_close(void *ct, uint32_t c_token, struct sip_svc_request *pre_close_
 	}
 
 #if CONFIG_ARM_SIP_SVC_SUBSYS_SINGLY_OPEN
+<<<<<<< HEAD
 	k_mutex_unlock(&ctrl->open_mutex);
+=======
+	(void)atomic_set(&ctrl->open_lock, SIP_SVC_OPEN_UNLOCKED);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 	k_mutex_unlock(&ctrl->data_mutex);
 
@@ -661,7 +686,11 @@ static void sip_svc_thread(void *ctrl_ptr, void *arg2, void *arg3)
 
 			/* sleep only when waiting for ASYNC responses*/
 			if (ret_msgq == 0 && ret_resp != 0) {
+<<<<<<< HEAD
 				k_msleep(CONFIG_ARM_SIP_SVC_SUBSYS_ASYNC_POLLING_DELAY);
+=======
+				k_usleep(CONFIG_ARM_SIP_SVC_SUBSYS_ASYNC_POLLING_DELAY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 		LOG_INF("Suspend thread, all transactions are completed");
@@ -802,8 +831,12 @@ void *sip_svc_get_controller(char *method)
 	/**
 	 * For more info on below code check @ref SIP_SVC_CONTROLLER_DEFINE()
 	 */
+<<<<<<< HEAD
 	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl)
 	{
+=======
+	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!strncmp(ctrl->method, method, SIP_SVC_SUBSYS_CONDUIT_NAME_LENGTH)) {
 			return (void *)ctrl;
 		}
@@ -831,20 +864,27 @@ static int sip_svc_subsys_init(void)
 	 * SIP_SVC_CONTROLLER_DEFINE(),see @ref SIP_SVC_CONTROLLER_DEFINE() for more
 	 * info.
 	 */
+<<<<<<< HEAD
 	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl)
 	{
+=======
+	STRUCT_SECTION_FOREACH(sip_svc_controller, ctrl) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!device_is_ready(ctrl->dev)) {
 			LOG_ERR("device not ready");
 			return -ENODEV;
 		}
 		dev = (struct device *)(ctrl->dev);
 
+<<<<<<< HEAD
 		if (ctrl->num_clients > CONFIG_ARM_SIP_SVC_SUBSYS_MAX_CLIENT_COUNT) {
 			LOG_ERR("number of clients cannot be greater than the "
 				"CONFIG_ARM_SIP_SVC_SUBSYS_MAX_CLIENT_COUNT");
 			return -EPROTO;
 		}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_INF("Got registered conduit %.*s", (int)sizeof(ctrl->method), ctrl->method);
 
 		ctrl->async_resp_data = k_malloc(ctrl->resp_size);
@@ -884,6 +924,11 @@ static int sip_svc_subsys_init(void)
 			return -ENOMEM;
 		}
 
+<<<<<<< HEAD
+=======
+		memset(ctrl->clients, 0, ctrl->num_clients * sizeof(struct sip_svc_client));
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Initialize request msgq */
 		k_msgq_init(&ctrl->req_msgq, msgq_buf, sizeof(struct sip_svc_request),
 			    CONFIG_ARM_SIP_SVC_SUBSYS_MSGQ_DEPTH);
@@ -930,10 +975,18 @@ static int sip_svc_subsys_init(void)
 		ctrl->active_job_cnt = 0;
 		ctrl->active_async_job_cnt = 0;
 
+<<<<<<< HEAD
 		/* Initialize mutex */
 #if CONFIG_ARM_SIP_SVC_SUBSYS_SINGLY_OPEN
 		k_mutex_init(&ctrl->open_mutex);
 #endif
+=======
+		/* Initialize atomic variable */
+#if CONFIG_ARM_SIP_SVC_SUBSYS_SINGLY_OPEN
+		(void)atomic_set(&ctrl->open_lock, SIP_SVC_OPEN_UNLOCKED);
+#endif
+		/* Initialize mutex */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_mutex_init(&ctrl->data_mutex);
 
 		ctrl->init = true;

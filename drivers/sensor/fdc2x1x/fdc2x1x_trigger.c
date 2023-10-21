@@ -130,7 +130,11 @@ int fdc2x1x_init_interrupt(const struct device *dev)
 
 	k_mutex_init(&drv_data->trigger_mutex);
 
+<<<<<<< HEAD
 	if (!device_is_ready(cfg->intb_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&cfg->intb_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: intb_gpio device not ready", cfg->intb_gpio.port->name);
 		return -ENODEV;
 	}

@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _memc:
 
 MEMC Driver Sample
 ##################
+=======
+.. zephyr:code-sample:: memc
+   :name: Memory controller (MEMC) driver
+
+   Access memory-mapped external RAM
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

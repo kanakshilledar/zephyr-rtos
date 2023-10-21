@@ -6,8 +6,18 @@
  */
 
 #include <stddef.h>
+<<<<<<< HEAD
 #include <zephyr/types.h>
 #include <zephyr/sys/printk.h>
+=======
+
+#include <soc.h>
+#include <zephyr/types.h>
+#include <zephyr/sys/printk.h>
+
+#include "hal/cpu.h"
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "memq.h"
 #include "mayfly.h"
 
@@ -154,10 +164,18 @@ static void dequeue(uint8_t callee_id, uint8_t caller_id, memq_link_t *link,
 		m->_link = link;
 
 		/* reset mayfly state to idle */
+<<<<<<< HEAD
+=======
+		cpu_dmb();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ack = m->_ack;
 		m->_ack = req;
 
 		/* re-insert, if re-pended by interrupt */
+<<<<<<< HEAD
+=======
+		cpu_dmb();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (((m->_req - ack) & 0x03) == 1U) {
 #if defined(MAYFLY_UT)
 			printk("%s: RACE\n", __func__);

@@ -41,6 +41,10 @@ LOG_MODULE_REGISTER(bt_mesh_beacon);
 #define PROV_XMIT                  BT_MESH_TRANSMIT(0, 20)
 
 static struct k_work_delayable beacon_timer;
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BT_MESH_PRIV_BEACONS)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct {
 	/**
 	 * Identifier for the current Private beacon random-value.
@@ -54,6 +58,10 @@ static struct {
 	uint8_t val[13];
 	uint64_t timestamp;
 } priv_random;
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 struct beacon_params {
 	bool private;
@@ -153,6 +161,7 @@ static int private_random_update(void)
 	uint64_t uptime = k_uptime_get();
 	int err;
 
+<<<<<<< HEAD
 	/* If private beacon will not be sent there is no point in generating new random */
 	if (bt_mesh_priv_beacon_get() != BT_MESH_FEATURE_ENABLED) {
 		return 0;
@@ -162,6 +171,13 @@ static int private_random_update(void)
 	 * N = (10 * interval) seconds, or on every beacon creation, if the interval is 0.
 	 */
 	if (interval &&
+=======
+	/* The Private beacon random value should change every N seconds to maintain privacy.
+	 * N = (10 * interval) seconds, or on every beacon creation, if the interval is 0.
+	 */
+	if (bt_mesh_priv_beacon_get() == BT_MESH_FEATURE_ENABLED &&
+	    interval &&
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	    uptime - priv_random.timestamp < (10 * interval * MSEC_PER_SEC) &&
 	    priv_random.timestamp != 0) {
 		/* Not time yet */
@@ -188,10 +204,18 @@ static int private_beacon_update(struct bt_mesh_subnet *sub)
 	uint8_t flags = bt_mesh_net_flags(sub);
 	int err;
 
+<<<<<<< HEAD
 	err = bt_mesh_beacon_encrypt(keys->priv_beacon, flags, bt_mesh.iv_index,
 				     priv_random.val, sub->priv_beacon_ctx.data,
 				     sub->priv_beacon.auth);
 	if (err) {
+=======
+	err = bt_mesh_beacon_encrypt(&keys->priv_beacon, flags, bt_mesh.iv_index,
+				     priv_random.val, sub->priv_beacon_ctx.data,
+				     sub->priv_beacon.auth);
+	if (err) {
+		LOG_ERR("Can't encrypt private beacon");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return err;
 	}
 
@@ -227,11 +251,18 @@ static int private_beacon_create(struct bt_mesh_subnet *sub,
 }
 #endif
 
+<<<<<<< HEAD
 int bt_mesh_beacon_create(struct bt_mesh_subnet *sub,
 			  struct net_buf_simple *buf)
 {
 #if defined(CONFIG_BT_MESH_PRIV_BEACONS)
 	if (bt_mesh_priv_beacon_get() == BT_MESH_FEATURE_ENABLED) {
+=======
+int bt_mesh_beacon_create(struct bt_mesh_subnet *sub, struct net_buf_simple *buf, bool priv)
+{
+#if defined(CONFIG_BT_MESH_PRIV_BEACONS)
+	if (priv) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return private_beacon_create(sub, buf);
 	}
 #endif
@@ -488,12 +519,23 @@ static bool auth_match(struct bt_mesh_subnet_keys *keys,
 		return false;
 	}
 
+<<<<<<< HEAD
 	bt_mesh_beacon_auth(keys->beacon, params->flags, keys->net_id,
 			    params->iv_index, net_auth);
 
 	if (memcmp(params->auth, net_auth, 8)) {
 		LOG_WRN("Authentication Value %s != %s", bt_hex(params->auth, 8),
 			bt_hex(net_auth, 8));
+=======
+	if (bt_mesh_beacon_auth(&keys->beacon, params->flags, keys->net_id, params->iv_index,
+				net_auth)) {
+		return false;
+	}
+
+	if (memcmp(params->auth, net_auth, 8)) {
+		LOG_WRN("Invalid auth value. Received auth: %s", bt_hex(params->auth, 8));
+		LOG_WRN("Calculated auth: %s", bt_hex(net_auth, 8));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return false;
 	}
 
@@ -541,7 +583,11 @@ static bool priv_beacon_decrypt(struct bt_mesh_subnet *sub, void *cb_data)
 			continue;
 		}
 
+<<<<<<< HEAD
 		err = bt_mesh_beacon_decrypt(sub->keys[i].priv_beacon, params->random,
+=======
+		err = bt_mesh_beacon_decrypt(&sub->keys[i].priv_beacon, params->random,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 					     params->data, params->auth, out);
 		if (!err) {
 			params->new_key = (i > 0);
@@ -727,7 +773,11 @@ void bt_mesh_beacon_update(struct bt_mesh_subnet *sub)
 	priv_random.timestamp = 0;
 #endif
 
+<<<<<<< HEAD
 	bt_mesh_beacon_auth(keys->beacon, flags, keys->net_id, bt_mesh.iv_index,
+=======
+	bt_mesh_beacon_auth(&keys->beacon, flags, keys->net_id, bt_mesh.iv_index,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			    sub->secure_beacon.auth);
 }
 
@@ -794,9 +844,12 @@ void bt_mesh_beacon_disable(void)
 	/* If this fails, we'll do an early exit in the work handler. */
 	(void)k_work_cancel_delayable(&beacon_timer);
 }
+<<<<<<< HEAD
 
 void bt_mesh_beacon_priv_random_get(uint8_t *random, size_t size)
 {
 	__ASSERT(size <= sizeof(priv_random.val), "Invalid random value size %u", size);
 	memcpy(random, priv_random.val, size);
 }
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

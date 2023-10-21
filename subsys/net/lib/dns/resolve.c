@@ -14,7 +14,11 @@
 LOG_MODULE_REGISTER(net_dns_resolve, CONFIG_DNS_RESOLVER_LOG_LEVEL);
 
 #include <zephyr/types.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <string.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -1075,7 +1079,11 @@ static void query_timeout(struct k_work *work)
 	 */
 	ret = k_mutex_lock(&pending_query->ctx->lock, K_NO_WAIT);
 	if (ret != 0) {
+<<<<<<< HEAD
 		struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+=======
+		struct k_work_delayable *dwork2 = k_work_delayable_from_work(work);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/*
 		 * Reschedule query timeout handler with some delay, so that all
@@ -1085,7 +1093,11 @@ static void query_timeout(struct k_work *work)
 		 * Timeout value was arbitrarily chosen and can be updated in
 		 * future if needed.
 		 */
+<<<<<<< HEAD
 		k_work_reschedule(dwork, K_MSEC(10));
+=======
+		k_work_reschedule(dwork2, K_MSEC(10));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		return;
 	}
 

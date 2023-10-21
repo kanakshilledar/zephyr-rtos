@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .. _samples_flash_shell:
 
 Flash Shell Sample
@@ -5,6 +6,17 @@ Flash Shell Sample
 
 Overview
 ********
+=======
+.. zephyr:code-sample:: flash-shell
+   :name: Flash shell
+   :relevant-api: flash_interface
+
+   Explore a flash device using shell commands.
+
+Overview
+********
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 This is a simple shell module that allows arbitrary boards with flash
 driver support to explore the flash device.
 

@@ -10,5 +10,10 @@ config SOC_SERIES_IMX_RT5XX
 	select CPU_CORTEX_M_HAS_DWT
 	select SOC_FAMILY_IMX
 	select CLOCK_CONTROL
+<<<<<<< HEAD
+=======
+	select HAS_PM
+	select HAS_POWEROFF
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for i.MX RT5XX Series MCU series

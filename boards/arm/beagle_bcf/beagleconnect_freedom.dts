@@ -9,6 +9,10 @@
 
 #include <ti/cc1352r7.dtsi>
 #include "beagleconnect_freedom-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define BTN_GPIO_FLAGS (GPIO_ACTIVE_LOW | GPIO_PULL_UP)
 
@@ -38,6 +42,10 @@
 		compatible = "gpio-keys";
 		button0: button_0 {
 			gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -75,6 +83,7 @@
 			reg = <0x41>;
 		};
 	};
+<<<<<<< HEAD
 
 	power-states {
 		idle: idle {
@@ -90,6 +99,8 @@
 			exit-latency-us = <240>;
 		};
 	};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &flash0 {
@@ -114,7 +125,10 @@
 
 &cpu0 {
 	clock-frequency = <48000000>;
+<<<<<<< HEAD
 	cpu-power-states = <&idle &standby>;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 &trng {
@@ -201,10 +215,13 @@
 	};
 };
 
+<<<<<<< HEAD
 &rtc {
 	status = "okay";
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &ieee802154 {
 	status = "okay";
 };

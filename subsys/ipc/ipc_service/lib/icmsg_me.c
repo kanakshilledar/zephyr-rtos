@@ -168,7 +168,11 @@ int icmsg_me_send(const struct icmsg_config_t *conf,
 		  const void *msg, size_t len)
 {
 	int r;
+<<<<<<< HEAD
 	int sent_bytes;
+=======
+	int sent_bytes = 0;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (user_buffer_len_to_icmsg_buffer_len(len) >= SEND_BUF_SIZE) {
 		return -EBADMSG;

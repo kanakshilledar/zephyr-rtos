@@ -1,7 +1,14 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2017 Justin Watson
  * Copyright (c) 2016 Intel Corporation.
  * Copyright (c) 2013-2015 Wind River Systems, Inc.
+=======
+ * Copyright (c) 2013-2015 Wind River Systems, Inc.
+ * Copyright (c) 2016 Intel Corporation.
+ * Copyright (c) 2017 Justin Watson
+ * Copyright (c) 2023 Gerson Fernando Budke <nandojve@gmail.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -17,9 +24,12 @@
 #include <zephyr/device.h>
 #include <zephyr/init.h>
 #include <soc.h>
+<<<<<<< HEAD
 #include <zephyr/arch/cpu.h>
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
 #include <zephyr/irq.h>
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Setup various clock on SoC at boot time.
@@ -181,6 +191,7 @@ static ALWAYS_INLINE void clock_init(void)
 	}
 }
 
+<<<<<<< HEAD
 /**
  * @brief Perform basic hardware initialization at boot.
  *
@@ -196,6 +207,10 @@ static int atmel_sam4s_init(void)
 
 	key = irq_lock();
 
+=======
+void z_arm_platform_init(void)
+{
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/*
 	 * Set FWS (Flash Wait State) value before increasing Master Clock
 	 * (MCK) frequency. Look at table 44.73 in the SAM4S datasheet.
@@ -209,6 +224,7 @@ static int atmel_sam4s_init(void)
 
 	/* Setup system clocks. */
 	clock_init();
+<<<<<<< HEAD
 
 	/*
 	 * Install default handler that simply resets the CPU
@@ -222,3 +238,6 @@ static int atmel_sam4s_init(void)
 }
 
 SYS_INIT(atmel_sam4s_init, PRE_KERNEL_1, 0);
+=======
+}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

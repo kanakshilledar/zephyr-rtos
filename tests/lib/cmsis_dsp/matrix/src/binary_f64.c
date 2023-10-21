@@ -13,7 +13,11 @@
 
 #include "binary_f64.pat"
 
+<<<<<<< HEAD
 #define SNR_ERROR_THRESH	((float32_t)120)
+=======
+#define SNR_ERROR_THRESH	((float64_t)120)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define REL_ERROR_THRESH	(1.0e-6)
 #define ABS_ERROR_THRESH	(1.0e-5)
 

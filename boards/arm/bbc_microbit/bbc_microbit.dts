@@ -7,6 +7,10 @@
 /dts-v1/;
 #include <nordic/nrf51822_qfaa.dtsi>
 #include "bbc_microbit-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "BBC Micro:bit";
@@ -37,11 +41,19 @@
 		buttonA: button_0 {
 			label = "BTN_A";
 			gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_A>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 
 		buttonB: button_1 {
 			label = "BTN_B";
 			gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_B>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

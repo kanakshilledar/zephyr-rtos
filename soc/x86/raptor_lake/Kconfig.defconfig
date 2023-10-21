@@ -15,7 +15,10 @@ config X86_DYNAMIC_IRQ_STUBS
 	default 16
 	depends on DYNAMIC_INTERRUPTS
 
+<<<<<<< HEAD
 config UART_NS16550_SIMULT_ACCESS
 	default y if UART_NS16550
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # SOC_RAPTOR_LAKE

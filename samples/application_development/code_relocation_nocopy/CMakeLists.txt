@@ -7,7 +7,10 @@ project(code_relocation_nocopy)
 
 FILE(GLOB app_sources src/*.c)
 target_sources(app PRIVATE ${app_sources})
+<<<<<<< HEAD
 target_sources_ifdef(CONFIG_NRFX_QSPI app PRIVATE boards/nrf5340dk_nrf5340_cpuapp/ext_mem_init.c)
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 # Run ext_code from the external flash (XIP). No need to copy.
 zephyr_code_relocate(FILES src/ext_code.c LOCATION EXTFLASH_TEXT NOCOPY)

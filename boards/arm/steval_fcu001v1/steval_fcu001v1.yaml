@@ -14,3 +14,7 @@ supported:
   - watchdog
 ram: 64
 flash: 256
+<<<<<<< HEAD
+=======
+vendor: st
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

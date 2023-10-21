@@ -170,6 +170,17 @@ static inline uint8_t bt_mesh_prov_auth_size_get(void)
 	return bt_mesh_prov_link.algorithm == BT_MESH_PROV_AUTH_CMAC_AES128_AES_CCM ? 16 : 32;
 }
 
+<<<<<<< HEAD
+=======
+static inline k_timeout_t bt_mesh_prov_protocol_timeout_get(void)
+{
+	return (bt_mesh_prov_link.oob_method == AUTH_METHOD_INPUT ||
+		bt_mesh_prov_link.oob_method == AUTH_METHOD_OUTPUT)
+		       ? PROTOCOL_TIMEOUT_EXT
+		       : PROTOCOL_TIMEOUT;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 int bt_mesh_prov_reset_state(void);
 
 bool bt_mesh_prov_active(void);

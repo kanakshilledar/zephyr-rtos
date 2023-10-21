@@ -198,7 +198,11 @@ ZTEST(smp, test_cpu_id_threads)
 	k_thread_join(tid, K_FOREVER);
 }
 
+<<<<<<< HEAD
 static void thread_entry(void *p1, void *p2, void *p3)
+=======
+static void thread_entry_fn(void *p1, void *p2, void *p3)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	ARG_UNUSED(p2);
 	ARG_UNUSED(p3);
@@ -373,7 +377,11 @@ ZTEST(smp, test_coop_resched_threads)
 	 * will not get scheduled
 	 */
 	spawn_threads(K_PRIO_COOP(10), num_threads, !EQUAL_PRIORITY,
+<<<<<<< HEAD
 		      &thread_entry, THREAD_DELAY);
+=======
+		      &thread_entry_fn, THREAD_DELAY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Wait for some time to let other core's thread run */
 	k_busy_wait(DELAY_US);
@@ -414,7 +422,11 @@ ZTEST(smp, test_preempt_resched_threads)
 	 * be preempted by higher ones
 	 */
 	spawn_threads(K_PRIO_PREEMPT(10), num_threads, !EQUAL_PRIORITY,
+<<<<<<< HEAD
 		      &thread_entry, THREAD_DELAY);
+=======
+		      &thread_entry_fn, THREAD_DELAY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	spin_for_threads_exit();
 
@@ -447,7 +459,11 @@ ZTEST(smp, test_yield_threads)
 	 * pending.
 	 */
 	spawn_threads(K_PRIO_COOP(10), num_threads, !EQUAL_PRIORITY,
+<<<<<<< HEAD
 		      &thread_entry, !THREAD_DELAY);
+=======
+		      &thread_entry_fn, !THREAD_DELAY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_yield();
 	k_busy_wait(DELAY_US);
@@ -476,7 +492,11 @@ ZTEST(smp, test_sleep_threads)
 	unsigned int num_threads = arch_num_cpus();
 
 	spawn_threads(K_PRIO_COOP(10), num_threads, !EQUAL_PRIORITY,
+<<<<<<< HEAD
 		      &thread_entry, !THREAD_DELAY);
+=======
+		      &thread_entry_fn, !THREAD_DELAY);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_msleep(TIMEOUT);
 
@@ -1118,6 +1138,22 @@ ZTEST(smp, test_smp_switch_torture)
 {
 	unsigned int num_threads = arch_num_cpus();
 
+<<<<<<< HEAD
+=======
+	if (CONFIG_SMP_TEST_RUN_FACTOR == 0) {
+		/* If CONFIG_SMP_TEST_RUN_FACTOR is zero,
+		 * the switch torture test is effectively
+		 * not doing anything as the k_sleep()
+		 * below is not going to sleep at all,
+		 * and all created threads are being
+		 * terminated (almost) immediately after
+		 * creation. So if run factor is zero,
+		 * mark the test as skipped.
+		 */
+		ztest_test_skip();
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	for (uintptr_t i = 0; i < num_threads; i++) {
 		k_poll_signal_init(&tsignal[i]);
 		k_poll_event_init(&tevent[i], K_POLL_TYPE_SIGNAL,

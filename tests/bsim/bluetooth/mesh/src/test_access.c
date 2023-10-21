@@ -261,8 +261,13 @@ static int model3_init(struct bt_mesh_model *model)
 	ASSERT_OK(bt_mesh_model_extend(model, model - 2));
 	ASSERT_OK(bt_mesh_model_extend(model, model - 1));
 
+<<<<<<< HEAD
 	if (model->elem_idx == 0) {
 		ASSERT_OK(bt_mesh_model_extend(&models_ne[2], model));
+=======
+	if (model->elem_idx == 1) {
+		ASSERT_OK(bt_mesh_model_extend(model, &models[4]));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;

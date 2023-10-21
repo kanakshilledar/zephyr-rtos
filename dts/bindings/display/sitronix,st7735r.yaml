@@ -1,7 +1,11 @@
 # Copyright (c) 2020, Kim Bøndergaard <kim@fam-boendergaard.dk>
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 description: ST7735R 160x128 display controller
+=======
+description: ST7735R/ST7735S 160x128 (max) display controller
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 compatible: "sitronix,st7735r"
 
@@ -10,7 +14,10 @@ include: [spi-device.yaml, display-controller.yaml]
 properties:
   reset-gpios:
     type: phandle-array
+<<<<<<< HEAD
     required: true
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     description: RESET pin.
 
       The RESET pin of ST7735R is active low.

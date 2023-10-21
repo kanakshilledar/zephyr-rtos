@@ -141,7 +141,11 @@ Flashing an application to STM32F411E-DISCO
 Connect the STM32F411E-DISCO Discovery kit to your host computer using the
 USB port. Then build and flash an application.
 
+<<<<<<< HEAD
 Here is an example for the :ref:`blinky-sample` application.
+=======
+Here is an example for the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -162,7 +166,11 @@ Debugging
 =========
 
 You can debug applications in the usual way. Here is an example for
+<<<<<<< HEAD
 the :ref:`blinky-sample` application.
+=======
+the :zephyr:code-sample:`blinky` application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. zephyr-app-commands::
    :zephyr-app: samples/basic/blinky
@@ -176,6 +184,7 @@ References
 .. target-notes::
 
 .. _32F411EDISCOVERY website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32f411ediscovery.html
 
 .. _32F411EDISCOVERY board User Manual:
@@ -186,3 +195,15 @@ References
 
 .. _STM32F411x reference manual:
    http://www.st.com/resource/en/reference_manual/dm00119316.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32f411ediscovery.html
+
+.. _32F411EDISCOVERY board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00148985.pdf
+
+.. _STM32F411VE website:
+   https://www.st.com/en/microcontrollers/stm32f411ve.html
+
+.. _STM32F411x reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00119316.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

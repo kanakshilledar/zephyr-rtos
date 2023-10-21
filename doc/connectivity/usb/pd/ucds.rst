@@ -27,7 +27,11 @@ The configuration of a USB-C Device is done in the stack layer and devicetree.
 The following devicetree, structures and callbacks need to be defined:
 
 * Devicetree usb-c-connector node referencing a TCPC
+<<<<<<< HEAD
 * Devicetree vbus node referencing a VBUS measurment device
+=======
+* Devicetree vbus node referencing a VBUS measurement device
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * User defined structure that encapsulates application specific data
 * Policy callbacks
 
@@ -117,7 +121,11 @@ The configuration of a USB-C Device is done in the stack layer and devicetree.
 Define the following devicetree, structures and callbacks:
 
 * Devicetree ``usb-c-connector`` node referencing a TCPC
+<<<<<<< HEAD
 * Devicetree ``vbus`` node referencing a VBUS measurment device
+=======
+* Devicetree ``vbus`` node referencing a VBUS measurement device
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * User defined structure that encapsulates application specific data
 * Policy callbacks
 

@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+<<<<<<< HEAD
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
@@ -24,10 +25,17 @@
 #define RTC_CHANNEL_ID 0
 
 static const struct device *const rtc_dev = DEVICE_DT_GET(RTC_NODE);
+=======
+
+#include <zephyr/drivers/counter.h>
+#include <zephyr/sys/poweroff.h>
+#include <zephyr/sys_clock.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int main(void)
 {
 	int ret;
+<<<<<<< HEAD
 
 	printk("\n%s system off demo\n", CONFIG_BOARD);
 
@@ -65,5 +73,34 @@ int main(void)
 	while (true) {
 		/* spin to avoid fall-off behavior */
 	}
+=======
+	const struct device *dev = DEVICE_DT_GET(DT_NODELABEL(rtc));
+	struct counter_alarm_cfg alarm_cfg = { 0 };
+
+	if (!device_is_ready(dev)) {
+		printf("Counter device not ready\n");
+		return 0;
+	}
+
+	ret = counter_start(dev);
+	if (ret < 0) {
+		printf("Could not start counter (%d)\n", ret);
+		return 0;
+	}
+
+	alarm_cfg.ticks = counter_us_to_ticks(dev, 10 * USEC_PER_SEC);
+
+	ret = counter_set_channel_alarm(dev, 0, &alarm_cfg);
+	if (ret < 0) {
+		printf("Could not set counter channel alarm (%d)\n", ret);
+		return 0;
+	}
+
+	printf("Wake-up alarm set for 10 seconds\n");
+	printf("Powering off\n");
+
+	sys_poweroff();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

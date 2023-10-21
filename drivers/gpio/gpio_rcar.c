@@ -20,10 +20,21 @@
 
 typedef void (*init_func_t)(const struct device *dev);
 
+<<<<<<< HEAD
 struct gpio_rcar_cfg {
 	struct gpio_driver_config common;
 	uint32_t reg_addr;
 	int reg_size;
+=======
+/* Required by DEVICE_MMIO_NAMED_* macros */
+#define DEV_CFG(_dev) \
+	((const struct gpio_rcar_cfg *)(_dev)->config)
+#define DEV_DATA(_dev) ((struct gpio_rcar_data *)(_dev)->data)
+
+struct gpio_rcar_cfg {
+	struct gpio_driver_config common;
+	DEVICE_MMIO_NAMED_ROM(reg_base);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	init_func_t init_func;
 	const struct device *clock_dev;
 	struct rcar_cpg_clk mod_clk;
@@ -31,6 +42,10 @@ struct gpio_rcar_cfg {
 
 struct gpio_rcar_data {
 	struct gpio_driver_data common;
+<<<<<<< HEAD
+=======
+	DEVICE_MMIO_NAMED_RAM(reg_base);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sys_slist_t cb;
 };
 
@@ -48,6 +63,7 @@ struct gpio_rcar_data {
 #define OUTDTSEL 0x40   /* Output Data Select Register */
 #define BOTHEDGE 0x4c   /* One Edge/Both Edge Select Register */
 
+<<<<<<< HEAD
 static inline uint32_t gpio_rcar_read(const struct gpio_rcar_cfg *config,
 				      uint32_t offs)
 {
@@ -64,6 +80,22 @@ static void gpio_rcar_modify_bit(const struct gpio_rcar_cfg *config,
 				 uint32_t offs, int bit, bool value)
 {
 	uint32_t tmp = gpio_rcar_read(config, offs);
+=======
+static inline uint32_t gpio_rcar_read(const struct device *dev, uint32_t offs)
+{
+	return sys_read32(DEVICE_MMIO_NAMED_GET(dev, reg_base) + offs);
+}
+
+static inline void gpio_rcar_write(const struct device *dev, uint32_t offs, uint32_t value)
+{
+	sys_write32(value, DEVICE_MMIO_NAMED_GET(dev, reg_base) + offs);
+}
+
+static void gpio_rcar_modify_bit(const struct device *dev,
+				 uint32_t offs, int bit, bool value)
+{
+	uint32_t tmp = gpio_rcar_read(dev, offs);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (value) {
 		tmp |= BIT(bit);
@@ -71,11 +103,16 @@ static void gpio_rcar_modify_bit(const struct gpio_rcar_cfg *config,
 		tmp &= ~BIT(bit);
 	}
 
+<<<<<<< HEAD
 	gpio_rcar_write(config, offs, tmp);
+=======
+	gpio_rcar_write(dev, offs, tmp);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void gpio_rcar_port_isr(const struct device *dev)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 	struct gpio_rcar_data *data = dev->data;
 	uint32_t pending, fsb, mask;
@@ -88,11 +125,28 @@ static void gpio_rcar_port_isr(const struct device *dev)
 		fsb = find_lsb_set(pending) - 1;
 		gpio_fire_callbacks(&data->cb, dev, BIT(fsb));
 		gpio_rcar_write(config, INTCLR, BIT(fsb));
+=======
+	struct gpio_rcar_data *data = dev->data;
+	uint32_t pending, fsb, mask;
+
+	pending = gpio_rcar_read(dev, INTDT);
+	mask = gpio_rcar_read(dev, INTMSK);
+
+	while ((pending = gpio_rcar_read(dev, INTDT) &
+			  gpio_rcar_read(dev, INTMSK))) {
+		fsb = find_lsb_set(pending) - 1;
+		gpio_fire_callbacks(&data->cb, dev, BIT(fsb));
+		gpio_rcar_write(dev, INTCLR, BIT(fsb));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 static void gpio_rcar_config_general_input_output_mode(
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config,
+=======
+	const struct device *dev,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t gpio,
 	bool output)
 {
@@ -102,6 +156,7 @@ static void gpio_rcar_config_general_input_output_mode(
 	 */
 
 	/* Configure positive logic in POSNEG */
+<<<<<<< HEAD
 	gpio_rcar_modify_bit(config, POSNEG, gpio, false);
 
 	/* Select "General Input/Output Mode" in IOINTSEL */
@@ -113,14 +168,30 @@ static void gpio_rcar_config_general_input_output_mode(
 	/* Select General Output Register to output data in OUTDTSEL */
 	if (output) {
 		gpio_rcar_modify_bit(config, OUTDTSEL, gpio, false);
+=======
+	gpio_rcar_modify_bit(dev, POSNEG, gpio, false);
+
+	/* Select "General Input/Output Mode" in IOINTSEL */
+	gpio_rcar_modify_bit(dev, IOINTSEL, gpio, false);
+
+	/* Select Input Mode or Output Mode in INOUTSEL */
+	gpio_rcar_modify_bit(dev, INOUTSEL, gpio, output);
+
+	/* Select General Output Register to output data in OUTDTSEL */
+	if (output) {
+		gpio_rcar_modify_bit(dev, OUTDTSEL, gpio, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 
 static int gpio_rcar_configure(const struct device *dev,
 			       gpio_pin_t pin, gpio_flags_t flags)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if ((flags & GPIO_OUTPUT) && (flags & GPIO_INPUT)) {
 		/* Pin cannot be configured as input and output */
 		return -ENOTSUP;
@@ -131,6 +202,7 @@ static int gpio_rcar_configure(const struct device *dev,
 
 	if (flags & GPIO_OUTPUT) {
 		if (flags & GPIO_OUTPUT_INIT_HIGH) {
+<<<<<<< HEAD
 			gpio_rcar_modify_bit(config, OUTDT, pin, true);
 		} else if (flags & GPIO_OUTPUT_INIT_LOW) {
 			gpio_rcar_modify_bit(config, OUTDT, pin, false);
@@ -138,6 +210,15 @@ static int gpio_rcar_configure(const struct device *dev,
 		gpio_rcar_config_general_input_output_mode(config, pin, true);
 	} else {
 		gpio_rcar_config_general_input_output_mode(config, pin, false);
+=======
+			gpio_rcar_modify_bit(dev, OUTDT, pin, true);
+		} else if (flags & GPIO_OUTPUT_INIT_LOW) {
+			gpio_rcar_modify_bit(dev, OUTDT, pin, false);
+		}
+		gpio_rcar_config_general_input_output_mode(dev, pin, true);
+	} else {
+		gpio_rcar_config_general_input_output_mode(dev, pin, false);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return 0;
@@ -146,9 +227,13 @@ static int gpio_rcar_configure(const struct device *dev,
 static int gpio_rcar_port_get_raw(const struct device *dev,
 				  gpio_port_value_t *value)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 
 	*value = gpio_rcar_read(config, INDT);
+=======
+	*value = gpio_rcar_read(dev, INDT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -156,12 +241,20 @@ static int gpio_rcar_port_set_masked_raw(const struct device *dev,
 					 gpio_port_pins_t mask,
 					 gpio_port_value_t value)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 	uint32_t port_val;
 
 	port_val = gpio_rcar_read(config, OUTDT);
 	port_val = (port_val & ~mask) | (value & mask);
 	gpio_rcar_write(config, OUTDT, port_val);
+=======
+	uint32_t port_val;
+
+	port_val = gpio_rcar_read(dev, OUTDT);
+	port_val = (port_val & ~mask) | (value & mask);
+	gpio_rcar_write(dev, OUTDT, port_val);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -169,12 +262,20 @@ static int gpio_rcar_port_set_masked_raw(const struct device *dev,
 static int gpio_rcar_port_set_bits_raw(const struct device *dev,
 				       gpio_port_pins_t pins)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 	uint32_t port_val;
 
 	port_val = gpio_rcar_read(config, OUTDT);
 	port_val |= pins;
 	gpio_rcar_write(config, OUTDT, port_val);
+=======
+	uint32_t port_val;
+
+	port_val = gpio_rcar_read(dev, OUTDT);
+	port_val |= pins;
+	gpio_rcar_write(dev, OUTDT, port_val);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -182,12 +283,20 @@ static int gpio_rcar_port_set_bits_raw(const struct device *dev,
 static int gpio_rcar_port_clear_bits_raw(const struct device *dev,
 					 gpio_port_pins_t pins)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 	uint32_t port_val;
 
 	port_val = gpio_rcar_read(config, OUTDT);
 	port_val &= ~pins;
 	gpio_rcar_write(config, OUTDT, port_val);
+=======
+	uint32_t port_val;
+
+	port_val = gpio_rcar_read(dev, OUTDT);
+	port_val &= ~pins;
+	gpio_rcar_write(dev, OUTDT, port_val);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -195,12 +304,20 @@ static int gpio_rcar_port_clear_bits_raw(const struct device *dev,
 static int gpio_rcar_port_toggle_bits(const struct device *dev,
 				      gpio_port_pins_t pins)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 	uint32_t port_val;
 
 	port_val = gpio_rcar_read(config, OUTDT);
 	port_val ^= pins;
 	gpio_rcar_write(config, OUTDT, port_val);
+=======
+	uint32_t port_val;
+
+	port_val = gpio_rcar_read(dev, OUTDT);
+	port_val ^= pins;
+	gpio_rcar_write(dev, OUTDT, port_val);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -210,18 +327,26 @@ static int gpio_rcar_pin_interrupt_configure(const struct device *dev,
 					     enum gpio_int_mode mode,
 					     enum gpio_int_trig trig)
 {
+<<<<<<< HEAD
 	const struct gpio_rcar_cfg *config = dev->config;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (mode == GPIO_INT_MODE_DISABLED) {
 		return -ENOTSUP;
 	}
 
 	/* Configure positive or negative logic in POSNEG */
+<<<<<<< HEAD
 	gpio_rcar_modify_bit(config, POSNEG, pin,
+=======
+	gpio_rcar_modify_bit(dev, POSNEG, pin,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			     (trig == GPIO_INT_TRIG_LOW));
 
 	/* Configure edge or level trigger in EDGLEVEL */
 	if (mode == GPIO_INT_MODE_EDGE) {
+<<<<<<< HEAD
 		gpio_rcar_modify_bit(config, EDGLEVEL, pin, true);
 	} else {
 		gpio_rcar_modify_bit(config, EDGLEVEL, pin, false);
@@ -239,6 +364,25 @@ static int gpio_rcar_pin_interrupt_configure(const struct device *dev,
 	}
 
 	gpio_rcar_write(config, MSKCLR, BIT(pin));
+=======
+		gpio_rcar_modify_bit(dev, EDGLEVEL, pin, true);
+	} else {
+		gpio_rcar_modify_bit(dev, EDGLEVEL, pin, false);
+	}
+
+	if (trig == GPIO_INT_TRIG_BOTH) {
+		gpio_rcar_modify_bit(dev, BOTHEDGE, pin, true);
+	}
+
+	gpio_rcar_modify_bit(dev, IOINTSEL, pin, true);
+
+	if (mode == GPIO_INT_MODE_EDGE) {
+		/* Write INTCLR in case of edge trigger */
+		gpio_rcar_write(dev, INTCLR, BIT(pin));
+	}
+
+	gpio_rcar_write(dev, MSKCLR, BIT(pin));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -259,6 +403,10 @@ static int gpio_rcar_init(const struct device *dev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	DEVICE_MMIO_NAMED_MAP(dev, reg_base, K_MEM_CACHE_NONE);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	config->init_func(dev);
 	return 0;
 }
@@ -284,6 +432,7 @@ static const struct gpio_driver_api gpio_rcar_driver_api = {
 };
 
 /* Device Instantiation */
+<<<<<<< HEAD
 #define GPIO_RCAR_INIT(n)					    \
 	static void gpio_rcar_##n##_init(const struct device *dev); \
 	static const struct gpio_rcar_cfg gpio_rcar_cfg_##n = {	    \
@@ -319,6 +468,42 @@ static const struct gpio_driver_api gpio_rcar_driver_api = {
 			    DEVICE_DT_INST_GET(n), 0);		    \
 								    \
 		irq_enable(DT_INST_IRQN(n));			    \
+=======
+#define GPIO_RCAR_INIT(n)					      \
+	static void gpio_rcar_##n##_init(const struct device *dev);   \
+	static const struct gpio_rcar_cfg gpio_rcar_cfg_##n = {	      \
+		DEVICE_MMIO_NAMED_ROM_INIT(reg_base, DT_DRV_INST(n)), \
+		.common = {					      \
+			.port_pin_mask =			      \
+				GPIO_PORT_PIN_MASK_FROM_DT_INST(n),   \
+		},						      \
+		.init_func = gpio_rcar_##n##_init,		      \
+		.clock_dev = DEVICE_DT_GET(DT_INST_CLOCKS_CTLR(n)),   \
+		.mod_clk.module =				      \
+			DT_INST_CLOCKS_CELL_BY_IDX(n, 0, module),     \
+		.mod_clk.domain =				      \
+			DT_INST_CLOCKS_CELL_BY_IDX(n, 0, domain),     \
+	};							      \
+	static struct gpio_rcar_data gpio_rcar_data_##n;	      \
+								      \
+	DEVICE_DT_INST_DEFINE(n,				      \
+			      gpio_rcar_init,			      \
+			      NULL,				      \
+			      &gpio_rcar_data_##n,		      \
+			      &gpio_rcar_cfg_##n,		      \
+			      PRE_KERNEL_1,			      \
+			      CONFIG_GPIO_INIT_PRIORITY,	      \
+			      &gpio_rcar_driver_api		      \
+			      );				      \
+	static void gpio_rcar_##n##_init(const struct device *dev)    \
+	{							      \
+		IRQ_CONNECT(DT_INST_IRQN(n),			      \
+			    0,					      \
+			    gpio_rcar_port_isr,			      \
+			    DEVICE_DT_INST_GET(n), 0);		      \
+								      \
+		irq_enable(DT_INST_IRQN(n));			      \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 DT_INST_FOREACH_STATUS_OKAY(GPIO_RCAR_INIT)

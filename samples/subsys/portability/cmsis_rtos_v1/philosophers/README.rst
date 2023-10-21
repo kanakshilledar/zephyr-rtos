@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 .. _cmsis_rtos_v1-sample:
 
 Dining Philosophers (CMSIS RTOS V1 APIs)
 ########################################
+=======
+.. zephyr:code-sample:: cmsis-rtos-v1
+   :name: Dining Philosophers (CMSIS RTOS V1 APIs)
+
+   Implement a solution to the Dining Philosophers problem using CMSIS RTOS V1.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

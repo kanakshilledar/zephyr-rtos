@@ -5,8 +5,13 @@
  */
 
 #include "bs_bt_utils.h"
+<<<<<<< HEAD
 #include "zephyr/bluetooth/addr.h"
 #include "zephyr/bluetooth/conn.h"
+=======
+#include <zephyr/bluetooth/addr.h>
+#include <zephyr/bluetooth/conn.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <stdint.h>
 

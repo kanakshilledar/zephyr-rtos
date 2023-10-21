@@ -106,7 +106,11 @@ if (NOT CONFIG_NEWLIB_LIBC AND
     NOT (CONFIG_PICOLIBC AND NOT CONFIG_PICOLIBC_USE_MODULE) AND
     NOT COMPILER STREQUAL "xcc" AND
     NOT CONFIG_HAS_ESPRESSIF_HAL AND
+<<<<<<< HEAD
     NOT CONFIG_NATIVE_APPLICATION)
+=======
+    NOT CONFIG_NATIVE_BUILD)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   set_compiler_property(PROPERTY nostdinc -nostdinc)
   set_compiler_property(APPEND PROPERTY nostdinc_include ${NOSTDINC})
 endif()
@@ -160,7 +164,16 @@ set_compiler_property(PROPERTY coverage -fprofile-arcs -ftest-coverage -fno-inli
 set_compiler_property(PROPERTY security_canaries -fstack-protector-all)
 
 # Only a valid option with GCC 7.x and above, so let's do check and set.
+<<<<<<< HEAD
 check_set_compiler_property(APPEND PROPERTY security_canaries -mstack-protector-guard=global)
+=======
+if(CONFIG_STACK_CANARIES_TLS)
+  check_set_compiler_property(APPEND PROPERTY security_canaries -mstack-protector-guard=tls)
+else()
+  check_set_compiler_property(APPEND PROPERTY security_canaries -mstack-protector-guard=global)
+endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if(NOT CONFIG_NO_OPTIMIZATIONS)
   # _FORTIFY_SOURCE: Detect common-case buffer overflows for certain functions
@@ -182,6 +195,12 @@ set_compiler_property(PROPERTY debug -g)
 # Flags to save temporary object files
 set_compiler_property(PROPERTY save_temps -save-temps=obj)
 
+<<<<<<< HEAD
+=======
+# Flag to specify linker script
+set_compiler_property(PROPERTY linker_script -T)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Flags to not track macro expansion
 set_compiler_property(PROPERTY no_track_macro_expansion -ftrack-macro-expansion=0)
 
@@ -217,3 +236,8 @@ set_compiler_property(PROPERTY no_position_independent
 )
 
 set_compiler_property(PROPERTY no_global_merge "")
+<<<<<<< HEAD
+=======
+
+set_compiler_property(PROPERTY warning_shadow_variables -Wshadow)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -129,7 +129,11 @@ be called and an appropriate event notified.
 The connection can be closed by calling the ``mqtt_disconnect`` function.
 
 Zephyr provides sample code utilizing the MQTT client API. See
+<<<<<<< HEAD
 :ref:`mqtt-publisher-sample` for more information.
+=======
+:zephyr:code-sample:`mqtt-publisher` for more information.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Using MQTT with TLS
 *******************
@@ -162,7 +166,11 @@ registered in the system first. For more information on how to do that, refer
 to :ref:`secure sockets documentation <secure_sockets_interface>`.
 
 An example of how to use TLS with MQTT is also present in
+<<<<<<< HEAD
 :ref:`mqtt-publisher-sample`.
+=======
+:zephyr:code-sample:`mqtt-publisher` sample application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _mqtt_api_reference:
 

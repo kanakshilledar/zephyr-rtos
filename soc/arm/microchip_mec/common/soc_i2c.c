@@ -53,6 +53,7 @@ static const struct mec_i2c_port mec_i2c_ports[] = {
 	{ 0065, 2, 0066, 2 }, /* VTR3 */
 	{ 0071, 2, 0070, 2 }, /* VTR3 */
 	{ 0150, 1, 0147, 1 }
+<<<<<<< HEAD
 #elif defined(CONFIG_SOC_SERIES_MEC1701X)
 	{ 0004, 1, 0003, 1 },
 	{ 0006, 1, 0005, 1 },
@@ -70,6 +71,8 @@ static const struct mec_i2c_port mec_i2c_ports[] = {
 	{ 0xFF, 0, 0xFF, 0 },
 	{ 0xFF, 0, 0xFF, 0 },
 	{ 0xFF, 0, 0xFF, 0 }
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 };
 

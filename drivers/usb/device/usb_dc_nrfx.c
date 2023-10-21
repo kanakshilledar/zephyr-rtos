@@ -16,6 +16,10 @@
 #include <soc.h>
 #include <string.h>
 #include <stdio.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/usb/usb_dc.h>
 #include <zephyr/usb/usb_device.h>
@@ -386,7 +390,11 @@ static inline void usbd_work_schedule(void)
  */
 static inline void usbd_evt_free(struct usbd_event *ev)
 {
+<<<<<<< HEAD
 	k_mem_slab_free(&fifo_elem_slab, (void **)&ev->block.data);
+=======
+	k_mem_slab_free(&fifo_elem_slab, (void *)ev->block.data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -1046,7 +1054,10 @@ static void usbd_event_transfer_data(nrfx_usbd_evt_t const *const p_event)
  */
 static void usbd_event_handler(nrfx_usbd_evt_t const *const p_event)
 {
+<<<<<<< HEAD
 	struct nrf_usbd_ep_ctx *ep_ctx;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct usbd_event evt = {0};
 	bool put_evt = false;
 
@@ -1080,7 +1091,13 @@ static void usbd_event_handler(nrfx_usbd_evt_t const *const p_event)
 		}
 		break;
 
+<<<<<<< HEAD
 	case NRFX_USBD_EVT_EPTRANSFER:
+=======
+	case NRFX_USBD_EVT_EPTRANSFER: {
+		struct nrf_usbd_ep_ctx *ep_ctx;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ep_ctx = endpoint_ctx(p_event->data.eptransfer.ep);
 		switch (ep_ctx->cfg.type) {
 		case USB_DC_EP_CONTROL:
@@ -1097,6 +1114,10 @@ static void usbd_event_handler(nrfx_usbd_evt_t const *const p_event)
 			break;
 		}
 		break;
+<<<<<<< HEAD
+=======
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	case NRFX_USBD_EVT_SETUP: {
 		nrfx_usbd_setup_t drv_setup;
@@ -1394,6 +1415,15 @@ int usb_dc_ep_check_cap(const struct usb_dc_ep_cfg_data *const ep_cfg)
 		return -1;
 	}
 
+<<<<<<< HEAD
+=======
+	if ((ep_cfg->ep_type != USB_DC_EP_ISOCHRONOUS) &&
+	    (NRF_USBD_EPISO_CHECK(ep_cfg->ep_addr))) {
+		LOG_WRN("iso endpoint can only be iso");
+		return -1;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

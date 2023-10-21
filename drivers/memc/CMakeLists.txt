@@ -8,6 +8,10 @@ zephyr_linker_sources_ifdef(CONFIG_MEMC_STM32_SDRAM SECTIONS memc_stm32_sdram.ld
 zephyr_library_sources_ifdef(CONFIG_MEMC_STM32_NOR_PSRAM memc_stm32_nor_psram.c)
 
 zephyr_library_sources_ifdef(CONFIG_MEMC_MCUX_FLEXSPI memc_mcux_flexspi.c)
+<<<<<<< HEAD
+=======
+zephyr_library_sources_ifdef(CONFIG_MEMC_MCUX_FLEXSPI_W956A8MBYA memc_mcux_flexspi_w956a8mbya.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 zephyr_library_sources_ifdef(CONFIG_MEMC_MCUX_FLEXSPI_S27KS0641 memc_mcux_flexspi_s27ks0641.c)
 zephyr_library_sources_ifdef(CONFIG_MEMC_MCUX_FLEXSPI_APS6408L memc_mcux_flexspi_aps6408l.c)
 
@@ -18,3 +22,8 @@ zephyr_library_sources_ifdef(CONFIG_MEMC_HIFIVE_UNMATCHED_DRAM sifive_ddr.c)
 if((DEFINED CONFIG_FLASH_MCUX_FLEXSPI_XIP) AND (DEFINED CONFIG_FLASH))
   zephyr_code_relocate(FILES memc_mcux_flexspi.c LOCATION ${CONFIG_FLASH_MCUX_FLEXSPI_XIP_MEM}_TEXT)
 endif()
+<<<<<<< HEAD
+=======
+
+zephyr_library_sources_ifdef(CONFIG_MEMC_NXP_S32_QSPI memc_nxp_s32_qspi.c)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

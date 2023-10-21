@@ -89,6 +89,11 @@ static inline uint8_t bt_hci_evt_get_flags(uint8_t evt)
  * for so-called high priority HCI events, which should instead be delivered to
  * the host stack through bt_recv_prio().
  *
+<<<<<<< HEAD
+=======
+ * @note This function must only be called from a cooperative thread.
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @param buf Network buffer containing data from the controller.
  *
  * @return 0 on success or negative error number on failure.
@@ -240,6 +245,22 @@ int bt_hci_driver_register(const struct bt_hci_driver *drv);
  */
 int bt_hci_transport_setup(const struct device *dev);
 
+<<<<<<< HEAD
+=======
+/**
+ * @brief Teardown the HCI transport.
+ *
+ * @note A weak version of this function is included in the RPMSG driver, so
+ *		defining it is optional. NRF5340 includes support to put network core
+ *		in reset state.
+ *
+ * @param dev The device structure for the bus connecting to the IC
+ *
+ * @return 0 on success, negative error value on faulure
+ */
+int bt_hci_transport_teardown(const struct device *dev);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /** Allocate an HCI event buffer.
  *
  * This function allocates a new buffer for an HCI event. It is given the

@@ -71,6 +71,34 @@ irq_connect_dynamic(unsigned int irq, unsigned int priority,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * Disconnect a dynamic interrupt.
+ *
+ * Use this in conjunction with shared interrupts to remove a routine/parameter
+ * pair from the list of clients using the same interrupt line. If the interrupt
+ * is not being shared then the associated _sw_isr_table entry will be replaced
+ * by (NULL, z_irq_spurious) (default entry).
+ *
+ * @param irq IRQ line number
+ * @param priority Interrupt priority
+ * @param routine Interrupt service routine
+ * @param parameter ISR parameter
+ * @param flags Arch-specific IRQ configuration flags
+ *
+ * @return 0 in case of success, negative value otherwise
+ */
+static inline int
+irq_disconnect_dynamic(unsigned int irq, unsigned int priority,
+		       void (*routine)(const void *parameter),
+		       const void *parameter, uint32_t flags)
+{
+	return arch_irq_disconnect_dynamic(irq, priority, routine,
+					   parameter, flags);
+}
+
+/**
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * @brief Initialize a 'direct' interrupt handler.
  *
  * This routine initializes an interrupt handler for an IRQ. The IRQ must be
@@ -265,6 +293,7 @@ void z_smp_global_unlock(unsigned int key);
  */
 static inline unsigned int irq_get_level(unsigned int irq)
 {
+<<<<<<< HEAD
 #if defined(CONFIG_3RD_LEVEL_INTERRUPTS)
 	return ((irq >> 16) & 0xFF) != 0 ? 3 :
 		(((irq >> 8) & 0xFF) == 0 ? 1 : 2);
@@ -282,6 +311,28 @@ static inline unsigned int irq_get_level(unsigned int irq)
  * @brief Return the 2nd level interrupt number
  *
  *
+=======
+	const uint32_t mask2 = BIT_MASK(CONFIG_2ND_LEVEL_INTERRUPT_BITS) <<
+		CONFIG_1ST_LEVEL_INTERRUPT_BITS;
+	const uint32_t mask3 = BIT_MASK(CONFIG_3RD_LEVEL_INTERRUPT_BITS) <<
+		(CONFIG_1ST_LEVEL_INTERRUPT_BITS + CONFIG_2ND_LEVEL_INTERRUPT_BITS);
+
+	if (IS_ENABLED(CONFIG_3RD_LEVEL_INTERRUPTS) && (irq & mask3) != 0) {
+		return 3;
+	}
+
+	if (IS_ENABLED(CONFIG_2ND_LEVEL_INTERRUPTS) && (irq & mask2) != 0) {
+		return 2;
+	}
+
+	return 1;
+}
+
+#if defined(CONFIG_2ND_LEVEL_INTERRUPTS)
+/**
+ * @brief Return the 2nd level interrupt number
+ *
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * This routine returns the second level irq number of the zephyr irq
  * number passed in
  *
@@ -291,10 +342,18 @@ static inline unsigned int irq_get_level(unsigned int irq)
  */
 static inline unsigned int irq_from_level_2(unsigned int irq)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_3RD_LEVEL_INTERRUPTS
 	return ((irq >> 8) & 0xFF) - 1;
 #else
 	return (irq >> 8) - 1;
+=======
+#if defined(CONFIG_3RD_LEVEL_INTERRUPTS)
+	return ((irq >> CONFIG_1ST_LEVEL_INTERRUPT_BITS) &
+		BIT_MASK(CONFIG_2ND_LEVEL_INTERRUPT_BITS)) - 1;
+#else
+	return (irq >> CONFIG_1ST_LEVEL_INTERRUPT_BITS) - 1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 }
 
@@ -312,7 +371,11 @@ static inline unsigned int irq_from_level_2(unsigned int irq)
  */
 static inline unsigned int irq_to_level_2(unsigned int irq)
 {
+<<<<<<< HEAD
 	return (irq + 1) << 8;
+=======
+	return (irq + 1) << CONFIG_1ST_LEVEL_INTERRUPT_BITS;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -327,7 +390,11 @@ static inline unsigned int irq_to_level_2(unsigned int irq)
  */
 static inline unsigned int irq_parent_level_2(unsigned int irq)
 {
+<<<<<<< HEAD
 	return irq & 0xFF;
+=======
+	return irq & BIT_MASK(CONFIG_1ST_LEVEL_INTERRUPT_BITS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif
 
@@ -345,7 +412,11 @@ static inline unsigned int irq_parent_level_2(unsigned int irq)
  */
 static inline unsigned int irq_from_level_3(unsigned int irq)
 {
+<<<<<<< HEAD
 	return (irq >> 16) - 1;
+=======
+	return (irq >> (CONFIG_1ST_LEVEL_INTERRUPT_BITS + CONFIG_2ND_LEVEL_INTERRUPT_BITS)) - 1;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -362,7 +433,11 @@ static inline unsigned int irq_from_level_3(unsigned int irq)
  */
 static inline unsigned int irq_to_level_3(unsigned int irq)
 {
+<<<<<<< HEAD
 	return (irq + 1) << 16;
+=======
+	return (irq + 1) << (CONFIG_1ST_LEVEL_INTERRUPT_BITS + CONFIG_2ND_LEVEL_INTERRUPT_BITS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -377,7 +452,12 @@ static inline unsigned int irq_to_level_3(unsigned int irq)
  */
 static inline unsigned int irq_parent_level_3(unsigned int irq)
 {
+<<<<<<< HEAD
 	return (irq >> 8) & 0xFF;
+=======
+	return (irq >> CONFIG_1ST_LEVEL_INTERRUPT_BITS) &
+		BIT_MASK(CONFIG_2ND_LEVEL_INTERRUPT_BITS);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 #endif
 

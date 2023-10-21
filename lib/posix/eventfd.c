@@ -17,6 +17,11 @@
 #define EFD_FLAGS_SET_INTERNAL (EFD_SEMAPHORE | EFD_NONBLOCK)
 
 struct eventfd {
+<<<<<<< HEAD
+=======
+	struct k_poll_signal read_sig;
+	struct k_poll_signal write_sig;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	struct k_spinlock lock;
 	eventfd_t cnt;
 	int flags;
@@ -49,12 +54,37 @@ static int eventfd_poll_prepare(struct eventfd *efd,
 				struct k_poll_event **pev,
 				struct k_poll_event *pev_end)
 {
+<<<<<<< HEAD
 	if ((pfd->events & (ZSOCK_POLLOUT | ZSOCK_POLLIN)) != 0) {
+=======
+	if (pfd->events & ZSOCK_POLLIN) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (*pev == pev_end) {
 			errno = ENOMEM;
 			return -1;
 		}
+<<<<<<< HEAD
 		**pev = (struct k_poll_event){0};
+=======
+
+		(*pev)->obj = &efd->read_sig;
+		(*pev)->type = K_POLL_TYPE_SIGNAL;
+		(*pev)->mode = K_POLL_MODE_NOTIFY_ONLY;
+		(*pev)->state = K_POLL_STATE_NOT_READY;
+		(*pev)++;
+	}
+
+	if (pfd->events & ZSOCK_POLLOUT) {
+		if (*pev == pev_end) {
+			errno = ENOMEM;
+			return -1;
+		}
+
+		(*pev)->obj = &efd->write_sig;
+		(*pev)->type = K_POLL_TYPE_SIGNAL;
+		(*pev)->mode = K_POLL_MODE_NOTIFY_ONLY;
+		(*pev)->state = K_POLL_STATE_NOT_READY;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		(*pev)++;
 	}
 
@@ -99,6 +129,15 @@ static int eventfd_read_locked(struct eventfd *efd, eventfd_t *value)
 		efd->cnt = 0;
 	}
 
+<<<<<<< HEAD
+=======
+	if (efd->cnt == 0) {
+		k_poll_signal_reset(&efd->read_sig);
+	}
+
+	k_poll_signal_raise(&efd->write_sig, 0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -124,6 +163,15 @@ static int eventfd_write_locked(struct eventfd *efd, eventfd_t *value)
 	/* successful write */
 	efd->cnt = result;
 
+<<<<<<< HEAD
+=======
+	if (efd->cnt == (UINT64_MAX - 1)) {
+		k_poll_signal_reset(&efd->write_sig);
+	}
+
+	k_poll_signal_raise(&efd->read_sig, 0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 
@@ -398,6 +446,18 @@ int eventfd(unsigned int initval, int flags)
 	efd->flags = EFD_IN_USE_INTERNAL | flags;
 	efd->cnt = initval;
 
+<<<<<<< HEAD
+=======
+	k_poll_signal_init(&efd->write_sig);
+	k_poll_signal_init(&efd->read_sig);
+
+	if (initval != 0) {
+		k_poll_signal_raise(&efd->read_sig, 0);
+	}
+
+	k_poll_signal_raise(&efd->write_sig, 0);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	z_finalize_fd(fd, efd, &eventfd_fd_vtable);
 
 	return fd;

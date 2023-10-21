@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _usb_hid-mouse:
 
 USB HID mouse Sample Application
 ################################
+=======
+.. zephyr:code-sample:: usb-hid-mouse
+   :name: USB HID mouse
+   :relevant-api: _usb_device_core_api usb_hid_class input_interface
+
+   Implement a basic HID mouse device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -19,6 +27,7 @@ Zephyr project tree.
 Requirements
 ************
 
+<<<<<<< HEAD
 This project requires an USB device driver, and there must has at least one
 GPIO button in your board.
 
@@ -42,6 +51,19 @@ also be used as follows:
 - ``sw1``: right button
 - ``sw2``: move the mouse along the x-axis
 - ``sw3``: move the mouse along the y-axis
+=======
+This project requires an USB device driver and uses the :ref:`input` API.
+There must be a :dtcompatible:`gpio-keys` group of buttons or keys defined at
+the board level that can generate input events, otherwise the example will build
+but not work as expected.
+
+The key mapping in the sample is as follows:
+
+- ``INPUT_KEY_0``: left button
+- ``INPUT_KEY_1``: right button
+- ``INPUT_KEY_2``: move the mouse along the x-axis
+- ``INPUT_KEY_3``: move the mouse along the y-axis
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 An LED must also be configured via the ``led0`` devicetree alias. You may also
 see this error if you try to build this sample for an unsupported board:

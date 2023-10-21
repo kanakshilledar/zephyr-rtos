@@ -7,6 +7,7 @@ Overview
 ********
 
 This sample can be used for basic power measurement and as an example of
+<<<<<<< HEAD
 deep sleep on Nordic platforms.  The functional behavior is:
 
 * Busy-wait for 2 seconds
@@ -21,6 +22,9 @@ This sample also demonstrates the use of a :c:func:`SYS_INIT()` call to
 disable the deep sleep functionality before the kernel starts, which
 prevents the board from powering down during initialization of drivers
 that use unbounded delays to wait for startup.
+=======
+deep sleep on Nordic platforms.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 RAM Retention
 =============
@@ -36,6 +40,7 @@ Requirements
 
 This application uses nRF51 DK or nRF52 DK board for the demo.
 
+<<<<<<< HEAD
 Building, Flashing and Running
 ******************************
 
@@ -57,6 +62,11 @@ Running:
 
 Sample Output
 =================
+=======
+Sample Output
+=============
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 nRF52 core output
 -----------------
 
@@ -65,8 +75,12 @@ nRF52 core output
    *** Booting Zephyr OS build v2.3.0-rc1-204-g5f2eb85f728d  ***
 
    nrf52dk_nrf52832 system off demo
+<<<<<<< HEAD
    Busy-wait 2 s
    Busy-wait 2 s with UART off
    Sleep 2 s
    Sleep 2 s with UART off
    Entering system off; press BUTTON1 to restart
+=======
+   Entering system off; press sw0 to restart
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

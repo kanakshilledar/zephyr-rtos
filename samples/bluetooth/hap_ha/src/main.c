@@ -24,11 +24,16 @@
 				BT_AUDIO_CONTEXT_TYPE_MEDIA | \
 				BT_AUDIO_CONTEXT_TYPE_LIVE)
 
+<<<<<<< HEAD
 #define AVAILABLE_SINK_CONTEXT CONFIG_BT_PACS_SNK_CONTEXT
 #define AVAILABLE_SOURCE_CONTEXT CONFIG_BT_PACS_SRC_CONTEXT
 
 BUILD_ASSERT((CONFIG_BT_PACS_SNK_CONTEXT & MANDATORY_SINK_CONTEXT) == MANDATORY_SINK_CONTEXT,
 	     "Need to support mandatory Supported_Sink_Contexts");
+=======
+#define AVAILABLE_SINK_CONTEXT   MANDATORY_SINK_CONTEXT
+#define AVAILABLE_SOURCE_CONTEXT MANDATORY_SINK_CONTEXT
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static uint8_t unicast_server_addata[] = {
 	BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL), /* ASCS UUID */
@@ -51,7 +56,11 @@ static const struct bt_data ad[] = {
 };
 
 static struct k_work_delayable adv_work;
+<<<<<<< HEAD
 static struct bt_le_ext_adv *adv;
+=======
+static struct bt_le_ext_adv *ext_adv;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
@@ -101,14 +110,24 @@ static void adv_work_handler(struct k_work *work)
 {
 	int err;
 
+<<<<<<< HEAD
 	if (adv == NULL) {
 		/* Create a non-connectable non-scannable advertising set */
 		err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN_NAME, &adv_cb, &adv);
+=======
+	if (ext_adv == NULL) {
+		/* Create a non-connectable non-scannable advertising set */
+		err = bt_le_ext_adv_create(BT_LE_EXT_ADV_CONN_NAME, &adv_cb, &ext_adv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err) {
 			printk("Failed to create advertising set (err %d)\n", err);
 		}
 
+<<<<<<< HEAD
 		err = bt_le_ext_adv_set_data(adv, ad, ARRAY_SIZE(ad), NULL, 0);
+=======
+		err = bt_le_ext_adv_set_data(ext_adv, ad, ARRAY_SIZE(ad), NULL, 0);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (err) {
 			printk("Failed to set advertising data (err %d)\n", err);
 		}
@@ -116,7 +135,11 @@ static void adv_work_handler(struct k_work *work)
 		__ASSERT_NO_MSG(err == 0);
 	}
 
+<<<<<<< HEAD
 	err = bt_le_ext_adv_start(adv, BT_LE_EXT_ADV_START_DEFAULT);
+=======
+	err = bt_le_ext_adv_start(ext_adv, BT_LE_EXT_ADV_START_DEFAULT);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (err) {
 		printk("Failed to start advertising set (err %d)\n", err);
 	} else {

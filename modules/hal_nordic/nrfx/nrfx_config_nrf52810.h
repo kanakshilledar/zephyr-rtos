@@ -35,9 +35,15 @@
  *
  * Integer value.
  * Supported values:
+<<<<<<< HEAD
  * - RC                  = 0
  * - XTAL                = 1
  * - Synth               = 2
+=======
+ * - RC    = 0
+ * - XTAL  = 1
+ * - Synth = 2
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * - External Low Swing  = 131073
  * - External Full Swing = 196609
  */

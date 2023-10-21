@@ -17,3 +17,16 @@ tests:
       - hifive_unleashed
       - mps2_an385
       - mps2_an521_ns
+<<<<<<< HEAD
+=======
+  kernel.timer.timer_behavior_external:
+    filter: dt_compat_enabled("test-kernel-timer-behavior-external")
+    harness: pytest
+    harness_config:
+      pytest_args: ['--tool', 'saleae_logic2', '--tool-options',
+                    'port=10430,channel=1,sample-rate=6_250_000,threshold-volts=3.3']
+      fixture: gpio_timerout
+    extra_configs:
+      - CONFIG_TIMER_EXTERNAL_TEST=y
+      - CONFIG_BOOT_DELAY=5000
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

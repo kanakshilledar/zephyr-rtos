@@ -514,4 +514,9 @@ enum shst_value {
 			    (mm_reg_t)b_a + nvme_mmio_offsetof(reg) + 4); \
 	} while (0)
 
+<<<<<<< HEAD
+=======
+#define NVME_IS_BUFFER_DWORD_ALIGNED(_buf_addr) (!((uintptr_t)_buf_addr & 0x3))
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* ZEPHYR_DRIVERS_DISK_NVME_NHME_HELPERS_H_ */

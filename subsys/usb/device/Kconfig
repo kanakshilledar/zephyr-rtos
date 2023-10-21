@@ -49,9 +49,17 @@ config USB_DEVICE_SN
 	  Hardware Information Driver (HWINFO).
 
 config USB_COMPOSITE_DEVICE
+<<<<<<< HEAD
 	bool "Composite device driver"
 	help
 	  Enable composite USB device driver.
+=======
+	bool "Use Interface Association Descriptor code triple"
+	help
+	  This option modifies the code triple in the device descriptor
+	  to signal that one of the functions has two or more interfaces and
+	  uses the Interface Association Descriptor.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config USB_MAX_NUM_TRANSFERS
     int "Set number of USB transfer data buffers"
@@ -136,7 +144,11 @@ config USB_WORKQUEUE
 config USB_WORKQUEUE_STACK_SIZE
 	int "USB workqueue stack size"
 	depends on USB_WORKQUEUE
+<<<<<<< HEAD
 	default 4096 if COVERAGE
+=======
+	default 4096 if COVERAGE_GCOV
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 1024
 
 config USB_WORKQUEUE_PRIORITY

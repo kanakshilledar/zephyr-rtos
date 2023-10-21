@@ -6,7 +6,11 @@ menuconfig MCUMGR
 	bool "mcumgr Support"
 	depends on NET_BUF
 	depends on ZCBOR
+<<<<<<< HEAD
 	depends on CRC
+=======
+	imply CRC
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  This option enables the mcumgr management library.
 
@@ -33,6 +37,15 @@ config MCUMGR_SMP_LEGACY_RC_BEHAVIOUR
 	  response will be empty with the new behaviour enabled, as opposed to
 	  the old behaviour where the rc field will be present in the response.
 
+<<<<<<< HEAD
+=======
+menu "SMP Client"
+
+rsource "smp_client/Kconfig"
+
+endmenu
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 menu "Command Handlers"
 
 rsource "grp/Kconfig"

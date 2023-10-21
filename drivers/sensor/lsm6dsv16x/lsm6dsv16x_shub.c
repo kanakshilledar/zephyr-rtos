@@ -580,14 +580,22 @@ static int lsm6dsv16x_shub_read_target_reg(const struct device *dev,
 	trgt_cfg.slv_subadd = trgt_reg;
 	trgt_cfg.slv_len = len;
 
+<<<<<<< HEAD
 	lsm6dsv16x_sh_slv0_cfg_read(ctx, &trgt_cfg);
+=======
+	lsm6dsv16x_sh_slv_cfg_read(ctx, 0, &trgt_cfg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* turn SH on, wait for shub i2c read to finish */
 	lsm6dsv16x_shub_enable(dev, 1);
 	lsm6dsv16x_shub_wait_completed(ctx);
 
 	/* read data from external target */
+<<<<<<< HEAD
 	if (lsm6dsv16x_sh_read_data_raw_get(ctx, (lsm6dsv16x_emb_sh_read_t *)value, len) < 0) {
+=======
+	if (lsm6dsv16x_sh_read_data_raw_get(ctx, value, len) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_DBG("shub: error reading sensor data");
 		return -EIO;
 	}
@@ -662,6 +670,7 @@ static int lsm6dsv16x_shub_set_data_channel(const struct device *dev)
 	struct lsm6dsv16x_shub_slist *sp;
 	lsm6dsv16x_sh_cfg_read_t trgt_cfg;
 
+<<<<<<< HEAD
 	int32_t (*sh_chan_cfg[LSM6DSV16X_SHUB_MAX_NUM_TARGETS])
 			(stmdev_ctx_t *ctx, lsm6dsv16x_sh_cfg_read_t *val) = {
 		lsm6dsv16x_sh_slv1_cfg_read,
@@ -669,6 +678,8 @@ static int lsm6dsv16x_shub_set_data_channel(const struct device *dev)
 		lsm6dsv16x_sh_slv3_cfg_read,
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Configure shub data channels to access external targets */
 	for (n = 0; n < data->num_ext_dev; n++) {
 		sp = &lsm6dsv16x_shub_slist[data->shub_ext[n]];
@@ -677,7 +688,11 @@ static int lsm6dsv16x_shub_set_data_channel(const struct device *dev)
 		trgt_cfg.slv_subadd = sp->out_data_addr;
 		trgt_cfg.slv_len = sp->out_data_len;
 
+<<<<<<< HEAD
 		if (sh_chan_cfg[n](ctx, &trgt_cfg) < 0) {
+=======
+		if (lsm6dsv16x_sh_slv_cfg_read(ctx, n + 1, &trgt_cfg) < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			LOG_DBG("shub: error configuring shub for ext targets");
 			return -EIO;
 		}
@@ -725,7 +740,14 @@ int lsm6dsv16x_shub_fetch_external_devs(const struct device *dev)
 	struct lsm6dsv16x_shub_slist *sp;
 
 	/* read data from external target */
+<<<<<<< HEAD
 	lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_SENSOR_HUB_MEM_BANK);
+=======
+	if (lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_SENSOR_HUB_MEM_BANK) < 0) {
+		LOG_DBG("failed to enter SENSOR_HUB bank");
+		return -EIO;
+	}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (n = 0; n < data->num_ext_dev; n++) {
 		sp = &lsm6dsv16x_shub_slist[data->shub_ext[n]];
@@ -733,14 +755,22 @@ int lsm6dsv16x_shub_fetch_external_devs(const struct device *dev)
 		if (lsm6dsv16x_read_reg(ctx, sp->sh_out_reg,
 				     data->ext_data[n], sp->out_data_len) < 0) {
 			LOG_DBG("shub: failed to read sample");
+<<<<<<< HEAD
 			lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_MAIN_MEM_BANK);
+=======
+			(void) lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_MAIN_MEM_BANK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			return -EIO;
 		}
 	}
 
+<<<<<<< HEAD
 	lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_MAIN_MEM_BANK);
 
 	return 0;
+=======
+	return lsm6dsv16x_mem_bank_set(ctx, LSM6DSV16X_MAIN_MEM_BANK);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int lsm6dsv16x_shub_config(const struct device *dev, enum sensor_channel chan,

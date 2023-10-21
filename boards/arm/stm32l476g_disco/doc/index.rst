@@ -206,6 +206,7 @@ You can debug an application in the usual way.  Here is an example for the
    :goals: debug
 
 .. _STM32L476G Discovery website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/32l476gdiscovery.html
 
 .. _STM32L476G Discovery board User Manual:
@@ -216,3 +217,15 @@ You can debug an application in the usual way.  Here is an example for the
 
 .. _STM32L476 reference manual:
    http://www.st.com/resource/en/reference_manual/DM00083560.pdf
+=======
+   https://www.st.com/en/evaluation-tools/32l476gdiscovery.html
+
+.. _STM32L476G Discovery board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00172179.pdf
+
+.. _STM32L476VG on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32l476vg.html
+
+.. _STM32L476 reference manual:
+   https://www.st.com/resource/en/reference_manual/DM00083560.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -12,7 +12,11 @@
 #include <zephyr/crypto/crypto.h>
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/mchp_xec_clock_control.h>
+<<<<<<< HEAD
 #include "zephyr/sys/util.h"
+=======
+#include <zephyr/sys/util.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(xec_symcr, CONFIG_CRYPTO_LOG_LEVEL);
 

@@ -24,3 +24,10 @@ RunTest mesh_adv_proxy_mixin adv_tx_proxy_mixin adv_rx_proxy_mixin
 conf=prj_mesh1d1_conf
 overlay=overlay_gatt_conf
 RunTest mesh_adv_proxy_mixin_1d1 adv_tx_proxy_mixin adv_rx_proxy_mixin
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay="overlay_gatt_conf_overlay_psa_conf"
+RunTest mesh_adv_proxy_mixin_psa adv_tx_proxy_mixin adv_rx_proxy_mixin
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

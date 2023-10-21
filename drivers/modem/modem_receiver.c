@@ -30,7 +30,11 @@ static struct mdm_receiver_context *contexts[MAX_MDM_CTX];
 /**
  * @brief  Finds receiver context which manages provided device.
  *
+<<<<<<< HEAD
  * @param  *dev: device used by the receiver context.
+=======
+ * @param  dev: device used by the receiver context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval Receiver context or NULL.
  */
@@ -53,7 +57,11 @@ static struct mdm_receiver_context *context_from_dev(const struct device *dev)
  * @note   Amount of stored receiver contexts is determined by
  *         MAX_MDM_CTX.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context to persist.
+=======
+ * @param  ctx: receiver context to persist.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval 0 if ok, < 0 if error.
  */
@@ -76,7 +84,11 @@ static int mdm_receiver_get(struct mdm_receiver_context *ctx)
  *
  * @note   Discards remaining data.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context.
+=======
+ * @param  ctx: receiver context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval None.
  */
@@ -98,7 +110,11 @@ static void mdm_receiver_flush(struct mdm_receiver_context *ctx)
  * @note   Fills contexts ring buffer with received data.
  *         When ring buffer is full the data is discarded.
  *
+<<<<<<< HEAD
  * @param  *uart_dev: uart device.
+=======
+ * @param  uart_dev: uart device.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval None.
  */
@@ -138,7 +154,11 @@ static void mdm_receiver_isr(const struct device *uart_dev, void *user_data)
 /**
  * @brief  Configures receiver context and assigned device.
  *
+<<<<<<< HEAD
  * @param  *ctx: receiver context.
+=======
+ * @param  ctx: receiver context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * @retval None.
  */

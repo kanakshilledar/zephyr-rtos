@@ -245,6 +245,13 @@ static inline void *arch_xtensa_uncached_ptr(void __sparse_cache *ptr)
 
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_XTENSA_MMU
+extern void arch_xtensa_mmu_post_init(bool is_core0);
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

@@ -7,16 +7,35 @@
 #include <zephyr/logging/log_output.h>
 #include <zephyr/logging/log_backend_ble.h>
 #include <zephyr/bluetooth/gatt.h>
+<<<<<<< HEAD
 #include <zephyr/logging/log_ctrl.h>
 
 static uint8_t output_buf[CONFIG_LOG_BACKEND_BLE_BUF_SIZE];
+=======
+#include <zephyr/bluetooth/conn.h>
+#include <zephyr/logging/log_ctrl.h>
+
+#define ATT_NOTIFY_SIZE 3
+#define LOG_BACKEND_BLE_BUF_SIZE (CONFIG_BT_L2CAP_TX_MTU - ATT_NOTIFY_SIZE)
+
+static uint8_t output_buf[LOG_BACKEND_BLE_BUF_SIZE];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static bool panic_mode;
 static uint32_t log_format_current = CONFIG_LOG_BACKEND_BLE_OUTPUT_DEFAULT;
 static logger_backend_ble_hook user_hook;
 static bool first_enable;
 static void *user_ctx;
+<<<<<<< HEAD
 /* Forward declarations*/
 const struct log_backend *log_backend_ble_get(void);
+=======
+static struct bt_conn *ble_backend_conn;
+
+/* Forward declarations*/
+static const struct log_backend *log_backend_ble_get(void);
+static void log_backend_ble_connect(struct bt_conn *conn, uint8_t err);
+static void log_backend_ble_disconnect(struct bt_conn *conn, uint8_t reason);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /**
  * @brief Callback for the subscription to the ble logger notification characteristic
@@ -39,6 +58,16 @@ static void log_notify_changed(const struct bt_gatt_attr *attr, uint16_t value);
 #define LOGGER_RX_SERVICE_UUID                                                                     \
 	BT_UUID_DECLARE_128(BT_UUID_128_ENCODE(0x6E400002, 0xB5A3, 0xF393, 0xE0A9, 0xE50E24DCCA9E))
 
+<<<<<<< HEAD
+=======
+BT_CONN_CB_DEFINE(log_backend_ble) = {
+	.connected = log_backend_ble_connect,
+	.disconnected = log_backend_ble_disconnect,
+	.le_param_req = NULL,
+	.le_param_updated = NULL
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /**
  * @brief BLE Service that represents this backend
  * @note Only transmission characteristic is used. The RX characteristic
@@ -63,6 +92,23 @@ void logger_backend_ble_set_hook(logger_backend_ble_hook hook, void *ctx)
 	user_ctx = ctx;
 }
 
+<<<<<<< HEAD
+=======
+static void log_backend_ble_connect(struct bt_conn *conn, uint8_t err)
+{
+	if (err == 0) {
+		ble_backend_conn = conn;
+	}
+}
+
+static void log_backend_ble_disconnect(struct bt_conn *conn, uint8_t reason)
+{
+	ARG_UNUSED(conn);
+	ARG_UNUSED(reason);
+	ble_backend_conn = NULL;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void log_notify_changed(const struct bt_gatt_attr *attr, uint16_t value)
 {
 	ARG_UNUSED(attr);
@@ -86,6 +132,7 @@ void log_notify_changed(const struct bt_gatt_attr *attr, uint16_t value)
 
 static int line_out(uint8_t *data, size_t length, void *output_ctx)
 {
+<<<<<<< HEAD
 	const int notify_res = bt_gatt_notify(NULL, log_characteristic, data, length);
 
 	if (notify_res == 0) {
@@ -93,12 +140,46 @@ static int line_out(uint8_t *data, size_t length, void *output_ctx)
 	} else {
 		return 0;
 	}
+=======
+	ARG_UNUSED(output_ctx);
+	const uint16_t mtu_size = bt_gatt_get_mtu(ble_backend_conn);
+	const uint16_t attr_data_len = mtu_size - ATT_NOTIFY_SIZE;
+	uint16_t notify_len;
+
+	if (attr_data_len < LOG_BACKEND_BLE_BUF_SIZE) {
+		notify_len = attr_data_len;
+	} else {
+		notify_len = LOG_BACKEND_BLE_BUF_SIZE;
+	}
+
+	struct bt_gatt_notify_params notify_param = {
+		.uuid = NULL,
+		.attr = log_characteristic,
+		.data = data,
+		.len = notify_len,
+		.func = NULL,
+		.user_data = NULL,
+	#if defined(CONFIG_BT_EATT)
+		.chan_opt = BT_ATT_CHAN_OPT_NONE
+	#endif
+	};
+
+	const int notify_res = bt_gatt_notify_cb(ble_backend_conn, &notify_param);
+	/* ignore notification result and continue sending msg*/
+	ARG_UNUSED(notify_res);
+
+	return length;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 LOG_OUTPUT_DEFINE(log_output_ble, line_out, output_buf, sizeof(output_buf));
 
 static void process(const struct log_backend *const backend, union log_msg_generic *msg)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(backend);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t flags = LOG_OUTPUT_FLAG_FORMAT_SYSLOG | LOG_OUTPUT_FLAG_TIMESTAMP;
 
 	if (panic_mode) {
@@ -112,17 +193,29 @@ static void process(const struct log_backend *const backend, union log_msg_gener
 
 static int format_set(const struct log_backend *const backend, uint32_t log_type)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(backend);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	log_format_current = log_type;
 	return 0;
 }
 
 static void init_ble(struct log_backend const *const backend)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(backend);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	log_backend_deactivate(log_backend_ble_get());
 }
 
 static void panic(struct log_backend const *const backend)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(backend);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	panic_mode = true;
 }
 
@@ -136,6 +229,10 @@ static void panic(struct log_backend const *const backend)
  */
 static int backend_ready(const struct log_backend *const backend)
 {
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(backend);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return -EACCES;
 }
 

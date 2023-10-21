@@ -40,6 +40,13 @@ static inline bool verify_emptyness(sys_slist_t *list)
 		return false;
 	}
 
+<<<<<<< HEAD
+=======
+	if (sys_slist_len(list) != 0) {
+		return false;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	count = 0;
 	SYS_SLIST_FOR_EACH_NODE(list, node) {
 		count++;
@@ -98,6 +105,13 @@ static inline bool verify_content_amount(sys_slist_t *list, int amount)
 		return false;
 	}
 
+<<<<<<< HEAD
+=======
+	if (sys_slist_len(list) != amount) {
+		return false;
+	}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	count = 0;
 	SYS_SLIST_FOR_EACH_NODE(list, node) {
 		count++;

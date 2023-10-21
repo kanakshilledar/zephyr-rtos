@@ -7,7 +7,11 @@
 #include <zephyr/dt-bindings/espi/npcx_espi.h>
 
 /*
+<<<<<<< HEAD
  *                Nuvoton NPCX7 eSPI Virtual Wires Mapping Table
+=======
+ *                Nuvoton NPCX eSPI Virtual Wires Mapping Table
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  * |--------------------------------------------------------------------------|
  * | VW idx | SLV reg | Wire Bit 3   | Wire Bit 2   | Wire Bit 1| Wire Bit 0  |
  * |--------------------------------------------------------------------------|
@@ -26,11 +30,14 @@
  * | 06h[S] | VWEVSM2 | HOST_RST_ACK | Reserved     | SMI#      | SCI#        |
  * | 40h[P] | VWEVSM3 | Reserved     | Reserved     | Reserved  | SUS_ACK#    |
  * |--------------------------------------------------------------------------|
+<<<<<<< HEAD
  * |       Output (Slave-to-Master) Virtual Wires (High at reset state)       |
  * |--------------------------------------------------------------------------|
  * | 50h[P] | VWGPSM0 | SLV_GPIO_3   | SLV_GPIO_2   | SLV_GPIO_1| SLV_GPIO_0  |
  * | 51h[P] | VWGPSM1 | SLV_GPIO_7   | SLV_GPIO_6   | SLV_GPIO_5| SLV_GPIO_4  |
  * |--------------------------------------------------------------------------|
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *  [S] System-/[P] Platform-Specific Virtual Wires
  */
 
@@ -142,6 +149,7 @@
 		vw-sus-ack {
 			vw-reg = <NPCX_VWEVSM3 0x01>;
 		};
+<<<<<<< HEAD
 
 		/*
 		 * Virtual wires for platform level usage (High at Reset state)
@@ -173,5 +181,7 @@
 		vw_slv_gpio_7 {
 			vw-reg = <NPCX_VWGPSM1 0x08>;
 		};
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

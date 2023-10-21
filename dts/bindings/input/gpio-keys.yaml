@@ -1,7 +1,31 @@
 # Copyright (c) 2018, Linaro Limited
 # SPDX-License-Identifier: Apache-2.0
 
+<<<<<<< HEAD
 description: GPIO KEYS parent node
+=======
+description: |
+  Zephyr Input GPIO KEYS parent node
+
+  This defines a group of buttons that can generate input events. Each button
+  is defined in a child node of the gpio-keys node and defines a specific key
+  code.
+
+  For example:
+
+  #include <zephyr/dt-bindings/input/input-event-codes.h>
+
+  / {
+         buttons {
+                 compatible = "gpio-keys";
+                 button_0 {
+                         gpios = <&gpio0 13 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+                         zephyr,code = <INPUT_KEY_0>;
+                 };
+         };
+  };
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 compatible: "gpio-keys"
 
@@ -26,5 +50,8 @@ child-binding:
       description: Descriptive name of the key
     zephyr,code:
       type: int
+<<<<<<< HEAD
       default: 0
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
       description: Key code to emit.

@@ -15,11 +15,14 @@
 #define TICKER_USER_ID_THREAD   MAYFLY_CALL_ID_PROGRAM
 
 #define EVENT_PIPELINE_MAX 7
+<<<<<<< HEAD
 #if defined(CONFIG_BT_CTLR_LOW_LAT_ULL)
 #define EVENT_DONE_LINK_CNT 0
 #else
 #define EVENT_DONE_LINK_CNT 1
 #endif /* CONFIG_BT_CTLR_LOW_LAT_ULL */
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define ADV_INT_UNIT_US      625U
 #define SCAN_INT_UNIT_US     625U
@@ -598,9 +601,13 @@ void *ull_pdu_rx_alloc(void);
 void *ull_iso_pdu_rx_alloc_peek(uint8_t count);
 void *ull_iso_pdu_rx_alloc(void);
 void ull_rx_put(memq_link_t *link, void *rx);
+<<<<<<< HEAD
 void ull_rx_put_done(memq_link_t *link, void *done);
 void ull_rx_sched(void);
 void ull_rx_sched_done(void);
+=======
+void ull_rx_sched(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void ull_rx_put_sched(memq_link_t *link, void *rx);
 void ull_iso_rx_put(memq_link_t *link, void *rx);
 void ull_iso_rx_sched(void);

@@ -8,6 +8,10 @@
 #include <st/f7/stm32f756Xg.dtsi>
 #include <st/f7/stm32f756zgtx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*
  * WARNING: The pin PA7 will conflict on selection of SPI_1 and ETH_STM32_HAL.
@@ -25,10 +29,18 @@
 		zephyr,shell-uart = &usart3;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
+<<<<<<< HEAD
 		zephyr,dtcm = &dtcm;
 	};
 
 	leds {
+=======
+		zephyr,code-partition = &slot0_partition;
+		zephyr,dtcm = &dtcm;
+	};
+
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led: led_0 {
 			gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
@@ -49,6 +61,10 @@
 		user_button: button_0 {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -149,3 +165,43 @@ zephyr_udc0: &usbotg_fs {
 		     &eth_txd1_pb13>;
 	pinctrl-names = "default";
 };
+<<<<<<< HEAD
+=======
+
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		/*
+		 * 256KB for bootloader. This is too large but
+		 * there is no way to make the part smaller.
+		 */
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 DT_SIZE_K(256)>;
+			read-only;
+		};
+
+		/* application image slot: 256KB */
+		slot0_partition: partition@40000 {
+			label = "image-0";
+			reg = <0x00040000 DT_SIZE_K(256)>;
+		};
+
+		/* backup slot: 256KB */
+		slot1_partition: partition@80000 {
+			label = "image-1";
+			reg = <0x00080000 DT_SIZE_K(256)>;
+		};
+
+		/* scratch slot: 256KB */
+		scratch_partition: partition@C0000 {
+			label = "image-scratch";
+			reg = <0x000C0000 DT_SIZE_K(256)>;
+		};
+
+	};
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

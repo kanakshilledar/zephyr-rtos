@@ -16,7 +16,11 @@ LOG_MODULE_REGISTER(net_test, CONFIG_NET_IPV6_LOG_LEVEL);
 #include <errno.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/linker/sections.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/ztest.h>
 
@@ -2217,9 +2221,17 @@ static uint8_t ipv6_reass_frag2[] = {
 
 static uint16_t test_recv_payload_len = 1300U;
 
+<<<<<<< HEAD
 static enum net_verdict handle_ipv6_echo_reply(struct net_pkt *pkt,
 					       struct net_ipv6_hdr *ip_hdr,
 					       struct net_icmp_hdr *icmp_hdr)
+=======
+static int handle_ipv6_echo_reply(struct net_icmp_ctx *ctx,
+				  struct net_pkt *pkt,
+				  struct net_icmp_ip_hdr *ip_hdr,
+				  struct net_icmp_hdr *icmp_hdr,
+				  void *user_data)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct net_ipv6_hdr *hdr = NET_IPV6_HDR(pkt);
 	uint8_t verify_buf[NET_IPV6H_LEN];
@@ -2228,6 +2240,14 @@ static enum net_verdict handle_ipv6_echo_reply(struct net_pkt *pkt,
 	uint16_t i;
 	uint8_t expected_data = 0;
 
+<<<<<<< HEAD
+=======
+	ARG_UNUSED(ctx);
+	ARG_UNUSED(ip_hdr);
+	ARG_UNUSED(icmp_hdr);
+	ARG_UNUSED(user_data);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	NET_DBG("Data %p received", pkt);
 
 	zassert_equal(net_pkt_get_len(pkt), expected_pkt_length, "Invalid packet length");
@@ -2275,8 +2295,11 @@ static enum net_verdict handle_ipv6_echo_reply(struct net_pkt *pkt,
 		i++;
 	}
 
+<<<<<<< HEAD
 	net_pkt_unref(pkt);
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	k_sem_give(&wait_data);
 
 	return NET_OK;
@@ -2292,6 +2315,7 @@ ZTEST(net_ipv6_fragment, test_recv_ipv6_fragment)
 	uint16_t payload2_len;
 	uint8_t data;
 	int ret;
+<<<<<<< HEAD
 	static struct net_icmpv6_handler ping6_handler = {
 		.type = NET_ICMPV6_ECHO_REPLY,
 		.code = 0,
@@ -2299,6 +2323,14 @@ ZTEST(net_ipv6_fragment, test_recv_ipv6_fragment)
 	};
 
 	net_icmpv6_register_handler(&ping6_handler);
+=======
+	struct net_icmp_ctx ctx;
+
+	ret = net_icmp_init_ctx(&ctx, NET_ICMPV6_ECHO_REPLY,
+				0, handle_ipv6_echo_reply);
+	zassert_equal(ret, 0, "Cannot register %s handler (%d)",
+		      STRINGIFY(NET_ICMPV6_ECHO_REPLY), ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Fragment 1 */
 	data = 0U;
@@ -2387,7 +2419,11 @@ ZTEST(net_ipv6_fragment, test_recv_ipv6_fragment)
 		zassert_true(false, "Timeout");
 	}
 
+<<<<<<< HEAD
 	net_icmpv6_unregister_handler(&ping6_handler);
+=======
+	net_icmp_cleanup_ctx(&ctx);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST_SUITE(net_ipv6_fragment, NULL, test_setup, NULL, NULL, NULL);

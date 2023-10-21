@@ -199,6 +199,7 @@ A specific application can adjust each partition size based on its needs.
 
 
 .. _Nucleo F429ZI website:
+<<<<<<< HEAD
    http://www.st.com/en/evaluation-tools/nucleo-f429zi.html
 
 .. _STM32 Nucleo-144 board User Manual:
@@ -212,6 +213,21 @@ A specific application can adjust each partition size based on its needs.
 
 .. _STM32F429 datasheet:
    http://www.st.com/resource/en/datasheet/DM00071990.pdf
+=======
+   https://www.st.com/en/evaluation-tools/nucleo-f429zi.html
+
+.. _STM32 Nucleo-144 board User Manual:
+   https://www.st.com/resource/en/user_manual/dm00244518.pdf
+
+.. _STM32F429ZI on www.st.com:
+   https://www.st.com/en/microcontrollers/stm32f429zi.html
+
+.. _STM32F429 reference manual:
+   https://www.st.com/resource/en/reference_manual/dm00031020.pdf
+
+.. _STM32F429 datasheet:
+   https://www.st.com/resource/en/datasheet/DM00071990.pdf
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 .. _MCUBoot:
    https://github.com/JuulLabs-OSS/mcuboot/blob/master/README.md

@@ -5,6 +5,10 @@
  */
 
 /dts-v1/;
+<<<<<<< HEAD
+=======
+#include <dt-bindings/clock/nxp_s32z2_clock.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <arm/nxp/nxp_s32z27x_rtu0_r52.dtsi>
 #include "s32z270dc2_r52.dtsi"
 
@@ -14,8 +18,11 @@
 
 	chosen {
 		zephyr,sram = &sram0;
+<<<<<<< HEAD
 		zephyr,console = &uart0;
 		zephyr,shell-uart = &uart0;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		zephyr,canbus = &can0;
 	};
 

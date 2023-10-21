@@ -20,6 +20,11 @@
 #include <zephyr/linker/linker-tool-gcc.h>
 #elif defined(__MWDT_LINKER_CMD__)
 #include <zephyr/linker/linker-tool-mwdt.h>
+<<<<<<< HEAD
+=======
+#elif defined(__LLD_LINKER_CMD__)
+#include <zephyr/linker/linker-tool-lld.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #error "Unknown toolchain"
 #endif

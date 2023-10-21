@@ -23,19 +23,27 @@ static inline void can_sja1000_write_reg(const struct device *dev, uint8_t reg, 
 {
 	const struct can_sja1000_config *config = dev->config;
 
+<<<<<<< HEAD
 	LOG_DBG("write reg %d = 0x%02x", reg, val);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return config->write_reg(dev, reg, val);
 }
 
 static inline uint8_t can_sja1000_read_reg(const struct device *dev, uint8_t reg)
 {
 	const struct can_sja1000_config *config = dev->config;
+<<<<<<< HEAD
 	uint8_t val;
 
 	val = config->read_reg(dev, reg);
 	LOG_DBG("read reg %d = 0x%02x", reg, val);
 
 	return val;
+=======
+
+	return config->read_reg(dev, reg);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static inline int can_sja1000_enter_reset_mode(const struct device *dev)
@@ -58,6 +66,17 @@ static inline int can_sja1000_enter_reset_mode(const struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline void can_sja1000_leave_reset_mode_nowait(const struct device *dev)
+{
+	uint8_t mod;
+
+	mod = can_sja1000_read_reg(dev, CAN_SJA1000_MOD);
+	can_sja1000_write_reg(dev, CAN_SJA1000_MOD, mod & ~(CAN_SJA1000_MOD_RM));
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static inline int can_sja1000_leave_reset_mode(const struct device *dev)
 {
 	int retries = CAN_SJA1000_RESET_MODE_RETRIES;
@@ -107,6 +126,7 @@ int can_sja1000_set_timing(const struct device *dev, const struct can_timing *ti
 	struct can_sja1000_data *data = dev->data;
 	uint8_t btr0;
 	uint8_t btr1;
+<<<<<<< HEAD
 	uint8_t sjw;
 
 	__ASSERT_NO_MSG(timing->sjw == CAN_SJW_NO_CHANGE || (timing->sjw >= 1 && timing->sjw <= 4));
@@ -114,6 +134,8 @@ int can_sja1000_set_timing(const struct device *dev, const struct can_timing *ti
 	__ASSERT_NO_MSG(timing->phase_seg1 >= 1 && timing->phase_seg1 <= 16);
 	__ASSERT_NO_MSG(timing->phase_seg2 >= 1 && timing->phase_seg2 <= 8);
 	__ASSERT_NO_MSG(timing->prescaler >= 1 && timing->prescaler <= 64);
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (data->started) {
 		return -EBUSY;
@@ -121,6 +143,7 @@ int can_sja1000_set_timing(const struct device *dev, const struct can_timing *ti
 
 	k_mutex_lock(&data->mod_lock, K_FOREVER);
 
+<<<<<<< HEAD
 	if (timing->sjw == CAN_SJW_NO_CHANGE) {
 		sjw = data->sjw;
 	} else {
@@ -130,6 +153,10 @@ int can_sja1000_set_timing(const struct device *dev, const struct can_timing *ti
 
 	btr0 = CAN_SJA1000_BTR0_BRP_PREP(timing->prescaler - 1) |
 	       CAN_SJA1000_BTR0_SJW_PREP(sjw - 1);
+=======
+	btr0 = CAN_SJA1000_BTR0_BRP_PREP(timing->prescaler - 1) |
+	       CAN_SJA1000_BTR0_SJW_PREP(timing->sjw - 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	btr1 = CAN_SJA1000_BTR1_TSEG1_PREP(timing->phase_seg1 - 1) |
 	       CAN_SJA1000_BTR1_TSEG2_PREP(timing->phase_seg2 - 1);
 
@@ -303,8 +330,16 @@ static void can_sja1000_read_frame(const struct device *dev, struct can_frame *f
 		frame->id |= FIELD_PREP(GENMASK(4, 0),
 				can_sja1000_read_reg(dev, CAN_SJA1000_EFF_ID4) >> 3);
 
+<<<<<<< HEAD
 		for (i = 0; i < frame->dlc; i++) {
 			frame->data[i] = can_sja1000_read_reg(dev, CAN_SJA1000_EFF_DATA + i);
+=======
+		if ((frame->flags & CAN_FRAME_RTR) == 0U) {
+			for (i = 0; i < frame->dlc; i++) {
+				frame->data[i] = can_sja1000_read_reg(dev, CAN_SJA1000_EFF_DATA +
+								      i);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	} else {
 		frame->id = FIELD_PREP(GENMASK(10, 3),
@@ -312,8 +347,16 @@ static void can_sja1000_read_frame(const struct device *dev, struct can_frame *f
 		frame->id |= FIELD_PREP(GENMASK(2, 0),
 				can_sja1000_read_reg(dev, CAN_SJA1000_XFF_ID2) >> 5);
 
+<<<<<<< HEAD
 		for (i = 0; i < frame->dlc; i++) {
 			frame->data[i] = can_sja1000_read_reg(dev, CAN_SJA1000_SFF_DATA + i);
+=======
+		if ((frame->flags & CAN_FRAME_RTR) == 0U) {
+			for (i = 0; i < frame->dlc; i++) {
+				frame->data[i] = can_sja1000_read_reg(dev, CAN_SJA1000_SFF_DATA +
+								      i);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
@@ -345,8 +388,16 @@ void can_sja1000_write_frame(const struct device *dev, const struct can_frame *f
 		can_sja1000_write_reg(dev, CAN_SJA1000_EFF_ID4,
 				FIELD_GET(GENMASK(4, 0), frame->id) << 3);
 
+<<<<<<< HEAD
 		for (i = 0; i < frame->dlc; i++) {
 			can_sja1000_write_reg(dev, CAN_SJA1000_EFF_DATA + i, frame->data[i]);
+=======
+		if ((frame->flags & CAN_FRAME_RTR) == 0U) {
+			for (i = 0; i < frame->dlc; i++) {
+				can_sja1000_write_reg(dev, CAN_SJA1000_EFF_DATA + i,
+						      frame->data[i]);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	} else {
 		can_sja1000_write_reg(dev, CAN_SJA1000_XFF_ID1,
@@ -354,8 +405,16 @@ void can_sja1000_write_frame(const struct device *dev, const struct can_frame *f
 		can_sja1000_write_reg(dev, CAN_SJA1000_XFF_ID2,
 				FIELD_GET(GENMASK(2, 0), frame->id) << 5);
 
+<<<<<<< HEAD
 		for (i = 0; i < frame->dlc; i++) {
 			can_sja1000_write_reg(dev, CAN_SJA1000_SFF_DATA + i, frame->data[i]);
+=======
+		if ((frame->flags & CAN_FRAME_RTR) == 0U) {
+			for (i = 0; i < frame->dlc; i++) {
+				can_sja1000_write_reg(dev, CAN_SJA1000_SFF_DATA + i,
+						      frame->data[i]);
+			}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
@@ -609,7 +668,11 @@ static void can_sja1000_handle_error_warning_irq(const struct device *dev)
 		can_sja1000_tx_done(dev, -ENETUNREACH);
 #ifdef CONFIG_CAN_AUTO_BUS_OFF_RECOVERY
 		if (data->started) {
+<<<<<<< HEAD
 			(void)can_sja1000_leave_reset_mode(dev);
+=======
+			can_sja1000_leave_reset_mode_nowait(dev);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 #endif /* CONFIG_CAN_AUTO_BUS_OFF_RECOVERY */
 	} else if ((sr & CAN_SJA1000_SR_ES) != 0) {
@@ -668,7 +731,11 @@ int can_sja1000_init(const struct device *dev)
 {
 	const struct can_sja1000_config *config = dev->config;
 	struct can_sja1000_data *data = dev->data;
+<<<<<<< HEAD
 	struct can_timing timing;
+=======
+	struct can_timing timing = { 0 };
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	int err;
 
 	__ASSERT_NO_MSG(config->read_reg != NULL);
@@ -708,10 +775,13 @@ int can_sja1000_init(const struct device *dev)
 	can_sja1000_write_reg(dev, CAN_SJA1000_AMR2, 0xFF);
 	can_sja1000_write_reg(dev, CAN_SJA1000_AMR3, 0xFF);
 
+<<<<<<< HEAD
 	/* Calculate initial timing parameters */
 	data->sjw = config->sjw;
 	timing.sjw = CAN_SJW_NO_CHANGE;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (config->sample_point != 0) {
 		err = can_calc_timing(dev, &timing, config->bitrate, config->sample_point);
 		if (err == -EINVAL) {
@@ -721,6 +791,10 @@ int can_sja1000_init(const struct device *dev)
 
 		LOG_DBG("initial sample point error: %d", err);
 	} else {
+<<<<<<< HEAD
+=======
+		timing.sjw = config->sjw;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		timing.prop_seg = 0;
 		timing.phase_seg1 = config->phase_seg1;
 		timing.phase_seg2 = config->phase_seg2;

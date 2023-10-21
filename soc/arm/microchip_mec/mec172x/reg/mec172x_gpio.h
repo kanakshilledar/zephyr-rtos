@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
+<<<<<<< HEAD
 #define NUM_MCHP_GPIO_PORTS	6u
 #define MAX_NUM_MCHP_GPIO	(NUM_MCHP_GPIO_PORTS * 32u)
 
@@ -53,6 +54,17 @@
 #define GPIO170_CTRL_DFLT	0x0041u
 #define GPIO234_CTRL_DFLT	0x1040u
 
+=======
+#if defined(CONFIG_SOC_MEC172X_NSZ)
+#include "gpio_pkg_sz.h"
+#elif defined(CONFIG_SOC_MEC172X_NLJ)
+#include "gpio_pkg_lj.h"
+#endif
+
+#define NUM_MCHP_GPIO_PORTS	6u
+#define MAX_NUM_MCHP_GPIO	(NUM_MCHP_GPIO_PORTS * 32u)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* GPIO Control register field definitions. */
 
 /* bits[1:0] internal pull up/down selection */
@@ -156,7 +168,10 @@
  * 10b = 8mA
  * 11b = 12mA
  */
+<<<<<<< HEAD
 #define MCHP_GPIO_CTRL2_OFFSET		0x0500u
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define MCHP_GPIO_CTRL2_SLEW_POS	0
 #define MCHP_GPIO_CTRL2_SLEW_MASK	0x01u
 #define MCHP_GPIO_CTRL2_SLEW_SLOW	0
@@ -173,6 +188,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /* GPIO pin numbers SZ (144-pin) package */
 enum mec_gpio_idx {
 	MCHP_GPIO_0000_ID = 0,
@@ -316,6 +332,10 @@ enum mec_gpio_idx {
 #define MCHP_GPIO_LOCK0_IDX	5u
 #define MCHP_GPIO_LOCK_MAX_IDX	6u
 
+=======
+#define MCHP_GPIO_PIN2PORT(pin_id) ((uint32_t)(pin_id) >> 5)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Helper functions */
 enum mchp_gpio_pud {
 	MCHP_GPIO_NO_PUD = 0,
@@ -393,6 +413,7 @@ enum mchp_gpio_drv_str {
 	MCHP_GPIO_DRV_STR_12MA,
 };
 
+<<<<<<< HEAD
 /** @brief GPIO control registers by pin name */
 struct gpio_ctrl_regs {
 	volatile uint32_t CTRL_0000;
@@ -719,6 +740,8 @@ struct gpio_lock_regs {
 	volatile uint32_t LOCK0;
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #ifdef __cplusplus
 }
 #endif

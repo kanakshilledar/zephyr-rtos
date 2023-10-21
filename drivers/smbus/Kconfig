@@ -38,6 +38,11 @@ config SMBUS_INTEL_PCH
 	bool "SMBus Intel PCH driver"
 	default y
 	depends on DT_HAS_INTEL_PCH_SMBUS_ENABLED
+<<<<<<< HEAD
+=======
+	select PCIE
+	select DYNAMIC_INTERRUPTS
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable Intel Platform Controller Hub (PCH) SMBus driver.
 

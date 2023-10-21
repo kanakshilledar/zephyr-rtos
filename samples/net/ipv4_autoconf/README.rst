@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _ipv4-autoconf-sample:
 
 IPv4 autoconf client application
 ################################
+=======
+.. zephyr:code-sample:: ipv4-autoconf
+   :name: IPv4 autoconf client
+   :relevant-api: networking net_if net_context net_mgmt
+
+   Perform IPv4 autoconfiguration and self-assign a random IPv4 address
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

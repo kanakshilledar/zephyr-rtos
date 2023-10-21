@@ -18,6 +18,14 @@ supported:
   - i2c
   - pwm
   - spi
+<<<<<<< HEAD
   - usb_cdc
   - usb_device
   - watchdog
+=======
+  - uart
+  - usb_cdc
+  - usb_device
+  - watchdog
+vendor: atmel
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

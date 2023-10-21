@@ -22,7 +22,11 @@ are missing.
    LAST PACKET NOT RECEIVED!!!
 
 zperf can be enabled in any application, a dedicated sample is also present
+<<<<<<< HEAD
 in Zephyr. See :ref:`zperf sample application <zperf-sample>` for details.
+=======
+in Zephyr. See :zephyr:code-sample:`zperf sample application <zperf>` for details.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Sample Usage
 ************

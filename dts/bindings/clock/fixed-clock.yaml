@@ -13,9 +13,12 @@ properties:
     description: output clock frequency (Hz)
     required: true
 
+<<<<<<< HEAD
   clocks:
     type: array
     description: input clock source
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   "#clock-cells":
     const: 0

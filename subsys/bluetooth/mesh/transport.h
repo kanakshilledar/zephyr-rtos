@@ -101,6 +101,7 @@ int bt_mesh_trans_send(struct bt_mesh_net_tx *tx, struct net_buf_simple *msg,
 int bt_mesh_trans_recv(struct net_buf_simple *buf, struct bt_mesh_net_rx *rx);
 
 void bt_mesh_trans_init(void);
+<<<<<<< HEAD
 
 void bt_mesh_trans_reset(void);
 
@@ -111,3 +112,6 @@ uint8_t bt_mesh_va_del(const uint8_t uuid[16], uint16_t *addr);
 uint8_t *bt_mesh_va_label_get(uint16_t addr);
 
 void bt_mesh_va_pending_store(void);
+=======
+void bt_mesh_trans_reset(void);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

@@ -564,7 +564,13 @@ static void mqtt_evt_handler(struct mqtt_client *const client, const struct mqtt
 
 	case MQTT_EVT_PUBLISH: {
 		const struct mqtt_publish_param *pub = &evt->param.publish;
+<<<<<<< HEAD
 		uint32_t size, payload_left;
+=======
+		uint32_t payload_left;
+		size_t size;
+		int rc;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		payload_left = pub->message.payload.len;
 
@@ -581,6 +587,7 @@ static void mqtt_evt_handler(struct mqtt_client *const client, const struct mqtt
 
 		while (payload_left > 0) {
 			/* Attempt to claim `payload_left` bytes of buffer in rb */
+<<<<<<< HEAD
 			size = ring_buf_put_claim(&sh_mqtt->rx_rb, &sh_mqtt->rx_rb_ptr,
 						  payload_left);
 			/* Read `size` bytes of payload from mqtt */
@@ -588,11 +595,24 @@ static void mqtt_evt_handler(struct mqtt_client *const client, const struct mqtt
 
 			/* errno value, return */
 			if (size < 0) {
+=======
+			size = (size_t)ring_buf_put_claim(&sh_mqtt->rx_rb, &sh_mqtt->rx_rb_ptr,
+							  payload_left);
+			/* Read `size` bytes of payload from mqtt */
+			rc = mqtt_read_publish_payload_blocking(client, sh_mqtt->rx_rb_ptr, size);
+
+			/* errno value, return */
+			if (rc < 0) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				(void)ring_buf_put_finish(&sh_mqtt->rx_rb, 0U);
 				sh_mqtt_rx_rb_flush();
 				return;
 			}
 
+<<<<<<< HEAD
+=======
+			size = (size_t)rc;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			/* Indicate that `size` bytes of payload has been written into rb */
 			(void)ring_buf_put_finish(&sh_mqtt->rx_rb, size);
 			/* Update `payload_left` */
@@ -716,7 +736,11 @@ static int enable(const struct shell_transport *transport, bool blocking)
 
 	/* Listen for network connection status */
 	net_mgmt_add_event_callback(&sh_mqtt->mgmt_cb);
+<<<<<<< HEAD
 	conn_mgr_resend_status();
+=======
+	conn_mgr_mon_resend_status();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }

@@ -17,6 +17,7 @@
 		zephyr,entropy = &trng;
 	};
 
+<<<<<<< HEAD
 	power-states {
 		/*
 		 * EM1 is a basic "CPU WFI idle", all high-freq clocks remain
@@ -68,6 +69,8 @@
 		};
 	};
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -87,7 +90,49 @@
 			 * has implications on system performance. Read
 			 * KConfig documentation entry before enabling it.
 			 */
+<<<<<<< HEAD
 			cpu-power-states = <&pstate_em1>;
+=======
+			cpu-power-states = <&pstate_em1 &pstate_em2 &pstate_em3>;
+		};
+
+		power-states {
+			/*
+			 * EM1 is a basic "CPU WFI idle", all high-freq clocks remain
+			 * enabled.
+			 */
+			pstate_em1: em1 {
+				compatible = "zephyr,power-state";
+				power-state-name = "runtime-idle";
+				min-residency-us = <4>;
+				/* HFXO remains active */
+				exit-latency-us = <2>;
+			};
+
+			/*
+			 * EM2 is a deepsleep with HF clocks disabled by HW, voltages
+			 * scaled down, etc.
+			 */
+			pstate_em2: em2 {
+				compatible = "zephyr,power-state";
+				power-state-name = "suspend-to-idle";
+				min-residency-us = <260>;
+				exit-latency-us = <250>;
+			};
+
+			/*
+			 * EM3 seems to be exactly the same as EM2 except that
+			 * LFXO & LFRCO should be disabled, so you must use ULFRCO
+			 * as BURTC clock for the system to not lose track of time and
+			 * wake up.
+			 */
+			pstate_em3: em3 {
+				compatible = "zephyr,power-state";
+				power-state-name = "standby";
+				min-residency-us = <20000>;
+				exit-latency-us = <2000>;
+			};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -109,11 +154,16 @@
 			compatible = "silabs,gecko-spi-usart";
 			reg = <0x5005C000 0x400>;
 			interrupt-names = "rx", "tx";
+<<<<<<< HEAD
 			status = "disabled";
 
 			#address-cells = <1>;
 			#size-cells = <0>;
 
+=======
+			#address-cells = <1>;
+			#size-cells = <0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			status = "disabled";
 		};
 

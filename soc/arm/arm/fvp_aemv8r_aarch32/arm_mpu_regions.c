@@ -5,7 +5,11 @@
 
 #include <zephyr/sys/slist.h>
 #include <zephyr/linker/linker-defs.h>
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/mpu/arm_mpu.h>
+=======
+#include <zephyr/arch/arm/mpu/arm_mpu.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #define DEVICE_REGION_START 0x80000000UL
 #define DEVICE_REGION_END   0xFFFFFFFFUL

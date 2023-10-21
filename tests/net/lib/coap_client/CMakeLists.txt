@@ -24,5 +24,11 @@ add_compile_definitions(CONFIG_COAP_CLIENT_MESSAGE_HEADER_SIZE=48)
 add_compile_definitions(CONFIG_COAP_CLIENT_STACK_SIZE=1024)
 add_compile_definitions(CONFIG_COAP_CLIENT_THREAD_PRIORITY=10)
 add_compile_definitions(CONFIG_COAP_LOG_LEVEL=4)
+<<<<<<< HEAD
 add_compile_definitions(CONFIG_NET_SOCKETS_POSIX_NAMES=y)
 add_compile_definitions(CONFIG_COAP_INIT_ACK_TIMEOUT_MS=2000)
+=======
+add_compile_definitions(CONFIG_COAP_INIT_ACK_TIMEOUT_MS=2000)
+add_compile_definitions(CONFIG_COAP_CLIENT_MAX_REQUESTS=2)
+add_compile_definitions(CONFIG_COAP_CLIENT_MAX_INSTANCES=2)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

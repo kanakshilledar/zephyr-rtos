@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/init.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/gd32.h>
 #include <zephyr/drivers/pinctrl.h>
@@ -144,6 +148,7 @@ static void configure_pin(pinctrl_soc_pin_t pin)
 	reg_val &= ~GPIO_MODE_MASK(pin_num);
 
 	if (mode == GD32_MODE_ALTERNATE) {
+<<<<<<< HEAD
 		uint8_t mode;
 
 		mode = configure_spd(port, pin_bit, GD32_OSPEED_GET(pin));
@@ -155,6 +160,19 @@ static void configure_pin(pinctrl_soc_pin_t pin)
 		}
 
 		reg_val |= GPIO_MODE_SET(pin_num, mode);
+=======
+		uint8_t new_mode;
+
+		new_mode = configure_spd(port, pin_bit, GD32_OSPEED_GET(pin));
+
+		if (GD32_OTYPE_GET(pin) == GD32_OTYPE_PP) {
+			new_mode |= GPIO_MODE_ALT_PP;
+		} else {
+			new_mode |= GPIO_MODE_ALT_OD;
+		}
+
+		reg_val |= GPIO_MODE_SET(pin_num, new_mode);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else if (mode == GD32_MODE_GPIO_IN) {
 		uint8_t pupd = GD32_PUPD_GET(pin);
 

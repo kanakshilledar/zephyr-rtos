@@ -23,8 +23,11 @@ CONFIG_UART_CONSOLE=y
 # Enable uart driver
 CONFIG_SERIAL=y
 
+<<<<<<< HEAD
 CONFIG_PINCTRL=y
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # Board Kconfig.defconfig enables USB CDC ACM and should disable USB remote
 # wakeup by default. It needs to be disabled here, because the USB nrfx
 # driver always overwrites option from Kconfig mentioned above with the

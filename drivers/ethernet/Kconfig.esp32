@@ -5,7 +5,11 @@
 
 menuconfig ETH_ESP32
 	bool "ESP32 Ethernet driver"
+<<<<<<< HEAD
 	depends on SOC_ESP32
+=======
+	depends on SOC_SERIES_ESP32
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	select MDIO
 	help
 	  Enable ESP32 Ethernet driver.

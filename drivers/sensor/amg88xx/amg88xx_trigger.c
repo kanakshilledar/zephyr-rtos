@@ -172,7 +172,11 @@ int amg88xx_init_interrupt(const struct device *dev)
 	struct amg88xx_data *drv_data = dev->data;
 	const struct amg88xx_config *config = dev->config;
 
+<<<<<<< HEAD
 	if (!device_is_ready(config->int_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&config->int_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		LOG_ERR("%s: device %s is not ready", dev->name,
 				config->int_gpio.port->name);
 		return -ENODEV;

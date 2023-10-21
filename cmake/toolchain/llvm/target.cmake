@@ -7,7 +7,29 @@ elseif(CONFIG_LLVM_USE_LLD)
 endif()
 
 if("${ARCH}" STREQUAL "arm")
+<<<<<<< HEAD
   set(triple arm-none-eabi)
+=======
+  if(DEFINED CONFIG_ARMV8_M_MAINLINE)
+    # ARMv8-M mainline is ARMv7-M with additional features from ARMv8-M.
+    set(triple armv8m.main-none-eabi)
+  elseif(DEFINED CONFIG_ARMV8_M_BASELINE)
+    # ARMv8-M baseline is ARMv6-M with additional features from ARMv8-M.
+    set(triple armv8m.base-none-eabi)
+  elseif(DEFINED CONFIG_ARMV7_M_ARMV8_M_MAINLINE)
+    # ARMV7_M_ARMV8_M_MAINLINE means that ARMv7-M or backward compatible ARMv8-M
+    # processor is used.
+    set(triple armv7m-cros-eabi)
+  elseif(DEFINED CONFIG_ARMV6_M_ARMV8_M_BASELINE)
+    # ARMV6_M_ARMV8_M_BASELINE means that ARMv6-M or ARMv8-M supporting the
+    # Baseline implementation processor is used.
+    set(triple armv6m-none-eabi)
+  else()
+    # Default ARM target supported by all processors.
+    set(triple arm-none-eabi)
+  endif()
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   set(CMAKE_EXE_LINKER_FLAGS_INIT "--specs=nosys.specs")
 elseif("${ARCH}" STREQUAL "x86")
   if(CONFIG_64BIT)
@@ -24,3 +46,17 @@ if(DEFINED triple)
 
   unset(triple)
 endif()
+<<<<<<< HEAD
+=======
+
+if(CONFIG_LIBGCC_RTLIB)
+  set(runtime_lib "libgcc")
+elseif(CONFIG_COMPILER_RT_RTLIB)
+  set(runtime_lib "compiler_rt")
+endif()
+
+list(APPEND TOOLCHAIN_C_FLAGS --config
+	${ZEPHYR_BASE}/cmake/toolchain/llvm/clang_${runtime_lib}.cfg)
+list(APPEND TOOLCHAIN_LD_FLAGS --config
+	${ZEPHYR_BASE}/cmake/toolchain/llvm/clang_${runtime_lib}.cfg)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

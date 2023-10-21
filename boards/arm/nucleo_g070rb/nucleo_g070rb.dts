@@ -8,6 +8,10 @@
 #include <st/g0/stm32g070Xb.dtsi>
 #include <st/g0/stm32g070rbtx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32G070RB-NUCLEO board";
@@ -21,7 +25,11 @@
 	};
 
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_1: led_4 {
 			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
@@ -34,6 +42,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -136,6 +148,11 @@
 &adc1 {
 	pinctrl-0 = <&adc1_in0_pa0 &adc1_in1_pa1>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
+=======
+	st,adc-clock-source = <SYNC>;
+	st,adc-prescaler = <4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	status = "okay";
 	vref-mv = <3300>;
 };
@@ -158,10 +175,13 @@
 	};
 };
 
+<<<<<<< HEAD
 &cpu0 {
 	cpu-power-states = <&stop0 &stop1>;
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &vref {
 	status = "okay";
 };

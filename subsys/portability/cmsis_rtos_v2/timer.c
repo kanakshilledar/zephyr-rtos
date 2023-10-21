@@ -144,7 +144,11 @@ osStatus_t osTimerDelete(osTimerId_t timer_id)
 		timer->status = NOT_ACTIVE;
 	}
 
+<<<<<<< HEAD
 	k_mem_slab_free(&cv2_timer_slab, (void *) &timer);
+=======
+	k_mem_slab_free(&cv2_timer_slab, (void *)timer);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return osOK;
 }
 

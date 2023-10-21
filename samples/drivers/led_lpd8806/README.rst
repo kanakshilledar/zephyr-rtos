@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _led_lpd8806_sample:
 
 LPD880x Sample Application
 ##########################
+=======
+.. zephyr:code-sample:: led-lpd8806
+   :name: LPD880x LED strip
+   :relevant-api: led_strip_interface
+
+   Control an LED strip using an LPD880x-compatible driver chip.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

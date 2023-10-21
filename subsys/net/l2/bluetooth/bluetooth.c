@@ -315,7 +315,12 @@ static struct net_if_api bt_if_api = {
 	.init = bt_iface_init,
 };
 
+<<<<<<< HEAD
 static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+=======
+static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_server *server,
+		       struct bt_l2cap_chan **chan)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct bt_if_conn *if_conn = NULL;
 	int i;
@@ -445,13 +450,22 @@ static bool eir_found(uint8_t type, const uint8_t *data, uint8_t data_len,
 	return false;
 }
 
+<<<<<<< HEAD
 static bool ad_parse(struct net_buf_simple *ad,
+=======
+static bool ad_parse(struct net_buf_simple *ad_buf,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		     bool (*func)(uint8_t type, const uint8_t *data,
 				  uint8_t data_len, void *user_data),
 		     void *user_data)
 {
+<<<<<<< HEAD
 	while (ad->len > 1) {
 		uint8_t len = net_buf_simple_pull_u8(ad);
+=======
+	while (ad_buf->len > 1) {
+		uint8_t len = net_buf_simple_pull_u8(ad_buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint8_t type;
 
 		/* Check for early termination */
@@ -459,11 +473,16 @@ static bool ad_parse(struct net_buf_simple *ad,
 			return false;
 		}
 
+<<<<<<< HEAD
 		if (len > ad->len) {
+=======
+		if (len > ad_buf->len) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			NET_ERR("AD malformed\n");
 			return false;
 		}
 
+<<<<<<< HEAD
 		type = net_buf_simple_pull_u8(ad);
 
 		if (func(type, ad->data, len - 1, user_data)) {
@@ -471,18 +490,35 @@ static bool ad_parse(struct net_buf_simple *ad,
 		}
 
 		net_buf_simple_pull(ad, len - 1);
+=======
+		type = net_buf_simple_pull_u8(ad_buf);
+
+		if (func(type, ad_buf->data, len - 1, user_data)) {
+			return true;
+		}
+
+		net_buf_simple_pull(ad_buf, len - 1);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	return false;
 }
 
 static void device_found(const bt_addr_le_t *addr, int8_t rssi, uint8_t type,
+<<<<<<< HEAD
 			 struct net_buf_simple *ad)
+=======
+			 struct net_buf_simple *ad_buf)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	/* We're only interested in connectable events */
 	if (type == BT_GAP_ADV_TYPE_ADV_IND ||
 	    type == BT_GAP_ADV_TYPE_ADV_DIRECT_IND) {
+<<<<<<< HEAD
 		ad_parse(ad, eir_found, (void *)addr);
+=======
+		ad_parse(ad_buf, eir_found, (void *)addr);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 }
 

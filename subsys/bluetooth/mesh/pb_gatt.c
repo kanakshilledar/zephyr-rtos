@@ -95,7 +95,11 @@ int bt_mesh_pb_gatt_recv(struct bt_conn *conn, struct net_buf_simple *buf)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	k_work_reschedule(&link.prot_timer, PROTOCOL_TIMEOUT);
+=======
+	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	link.cb->recv(&bt_mesh_pb_gatt, link.cb_data, buf);
 
@@ -111,7 +115,11 @@ int bt_mesh_pb_gatt_start(struct bt_conn *conn)
 	}
 
 	link.conn = bt_conn_ref(conn);
+<<<<<<< HEAD
 	k_work_reschedule(&link.prot_timer, PROTOCOL_TIMEOUT);
+=======
+	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	link.cb->link_opened(&bt_mesh_pb_gatt, link.cb_data);
 
@@ -142,7 +150,11 @@ int bt_mesh_pb_gatt_cli_start(struct bt_conn *conn)
 	}
 
 	link.conn = bt_conn_ref(conn);
+<<<<<<< HEAD
 	k_work_reschedule(&link.prot_timer, PROTOCOL_TIMEOUT);
+=======
+	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return 0;
 }
@@ -218,7 +230,11 @@ static int buf_send(struct net_buf_simple *buf, prov_bearer_send_complete_t cb,
 	link.comp.cb = cb;
 	link.comp.cb_data = cb_data;
 
+<<<<<<< HEAD
 	k_work_reschedule(&link.prot_timer, PROTOCOL_TIMEOUT);
+=======
+	k_work_reschedule(&link.prot_timer, bt_mesh_prov_protocol_timeout_get());
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return bt_mesh_proxy_msg_send(link.conn, BT_MESH_PROXY_PROV,
 				      buf, buf_send_end, NULL);

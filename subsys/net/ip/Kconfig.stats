@@ -95,7 +95,11 @@ config NET_STATISTICS_IGMP
 
 config NET_STATISTICS_PPP
 	bool "Point-to-point (PPP) statistics"
+<<<<<<< HEAD
 	depends on NET_PPP
+=======
+	depends on NET_L2_PPP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default y
 	help
 	  Keep track of PPP related statistics

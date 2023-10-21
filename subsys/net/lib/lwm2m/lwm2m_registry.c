@@ -436,6 +436,25 @@ int path_to_objs(const struct lwm2m_obj_path *path, struct lwm2m_engine_obj_inst
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+static bool is_string(const struct lwm2m_obj_path *path)
+{
+	struct lwm2m_engine_obj_field *obj_field;
+	int ret;
+
+	ret = path_to_objs(path, NULL, &obj_field, NULL, NULL);
+	if (ret < 0 || !obj_field) {
+		return false;
+	}
+	if (obj_field->data_type == LWM2M_RES_TYPE_STRING) {
+		return true;
+	}
+	return false;
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* User data setter functions */
 
 int lwm2m_set_res_buf(const struct lwm2m_obj_path *path, void *buffer_ptr, uint16_t buffer_len,
@@ -610,7 +629,11 @@ static int lwm2m_engine_set(const struct lwm2m_obj_path *path, const void *value
 		return ret;
 	}
 
+<<<<<<< HEAD
 	if (memcmp(data_ptr, value, len) != 0) {
+=======
+	if (memcmp(data_ptr, value, len) != 0 || res_inst->data_len != len) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		changed = true;
 	}
 
@@ -628,6 +651,7 @@ static int lwm2m_engine_set(const struct lwm2m_obj_path *path, const void *value
 	switch (obj_field->data_type) {
 
 	case LWM2M_RES_TYPE_OPAQUE:
+<<<<<<< HEAD
 		memcpy((uint8_t *)data_ptr, value, len);
 		break;
 
@@ -641,6 +665,20 @@ static int lwm2m_engine_set(const struct lwm2m_obj_path *path, const void *value
 		}
 		memcpy((uint8_t *)data_ptr, value, len);
 		((uint8_t *)data_ptr)[len] = '\0';
+=======
+		if (len) {
+			memcpy((uint8_t *)data_ptr, value, len);
+		}
+		break;
+
+	case LWM2M_RES_TYPE_STRING:
+		if (len) {
+			strncpy(data_ptr, value, len - 1);
+			((char *)data_ptr)[len - 1] = '\0';
+		} else {
+			((char *)data_ptr)[0] = '\0';
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 
 	case LWM2M_RES_TYPE_U32:
@@ -753,7 +791,18 @@ int lwm2m_engine_set_opaque(const char *pathstr, const char *data_ptr, uint16_t 
 
 int lwm2m_set_string(const struct lwm2m_obj_path *path, const char *data_ptr)
 {
+<<<<<<< HEAD
 	return lwm2m_engine_set(path, data_ptr, strlen(data_ptr));
+=======
+	uint16_t len = strlen(data_ptr);
+
+	/* String resources contain terminator as well, opaque resources don't */
+	if (is_string(path)) {
+		len += 1;
+	}
+
+	return lwm2m_engine_set(path, data_ptr, len);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int lwm2m_engine_set_string(const char *pathstr, const char *data_ptr)
@@ -1134,7 +1183,12 @@ static int lwm2m_engine_get(const struct lwm2m_obj_path *path, void *buf, uint16
 			break;
 
 		case LWM2M_RES_TYPE_STRING:
+<<<<<<< HEAD
 			strncpy((uint8_t *)buf, (uint8_t *)data_ptr, buflen);
+=======
+			strncpy(buf, data_ptr, data_len - 1);
+			((char *)buf)[data_len - 1] = '\0';
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			break;
 
 		case LWM2M_RES_TYPE_U32:
@@ -1207,6 +1261,12 @@ static int lwm2m_engine_get(const struct lwm2m_obj_path *path, void *buf, uint16
 			k_mutex_unlock(&registry_lock);
 			return -EINVAL;
 		}
+<<<<<<< HEAD
+=======
+	} else if (obj_field->data_type == LWM2M_RES_TYPE_STRING) {
+		/* Ensure empty string when there is no data */
+		((char *)buf)[0] = '\0';
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 	k_mutex_unlock(&registry_lock);
 	return 0;
@@ -1229,12 +1289,27 @@ int lwm2m_engine_get_opaque(const char *pathstr, void *buf, uint16_t buflen)
 	return lwm2m_get_opaque(&path, buf, buflen);
 }
 
+<<<<<<< HEAD
 int lwm2m_get_string(const struct lwm2m_obj_path *path, void *str, uint16_t strlen)
 {
 	return lwm2m_engine_get(path, str, strlen);
 }
 
 int lwm2m_engine_get_string(const char *pathstr, void *str, uint16_t strlen)
+=======
+int lwm2m_get_string(const struct lwm2m_obj_path *path, void *str, uint16_t buflen)
+{
+	/* Ensure termination, in case resource is not a string type */
+	if (!is_string(path)) {
+		memset(str, 0, buflen);
+		buflen -= 1; /* Last terminator cannot be overwritten */
+	}
+
+	return lwm2m_engine_get(path, str, buflen);
+}
+
+int lwm2m_engine_get_string(const char *pathstr, void *str, uint16_t buflen)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	struct lwm2m_obj_path path;
 	int ret = 0;
@@ -1243,7 +1318,11 @@ int lwm2m_engine_get_string(const char *pathstr, void *str, uint16_t strlen)
 	if (ret < 0) {
 		return ret;
 	}
+<<<<<<< HEAD
 	return lwm2m_get_opaque(&path, str, strlen);
+=======
+	return lwm2m_get_string(&path, str, buflen);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 int lwm2m_get_u8(const struct lwm2m_obj_path *path, uint8_t *value)

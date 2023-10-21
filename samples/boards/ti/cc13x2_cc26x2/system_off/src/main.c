@@ -10,7 +10,11 @@
 #include <zephyr/init.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
+<<<<<<< HEAD
 #include <zephyr/pm/pm.h>
+=======
+#include <zephyr/sys/poweroff.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <driverlib/ioc.h>
 
@@ -32,7 +36,11 @@ int main(void)
 	CC1352R1_LAUNCHXL_shutDownExtFlash();
 
 	/* Configure to generate PORT event (wakeup) on button 1 press. */
+<<<<<<< HEAD
 	if (!device_is_ready(sw0_gpio.port)) {
+=======
+	if (!gpio_is_ready_dt(&sw0_gpio)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		printk("%s: device not ready.\n", sw0_gpio.port->name);
 		return 0;
 	}
@@ -53,12 +61,17 @@ int main(void)
 	printk("Sleep %u s (STANDBY)\n", SLEEP_S);
 	k_sleep(K_SECONDS(SLEEP_S));
 
+<<<<<<< HEAD
 	printk("Entering system off (SHUTDOWN); press BUTTON1 to restart\n");
+=======
+	printk("Powering off; press BUTTON1 to restart\n");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Clear GPIO interrupt */
 	status = GPIO_getEventMultiDio(GPIO_DIO_ALL_MASK);
 	GPIO_clearEventMultiDio(status);
 
+<<<<<<< HEAD
 	/*
 	 * Force the SOFT_OFF state.
 	 */
@@ -74,5 +87,9 @@ int main(void)
 	while (true) {
 		/* spin to avoid fall-off behavior */
 	}
+=======
+	sys_poweroff();
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }

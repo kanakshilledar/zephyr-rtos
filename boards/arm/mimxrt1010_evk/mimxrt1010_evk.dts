@@ -9,6 +9,10 @@
 
 #include <nxp/nxp_rt1010.dtsi>
 #include "mimxrt1010_evk-pinctrl.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "NXP MIMXRT1010-EVK board";
@@ -40,6 +44,10 @@
 		user_button: button-1 {
 			label = "User SW4";
 			gpios = <&gpio2 5 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -82,10 +90,18 @@ arduino_serial: &lpuart1 {};
 };
 
 &flexspi {
+<<<<<<< HEAD
 	reg = <0x400a0000 0x4000>, <0x60000000 DT_SIZE_M(16)>;
 	at25sf128a: at25sf128a@0 {
 		compatible = "nxp,imx-flexspi-nor";
 		size = <134217728>;
+=======
+	status = "okay";
+	reg = <0x400a0000 0x4000>, <0x60000000 DT_SIZE_M(16)>;
+	at25sf128a: at25sf128a@0 {
+		compatible = "nxp,imx-flexspi-nor";
+		size = <DT_SIZE_M(16 * 8)>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		reg = <0>;
 		spi-max-frequency = <133000000>;
 		status = "okay";

@@ -17,7 +17,11 @@ LOG_MODULE_REGISTER(net_test, CONFIG_NET_CONTEXT_LOG_LEVEL);
 #include <errno.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/linker/sections.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/tc_util.h>
 

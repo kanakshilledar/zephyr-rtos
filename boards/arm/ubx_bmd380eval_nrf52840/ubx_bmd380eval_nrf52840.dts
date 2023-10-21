@@ -9,6 +9,10 @@
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "ubx_bmd380eval_nrf52840-pinctrl.dtsi"
 /* should be ckaa, but not available yet */
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "u-blox BMD-380-EVAL EVK nRF52840";
@@ -56,6 +60,7 @@
 	buttons {
 		compatible = "gpio-keys";
 		button0: button_0 {
+<<<<<<< HEAD
 			gpios = <&gpio0 11 (GPIO_PULL_UP | \
 					    GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 0";
@@ -74,6 +79,26 @@
 			gpios = <&gpio0 25 (GPIO_PULL_UP | \
 					    GPIO_ACTIVE_LOW)>;
 			label = "Push button switch 3";
+=======
+			gpios = <&gpio0 11 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 0";
+			zephyr,code = <INPUT_KEY_0>;
+		};
+		button1: button_1 {
+			gpios = <&gpio0 12 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 1";
+			zephyr,code = <INPUT_KEY_1>;
+		};
+		button2: button_2 {
+			gpios = <&gpio0 24 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 2";
+			zephyr,code = <INPUT_KEY_2>;
+		};
+		button3: button_3 {
+			gpios = <&gpio0 25 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 3";
+			zephyr,code = <INPUT_KEY_3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 
@@ -96,6 +121,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&uicr {
+	gpio-as-nreset;
+};
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 &gpiote {
 	status = "okay";
 };

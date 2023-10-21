@@ -7,7 +7,11 @@
 #include <zephyr/kernel.h>
 #include <zephyr/spinlock.h>
 #include <ksched.h>
+<<<<<<< HEAD
 #include <zephyr/timeout_q.h>
+=======
+#include <timeout_q.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/syscall_handler.h>
 #include <zephyr/drivers/timer/system_timer.h>
 #include <zephyr/sys_clock.h>
@@ -21,7 +25,11 @@ static struct k_spinlock timeout_lock;
 #define MAX_WAIT (IS_ENABLED(CONFIG_SYSTEM_CLOCK_SLOPPY_IDLE) \
 		  ? K_TICKS_FOREVER : INT_MAX)
 
+<<<<<<< HEAD
 /* Cycles left to process in the currently-executing sys_clock_announce() */
+=======
+/* Ticks left to process in the currently-executing sys_clock_announce() */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int announce_remaining;
 
 #if defined(CONFIG_TIMER_READS_ITS_FREQUENCY_AT_RUNTIME)
@@ -61,6 +69,25 @@ static void remove_timeout(struct _timeout *t)
 
 static int32_t elapsed(void)
 {
+<<<<<<< HEAD
+=======
+	/* While sys_clock_announce() is executing, new relative timeouts will be
+	 * scheduled relatively to the currently firing timeout's original tick
+	 * value (=curr_tick) rather than relative to the current
+	 * sys_clock_elapsed().
+	 *
+	 * This means that timeouts being scheduled from within timeout callbacks
+	 * will be scheduled at well-defined offsets from the currently firing
+	 * timeout.
+	 *
+	 * As a side effect, the same will happen if an ISR with higher priority
+	 * preempts a timeout callback and schedules a timeout.
+	 *
+	 * The distinction is implemented by looking at announce_remaining which
+	 * will be non-zero while sys_clock_announce() is executing and zero
+	 * otherwise.
+	 */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return announce_remaining == 0 ? sys_clock_elapsed() : 0U;
 }
 
@@ -94,7 +121,11 @@ void z_add_timeout(struct _timeout *to, _timeout_func_t fn,
 	__ASSERT(!sys_dnode_is_linked(&to->node), "");
 	to->fn = fn;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		struct _timeout *t;
 
 		if (IS_ENABLED(CONFIG_TIMEOUT_64BIT) &&
@@ -129,7 +160,11 @@ int z_abort_timeout(struct _timeout *to)
 {
 	int ret = -EINVAL;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (sys_dnode_is_linked(&to->node)) {
 			remove_timeout(to);
 			ret = 0;
@@ -162,7 +197,11 @@ k_ticks_t z_timeout_remaining(const struct _timeout *timeout)
 {
 	k_ticks_t ticks = 0;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ticks = timeout_rem(timeout);
 	}
 
@@ -173,7 +212,11 @@ k_ticks_t z_timeout_expires(const struct _timeout *timeout)
 {
 	k_ticks_t ticks = 0;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ticks = curr_tick + timeout_rem(timeout);
 	}
 
@@ -184,7 +227,11 @@ int32_t z_get_next_timeout_expiry(void)
 {
 	int32_t ret = (int32_t) K_TICKS_FOREVER;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		ret = next_timeout();
 	}
 	return ret;
@@ -208,7 +255,11 @@ void sys_clock_announce(int32_t ticks)
 
 	announce_remaining = ticks;
 
+<<<<<<< HEAD
 	struct _timeout *t = first();
+=======
+	struct _timeout *t;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	for (t = first();
 	     (t != NULL) && (t->dticks <= announce_remaining);
@@ -245,7 +296,11 @@ int64_t sys_clock_tick_get(void)
 {
 	uint64_t t = 0U;
 
+<<<<<<< HEAD
 	LOCKED(&timeout_lock) {
+=======
+	K_SPINLOCK(&timeout_lock) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		t = curr_tick + elapsed();
 	}
 	return t;
@@ -273,6 +328,7 @@ static inline int64_t z_vrfy_k_uptime_ticks(void)
 #include <syscalls/k_uptime_ticks_mrsh.c>
 #endif
 
+<<<<<<< HEAD
 void z_impl_k_busy_wait(uint32_t usec_to_wait)
 {
 	SYS_PORT_TRACING_FUNC_ENTER(k_thread, busy_wait, usec_to_wait);
@@ -335,6 +391,43 @@ uint64_t sys_clock_timeout_end_calc(k_timeout_t timeout)
 		}
 		return sys_clock_tick_get() + MAX(1, dt);
 	}
+=======
+k_timepoint_t sys_timepoint_calc(k_timeout_t timeout)
+{
+	k_timepoint_t timepoint;
+
+	if (K_TIMEOUT_EQ(timeout, K_FOREVER)) {
+		timepoint.tick = UINT64_MAX;
+	} else if (K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
+		timepoint.tick = 0;
+	} else {
+		k_ticks_t dt = timeout.ticks;
+
+		if (IS_ENABLED(CONFIG_TIMEOUT_64BIT) && Z_TICK_ABS(dt) >= 0) {
+			timepoint.tick = Z_TICK_ABS(dt);
+		} else {
+			timepoint.tick = sys_clock_tick_get() + MAX(1, dt);
+		}
+	}
+
+	return timepoint;
+}
+
+k_timeout_t sys_timepoint_timeout(k_timepoint_t timepoint)
+{
+	uint64_t now, remaining;
+
+	if (timepoint.tick == UINT64_MAX) {
+		return K_FOREVER;
+	}
+	if (timepoint.tick == 0) {
+		return K_NO_WAIT;
+	}
+
+	now = sys_clock_tick_get();
+	remaining = (timepoint.tick > now) ? (timepoint.tick - now) : 0;
+	return K_TICKS(remaining);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 #ifdef CONFIG_ZTEST

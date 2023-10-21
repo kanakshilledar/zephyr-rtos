@@ -6,6 +6,10 @@
 DT_CHOSEN_ESPI_BACKEND := zephyr,host-cmd-espi-backend
 DT_CHOSEN_SHI_BACKEND := zephyr,host-cmd-shi-backend
 DT_CHOSEN_UART_BACKEND := zephyr,host-cmd-uart-backend
+<<<<<<< HEAD
+=======
+DT_CHOSEN_SPI_BACKEND := zephyr,host-cmd-spi-backend
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 config EC_HOST_CMD_BACKEND_SIMULATOR
 	bool "Embedded Controller Host Command Backend Simulator"
@@ -37,6 +41,15 @@ config EC_HOST_CMD_BACKEND_UART
 	  Enable support for Embedded Controller host commands using
 	  the UART.
 
+<<<<<<< HEAD
+=======
+config EC_HOST_CMD_BACKEND_SPI
+	bool "Host commands support using SPI"
+	help
+	  Enable support for Embedded Controller host commands using
+	  the SPI.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if EC_HOST_CMD_BACKEND_SHI
 
 choice EC_HOST_CMD_BACKEND_SHI_DRIVER
@@ -79,3 +92,22 @@ config EC_HOST_CMD_BACKEND_SHI_MAX_RESPONSE
 	  response.
 
 endif # EC_HOST_CMD_BACKEND_SHI
+<<<<<<< HEAD
+=======
+
+if EC_HOST_CMD_BACKEND_SPI
+
+choice EC_HOST_CMD_BACKEND_SPI_DRIVER
+	prompt "SHI driver"
+	default EC_HOST_CMD_BACKEND_SPI_STM32 if DT_HAS_ST_STM32_SPI_HOST_CMD_ENABLED
+
+config EC_HOST_CMD_BACKEND_SPI_STM32
+	bool "SPI by STM32"
+	help
+	  This option enables the driver for SPI backend in the
+	  STM32 chip family.
+
+endchoice
+
+endif # EC_HOST_CMD_BACKEND_SPI
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

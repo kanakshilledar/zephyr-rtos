@@ -6,13 +6,21 @@ config GPIO_NPM1300
 	default y
 	depends on DT_HAS_NORDIC_NPM1300_GPIO_ENABLED
 	select I2C
+<<<<<<< HEAD
+=======
+	select MFD
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable the nPM1300 GPIO driver.
 
 config GPIO_NPM1300_INIT_PRIORITY
 	int "nPM1300 GPIO driver initialization priority"
 	depends on GPIO_NPM1300
+<<<<<<< HEAD
 	default 80
+=======
+	default 70
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Initialization priority for the nPM1300 GPIO driver. It must be
 	  greater than the I2C controller init priority.

@@ -8,6 +8,10 @@
 #include <st/f4/stm32f412Xg.dtsi>
 #include <st/f4/stm32f412z(e-g)tx-pinctrl.dtsi>
 #include "arduino_r3_connector.dtsi"
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 / {
 	model = "STMicroelectronics STM32F412ZG-NUCLEO board";
@@ -20,7 +24,11 @@
 		zephyr,flash = &flash0;
 	};
 
+<<<<<<< HEAD
 	leds {
+=======
+	leds: leds {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		compatible = "gpio-leds";
 		green_led_1: led_1 {
 			gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
@@ -41,6 +49,10 @@
 		user_button: button {
 			label = "User";
 			gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_0>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

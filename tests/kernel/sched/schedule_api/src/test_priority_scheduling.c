@@ -16,7 +16,11 @@
 #else
 	#define NUM_THREAD 10
 #endif
+<<<<<<< HEAD
 #define ITRERATION_COUNT 5
+=======
+#define ITERATION_COUNT 5
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define BASE_PRIORITY 1
 
 BUILD_ASSERT(NUM_THREAD <= MAX_NUM_THREAD);
@@ -83,7 +87,11 @@ ZTEST(threads_scheduling, test_priority_scheduling)
 					 K_NO_WAIT);
 	}
 
+<<<<<<< HEAD
 	while (count < ITRERATION_COUNT) {
+=======
+	while (count < ITERATION_COUNT) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Wait for each thread to complete */
 		for (int i = 0; i < NUM_THREAD; i++) {

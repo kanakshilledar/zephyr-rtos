@@ -295,6 +295,7 @@ SECTIONS
 
     /* Define linker symbols */
 
+<<<<<<< HEAD
     MMU_ALIGN;
     _image_ram_end = .;
     _end = .; /* end of image */
@@ -304,12 +305,26 @@ SECTIONS
     __kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
 
     GROUP_END(RAMABLE_REGION)
+=======
+    __kernel_ram_end = RAM_ADDR + RAM_SIZE;
+    __kernel_ram_size = __kernel_ram_end - __kernel_ram_start;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* Located in generated directory. This file is populated by the
  * zephyr_linker_sources() Cmake function.
  */
 #include <snippets-sections.ld>
 
+<<<<<<< HEAD
+=======
+#define LAST_RAM_ALIGN MMU_ALIGN;
+
+#include <zephyr/linker/ram-end.ld>
+
+    GROUP_END(RAMABLE_REGION)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/linker/debug-sections.ld>
 
     SECTION_PROLOGUE(.ARM.attributes, 0,)

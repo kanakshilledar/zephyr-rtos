@@ -131,6 +131,10 @@
 #define RF2XX_RX_CRC_VALID                  7
 #define RF2XX_RND_VALUE                     5
 #define RF2XX_RSSI                          0
+<<<<<<< HEAD
+=======
+#define RF2XX_RSSI_MASK                     0x1F
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /* PHY_CC_CCA */
 #define RF2XX_CCA_REQUEST                   7

@@ -19,3 +19,7 @@ supported:
   - arduino_i2c
   - arduino_spi
   - arduino_gpio
+<<<<<<< HEAD
+=======
+vendor: phytec
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

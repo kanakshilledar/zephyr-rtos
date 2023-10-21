@@ -3,6 +3,10 @@
  * Copyright (c) 2016 BayLibre, SAS
  * Copyright (c) 2017-2022 Linaro Limited.
  * Copyright (c) 2017 RnDity Sp. z o.o.
+<<<<<<< HEAD
+=======
+ * Copyright (c) 2023 STMicroelectronics
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -45,6 +49,11 @@
 #include <zephyr/dt-bindings/clock/stm32h7_clock.h>
 #elif defined(CONFIG_SOC_SERIES_STM32U5X)
 #include <zephyr/dt-bindings/clock/stm32u5_clock.h>
+<<<<<<< HEAD
+=======
+#elif defined(CONFIG_SOC_SERIES_STM32WBAX)
+#include <zephyr/dt-bindings/clock/stm32wba_clock.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #include <zephyr/dt-bindings/clock/stm32_clock.h>
 #endif
@@ -58,8 +67,15 @@
 #define STM32_APB1_PRESCALER	DT_PROP(DT_NODELABEL(rcc), apb1_prescaler)
 #define STM32_APB2_PRESCALER	DT_PROP(DT_NODELABEL(rcc), apb2_prescaler)
 #define STM32_APB3_PRESCALER	DT_PROP(DT_NODELABEL(rcc), apb3_prescaler)
+<<<<<<< HEAD
 #define STM32_AHB3_PRESCALER	DT_PROP(DT_NODELABEL(rcc), ahb3_prescaler)
 #define STM32_AHB4_PRESCALER	DT_PROP(DT_NODELABEL(rcc), ahb4_prescaler)
+=======
+#define STM32_APB7_PRESCALER	DT_PROP(DT_NODELABEL(rcc), apb7_prescaler)
+#define STM32_AHB3_PRESCALER	DT_PROP(DT_NODELABEL(rcc), ahb3_prescaler)
+#define STM32_AHB4_PRESCALER	DT_PROP(DT_NODELABEL(rcc), ahb4_prescaler)
+#define STM32_AHB5_PRESCALER	DT_PROP_OR(DT_NODELABEL(rcc), ahb5_prescaler, 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STM32_CPU1_PRESCALER	DT_PROP(DT_NODELABEL(rcc), cpu1_prescaler)
 #define STM32_CPU2_PRESCALER	DT_PROP(DT_NODELABEL(rcc), cpu2_prescaler)
 
@@ -77,6 +93,14 @@
 #define STM32_FLASH_PRESCALER	STM32_CORE_PRESCALER
 #endif
 
+<<<<<<< HEAD
+=======
+#define STM32_ADC_PRESCALER	DT_PROP(DT_NODELABEL(rcc), adc_prescaler)
+#define STM32_ADC12_PRESCALER	DT_PROP(DT_NODELABEL(rcc), adc12_prescaler)
+#define STM32_ADC34_PRESCALER	DT_PROP(DT_NODELABEL(rcc), adc34_prescaler)
+
+/** STM2H7 specifics RCC dividers */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define STM32_D1CPRE	DT_PROP(DT_NODELABEL(rcc), d1cpre)
 #define STM32_HPRE	DT_PROP(DT_NODELABEL(rcc), hpre)
 #define STM32_D2PPRE1	DT_PROP(DT_NODELABEL(rcc), d2ppre1)
@@ -84,6 +108,12 @@
 #define STM32_D1PPRE	DT_PROP(DT_NODELABEL(rcc), d1ppre)
 #define STM32_D3PPRE	DT_PROP(DT_NODELABEL(rcc), d3ppre)
 
+<<<<<<< HEAD
+=======
+/** STM2WBA specifics RCC dividers */
+#define STM32_AHB5_DIV	DT_PROP(DT_NODELABEL(rcc), ahb5_div)
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define DT_RCC_CLOCKS_CTRL	DT_CLOCKS_CTLR(DT_NODELABEL(rcc))
 
 /* To enable use of IS_ENABLED utility macro, these symbols
@@ -112,6 +142,7 @@
 /** PLL node related symbols */
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f2_pll_clock, okay) || \
+<<<<<<< HEAD
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f4_pll_clock, okay) || \
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f7_pll_clock, okay) || \
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32g0_pll_clock, okay) || \
@@ -119,6 +150,16 @@
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32l4_pll_clock, okay) || \
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32u5_pll_clock, okay) || \
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32wb_pll_clock, okay) || \
+=======
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f4_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f7_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32g0_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32g4_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32l4_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32u5_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32wb_pll_clock, okay)  || \
+	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32wba_pll_clock, okay) || \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32h7_pll_clock, okay)
 #define STM32_PLL_ENABLED	1
 #define STM32_PLL_M_DIVISOR	DT_PROP(DT_NODELABEL(pll), div_m)
@@ -129,6 +170,11 @@
 #define STM32_PLL_Q_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll), div_q, 1)
 #define STM32_PLL_R_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll), div_r)
 #define STM32_PLL_R_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll), div_r, 1)
+<<<<<<< HEAD
+=======
+#define STM32_PLL_FRACN_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll), fracn)
+#define STM32_PLL_FRACN_VALUE	DT_PROP_OR(DT_NODELABEL(pll), fracn, 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(plli2s), st_stm32f4_plli2s_clock, okay)
@@ -158,6 +204,11 @@
 #define STM32_PLL2_Q_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll2), div_q, 1)
 #define STM32_PLL2_R_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll2), div_r)
 #define STM32_PLL2_R_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll2), div_r, 1)
+<<<<<<< HEAD
+=======
+#define STM32_PLL2_FRACN_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll2), fracn)
+#define STM32_PLL2_FRACN_VALUE	DT_PROP_OR(DT_NODELABEL(pll2), fracn, 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll3), st_stm32h7_pll_clock, okay) || \
@@ -171,6 +222,11 @@
 #define STM32_PLL3_Q_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll3), div_q, 1)
 #define STM32_PLL3_R_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll3), div_r)
 #define STM32_PLL3_R_DIVISOR	DT_PROP_OR(DT_NODELABEL(pll3), div_r, 1)
+<<<<<<< HEAD
+=======
+#define STM32_PLL3_FRACN_ENABLED	DT_NODE_HAS_PROP(DT_NODELABEL(pll3), fracn)
+#define STM32_PLL3_FRACN_VALUE	DT_PROP_OR(DT_NODELABEL(pll3), fracn, 1)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif
 
 #if DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(pll), st_stm32f1_pll_clock, okay)
@@ -354,6 +410,13 @@
 #define STM32_HSE_TCXO		DT_PROP(DT_NODELABEL(clk_hse), hse_tcxo)
 #define STM32_HSE_DIV2		DT_PROP(DT_NODELABEL(clk_hse), hse_div2)
 #define STM32_HSE_FREQ		DT_PROP(DT_NODELABEL(clk_hse), clock_frequency)
+<<<<<<< HEAD
+=======
+#elif DT_NODE_HAS_COMPAT_STATUS(DT_NODELABEL(clk_hse), st_stm32wba_hse_clock, okay)
+#define STM32_HSE_ENABLED	1
+#define STM32_HSE_DIV2		DT_PROP(DT_NODELABEL(clk_hse), hse_div2)
+#define STM32_HSE_FREQ		DT_PROP(DT_NODELABEL(clk_hse), clock_frequency)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #else
 #define STM32_HSE_FREQ		0
 #endif

@@ -15,6 +15,25 @@
 
 LOG_MODULE_REGISTER(pwm_nrfx, CONFIG_PWM_LOG_LEVEL);
 
+<<<<<<< HEAD
+=======
+/* NRFX_PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED can be undefined or defined
+ * to 0 or 1, hence the use of #if IS_ENABLED().
+ */
+#if IS_ENABLED(NRFX_PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED)
+#define ANOMALY_109_IRQ_CONNECT(...) IRQ_CONNECT(__VA_ARGS__)
+#define ANOMALY_109_EGU_IRQ_CONNECT(idx) _EGU_IRQ_CONNECT(idx)
+#define _EGU_IRQ_CONNECT(idx) \
+	extern void nrfx_egu_##idx##_irq_handler(void); \
+	IRQ_CONNECT(DT_IRQN(DT_NODELABEL(egu##idx)), \
+		    DT_IRQ(DT_NODELABEL(egu##idx), priority), \
+		    nrfx_isr, nrfx_egu_##idx##_irq_handler, 0)
+#else
+#define ANOMALY_109_IRQ_CONNECT(...)
+#define ANOMALY_109_EGU_IRQ_CONNECT(idx)
+#endif
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #define PWM_NRFX_CH_POLARITY_MASK BIT(15)
 #define PWM_NRFX_CH_COMPARE_MASK  BIT_MASK(15)
 #define PWM_NRFX_CH_VALUE(compare_value, inverted) \
@@ -198,6 +217,7 @@ static int pwm_nrfx_set_cycles(const struct device *dev, uint32_t channel,
 			 * and till that moment, it ignores any start requests,
 			 * so ensure here that it is stopped.
 			 */
+<<<<<<< HEAD
 			/* TODO: Remove nrfy_pwm_events_process() that is temporarly
 			 * added as a workaround for missing functionality in
 			 * nrfx_pwm_stopped_check()
@@ -205,6 +225,9 @@ static int pwm_nrfx_set_cycles(const struct device *dev, uint32_t channel,
 			while (!nrfx_pwm_stopped_check(&config->pwm) &&
 			       !nrfy_pwm_events_process(config->pwm.p_reg,
 					NRFY_EVENT_TO_INT_BITMASK(NRF_PWM_EVENT_STOPPED))) {
+=======
+			while (!nrfx_pwm_stopped_check(&config->pwm)) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 
@@ -244,6 +267,11 @@ static int pwm_nrfx_init(const struct device *dev)
 
 	int ret = pinctrl_apply_state(config->pcfg, PINCTRL_STATE_DEFAULT);
 
+<<<<<<< HEAD
+=======
+	ANOMALY_109_EGU_IRQ_CONNECT(NRFX_PWM_NRF52_ANOMALY_109_EGU_INSTANCE);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (ret < 0) {
 		return ret;
 	}
@@ -349,14 +377,28 @@ static int pwm_nrfx_pm_action(const struct device *dev,
 		.seq.length = NRF_PWM_CHANNEL_COUNT,			      \
 		.pcfg = PINCTRL_DT_DEV_CONFIG_GET(PWM(idx)),		      \
 	};								      \
+<<<<<<< HEAD
 	PM_DEVICE_DT_DEFINE(PWM(idx), pwm_nrfx_pm_action);		      \
 	DEVICE_DT_DEFINE(PWM(idx),					      \
 			 pwm_nrfx_init, PM_DEVICE_DT_GET(PWM(idx)),	      \
+=======
+	static int pwm_nrfx_init##idx(const struct device *dev)		      \
+	{								      \
+		ANOMALY_109_IRQ_CONNECT(				      \
+			DT_IRQN(PWM(idx)), DT_IRQ(PWM(idx), priority),	      \
+			nrfx_isr, nrfx_pwm_##idx##_irq_handler, 0);	      \
+		return pwm_nrfx_init(dev);				      \
+	};								      \
+	PM_DEVICE_DT_DEFINE(PWM(idx), pwm_nrfx_pm_action);		      \
+	DEVICE_DT_DEFINE(PWM(idx),					      \
+			 pwm_nrfx_init##idx, PM_DEVICE_DT_GET(PWM(idx)),      \
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			 &pwm_nrfx_##idx##_data,			      \
 			 &pwm_nrfx_##idx##_config,			      \
 			 POST_KERNEL, CONFIG_PWM_INIT_PRIORITY,		      \
 			 &pwm_nrfx_drv_api_funcs)
 
+<<<<<<< HEAD
 #if DT_NODE_HAS_STATUS(DT_NODELABEL(pwm0), okay)
 PWM_NRFX_DEVICE(0);
 #endif
@@ -370,5 +412,20 @@ PWM_NRFX_DEVICE(2);
 #endif
 
 #if DT_NODE_HAS_STATUS(DT_NODELABEL(pwm3), okay)
+=======
+#ifdef CONFIG_HAS_HW_NRF_PWM0
+PWM_NRFX_DEVICE(0);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_PWM1
+PWM_NRFX_DEVICE(1);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_PWM2
+PWM_NRFX_DEVICE(2);
+#endif
+
+#ifdef CONFIG_HAS_HW_NRF_PWM3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 PWM_NRFX_DEVICE(3);
 #endif

@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 / {
 	leds:	leds {
 		compatible = "gpio-leds";
@@ -44,22 +49,42 @@
 		button_1_vol_dn: button_1_vol_dn {
 			gpios = <&gpio0 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 1";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_VOLUMEDOWN>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button_2_vol_up: button_2_vol_up {
 			gpios = <&gpio0 3 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 2";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_VOLUMEUP>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button3: button_3 {
 			gpios = <&gpio0 4 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 3";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_3>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button4: button_4 {
 			gpios = <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 4";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_4>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 		button5: button_5 {
 			gpios = <&gpio0 5 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 			label = "Push button 5";
+<<<<<<< HEAD
+=======
+			zephyr,code = <INPUT_KEY_5>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		};
 	};
 

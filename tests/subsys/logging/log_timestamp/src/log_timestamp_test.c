@@ -71,7 +71,11 @@ ZTEST(test_timestamp, test_custom_timestamp)
 	err = cbprintf_package(package, sizeof(package), 0, TEST_STR);
 	zassert_true(err > 0);
 
+<<<<<<< HEAD
 	log_output_process(&log_output, 1, DNAME, SNAME, LOG_LEVEL_INF,
+=======
+	log_output_process(&log_output, 1, DNAME, SNAME, NULL, LOG_LEVEL_INF,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			   package, NULL, 0, flags);
 
 	mock_buffer[mock_len] = '\0';

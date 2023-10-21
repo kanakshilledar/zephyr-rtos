@@ -62,6 +62,7 @@
 	/* On-board antenna pinmux states */
 	board_ant_24g_off: board_ant_24g_off {
 		pinmux = <28 IOC_PORT_GPIO>;
+<<<<<<< HEAD
 	};
 	board_ant_24g_on: board_ant_24g_on {
 		pinmux = <28 IOC_PORT_RFC_GPO0>;
@@ -77,5 +78,28 @@
 	};
 	board_ant_subg_on: board_ant_subg_on {
 		pinmux = <30 IOC_PORT_RFC_GPO0>;
+=======
+		bias-disable;
+	};
+	board_ant_24g_on: board_ant_24g_on {
+		pinmux = <28 IOC_PORT_RFC_GPO0>;
+		bias-disable;
+	};
+	board_ant_tx_pa_off: board_ant_tx_pa_off {
+		pinmux = <29 IOC_PORT_GPIO>;
+		bias-disable;
+	};
+	board_ant_tx_pa_on: board_ant_tx_pa_on {
+		pinmux = <29 IOC_PORT_RFC_GPO3>;
+		bias-disable;
+	};
+	board_ant_subg_off: board_ant_subg_off {
+		pinmux = <30 IOC_PORT_GPIO>;
+		bias-disable;
+	};
+	board_ant_subg_on: board_ant_subg_on {
+		pinmux = <30 IOC_PORT_RFC_GPO0>;
+		bias-disable;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

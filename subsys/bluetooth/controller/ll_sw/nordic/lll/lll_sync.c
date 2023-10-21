@@ -301,8 +301,11 @@ static int create_prepare_cb(struct lll_prepare_param *p)
 	if (false) {
 #if defined(CONFIG_BT_CTLR_DF_SCAN_CTE_RX)
 	} else if (cfg->is_enabled) {
+<<<<<<< HEAD
 		int err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* In case of call in create_prepare_cb, new sync event starts hence discard
 		 * previous incomplete state.
 		 */
@@ -312,8 +315,13 @@ static int create_prepare_cb(struct lll_prepare_param *p)
 		err = lll_df_iq_report_no_resources_prepare(lll);
 		if (!err) {
 			err = lll_df_conf_cte_rx_enable(cfg->slot_durations, cfg->ant_sw_len,
+<<<<<<< HEAD
 							cfg->ant_ids, chan_idx, CTE_INFO_IN_PAYLOAD,
 							lll->phy);
+=======
+							cfg->ant_ids, chan_idx,
+							CTE_INFO_IN_PAYLOAD, lll->phy);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (err) {
 				lll->is_cte_incomplete = true;
 			}
@@ -388,8 +396,11 @@ static int prepare_cb(struct lll_prepare_param *p)
 	cfg = lll_df_sync_cfg_latest_get(&lll->df_cfg, NULL);
 
 	if (cfg->is_enabled) {
+<<<<<<< HEAD
 		int err;
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* In case of call in prepare, new sync event starts hence discard previous
 		 * incomplete state.
 		 */
@@ -399,8 +410,13 @@ static int prepare_cb(struct lll_prepare_param *p)
 		err = lll_df_iq_report_no_resources_prepare(lll);
 		if (!err) {
 			err = lll_df_conf_cte_rx_enable(cfg->slot_durations, cfg->ant_sw_len,
+<<<<<<< HEAD
 							cfg->ant_ids, chan_idx, CTE_INFO_IN_PAYLOAD,
 							lll->phy);
+=======
+							cfg->ant_ids, chan_idx,
+							CTE_INFO_IN_PAYLOAD, lll->phy);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			if (err) {
 				lll->is_cte_incomplete = true;
 			}
@@ -440,6 +456,10 @@ static int prepare_cb_common(struct lll_prepare_param *p, uint8_t chan_idx)
 	struct ull_hdr *ull;
 	uint32_t remainder;
 	uint32_t hcto;
+<<<<<<< HEAD
+=======
+	uint32_t ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	lll = p->param;
 
@@ -507,14 +527,26 @@ static int prepare_cb_common(struct lll_prepare_param *p, uint8_t chan_idx)
 
 #if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
 	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
+<<<<<<< HEAD
 	/* check if preempt to start has changed */
 	if (lll_preempt_calc(ull, (TICKER_ID_SCAN_SYNC_BASE +
 				   ull_sync_lll_handle_get(lll)),
 			     ticks_at_event)) {
+=======
+	uint32_t overhead;
+
+	overhead = lll_preempt_calc(ull, (TICKER_ID_SCAN_SYNC_BASE + ull_sync_lll_handle_get(lll)),
+				    ticks_at_event);
+	/* check if preempt to start has changed */
+	if (overhead) {
+		LL_ASSERT_OVERHEAD(overhead);
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		radio_isr_set(isr_done, lll);
 		radio_disable();
 
 		return -ECANCELED;
+<<<<<<< HEAD
 	} else
 #endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
 	{
@@ -523,6 +555,13 @@ static int prepare_cb_common(struct lll_prepare_param *p, uint8_t chan_idx)
 		ret = lll_prepare_done(lll);
 		LL_ASSERT(!ret);
 	}
+=======
+	}
+#endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
+
+	ret = lll_prepare_done(lll);
+	LL_ASSERT(!ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	DEBUG_RADIO_START_O(1);
 

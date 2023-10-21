@@ -24,13 +24,21 @@ LOG_MODULE_REGISTER(dma_stm32, CONFIG_DMA_LOG_LEVEL);
 
 #define DT_DRV_COMPAT st_stm32u5_dma
 
+<<<<<<< HEAD
 static const uint32_t table_m_size[] = {
+=======
+static const uint32_t table_src_size[] = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LL_DMA_SRC_DATAWIDTH_BYTE,
 	LL_DMA_SRC_DATAWIDTH_HALFWORD,
 	LL_DMA_SRC_DATAWIDTH_WORD,
 };
 
+<<<<<<< HEAD
 static const uint32_t table_p_size[] = {
+=======
+static const uint32_t table_dst_size[] = {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	LL_DMA_DEST_DATAWIDTH_BYTE,
 	LL_DMA_DEST_DATAWIDTH_HALFWORD,
 	LL_DMA_DEST_DATAWIDTH_WORD,
@@ -98,6 +106,27 @@ void dma_stm32_clear_tc(DMA_TypeDef *DMAx, uint32_t id)
 	LL_DMA_ClearFlag_TC(DMAx, dma_stm32_id_to_stream(id));
 }
 
+<<<<<<< HEAD
+=======
+/* data transfer error */
+static inline bool dma_stm32_is_dte_active(DMA_TypeDef *dma, uint32_t id)
+{
+	return LL_DMA_IsActiveFlag_DTE(dma, dma_stm32_id_to_stream(id));
+}
+
+/* link transfer error */
+static inline bool dma_stm32_is_ule_active(DMA_TypeDef *dma, uint32_t id)
+{
+	return LL_DMA_IsActiveFlag_ULE(dma, dma_stm32_id_to_stream(id));
+}
+
+/* user setting error */
+static inline bool dma_stm32_is_use_active(DMA_TypeDef *dma, uint32_t id)
+{
+	return LL_DMA_IsActiveFlag_USE(dma, dma_stm32_id_to_stream(id));
+}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* transfer error either a data or user or link error */
 bool dma_stm32_is_te_active(DMA_TypeDef *DMAx, uint32_t id)
 {
@@ -127,10 +156,20 @@ void dma_stm32_clear_ht(DMA_TypeDef *DMAx, uint32_t id)
 
 void stm32_dma_dump_stream_irq(DMA_TypeDef *dma, uint32_t id)
 {
+<<<<<<< HEAD
 	LOG_INF("tc: %d, ht: %d, te: %d",
 		dma_stm32_is_tc_active(dma, id),
 		dma_stm32_is_ht_active(dma, id),
 		dma_stm32_is_te_active(dma, id));
+=======
+	LOG_INF("tc: %d, ht: %d, dte: %d, ule: %d, use: %d",
+		dma_stm32_is_tc_active(dma, id),
+		dma_stm32_is_ht_active(dma, id),
+		dma_stm32_is_dte_active(dma, id),
+		dma_stm32_is_ule_active(dma, id),
+		dma_stm32_is_use_active(dma, id)
+	);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /* Check if nsecure masked interrupt is active on channel */
@@ -468,6 +507,7 @@ static int dma_stm32_configure(const struct device *dev,
 	/* Set the data width, when source_data_size equals dest_data_size */
 	int index = find_lsb_set(config->source_data_size) - 1;
 
+<<<<<<< HEAD
 	DMA_InitStruct.SrcDataWidth = table_p_size[index];
 
 	index = find_lsb_set(config->dest_data_size) - 1;
@@ -480,6 +520,14 @@ static int dma_stm32_configure(const struct device *dev,
 		DMA_InitStruct.BlkDataLength = config->head_block->block_size /
 					config->dest_data_size;
 	}
+=======
+	DMA_InitStruct.SrcDataWidth = table_src_size[index];
+
+	index = find_lsb_set(config->dest_data_size) - 1;
+	DMA_InitStruct.DestDataWidth = table_dst_size[index];
+
+	DMA_InitStruct.BlkDataLength = config->head_block->block_size;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* The request ID is stored in the dma_slot */
 	DMA_InitStruct.Request = config->dma_slot;
@@ -487,6 +535,12 @@ static int dma_stm32_configure(const struct device *dev,
 	LL_DMA_Init(dma, dma_stm32_id_to_stream(id), &DMA_InitStruct);
 
 	LL_DMA_EnableIT_TC(dma, dma_stm32_id_to_stream(id));
+<<<<<<< HEAD
+=======
+	LL_DMA_EnableIT_USE(dma, dma_stm32_id_to_stream(id));
+	LL_DMA_EnableIT_ULE(dma, dma_stm32_id_to_stream(id));
+	LL_DMA_EnableIT_DTE(dma, dma_stm32_id_to_stream(id));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Enable Half-Transfer irq if circular mode is enabled */
 	if (config->head_block->source_reload_en) {
@@ -631,6 +685,12 @@ static int dma_stm32_stop(const struct device *dev, uint32_t id)
 	}
 
 	LL_DMA_DisableIT_TC(dma, dma_stm32_id_to_stream(id));
+<<<<<<< HEAD
+=======
+	LL_DMA_DisableIT_USE(dma, dma_stm32_id_to_stream(id));
+	LL_DMA_DisableIT_ULE(dma, dma_stm32_id_to_stream(id));
+	LL_DMA_DisableIT_DTE(dma, dma_stm32_id_to_stream(id));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	dma_stm32_clear_stream_irq(dev, id);
 	dma_stm32_disable_stream(dma, id);

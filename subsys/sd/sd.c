@@ -117,7 +117,12 @@ static int sd_common_init(struct sd_card *card)
 static int sd_init_io(struct sd_card *card)
 {
 	struct sdhc_io *bus_io = &card->bus_io;
+<<<<<<< HEAD
 	int ret;
+=======
+	struct sdhc_host_props *host_props = &card->host_props;
+	int ret, voltage;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* SD clock should start gated */
 	bus_io->clock = 0;
@@ -125,9 +130,28 @@ static int sd_init_io(struct sd_card *card)
 	bus_io->bus_mode = SDHC_BUSMODE_PUSHPULL;
 	bus_io->power_mode = SDHC_POWER_ON;
 	bus_io->bus_width = SDHC_BUS_WIDTH1BIT;
+<<<<<<< HEAD
 	/* Cards start with legacy timing and 3.3V signalling at power on */
 	bus_io->timing = SDHC_TIMING_LEGACY;
 	bus_io->signal_voltage = SD_VOL_3_3_V;
+=======
+	/* Cards start with legacy timing and Maximum voltage Host controller support */
+	bus_io->timing = SDHC_TIMING_LEGACY;
+
+	if (host_props->host_caps.vol_330_support) {
+		LOG_DBG("Host controller support 3.3V max");
+		voltage = SD_VOL_3_3_V;
+	} else if (host_props->host_caps.vol_300_support) {
+		LOG_DBG("Host controller support 3.0V max");
+		voltage = SD_VOL_3_0_V;
+	} else {
+		LOG_DBG("Host controller support 1.8V max");
+		voltage = SD_VOL_1_8_V;
+	}
+
+	/* Set to maximum voltage support by Host controller */
+	bus_io->signal_voltage = voltage;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Toggle power to card to reset it */
 	LOG_DBG("Resetting power to card");
@@ -144,8 +168,13 @@ static int sd_init_io(struct sd_card *card)
 		LOG_ERR("Could not disable card power via SDHC");
 		return ret;
 	}
+<<<<<<< HEAD
 	/* After reset or init, card voltage should be 3.3V */
 	card->card_voltage = SD_VOL_3_3_V;
+=======
+	/* After reset or init, card voltage should be max HC support */
+	card->card_voltage = voltage;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Reset card flags */
 	card->flags = 0U;
 	/* Delay so card can power up */

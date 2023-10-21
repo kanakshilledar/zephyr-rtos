@@ -427,6 +427,10 @@ static int prepare_cb(struct lll_prepare_param *p)
 	uint8_t is_lll_scan;
 	uint32_t remainder;
 	uint32_t hcto;
+<<<<<<< HEAD
+=======
+	uint32_t ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t aa;
 
 	DEBUG_RADIO_START_O(1);
@@ -559,6 +563,7 @@ sync_aux_prepare_done:
 
 #if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
 	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
+<<<<<<< HEAD
 	/* check if preempt to start has changed */
 	if (lll_preempt_calc(ull, (TICKER_ID_SCAN_AUX_BASE +
 				   ull_scan_aux_lll_handle_get(lll_aux)),
@@ -596,6 +601,46 @@ sync_aux_prepare_done:
 		ret = lll_prepare_done(lll_aux);
 		LL_ASSERT(!ret);
 	}
+=======
+	uint32_t overhead;
+
+	overhead = lll_preempt_calc(ull, (TICKER_ID_SCAN_AUX_BASE +
+					  ull_scan_aux_lll_handle_get(lll_aux)), ticks_at_event);
+	/* check if preempt to start has changed */
+	if (overhead) {
+		LL_ASSERT_OVERHEAD(overhead);
+
+		radio_isr_set(isr_done, lll_aux);
+		radio_disable();
+
+		return -ECANCELED;
+	}
+#endif /* !CONFIG_BT_CTLR_XTAL_ADVANCED */
+
+#if defined(CONFIG_BT_CENTRAL) && defined(CONFIG_BT_CTLR_SCHED_ADVANCED)
+	/* calc end of group in us for the anchor where next connection
+	 * event to be placed.
+	 */
+	if (lll && lll->conn) {
+		static memq_link_t link;
+		static struct mayfly mfy_after_cen_offset_get = {
+			0U, 0U, &link, NULL, ull_sched_mfy_after_cen_offset_get};
+
+		/* NOTE: LLL scan instance passed, as done when
+		 *       establishing legacy connections.
+		 */
+		p->param = lll;
+		mfy_after_cen_offset_get.param = p;
+
+		ret = mayfly_enqueue(TICKER_USER_ID_LLL, TICKER_USER_ID_ULL_LOW, 1U,
+				     &mfy_after_cen_offset_get);
+		LL_ASSERT(!ret);
+	}
+#endif /* CONFIG_BT_CENTRAL && CONFIG_BT_CTLR_SCHED_ADVANCED */
+
+	ret = lll_prepare_done(lll_aux);
+	LL_ASSERT(!ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	DEBUG_RADIO_START_O(1);
 
@@ -844,12 +889,21 @@ isr_rx_do_close:
 	} else {
 		/* Send message to flush Auxiliary PDU list */
 		if (lll->is_aux_sched && err != -ECANCELED) {
+<<<<<<< HEAD
 			struct node_rx_pdu *node_rx;
 
 			node_rx = ull_pdu_rx_alloc();
 			LL_ASSERT(node_rx);
 
 			node_rx->hdr.type = NODE_RX_TYPE_EXT_AUX_RELEASE;
+=======
+			struct node_rx_pdu *node_rx2;
+
+			node_rx2 = ull_pdu_rx_alloc();
+			LL_ASSERT(node_rx2);
+
+			node_rx2->hdr.type = NODE_RX_TYPE_EXT_AUX_RELEASE;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 			/* Use LLL scan context pointer which will be resolved
 			 * to LLL aux context in the `ull_scan_aux_release`
@@ -860,9 +914,15 @@ isr_rx_do_close:
 			 * under race, if ULL execution did assign one, it will
 			 * free it.
 			 */
+<<<<<<< HEAD
 			node_rx->hdr.rx_ftr.param = lll;
 
 			ull_rx_put_sched(node_rx->hdr.link, node_rx);
+=======
+			node_rx2->hdr.rx_ftr.param = lll;
+
+			ull_rx_put_sched(node_rx2->hdr.link, node_rx2);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 
 		/* Check if LLL scheduled auxiliary PDU reception by scan
@@ -900,7 +960,10 @@ static int isr_rx_pdu(struct lll_scan *lll, struct lll_scan_aux *lll_aux,
 		   lll_scan_ext_tgta_check(lll, false, true, pdu,
 					   rl_idx, NULL)) {
 		struct lll_scan_aux *lll_aux_to_use;
+<<<<<<< HEAD
 		struct node_rx_ftr *ftr;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		struct node_rx_pdu *rx;
 		struct pdu_adv *pdu_tx;
 		uint32_t conn_space_us;
@@ -1509,7 +1572,11 @@ static void isr_rx_connect_rsp(void *param)
 
 		rx = ftr->extra;
 		rx->hdr.type = NODE_RX_TYPE_RELEASE;
+<<<<<<< HEAD
 		goto isr_rx_do_close;
+=======
+		goto isr_rx_connect_rsp_do_close;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Update the max Tx and Rx time; and connection PHY based on the
@@ -1547,7 +1614,11 @@ static void isr_rx_connect_rsp(void *param)
 	}
 #endif /* CONFIG_BT_CTLR_PRIVACY */
 
+<<<<<<< HEAD
 isr_rx_do_close:
+=======
+isr_rx_connect_rsp_do_close:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (IS_ENABLED(CONFIG_BT_CTLR_PROFILE_ISR)) {
 		lll_prof_cputime_capture();
 	}

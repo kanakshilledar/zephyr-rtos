@@ -1,7 +1,11 @@
 common:
   filter: not CONFIG_64BIT
 tests:
+<<<<<<< HEAD
   logging.log_syst.mipi_syst:
+=======
+  logging.mipi_syst:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_syst
       - logging
@@ -25,7 +29,11 @@ tests:
       - CONFIG_LOG_MIPI_SYST_ENABLE=y
       - CONFIG_LOG_BACKEND_MOCK_OUTPUT_SYST=y
       - CONFIG_REQUIRES_FULL_LIBC=y
+<<<<<<< HEAD
   logging.log_syst.text:
+=======
+  logging.mipi_syst.text:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     tags:
       - log_syst
       - logging

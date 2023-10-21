@@ -7,6 +7,10 @@
 
 /dts-v1/;
 #include <silabs/efr32fg13p233f512gm48.dtsi>
+<<<<<<< HEAD
+=======
+#include <silabs/efr32xg13p-pinctrl.dtsi>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include "efr32_radio.dtsi"
 
 / {
@@ -57,3 +61,13 @@
 
 	};
 };
+<<<<<<< HEAD
+=======
+
+&usart0 {
+	current-speed = <115200>;
+	pinctrl-0 = <&usart0_default>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

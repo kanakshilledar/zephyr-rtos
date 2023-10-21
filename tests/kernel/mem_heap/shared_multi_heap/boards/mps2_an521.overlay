@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+<<<<<<< HEAD
+=======
+#include <zephyr/dt-bindings/memory-attr/memory-attr.h>
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 / {
 	/delete-node/ memory@38000000;
 
@@ -17,20 +23,32 @@
 		compatible = "zephyr,memory-region", "mmio-sram";
 		reg = <0x38100000 0x1000>;
 		zephyr,memory-region = "RES0";
+<<<<<<< HEAD
 		zephyr,memory-region-mpu = "RAM";
+=======
+		zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	res1: memory@38200000 {
 		compatible = "zephyr,memory-region", "mmio-sram";
 		reg = <0x38200000 0x2000>;
 		zephyr,memory-region = "RES1";
+<<<<<<< HEAD
 		zephyr,memory-region-mpu = "RAM_NOCACHE";
+=======
+		zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM_NOCACHE) )>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	res2: memory@38300000 {
 		compatible = "zephyr,memory-region", "mmio-sram";
 		reg = <0x38300000 0x3000>;
 		zephyr,memory-region = "RES2";
+<<<<<<< HEAD
 		zephyr,memory-region-mpu = "RAM";
+=======
+		zephyr,memory-attr = <( DT_MEM_ARM(ATTR_MPU_RAM) )>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 };

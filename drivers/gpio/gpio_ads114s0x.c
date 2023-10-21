@@ -106,6 +106,7 @@ static int gpio_ads114s0x_port_toggle_bits(const struct device *dev, gpio_port_p
 	return ads114s0x_gpio_port_toggle_bits(config->parent, pins);
 }
 
+<<<<<<< HEAD
 static int gpio_ads114s0x_pin_interrupt_configure(const struct device *dev, gpio_pin_t pin,
 						  enum gpio_int_mode mode, enum gpio_int_trig trig)
 {
@@ -117,6 +118,8 @@ static int gpio_ads114s0x_pin_interrupt_configure(const struct device *dev, gpio
 	return -ENOTSUP;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int gpio_ads114s0x_init(const struct device *dev)
 {
 	const struct gpio_ads114s0x_config *config = dev->config;
@@ -135,7 +138,10 @@ static const struct gpio_driver_api gpio_ads114s0x_api = {
 	.port_set_bits_raw = gpio_ads114s0x_port_set_bits_raw,
 	.port_clear_bits_raw = gpio_ads114s0x_port_clear_bits_raw,
 	.port_toggle_bits = gpio_ads114s0x_port_toggle_bits,
+<<<<<<< HEAD
 	.pin_interrupt_configure = gpio_ads114s0x_pin_interrupt_configure,
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.port_get_raw = gpio_ads114s0x_port_get_raw,
 };
 

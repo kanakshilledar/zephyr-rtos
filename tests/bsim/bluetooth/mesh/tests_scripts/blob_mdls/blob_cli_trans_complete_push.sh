@@ -9,3 +9,12 @@ conf=prj_mesh1d1_conf
 RunTest blob_success_push blob_cli_trans_complete \
 	blob_srv_trans_complete blob_srv_trans_complete \
 	blob_srv_trans_complete blob_srv_trans_complete
+<<<<<<< HEAD
+=======
+
+conf=prj_mesh1d1_conf
+overlay=overlay_psa_conf
+RunTest blob_success_push_psa blob_cli_trans_complete \
+	blob_srv_trans_complete blob_srv_trans_complete \
+	blob_srv_trans_complete blob_srv_trans_complete
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

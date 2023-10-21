@@ -12,6 +12,10 @@
 #include <zephyr/sys/byteorder.h>
 
 #include <zephyr/bluetooth/bluetooth.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/bluetooth/byteorder.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/audio/audio.h>
 #include <zephyr/bluetooth/audio/bap.h>
@@ -23,17 +27,21 @@
 
 #include "tmap_peripheral.h"
 
+<<<<<<< HEAD
 #define AVAILABLE_SINK_CONTEXT  (BT_AUDIO_CONTEXT_TYPE_UNSPECIFIED | \
 				 BT_AUDIO_CONTEXT_TYPE_CONVERSATIONAL | \
 				 BT_AUDIO_CONTEXT_TYPE_MEDIA | \
 				 BT_AUDIO_CONTEXT_TYPE_GAME | \
 				 BT_AUDIO_CONTEXT_TYPE_INSTRUCTIONAL)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static struct bt_conn *default_conn;
 static struct k_work_delayable call_terminate_set_work;
 static struct k_work_delayable media_pause_set_work;
 
 static uint8_t unicast_server_addata[] = {
+<<<<<<< HEAD
 	BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL), /* ASCS UUID */
 	BT_AUDIO_UNICAST_ANNOUNCEMENT_TARGETED, /* Target Announcement */
 	(((AVAILABLE_SINK_CONTEXT) >>  0) & 0xFF),
@@ -44,21 +52,51 @@ static uint8_t unicast_server_addata[] = {
 static uint8_t tmap_addata[] = {
 	BT_UUID_16_ENCODE(BT_UUID_TMAS_VAL), /* TMAS UUID */
 	(BT_TMAP_ROLE_UMR | BT_TMAP_ROLE_CT), 0x00, /* TMAP Role */
+=======
+	BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL),    /* ASCS UUID */
+	BT_AUDIO_UNICAST_ANNOUNCEMENT_TARGETED, /* Target Announcement */
+	BT_BYTES_LIST_LE16(AVAILABLE_SINK_CONTEXT),
+	BT_BYTES_LIST_LE16(AVAILABLE_SOURCE_CONTEXT),
+	0x00, /* Metadata length */
+};
+
+static const uint8_t cap_addata[] = {
+	BT_UUID_16_ENCODE(BT_UUID_CAS_VAL),
+	BT_AUDIO_UNICAST_ANNOUNCEMENT_TARGETED,
+};
+
+static uint8_t tmap_addata[] = {
+	BT_UUID_16_ENCODE(BT_UUID_TMAS_VAL),                    /* TMAS UUID */
+	BT_BYTES_LIST_LE16(BT_TMAP_ROLE_UMR | BT_TMAP_ROLE_CT), /* TMAP Role */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static uint8_t csis_rsi_addata[BT_CSIP_RSI_SIZE];
 static bool peer_is_cg;
 static bool peer_is_ums;
 
+<<<<<<< HEAD
 /* TODO: Expand with BAP data */
 static const struct bt_data ad[] = {
 	BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
 	BT_DATA_BYTES(BT_DATA_GAP_APPEARANCE, 0x09, 0x41), /* Appearance - Earbud */
 	BT_DATA_BYTES(BT_DATA_UUID16_SOME, BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL)),
+=======
+static const struct bt_data ad[] = {
+	BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
+	BT_DATA_BYTES(BT_DATA_GAP_APPEARANCE,
+		      BT_BYTES_LIST_LE16(BT_APPEARANCE_WEARABLE_AUDIO_DEVICE_EARBUD)),
+	BT_DATA_BYTES(BT_DATA_UUID16_SOME, BT_UUID_16_ENCODE(BT_UUID_ASCS_VAL),
+		      BT_UUID_16_ENCODE(BT_UUID_CAS_VAL), BT_UUID_16_ENCODE(BT_UUID_TMAS_VAL)),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #if defined(CONFIG_BT_CSIP_SET_MEMBER)
 	BT_DATA(BT_DATA_CSIS_RSI, csis_rsi_addata, ARRAY_SIZE(csis_rsi_addata)),
 #endif /* CONFIG_BT_CSIP_SET_MEMBER */
 	BT_DATA(BT_DATA_SVC_DATA16, tmap_addata, ARRAY_SIZE(tmap_addata)),
+<<<<<<< HEAD
+=======
+	BT_DATA(BT_DATA_SVC_DATA16, cap_addata, ARRAY_SIZE(cap_addata)),
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	BT_DATA(BT_DATA_SVC_DATA16, unicast_server_addata, ARRAY_SIZE(unicast_server_addata)),
 };
 

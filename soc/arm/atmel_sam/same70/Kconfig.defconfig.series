@@ -1,6 +1,10 @@
 # Atmel SAM E70 MCU series configuration options
 
 # Copyright (c) 2016 Piotr Mienkowski
+<<<<<<< HEAD
+=======
+# Copyright (c) 2023 Gerson Fernando Budke <nandojve@gmail.com>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # SPDX-License-Identifier: Apache-2.0
 
 if SOC_SERIES_SAME70

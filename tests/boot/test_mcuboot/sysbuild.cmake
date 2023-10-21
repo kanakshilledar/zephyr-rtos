@@ -15,11 +15,20 @@ ExternalZephyrProject_Add(
 )
 
 # Add the swapped app to the list of images to flash
+<<<<<<< HEAD
 # Ensure the order of images is as follows:
+=======
+# Ensure the flashing order of images is as follows:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # - mcuboot
 # - swapped app
 # - primary app (test_mcuboot)
 # This order means that if the debugger resets the MCU in between flash
 # iterations, the MCUBoot swap won't be triggered until the secondary app
 # is actually present in flash.
+<<<<<<< HEAD
 set(IMAGES "mcuboot" "swapped_app" "test_mcuboot")
+=======
+sysbuild_add_dependencies(FLASH test_mcuboot swapped_app)
+sysbuild_add_dependencies(FLASH swapped_app mcuboot)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

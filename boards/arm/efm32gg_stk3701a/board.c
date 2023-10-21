@@ -13,6 +13,7 @@
 
 static int efm32gg_stk3701a_init(void)
 {
+<<<<<<< HEAD
 	const struct device *cur_dev;
 
 
@@ -27,6 +28,11 @@ static int efm32gg_stk3701a_init(void)
 	gpio_pin_set(cur_dev, BC_ENABLE_GPIO_PIN, 1);
 
 #ifdef CONFIG_ETH_GECKO
+=======
+#ifdef CONFIG_ETH_GECKO
+	const struct device *cur_dev;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Enable the ethernet PHY power */
 	cur_dev = DEVICE_DT_GET(ETH_PWR_ENABLE_GPIO_NODE);
 	if (!device_is_ready(cur_dev)) {

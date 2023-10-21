@@ -24,9 +24,12 @@
 
 #include <zephyr/fs/littlefs.h>
 
+<<<<<<< HEAD
 #define HELLO "hello"
 #define GOODBYE "goodbye"
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int mount(struct fs_mount_t *mp)
 {
 	TC_PRINT("mounting %s\n", mp->mnt_point);
@@ -72,6 +75,7 @@ static int clean_statvfs(const struct fs_mount_t *mp)
 	return TC_PASS;
 }
 
+<<<<<<< HEAD
 static int create_write_hello(const struct fs_mount_t *mp)
 {
 	struct testfs_path path;
@@ -421,6 +425,8 @@ static int verify_goodbye(const struct fs_mount_t *mp)
 	return TC_PASS;
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static int check_medium(void)
 {
 	struct fs_mount_t *mp = &testfs_medium_mnt;
@@ -585,6 +591,14 @@ static int num_dirs(struct fs_mount_t *mp)
 	return TC_PASS;
 }
 
+<<<<<<< HEAD
+=======
+void test_fs_basic(void);
+
+/* Mount structure needed by test_fs_basic tests. */
+struct fs_mount_t *fs_basic_test_mp = &testfs_small_mnt;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ZTEST(littlefs, test_lfs_basic)
 {
 	struct fs_mount_t *mp = &testfs_small_mnt;
@@ -592,12 +606,23 @@ ZTEST(littlefs, test_lfs_basic)
 	zassert_equal(clear_partition(mp), TC_PASS,
 		      "clear partition failed");
 
+<<<<<<< HEAD
+=======
+	/* Common basic tests.
+	 * (File system is mounted and unmounted during that test.)
+	 */
+	test_fs_basic();
+
+	/* LittleFS specific tests */
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(mount(mp), TC_PASS,
 		      "clean mount failed");
 
 	zassert_equal(clean_statvfs(mp), TC_PASS,
 		      "clean statvfs failed");
 
+<<<<<<< HEAD
 	zassert_equal(create_write_hello(mp), TC_PASS,
 		      "write hello failed");
 
@@ -616,6 +641,8 @@ ZTEST(littlefs, test_lfs_basic)
 	zassert_equal(sync_goodbye(mp), TC_PASS,
 		      "sync goodbye failed");
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(num_files(mp), TC_PASS,
 		      "num_files failed");
 
@@ -626,6 +653,7 @@ ZTEST(littlefs, test_lfs_basic)
 	zassert_equal(fs_unmount(mp), 0,
 		      "unmount small failed");
 
+<<<<<<< HEAD
 	k_sleep(K_MSEC(100));   /* flush log messages */
 	TC_PRINT("checking double unmount diagnoses\n");
 	zassert_equal(fs_unmount(mp), -EINVAL,
@@ -640,6 +668,8 @@ ZTEST(littlefs, test_lfs_basic)
 	zassert_equal(fs_unmount(mp), 0,
 		      "unmount2 small failed");
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	if (IS_ENABLED(CONFIG_APP_TEST_CUSTOM)) {
 		zassert_equal(check_medium(), TC_PASS,
 			      "check medium failed");

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _net_stats-sample:
 
 Network Statistics Sample Application
 #####################################
+=======
+.. zephyr:code-sample:: net-stats
+   :name: Network statistics
+   :relevant-api: net_stats
+
+   Query and display network statistics from a user application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

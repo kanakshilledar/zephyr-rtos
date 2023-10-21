@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _sockets-echo-sample:
 
 Socket Echo Server
 ##################
+=======
+.. zephyr:code-sample:: sockets-echo
+   :name: Echo server (simple)
+   :relevant-api: bsd_sockets
+
+   Implements a simple IPv4 TCP echo server using BSD sockets.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********

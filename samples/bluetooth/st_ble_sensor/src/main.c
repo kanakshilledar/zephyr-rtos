@@ -74,7 +74,11 @@ static const struct bt_data ad[] = {
 };
 
 /* BLE connection */
+<<<<<<< HEAD
 struct bt_conn *conn;
+=======
+struct bt_conn *ble_conn;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Notification state */
 volatile bool notify_enable;
 
@@ -116,7 +120,11 @@ static void button_callback(const struct device *gpiob, struct gpio_callback *cb
 	int err;
 
 	LOG_INF("Button pressed");
+<<<<<<< HEAD
 	if (conn) {
+=======
+	if (ble_conn) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (notify_enable) {
 			err = bt_gatt_notify(NULL, &stsensor_svc.attrs[4],
 					     &but_val, sizeof(but_val));
@@ -157,17 +165,28 @@ static void connected(struct bt_conn *connected, uint8_t err)
 		LOG_ERR("Connection failed (err %u)", err);
 	} else {
 		LOG_INF("Connected");
+<<<<<<< HEAD
 		if (!conn) {
 			conn = bt_conn_ref(connected);
+=======
+		if (!ble_conn) {
+			ble_conn = bt_conn_ref(connected);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		}
 	}
 }
 
 static void disconnected(struct bt_conn *disconn, uint8_t reason)
 {
+<<<<<<< HEAD
 	if (conn) {
 		bt_conn_unref(conn);
 		conn = NULL;
+=======
+	if (ble_conn) {
+		bt_conn_unref(ble_conn);
+		ble_conn = NULL;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	LOG_INF("Disconnected (reason %u)", reason);

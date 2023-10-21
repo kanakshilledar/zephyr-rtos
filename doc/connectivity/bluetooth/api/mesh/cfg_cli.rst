@@ -17,8 +17,13 @@ All configuration functions in the Configuration Client API have ``net_idx``
 and ``addr`` as their first parameters. These should be set to the network
 index and primary unicast address that the target node was provisioned with.
 
+<<<<<<< HEAD
 The Configuration Client model is optional, but should be instantiated on the
 first element if it is present in the composition data.
+=======
+The Configuration Client model is optional, and it must only be instantiated on the
+primary element if present in the Composition Data.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 API reference
 *************

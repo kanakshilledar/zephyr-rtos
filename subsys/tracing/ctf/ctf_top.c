@@ -27,7 +27,11 @@ void sys_trace_k_thread_switched_out(void)
 	ctf_bounded_string_t name = { "unknown" };
 	struct k_thread *thread;
 
+<<<<<<< HEAD
 	thread = z_current_get();
+=======
+	thread = k_sched_current_thread_query();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	_get_thread_name(thread, &name);
 
 	ctf_top_thread_switched_out((uint32_t)(uintptr_t)thread, name);
@@ -38,7 +42,11 @@ void sys_trace_k_thread_switched_in(void)
 	struct k_thread *thread;
 	ctf_bounded_string_t name = { "unknown" };
 
+<<<<<<< HEAD
 	thread = z_current_get();
+=======
+	thread = k_sched_current_thread_query();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	_get_thread_name(thread, &name);
 
 	ctf_top_thread_switched_in((uint32_t)(uintptr_t)thread, name);

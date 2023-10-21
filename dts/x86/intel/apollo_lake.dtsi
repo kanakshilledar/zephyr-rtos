@@ -16,7 +16,11 @@
 
 		cpu@0 {
 			device_type = "cpu";
+<<<<<<< HEAD
 			compatible = "intel,apollo_lake";
+=======
+			compatible = "intel,apollo-lake";
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			d-cache-line-size = <64>;
 			reg = <0>;
 		};
@@ -30,9 +34,24 @@
 
 	intc: ioapic@fec00000  {
 		compatible = "intel,ioapic";
+<<<<<<< HEAD
 		reg = <0xfec00000 0x1000>;
 		interrupt-controller;
 		#interrupt-cells = <3>;
+=======
+		#address-cells = <1>;
+		#interrupt-cells = <3>;
+		reg = <0xfec00000 0x1000>;
+		interrupt-controller;
+	};
+
+	intc_loapic: loapic@fee00000  {
+		compatible = "intel,loapic";
+		reg = <0xfee00000 0x1000>;
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		#address-cells = <1>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	};
 
 	pcie0: pcie0 {

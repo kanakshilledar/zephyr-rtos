@@ -36,6 +36,10 @@ tests:
       - nucleo_u575zi_q
       - nucleo_c031c6
       - stm32h573i_dk
+<<<<<<< HEAD
+=======
+      - nucleo_wba52cg
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - nucleo_f091rc
   drivers.watchdog.stm32wwdg_h7:
@@ -68,6 +72,10 @@ tests:
       - nucleo_h743zi
       - nucleo_c031c6
       - nucleo_h753zi
+<<<<<<< HEAD
+=======
+      - nucleo_wba52cg
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     integration_platforms:
       - nucleo_f091rc
   drivers.watchdog.mec15xxevb_assy6853:
@@ -110,11 +118,19 @@ tests:
       - longan_nano
     integration_platforms:
       - gd32e103v_eval
+<<<<<<< HEAD
   drivers.watchdog.s32z270dc2_r52:
+=======
+  drivers.watchdog.nxp_s32:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     build_only: true
     platform_allow:
       - s32z270dc2_rtu0_r52
       - s32z270dc2_rtu1_r52
+<<<<<<< HEAD
+=======
+      - mr_canhubk3
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   drivers.watchdog.mimxrt1050_evk_ti_tps382x:
     filter: dt_compat_enabled("ti,tps382x")
     platform_allow: mimxrt1050_evk

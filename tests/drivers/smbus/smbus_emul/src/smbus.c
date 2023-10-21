@@ -7,7 +7,11 @@
 #include <zephyr/ztest.h>
 #include <zephyr/tc_util.h>
 #include <zephyr/sys/byteorder.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/drivers/pcie/pcie.h>
 #include <zephyr/drivers/smbus.h>
@@ -101,7 +105,11 @@ static struct pch_config pch_config_data = {
 };
 
 DEVICE_DEFINE(dummy_driver, SMBUS_EMUL, &pch_smbus_init,
+<<<<<<< HEAD
 	      NULL, &smbus_data, &pch_config_data, APPLICATION,
+=======
+	      NULL, &smbus_data, &pch_config_data, POST_KERNEL,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	      CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &funcs);
 
 ZTEST(test_smbus_emul, test_byte)

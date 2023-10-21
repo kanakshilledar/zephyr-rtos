@@ -14,6 +14,15 @@ choice CODE_LOCATION
 	default CODE_FLEXSPI
 endchoice
 
+<<<<<<< HEAD
+=======
+config DEVICE_CONFIGURATION_DATA
+	default y
+
+config NXP_IMX_EXTERNAL_SDRAM
+	default y
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if FLASH
 
 config FLASH_MCUX_FLEXSPI_NOR
@@ -28,11 +37,16 @@ config FLASH_MCUX_FLEXSPI_HYPERFLASH
 
 endif #FLASH
 
+<<<<<<< HEAD
 config KSCAN
 	default y if LVGL
 
 config INPUT
 	default y if KSCAN
+=======
+config INPUT
+	default y if LVGL
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 if INPUT
 
@@ -53,9 +67,12 @@ endif # NETWORKING
 
 if LVGL
 
+<<<<<<< HEAD
 config LV_Z_POINTER_KSCAN
 	default y
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 # LVGL should allocate buffers equal to size of display
 config LV_Z_VDB_SIZE
 	default 100
@@ -79,6 +96,12 @@ config LV_Z_BITS_PER_PIXEL
 config LV_Z_VDB_ALIGN
 	default 32
 
+<<<<<<< HEAD
+=======
+# Use offloaded render thread
+config LV_Z_FLUSH_THREAD
+	default y
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 choice LV_COLOR_DEPTH
 	default LV_COLOR_DEPTH_16

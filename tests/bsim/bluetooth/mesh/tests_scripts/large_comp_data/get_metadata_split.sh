@@ -19,5 +19,16 @@ source $(dirname "${BASH_SOURCE[0]}")/../../_mesh_test.sh
 # 6. Client merges the two samples and checks that the collected data is
 #    correctly merged, continuous, and matches its local metadata.
 conf=prj_mesh1d1_conf
+<<<<<<< HEAD
 RunTest mesh_lcd_test_split_metadata \
 	lcd_cli_split_metadata_request lcd_srv_metadata_status_respond
+=======
+overlay=overlay_pst_conf
+RunTest mesh_lcd_test_split_metadata \
+	lcd_cli_split_metadata_request lcd_srv_metadata_status_respond
+
+conf=prj_mesh1d1_conf
+overlay="overlay_pst_conf_overlay_psa_conf"
+RunTest mesh_lcd_test_split_metadata_psa \
+	lcd_cli_split_metadata_request lcd_srv_metadata_status_respond
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

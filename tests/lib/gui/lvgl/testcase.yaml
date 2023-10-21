@@ -22,8 +22,12 @@ tests:
     extra_configs:
       - CONFIG_LV_Z_BUFFER_ALLOC_DYNAMIC=y
       - CONFIG_LV_Z_MEM_POOL_SYS_HEAP=y
+<<<<<<< HEAD
       - CONFIG_LV_Z_MEM_POOL_NUMBER_BLOCKS=3
       - CONFIG_LV_Z_MEM_POOL_MAX_SIZE=32768
+=======
+      - CONFIG_LV_Z_MEM_POOL_SIZE=98304
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   libraries.gui.lvgl.16bit:
     tags:
       - display

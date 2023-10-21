@@ -15,5 +15,9 @@ config SOC_SERIES_NRF52X
 	select HAS_NORDIC_DRIVERS
 	select HAS_SEGGER_RTT if ZEPHYR_SEGGER_MODULE
 	select HAS_SWO
+<<<<<<< HEAD
+=======
+	select HAS_POWEROFF
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	help
 	  Enable support for NRF52 MCU series

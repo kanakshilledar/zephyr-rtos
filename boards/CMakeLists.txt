@@ -8,6 +8,14 @@ if(EXISTS ${BOARD_DIR}/CMakeLists.txt)
 	set(build_dir boards/${ARCH}/${BOARD})
   else()
 	unset(build_dir)
+<<<<<<< HEAD
+=======
+
+	# FIXME: SHADOW_VARS: Remove this once we have enabled -Wshadow globally.
+	#
+	# For now, only enable warning for shadow variables for in-tree boards.
+	add_compile_options($<TARGET_PROPERTY:compiler,warning_shadow_variables>)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
   endif()
 
   add_subdirectory(${BOARD_DIR} ${build_dir})

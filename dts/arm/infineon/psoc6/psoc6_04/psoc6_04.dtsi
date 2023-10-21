@@ -186,6 +186,7 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		adc0: adc@409f0000 {
 			compatible = "infineon,cat1-adc";
 			reg = <0x409f0000 0x10000>;
@@ -195,6 +196,17 @@
 		adc1: adc@409f0000 {
 			compatible = "infineon,cat1-adc";
 			reg = <0x409f0000 0x10000>;
+=======
+		adc0: adc@409b0000 {
+			compatible = "infineon,cat1-adc";
+			reg = <0x409b0000 0x10000>;
+			interrupts = <39 6>;
+			status = "disabled";
+		};
+		adc1: adc@409c0000 {
+			compatible = "infineon,cat1-adc";
+			reg = <0x409c0000 0x10000>;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			interrupts = <40 6>;
 			status = "disabled";
 		};

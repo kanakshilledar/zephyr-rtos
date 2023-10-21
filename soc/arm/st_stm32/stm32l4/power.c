@@ -27,6 +27,7 @@ LOG_MODULE_DECLARE(soc, CONFIG_SOC_LOG_LEVEL);
 #define RCC_STOP_WAKEUPCLOCK_SELECTED LL_RCC_STOP_WAKEUPCLOCK_HSI
 #endif
 
+<<<<<<< HEAD
 void enter_ultra_low_power_mode(void)
 {
 	/* Configure CPU core */
@@ -40,6 +41,8 @@ void enter_ultra_low_power_mode(void)
 	}
 }
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 void set_mode_stop(uint8_t substate_id)
 {
 	/* ensure the proper wake-up system clock */
@@ -67,6 +70,7 @@ void set_mode_stop(uint8_t substate_id)
 	}
 }
 
+<<<<<<< HEAD
 void set_mode_standby(void)
 {
 	/* Select standby mode */
@@ -83,6 +87,10 @@ void set_mode_shutdown(void)
 
 /* Invoke Low Power/System Off specific Tasks */
 __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
+=======
+/* Invoke Low Power/System Off specific Tasks */
+void pm_state_set(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	switch (state) {
 	case PM_STATE_SUSPEND_TO_IDLE:
@@ -93,10 +101,17 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 		k_cpu_idle();
 		break;
 	case PM_STATE_STANDBY:
+<<<<<<< HEAD
 		set_mode_standby();
 		break;
 	case PM_STATE_SOFT_OFF:
 		set_mode_shutdown();
+=======
+		LL_PWR_SetPowerMode(LL_PWR_MODE_STANDBY);
+		LL_LPM_EnableDeepSleep();
+		LL_DBGMCU_DisableDBGStandbyMode();
+		k_cpu_idle();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		break;
 	default:
 		LOG_DBG("Unsupported power state %u", state);
@@ -106,7 +121,11 @@ __weak void pm_state_set(enum pm_state state, uint8_t substate_id)
 }
 
 /* Handle SOC specific activity after Low Power Mode Exit */
+<<<<<<< HEAD
 __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+=======
+void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	switch (state) {
 	case PM_STATE_SUSPEND_TO_IDLE:
@@ -129,11 +148,14 @@ __weak void pm_state_exit_post_ops(enum pm_state state, uint8_t substate_id)
 		break;
 	case PM_STATE_STANDBY:
 		__fallthrough;
+<<<<<<< HEAD
 	case PM_STATE_SOFT_OFF:
 		/* We should not get there */
 		__fallthrough;
 	case PM_STATE_ACTIVE:
 		__fallthrough;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	case PM_STATE_SUSPEND_TO_RAM:
 		__fallthrough;
 	case PM_STATE_SUSPEND_TO_DISK:
@@ -152,11 +174,14 @@ static int stm32_power_init(void)
 	/* enable Power clock */
 	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG
 	/* Enable the Debug Module during STOP mode */
 	LL_DBGMCU_EnableDBGStopMode();
 #endif /* CONFIG_DEBUG */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	return 0;
 }
 

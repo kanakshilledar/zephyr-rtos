@@ -1165,7 +1165,11 @@ static void read_codecs_v2(struct net_buf *buf, struct net_buf **evt)
 	/* copy vendor specific codec information  */
 	vs_codecs = (struct bt_hci_vs_codecs_v2 *)&rp->codecs[std_codecs_bytes];
 	vs_codecs->num_codecs = num_vs_codecs;
+<<<<<<< HEAD
 	for (i = 0; i < num_std_codecs; i++) {
+=======
+	for (i = 0; i < num_vs_codecs; i++) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		struct bt_hci_vs_codec_info_v2 *codec;
 
 		codec = &vs_codecs->codec_info[i];
@@ -2032,8 +2036,13 @@ static void le_set_cig_parameters(struct net_buf *buf, struct net_buf **evt)
 		status = ll_cig_parameters_commit(cig_id, handles);
 
 		if (status == BT_HCI_ERR_SUCCESS) {
+<<<<<<< HEAD
 			for (uint8_t i = 0; i < cis_count; i++) {
 				rp->handle[i] = sys_cpu_to_le16(handles[i]);
+=======
+			for (uint8_t j = 0; j < cis_count; j++) {
+				rp->handle[j] = sys_cpu_to_le16(handles[j]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 	}
@@ -2104,8 +2113,13 @@ static void le_set_cig_params_test(struct net_buf *buf, struct net_buf **evt)
 		status = ll_cig_parameters_commit(cig_id, handles);
 
 		if (status == BT_HCI_ERR_SUCCESS) {
+<<<<<<< HEAD
 			for (uint8_t i = 0; i < cis_count; i++) {
 				rp->handle[i] = sys_cpu_to_le16(handles[i]);
+=======
+			for (uint8_t j = 0; j < cis_count; j++) {
+				rp->handle[j] = sys_cpu_to_le16(handles[j]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 			}
 		}
 	}
@@ -2122,6 +2136,18 @@ static void le_create_cis(struct net_buf *buf, struct net_buf **evt)
 	uint8_t i;
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Only create a CIS if the Isochronous Channels (Host Support) feature bit
+	 * is set. Refer to BT Spec v5.4 Vol 6 Part B Section 4.6.33.1.
+	 */
+	if (!(ll_feat_get() & BIT64(BT_LE_FEAT_BIT_ISO_CHANNELS))) {
+		*evt = cmd_status(BT_HCI_ERR_CMD_DISALLOWED);
+		return;
+	}
+
+	/*
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	 * Creating new CISes is disallowed until all previous CIS
 	 * established events have been generated
 	 */
@@ -3499,7 +3525,10 @@ static void le_set_ext_adv_enable(struct net_buf *buf, struct net_buf **evt)
 	struct bt_hci_cp_le_set_ext_adv_enable *cmd = (void *)buf->data;
 	struct bt_hci_ext_adv_set *s;
 	uint8_t set_num;
+<<<<<<< HEAD
 	uint8_t enable;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t status;
 	uint8_t handle;
 
@@ -3521,8 +3550,24 @@ static void le_set_ext_adv_enable(struct net_buf *buf, struct net_buf **evt)
 		return;
 	}
 
+<<<<<<< HEAD
 	s = (void *) cmd->s;
 	enable = cmd->enable;
+=======
+	/* Check for duplicate handles */
+	if (IS_ENABLED(CONFIG_BT_CTLR_PARAM_CHECK)) {
+		for (uint8_t i = 0U; i < set_num - 1; i++) {
+			for (uint8_t j = i + 1U; j < set_num; j++) {
+				if (cmd->s[i].handle == cmd->s[j].handle) {
+					*evt = cmd_complete_status(BT_HCI_ERR_INVALID_PARAM);
+					return;
+				}
+			}
+		}
+	}
+
+	s = (void *) cmd->s;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	do {
 		status = ll_adv_set_by_hci_handle_get(s->handle, &handle);
 		if (status) {
@@ -3823,7 +3868,12 @@ static void le_set_ext_scan_enable(struct net_buf *buf, struct net_buf **evt)
 	}
 #endif /* CONFIG_BT_CTLR_DUP_FILTER_LEN > 0 */
 
+<<<<<<< HEAD
 	status = ll_scan_enable(cmd->enable, cmd->duration, cmd->period);
+=======
+	status = ll_scan_enable(cmd->enable, sys_le16_to_cpu(cmd->duration),
+				sys_le16_to_cpu(cmd->period));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* NOTE: As filter duplicates is implemented here in HCI source code,
 	 *       enabling of already enabled scanning shall succeed after
@@ -4225,8 +4275,13 @@ static void le_cis_established(struct pdu_data *pdu_data,
 	sys_put_le24(cis->sync_delay, sep->cis_sync_delay);
 	sys_put_le24(cig->c_latency, sep->c_latency);
 	sys_put_le24(cig->p_latency, sep->p_latency);
+<<<<<<< HEAD
 	sep->c_phy = lll_cis_c->phy;
 	sep->p_phy = lll_cis_p->phy;
+=======
+	sep->c_phy = find_lsb_set(lll_cis_c->phy);
+	sep->p_phy = find_lsb_set(lll_cis_p->phy);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	sep->nse = lll_cis->nse;
 	sep->c_bn = lll_cis_c->bn;
 	sep->p_bn = lll_cis_p->bn;
@@ -5458,6 +5513,15 @@ int hci_vendor_cmd_handle_common(uint16_t ocf, struct net_buf *cmd,
 		vs_read_tx_power_level(cmd, evt);
 		break;
 #endif /* CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL */
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_BT_CTLR_MIN_USED_CHAN) && defined(CONFIG_BT_PERIPHERAL)
+	case BT_OCF(BT_HCI_OP_VS_SET_MIN_NUM_USED_CHANS):
+		vs_set_min_used_chans(cmd, evt);
+		break;
+#endif /* CONFIG_BT_CTLR_MIN_USED_CHAN && CONFIG_BT_PERIPHERAL */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #endif /* CONFIG_BT_HCI_VS_EXT */
 
 #if defined(CONFIG_BT_HCI_MESH_EXT)
@@ -5466,12 +5530,15 @@ int hci_vendor_cmd_handle_common(uint16_t ocf, struct net_buf *cmd,
 		break;
 #endif /* CONFIG_BT_HCI_MESH_EXT */
 
+<<<<<<< HEAD
 #if defined(CONFIG_BT_CTLR_MIN_USED_CHAN) && defined(CONFIG_BT_PERIPHERAL)
 	case BT_OCF(BT_HCI_OP_VS_SET_MIN_NUM_USED_CHANS):
 		vs_set_min_used_chans(cmd, evt);
 		break;
 #endif /* CONFIG_BT_CTLR_MIN_USED_CHAN && CONFIG_BT_PERIPHERAL */
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default:
 		return -EINVAL;
 	}
@@ -5637,8 +5704,11 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 	struct bt_hci_iso_data_hdr *iso_data_hdr;
 	struct isoal_sdu_tx sdu_frag_tx;
 	struct bt_hci_iso_hdr *iso_hdr;
+<<<<<<< HEAD
 	struct ll_iso_datapath *dp_in;
 	struct ll_iso_stream_hdr *hdr;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint32_t *time_stamp;
 	uint16_t handle;
 	uint8_t pb_flag;
@@ -5648,8 +5718,11 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 
 	iso_data_hdr = NULL;
 	*evt  = NULL;
+<<<<<<< HEAD
 	hdr   = NULL;
 	dp_in = NULL;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (buf->len < sizeof(*iso_hdr)) {
 		LOG_ERR("No HCI ISO header");
@@ -5658,7 +5731,11 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 
 	iso_hdr = net_buf_pull_mem(buf, sizeof(*iso_hdr));
 	handle = sys_le16_to_cpu(iso_hdr->handle);
+<<<<<<< HEAD
 	len = sys_le16_to_cpu(iso_hdr->len);
+=======
+	len = bt_iso_hdr_len(sys_le16_to_cpu(iso_hdr->len));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (buf->len < len) {
 		LOG_ERR("Invalid HCI ISO packet length");
@@ -5680,17 +5757,34 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 	 * -- A captured time stamp of the SDU
 	 * -- A time stamp provided by the higher layer
 	 * -- A computed time stamp based on a sequence counter provided by the
+<<<<<<< HEAD
 	 *    higher layer (Not implemented)
 	 * -- Any other method of determining Time_Offset (Not implemented)
 	 */
 	if (ts_flag) {
 		/* Overwrite time stamp with HCI provided time stamp */
+=======
+	 *    higher layer
+	 * -- Any other method of determining Time_Offset
+	 *    (Uses a timestamp computed from the difference in provided
+	 *    timestamps, if the timestamp is deemed not based on the
+	 *    controller's clock)
+	 */
+	sdu_frag_tx.cntr_time_stamp = HAL_TICKER_TICKS_TO_US(ticker_ticks_now_get());
+	if (ts_flag) {
+		/* Use HCI provided time stamp */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		time_stamp = net_buf_pull_mem(buf, sizeof(*time_stamp));
 		len -= sizeof(*time_stamp);
 		sdu_frag_tx.time_stamp = sys_le32_to_cpu(*time_stamp);
 	} else {
+<<<<<<< HEAD
 		sdu_frag_tx.time_stamp =
 			HAL_TICKER_TICKS_TO_US(ticker_ticks_now_get());
+=======
+		/* Use controller's capture time */
+		sdu_frag_tx.time_stamp = sdu_frag_tx.cntr_time_stamp;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Extract ISO data header if included (PB_Flag 0b00 or 0b10) */
@@ -5698,7 +5792,12 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 		iso_data_hdr = net_buf_pull_mem(buf, sizeof(*iso_data_hdr));
 		len -= sizeof(*iso_data_hdr);
 		sdu_frag_tx.packet_sn = sys_le16_to_cpu(iso_data_hdr->sn);
+<<<<<<< HEAD
 		sdu_frag_tx.iso_sdu_length = sys_le16_to_cpu(iso_data_hdr->slen);
+=======
+		sdu_frag_tx.iso_sdu_length =
+			sys_le16_to_cpu(bt_iso_pkt_len(iso_data_hdr->slen));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	} else {
 		sdu_frag_tx.packet_sn = 0;
 		sdu_frag_tx.iso_sdu_length = 0;
@@ -5722,16 +5821,78 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 	 * data path
 	 */
 	} else if (IS_CIS_HANDLE(handle)) {
+<<<<<<< HEAD
 		struct ll_conn_iso_stream *cis =
 			ll_iso_stream_connected_get(handle);
+=======
+		struct ll_conn_iso_stream *cis;
+		struct ll_conn_iso_group *cig;
+		struct ll_iso_stream_hdr *hdr;
+		struct ll_iso_datapath *dp_in;
+
+		cis = ll_iso_stream_connected_get(handle);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (!cis) {
 			return -EINVAL;
 		}
 
+<<<<<<< HEAD
 		struct ll_conn_iso_group *cig = cis->group;
 		uint8_t event_offset;
 
 		hdr = &(cis->hdr);
+=======
+		cig = cis->group;
+
+#if defined(CONFIG_BT_CTLR_ISOAL_PSN_IGNORE)
+		uint64_t event_count;
+		uint64_t pkt_seq_num;
+
+		/* Catch up local pkt_seq_num with internal pkt_seq_num */
+		event_count = cis->lll.event_count;
+		pkt_seq_num = event_count + 1U;
+		/* If pb_flag is BT_ISO_START (0b00) or BT_ISO_SINGLE (0b10)
+		 * then we simply check that the pb_flag is an even value, and
+		 * then  pkt_seq_num is a future sequence number value compare
+		 * to last recorded number in cis->pkt_seq_num.
+		 *
+		 * When (pkt_seq_num - stream->pkt_seq_num) is negative then
+		 * BIT64(39) will be set (2's compliment value). The diff value
+		 * less than or equal to BIT64_MASK(38) means the diff value is
+		 * positive and hence pkt_seq_num is greater than
+		 * stream->pkt_seq_num. This calculation is valid for when value
+		 * rollover too.
+		 */
+		if (!(pb_flag & 0x01) &&
+		    (((pkt_seq_num - cis->pkt_seq_num) &
+		      BIT64_MASK(39)) <= BIT64_MASK(38))) {
+			cis->pkt_seq_num = pkt_seq_num;
+		} else {
+			pkt_seq_num = cis->pkt_seq_num;
+		}
+
+		/* Pre-increment, when pg_flag is BT_ISO_SINGLE (0b10) or
+		 * BT_ISO_END (0b11) then we simple check if pb_flag has bit 1
+		 * is set, for next ISO data packet seq num comparison.
+		 */
+		if (pb_flag & 0x10) {
+			cis->pkt_seq_num++;
+		}
+
+		/* Target next ISO event to avoid overlapping with, if any,
+		 * current ISO event
+		 */
+		pkt_seq_num++;
+		sdu_frag_tx.target_event = pkt_seq_num;
+		sdu_frag_tx.grp_ref_point =
+			isoal_get_wrapped_time_us(cig->cig_ref_point,
+						  ((pkt_seq_num - event_count) *
+						   cig->iso_interval *
+						   ISO_INT_UNIT_US));
+
+#else /* !CONFIG_BT_CTLR_ISOAL_PSN_IGNORE */
+		uint8_t event_offset;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* We must ensure sufficient time for ISO-AL to fragment SDU and
 		 * deliver PDUs to the TX queue. By checking ull_ref_get, we
@@ -5755,11 +5916,23 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 		}
 
 		sdu_frag_tx.target_event = cis->lll.event_count + event_offset;
+<<<<<<< HEAD
 		sdu_frag_tx.grp_ref_point = isoal_get_wrapped_time_us(cig->cig_ref_point,
 						(event_offset * cig->iso_interval *
 							ISO_INT_UNIT_US));
 
 		/* Get controller's input data path for CIS */
+=======
+		sdu_frag_tx.grp_ref_point =
+			isoal_get_wrapped_time_us(cig->cig_ref_point,
+						  (event_offset *
+						   cig->iso_interval *
+						   ISO_INT_UNIT_US));
+#endif /* !CONFIG_BT_CTLR_ISOAL_PSN_IGNORE */
+
+		/* Get controller's input data path for CIS */
+		hdr = &cis->hdr;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		dp_in = hdr->datapath_in;
 		if (!dp_in || dp_in->path_id != BT_HCI_DATAPATH_ID_HCI) {
 			LOG_ERR("Input data path not set for HCI");
@@ -5792,8 +5965,11 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 		struct ll_adv_iso_set *adv_iso;
 		struct lll_adv_iso *lll_iso;
 		uint16_t stream_handle;
+<<<<<<< HEAD
 		uint8_t target_event;
 		uint8_t event_offset;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		uint16_t slen;
 
 		/* FIXME: Code only expects header present */
@@ -5819,6 +5995,73 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 			return -EINVAL;
 		}
 
+<<<<<<< HEAD
+=======
+		lll_iso = &adv_iso->lll;
+
+#if defined(CONFIG_BT_CTLR_ISOAL_PSN_IGNORE)
+		uint64_t event_count;
+		uint64_t pkt_seq_num;
+
+		/* Catch up local pkt_seq_num with internal pkt_seq_num */
+		event_count = lll_iso->payload_count / lll_iso->bn;
+		pkt_seq_num = event_count;
+		/* If pb_flag is BT_ISO_START (0b00) or BT_ISO_SINGLE (0b10)
+		 * then we simply check that the pb_flag is an even value, and
+		 * then  pkt_seq_num is a future sequence number value compare
+		 * to last recorded number in cis->pkt_seq_num.
+		 *
+		 * When (pkt_seq_num - stream->pkt_seq_num) is negative then
+		 * BIT64(39) will be set (2's compliment value). The diff value
+		 * less than or equal to BIT64_MASK(38) means the diff value is
+		 * positive and hence pkt_seq_num is greater than
+		 * stream->pkt_seq_num. This calculation is valid for when value
+		 * rollover too.
+		 */
+		if (!(pb_flag & 0x01) &&
+		    (((pkt_seq_num - stream->pkt_seq_num) &
+		      BIT64_MASK(39)) <= BIT64_MASK(38))) {
+			stream->pkt_seq_num = pkt_seq_num;
+		} else {
+			pkt_seq_num = stream->pkt_seq_num;
+		}
+
+		/* Pre-increment, when pg_flag is BT_ISO_SINGLE (0b10) or
+		 * BT_ISO_END (0b11) then we simple check if pb_flag has bit 1
+		 * is set, for next ISO data packet seq num comparison.
+		 */
+		if (pb_flag & 0x10) {
+			stream->pkt_seq_num++;
+		}
+
+		/* Target next ISO event to avoid overlapping with, if any,
+		 * current ISO event
+		 */
+		/* FIXME: Implement ISO Tx ack generation early in done compared
+		 *        to currently only in prepare. I.e. to ensure upper
+		 *        layer has the number of completed packet before the
+		 *        next BIG event, so as to supply new ISO data packets.
+		 *        Without which upper layers need extra buffers to
+		 *        buffer next ISO data packet.
+		 *
+		 *        Enable below increment once early Tx ack is
+		 *        implemented.
+		 *
+		 * pkt_seq_num++;
+		 */
+		sdu_frag_tx.target_event = pkt_seq_num;
+		sdu_frag_tx.grp_ref_point =
+			isoal_get_wrapped_time_us(adv_iso->big_ref_point,
+						  (((pkt_seq_num + 1U) -
+						    event_count) *
+						   lll_iso->iso_interval *
+						   ISO_INT_UNIT_US));
+
+#else /* !CONFIG_BT_CTLR_ISOAL_PSN_IGNORE */
+		uint8_t target_event;
+		uint8_t event_offset;
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		/* Determine the target event and the first event offset after
 		 * datapath setup.
 		 * event_offset mitigates the possibility of first SDU being
@@ -5836,7 +6079,10 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 		 * BIG event by incrementing the previous elapsed big_ref_point
 		 * by one additional ISO interval.
 		 */
+<<<<<<< HEAD
 		lll_iso = &adv_iso->lll;
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		target_event = lll_iso->payload_count / lll_iso->bn;
 		event_offset = ull_ref_get(&adv_iso->ull) ? 0U : 1U;
 		event_offset += lll_iso->latency_prepare;
@@ -5847,6 +6093,10 @@ int hci_iso_handle(struct net_buf *buf, struct net_buf **evt)
 						  ((event_offset + 1U) *
 						   lll_iso->iso_interval *
 						   ISO_INT_UNIT_US));
+<<<<<<< HEAD
+=======
+#endif /* !CONFIG_BT_CTLR_ISOAL_PSN_IGNORE */
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 		/* Start Fragmentation */
 		/* FIXME: need to ensure ISO-AL returns proper isoal_status.
@@ -6385,7 +6635,11 @@ static void le_ext_adv_legacy_report(struct pdu_data *pdu_data,
 	sep->num_reports = 1U;
 	adv_info = (void *)(((uint8_t *)sep) + sizeof(*sep));
 
+<<<<<<< HEAD
 	adv_info->evt_type = evt_type_lookup[adv->type];
+=======
+	adv_info->evt_type = sys_cpu_to_le16((uint16_t)evt_type_lookup[adv->type]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #if defined(CONFIG_BT_CTLR_PRIVACY)
 	if (rl_idx < ll_rl_size_get()) {
@@ -6576,7 +6830,11 @@ static void ext_adv_info_fill(uint8_t evt_type, uint8_t phy, uint8_t sec_phy,
 	sep->num_reports = 1U;
 	adv_info = (void *)(((uint8_t *)sep) + sizeof(*sep));
 
+<<<<<<< HEAD
 	adv_info->evt_type = evt_type;
+=======
+	adv_info->evt_type = sys_cpu_to_le16((uint16_t)evt_type);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	if (0) {
 #if defined(CONFIG_BT_CTLR_PRIVACY)
@@ -6878,7 +7136,18 @@ static void le_ext_adv_report(struct pdu_data *pdu_data,
 			uint8_t aux_phy;
 
 			aux_ptr = (void *)ptr;
+<<<<<<< HEAD
 			if (PDU_ADV_AUX_PTR_PHY_GET(aux_ptr) > EXT_ADV_AUX_PHY_LE_CODED) {
+=======
+
+			/* Don't report if invalid phy or AUX_ADV_IND was not received
+			 * See BT Core 5.4, Vol 6, Part B, Section 4.4.3.5:
+			 * If the Controller does not listen for or does not receive the
+			 * AUX_ADV_IND PDU, no report shall be generated
+			 */
+			if ((node_rx_curr == node_rx && !node_rx_next) ||
+			    PDU_ADV_AUX_PTR_PHY_GET(aux_ptr) > EXT_ADV_AUX_PHY_LE_CODED) {
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 				struct node_rx_ftr *ftr;
 
 				ftr = &node_rx->hdr.rx_ftr;
@@ -6954,6 +7223,22 @@ no_ext_hdr:
 			LOG_DBG("    AD Data (%u): <todo>", data_len);
 		}
 
+<<<<<<< HEAD
+=======
+		if (data_len_total + data_len_curr > CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX) {
+			/* Truncating advertising data
+			 * Note that this has to be done at a PDU boundary, so stop
+			 * processing nodes from this one forward
+			 */
+			if (scan_data) {
+				scan_data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_INCOMPLETE;
+			} else {
+				data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_INCOMPLETE;
+			}
+			break;
+		}
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		if (node_rx_curr == node_rx) {
 			evt_type = evt_type_curr;
 			adv_addr_type = adv_addr_type_curr;
@@ -7087,6 +7372,7 @@ no_ext_hdr:
 		}
 	}
 
+<<<<<<< HEAD
 	/* Restrict data length to maximum scan data length */
 	if (data_len_total > CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX) {
 		data_len_total = CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX;
@@ -7097,6 +7383,8 @@ no_ext_hdr:
 		data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_INCOMPLETE;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Set directed advertising bit */
 	if (direct_addr) {
 		evt_type |= BT_HCI_LE_ADV_EVT_TYPE_DIRECT;
@@ -7136,6 +7424,7 @@ no_ext_hdr:
 		return;
 	}
 
+<<<<<<< HEAD
 	/* Restrict scan response data length to maximum scan data length */
 	if (scan_data_len_total > CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX) {
 		scan_data_len_total = CONFIG_BT_CTLR_SCAN_DATA_LEN_MAX;
@@ -7146,6 +7435,8 @@ no_ext_hdr:
 		scan_data_status = BT_HCI_LE_ADV_EVT_TYPE_DATA_STATUS_INCOMPLETE;
 	}
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	/* Set scan response bit */
 	evt_type |= BT_HCI_LE_ADV_EVT_TYPE_SCAN_RSP;
 

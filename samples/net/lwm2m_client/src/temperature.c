@@ -14,7 +14,11 @@ LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/net/lwm2m.h>
 #include <zephyr/kernel.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <stdint.h>
 
 static struct k_work_delayable temp_work;

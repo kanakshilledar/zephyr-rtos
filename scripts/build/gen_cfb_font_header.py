@@ -76,7 +76,17 @@ def extract_font_glyphs():
     fw_max = 0
     fh_max = 0
     for i in range(args.first, args.last + 1):
+<<<<<<< HEAD
         fw, fh = font.getsize(chr(i))
+=======
+        # returns (left, top, right, bottom) bounding box
+        size = font.getbbox(chr(i))
+
+        # calculate width + height
+        fw = size[2] - size[0]  # right - left
+        fh = size[3] - size[1]  # bottom - top
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if fw > fw_max:
             fw_max = fw
         if fh > fh_max:
@@ -100,7 +110,16 @@ def extract_font_glyphs():
         image = Image.new('1', (width, height), 'white')
         draw = ImageDraw.Draw(image)
 
+<<<<<<< HEAD
         fw, fh = draw.textsize(chr(i), font=font)
+=======
+        # returns (left, top, right, bottom) bounding box
+        size = draw.textbbox((0, 0), chr(i), font=font)
+
+        # calculate width + height
+        fw = size[2] - size[0]  # right - left
+        fh = size[3] - size[1]  # bottom - top
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
         xpos = 0
         if args.center_x:

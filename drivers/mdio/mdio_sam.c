@@ -1,5 +1,9 @@
 /*
  * Copyright (c) 2021 IP-Logix Inc.
+<<<<<<< HEAD
+=======
+ * Copyright 2023 NXP
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,6 +17,10 @@
 #include <soc.h>
 #include <zephyr/drivers/mdio.h>
 #include <zephyr/drivers/pinctrl.h>
+<<<<<<< HEAD
+=======
+#include <zephyr/net/mdio.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(mdio_sam, CONFIG_MDIO_LOG_LEVEL);
@@ -31,11 +39,19 @@ struct mdio_sam_dev_data {
 struct mdio_sam_dev_config {
 	Gmac * const regs;
 	const struct pinctrl_dev_config *pcfg;
+<<<<<<< HEAD
 	int protocol;
 };
 
 static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 			 uint8_t rw, uint16_t data_in, uint16_t *data_out)
+=======
+};
+
+static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t regad,
+			 enum mdio_opcode op, bool c45, uint16_t data_in,
+			 uint16_t *data_out)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 {
 	const struct mdio_sam_dev_config *const cfg = dev->config;
 	struct mdio_sam_dev_data *const data = dev->data;
@@ -44,6 +60,7 @@ static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 	k_sem_take(&data->sem, K_FOREVER);
 
 	/* Write mdio transaction */
+<<<<<<< HEAD
 	if (cfg->protocol == CLAUSE_45) {
 		cfg->regs->GMAC_MAN = (GMAC_MAN_OP(rw ? 0x2 : 0x3))
 				    |  GMAC_MAN_WTN(0x02)
@@ -62,6 +79,14 @@ static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 	} else {
 		LOG_ERR("Unsupported protocol");
 	}
+=======
+	cfg->regs->GMAC_MAN = (c45 ? 0U : GMAC_MAN_CLTTO)
+			    |  GMAC_MAN_OP(op)
+			    |  GMAC_MAN_WTN(0x02)
+			    |  GMAC_MAN_PHYA(prtad)
+			    |  GMAC_MAN_REGA(regad)
+			    |  GMAC_MAN_DATA(data_in);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	/* Wait until done */
 	while (!(cfg->regs->GMAC_NSR & GMAC_NSR_IDLE)) {
@@ -84,6 +109,7 @@ static int mdio_transfer(const struct device *dev, uint8_t prtad, uint8_t devad,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mdio_sam_read(const struct device *dev, uint8_t prtad, uint8_t devad,
 			 uint16_t *data)
 {
@@ -94,6 +120,50 @@ static int mdio_sam_write(const struct device *dev, uint8_t prtad,
 			  uint8_t devad, uint16_t data)
 {
 	return mdio_transfer(dev, prtad, devad, 0, data, NULL);
+=======
+static int mdio_sam_read(const struct device *dev, uint8_t prtad, uint8_t regad,
+			 uint16_t *data)
+{
+	return mdio_transfer(dev, prtad, regad, MDIO_OP_C22_READ, false,
+			     0, data);
+}
+
+static int mdio_sam_write(const struct device *dev, uint8_t prtad,
+			  uint8_t regad, uint16_t data)
+{
+	return mdio_transfer(dev, prtad, regad, MDIO_OP_C22_WRITE, false,
+			     data, NULL);
+}
+
+static int mdio_sam_read_c45(const struct device *dev, uint8_t prtad,
+			     uint8_t devad, uint16_t regad, uint16_t *data)
+{
+	int err;
+
+	err = mdio_transfer(dev, prtad, devad, MDIO_OP_C45_ADDRESS, true,
+			    regad, NULL);
+	if (!err) {
+		err = mdio_transfer(dev, prtad, devad, MDIO_OP_C45_READ, true,
+				    0, data);
+	}
+
+	return err;
+}
+
+static int mdio_sam_write_c45(const struct device *dev, uint8_t prtad,
+			      uint8_t devad, uint16_t regad, uint16_t data)
+{
+	int err;
+
+	err = mdio_transfer(dev, prtad, devad, MDIO_OP_C45_ADDRESS, true,
+			    regad, NULL);
+	if (!err) {
+		err = mdio_transfer(dev, prtad, devad, MDIO_OP_C45_WRITE, true,
+				    data, NULL);
+	}
+
+	return err;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static void mdio_sam_bus_enable(const struct device *dev)
@@ -126,15 +196,25 @@ static int mdio_sam_initialize(const struct device *dev)
 static const struct mdio_driver_api mdio_sam_driver_api = {
 	.read = mdio_sam_read,
 	.write = mdio_sam_write,
+<<<<<<< HEAD
+=======
+	.read_c45 = mdio_sam_read_c45,
+	.write_c45 = mdio_sam_write_c45,
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	.bus_enable = mdio_sam_bus_enable,
 	.bus_disable = mdio_sam_bus_disable,
 };
 
 #define MDIO_SAM_CONFIG(n)						\
 static const struct mdio_sam_dev_config mdio_sam_dev_config_##n = {	\
+<<<<<<< HEAD
 	.regs = (Gmac *)DT_REG_ADDR(DT_INST_PARENT(n)),			\
 	.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(n),			\
 	.protocol = DT_INST_ENUM_IDX(n, protocol),			\
+=======
+	.regs = (Gmac *)DT_INST_REG_ADDR(n),				\
+	.pcfg = PINCTRL_DT_INST_DEV_CONFIG_GET(n),			\
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 #define MDIO_SAM_DEVICE(n)						\

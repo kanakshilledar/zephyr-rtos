@@ -14,7 +14,11 @@
 struct k_sem sync_sema;
 static K_THREAD_STACK_ARRAY_DEFINE(tstack, THREAD_NUM, STACK_SIZE);
 static struct k_thread tdata[THREAD_NUM];
+<<<<<<< HEAD
 static void *block[BLK_NUM_MAX];
+=======
+static void *pool_blocks[BLK_NUM_MAX];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 /*test cases*/
 
@@ -55,9 +59,15 @@ static void tmheap_handler(void *p1, void *p2, void *p3)
 {
 	int thread_id = POINTER_TO_INT(p1);
 
+<<<<<<< HEAD
 	block[thread_id] = k_malloc(BLOCK_SIZE);
 
 	zassert_not_null(block[thread_id], "memory is not allocated");
+=======
+	pool_blocks[thread_id] = k_malloc(BLOCK_SIZE);
+
+	zassert_not_null(pool_blocks[thread_id], "memory is not allocated");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	k_sem_give(&sync_sema);
 }
@@ -95,7 +105,11 @@ ZTEST(mheap_api, test_mheap_threadsafe)
 
 	for (int i = 0; i < THREAD_NUM; i++) {
 		/* verify free mheap in main thread */
+<<<<<<< HEAD
 		k_free(block[i]);
+=======
+		k_free(pool_blocks[i]);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 		k_thread_abort(tid[i]);
 	}
 }

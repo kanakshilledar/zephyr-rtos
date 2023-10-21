@@ -9,6 +9,7 @@
 
 #include <zephyr/sys/util_macro.h>
 
+<<<<<<< HEAD
 /* bit operations macros */
 #define MASK(b_hi, b_lo)	\
 	(((1ULL << ((b_hi) - (b_lo) + 1ULL)) - 1ULL) << (b_lo))
@@ -24,6 +25,8 @@
 #define GET_BITS(b_hi, b_lo, x) \
 	(((x) & MASK(b_hi, b_lo)) >> (b_lo))
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* The microphones create a low frequecy thump sound when clock is enabled.
  * The unmute linear gain ramp chacteristic is defined here.
  * NOTE: Do not set any of these to 0.
@@ -32,6 +35,7 @@
 #define DMIC_UNMUTE_CIC		1	/* Unmute CIC at 1 ms */
 #define DMIC_UNMUTE_FIR		2	/* Unmute FIR at 2 ms */
 
+<<<<<<< HEAD
 /* DMIC timestamping registers */
 #define TS_DMIC_LOCAL_TSCTRL_OFFSET	0x000
 #define TS_DMIC_LOCAL_OFFS_OFFSET	0x004
@@ -97,6 +101,8 @@
 #define DMICSYNC_SYNCPRD(x)	SET_BITS(14, 0, x)
 #endif
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Parameters used in modes computation */
 #define DMIC_HW_BITS_CIC		26
 #define DMIC_HW_BITS_FIR_COEF		20
@@ -119,6 +125,7 @@
 #define DMIC_HW_DUTY_MIN		20 /* Note: Practical min value */
 #define DMIC_HW_DUTY_MAX		80 /* Note: Practical max value */
 
+<<<<<<< HEAD
 /* DMIC register offsets */
 
 /* Global registers */
@@ -345,6 +352,8 @@
 #define FIR_CONFIG_A_FIR_SHIFT_GET(x)		GET_BITS(11, 8, x)
 #define FIR_CONFIG_A_FIR_LENGTH_GET(x)		GET_BITS(7, 0, x)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* DC offset compensation time constants */
 #define DCCOMP_TC0	0
 #define DCCOMP_TC1	1
@@ -355,6 +364,7 @@
 #define DCCOMP_TC6	6
 #define DCCOMP_TC7	7
 
+<<<<<<< HEAD
 /* DC_OFFSET_LEFT_A bits */
 #define DC_OFFSET_LEFT_A_DC_OFFS(x)		SET_BITS(21, 0, x)
 
@@ -411,6 +421,8 @@
 #define FIR_COEF_A(x)				SET_BITS(19, 0, x)
 #define FIR_COEF_B(x)				SET_BITS(19, 0, x)
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Used for scaling FIR coefficients for HW */
 #define DMIC_HW_FIR_COEF_MAX ((1 << (DMIC_HW_BITS_FIR_COEF - 1)) - 1)
 #define DMIC_HW_FIR_COEF_Q (DMIC_HW_BITS_FIR_COEF - 1)
@@ -495,6 +507,7 @@
 #define DMA_HANDSHAKE_DMIC_CH0	0
 #define DMA_HANDSHAKE_DMIC_CH1	1
 
+<<<<<<< HEAD
 /* For NHLT DMIC configuration parsing */
 #define DMIC_HW_CONTROLLERS_MAX	4
 #define DMIC_HW_FIFOS_MAX	2
@@ -543,6 +556,8 @@ struct nhlt_pdm_fir_coeffs {
 	int32_t fir_coeffs[0];
 };
 
+=======
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 enum dai_dmic_frame_format {
 	DAI_DMIC_FRAME_S16_LE = 0,
 	DAI_DMIC_FRAME_S24_4LE,
@@ -589,6 +604,11 @@ struct dai_intel_dmic {
 #endif
 	int irq;
 	uint32_t flags;
+<<<<<<< HEAD
+=======
+	uint32_t gain_left;
+	uint32_t gain_right;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 };
 
 static inline int32_t sat_int32(int64_t x)

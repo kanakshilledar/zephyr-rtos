@@ -74,7 +74,11 @@ class SectionKind(Enum):
 
         >>> SectionKind.for_section_with_name(".rodata.str1.4")
         <SectionKind.RODATA: 'rodata'>
+<<<<<<< HEAD
         >>> SectionKind.for_section_with_name(".device_handles")
+=======
+        >>> SectionKind.for_section_with_name(".device_deps")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         None
         """
         if ".text." in name:
@@ -101,7 +105,11 @@ PRINT_TEMPLATE = """
 """
 
 SECTION_LOAD_MEMORY_SEQ = """
+<<<<<<< HEAD
         __{0}_{1}_rom_start = LOADADDR(_{2}_{3}_SECTION_NAME);
+=======
+        __{0}_{1}_rom_start = LOADADDR(.{0}_{1}_reloc);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 """
 
 LOAD_ADDRESS_LOCATION_FLASH = """
@@ -135,33 +143,57 @@ LINKER_SECTION_SEQ = """
 
 /* Linker section for memory region {2} for  {3} section  */
 
+<<<<<<< HEAD
 	SECTION_PROLOGUE(_{2}_{3}_SECTION_NAME,,)
+=======
+	SECTION_PROLOGUE(.{0}_{1}_reloc,,)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         {{
                 . = ALIGN(4);
                 {4}
                 . = ALIGN(4);
 	}} {5}
+<<<<<<< HEAD
         __{0}_{1}_end = .;
         __{0}_{1}_start = ADDR(_{2}_{3}_SECTION_NAME);
         __{0}_{1}_size = SIZEOF(_{2}_{3}_SECTION_NAME);
+=======
+        __{0}_{1}_reloc_end = .;
+        __{0}_{1}_reloc_start = ADDR(.{0}_{1}_reloc);
+        __{0}_{1}_reloc_size = __{0}_{1}_reloc_end - __{0}_{1}_reloc_start;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 """
 
 LINKER_SECTION_SEQ_MPU = """
 
 /* Linker section for memory region {2} for {3} section  */
 
+<<<<<<< HEAD
 	SECTION_PROLOGUE(_{2}_{3}_SECTION_NAME,,)
         {{
                 __{0}_{1}_start = .;
+=======
+	SECTION_PROLOGUE(.{0}_{1}_reloc,,)
+        {{
+                __{0}_{1}_reloc_start = .;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
                 {4}
 #if {6}
                 . = ALIGN({6});
 #else
+<<<<<<< HEAD
                 MPU_ALIGN(__{0}_{1}_size);
 #endif
                 __{0}_{1}_end = .;
 	}} {5}
         __{0}_{1}_size = __{0}_{1}_end - __{0}_{1}_start;
+=======
+                MPU_ALIGN(__{0}_{1}_reloc_size);
+#endif
+                __{0}_{1}_reloc_end = .;
+	}} {5}
+        __{0}_{1}_reloc_size = __{0}_{1}_reloc_end - __{0}_{1}_reloc_start;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 """
 
 SOURCE_CODE_INCLUDES = """
@@ -173,9 +205,15 @@ SOURCE_CODE_INCLUDES = """
 """
 
 EXTERN_LINKER_VAR_DECLARATION = """
+<<<<<<< HEAD
 extern char __{0}_{1}_start[];
 extern char __{0}_{1}_rom_start[];
 extern char __{0}_{1}_size[];
+=======
+extern char __{0}_{1}_reloc_start[];
+extern char __{0}_{1}_rom_start[];
+extern char __{0}_{1}_reloc_size[];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 """
 
 
@@ -194,14 +232,24 @@ void bss_zeroing_relocation(void)
 """
 
 MEMCPY_TEMPLATE = """
+<<<<<<< HEAD
 	z_early_memcpy(&__{0}_{1}_start, &__{0}_{1}_rom_start,
 		           (size_t) &__{0}_{1}_size);
+=======
+	z_early_memcpy(&__{0}_{1}_reloc_start, &__{0}_{1}_rom_start,
+		           (size_t) &__{0}_{1}_reloc_size);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 """
 
 MEMSET_TEMPLATE = """
+<<<<<<< HEAD
  	z_early_memset(&__{0}_bss_start, 0,
 		           (size_t) &__{0}_bss_size);
+=======
+	z_early_memset(&__{0}_bss_reloc_start, 0,
+		           (size_t) &__{0}_bss_reloc_size);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 """
 
 
@@ -456,8 +504,13 @@ def parse_args():
         formatter_class=argparse.RawDescriptionHelpFormatter, allow_abbrev=False)
     parser.add_argument("-d", "--directory", required=True,
                         help="obj file's directory")
+<<<<<<< HEAD
     parser.add_argument("-i", "--input_rel_dict", required=True,
                         help="input src:memory type(sram2 or ccm or aon etc) string")
+=======
+    parser.add_argument("-i", "--input_rel_dict", required=True, type=argparse.FileType('r'),
+                        help="input file with dict src:memory type(sram2 or ccm or aon etc)")
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
     parser.add_argument("-o", "--output", required=False, help="Output ld file")
     parser.add_argument("-s", "--output_sram_data", required=False,
                         help="Output sram data ld file")
@@ -490,7 +543,11 @@ def get_obj_filename(searchpath, filename):
 # Returns a 4-tuple with them: (mem_region, program_header, flag, file_name)
 # If no `program_header` is defined, returns an empty string
 def parse_input_string(line):
+<<<<<<< HEAD
     line = line.replace('\\ :', ':')
+=======
+    line = line.replace(' :', ':')
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
     flag_sep = ':NOCOPY:' if ':NOCOPY' in line else ':COPY:'
     mem_region_phdr, copy_flag, file_name = line.partition(flag_sep)
@@ -508,9 +565,16 @@ def create_dict_wrt_mem():
     rel_dict = dict()
     phdrs = dict()
 
+<<<<<<< HEAD
     if args.input_rel_dict == '':
         sys.exit("Disable CONFIG_CODE_DATA_RELOCATION if no file needs relocation")
     for line in args.input_rel_dict.split('|'):
+=======
+    input_rel_dict = args.input_rel_dict.read()
+    if input_rel_dict == '':
+        sys.exit("Disable CONFIG_CODE_DATA_RELOCATION if no file needs relocation")
+    for line in input_rel_dict.split('|'):
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
         if ':' not in line:
             continue
 

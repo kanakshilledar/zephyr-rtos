@@ -23,6 +23,16 @@ config BT_LONG_WQ_PRIO
 	int "Long workqueue priority. Should be pre-emptible."
 	default 10
 	range 0 NUM_PREEMPT_PRIORITIES
+<<<<<<< HEAD
+=======
+
+config BT_LONG_WQ_INIT_PRIO
+	int "Long workqueue init priority"
+	default 50
+	help
+	  Init priority level to setup the long workqueue.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 endif # BT_LONG_WQ
 
 config BT_HCI_HOST
@@ -41,7 +51,11 @@ config BT_HCI_TX_STACK_SIZE
 	default 512 if BT_H4
 	default 512 if BT_H5
 	default 416 if BT_SPI
+<<<<<<< HEAD
 	default 940 if BT_CTLR && BT_LL_SW_SPLIT && NO_OPTIMIZATIONS
+=======
+	default 940 if BT_CTLR && BT_LL_SW_SPLIT && (NO_OPTIMIZATIONS || BT_ISO_BROADCAST)
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	default 1024 if BT_CTLR && BT_LL_SW_SPLIT && BT_CENTRAL
 	default 768 if BT_CTLR && BT_LL_SW_SPLIT
 	default 512 if BT_USERCHAN
@@ -197,6 +211,12 @@ config BT_SETTINGS
 	  which case it's more efficient to load all settings in one go,
 	  instead of each subsystem doing it independently.
 
+<<<<<<< HEAD
+=======
+	  Warning: The Bluetooth host expects a settings backend that loads
+	  settings items in handle order.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 if BT_SETTINGS
 config BT_SETTINGS_CCC_LAZY_LOADING
 	bool "Load CCC values from settings when peer connects"
@@ -299,6 +319,21 @@ config BT_CONN_TX_MAX
 	  callback. Normally this can be left to the default value, which
 	  is equal to the number of TX buffers in the stack-internal pool.
 
+<<<<<<< HEAD
+=======
+config BT_CONN_PARAM_ANY
+	bool "Accept any values for connection parameters"
+	help
+	  Some controllers support additional connection parameter ranges
+	  beyond what is described in the specification. Enabling this option
+	  allows the application to set any value to all connection parameters.
+	  Tbe Host will perform no limits nor consistency checks on any of the
+	  connection parameters (conn interval min and max, latency and timeout).
+	  However, the Host will still use numerical comparisons between the
+	  min and max connection intervals in order to verify whether the
+	  desired parameters have been established in the connection.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config BT_USER_PHY_UPDATE
 	bool "User control of PHY Update Procedure"
 	depends on BT_PHY_UPDATE
@@ -600,6 +635,16 @@ config BT_BONDING_REQUIRED
 	  set the bondable flag in their pairing request. Any other kind of
 	  requests will be rejected.
 
+<<<<<<< HEAD
+=======
+config BT_BONDABLE_PER_CONNECTION
+	bool "Set/clear the bonding flag per-connection [EXPERIMENTAL]"
+	select EXPERIMENTAL
+	help
+	  Enable support for the bt_conn_set_bondable API function that is
+	  used to set/clear the bonding flag on a per-connection basis.
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 config BT_STORE_DEBUG_KEYS
 	bool "Store Debug Mode bonds"
 	help

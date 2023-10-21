@@ -53,12 +53,17 @@ static int handle_large_comp_data_get(struct bt_mesh_model *model, struct bt_mes
 		ctx->net_idx, ctx->app_idx, ctx->addr, buf->len,
 		bt_hex(buf->data, buf->len));
 
+<<<<<<< HEAD
 	page = net_buf_simple_pull_u8(buf);
+=======
+	page = bt_mesh_comp_parse_page(buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	offset = net_buf_simple_pull_le16(buf);
 
 	LOG_DBG("page %u offset %u", page, offset);
 
 	bt_mesh_model_msg_init(&rsp, OP_LARGE_COMP_DATA_STATUS);
+<<<<<<< HEAD
 
 	if (page != 0U) {
 		LOG_DBG("Composition page %u not available", page);
@@ -77,6 +82,41 @@ static int handle_large_comp_data_get(struct bt_mesh_model *model, struct bt_mes
 			LOG_ERR("comp_get_page_0 returned error");
 			return err;
 		}
+=======
+	net_buf_simple_add_u8(&rsp, page);
+	net_buf_simple_add_le16(&rsp, offset);
+
+	if (atomic_test_bit(bt_mesh.flags, BT_MESH_COMP_DIRTY) && page < 128) {
+		size_t msg_space;
+
+		NET_BUF_SIMPLE_DEFINE(temp_buf, CONFIG_BT_MESH_COMP_PST_BUF_SIZE);
+		err = bt_mesh_comp_read(&temp_buf, page);
+		if (err) {
+			LOG_ERR("Could not read comp data p%d, err: %d", page, err);
+			return err;
+		}
+
+		net_buf_simple_add_le16(&rsp, temp_buf.len);
+		if (offset > temp_buf.len) {
+			return 0;
+		}
+
+		msg_space = net_buf_simple_tailroom(&rsp) - BT_MESH_MIC_SHORT;
+		net_buf_simple_add_mem(
+			&rsp, temp_buf.data + offset,
+			(msg_space < (temp_buf.len - offset)) ? msg_space : temp_buf.len - offset);
+	} else {
+		total_size = bt_mesh_comp_page_size(page);
+		net_buf_simple_add_le16(&rsp, total_size);
+
+		if (offset < total_size) {
+			err = bt_mesh_comp_data_get_page(&rsp, page, offset);
+			if (err && err != -E2BIG) {
+				LOG_ERR("Could not read comp data p%d, err: %d", page, err);
+				return err;
+			}
+		}
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	if (bt_mesh_model_send(model, ctx, &rsp, NULL, NULL)) {

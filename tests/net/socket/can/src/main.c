@@ -23,6 +23,7 @@ ZTEST(socket_can, test_socketcan_frame_to_can_frame)
 	const uint8_t data[SOCKETCAN_MAX_DLEN] = { 0x01, 0x02, 0x03, 0x04,
 						   0x05, 0x06, 0x07, 0x08 };
 
+<<<<<<< HEAD
 	sframe.can_id = BIT(31) | BIT(30) | 1234;
 	sframe.len = sizeof(data);
 	memcpy(sframe.data, data, sizeof(sframe.data));
@@ -30,6 +31,16 @@ ZTEST(socket_can, test_socketcan_frame_to_can_frame)
 	expected.flags = CAN_FRAME_IDE | CAN_FRAME_RTR;
 	expected.id = 1234U;
 	expected.dlc = sizeof(data);
+=======
+	sframe.can_id = BIT(31) | 1234;
+	sframe.len = sizeof(data);
+	memcpy(sframe.data, data, sizeof(sframe.data));
+
+	expected.flags = CAN_FRAME_IDE;
+	expected.id = 1234U;
+	expected.dlc = can_bytes_to_dlc(sizeof(data));
+	memcpy(expected.data, data, sizeof(data));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	socketcan_to_can_frame(&sframe, &zframe);
 
@@ -40,6 +51,20 @@ ZTEST(socket_can, test_socketcan_frame_to_can_frame)
 	zassert_equal(zframe.flags, expected.flags, "Flags not equal");
 	zassert_equal(zframe.id, expected.id, "CAN id invalid");
 	zassert_equal(zframe.dlc, expected.dlc, "Msg length invalid");
+<<<<<<< HEAD
+=======
+	zassert_mem_equal(&zframe.data, &expected.data, can_dlc_to_bytes(expected.dlc),
+			  "CAN data not same");
+
+	/* Test RTR flag conversion after comparing data payload */
+	sframe.can_id |= BIT(30);
+	expected.flags |= CAN_FRAME_RTR;
+
+	socketcan_to_can_frame(&sframe, &zframe);
+
+	zassert_equal(zframe.flags, expected.flags, "Flags not equal");
+	zassert_equal(zframe.id, expected.id, "CAN id invalid");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**
@@ -53,6 +78,7 @@ ZTEST(socket_can, test_can_frame_to_socketcan_frame)
 	const uint8_t data[SOCKETCAN_MAX_DLEN] = { 0x01, 0x02, 0x03, 0x04,
 						   0x05, 0x06, 0x07, 0x08 };
 
+<<<<<<< HEAD
 	expected.can_id = BIT(31) | BIT(30) | 1234;
 	expected.len = sizeof(data);
 	memcpy(expected.data, data, sizeof(expected.data));
@@ -60,6 +86,15 @@ ZTEST(socket_can, test_can_frame_to_socketcan_frame)
 	zframe.flags = CAN_FRAME_IDE | CAN_FRAME_RTR;
 	zframe.id = 1234U;
 	zframe.dlc = sizeof(data);
+=======
+	expected.can_id = BIT(31) | 1234;
+	expected.len = sizeof(data);
+	memcpy(expected.data, data, sizeof(expected.data));
+
+	zframe.flags = CAN_FRAME_IDE;
+	zframe.id = 1234U;
+	zframe.dlc = can_bytes_to_dlc(sizeof(data));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	memcpy(zframe.data, data, sizeof(data));
 
 	socketcan_from_can_frame(&zframe, &sframe);
@@ -69,10 +104,22 @@ ZTEST(socket_can, test_can_frame_to_socketcan_frame)
 	LOG_HEXDUMP_DBG((const uint8_t *)&expected, sizeof(expected), "expected");
 
 	zassert_equal(sframe.can_id, expected.can_id, "CAN ID not same");
+<<<<<<< HEAD
 	zassert_mem_equal(&sframe.data, &expected.data, sizeof(sframe.data),
 			  "CAN data not same");
 	zassert_equal(sframe.len, expected.len,
 		      "CAN msg length not same");
+=======
+	zassert_equal(sframe.len, expected.len, "CAN msg length not same");
+	zassert_mem_equal(&sframe.data, &expected.data, sizeof(sframe.data), "CAN data not same");
+
+	/* Test RTR flag conversion after comparing data payload */
+	expected.can_id |= BIT(30);
+	zframe.flags |= CAN_FRAME_RTR;
+
+	socketcan_from_can_frame(&zframe, &sframe);
+	zassert_equal(sframe.can_id, expected.can_id, "CAN ID not same");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 /**

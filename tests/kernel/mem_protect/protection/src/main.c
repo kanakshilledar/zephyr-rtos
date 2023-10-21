@@ -35,7 +35,11 @@ void k_sys_fatal_error_handler(unsigned int reason, const z_arch_esf_t *pEsf)
 }
 
 #ifdef CONFIG_CPU_CORTEX_M
+<<<<<<< HEAD
 #include <zephyr/arch/arm/aarch32/cortex_m/cmsis.h>
+=======
+#include <cmsis_core.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 /* Must clear LSB of function address to access as data. */
 #define FUNC_TO_PTR(x) (void *)((uintptr_t)(x) & ~0x1)
 /* Must set LSB of function address to call in Thumb mode. */

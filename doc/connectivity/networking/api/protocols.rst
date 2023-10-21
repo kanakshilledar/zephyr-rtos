@@ -13,3 +13,7 @@ Protocols
    lwm2m
    mqtt
    mqtt_sn
+<<<<<<< HEAD
+=======
+   tftp
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

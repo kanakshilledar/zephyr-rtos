@@ -83,6 +83,7 @@ int bt_mesh_adv_gatt_start(const struct bt_le_adv_param *param, int32_t duration
 			   const struct bt_data *ad, size_t ad_len,
 			   const struct bt_data *sd, size_t sd_len);
 
+<<<<<<< HEAD
 static inline void bt_mesh_adv_send_start(uint16_t duration, int err,
 					  struct bt_mesh_adv *adv)
 {
@@ -106,6 +107,9 @@ static inline void bt_mesh_adv_send_end(
 		adv->cb->end(err, adv->cb_data);
 	}
 }
+=======
+void bt_mesh_adv_send_start(uint16_t duration, int err, struct bt_mesh_adv *adv);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 int bt_mesh_scan_active_set(bool active);
 

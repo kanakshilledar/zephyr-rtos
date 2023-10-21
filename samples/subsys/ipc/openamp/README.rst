@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 .. _openAMP_sample:
 
 OpenAMP Sample Application
 ##########################
+=======
+.. zephyr:code-sample:: openamp
+   :name: OpenAMP
+   :relevant-api: ipm_interface
+
+   Send messages between two cores using OpenAMP.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Overview
 ********
@@ -9,7 +17,11 @@ Overview
 This application demonstrates how to use OpenAMP with Zephyr. It is designed to
 demonstrate how to integrate OpenAMP with Zephyr both from a build perspective
 and code. Note that the remote and primary core images can be flashed
+<<<<<<< HEAD
 independently, but sysbuild must be used in order to flash them in one step.
+=======
+independently, but sysbuild must be used in order to build the images.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building the application for lpcxpresso54114_m4
 ***********************************************
@@ -18,6 +30,10 @@ Building the application for lpcxpresso54114_m4
    :zephyr-app: samples/subsys/ipc/openamp
    :board: lpcxpresso54114_m4
    :goals: debug
+<<<<<<< HEAD
+=======
+   :west-args: --sysbuild
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building the application for lpcxpresso55s69_cpu0
 *************************************************
@@ -26,6 +42,10 @@ Building the application for lpcxpresso55s69_cpu0
    :zephyr-app: samples/subsys/ipc/openamp
    :board: lpcxpresso55s69_cpu0
    :goals: debug
+<<<<<<< HEAD
+=======
+   :west-args: --sysbuild
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building the application for mps2_an521
 ***************************************
@@ -34,6 +54,10 @@ Building the application for mps2_an521
    :zephyr-app: samples/subsys/ipc/openamp
    :board: mps2_an521
    :goals: debug
+<<<<<<< HEAD
+=======
+   :west-args: --sysbuild
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building the application for v2m_musca_b1
 *****************************************
@@ -42,6 +66,10 @@ Building the application for v2m_musca_b1
    :zephyr-app: samples/subsys/ipc/openamp
    :board: v2m_musca_b1
    :goals: debug
+<<<<<<< HEAD
+=======
+   :west-args: --sysbuild
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Building the application for mimxrt1170_evk_cm7
 ***********************************************
@@ -50,6 +78,10 @@ Building the application for mimxrt1170_evk_cm7
    :zephyr-app: samples/subsys/ipc/openamp
    :board: mimxrt1170_evk_cm7
    :goals: debug
+<<<<<<< HEAD
+=======
+   :west-args: --sysbuild
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Open a serial terminal (minicom, putty, etc.) and connect the board with the
 following settings:

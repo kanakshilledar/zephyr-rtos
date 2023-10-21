@@ -13,7 +13,11 @@ LOG_MODULE_REGISTER(net_ipv4_test, CONFIG_NET_IPV4_LOG_LEVEL);
 #include <string.h>
 #include <errno.h>
 #include <zephyr/linker/sections.h>
+<<<<<<< HEAD
 #include <zephyr/random/rand32.h>
+=======
+#include <zephyr/random/random.h>
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 #include <zephyr/ztest.h>
 #include <zephyr/net/ethernet.h>
 #include <zephyr/net/dummy.h>
@@ -147,7 +151,11 @@ static uint8_t upper_layer_packet_count;
 static uint16_t lower_layer_total_size;
 static uint16_t upper_layer_total_size;
 
+<<<<<<< HEAD
 static uint8_t tmp_buf[256];
+=======
+static uint8_t test_tmp_buf[256];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 static uint8_t net_iface_dummy_data;
 
 static void net_iface_init(struct net_if *iface);
@@ -590,7 +598,11 @@ static void *test_setup(void)
 	setup_tcp_handler(&my_addr1, &my_addr2, 4092, 19551);
 
 	/* Generate test data */
+<<<<<<< HEAD
 	generate_dummy_data(tmp_buf, sizeof(tmp_buf));
+=======
+	generate_dummy_data(test_tmp_buf, sizeof(test_tmp_buf));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	return NULL;
 }
@@ -618,9 +630,15 @@ ZTEST(net_ipv4_fragment, test_udp)
 	/* Add enough data until we have 4 packets */
 	i = 0;
 	while (i < IPV4_TEST_PACKET_SIZE) {
+<<<<<<< HEAD
 		ret = net_pkt_write(pkt, tmp_buf, sizeof(tmp_buf));
 		zassert_equal(ret, 0, "IPv4 data append failed");
 		i += sizeof(tmp_buf);
+=======
+		ret = net_pkt_write(pkt, test_tmp_buf, sizeof(test_tmp_buf));
+		zassert_equal(ret, 0, "IPv4 data append failed");
+		i += sizeof(test_tmp_buf);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	/* Setup packet for insertion */

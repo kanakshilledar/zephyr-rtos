@@ -3,26 +3,52 @@
 Bluetooth Mesh Shell
 ####################
 
+<<<<<<< HEAD
 The Bluetooth mesh shell subsystem provides a set of Bluetooth mesh shell commands for the :ref:`shell_api` module.
 It allows for testing and exploring the Bluetooth mesh API through an interactive interface, without having to write an application.
 
 The Bluetooth mesh shell interface provides access to most Bluetooth mesh features, including provisioning, configuration, and message sending.
+=======
+The Bluetooth mesh shell subsystem provides a set of Bluetooth mesh shell commands for the
+:ref:`shell_api` module. It allows for testing and exploring the Bluetooth mesh API through an
+interactive interface, without having to write an application.
+
+The Bluetooth mesh shell interface provides access to most Bluetooth mesh features, including
+provisioning, configuration, and message sending.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Prerequisites
 *************
 
+<<<<<<< HEAD
 The Bluetooth mesh shell subsystem depends on the application to create the composition data and do the mesh initialization.
+=======
+The Bluetooth mesh shell subsystem depends on the application to create the composition data and do
+the mesh initialization.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Application
 ***********
 
+<<<<<<< HEAD
 The Bluetooth mesh shell subsystem is most easily used through the Bluetooth mesh shell application under ``tests/bluetooth/mesh_shell``.
 See :ref:`shell_api` for information on how to connect and interact with the Bluetooth mesh shell application.
+=======
+The Bluetooth mesh shell subsystem is most easily used through the Bluetooth mesh shell application
+under ``tests/bluetooth/mesh_shell``. See :ref:`shell_api` for information on how to connect and
+interact with the Bluetooth mesh shell application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Basic usage
 ***********
 
+<<<<<<< HEAD
 The Bluetooth mesh shell subsystem adds a single ``mesh`` command, which holds a set of sub-commands. Every time the device boots up, make sure to call ``mesh init`` before any of the other Bluetooth mesh shell commands can be called::
+=======
+The Bluetooth mesh shell subsystem adds a single ``mesh`` command, which holds a set of
+sub-commands. Every time the device boots up, make sure to call ``mesh init`` before any of the
+other Bluetooth mesh shell commands can be called::
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	uart:~$ mesh init
 
@@ -31,6 +57,7 @@ This is done to ensure that all available log will be printed to the shell outpu
 Provisioning
 ============
 
+<<<<<<< HEAD
 The mesh node must be provisioned to become part of the network. This is only necessary the first time the device boots up, as the device will remember its provisioning data between reboots.
 
 The simplest way to provision the device is through self-provisioning. To do this the user must provision the device with the default network key and address ``0x0001``, execute::
@@ -40,17 +67,46 @@ The simplest way to provision the device is through self-provisioning. To do thi
 Since all mesh nodes use the same values for the default network key, this can be done on multiple devices, as long as they're assigned non-overlapping unicast addresses. Alternatively, to provision the device into an existing network, the unprovisioned beacon can be enabled with ``mesh prov pb-adv on`` or ``mesh prov pb-gatt on``. The beacons can be picked up by an external provisioner, which can provision the node into its network.
 
 Once the mesh node is part of a network, its transmission parameters can be controlled by the general configuration commands:
+=======
+The mesh node must be provisioned to become part of the network. This is only necessary the first
+time the device boots up, as the device will remember its provisioning data between reboots.
+
+The simplest way to provision the device is through self-provisioning. To do this the user must
+provision the device with the default network key and address ``0x0001``, execute::
+
+	uart:~$ mesh prov local 0 0x0001
+
+Since all mesh nodes use the same values for the default network key, this can be done on multiple
+devices, as long as they're assigned non-overlapping unicast addresses. Alternatively, to provision
+the device into an existing network, the unprovisioned beacon can be enabled with
+``mesh prov pb-adv on`` or ``mesh prov pb-gatt on``. The beacons can be picked up by an external
+provisioner, which can provision the node into its network.
+
+Once the mesh node is part of a network, its transmission parameters can be controlled by the
+general configuration commands:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 * To set the destination address, call ``mesh target dst <Addr>``.
 * To set the network key index, call ``mesh target net <NetKeyIdx>``.
 * To set the application key index, call ``mesh target app <AppKeyIdx>``.
 
+<<<<<<< HEAD
 By default, the transmission parameters are set to send messages to the provisioned address and network key.
+=======
+By default, the transmission parameters are set to send messages to the provisioned address and
+network key.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Configuration
 =============
 
+<<<<<<< HEAD
 By setting the destination address to the local unicast address (``0x0001`` in the ``mesh prov local`` command above), we can perform self-configuration through any of the :ref:`bluetooth_mesh_shell_cfg_cli` commands.
+=======
+By setting the destination address to the local unicast address (``0x0001`` in the
+``mesh prov local`` command above), we can perform self-configuration through any of the
+:ref:`bluetooth_mesh_shell_cfg_cli` commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 A good first step is to read out the node's own composition data::
 
@@ -65,7 +121,12 @@ Next, since the device has no application keys by default, it's a good idea to a
 Message sending
 ===============
 
+<<<<<<< HEAD
 With an application key added (see above), the mesh node's transition parameters are all valid, and the Bluetooth mesh shell can send raw mesh messages through the network.
+=======
+With an application key added (see above), the mesh node's transition parameters are all valid, and
+the Bluetooth mesh shell can send raw mesh messages through the network.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 For example, to send a Generic OnOff Set message, call::
 
@@ -74,6 +135,7 @@ For example, to send a Generic OnOff Set message, call::
 .. note::
 	All multibyte fields model messages are in little endian, except the opcode.
 
+<<<<<<< HEAD
 The message will be sent to the current destination address, using the current network and application key indexes. As the destination address points to the local unicast address by default, the device will only send packets to itself. To change the destination address to the All Nodes broadcast address, call::
 
 	uart:~$ mesh target dst 0xffff
@@ -84,6 +146,28 @@ With the destination address set to ``0xffff``, any other mesh nodes in the netw
 	To change the configuration of the device, the destination address must be set back to the local unicast address before issuing any configuration commands.
 
 Sending raw mesh packets is a good way to test model message handler implementations during development, as it can be done without having to implement the sending model. By default, only the reception of the model messages can be tested this way, as the Bluetooth mesh shell only includes the foundation models. To receive a packet in the mesh node, you have to add a model with a valid opcode handler list to the composition data in ``subsys/bluetooth/mesh/shell.c``, and print the incoming message to the shell in the handler callback.
+=======
+The message will be sent to the current destination address, using the current network and
+application key indexes. As the destination address points to the local unicast address by default,
+the device will only send packets to itself. To change the destination address to the All Nodes
+broadcast address, call::
+
+	uart:~$ mesh target dst 0xffff
+
+With the destination address set to ``0xffff``, any other mesh nodes in the network with the
+configured network and application keys will receive and process the messages we send.
+
+.. note::
+	To change the configuration of the device, the destination address must be set back to the
+	local unicast address before issuing any configuration commands.
+
+Sending raw mesh packets is a good way to test model message handler implementations during
+development, as it can be done without having to implement the sending model. By default, only the
+reception of the model messages can be tested this way, as the Bluetooth mesh shell only includes
+the foundation models. To receive a packet in the mesh node, you have to add a model with a valid
+opcode handler list to the composition data in ``subsys/bluetooth/mesh/shell.c``, and print the
+incoming message to the shell in the handler callback.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Parameter formats
 *****************
@@ -98,10 +182,19 @@ The Bluetooth mesh shell commands are parsed with a variety of formats:
 	  - Description
 	  - Example
 	* - Integers
+<<<<<<< HEAD
 	  - The default format unless something else is specified. Can be either decimal or hexadecimal.
 	  - ``1234``, ``0xabcd01234``
 	* - Hexstrings
 	  - For raw byte arrays, like UUIDs, key values and message payloads, the parameters should be formatted as an unbroken string of hexadecimal values without any prefix.
+=======
+	  - The default format unless something else is specified. Can be either decimal or
+	    hexadecimal.
+	  - ``1234``, ``0xabcd01234``
+	* - Hexstrings
+	  - For raw byte arrays, like UUIDs, key values and message payloads, the parameters should
+	    be formatted as an unbroken string of hexadecimal values without any prefix.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	  - ``deadbeef01234``
 	* - Booleans
 	  - Boolean values are denoted in the API documentation as ``<val(off, on)>``.
@@ -110,7 +203,14 @@ The Bluetooth mesh shell commands are parsed with a variety of formats:
 Commands
 ********
 
+<<<<<<< HEAD
 The Bluetooth mesh shell implements a large set of commands. Some of the commands accept parameters, which are mentioned in brackets after the command name. For example, ``mesh lpn set <value: off, on>``. Mandatory parameters are marked with angle brackets (e.g. ``<NetKeyIdx>``), and optional parameters are marked with square brackets (e.g. ``[DstAddr]``).
+=======
+The Bluetooth mesh shell implements a large set of commands. Some of the commands accept parameters,
+which are mentioned in brackets after the command name. For example,
+``mesh lpn set <value: off, on>``. Mandatory parameters are marked with angle brackets (e.g.
+``<NetKeyIdx>``), and optional parameters are marked with square brackets (e.g. ``[DstAddr]``).
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 The Bluetooth mesh shell commands are divided into the following groups:
 
@@ -119,7 +219,13 @@ The Bluetooth mesh shell commands are divided into the following groups:
 	:local:
 
 .. note::
+<<<<<<< HEAD
 	Some commands depend on specific features being enabled in the compile time configuration of the application. Not all features are enabled by default. The list of available Bluetooth mesh shell commands can be shown in the shell by calling ``mesh`` without any arguments.
+=======
+	Some commands depend on specific features being enabled in the compile time configuration of
+	the application. Not all features are enabled by default. The list of available Bluetooth
+	mesh shell commands can be shown in the shell by calling ``mesh`` without any arguments.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 General configuration
 =====================
@@ -132,17 +238,33 @@ General configuration
 ``mesh reset-local``
 --------------------
 
+<<<<<<< HEAD
 	Reset the local mesh node to its initial unprovisioned state. This command will also clear the Configuration Database (CDB) if present.
+=======
+	Reset the local mesh node to its initial unprovisioned state. This command will also clear
+	the Configuration Database (CDB) if present.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Target
 ======
 
+<<<<<<< HEAD
 The target commands enables the user to monitor and set the target destination address, network index and application index for the shell. These parameters are used by several commands, like provisioning, Configuration Client, etc.
+=======
+The target commands enables the user to monitor and set the target destination address, network
+index and application index for the shell. These parameters are used by several commands, like
+provisioning, Configuration Client, etc.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh target dst [DstAddr]``
 -----------------------------
 
+<<<<<<< HEAD
 	Get or set the message destination address. The destination address determines where mesh packets are sent with the shell, but has no effect on modules outside the shell's control.
+=======
+	Get or set the message destination address. The destination address determines where mesh
+	packets are sent with the shell, but has no effect on modules outside the shell's control.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``DstAddr``: If present, sets the new 16-bit mesh destination address. If omitted, the current destination address is printed.
 
@@ -150,7 +272,14 @@ The target commands enables the user to monitor and set the target destination a
 ``mesh target net [NetKeyIdx]``
 -------------------------------
 
+<<<<<<< HEAD
 	Get or set the message network index. The network index determines which network key is used to encrypt mesh packets that are sent with the shell, but has no effect on modules outside the shell's control. The network key must already be added to the device, either through provisioning or by a Configuration Client.
+=======
+	Get or set the message network index. The network index determines which network key is used
+	to encrypt mesh packets that are sent with the shell, but has no effect on modules outside
+	the shell's control. The network key must already be added to the device, either through
+	provisioning or by a Configuration Client.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: If present, sets the new network index. If omitted, the current network index is printed.
 
@@ -158,24 +287,45 @@ The target commands enables the user to monitor and set the target destination a
 ``mesh target app [AppKeyIdx]``
 -------------------------------
 
+<<<<<<< HEAD
 	Get or set the message application index. The application index determines which application key is used to encrypt mesh packets that are sent with the shell, but has no effect on modules outside the shell's control. The application key must already be added to the device by a Configuration Client, and must be bound to the current network index.
 
 	* ``AppKeyIdx``: If present, sets the new application index. If omitted, the current application index is printed.
 
+=======
+	Get or set the message application index. The application index determines which application
+	key is used to encrypt mesh packets that are sent with the shell, but has no effect on
+	modules outside the shell's control. The application key must already be added to the device
+	by a Configuration Client, and must be bound to the current network index.
+
+	* ``AppKeyIdx``: If present, sets the new application index. If omitted, the current application index is printed.
+
+
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 Low Power Node
 ==============
 
 ``mesh lpn set <Val(off, on)>``
 -------------------------------
 
+<<<<<<< HEAD
 	Enable or disable Low Power operation. Once enabled, the device will turn off its radio and start polling for friend nodes.
+=======
+	Enable or disable Low Power operation. Once enabled, the device will turn off its radio and
+	start polling for friend nodes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Val``: Sets whether Low Power operation is enabled.
 
 ``mesh lpn poll``
 -----------------
 
+<<<<<<< HEAD
 	Perform a poll to the friend node, to receive any pending messages. Only available when LPN is enabled.
+=======
+	Perform a poll to the friend node, to receive any pending messages. Only available when LPN
+	is enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Testing
 =======
@@ -183,7 +333,12 @@ Testing
 ``mesh test net-send <HexString>``
 -----------------------------------
 
+<<<<<<< HEAD
 	Send a raw mesh message with the current destination address, network and application index. The message opcode must be encoded manually.
+=======
+	Send a raw mesh message with the current destination address, network and application index.
+	The message opcode must be encoded manually.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``HexString`` Raw hexadecimal representation of the message to send.
 
@@ -208,7 +363,13 @@ Testing
 
 .. warning::
 
+<<<<<<< HEAD
 	Clearing the replay protection list breaks the security mechanisms of the mesh node, making it susceptible to message replay attacks. This should never be performed in a real deployment.
+=======
+	Clearing the replay protection list breaks the security mechanisms of the mesh node, making
+	it susceptible to message replay attacks. This should never be performed in a real
+	deployment.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Health Server Test
 ------------------
@@ -231,20 +392,39 @@ Health Server Test
 Provisioning
 ============
 
+<<<<<<< HEAD
 To allow a device to broadcast connectable unprovisioned beacons, the :kconfig:option:`CONFIG_BT_MESH_PROV_DEVICE` configuration option must be enabled, along with the :kconfig:option:`CONFIG_BT_MESH_PB_GATT` option.
+=======
+To allow a device to broadcast connectable unprovisioned beacons, the
+:kconfig:option:`CONFIG_BT_MESH_PROV_DEVICE` configuration option must be enabled, along with the
+:kconfig:option:`CONFIG_BT_MESH_PB_GATT` option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh prov pb-gatt <Val(off, on)>``
 ------------------------------------
 
+<<<<<<< HEAD
 	Start or stop advertising a connectable unprovisioned beacon. The connectable unprovisioned beacon allows the mesh node to be discovered by nearby GATT based provisioners, and provisioned through the GATT bearer.
 
 	* ``Val``: Enable or disable provisioning with GATT
 
 To allow a device to broadcast unprovisioned beacons, the :kconfig:option:`CONFIG_BT_MESH_PROV_DEVICE` configuration option must be enabled, along with the :kconfig:option:`CONFIG_BT_MESH_PB_ADV` option.
+=======
+	Start or stop advertising a connectable unprovisioned beacon. The connectable unprovisioned
+	beacon allows the mesh node to be discovered by nearby GATT based provisioners, and
+	provisioned through the GATT bearer.
+
+	* ``Val``: Enable or disable provisioning with GATT
+
+To allow a device to broadcast unprovisioned beacons, the
+:kconfig:option:`CONFIG_BT_MESH_PROV_DEVICE` configuration option must be enabled, along with the
+:kconfig:option:`CONFIG_BT_MESH_PB_ADV` option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh prov pb-adv <Val(off, on)>``
 -----------------------------------
 
+<<<<<<< HEAD
 	Start or stop advertising the unprovisioned beacon. The unprovisioned beacon allows the mesh node to be discovered by nearby advertising-based provisioners, and provisioned through the advertising bearer.
 
 	* ``Val``: Enable or disable provisioning with advertiser
@@ -255,11 +435,30 @@ To allow a device to provision devices, the :kconfig:option:`CONFIG_BT_MESH_PROV
 -----------------------------------------------------------------------------------
 
 	Provision a nearby device into the mesh. The mesh node starts scanning for unprovisioned beacons with the given UUID. Once found, the unprovisioned device will be added to the mesh network with the given unicast address, and given the network key indicated by ``NetKeyIdx``.
+=======
+	Start or stop advertising the unprovisioned beacon. The unprovisioned beacon allows the mesh
+	node to be discovered by nearby advertising-based provisioners, and provisioned through the
+	advertising bearer.
+
+	* ``Val``: Enable or disable provisioning with advertiser
+
+To allow a device to provision devices, the :kconfig:option:`CONFIG_BT_MESH_PROVISIONER` and
+:kconfig:option:`CONFIG_BT_MESH_PB_ADV` configuration options must be enabled.
+
+``mesh prov remote-adv <UUID(1-16 hex)> <NetKeyIdx> <Addr> <AttDur(s)>``
+-----------------------------------------------------------------------------------
+
+	Provision a nearby device into the mesh. The mesh node starts scanning for unprovisioned
+	beacons with the given UUID. Once found, the unprovisioned device will be added to the mesh
+	network with the given unicast address, and given the network key indicated by
+	``NetKeyIdx``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``UUID``: UUID of the unprovisioned device. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
 	* ``NetKeyIdx``: Index of the network key to pass to the device.
 	* ``Addr``: First unicast address to assign to the unprovisioned device. The device will occupy as many addresses as it has elements, and all must be available.
 	* ``AttDur``: The duration in seconds the unprovisioned device will identify itself for, if supported. See :ref:`bluetooth_mesh_models_health_srv_attention` for details.
+<<<<<<< HEAD
 	* ``AuthType``: If present, the OOB authentication type used for provisioning.
 
 		* ``no``: No OOB (default).
@@ -268,11 +467,23 @@ To allow a device to provision devices, the :kconfig:option:`CONFIG_BT_MESH_PROV
 		* ``input``: Input OOB.
 
 To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT_MESH_PROVISIONER` and :kconfig:option:`CONFIG_BT_MESH_PB_GATT_CLIENT` configuration options must be enabled.
+=======
+
+To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT_MESH_PROVISIONER`
+and :kconfig:option:`CONFIG_BT_MESH_PB_GATT_CLIENT` configuration options must be enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh prov remote-gatt <UUID(1-16 hex)> <NetKeyIdx> <Addr> <AttDur(s)>``
 -------------------------------------------------------------------------
 
+<<<<<<< HEAD
 	Provision a nearby device into the mesh. The mesh node starts scanning for connectable advertising for PB-GATT with the given UUID. Once found, the unprovisioned device will be added to the mesh network with the given unicast address, and given the network key indicated by ``NetKeyIdx``.
+=======
+	Provision a nearby device into the mesh. The mesh node starts scanning for connectable
+	advertising for PB-GATT with the given UUID. Once found, the unprovisioned device will be
+	added to the mesh network with the given unicast address, and given the network key
+	indicated by ``NetKeyIdx``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``UUID``: UUID of the unprovisioned device. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
 	* ``NetKeyIdx``: Index of the network key to pass to the device.
@@ -284,13 +495,23 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 
 	Get or set the mesh node's UUID, used in the unprovisioned beacons.
 
+<<<<<<< HEAD
 	* ``UUID``: If present, new 128-bit UUID value. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. If omitted, the current UUID will be printed. To enable this command, the :kconfig:option:`BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+=======
+	* ``UUID``: If present, new 128-bit UUID value. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. If omitted, the current UUID will be printed. To enable this command, the :kconfig:option:`CONFIG_BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh prov input-num <Number>``
 --------------------------------
 
+<<<<<<< HEAD
 	Input a numeric OOB authentication value. Only valid when prompted by the shell during provisioning. The input number must match the number presented by the other participant in the provisioning.
+=======
+	Input a numeric OOB authentication value. Only valid when prompted by the shell during
+	provisioning. The input number must match the number presented by the other participant in
+	the provisioning.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Number``: Decimal authentication number.
 
@@ -298,15 +519,31 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 ``mesh prov input-str <String>``
 --------------------------------
 
+<<<<<<< HEAD
 	Input an alphanumeric OOB authentication value. Only valid when prompted by the shell during provisioning. The input string must match the string presented by the other participant in the provisioning.
+=======
+	Input an alphanumeric OOB authentication value. Only valid when prompted by the shell during
+	provisioning. The input string must match the string presented by the other participant in
+	the provisioning.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``String``: Unquoted alphanumeric authentication string.
 
 
+<<<<<<< HEAD
 ``mesh prov static-oob [Val(1-16 hex)]``
 ----------------------------------------
 
 	Set or clear the static OOB authentication value. The static OOB authentication value must be set before provisioning starts to have any effect. The static OOB value must be same on both participants in the provisioning. To enable this command, the :kconfig:option:`BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+=======
+``mesh prov static-oob [Val(1-32 hex)]``
+----------------------------------------
+
+	Set or clear the static OOB authentication value. The static OOB authentication value must
+	be set before provisioning starts to have any effect. The static OOB value must be same on
+	both participants in the provisioning. To enable this command, the
+	:kconfig:option:`CONFIG_BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Val``: If present, indicates the new hexadecimal value of the static OOB. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. If omitted, the static OOB value is cleared.
 
@@ -314,7 +551,12 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 ``mesh prov local <NetKeyIdx> <Addr> [IVI]``
 --------------------------------------------
 
+<<<<<<< HEAD
 	Provision the mesh node itself. If the Configuration database is enabled, the network key must be created. Otherwise, the default key value is used.
+=======
+	Provision the mesh node itself. If the Configuration database is enabled, the network key
+	must be created. Otherwise, the default key value is used.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: Index of the network key to provision.
 	* ``Addr``: First unicast address to assign to the device. The device will occupy as many addresses as it has elements, and all must be available.
@@ -324,7 +566,13 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 ``mesh prov beacon-listen <Val(off, on)>``
 ------------------------------------------
 
+<<<<<<< HEAD
 	Enable or disable printing of incoming unprovisioned beacons. Allows a provisioner device to detect nearby unprovisioned devices and provision them. To enable this command, the :kconfig:option:`BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+=======
+	Enable or disable printing of incoming unprovisioned beacons. Allows a provisioner device to
+	detect nearby unprovisioned devices and provision them. To enable this command, the
+	:kconfig:option:`CONFIG_BT_MESH_SHELL_PROV_CTX_INSTANCE` option must be enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Val``: Whether to enable the unprovisioned beacon printing.
 
@@ -336,7 +584,12 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 
 ``mesh prov auth-method input <Action> <Size>``
 -----------------------------------------------
+<<<<<<< HEAD
 	From the provisioner device, instruct the unprovisioned device to use the specified Input OOB authentication action.
+=======
+	From the provisioner device, instruct the unprovisioned device to use the specified Input
+	OOB authentication action.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Action`` - Input action. Allowed values:
 
@@ -349,7 +602,12 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 
 ``mesh prov auth-method output <Action> <Size>``
 ------------------------------------------------
+<<<<<<< HEAD
 	From the provisioner device, instruct the unprovisioned device to use the specified Output OOB authentication action.
+=======
+	From the provisioner device, instruct the unprovisioned device to use the specified Output
+	OOB authentication action.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Action`` - Output action. Allowed values:
 
@@ -362,6 +620,7 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 
 ``mesh prov auth-method static <Val(1-16 hex)>``
 ------------------------------------------------
+<<<<<<< HEAD
 	From the provisioner device, instruct the unprovisioned device to use static OOB authentication, and use the given static authentication value when provisioning.
 
 	* ``Val`` - Static OOB value. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
@@ -369,18 +628,42 @@ To allow a device to provision devices over GATT, the :kconfig:option:`CONFIG_BT
 ``mesh prov auth-method none``
 ------------------------------
 	From the provisioner device, don't use any authentication when provisioning new devices. This is the default behavior.
+=======
+	From the provisioner device, instruct the unprovisioned device to use static OOB
+	authentication, and use the given static authentication value when provisioning.
+
+	* ``Val`` - Static OOB value. Providing a hex-string shorter than 32 bytes will populate the N most significant bytes of the array and zero-pad the rest.
+
+``mesh prov auth-method none``
+------------------------------
+	From the provisioner device, don't use any authentication when provisioning new devices.
+	This is the default behavior.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 Proxy
 =====
 
+<<<<<<< HEAD
 The Proxy Server module is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_GATT_PROXY` configuration option.
+=======
+The Proxy Server module is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_GATT_PROXY` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh proxy identity-enable``
 ------------------------------
 
+<<<<<<< HEAD
 	Enable the Proxy Node Identity beacon, allowing Proxy devices to connect explicitly to this device. The beacon will run for 60 seconds before the node returns to normal Proxy beacons.
 
 The Proxy Client module is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_PROXY_CLIENT` configuration option.
+=======
+	Enable the Proxy Node Identity beacon, allowing Proxy devices to connect explicitly to this
+	device. The beacon will run for 60 seconds before the node returns to normal Proxy beacons.
+
+The Proxy Client module is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_PROXY_CLIENT` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh proxy connect <NetKeyIdx>``
 ----------------------------------
@@ -401,7 +684,12 @@ The Proxy Client module is an optional mesh subsystem that can be enabled throug
 ``mesh proxy solicit <NetKeyIdx>``
 ----------------------------------
 
+<<<<<<< HEAD
 	Begin Proxy Solicitation of a subnet. Support of this feature can be enabled through the :kconfig:option:`CONFIG_BT_MESH_PROXY_SOLICITATION` configuration option.
+=======
+	Begin Proxy Solicitation of a subnet. Support of this feature can be enabled through the
+	:kconfig:option:`CONFIG_BT_MESH_PROXY_SOLICITATION` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: Index of the network key to send Solicitation PDUs to.
 
@@ -413,9 +701,30 @@ Models
 Configuration Client
 --------------------
 
+<<<<<<< HEAD
 The Configuration Client model is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_CFG_CLI` configuration option. This is implemented as a separate module (``mesh models cfg``) inside the ``mesh models`` subcommand list. This module will work on any instance of the Configuration Client model if the mentioned shell configuration options is enabled, and as long as the Configuration Client model is present in the model composition of the application. This shell module can be used for configuring itself and other nodes in the mesh network.
 
 The Configuration Client uses general message parameters set by ``mesh target dst`` and ``mesh target net`` to target specific nodes. When the Bluetooth mesh shell node is provisioned, given that the :kconfig:option:`BT_MESH_SHELL_PROV_CTX_INSTANCE` option is enabled with the shell provisioning context initialized, the Configuration Client model targets itself by default. Similarly, when another node has been provisioned by the Bluetooth mesh shell, the Configuration Client model targets the new node. In most common use-cases, the Configuration Client is depending on the provisioning features and the Configuration database to be fully functional. The Configuration Client always sends messages using the Device key bound to the destination address, so it will only be able to configure itself and the mesh nodes it provisioned. The following steps are an example of how you can set up a device to start using the Configuration Client commands:
+=======
+The Configuration Client model is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_CFG_CLI` configuration option. This is implemented as a separate
+module (``mesh models cfg``) inside the ``mesh models`` subcommand list. This module will work on
+any instance of the Configuration Client model if the mentioned shell configuration options is
+enabled, and as long as the Configuration Client model is present in the model composition of the
+application. This shell module can be used for configuring itself and other nodes in the mesh
+network.
+
+The Configuration Client uses general message parameters set by ``mesh target dst`` and ``mesh
+target net`` to target specific nodes. When the Bluetooth mesh shell node is provisioned, given that
+the :kconfig:option:`CONFIG_BT_MESH_SHELL_PROV_CTX_INSTANCE` option is enabled with the shell
+provisioning context initialized, the Configuration Client model targets itself by default.
+Similarly, when another node has been provisioned by the Bluetooth mesh shell, the Configuration
+Client model targets the new node. In most common use-cases, the Configuration Client is depending
+on the provisioning features and the Configuration database to be fully functional. The
+Configuration Client always sends messages using the Device key bound to the destination address, so
+it will only be able to configure itself and the mesh nodes it provisioned. The following steps are
+an example of how you can set up a device to start using the Configuration Client commands:
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 * Initialize the client node (``mesh init``).
 * Create the CDB (``mesh cdb create``).
@@ -423,7 +732,12 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 * The shell module should now target itself.
 * Monitor the composition data of the local node (``mesh models cfg get-comp``).
 * Configure the local node as desired with the Configuration Client commands.
+<<<<<<< HEAD
 * Provision other devices (``mesh prov beacon-listen``) (``mesh prov remote-adv``) (``mesh prov remote-gatt``).
+=======
+* Provision other devices (``mesh prov beacon-listen``) (``mesh prov remote-adv``)
+  (``mesh prov remote-gatt``).
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 * The shell module should now target the newly added node.
 * Monitor the newly provisioned nodes and their addresses (``mesh cdb show``).
 * Monitor the composition data of the target device (``mesh models cfg get-comp``).
@@ -455,7 +769,12 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg get-comp [Page]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Read a composition data page. The full composition data page will be printed. If the target does not have the given page, it will return the last page before it.
+=======
+	Read a composition data page. The full composition data page will be printed. If the target
+	does not have the given page, it will return the last page before it.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Page``: The composition data page to request. Defaults to 0 if omitted.
 
@@ -473,7 +792,11 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 
 	Get or set the default TTL value.
 
+<<<<<<< HEAD
 	* ``TTL``: If present, sets the new default TTL value. Leagal TTL values are 0x00 and 0x02-0x7f. If omitted, the current default TTL value is printed.
+=======
+	* ``TTL``: If present, sets the new default TTL value. Legal TTL values are 0x00 and 0x02-0x7f. If omitted, the current default TTL value is printed.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models cfg friend [Val(off, on)]``
@@ -512,7 +835,11 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 		* ``0x02``: The feature is not supported.
 
 	* ``Count``: Sets the new relay retransmit count if ``val`` is ``on``. Ignored if ``val`` is ``off``. Legal retransmit count is 0-7. Defaults to ``2`` if omitted.
+<<<<<<< HEAD
 	* ``Int``: Sets the new relay retransmit interval in milliseconds if ``val`` is ``on``. Legal interval range is 10-320 milliseconds. Ignored if ``val`` is ``off``. Defaults to ``20`` if omitted.
+=======
+	* ``Int``: Sets the new relay retransmit interval in milliseconds if ``val`` is ``on``.  Legal interval range is 10-320 milliseconds. Ignored if ``val`` is ``off``.  Defaults to ``20`` if omitted.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models cfg node-id <NetKeyIdx> [Identity]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -572,7 +899,12 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg appkey add <NetKeyIdx> <AppKeyIdx> [Key(1-16 hex)]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Add an application key to the target node. Adds the key to the Configuration Database if enabled.
+=======
+	Add an application key to the target node. Adds the key to the Configuration Database if
+	enabled.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: The network key index the application key is bound to.
 	* ``AppKeyIdx``: The application key index to add.
@@ -607,7 +939,12 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg model app-bind <Addr> <AppKeyIdx> <MID> [CID]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Bind an application key to a model. Models can only encrypt and decrypt messages sent with application keys they are bound to.
+=======
+	Bind an application key to a model. Models can only encrypt and decrypt messages sent with
+	application keys they are bound to.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Addr``: Address of the element the model is on.
 	* ``AppKeyIdx``: The application key to bind to the model.
@@ -639,8 +976,14 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg model pub <Addr> <MID> [CID] [<PubAddr> <AppKeyIdx> <Cred(off, on)> <TTL> <PerRes> <PerSteps> <Count> <Int(ms)>]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Get or set the publication parameters of a model. If all publication parameters are included, they become the new publication parameters of the model.
 	If all publication parameters are omitted, print the current publication parameters of the model.
+=======
+	Get or set the publication parameters of a model. If all publication parameters are
+	included, they become the new publication parameters of the model.  If all publication
+	parameters are omitted, print the current publication parameters of the model.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Addr``: Address of the element the model is on.
 	* ``MID``: The model ID of the model to get the bound keys of.
@@ -691,7 +1034,13 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg model sub-add <ElemAddr> <SubAddr> <MID> [CID]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Subscription the model to a group address. Models only receive messages sent to their unicast address or a group or virtual address they subscribe to. Models may subscribe to multiple group and virtual addresses.
+=======
+	Subscription the model to a group address. Models only receive messages sent to their
+	unicast address or a group or virtual address they subscribe to. Models may subscribe to
+	multiple group and virtual addresses.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemAddr``: Address of the element the model is on.
 	* ``SubAddr``: 16-bit group address the model should subscribe to (``0xc000`` to ``0xFEFF``).
@@ -713,7 +1062,13 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg model sub-add-va <ElemAddr> <LabelUUID(1-16 hex)> <MID> [CID]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Subscribe the model to a virtual address. Models only receive messages sent to their unicast address or a group or virtual address they subscribe to. Models may subscribe to multiple group and virtual addresses.
+=======
+	Subscribe the model to a virtual address. Models only receive messages sent to their unicast
+	address or a group or virtual address they subscribe to. Models may subscribe to multiple
+	group and virtual addresses.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemAddr``: Address of the element the model is on.
 	* ``LabelUUID``: 128-bit label UUID of the virtual address to subscribe to. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
@@ -727,7 +1082,11 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 	Unsubscribe a model from a virtual address.
 
 	* ``ElemAddr``: Address of the element the model is on.
+<<<<<<< HEAD
 	* ``LabelUUID``: 128-bit label UUID of the virtual address to remove the subscription of. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
+=======
+	* ``LabelUUID``: 128-bit label UUID of the virtual address to remove the subscription of.  Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	* ``MID``: The model ID of the model to add the subscription to.
 	* ``CID``: If present, determines the Company ID of the model. If omitted, the model is a Bluetooth SIG defined model.
 
@@ -744,7 +1103,13 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg model sub-ow-va <ElemAddr> <LabelUUID(1-16 hex)> <MID> [CID]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Overwrite all model subscriptions with a single new virtual address. Models only receive messages sent to their unicast address or a group or virtual address they subscribe to. Models may subscribe to multiple group and virtual addresses.
+=======
+	Overwrite all model subscriptions with a single new virtual address. Models only receive
+	messages sent to their unicast address or a group or virtual address they subscribe to.
+	Models may subscribe to multiple group and virtual addresses.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemAddr``: Address of the element the model is on.
 	* ``LabelUUID``: 128-bit label UUID of the virtual address as the new Address to be added to the subscription list. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
@@ -785,7 +1150,14 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg hb-sub [<Src> <Dst> <Per>]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Get or set the Heartbeat subscription parameters. A node only receives Heartbeat messages matching the Heartbeat subscription parameters. Sets the Heartbeat subscription parameters if present, or prints the current Heartbeat subscription parameters if called with no parameters.
+=======
+	Get or set the Heartbeat subscription parameters. A node only receives Heartbeat messages
+	matching the Heartbeat subscription parameters. Sets the Heartbeat subscription parameters
+	if present, or prints the current Heartbeat subscription parameters if called with no
+	parameters.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Src``: Unicast source address to receive Heartbeat messages from.
 	* ``Dst``: Destination address to receive Heartbeat messages on.
@@ -798,7 +1170,13 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 ``mesh models cfg hb-pub [<Dst> <Count> <Per> <TTL> <Features> <NetKeyIdx>]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Get or set the Heartbeat publication parameters. Sets the Heartbeat publication parameters if present, or prints the current Heartbeat publication parameters if called with no parameters.
+=======
+	Get or set the Heartbeat publication parameters. Sets the Heartbeat publication parameters
+	if present, or prints the current Heartbeat publication parameters if called with no
+	parameters.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Dst``: Destination address to publish Heartbeat messages to.
 	* ``Count``: Logarithmic representation of the number of Heartbeat messages to publish periodically:
@@ -826,11 +1204,30 @@ The Configuration Client uses general message parameters set by ``mesh target ds
 Health Client
 -------------
 
+<<<<<<< HEAD
 The Health Client model is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_HEALTH_CLI` configuration option. This is implemented as a separate module (``mesh models health``) inside the ``mesh models`` subcommand list. This module will work on any instance of the Health Client model if the mentioned shell configuration options is enabled, and as long as one or more Health Client model(s) is present in the model composition of the application. This shell module can be used to trigger interaction between Health Clients and Servers on devices in a Mesh network.
 
 By default, the module will choose the first Health Client instance in the model composition when using the Health Client commands. To choose a spesific Health Client instance the user can utilize the commands ``mesh models health instance set`` and ``mesh models health instance get-all``.
 
 The Health Client may use the general messages parameters set by ``mesh target dst``, ``mesh target net`` and ``mesh target app`` to target specific nodes. If the shell target destination address is set to zero, the targeted Health Client will attempt to publish messages using its configured publication parameters.
+=======
+The Health Client model is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_HEALTH_CLI` configuration option. This is implemented as a separate
+module (``mesh models health``) inside the ``mesh models`` subcommand list. This module will work on
+any instance of the Health Client model if the mentioned shell configuration options is enabled, and
+as long as one or more Health Client model(s) is present in the model composition of the
+application. This shell module can be used to trigger interaction between Health Clients and Servers
+on devices in a Mesh network.
+
+By default, the module will choose the first Health Client instance in the model composition when
+using the Health Client commands. To choose a spesific Health Client instance the user can utilize
+the commands ``mesh models health instance set`` and ``mesh models health instance get-all``.
+
+The Health Client may use the general messages parameters set by ``mesh target dst``,
+``mesh target net`` and ``mesh target app`` to target specific nodes. If the shell target
+destination address is set to zero, the targeted Health Client will attempt to publish messages
+using its configured publication parameters.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models health instance set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -895,7 +1292,14 @@ The Health Client may use the general messages parameters set by ``mesh target d
 ``mesh models health period-set <Divisor>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Set the current Health Server publish period divisor. When a fault is detected, the Health Server will start publishing is fault status with a reduced interval. The reduced interval is determined by the Health Server publish period divisor: Fault publish period = Publish period / 2\ :sup:`divisor`.
+=======
+	Set the current Health Server publish period divisor. When a fault is detected, the Health
+	Server will start publishing is fault status with a reduced interval. The reduced interval
+	is determined by the Health Server publish period divisor: Fault publish period = Publish
+	period / 2\ :sup:`divisor`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Divisor``: The new Health Server publish period divisor.
 
@@ -903,7 +1307,14 @@ The Health Client may use the general messages parameters set by ``mesh target d
 ``mesh models health period-set-unack <Divisor>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Set the current Health Server publish period divisor. When a fault is detected, the Health Server will start publishing is fault status with a reduced interval. The reduced interval is determined by the Health Server publish period divisor: Fault publish period = Publish period / 2\ :sup:`divisor`.
+=======
+	Set the current Health Server publish period divisor. When a fault is detected, the Health
+	Server will start publishing is fault status with a reduced interval. The reduced interval
+	is determined by the Health Server publish period divisor: Fault publish period = Publish
+	period / 2\ :sup:`divisor`.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Divisor``: The new Health Server publish period divisor.
 
@@ -933,7 +1344,13 @@ The Health Client may use the general messages parameters set by ``mesh target d
 Binary Large Object (BLOB) Transfer Client model
 ------------------------------------------------
 
+<<<<<<< HEAD
 The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling the :kconfig:option:`CONFIG_BT_MESH_BLOB_CLI` option, and disabling the :kconfig:option:`CONFIG_BT_MESH_DFU_CLI` option.
+=======
+The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling the
+:kconfig:option:`CONFIG_BT_MESH_BLOB_CLI` option, and disabling the
+:kconfig:option:`CONFIG_BT_MESH_DFU_CLI` option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models blob cli target <Addr>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -954,11 +1371,22 @@ The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling th
 ``mesh models blob cli tx <Id> <Size> <BlockSizeLog> <ChunkSize> [<Group> [<Mode(push, pull)>]]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Perform a BLOB transfer to Target nodes. The BLOB Transfer Client will send a dummy BLOB to all Target nodes, then post a message when the transfer is completed. Note that all Target nodes must first be configured to receive the transfer using the ``mesh models blob srv rx`` command.
 
 	* ``Id``: 64-bit BLOB transfer ID.
 	* ``Size``: Size of the BLOB in bytes.
 	* ``BlockSizeLog`` Logarithmic representation of the BLOB's block size. The final block size will be ``1 << block size log`` bytes.
+=======
+	Perform a BLOB transfer to Target nodes. The BLOB Transfer Client will send a dummy BLOB to
+	all Target nodes, then post a message when the transfer is completed. Note that all Target
+	nodes must first be configured to receive the transfer using the ``mesh models blob srv rx``
+	command.
+
+	* ``Id``: 64-bit BLOB transfer ID.
+	* ``Size``: Size of the BLOB in bytes.
+	* ``BlockSizeLog``: Logarithmic representation of the BLOB's block size. The final block size will be ``1 << block size log`` bytes.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	* ``ChunkSize``: Chunk size in bytes.
 	* ``Group``: Optional group address to use when communicating with Target nodes. If omitted or set to 0, the BLOB Transfer Client will address each Target node individually.
 	* ``Mode``: BLOB transfer mode to use. Must be either ``push`` (Push BLOB Transfer Mode) or ``pull`` (Pull BLOB Transfer Mode). If omitted, ``push`` will be used by default.
@@ -972,7 +1400,12 @@ The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling th
 ``mesh models blob cli tx-get [Group]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Determine the progress of a previously running BLOB transfer. Can be used when not performing a BLOB transfer.
+=======
+	Determine the progress of a previously running BLOB transfer. Can be used when not
+	performing a BLOB transfer.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Group``: Optional group address to use when communicating with Target nodes. If omitted or set to 0, the BLOB Transfer Client will address each Target node individually.
 
@@ -991,7 +1424,12 @@ The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling th
 ``mesh models blob cli instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Use the BLOB Transfer Client model instance on the specified element when using the other BLOB Transfer Client model commands.
+=======
+	Use the BLOB Transfer Client model instance on the specified element when using the other
+	BLOB Transfer Client model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the BLOB Transfer Client model instance to use.
 
@@ -1004,7 +1442,13 @@ The :ref:`bluetooth_mesh_blob_cli` can be added to the mesh shell by enabling th
 BLOB Transfer Server model
 --------------------------
 
+<<<<<<< HEAD
 The :ref:`bluetooth_mesh_blob_srv` can be added to the mesh shell by enabling the :kconfig:option:`CONFIG_BT_MESH_BLOB_SRV` option. The BLOB Transfer Server model is capable of receiving any BLOB data, but the implementation in the mesh shell will discard the incoming data.
+=======
+The :ref:`bluetooth_mesh_blob_srv` can be added to the mesh shell by enabling the
+:kconfig:option:`CONFIG_BT_MESH_BLOB_SRV` option. The BLOB Transfer Server model is capable of
+receiving any BLOB data, but the implementation in the mesh shell will discard the incoming data.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models blob srv rx <ID> [<TimeoutBase(10s steps)>]``
@@ -1024,7 +1468,12 @@ The :ref:`bluetooth_mesh_blob_srv` can be added to the mesh shell by enabling th
 ``mesh models blob srv instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Use the BLOB Transfer Server model instance on the specified element when using the other BLOB Transfer Server model commands.
+=======
+	Use the BLOB Transfer Server model instance on the specified element when using the other
+	BLOB Transfer Server model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the BLOB Transfer Server model instance to use.
 
@@ -1037,6 +1486,7 @@ The :ref:`bluetooth_mesh_blob_srv` can be added to the mesh shell by enabling th
 Firmware Update Client model
 ----------------------------
 
+<<<<<<< HEAD
 The Firmware Update Client model can be added to the mesh shell by enabling configuration options :kconfig:option:`CONFIG_BT_MESH_BLOB_CLI` and :kconfig:option:`CONFIG_BT_MESH_DFU_CLI`. The Firmware Update Client demonstrates the firmware update Distributor role by transferring a dummy firmware update to a set of Target nodes.
 
 
@@ -1049,6 +1499,25 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 	* ``FwID``: Optional firmware ID, formatted as a hexstring.
 	* ``Metadata``: Optional firmware metadata, formatted as a hexstring.
 	* ``URI``: Optional URI for the firmware.
+=======
+The Firmware Update Client model can be added to the mesh shell by enabling configuration options
+:kconfig:option:`CONFIG_BT_MESH_BLOB_CLI` and :kconfig:option:`CONFIG_BT_MESH_DFU_CLI`. The Firmware
+Update Client demonstrates the firmware update Distributor role by transferring a dummy firmware
+update to a set of Target nodes.
+
+
+``mesh models dfu slot add <Size> <FwID> [<Metadata>]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Add a virtual DFU image slot that can be transferred as a DFU image. The image slot will be
+	assigned an image slot index, which is printed as a response, and can be used to reference
+	the slot in other commands. To update the image slot, remove it using the
+	``mesh models dfu slot del`` shell command and then add it again.
+
+	* ``Size``: DFU image slot size in bytes.
+	* ``FwID``: Firmware ID, formatted as a hexstring.
+	* ``Metadata``: Optional firmware metadata, formatted as a hexstring.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models dfu slot del <SlotIdx>``
@@ -1093,7 +1562,13 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 ``mesh models dfu cli target-check <SlotIdx> <TargetImgIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Check whether the device at the configured destination address will accept a DFU transfer from the given DFU image slot to the Target node's DFU image at the given index, and what the effect would be.
+=======
+	Check whether the device at the configured destination address will accept a DFU transfer
+	from the given DFU image slot to the Target node's DFU image at the given index, and what
+	the effect would be.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``SlotIdx``: Index of the local DFU image slot to check.
 	* ``TargetImgIdx``: Index of the Target node's DFU image to check.
@@ -1108,15 +1583,35 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 	* ``Group``: Optional group address to use when communicating with the Target nodes. If omitted, the Firmware Update Client will address each Target node individually.
 
 
+<<<<<<< HEAD
 ``mesh models dfu cli apply``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	Apply the most recent DFU transfer on all Target nodes. Can only be called after a DFU transfer is completed.
+=======
+``mesh models dfu cli cancel [<Addr>]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Cancel the DFU procedure at any state on a specific Target node or on all Target nodes. When
+	a Target node address is provided, the Firmware Update Client model will try to cancel the
+	DFU procedure on the provided Target node. Otherwise, the Firmware Update Client model will
+	try to cancel the ongoing DFU procedure on all Target nodes.
+
+	* ``Addr``: Optional unicast address of a Target node on which to cancel the DFU procedure.
+
+
+``mesh models dfu cli apply``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Apply the most recent DFU transfer on all Target nodes. Can only be called after a DFU
+	transfer is completed.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models dfu cli confirm``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Confirm that the most recent DFU transfer was successfully applied on all Target nodes. Can only be called after a DFU transfer is completed and applied.
 
 
@@ -1124,6 +1619,10 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	Check the progress of the current transfer.
+=======
+	Confirm that the most recent DFU transfer was successfully applied on all Target nodes. Can
+	only be called after a DFU transfer is completed and applied.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models dfu cli suspend``
@@ -1137,15 +1636,29 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 
 	Resume the suspended DFU transfer.
 
+<<<<<<< HEAD
 ``mesh models dfu srv progress``
+=======
+
+``mesh models dfu cli progress``
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	Check the progress of the current transfer.
 
+<<<<<<< HEAD
 ``mesh models dfu cli instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 	Use the Firmware Update Client model instance on the specified element when using the other Firmware Update Client model commands.
+=======
+
+``mesh models dfu cli instance-set <ElemIdx>``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Use the Firmware Update Client model instance on the specified element when using the other
+	Firmware Update Client model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the Firmware Update Client model instance to use.
 
@@ -1158,15 +1671,32 @@ The Firmware Update Client model can be added to the mesh shell by enabling conf
 Firmware Update Server model
 ----------------------------
 
+<<<<<<< HEAD
 The Firmware Update Server model can be added to the mesh shell by enabling configuration options :kconfig:option:`CONFIG_BT_MESH_BLOB_SRV` and :kconfig:option:`CONFIG_BT_MESH_DFU_SRV`. The Firmware Update Server demonstrates the firmware update Target role by accepting any firmware update. The mesh shell Firmware Update Server will discard the incoming firmware data, but otherwise behave as a proper firmware update Target node.
+=======
+The Firmware Update Server model can be added to the mesh shell by enabling configuration options
+:kconfig:option:`CONFIG_BT_MESH_BLOB_SRV` and :kconfig:option:`CONFIG_BT_MESH_DFU_SRV`. The Firmware
+Update Server demonstrates the firmware update Target role by accepting any firmware update. The
+mesh shell Firmware Update Server will discard the incoming firmware data, but otherwise behave as a
+proper firmware update Target node.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models dfu srv applied``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Mark the most recent DFU transfer as applied. Can only be called after a DFU transfer is completed, and the Distributor has requested that the transfer is applied.
 
 	As the mesh shell Firmware Update Server doesn't actually apply the incoming firmware image, this command can be used to emulate an applied status, to notify the Distributor that the transfer was successful.
+=======
+	Mark the most recent DFU transfer as applied. Can only be called after a DFU transfer is
+	completed, and the Distributor has requested that the transfer is applied.
+
+	As the mesh shell Firmware Update Server doesn't actually apply the incoming firmware image,
+	this command can be used to emulate an applied status, to notify the Distributor that the
+	transfer was successful.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models dfu srv progress``
@@ -1182,7 +1712,12 @@ The Firmware Update Server model can be added to the mesh shell by enabling conf
 ``mesh models dfu srv instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Use the Firmware Update Server model instance on the specified element when using the other Firmware Update Server model commands.
+=======
+	Use the Firmware Update Server model instance on the specified element when using the other
+	Firmware Update Server model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the Firmware Update Server model instance to use.
 
@@ -1197,17 +1732,32 @@ The Firmware Update Server model can be added to the mesh shell by enabling conf
 Firmware Distribution Server model
 ----------------------------------
 
+<<<<<<< HEAD
 The Firmware Distribution Server model commands can be added to the mesh shell by enabling the :kconfig:option:`CONFIG_BT_MESH_DFD_SRV` configuration option.
 The shell commands for this model mirror the messages sent to the server by a Firmware Distribution Client model.
 To use these commands, a Firmware Distribution Server must be instantiated by the application.
+=======
+The Firmware Distribution Server model commands can be added to the mesh shell by enabling the
+:kconfig:option:`CONFIG_BT_MESH_DFD_SRV` configuration option. The shell commands for this model
+mirror the messages sent to the server by a Firmware Distribution Client model. To use these
+commands, a Firmware Distribution Server must be instantiated by the application.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models dfd receivers-add <Addr>,<FwIdx>[;<Addr>,<FwIdx>]...``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Add receivers to the Firmware Distribution Server.
 	Supply receivers as a list of comma-separated addr,fw_idx pairs, separated by semicolons, for example, ``0x0001,0;0x0002,0;0x0004,1``.
 	Do not use spaces in the receiver list.
 	Repeated calls to this command will continue populating the receivers list until ``mesh models dfd receivers-delete-all`` is called.
+=======
+	Add receivers to the Firmware Distribution Server. Supply receivers as a list of
+	comma-separated addr,fw_idx pairs, separated by semicolons, for example,
+	``0x0001,0;0x0002,0;0x0004,1``.  Do not use spaces in the receiver list. Repeated calls to
+	this command will continue populating the receivers list until
+	``mesh models dfd receivers-delete-all`` is called.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Addr``: Address of the receiving node(s).
 	* ``FwIdx``: Index of the firmware slot to send to ``Addr``.
@@ -1223,7 +1773,11 @@ To use these commands, a Firmware Distribution Server must be instantiated by th
 	Get a list of info about firmware receivers.
 
 	* ``First``: Index of the first receiver to get from the receiver list.
+<<<<<<< HEAD
 	* ``Count``: The number of recievers for which to get info.
+=======
+	* ``Count``: The number of receivers for which to get info.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models dfd capabilities-get``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1292,7 +1846,12 @@ To use these commands, a Firmware Distribution Server must be instantiated by th
 ``mesh models dfd instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Use the Firmware Distribution Server model instance on the specified element when using the other Firmware Distribution Server model commands.
+=======
+	Use the Firmware Distribution Server model instance on the specified element when using the
+	other Firmware Distribution Server model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the Firmware Distribution Server model instance to use.
 
@@ -1307,7 +1866,13 @@ To use these commands, a Firmware Distribution Server must be instantiated by th
 DFU metadata
 ------------
 
+<<<<<<< HEAD
 The DFU metadata commands allow generating metadata that can be used by a Target node to check the firmware before accepting it. The commands are enabled through the :kconfig:option:`CONFIG_BT_MESH_DFU_METADATA` configuration option.
+=======
+The DFU metadata commands allow generating metadata that can be used by a Target node to check the
+firmware before accepting it. The commands are enabled through the
+:kconfig:option:`CONFIG_BT_MESH_DFU_METADATA` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models dfu metadata comp-clear``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1371,7 +1936,14 @@ The DFU metadata commands allow generating metadata that can be used by a Target
 Segmentation and Reassembly (SAR) Configuration Client
 ------------------------------------------------------
 
+<<<<<<< HEAD
 The SAR Configuration client is an optional mesh model that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_SAR_CFG_CLI` configuration option. The SAR Configuration Client model is used to support the functionality of configuring the behavior of the lower transport layer of a node that supports the SAR Configuration Server model.
+=======
+The SAR Configuration client is an optional mesh model that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_SAR_CFG_CLI` configuration option. The SAR Configuration Client
+model is used to support the functionality of configuring the behavior of the lower transport layer
+of a node that supports the SAR Configuration Server model.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh models sar tx-get``
@@ -1412,7 +1984,12 @@ The SAR Configuration client is an optional mesh model that can be enabled throu
 Private Beacon Client
 ---------------------
 
+<<<<<<< HEAD
 The Private Beacon Client model is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_PRIV_BEACON_CLI` configuration option.
+=======
+The Private Beacon Client model is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_PRIV_BEACON_CLI` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models prb priv-beacon-get``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1475,32 +2052,65 @@ The Private Beacon Client model is an optional mesh subsystem that can be enable
 Opcodes Aggregator Client
 -------------------------
 
+<<<<<<< HEAD
 The Opcodes Aggregator client is an optional Bluetooth mesh model that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_OP_AGG_CLI` configuration option. The Opcodes Aggregator Client model is used to support the functionality of dispatching a sequence of access layer messages to nodes supporting the Opcodes Aggregator Server model.
+=======
+The Opcodes Aggregator client is an optional Bluetooth mesh model that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_OP_AGG_CLI` configuration option. The Opcodes Aggregator Client
+model is used to support the functionality of dispatching a sequence of access layer messages to
+nodes supporting the Opcodes Aggregator Server model.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models opagg seq-start <ElemAddr>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Start the Opcodes Aggregator Sequence message. This command initiates the context for aggregating messages and sets the destination address for next shell commands to ``elem_addr``.
+=======
+	Start the Opcodes Aggregator Sequence message. This command initiates the context for
+	aggregating messages and sets the destination address for next shell commands to
+	``elem_addr``.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemAddr``: Element address that will process the aggregated opcodes.
 
 ``mesh models opagg seq-send``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Send the Opcodes Aggregator Sequence message. This command completes the procedure, sends the aggregated sequence message to the target node and clears the context.
+=======
+	Send the Opcodes Aggregator Sequence message. This command completes the procedure, sends
+	the aggregated sequence message to the target node and clears the context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models opagg seq-abort``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Abort the Opcodes Aggregator Sequence message. This command clears the Opcodes Aggregator Client context.
+=======
+	Abort the Opcodes Aggregator Sequence message. This command clears the Opcodes Aggregator
+	Client context.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 Remote Provisioning Client
 --------------------------
 
+<<<<<<< HEAD
 The Remote Provisioning Client is an optional Bluetooth mesh model enabled through the :kconfig:option:`CONFIG_BT_MESH_RPR_CLI` configuration option. The Remote Provisioning Client model provides support for remote provisioning of devices into a mesh network by using the Remote Provisioning Server model.
 
 This shell module can be used to trigger interaction between Remote Provisioning Clients and Remote Provisioning Servers on devices in a mesh network.
+=======
+The Remote Provisioning Client is an optional Bluetooth mesh model enabled through the
+:kconfig:option:`CONFIG_BT_MESH_RPR_CLI` configuration option. The Remote Provisioning Client model
+provides support for remote provisioning of devices into a mesh network by using the Remote
+Provisioning Server model.
+
+This shell module can be used to trigger interaction between Remote Provisioning Clients and Remote
+Provisioning Servers on devices in a mesh network.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models rpr scan <Timeout(s)> [<UUID(1-16 hex)>]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1566,12 +2176,21 @@ This shell module can be used to trigger interaction between Remote Provisioning
 	Reprovision a mesh node using the PB-Remote provisioning bearer.
 
 	* ``Addr``: Address to assign to remote device. If ``addr`` is 0, the lowest available address will be chosen.
+<<<<<<< HEAD
 	* ``CompChanged``: The Target node has indicated that its Composition Data has changed. Defaults to false.
+=======
+	* ``CompChanged``: The Target node has indicated that its Composition Data has changed.  Defaults to false.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models rpr instance-set <ElemIdx>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 	Use the Remote Provisioning Client model instance on the specified element when using the other Remote Provisioning Client model commands.
+=======
+	Use the Remote Provisioning Client model instance on the specified element when using the
+	other Remote Provisioning Client model commands.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``ElemIdx``: The element on which to find the Remote Provisioning Client model instance to use.
 
@@ -1584,14 +2203,27 @@ This shell module can be used to trigger interaction between Remote Provisioning
 Configuration database
 ======================
 
+<<<<<<< HEAD
 The Configuration database is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_CDB` configuration option. The Configuration database is only available on provisioner devices, and allows them to store all information about the mesh network. To avoid conflicts, there should only be one mesh node in the network with the Configuration database enabled. This node is the Configurator, and is responsible for adding new nodes to the network and configuring them.
+=======
+The Configuration database is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_CDB` configuration option. The Configuration database is only
+available on provisioner devices, and allows them to store all information about the mesh network.
+To avoid conflicts, there should only be one mesh node in the network with the Configuration
+database enabled. This node is the Configurator, and is responsible for adding new nodes to the
+network and configuring them.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh cdb create [NetKey(1-16 hex)]``
 --------------------------------------
 
 	Create a Configuration database.
 
+<<<<<<< HEAD
 	* ``NetKey``: Optional network key value of the primary network key (NetKeyIndex=0). Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. Defaults to the default key value if omitted.
+=======
+	* ``NetKey``: Optional network key value of the primary network key (NetKeyIndex=0).  Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. Defaults to the default key value if omitted.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 ``mesh cdb clear``
@@ -1609,7 +2241,13 @@ The Configuration database is an optional mesh subsystem that can be enabled thr
 ``mesh cdb node-add <UUID(1-16 hex)> <Addr> <ElemCnt> <NetKeyIdx> [DevKey(1-16 hex)]``
 --------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 	Manually add a mesh node to the configuration database. Note that devices provisioned with ``mesh provision`` and ``mesh provision-adv`` will be added automatically if the Configuration Database is enabled and created.
+=======
+	Manually add a mesh node to the configuration database. Note that devices provisioned with
+	``mesh provision`` and ``mesh provision-adv`` will be added automatically if the
+	Configuration Database is enabled and created.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``UUID``: 128-bit hexadecimal UUID of the node. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest.
 	* ``Addr``: Unicast address of the node, or 0 to automatically choose the lowest available address.
@@ -1621,7 +2259,13 @@ The Configuration database is an optional mesh subsystem that can be enabled thr
 ``mesh cdb node-del <Addr>``
 ----------------------------
 
+<<<<<<< HEAD
 	Delete a mesh node from the Configuration database. If possible, the node should be reset with ``mesh reset`` before it is deleted from the Configuration database, to avoid unexpected behavior and uncontrolled access to the network.
+=======
+	Delete a mesh node from the Configuration database. If possible, the node should be reset
+	with ``mesh reset`` before it is deleted from the Configuration database, to avoid
+	unexpected behavior and uncontrolled access to the network.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``Addr`` Address of the node to delete.
 
@@ -1629,7 +2273,13 @@ The Configuration database is an optional mesh subsystem that can be enabled thr
 ``mesh cdb subnet-add <NetKeyIdx> [<NetKey(1-16 hex)>]``
 --------------------------------------------------------
 
+<<<<<<< HEAD
 	Add a network key to the Configuration database. The network key can later be passed to mesh nodes in the network. Note that adding a key to the Configuration database does not automatically add it to the local node's list of known network keys.
+=======
+	Add a network key to the Configuration database. The network key can later be passed to mesh
+	nodes in the network. Note that adding a key to the Configuration database does not
+	automatically add it to the local node's list of known network keys.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: Key index of the network key to add.
 	* ``NetKey``: Optional 128-bit network key value. Providing a hex-string shorter than 16 bytes will populate the N most significant bytes of the array and zero-pad the rest. If omitted, a random value will be generated.
@@ -1646,7 +2296,13 @@ The Configuration database is an optional mesh subsystem that can be enabled thr
 ``mesh cdb app-key-add <NetKeyIdx> <AppKeyIdx> [<AppKey(1-16 hex)>]``
 ---------------------------------------------------------------------
 
+<<<<<<< HEAD
 	Add an application key to the Configuration database. The application key can later be passed to mesh nodes in the network. Note that adding a key to the Configuration database does not automatically add it to the local node's list of known application keys.
+=======
+	Add an application key to the Configuration database. The application key can later be
+	passed to mesh nodes in the network. Note that adding a key to the Configuration database
+	does not automatically add it to the local node's list of known application keys.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``NetKeyIdx``: Network key index the application key is bound to.
 	* ``AppKeyIdx``: Key index of the application key to add.
@@ -1664,26 +2320,67 @@ The Configuration database is an optional mesh subsystem that can be enabled thr
 On-Demand Private GATT Proxy Client
 -----------------------------------
 
+<<<<<<< HEAD
 The On-Demand Private GATT Proxy Client model is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_OD_PRIV_PROXY_CLI` configuration option.
+=======
+The On-Demand Private GATT Proxy Client model is an optional mesh subsystem that can be enabled
+through the :kconfig:option:`CONFIG_BT_MESH_OD_PRIV_PROXY_CLI` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models od_priv_proxy od-priv-gatt-proxy [Dur(s)]``
 ---------------------------------------------------------
 
+<<<<<<< HEAD
 	Set the On-Demand Private GATT Proxy state on active target, or fetch the value of this state from it.
 
 	* ``Dur``: If given, set the state of On-Demand Private GATT Proxy to this value in seconds. Fetch this value otherwise.
+=======
+	Set the On-Demand Private GATT Proxy state on active target, or fetch the value of this
+	state from it.
+
+	* ``Dur``: If given, set the state of On-Demand Private GATT Proxy to this value in seconds.  Fetch this value otherwise.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 
 Solicitation PDU RPL Client
 ---------------------------
 
+<<<<<<< HEAD
 The Solicitation PDU RPL Client model is an optional mesh subsystem that can be enabled through the :kconfig:option:`CONFIG_BT_MESH_SOL_PDU_RPL_CLI` configuration option.
+=======
+The Solicitation PDU RPL Client model is an optional mesh subsystem that can be enabled through the
+:kconfig:option:`CONFIG_BT_MESH_SOL_PDU_RPL_CLI` configuration option.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 ``mesh models sol_pdu_rpl sol-pdu-rpl-clear <RngStart> <Ackd> [RngLen]``
 ------------------------------------------------------------------------
 
+<<<<<<< HEAD
 	Clear active target's solicitation replay protection list (SRPL) in given range of solicitation source (SSRC) addresses.
+=======
+	Clear active target's solicitation replay protection list (SRPL) in given range of
+	solicitation source (SSRC) addresses.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	* ``RngStart``: Start address of the SSRC range.
 	* ``Ackd``: This argument decides on whether an acknowledged or unacknowledged message will be sent.
 	* ``RngLen``: Range length for the SSRC addresses to be cleared from the solicitiation RPL list. This parameter is optional; if absent, only a single SSRC address will be cleared.
+<<<<<<< HEAD
+=======
+
+
+Frame statistic
+===============
+
+``mesh stat get``
+-----------------
+
+	Get the frame statistic. The command prints numbers of received frames, as well as numbers
+	of planned and succeeded transmission attempts.
+
+
+``mesh stat clear``
+-------------------
+
+	Clear all statistics collected before.
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d

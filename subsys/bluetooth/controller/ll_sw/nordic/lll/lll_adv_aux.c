@@ -120,6 +120,10 @@ static int prepare_cb(struct lll_prepare_param *p)
 	uint32_t start_us;
 	uint8_t chan_idx;
 	uint8_t phy_s;
+<<<<<<< HEAD
+=======
+	uint32_t ret;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	uint8_t upd;
 	uint32_t aa;
 
@@ -316,6 +320,7 @@ static int prepare_cb(struct lll_prepare_param *p)
 
 #if defined(CONFIG_BT_CTLR_XTAL_ADVANCED) && \
 	(EVENT_OVERHEAD_PREEMPT_US <= EVENT_OVERHEAD_PREEMPT_MIN_US)
+<<<<<<< HEAD
 	/* check if preempt to start has changed */
 	if (lll_preempt_calc(ull, (TICKER_ID_ADV_AUX_BASE +
 				   ull_adv_aux_lll_handle_get(lll)),
@@ -337,6 +342,32 @@ static int prepare_cb(struct lll_prepare_param *p)
 		ret = lll_prepare_done(lll);
 		LL_ASSERT(!ret);
 	}
+=======
+	uint32_t overhead;
+
+	overhead = lll_preempt_calc(ull, (TICKER_ID_ADV_AUX_BASE + ull_adv_aux_lll_handle_get(lll)),
+				    ticks_at_event);
+	/* check if preempt to start has changed */
+	if (overhead) {
+		LL_ASSERT_OVERHEAD(overhead);
+
+		radio_isr_set(lll_isr_abort, lll);
+		radio_disable();
+
+		return -ECANCELED;
+	}
+#endif /* CONFIG_BT_CTLR_XTAL_ADVANCED */
+
+	if (IS_ENABLED(CONFIG_BT_CTLR_ADV_PERIODIC) &&
+	    IS_ENABLED(CONFIG_BT_TICKER_EXT_EXPIRE_INFO) &&
+	    sec_pdu->adv_ext_ind.ext_hdr_len &&
+	    sec_pdu->adv_ext_ind.ext_hdr.sync_info) {
+		ull_adv_sync_lll_syncinfo_fill(sec_pdu, lll);
+	}
+
+	ret = lll_prepare_done(lll);
+	LL_ASSERT(!ret);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	DEBUG_RADIO_START_A(1);
 
@@ -390,7 +421,11 @@ static void isr_tx_chain(void *param)
 						 lll->phy_s, lll->phy_flags);
 	} else {
 		radio_isr_set(isr_done, lll_aux);
+<<<<<<< HEAD
 		radio_switch_complete_and_disable();
+=======
+		radio_switch_complete_and_b2b_tx_disable();
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	}
 
 	radio_pkt_tx_set(pdu);

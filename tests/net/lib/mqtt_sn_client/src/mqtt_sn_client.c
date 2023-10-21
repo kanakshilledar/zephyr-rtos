@@ -84,15 +84,24 @@ int tp_poll(struct mqtt_sn_client *client)
 	return recv_data.sz;
 }
 
+<<<<<<< HEAD
 static ZTEST_BMEM struct mqtt_sn_client clients[3];
 static ZTEST_BMEM struct mqtt_sn_client *client;
+=======
+static ZTEST_BMEM struct mqtt_sn_client mqtt_clients[3];
+static ZTEST_BMEM struct mqtt_sn_client *mqtt_client;
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 static void setup(void *f)
 {
 	ARG_UNUSED(f);
 	static ZTEST_BMEM size_t i;
 
+<<<<<<< HEAD
 	client = &clients[i++];
+=======
+	mqtt_client = &mqtt_clients[i++];
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 
 	transport = (struct mqtt_sn_transport){
 		.init = tp_init, .msg_send = msg_send, .recv = tp_recv, .poll = tp_poll};
@@ -139,7 +148,11 @@ static void mqtt_sn_connect_no_will(struct mqtt_sn_client *client)
 static ZTEST(mqtt_sn_client, test_mqtt_sn_connect_no_will)
 {
 
+<<<<<<< HEAD
 	mqtt_sn_connect_no_will(client);
+=======
+	mqtt_sn_connect_no_will(mqtt_client);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 static ZTEST(mqtt_sn_client, test_mqtt_sn_connect_will)
@@ -150,6 +163,7 @@ static ZTEST(mqtt_sn_client, test_mqtt_sn_connect_will)
 
 	int err;
 
+<<<<<<< HEAD
 	err = mqtt_sn_client_init(client, &client_id, &transport, evt_cb, tx, sizeof(tx), rx,
 				  sizeof(rx));
 	zassert_equal(err, 0, "unexpected error %d");
@@ -176,6 +190,34 @@ static ZTEST(mqtt_sn_client, test_mqtt_sn_connect_will)
 	err = input(client, connack, sizeof(connack));
 	zassert_equal(err, 0, "unexpected error %d");
 	zassert_equal(client->state, 1, "Wrong state");
+=======
+	err = mqtt_sn_client_init(mqtt_client, &client_id, &transport, evt_cb, tx, sizeof(tx), rx,
+				  sizeof(rx));
+	zassert_equal(err, 0, "unexpected error %d");
+
+	mqtt_client->will_topic = MQTT_SN_DATA_STRING_LITERAL("topic");
+	mqtt_client->will_msg = MQTT_SN_DATA_STRING_LITERAL("msg");
+
+	err = mqtt_sn_connect(mqtt_client, true, false);
+	zassert_equal(err, 0, "unexpected error %d");
+	assert_msg_send(1, 12);
+	zassert_equal(mqtt_client->state, 0, "Wrong state");
+
+	err = input(mqtt_client, willtopicreq, sizeof(willtopicreq));
+	zassert_equal(err, 0, "unexpected error %d");
+	zassert_equal(mqtt_client->state, 0, "Wrong state");
+	assert_msg_send(1, 8);
+
+	err = input(mqtt_client, willmsgreq, sizeof(willmsgreq));
+	zassert_equal(err, 0, "unexpected error %d");
+	zassert_equal(mqtt_client->state, 0, "Wrong state");
+	zassert_equal(evt_cb_data.called, 0, "Unexpected event");
+	assert_msg_send(1, 5);
+
+	err = input(mqtt_client, connack, sizeof(connack));
+	zassert_equal(err, 0, "unexpected error %d");
+	zassert_equal(mqtt_client->state, 1, "Wrong state");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(evt_cb_data.called, 1, "NO event");
 	zassert_equal(evt_cb_data.last_evt.type, MQTT_SN_EVT_CONNECTED, "Wrong event");
 	k_sleep(K_MSEC(10));
@@ -189,22 +231,36 @@ static ZTEST(mqtt_sn_client, test_mqtt_sn_publish_qos0)
 	uint8_t regack[] = {7, 0x0B, 0x1A, 0x1B, 0x00, 0x01, 0};
 	int err;
 
+<<<<<<< HEAD
 	mqtt_sn_connect_no_will(client);
 	err = mqtt_sn_publish(client, MQTT_SN_QOS_0, &topic, false, &data);
+=======
+	mqtt_sn_connect_no_will(mqtt_client);
+	err = mqtt_sn_publish(mqtt_client, MQTT_SN_QOS_0, &topic, false, &data);
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(err, 0, "Unexpected error %d", err);
 
 	assert_msg_send(0, 0);
 	k_sleep(K_MSEC(10));
 	/* Expect a REGISTER to be sent */
 	assert_msg_send(1, 12);
+<<<<<<< HEAD
 	err = input(client, regack, sizeof(regack));
+=======
+	err = input(mqtt_client, regack, sizeof(regack));
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 	zassert_equal(err, 0, "unexpected error %d");
 	assert_msg_send(0, 0);
 	k_sleep(K_MSEC(10));
 	assert_msg_send(1, 20);
 
+<<<<<<< HEAD
 	zassert_true(sys_slist_is_empty(&client->publish), "Publish not empty");
 	zassert_false(sys_slist_is_empty(&client->topic), "Topic empty");
+=======
+	zassert_true(sys_slist_is_empty(&mqtt_client->publish), "Publish not empty");
+	zassert_false(sys_slist_is_empty(&mqtt_client->topic), "Topic empty");
+>>>>>>> 01478ffa5f76283e4556b4b7585875d50d82484d
 }
 
 ZTEST_SUITE(mqtt_sn_client, NULL, NULL, setup, NULL, NULL);
